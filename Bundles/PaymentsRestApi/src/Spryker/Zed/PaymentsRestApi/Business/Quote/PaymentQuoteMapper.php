@@ -11,9 +11,23 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPaymentTransfer;
+use Spryker\Zed\PaymentsRestApi\Dependency\Facade\PaymentsRestApiToPaymentFacadeInterface;
 
 class PaymentQuoteMapper implements PaymentQuoteMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\PaymentsRestApi\Dependency\Facade\PaymentsRestApiToPaymentFacadeInterface
+     */
+    protected $paymentFacade;
+
+    /**
+     * @param \Spryker\Zed\PaymentsRestApi\Dependency\Facade\PaymentsRestApiToPaymentFacadeInterface $paymentFacade
+     */
+    public function __construct(PaymentsRestApiToPaymentFacadeInterface $paymentFacade)
+    {
+        $this->paymentFacade = $paymentFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -30,7 +44,11 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfers->offsetGet(0)));
+        $paymentTransfer = $this->preparePaymentTransfer($restPaymentTransfers->offsetGet(0));
+
+        $paymentTransfer = $this->paymentFacade->expandPaymentWithPaymentSelection($paymentTransfer, $quoteTransfer->getStore());
+
+        $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
     }

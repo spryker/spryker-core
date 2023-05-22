@@ -10,6 +10,7 @@
         <property name="isLimitedAmount" type="bool"/>
         <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method"/>
         <property name="foreignPayments" type="array" associative="true" singular="foreignPayment"/>
+        <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
     </transfer>
 
     <transfer name="Quote">
@@ -88,6 +89,7 @@
         <property name="groupName" type="string"/>
         <property name="isHidden" type="bool"/>
         <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="isForeign" type="bool"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -176,10 +178,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="amount" type="int"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -188,10 +186,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="amount" type="int"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -200,10 +194,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="amount" type="int"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -237,10 +227,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -249,10 +235,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -261,10 +243,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -273,10 +251,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -285,10 +259,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -297,10 +267,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -309,10 +275,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -321,10 +283,6 @@
         <property name="orderItemIds" type="array" singular="orderItemId"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="idPaymentPayoneOrderCancel" type="int"/>
-        <property name="idPaymentPayoneOrderCapture" type="int"/>
-        <property name="idPaymentPayoneOrderRefund" type="int"/>
-        <property name="attemptNumber" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -370,6 +328,8 @@
         <property name="names" type="string[]" singular="name"/>
         <property name="paymentMethodIds" type="int[]" singular="idPaymentMethod"/>
         <property name="paymentMethodKeys" type="string[]" singular="paymentMethodKey"/>
+        <property name="paymentProviderKeys" type="string[]" singular="paymentProviderKey"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="Error">

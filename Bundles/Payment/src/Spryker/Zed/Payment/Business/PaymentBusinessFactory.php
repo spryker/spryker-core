@@ -24,6 +24,8 @@ use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentProviderEntityId
 use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentProviderEntityIdentifierBuilderInterface;
 use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitter;
 use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitterInterface;
+use Spryker\Zed\Payment\Business\Expander\PaymentExpander;
+use Spryker\Zed\Payment\Business\Expander\PaymentExpanderInterface;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGenerator;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapper;
@@ -494,5 +496,16 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function createPaymentMethodEntityIdentifierBuilder(): PaymentMethodEntityIdentifierBuilderInterface
     {
         return new PaymentMethodEntityIdentifierBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Expander\PaymentExpanderInterface
+     */
+    public function createPaymentExpander(): PaymentExpanderInterface
+    {
+        return new PaymentExpander(
+            $this->getRepository(),
+            $this->getStoreFacade(),
+        );
     }
 }

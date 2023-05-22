@@ -24,8 +24,10 @@ use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -84,7 +86,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     {
         return $this->getFactory()
             ->createPaymentMethodUpdater()
-            ->enablePaymentMethod($paymentMethodAddedTransfer);
+            ->enableForeignPaymentMethod($paymentMethodAddedTransfer);
     }
 
     /**
@@ -100,7 +102,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     {
         $this->getFactory()
             ->createPaymentMethodUpdater()
-            ->disablePaymentMethod($paymentMethodDeletedTransfer);
+            ->disableForeignPaymentMethod($paymentMethodDeletedTransfer);
     }
 
     /**
@@ -502,5 +504,22 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
         return $this->getFactory()
             ->createPaymentMethodCreator()
             ->createPaymentMethodCollection($paymentMethodCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentTransfer
+     */
+    public function expandPaymentWithPaymentSelection(PaymentTransfer $paymentTransfer, StoreTransfer $storeTransfer): PaymentTransfer
+    {
+        return $this->getFactory()
+            ->createPaymentExpander()
+            ->expandPaymentWithPaymentSelection($paymentTransfer, $storeTransfer);
     }
 }

@@ -24,8 +24,10 @@ use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
@@ -469,4 +471,22 @@ interface PaymentFacadeInterface
     public function createPaymentMethodCollection(
         PaymentMethodCollectionRequestTransfer $paymentMethodCollectionRequestTransfer
     ): PaymentMethodCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `PaymentTransfer.paymentMethod` to be set.
+     * - Requires `PaymentTransfer.paymentProvider` to be set.
+     * - Requires `StoreTransfer.idStore` or `StoreTransfer.name` to be set.
+     * - Expands PaymentTransfer with paymentSelection field if it was not populated before.
+     * - Uses provided arguments to retrieve payment method from database.
+     * - Sets `PaymentTransfer.paymentSelection` to payment method key or payment method key with added suffix for foreign payment methods.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentTransfer
+     */
+    public function expandPaymentWithPaymentSelection(PaymentTransfer $paymentTransfer, StoreTransfer $storeTransfer): PaymentTransfer;
 }

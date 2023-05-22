@@ -26,12 +26,12 @@ interface PaymentMethodUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function enablePaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
+    public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function disablePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer;
+    public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer;
 }

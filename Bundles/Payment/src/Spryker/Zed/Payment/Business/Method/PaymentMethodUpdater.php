@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface;
@@ -112,7 +113,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function enablePaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
+    public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
     {
         $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodAddedTransferToPaymentMethodTransfer(
             $paymentMethodAddedTransfer,
@@ -136,16 +137,28 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
             ->setIdPaymentProvider($paymentProviderTransfer->getIdPaymentProvider())
             ->setPaymentMethodKey($paymentMethodKey)
             ->setIsActive(false)
-            ->setIsHidden(false);
+            ->setIsHidden(false)
+            ->setIsForeign(true);
 
         $existingPaymentMethodTransfer = $this->paymentRepository->findPaymentMethod($paymentMethodTransfer);
         if ($existingPaymentMethodTransfer) {
             $existingPaymentMethodTransfer->fromArray($paymentMethodTransfer->modifiedToArray());
 
+            $existingPaymentMethodTransfer->getStoreRelation()
+                ->addStores($storeTransfer)
+                ->addIdStores($storeTransfer->getIdStore());
+
             $paymentMethodResponseTransfer = $this->updatePaymentMethod($existingPaymentMethodTransfer);
 
             return $paymentMethodResponseTransfer->getPaymentMethodOrFail();
         }
+
+        $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation() ?? new StoreRelationTransfer();
+        $storeRelationTransfer
+            ->addStores($storeTransfer)
+            ->addIdStores($storeTransfer->getIdStore());
+
+        $paymentMethodTransfer->setStoreRelation($storeRelationTransfer);
 
         $paymentMethodResponseTransfer = $this->paymentWriter->createPaymentMethod($paymentMethodTransfer);
 
@@ -157,7 +170,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function disablePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer
+    public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer
     {
         $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodDeletedTransferToPaymentMethodTransfer(
             $paymentMethodDeletedTransfer,

@@ -1,0 +1,197 @@
+asyncapi: 2.2.0
+info:
+    title: 'Payment AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    payment:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/PaymentCancelReservationRequested'
+                    - $ref: '#/components/messages/PaymentConfirmationRequested'
+                    - $ref: '#/components/messages/PaymentRefundRequested'
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/PaymentMethodAdded'
+                    - $ref: '#/components/messages/PaymentMethodDeleted'
+                    - $ref: '#/components/messages/PaymentPreauthorized'
+                    - $ref: '#/components/messages/PaymentPreauthorizationFailed'
+                    - $ref: '#/components/messages/PaymentConfirmed'
+                    - $ref: '#/components/messages/PaymentConfirmationFailed'
+                    - $ref: '#/components/messages/PaymentRefunded'
+                    - $ref: '#/components/messages/PaymentRefundFailed'
+                    - $ref: '#/components/messages/PaymentReservationCanceled'
+                    - $ref: '#/components/messages/PaymentCancelReservationFailed'
+components:
+    messages:
+        PaymentMethodAdded:
+            name: PaymentMethodAdded
+            operationId: Payment
+            summary: 'Handle a new Payment method.'
+            payload:
+                $ref: '#/components/schemas/PaymentMethodAdded'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentMethodDeleted:
+            name: PaymentMethodDeleted
+            operationId: Payment
+            summary: 'Handle that a Payment method was deleted.'
+            payload:
+                $ref: '#/components/schemas/PaymentMethodDeleted'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentPreauthorized:
+            name: PaymentPreauthorized
+            operationId: Oms
+            summary: 'Handle payment preauthorization event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPreauthorized'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentPreauthorizationFailed:
+            name: PaymentPreauthorizationFailed
+            operationId: Oms
+            summary: 'Handle payment preauthorization failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPreauthorizationFailed'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentConfirmed:
+            name: PaymentConfirmed
+            operationId: Oms
+            summary: 'Handle payment confirmation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentConfirmed'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentConfirmationFailed:
+            name: PaymentConfirmationFailed
+            operationId: Oms
+            summary: 'Handle payment confirmation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentConfirmationFailed'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentRefunded:
+            name: PaymentRefunded
+            operationId: Oms
+            summary: 'Handle payment refund event.'
+            payload:
+                $ref: '#/components/schemas/PaymentRefunded'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentRefundFailed:
+            name: PaymentRefundFailed
+            operationId: Oms
+            summary: 'Handle payment refund failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentRefundFailed'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentReservationCanceled:
+            name: PaymentReservationCanceled
+            operationId: Oms
+            summary: 'Handle payment reservation cancellation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentReservationCanceled'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentCancelReservationFailed:
+            name: PaymentCancelReservationFailed
+            operationId: Oms
+            summary: 'Handle payment reservation cancellation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentCancelReservationFailed'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentCancelReservationRequested:
+            name: PaymentCancelReservationRequested
+            operationId: Oms
+            summary: 'Handle payment reservation cancellation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentCancelReservationRequested'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentConfirmationRequested:
+            name: PaymentConfirmationRequested
+            operationId: Oms
+            summary: 'Handle payment confirmation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentConfirmationRequested'
+            headers:
+                $ref: '#/components/schemas/headers'
+        PaymentRefundRequested:
+            name: PaymentRefundRequested
+            operationId: Oms
+            summary: 'Handle payment refund request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentRefundRequested'
+            headers:
+                $ref: '#/components/schemas/headers'
+    schemas:
+        PaymentMethodAdded:
+            $ref: '#/components/schemas/PaymentMethodPayload'
+        PaymentMethodDeleted:
+            $ref: '#/components/schemas/PaymentMethodPayload'
+        PaymentPreauthorized:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentPreauthorizationFailed:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentConfirmed:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentConfirmationFailed:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentRefunded:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentRefundFailed:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentReservationCanceled:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentCancelReservationFailed:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentCancelReservationRequested:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentConfirmationRequested:
+            $ref: '#/components/schemas/PaymentPayload'
+        PaymentRefundRequested:
+            $ref: '#/components/schemas/PaymentPayload'
+
+        PaymentMethodPayload:
+            type: object
+            properties:
+                name:
+                    type: string
+                providerName:
+                    type: string
+                paymentAuthorizationEndpoint:
+                    type: string
+            required:
+                - name
+                - providerName
+                - checkoutOrderTokenUrl
+                - checkoutRedirectUrl
+
+        PaymentPayload:
+            type: object
+            properties:
+                orderReference:
+                    type: string
+                orderItemIds:
+                    type: array
+                amount:
+                    type: integer
+                currencyIsoCode:
+                    type: string
+            required:
+                - orderReference
+                - orderItemIds
+
+        headers:
+            type: object
+            required:
+                - storeReference
+            properties:
+                storeReference:
+                    type: string
+                    description: 'Identifier of a store for the triggered event.'

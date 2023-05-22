@@ -164,6 +164,7 @@ class PaymentConfig extends AbstractBundleConfig
             QuoteTransfer::PAYMENT => [
                 PaymentTransfer::AMOUNT => 'grandTotal',
                 PaymentTransfer::PAYMENT_METHOD => 'paymentMethod',
+                PaymentTransfer::ADDITIONAL_PAYMENT_DATA => 'additionalPaymentData',
             ],
             QuoteTransfer::ITEMS => [
                 ItemTransfer::ID_SALES_ORDER_ITEM => 'idSalesOrderItem',

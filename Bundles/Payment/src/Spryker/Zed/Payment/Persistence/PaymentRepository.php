@@ -288,6 +288,20 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             $paymentMethodQuery->filterByIdPaymentMethod_In($paymentMethodConditionsTransfer->getPaymentMethodIds());
         }
 
+        if ($paymentMethodConditionsTransfer->getPaymentProviderKeys()) {
+            $paymentMethodQuery
+                ->useSpyPaymentProviderQuery()
+                ->filterByPaymentProviderKey_In($paymentMethodConditionsTransfer->getPaymentProviderKeys())
+                ->endUse();
+        }
+
+        if ($paymentMethodConditionsTransfer->getStoreIds()) {
+            $paymentMethodQuery
+                ->useSpyPaymentMethodStoreQuery()
+                ->filterByFkStore_In($paymentMethodConditionsTransfer->getStoreIds())
+                ->endUse();
+        }
+
         if ($paymentMethodConditionsTransfer->getPaymentMethodKeys()) {
             $paymentMethodQuery->filterByPaymentMethodKey_In($paymentMethodConditionsTransfer->getPaymentMethodKeys());
         }
