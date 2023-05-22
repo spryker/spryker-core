@@ -18,4 +18,12 @@ interface MerchantToEventFacadeInterface
      * @return void
      */
     public function trigger($eventName, TransferInterface $transfer);
+
+    /**
+     * @param string $eventName
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $transfers): void;
 }

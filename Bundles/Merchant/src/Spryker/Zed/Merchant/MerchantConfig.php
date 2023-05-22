@@ -7,6 +7,13 @@
 
 namespace Spryker\Zed\Merchant;
 
+use Generated\Shared\Transfer\MerchantCreatedTransfer;
+use Generated\Shared\Transfer\MerchantExportedTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUpdatedTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Merchant\MerchantConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantConfig extends AbstractBundleConfig
@@ -53,6 +60,61 @@ class MerchantConfig extends AbstractBundleConfig
             ],
             static::STATUS_DENIED => [
                 static::STATUS_APPROVED,
+            ],
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Used to decide if internal merchant events have to be sent to the Message Broker
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isPublishingToMessageBrokerEnabled(): bool
+    {
+        return (bool)$this->get(MerchantConstants::PUBLISHING_TO_MESSAGE_BROKER_ENABLED, true);
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getMerchantEventsAllowedForPublish(): array
+    {
+        return [
+            MerchantExportedTransfer::class,
+            MerchantCreatedTransfer::class,
+            MerchantUpdatedTransfer::class,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getMerchantFieldsForMerchantEventMessage(): array
+    {
+        return [
+            MerchantTransfer::MERCHANT_REFERENCE => MerchantTransfer::MERCHANT_REFERENCE,
+            MerchantTransfer::NAME => MerchantTransfer::NAME,
+            MerchantTransfer::EMAIL => MerchantTransfer::EMAIL,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getMerchantStoreRelationFieldsForMerchantEventMessage(): array
+    {
+        return [
+            StoreRelationTransfer::STORES => [
+                StoreTransfer::STORE_REFERENCE => StoreTransfer::STORE_REFERENCE,
             ],
         ];
     }

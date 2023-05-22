@@ -10,19 +10,29 @@ namespace Spryker\Zed\Merchant\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreator;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface;
+use Spryker\Zed\Merchant\Business\Exporter\MerchantExporter;
+use Spryker\Zed\Merchant\Business\Exporter\MerchantExporterInterface;
 use Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilter;
 use Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilterInterface;
+use Spryker\Zed\Merchant\Business\Mapper\TransferMapper;
+use Spryker\Zed\Merchant\Business\Mapper\TransferMapperInterface;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaver;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
+use Spryker\Zed\Merchant\Business\Publisher\MerchantMessageBrokerPublisher;
+use Spryker\Zed\Merchant\Business\Publisher\MerchantPublisherInterface;
 use Spryker\Zed\Merchant\Business\Reader\MerchantReader;
 use Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Status\MerchantStatusReader;
 use Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface;
 use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidator;
 use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Trigger\MerchantEventTrigger;
+use Spryker\Zed\Merchant\Business\Trigger\MerchantEventTriggerInterface;
 use Spryker\Zed\Merchant\Business\Updater\MerchantUpdater;
 use Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToMessageBrokerFacadeInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
@@ -45,6 +55,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getMerchantPostCreatePlugins(),
             $this->createMerchantUrlSaver(),
             $this->getEventFacade(),
+            $this->createMerchantEventTrigger(),
         );
     }
 
@@ -60,6 +71,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getMerchantPostUpdatePlugins(),
             $this->createMerchantUrlSaver(),
             $this->getEventFacade(),
+            $this->createMerchantEventTrigger(),
         );
     }
 
@@ -71,6 +83,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantReader(
             $this->getRepository(),
             $this->getMerchantExpanderPlugins(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -158,5 +171,63 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductMerchantRelationshipStorageFilter(): PriceProductMerchantRelationshipStorageFilterInterface
     {
         return new PriceProductMerchantRelationshipStorageFilter($this->createMerchantReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToMessageBrokerFacadeInterface
+     */
+    public function getMessageBrokerFacade(): MerchantToMessageBrokerFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_MESSAGE_BROKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Publisher\MerchantPublisherInterface
+     */
+    public function createMerchantMessageBrokerPublisher(): MerchantPublisherInterface
+    {
+        return new MerchantMessageBrokerPublisher(
+            $this->getMessageBrokerFacade(),
+            $this->createMerchantReader(),
+            $this->createTransferMapper(),
+            $this->getStoreFacade(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Mapper\TransferMapperInterface
+     */
+    public function createTransferMapper(): TransferMapperInterface
+    {
+        return new TransferMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Exporter\MerchantExporterInterface
+     */
+    public function createMerchantExporter(): MerchantExporterInterface
+    {
+        return new MerchantExporter(
+            $this->getEventFacade(),
+            $this->getStoreFacade(),
+            $this->createMerchantReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Trigger\MerchantEventTriggerInterface
+     */
+    public function createMerchantEventTrigger(): MerchantEventTriggerInterface
+    {
+        return new MerchantEventTrigger($this->getEventFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): MerchantToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_STORE);
     }
 }

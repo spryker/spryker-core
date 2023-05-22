@@ -11,6 +11,8 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeBridge;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToMessageBrokerFacadeBridge;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeBridge;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeBridge;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceBridge;
 
@@ -55,6 +57,16 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_URL = 'PROPEL_QUERY_URL';
 
     /**
+     * @var string
+     */
+    public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -67,6 +79,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantExpanderPlugins($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addMessageBrokerFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -203,6 +217,34 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PROPEL_QUERY_URL, $container->factory(function () {
             return SpyUrlQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessageBrokerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
+            return new MerchantToMessageBrokerFacadeBridge($container->getLocator()->messageBroker()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new MerchantToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

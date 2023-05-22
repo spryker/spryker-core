@@ -34,4 +34,15 @@ class MerchantToEventFacadeBridge implements MerchantToEventFacadeInterface
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }
+
+    /**
+     * @param string $eventName
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $transfers): void
+    {
+        $this->eventFacade->triggerBulk($eventName, $transfers);
+    }
 }

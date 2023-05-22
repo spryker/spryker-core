@@ -29,10 +29,7 @@ class MerchantHelper extends Module
      */
     public function haveMerchant(array $seedData = []): MerchantTransfer
     {
-        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
-        $merchantTransfer = (new MerchantBuilder($seedData))->build();
-        $merchantTransfer->setIdMerchant(null);
-        $merchantTransfer = $this->addStoreRelation($merchantTransfer, $seedData);
+        $merchantTransfer = $this->getMerchantTransfer($seedData);
 
         $merchantResponseTransfer = $this->getLocator()
             ->merchant()
@@ -64,6 +61,25 @@ class MerchantHelper extends Module
     }
 
     /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    public function assertMerchantNotExists(int $idMerchant): void
+    {
+        $query = $this->getMerchantQuery()->filterByIdMerchant($idMerchant);
+        $this->assertSame(0, $query->count());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\MerchantConfig
+     */
+    public function createMerchantConfig(): MerchantConfig
+    {
+        return new MerchantConfig();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param array $seedData
      *
@@ -88,26 +104,7 @@ class MerchantHelper extends Module
             return (new StoreRelationBuilder())->seed($seedData[MerchantTransfer::STORE_RELATION])->build();
         }
 
-        return (new StoreRelationBuilder())->build();
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function assertMerchantNotExists(int $idMerchant): void
-    {
-        $query = $this->getMerchantQuery()->filterByIdMerchant($idMerchant);
-        $this->assertSame(0, $query->count());
-    }
-
-    /**
-     * @return \Spryker\Zed\Merchant\MerchantConfig
-     */
-    public function createMerchantConfig(): MerchantConfig
-    {
-        return new MerchantConfig();
+        return (new StoreRelationBuilder())->seed($seedData)->build();
     }
 
     /**
@@ -116,5 +113,20 @@ class MerchantHelper extends Module
     protected function getMerchantQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function getMerchantTransfer(array $seedData = []): MerchantTransfer
+    {
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
+        $merchantTransfer = (new MerchantBuilder($seedData))->build();
+        $merchantTransfer->setIdMerchant(null);
+        $merchantTransfer = $this->addStoreRelation($merchantTransfer, $seedData);
+
+        return $merchantTransfer;
     }
 }

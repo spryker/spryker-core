@@ -70,6 +70,7 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="Url">
@@ -160,5 +161,40 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="ExportMerchants" strict="true">
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantExported" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantCreated" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantUpdated" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantPublisherConfig" strict="true">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="eventName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantExportCriteria" strict="true">
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="MessageResponse">
     </transfer>
 </transfers>

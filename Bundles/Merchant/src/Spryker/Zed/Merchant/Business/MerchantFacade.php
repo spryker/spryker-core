@@ -9,6 +9,8 @@ namespace Spryker\Zed\Merchant\Business;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantExportCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantPublisherConfigTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -112,5 +114,33 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
         return $this->getFactory()
             ->createPriceProductMerchantRelationshipStorageFilter()
             ->filterByMerchant($priceProductMerchantRelationshipStorageTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+     *
+     * @return void
+     */
+    public function triggerMerchantExportEvents(MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer): void
+    {
+        $this->getFactory()->createMerchantExporter()->export($merchantExportCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer
+     *
+     * @return void
+     */
+    public function emitPublishMerchantToMessageBroker(MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer): void
+    {
+        $this->getFactory()->createMerchantMessageBrokerPublisher()->publish($merchantPublisherConfigTransfer);
     }
 }

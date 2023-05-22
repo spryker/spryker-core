@@ -28,4 +28,19 @@ class MerchantEvents
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
+
+    /**
+     * @var string
+     */
+    public const MERCHANT_EXPORTED = 'Merchant.exported';
+
+    /**
+     * @var string
+     */
+    public const MERCHANT_CREATED = 'Merchant.created';
+
+    /**
+     * @var string
+     */
+    public const MERCHANT_UPDATED = 'Merchant.updated';
 }

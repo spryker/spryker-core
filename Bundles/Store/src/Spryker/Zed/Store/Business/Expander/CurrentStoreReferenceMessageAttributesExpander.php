@@ -41,17 +41,35 @@ class CurrentStoreReferenceMessageAttributesExpander implements CurrentStoreRefe
     public function expand(
         MessageAttributesTransfer $messageAttributesTransfer
     ): MessageAttributesTransfer {
-        try {
-            $storeTransfer = $this->storeReader->getStoreByName($this->storeName);
-        } catch (StoreNotFoundException $exception) {
+        $messageAttributesTransfer = $this->setStoreReference($messageAttributesTransfer);
+
+        if (!$messageAttributesTransfer->getStoreReference()) {
             return $messageAttributesTransfer;
         }
 
-        $storeReference = $storeTransfer->getStoreReference();
-        $messageAttributesTransfer->setStoreReference($storeReference);
-
-        $emitter = $messageAttributesTransfer->getEmitter() ?? $storeReference;
+        $emitter = $messageAttributesTransfer->getEmitter() ?? $messageAttributesTransfer->getStoreReference();
         $messageAttributesTransfer->setEmitter($emitter);
+
+        return $messageAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function setStoreReference(MessageAttributesTransfer $messageAttributesTransfer): MessageAttributesTransfer
+    {
+        if ($messageAttributesTransfer->getStoreReference()) {
+            return $messageAttributesTransfer;
+        }
+
+        try {
+            $storeTransfer = $this->storeReader->getStoreByName($this->storeName);
+            $messageAttributesTransfer->setStoreReference($storeTransfer->getStoreReference());
+        } catch (StoreNotFoundException $exception) {
+            return $messageAttributesTransfer;
+        }
 
         return $messageAttributesTransfer;
     }

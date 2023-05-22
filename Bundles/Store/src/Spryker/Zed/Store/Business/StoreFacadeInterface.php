@@ -260,7 +260,7 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Validates if `storeReference` from the message equals `storeReference` of the current store.
+     * - Validates if `storeReference` from the message matches `storeReference` of one the configured stores.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
@@ -273,7 +273,7 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Expands message attributes with store reference from a store set in the application environment.
+     * - When store reference is not provided, expands message attributes with store reference from a store set in the application environment.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api

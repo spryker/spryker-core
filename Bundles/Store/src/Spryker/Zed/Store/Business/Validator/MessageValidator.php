@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Store\Business\Validator;
 
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageValidationResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 use Spryker\Zed\Store\Business\Model\StoreReaderInterface;
 
 class MessageValidator implements MessageValidatorInterface
@@ -28,18 +28,11 @@ class MessageValidator implements MessageValidatorInterface
     protected $storeReader;
 
     /**
-     * @var string
-     */
-    protected string $storeName;
-
-    /**
      * @param \Spryker\Zed\Store\Business\Model\StoreReaderInterface $storeReader
-     * @param string $storeName
      */
-    public function __construct(StoreReaderInterface $storeReader, string $storeName)
+    public function __construct(StoreReaderInterface $storeReader)
     {
         $this->storeReader = $storeReader;
-        $this->storeName = $storeName;
     }
 
     /**
@@ -51,27 +44,54 @@ class MessageValidator implements MessageValidatorInterface
     {
         $messageValidationResponse = new MessageValidationResponseTransfer();
 
-        try {
-            $storeReference = $this->storeReader->getStoreByName($this->storeName)->getStoreReference();
-        } catch (StoreReferenceNotFoundException $exception) {
-            $this->getLogger()->error('Store reference map is not configured');
-
-            return $messageValidationResponse->setIsValid(false);
-        }
-
-        /** @phpstan-var \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer $messageTransfer */
-        if ($storeReference !== $messageTransfer->getMessageAttributesOrFail()->getStoreReference()) {
+        if (!method_exists($messageTransfer, 'getMessageAttributes')) {
             $this->getLogger()->error(
-                sprintf(static::VALIDATION_ERROR_STORE_REFERENCE_ERROR, get_class($messageTransfer)),
+                sprintf('MessageTransfer `%s` must have method getMessageAttributes().', get_class($messageTransfer)),
                 [
                     'message' => $messageTransfer->toArray(),
-                    'storeReference' => $storeReference,
                 ],
             );
 
             return $messageValidationResponse->setIsValid(false);
         }
 
-        return $messageValidationResponse->setIsValid(true);
+        $messageAttributesTransfer = $messageTransfer->getMessageAttributes();
+
+        if (!$messageAttributesTransfer instanceof MessageAttributesTransfer) {
+            $this->getLogger()->error(
+                'MessageAttributes has invalid type.',
+                [
+                    'message' => $messageTransfer->toArray(),
+                ],
+            );
+
+            return $messageValidationResponse->setIsValid(false);
+        }
+
+        $storeReference = $messageAttributesTransfer->getStoreReference();
+
+        if ($storeReference === null) {
+            $this->getLogger()->error('StoreReference cannot be `null`.');
+
+            return $messageValidationResponse->setIsValid(false);
+        }
+
+        $allStores = $this->storeReader->getAllStores();
+
+        foreach ($allStores as $store) {
+            if ($store->getStoreReference() === $storeReference) {
+                return $messageValidationResponse->setIsValid(true);
+            }
+        }
+
+        $this->getLogger()->error(
+            sprintf(static::VALIDATION_ERROR_STORE_REFERENCE_ERROR, get_class($messageTransfer)),
+            [
+                'message' => $messageTransfer->toArray(),
+                'storeReference' => $storeReference,
+            ],
+        );
+
+        return $messageValidationResponse->setIsValid(false);
     }
 }

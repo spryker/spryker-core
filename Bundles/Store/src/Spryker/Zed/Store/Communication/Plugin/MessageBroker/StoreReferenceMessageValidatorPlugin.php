@@ -21,7 +21,7 @@ class StoreReferenceMessageValidatorPlugin extends AbstractPlugin implements Mes
 {
     /**
      * {@inheritDoc}
-     * - Validates is storeReference from message is equals to storeReference of current store.
+     * - Validates if `storeReference` from the message matches `storeReference` of one the configured stores.
      *
      * @api
      *

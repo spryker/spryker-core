@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotSavedException;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
+use Spryker\Zed\Merchant\Business\Trigger\MerchantEventTriggerInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\Merchant\MerchantConfig;
@@ -48,24 +49,32 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\Trigger\MerchantEventTriggerInterface
+     */
+    protected $merchantEventTrigger;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface> $merchantPostCreatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\Merchant\Business\Trigger\MerchantEventTriggerInterface $merchantEventTrigger
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantConfig $merchantConfig,
         array $merchantPostCreatePlugins,
         MerchantUrlSaverInterface $merchantUrlSaver,
-        MerchantToEventFacadeInterface $eventFacade
+        MerchantToEventFacadeInterface $eventFacade,
+        MerchantEventTriggerInterface $merchantEventTrigger
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostCreatePlugins = $merchantPostCreatePlugins;
         $this->merchantUrlSaver = $merchantUrlSaver;
         $this->eventFacade = $eventFacade;
+        $this->merchantEventTrigger = $merchantEventTrigger;
     }
 
     /**
@@ -115,6 +124,8 @@ class MerchantCreator implements MerchantCreatorInterface
         $merchantTransfer = $this->createMerchantStores($merchantTransfer->setStoreRelation($storeRelationTransfer));
         $merchantTransfer = $this->merchantUrlSaver->saveMerchantUrls($merchantTransfer->setUrlCollection($urlTransfers));
         $merchantTransfer = $this->executeMerchantPostCreatePlugins($merchantTransfer);
+
+        $this->merchantEventTrigger->triggerMerchantCreatedEvent($merchantTransfer);
 
         $this->triggerPublishEvent($merchantTransfer);
 

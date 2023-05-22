@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Store\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreCollectionTransfer;
 use Generated\Shared\Transfer\StoreConditionsTransfer;
@@ -57,6 +58,11 @@ class StoreFacadeTest extends Unit
      * @var string
      */
     public const DEFAULT_STORE_REFERENCE = 'dev-DE';
+
+    /**
+     * @var string
+     */
+    protected const NON_EXISTENT_STORE_REFERENCE = 'non-Existent';
 
     /**
      * @var \SprykerTest\Zed\Store\StoreBusinessTester
@@ -520,9 +526,7 @@ class StoreFacadeTest extends Unit
         // Arrange
         $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
 
-        $storeFacade = $this->createStoreFacade();
-        $storeTransfer = $storeFacade->getStoreByName(static::ALTERNATIVE_STORE_NAME);
-        $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer($storeTransfer->getStoreReference());
+        $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer(static::NON_EXISTENT_STORE_REFERENCE);
 
         // Act
         $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
@@ -537,7 +541,9 @@ class StoreFacadeTest extends Unit
     public function testMessageAttributesSuccessfullyExpandedWithStoreReference(): void
     {
         // Arrange
-        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer();
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer([
+            MessageAttributesTransfer::STORE_REFERENCE => static::DEFAULT_STORE_REFERENCE,
+        ]);
 
         // Act
         $messageAttributesTransfer = $this->tester->getFacade()->expandMessageAttributes($messageAttributesTransfer);

@@ -1,0 +1,96 @@
+asyncapi: 2.2.0
+info:
+    title: 'Merchant AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    merchants:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/MerchantExported'
+                    - $ref: '#/components/messages/MerchantCreated'
+                    - $ref: '#/components/messages/MerchantUpdated'
+
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/ExportMerchants'
+components:
+    messages:
+        ExportMerchants:
+            name: ExportMerchants
+            description: Request to export all merchants.
+            x-spryker:
+                module: Merchant
+
+        MerchantExported:
+            name: MerchantExported
+            description: A Merchant has been exported.
+            x-spryker:
+                module: Merchant
+            payload:
+                $ref: '#/components/schemas/MerchantExported'
+
+        MerchantCreated:
+            name: MerchantCreated
+            description: A Merchant has been created.
+            x-spryker:
+                module: Merchant
+            payload:
+                $ref: '#/components/schemas/MerchantCreated'
+
+        MerchantUpdated:
+            name: MerchantUpdated
+            description: A Merchant has been updated.
+            x-spryker:
+                module: Merchant
+            payload:
+                $ref: '#/components/schemas/MerchantUpdated'
+
+    schemas:
+        MerchantExported:
+            $ref: '#/components/schemas/Merchant'
+
+        MerchantCreated:
+            $ref: '#/components/schemas/Merchant'
+
+        MerchantUpdated:
+            $ref: '#/components/schemas/Merchant'
+
+        Merchant:
+            type: object
+            properties:
+                merchantReference:
+                    type: string
+                    description: Reference of the merchant
+                    example: MER000001
+                name:
+                    type: string
+                    description: Name of the merchant
+                    example: Acme Merchant
+                email:
+                    type: string
+                    description: Email of merchant
+                    example: email@example.com
+                storeRelation:
+                    type: object
+                    properties:
+                        stores:
+                            type: array
+                            items:
+                                $ref: '#/components/schemas/Store'
+            required:
+                - merchantReference
+                - name
+                - email
+                - storeRelation
+
+        Store:
+            type: object
+            properties:
+                storeReference:
+                    type: string
+                    description: Reference of the store
+                    example: STORE-001
+            required:
+                - storeReference

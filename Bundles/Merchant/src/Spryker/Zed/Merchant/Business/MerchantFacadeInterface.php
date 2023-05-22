@@ -9,6 +9,8 @@ namespace Spryker\Zed\Merchant\Business;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantExportCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantPublisherConfigTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
@@ -121,4 +123,31 @@ interface MerchantFacadeInterface
      * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
     public function filterPriceProductMerchantRelations(array $priceProductMerchantRelationshipStorageTransfers): array;
+
+    /**
+     * Specification:
+     * - Triggers Merchant.export event for Merchants filtered by the criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+     *
+     * @return void
+     */
+    public function triggerMerchantExportEvents(MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieves Merchant entities from the DB by the provided IDs.
+     * - Requires MerchantPublisherConfigTransfer.merchantIds.
+     * - Requires MerchantPublisherConfigTransfer.eventName.
+     * - Sends MerchantPublisherConfigTransfer.eventName event to the event bus.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer
+     *
+     * @return void
+     */
+    public function emitPublishMerchantToMessageBroker(MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer): void;
 }

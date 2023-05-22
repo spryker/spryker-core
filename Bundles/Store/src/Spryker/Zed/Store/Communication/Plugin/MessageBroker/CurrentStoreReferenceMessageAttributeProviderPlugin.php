@@ -21,7 +21,7 @@ class CurrentStoreReferenceMessageAttributeProviderPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Expands message attributes with store reference from a store set in the application environment.
+     * - When store reference is not provided, expands message attributes with store reference from a store set in the application environment.
      *
      * @api
      *
