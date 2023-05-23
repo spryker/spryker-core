@@ -69,7 +69,16 @@ class TokenResourceController extends AbstractStorefrontApiController
 
         $glueAuthenticationResponseTransfer = $this->getFactory()->getAuthenticationClient()->authenticate($glueAuthenticationRequestTransfer);
 
-        return $this->mapAuthenticationAttributesToGlueResponseTransfer($glueAuthenticationResponseTransfer, $glueRequestTransfer);
+        $glueResponseTransfer = $this->mapAuthenticationAttributesToGlueResponseTransfer(
+            $glueAuthenticationResponseTransfer,
+            $glueRequestTransfer,
+        );
+
+        if ($this->getFactory()->getConfig()->isConventionalResponseCodeEnabled() && !$glueResponseTransfer->getHttpStatus()) {
+            $glueResponseTransfer->setHttpStatus(Response::HTTP_OK);
+        }
+
+        return $glueResponseTransfer;
     }
 
     /**

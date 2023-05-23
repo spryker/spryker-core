@@ -63,4 +63,21 @@ class OauthApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_TOKEN = 'token';
+
+    /**
+     * Specification:
+     * - Returns if conventional response code for OAuth flow is enabled.
+     * - If True - forces returning 200 OK.
+     * - If False - forces returning 201 CREATED.
+     *
+     * @api
+     *
+     * @deprecated Will be removed in next major. Becomes default behavior.
+     *
+     * @return bool
+     */
+    public function isConventionalResponseCodeEnabled(): bool
+    {
+        return false;
+    }
 }
