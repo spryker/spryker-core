@@ -20,6 +20,7 @@ interface ShipmentTypeFacadeInterface
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.shipmentTypeIds` to filter by shipment type IDs.
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.uuids` to filter by shipment type UUIDs.
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.keys` to filter by shipment type keys.
+     * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.names` to filter by shipment type names.
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.isActive` to filter by shipment type active status.
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.storeNames` to filter shipmentTypes by related store names.
      * - Uses `ShipmentTypeCriteriaTransfer.ShipmentTypeConditions.withStores` to load store relations.

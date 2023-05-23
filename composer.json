@@ -890,6 +890,7 @@
         "spryker/shipment-gui-extension": "*",
         "spryker/shipment-type": "*",
         "spryker/shipment-type-data-import": "*",
+        "spryker/shipment-types-backend-api": "*",
         "spryker/shipments-backend-api": "*",
         "spryker/shipments-rest-api": "*",
         "spryker/shipments-rest-api-extension": "*",

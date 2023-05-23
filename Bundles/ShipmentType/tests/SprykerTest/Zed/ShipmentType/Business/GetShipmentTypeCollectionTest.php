@@ -147,6 +147,36 @@ class GetShipmentTypeCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testReturnsCorrectShipmentTypeByName(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+
+        $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())
+            ->addName($shipmentTypeTransfer->getNameOrFail());
+        $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
+            ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+
+        // Act
+        $shipmentTypeCollectionTransfer = $this->tester->getFacade()->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $shipmentTypeCollectionTransfer->getShipmentTypes());
+        $this->assertSameShipmentTypeTransfer(
+            $shipmentTypeTransfer,
+            $shipmentTypeCollectionTransfer->getShipmentTypes()->getIterator()->current(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsCorrectShipmentTypeByIsActiveStatus(): void
     {
         // Arrange
@@ -192,7 +222,38 @@ class GetShipmentTypeCollectionTest extends Unit
         ]);
 
         $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())
-            ->addStoreName($storeAtTransfer->getName());
+            ->addStoreName($storeAtTransfer->getNameOrFail());
+        $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
+            ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+
+        // Act
+        $shipmentTypeCollectionTransfer = $this->tester->getFacade()->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $shipmentTypeCollectionTransfer->getShipmentTypes());
+        $this->assertSameShipmentTypeTransfer(
+            $shipmentTypeTransfer,
+            $shipmentTypeCollectionTransfer->getShipmentTypes()->getIterator()->current(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsCorrectShipmentTypeByStoreNamesWithoutDuplicates(): void
+    {
+        // Arrange
+        $storeDeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeAtTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())
+                ->addStores($storeDeTransfer)
+                ->addStores($storeAtTransfer),
+        ]);
+
+        $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())
+            ->addStoreName($storeDeTransfer->getNameOrFail())
+            ->addStoreName($storeAtTransfer->getNameOrFail());
         $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
             ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
 

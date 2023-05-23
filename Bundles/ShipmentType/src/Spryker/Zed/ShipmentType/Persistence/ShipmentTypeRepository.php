@@ -95,8 +95,13 @@ class ShipmentTypeRepository extends AbstractRepository implements ShipmentTypeR
             $shipmentTypeQuery->filterByKey_In($shipmentTypeConditionsTransfer->getKeys());
         }
 
+        if ($shipmentTypeConditionsTransfer->getNames() !== []) {
+            $shipmentTypeQuery->filterByName_In($shipmentTypeConditionsTransfer->getNames());
+        }
+
         if ($shipmentTypeConditionsTransfer->getStoreNames() !== []) {
             $shipmentTypeQuery
+                ->groupByIdShipmentType()
                 ->useShipmentTypeStoreQuery()
                     ->useStoreQuery()
                         ->filterByName_In($shipmentTypeConditionsTransfer->getStoreNames())

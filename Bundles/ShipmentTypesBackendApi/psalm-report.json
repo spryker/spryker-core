@@ -1,0 +1,163 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'callable():Generated\\Shared\\Transfer\\GlueResponseTransfer' for Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface::getResource is more specific than the implemented return type for Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\Backend\\AbstractResourcePlugin::getresource 'callable'",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/GlueApplication/Backend/AbstractResourcePlugin.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Creator/ShipmentTypeCreator.php",
+            "snippet": "        if ($errorTransfers->count() !== 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Creator/ShipmentTypeCreator.php",
+            "snippet": "                $errorTransfers,",
+            "selected_text": "$errorTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createShipmentTypeResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Creator/ShipmentTypeCreator.php",
+            "snippet": "            $shipmentTypeCollectionResponseTransfer->getShipmentTypes(),",
+            "selected_text": "$shipmentTypeCollectionResponseTransfer->getShipmentTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createShipmentTypeResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Reader/ShipmentTypeReader.php",
+            "snippet": "            $shipmentTypeCollectionTransfer->getShipmentTypes(),",
+            "selected_text": "$shipmentTypeCollectionTransfer->getShipmentTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Reader/ShipmentTypeReader.php",
+            "snippet": "        if ($shipmentTypeCollectionTransfer->getShipmentTypes()->count() !== 1) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createShipmentTypeResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Reader/ShipmentTypeReader.php",
+            "snippet": "            $shipmentTypeCollectionTransfer->getShipmentTypes(),",
+            "selected_text": "$shipmentTypeCollectionTransfer->getShipmentTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 172,
+            "line_to": 172,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GlueErrorTransfer> variable $glueErrorTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/ResponseBuilder/ShipmentTypeResponseBuilder.php",
+            "snippet": "        if ($glueErrorTransfers->count() > 1) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 179,
+            "line_to": 179,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GlueErrorTransfer> variable $glueErrorTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/ResponseBuilder/ShipmentTypeResponseBuilder.php",
+            "snippet": "            $glueErrorTransfers->getIterator()->current()->getStatus(),",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Updater/ShipmentTypeUpdater.php",
+            "snippet": "        if ($errorTransfers->count() !== 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Updater/ShipmentTypeUpdater.php",
+            "snippet": "                $errorTransfers,",
+            "selected_text": "$errorTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentTypesBackendApi\\Processor\\ResponseBuilder\\ShipmentTypeResponseBuilderInterface::createShipmentTypeResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Updater/ShipmentTypeUpdater.php",
+            "snippet": "            $shipmentTypeCollectionResponseTransfer->getShipmentTypes(),",
+            "selected_text": "$shipmentTypeCollectionResponseTransfer->getShipmentTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypesBackendApi/src/Spryker/Glue/ShipmentTypesBackendApi/Processor/Updater/ShipmentTypeUpdater.php",
+            "snippet": "        return $shipmentTypeCollectionTransfer->getShipmentTypes()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [],
+    "count": 0
+}
