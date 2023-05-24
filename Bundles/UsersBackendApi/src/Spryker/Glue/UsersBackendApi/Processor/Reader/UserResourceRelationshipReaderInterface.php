@@ -10,9 +10,18 @@ namespace Spryker\Glue\UsersBackendApi\Processor\Reader;
 interface UserResourceRelationshipReaderInterface
 {
     /**
-     * @param array<int, string> $userUuids
+     * @param list<string> $userUuids
      *
      * @return array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer>
      */
     public function getUserRelationshipsIndexedByUserUuid(array $userUuids): array;
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface::getUserRelationshipsWithUsersRestAttributesIndexedByUserUuid()} instead.
+     *
+     * @param list<string> $userUuids
+     *
+     * @return array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer>
+     */
+    public function getUserRelationshipsWithUsersRestAttributesIndexedByUserUuid(array $userUuids): array;
 }

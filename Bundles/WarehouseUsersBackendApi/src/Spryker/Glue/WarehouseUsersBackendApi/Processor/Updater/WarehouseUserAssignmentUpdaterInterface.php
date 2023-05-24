@@ -7,20 +7,20 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Updater;
 
+use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer;
 
 interface WarehouseUserAssignmentUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateWarehouseUserAssignment(
-        WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer,
+        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer;
 }

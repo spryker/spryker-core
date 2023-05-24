@@ -10,6 +10,7 @@ namespace Spryker\Glue\UsersBackendApi\Processor\Reader;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
 use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserResourceCollectionTransfer;
 
 class UserResourceRelationshipReader implements UserResourceRelationshipReaderInterface
 {
@@ -27,41 +28,60 @@ class UserResourceRelationshipReader implements UserResourceRelationshipReaderIn
     }
 
     /**
-     * @param array<int, string> $userUuids
+     * @param list<string> $userUuids
      *
      * @return array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer>
      */
     public function getUserRelationshipsIndexedByUserUuid(array $userUuids): array
     {
-        $indexedUserRelationshipTransfers = [];
-        $userResourcesIndexedByUserUuid = $this->getUserResourcesIndexedByUserUuid($userUuids);
+        $userResourceCollectionTransfer = $this->userResourceReader->getUserResources(
+            $this->createUserCriteriaTransfer($userUuids),
+        );
 
-        foreach ($userResourcesIndexedByUserUuid as $userUuid => $userResource) {
-            $indexedUserRelationshipTransfers[$userUuid] = (new GlueRelationshipTransfer())->addResource($userResource);
-        }
+        return $this->getGlueRelationshipTransfersIndexedByUserUuid($userResourceCollectionTransfer);
+    }
 
-        return $indexedUserRelationshipTransfers;
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReader::getUserRelationshipsIndexedByUserUuid()} instead.
+     *
+     * @param list<string> $userUuids
+     *
+     * @return array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer>
+     */
+    public function getUserRelationshipsWithUsersRestAttributesIndexedByUserUuid(array $userUuids): array
+    {
+        $userResourceCollectionTransfer = $this->userResourceReader->getUserResourceCollection(
+            $this->createUserCriteriaTransfer($userUuids),
+        );
+
+        return $this->getGlueRelationshipTransfersIndexedByUserUuid($userResourceCollectionTransfer);
     }
 
     /**
      * @param list<string> $userUuids
      *
-     * @return array<string, \Generated\Shared\Transfer\GlueResourceTransfer>
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
      */
-    protected function getUserResourcesIndexedByUserUuid(array $userUuids): array
+    protected function createUserCriteriaTransfer(array $userUuids): UserCriteriaTransfer
     {
-        $userConditionsTransfer = (new UserConditionsTransfer())
-            ->setUuids($userUuids);
-        $userCriteriaTransfer = (new UserCriteriaTransfer())
-            ->setUserConditions($userConditionsTransfer);
+        $userConditionsTransfer = (new UserConditionsTransfer())->setUuids($userUuids);
 
-        $userResourceCollectionTransfer = $this->userResourceReader->getUserResourceCollection($userCriteriaTransfer);
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+    }
 
-        $indexedUserResources = [];
+    /**
+     * @param \Generated\Shared\Transfer\UserResourceCollectionTransfer $userResourceCollectionTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer>
+     */
+    protected function getGlueRelationshipTransfersIndexedByUserUuid(
+        UserResourceCollectionTransfer $userResourceCollectionTransfer
+    ): array {
+        $indexedUserRelationshipTransfers = [];
         foreach ($userResourceCollectionTransfer->getUserResources() as $userResource) {
-            $indexedUserResources[$userResource->getIdOrFail()] = $userResource;
+            $indexedUserRelationshipTransfers[$userResource->getIdOrFail()] = (new GlueRelationshipTransfer())->addResource($userResource);
         }
 
-        return $indexedUserResources;
+        return $indexedUserRelationshipTransfers;
     }
 }

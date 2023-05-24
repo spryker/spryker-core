@@ -7,30 +7,30 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer;
+use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 
 interface WarehouseUserAssignmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
-     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer
      */
-    public function mapWarehouseUserAssignmentTransferToWarehouseUserAssignmentsRestAttributesTransfer(
+    public function mapWarehouseUserAssignmentTransferToApiWarehouseUserAssignmentsAttributesTransfer(
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer,
-        WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
-    ): WarehouseUserAssignmentsRestAttributesTransfer;
+        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+    ): ApiWarehouseUserAssignmentsAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer
      */
-    public function mapWarehouseUserAssignmentsRestAttributesTransferToWarehouseUserAssignmentTransfer(
-        WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer,
+    public function mapApiWarehouseUserAssignmentsAttributesTransferToWarehouseUserAssignmentTransfer(
+        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
     ): WarehouseUserAssignmentTransfer;
 }

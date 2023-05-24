@@ -111,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/WarehouseUsersBackendApi/src/Spryker/Glue/WarehouseUsersBackendApi/Processor/Reader/WarehouseUserAssignmentReader.php",
@@ -123,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
+            "line_from": 89,
+            "line_to": 89,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\WarehouseUsersBackendApi\\Processor\\Creator\\ResponseCreatorInterface::createWarehouseUserAssignmentResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/WarehouseUsersBackendApi/src/Spryker/Glue/WarehouseUsersBackendApi/Processor/Reader/WarehouseUserAssignmentReader.php",
@@ -135,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 121,
+            "line_to": 121,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\WarehouseUsersBackendApi\\Processor\\Creator\\ResponseCreatorInterface::createWarehouseUserAssignmentResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/WarehouseUsersBackendApi/src/Spryker/Glue/WarehouseUsersBackendApi/Processor/Reader/WarehouseUserAssignmentReader.php",

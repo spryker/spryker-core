@@ -8,11 +8,11 @@
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Creator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Spryker\Glue\WarehouseUsersBackendApi\Processor\Mapper\WarehouseUserAssignmentMapperInterface;
 use Spryker\Glue\WarehouseUsersBackendApi\WarehouseUsersBackendApiConfig;
@@ -141,16 +141,16 @@ class ResponseCreator implements ResponseCreatorInterface
     protected function createWarehouseUserAssignmentsResourceTransfer(
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
     ): GlueResourceTransfer {
-        $warehouseUserAssignmentsRestAttributesTransfer = $this->warehouseUserAssignmentMapper
-            ->mapWarehouseUserAssignmentTransferToWarehouseUserAssignmentsRestAttributesTransfer(
+        $apiWarehouseUserAssignmentsAttributesTransfer = $this->warehouseUserAssignmentMapper
+            ->mapWarehouseUserAssignmentTransferToApiWarehouseUserAssignmentsAttributesTransfer(
                 $warehouseUserAssignmentTransfer,
-                new WarehouseUserAssignmentsRestAttributesTransfer(),
+                new ApiWarehouseUserAssignmentsAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($warehouseUserAssignmentTransfer->getUuidOrFail())
             ->setType(WarehouseUsersBackendApiConfig::RESOURCE_TYPE_WAREHOUSE_USER_ASSIGNMENTS)
-            ->setAttributes($warehouseUserAssignmentsRestAttributesTransfer);
+            ->setAttributes($apiWarehouseUserAssignmentsAttributesTransfer);
     }
 
     /**

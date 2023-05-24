@@ -15,4 +15,13 @@ interface UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface
      * @return void
      */
     public function addUserRelationships(array $glueResourceTransfers): void;
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Expander\UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface::addUserRelationships()} instead.
+     *
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransfers
+     *
+     * @return void
+     */
+    public function addUserRelationshipsWithUsersRestAttributes(array $glueResourceTransfers): void;
 }

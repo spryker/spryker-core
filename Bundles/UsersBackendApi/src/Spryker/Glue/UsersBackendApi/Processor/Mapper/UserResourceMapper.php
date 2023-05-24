@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\UsersBackendApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\ApiUsersAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserResourceCollectionTransfer;
@@ -36,6 +37,21 @@ class UserResourceMapper implements UserResourceMapperInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\ApiUsersAttributesTransfer $apiUsersAttributesTransfer
+     * @param \Generated\Shared\Transfer\UsersRestAttributesTransfer $usersRestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\UsersRestAttributesTransfer
+     */
+    public function mapApiUsersAttributesTransferToUsersRestAttributesTransfer(
+        ApiUsersAttributesTransfer $apiUsersAttributesTransfer,
+        UsersRestAttributesTransfer $usersRestAttributesTransfer
+    ): UsersRestAttributesTransfer {
+        return $usersRestAttributesTransfer->fromArray($apiUsersAttributesTransfer->toArray(), true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param \Generated\Shared\Transfer\GlueResourceTransfer $userResourceTransfer
      *
@@ -45,24 +61,24 @@ class UserResourceMapper implements UserResourceMapperInterface
         UserTransfer $userTransfer,
         GlueResourceTransfer $userResourceTransfer
     ): GlueResourceTransfer {
-        $usersRestAttributesTransfer = $this->mapUserTransferToUsersRestAttributesTransfer($userTransfer, new UsersRestAttributesTransfer());
+        $apiUsersAttributesTransfer = $this->mapUserTransferToApiUsersAttributesTransfer($userTransfer, new ApiUsersAttributesTransfer());
 
         return $userResourceTransfer
             ->setId($userTransfer->getUuidOrFail())
             ->setType(UsersBackendApiConfig::RESOURCE_TYPE_USERS)
-            ->setAttributes($usersRestAttributesTransfer);
+            ->setAttributes($apiUsersAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\UsersRestAttributesTransfer $usersRestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiUsersAttributesTransfer $apiUsersAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\UsersRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\ApiUsersAttributesTransfer
      */
-    protected function mapUserTransferToUsersRestAttributesTransfer(
+    protected function mapUserTransferToApiUsersAttributesTransfer(
         UserTransfer $userTransfer,
-        UsersRestAttributesTransfer $usersRestAttributesTransfer
-    ): UsersRestAttributesTransfer {
-        return $usersRestAttributesTransfer->fromArray($userTransfer->toArray(), true);
+        ApiUsersAttributesTransfer $apiUsersAttributesTransfer
+    ): ApiUsersAttributesTransfer {
+        return $apiUsersAttributesTransfer->fromArray($userTransfer->toArray(), true);
     }
 }

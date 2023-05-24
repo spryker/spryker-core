@@ -21,6 +21,8 @@ class UsersBackendApiResource extends AbstractRestResource implements UsersBacke
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\UsersBackendApiResource::getUserResources()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
@@ -30,5 +32,21 @@ class UsersBackendApiResource extends AbstractRestResource implements UsersBacke
         return $this->getFactory()
             ->createUserResourceReader()
             ->getUserResourceCollection($userCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
+    public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createUserResourceReader()
+            ->getUserResources($userCriteriaTransfer);
     }
 }

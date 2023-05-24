@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Plugin\GlueBackendApiApplication;
 
+use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
@@ -55,7 +56,7 @@ class PushNotificationSubscriptionsBackendResourcePlugin extends AbstractResourc
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributes'),
+                    ->setAttributes(ApiPushNotificationSubscriptionsAttributesTransfer::class),
             );
     }
 }

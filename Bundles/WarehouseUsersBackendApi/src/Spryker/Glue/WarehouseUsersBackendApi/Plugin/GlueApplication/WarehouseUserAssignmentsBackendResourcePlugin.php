@@ -55,19 +55,19 @@ class WarehouseUserAssignmentsBackendResourcePlugin extends AbstractResourcePlug
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getAction')
-                    ->setAttributes('\Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
             )->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getCollectionAction')
-                    ->setAttributes('\Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
             )->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes('\Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
             )->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('patchAction')
-                    ->setAttributes('\Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
             )->setDelete(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('deleteAction'),

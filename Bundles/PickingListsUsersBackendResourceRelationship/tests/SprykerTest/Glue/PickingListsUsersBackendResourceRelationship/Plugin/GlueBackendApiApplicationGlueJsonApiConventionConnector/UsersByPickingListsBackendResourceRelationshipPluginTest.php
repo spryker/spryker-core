@@ -9,10 +9,10 @@ namespace SprykerTest\Glue\PickingListsUsersBackendResourceRelationship\Plugin\G
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiPickingListsAttributesTransfer;
+use Generated\Shared\Transfer\ApiUsersAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
-use Generated\Shared\Transfer\UsersRestAttributesTransfer;
 use Spryker\Glue\PickingListsUsersBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\UsersByPickingListsBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\PickingListsUsersBackendResourceRelationship\PickingListsUsersBackendResourceRelationshipTester;
 
@@ -86,7 +86,7 @@ class UsersByPickingListsBackendResourceRelationshipPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer */
         $glueResourceTransfer = $glueRelationshipTransfer->getResources()->getIterator()->current();
         $this->assertSame(static::RESOURCE_TYPE_USERS, $glueResourceTransfer->getType());
-        $this->assertInstanceOf(UsersRestAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ApiUsersAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getId());
     }
 

@@ -8,7 +8,11 @@
         <property name="id" type="string"/>
     </transfer>
 
-    <transfer name="WarehouseUserAssignmentsRestAttributes" strict="true">
+    <transfer name="WarehouseUserAssignmentsRestAttributes" strict="true" deprecated="Use ApiWarehouseUserAssignmentsAttributes instead">
+        <property name="userUuid" type="string"/>
+    </transfer>
+
+    <transfer name="ApiWarehouseUserAssignmentsAttributes" strict="true">
         <property name="userUuid" type="string"/>
     </transfer>
 
@@ -24,7 +28,13 @@
         <property name="uuid" type="string" strict="true"/>
     </transfer>
 
-    <transfer name="UsersRestAttributes" strict="true">
+    <transfer name="UsersRestAttributes" strict="true" deprecated="Use ApiUsersAttributes instead">
+        <property name="username" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="ApiUsersAttributes" strict="true">
         <property name="username" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
@@ -37,7 +47,7 @@
     <transfer name="UserCriteria">
         <property name="userConditions" type="UserConditions" strict="true"/>
     </transfer>
-    
+
     <transfer name="UserResourceCollection" strict="true">
         <property name="userResources" type="GlueResource[]" singular="userResource"/>
     </transfer>

@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Controller;
 
+use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 
 /**
@@ -18,6 +18,35 @@ use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 class WarehouseUserAssignmentsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves warehouse user assignments collection."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "ref": "ContentType"
+     *              },
+     *              {
+     *                  "ref": "Page"
+     *              },
+     *              {
+     *                  "ref": "Fields"
+     *              },
+     *              {
+     *                  "ref": "Sort"
+     *              }
+     *          ],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responses": {
+     *              "403": "Unauthorized request"
+     *          }
+     *     }
+     * })
+     *
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -30,6 +59,30 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves warehouse user assignment by uuid."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "ref": "ContentType"
+     *              },
+     *              {
+     *                  "ref": "Fields"
+     *              }
+     *          ],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responses": {
+     *              "403": "Unauthorized request",
+     *              "404": "Not found"
+     *          }
+     *     }
+     * })
+     *
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -42,42 +95,110 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Creates warehouse user assignment."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "ref": "ContentType"
+     *              }
+     *          ],
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responses": {
+     *              "400": "Bad Request",
+     *              "403": "Unauthorized request"
+     *          }
+     *     }
+     * })
+     *
+     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer,
+        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createWarehouseUserAssignmentCreator()
             ->createWarehouseUserAssignment(
-                $warehouseUserAssignmentsRestAttributesTransfer,
+                $apiWarehouseUserAssignmentsAttributesTransfer,
                 $glueRequestTransfer,
             );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a concrete warehouse user assignment."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "ref": "ContentType"
+     *              },
+     *              {
+     *                  "ref": "Fields"
+     *              }
+     *          ],
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responses": {
+     *              "403": "Unauthorized request",
+     *              "404": "Not Found"
+     *          }
+     *     }
+     * })
+     *
+     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function patchAction(
-        WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributesTransfer,
+        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createWarehouseUserAssignmentUpdater()
             ->updateWarehouseUserAssignment(
-                $warehouseUserAssignmentsRestAttributesTransfer,
+                $apiWarehouseUserAssignmentsAttributesTransfer,
                 $glueRequestTransfer,
             );
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Deletes a concrete warehouse user assignment."
+     *          ],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "ref": "ContentType"
+     *              }
+     *          ],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responses": {
+     *              "403": "Unauthorized request",
+     *              "404": "Not Found"
+     *          }
+     *     }
+     * })
+     *
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer

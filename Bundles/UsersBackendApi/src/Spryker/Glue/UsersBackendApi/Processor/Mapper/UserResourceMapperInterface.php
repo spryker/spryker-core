@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\UsersBackendApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\ApiUsersAttributesTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserResourceCollectionTransfer;
+use Generated\Shared\Transfer\UsersRestAttributesTransfer;
 
 interface UserResourceMapperInterface
 {
@@ -22,4 +24,17 @@ interface UserResourceMapperInterface
         UserCollectionTransfer $userCollectionTransfer,
         UserResourceCollectionTransfer $userResourceCollectionTransfer
     ): UserResourceCollectionTransfer;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\ApiUsersAttributesTransfer $apiUsersAttributesTransfer
+     * @param \Generated\Shared\Transfer\UsersRestAttributesTransfer $usersRestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\UsersRestAttributesTransfer
+     */
+    public function mapApiUsersAttributesTransferToUsersRestAttributesTransfer(
+        ApiUsersAttributesTransfer $apiUsersAttributesTransfer,
+        UsersRestAttributesTransfer $usersRestAttributesTransfer
+    ): UsersRestAttributesTransfer;
 }

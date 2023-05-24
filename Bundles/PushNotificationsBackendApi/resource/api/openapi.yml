@@ -14,14 +14,14 @@ paths:
                 content:
                     application/vnd.api+json:
                         schema:
-                            $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributesResponse'
+                            $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributes'
             responses:
                 '201':
                     description: 'Expected response to a valid request.'
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributesResponse'
+                                $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributesResponse'
                 '400':
                     description: 'Expected response to a bad request.'
                     content:
@@ -35,22 +35,22 @@ components:
             scheme: bearer
             bearerFormat: JWT
     schemas:
-        ApiPushNotificationGroupAttributes:
+        ApiPushNotificationGroupsAttributes:
             properties:
                 name:
                     type: string
                 identifier:
                     type: string
-        ApiPushNotificationSubscriptionAttributes:
+        ApiPushNotificationSubscriptionsAttributes:
             properties:
                 providerName:
                     type: string
                 group:
-                    $ref: '#/components/schemas/ApiPushNotificationGroupAttributes'
+                    $ref: '#/components/schemas/ApiPushNotificationGroupsAttributes'
                 payload:
                     type: array
                     items: {}
-        ApiPushNotificationSubscriptionAttributesResponse:
+        ApiPushNotificationSubscriptionsAttributesResponse:
             properties:
                 data:
                     $ref: '#/components/schemas/ApiPushNotificationSubscriptionResponseData'
@@ -63,7 +63,7 @@ components:
                 id:
                     type: string
                 attributes:
-                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributes'
+                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributes'
                 links:
                     $ref: '#/components/schemas/Links'
         JsonApiErrorMessage:

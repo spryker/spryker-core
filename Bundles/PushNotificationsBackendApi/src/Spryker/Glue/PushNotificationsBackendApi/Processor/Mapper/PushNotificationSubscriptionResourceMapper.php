@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPushNotificationGroupAttributesTransfer;
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer;
+use Generated\Shared\Transfer\ApiPushNotificationGroupsAttributesTransfer;
+use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
@@ -19,20 +19,20 @@ class PushNotificationSubscriptionResourceMapper implements PushNotificationSubs
 {
     /**
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer
+     * @return \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer
      */
-    public function mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionAttributesTransfer(
+    public function mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionsAttributesTransfer(
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer,
-        ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer
-    ): ApiPushNotificationSubscriptionAttributesTransfer {
-        return $apiPushNotificationSubscriptionAttributesTransfer
+        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+    ): ApiPushNotificationSubscriptionsAttributesTransfer {
+        return $apiPushNotificationSubscriptionsAttributesTransfer
             ->setProviderName(
                 $pushNotificationSubscriptionTransfer->getProviderOrFail()->getNameOrFail(),
             )
             ->setGroup(
-                (new ApiPushNotificationGroupAttributesTransfer())
+                (new ApiPushNotificationGroupsAttributesTransfer())
                     ->fromArray($pushNotificationSubscriptionTransfer->getGroupOrFail()->toArray(), true),
             )
             ->setPayload(
@@ -41,30 +41,30 @@ class PushNotificationSubscriptionResourceMapper implements PushNotificationSubs
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer
      */
-    public function mapApiPushNotificationSubscriptionAttributesTransferToPushNotificationSubscriptionTransfer(
-        ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer,
+    public function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
+        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): PushNotificationSubscriptionTransfer {
         if (!$pushNotificationSubscriptionTransfer->getProvider()) {
             $pushNotificationSubscriptionTransfer->setProvider(new PushNotificationProviderTransfer());
         }
         $pushNotificationSubscriptionTransfer->getProviderOrFail()->setName(
-            $apiPushNotificationSubscriptionAttributesTransfer->getProviderName(),
+            $apiPushNotificationSubscriptionsAttributesTransfer->getProviderName(),
         );
         if (!$pushNotificationSubscriptionTransfer->getGroup()) {
             $pushNotificationSubscriptionTransfer->setGroup(new PushNotificationGroupTransfer());
         }
         $pushNotificationSubscriptionTransfer->getGroupOrFail()->fromArray(
-            $apiPushNotificationSubscriptionAttributesTransfer->getGroupOrFail()->toArray(),
+            $apiPushNotificationSubscriptionsAttributesTransfer->getGroupOrFail()->toArray(),
             true,
         );
         $pushNotificationSubscriptionTransfer->setPayload(
-            $apiPushNotificationSubscriptionAttributesTransfer->getPayload(),
+            $apiPushNotificationSubscriptionsAttributesTransfer->getPayload(),
         );
 
         return $pushNotificationSubscriptionTransfer;

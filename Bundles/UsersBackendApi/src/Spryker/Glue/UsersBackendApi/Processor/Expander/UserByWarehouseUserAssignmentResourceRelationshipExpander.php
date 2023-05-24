@@ -53,20 +53,42 @@ class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserB
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Expander\UserByWarehouseUserAssignmentResourceRelationshipExpander::addUserRelationships()} instead.
+     *
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransfers
+     *
+     * @return void
+     */
+    public function addUserRelationshipsWithUsersRestAttributes(array $glueResourceTransfers): void
+    {
+        $warehouseUserAssignmentsResources = $this->warehouseUserAssignmentResourceFilter->filterWarehouseUserAssignmentResources($glueResourceTransfers);
+        $userUuids = $this->extractUserUuids($warehouseUserAssignmentsResources);
+
+        $userGlueRelationshipTransfersIndexedByUserUuid = $this->userResourceRelationshipReader->getUserRelationshipsWithUsersRestAttributesIndexedByUserUuid($userUuids);
+
+        $this->addUserRelationshipsToGlueResourceTransfers(
+            $warehouseUserAssignmentsResources,
+            $userGlueRelationshipTransfersIndexedByUserUuid,
+        );
+    }
+
+    /**
      * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
      *
-     * @return array<int, string>
+     * @return list<string>
      */
     protected function extractUserUuids(array $warehouseUserAssignmentsResources): array
     {
         $userUuids = [];
         foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
-            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributeTransfer */
-            $warehouseUserAssignmentsRestAttributeTransfer = $warehouseUserAssignmentsResource->getAttributes();
-            $userUuids[] = $warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail();
+            /** @var \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer */
+            $apiWarehouseUserAssignmentsAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
+            if (!in_array($apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail(), $userUuids)) {
+                $userUuids[] = $apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail();
+            }
         }
 
-        return array_unique($userUuids);
+        return $userUuids;
     }
 
     /**
@@ -80,9 +102,9 @@ class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserB
         array $userGlueRelationshipTransfersIndexedByUserUuid
     ): void {
         foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
-            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributeTransfer */
-            $warehouseUserAssignmentsRestAttributeTransfer = $warehouseUserAssignmentsResource->getAttributes();
-            $userGlueRelationshipTransfer = $userGlueRelationshipTransfersIndexedByUserUuid[$warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail()] ?? null;
+            /** @var \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer */
+            $apiWarehouseUserAssignmentsAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
+            $userGlueRelationshipTransfer = $userGlueRelationshipTransfersIndexedByUserUuid[$apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail()] ?? null;
 
             if (!$userGlueRelationshipTransfer) {
                 continue;

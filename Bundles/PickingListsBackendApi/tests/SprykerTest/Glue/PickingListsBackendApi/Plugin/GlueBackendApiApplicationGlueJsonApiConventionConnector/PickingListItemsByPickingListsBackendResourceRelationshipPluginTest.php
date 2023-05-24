@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\PickingListsBackendApi\Plugin\GlueJsonApiConvention;
+namespace SprykerTest\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
-use Spryker\Glue\PickingListsBackendApi\Plugin\GlueJsonApiConvention\PickingListItemsByPickingListsBackendResourceRelationshipPlugin;
+use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\PickingListItemsByPickingListsBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\PickingListsBackendApi\PickingListsBackendApiTester;
 
 /**
@@ -29,7 +29,7 @@ use SprykerTest\Glue\PickingListsBackendApi\PickingListsBackendApiTester;
  * @group Glue
  * @group PickingListsBackendApi
  * @group Plugin
- * @group GlueJsonApiConvention
+ * @group GlueBackendApiApplicationGlueJsonApiConventionConnector
  * @group PickingListItemsByPickingListsBackendResourceRelationshipPluginTest
  * Add your own group annotations below this line
  */

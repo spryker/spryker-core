@@ -9,6 +9,7 @@ namespace Spryker\Glue\UsersBackendApi\Processor\Reader;
 
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserResourceCollectionTransfer;
+use Generated\Shared\Transfer\UsersRestAttributesTransfer;
 use Spryker\Glue\UsersBackendApi\Dependency\Facade\UsersBackendApiToUserFacadeInterface;
 use Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapperInterface;
 
@@ -41,7 +42,7 @@ class UserResourceReader implements UserResourceReaderInterface
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
-    public function getUserResourceCollection(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
+    public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
     {
         $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
 
@@ -49,5 +50,29 @@ class UserResourceReader implements UserResourceReaderInterface
             $userCollectionTransfer,
             new UserResourceCollectionTransfer(),
         );
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReader::getUserResources()} instead.
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
+    public function getUserResourceCollection(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
+    {
+        $userResourceCollectionTransfer = $this->getUserResources($userCriteriaTransfer);
+
+        foreach ($userResourceCollectionTransfer->getUserResources() as $userResource) {
+            /** @var \Generated\Shared\Transfer\ApiUsersAttributesTransfer $apiUsersAttributesTransfer */
+            $apiUsersAttributesTransfer = $userResource->getAttributesOrFail();
+            $usersRestAttributesTransfer = $this->userResourceMapper->mapApiUsersAttributesTransferToUsersRestAttributesTransfer(
+                $apiUsersAttributesTransfer,
+                new UsersRestAttributesTransfer(),
+            );
+            $userResource->setAttributes($usersRestAttributesTransfer);
+        }
+
+        return $userResourceCollectionTransfer;
     }
 }

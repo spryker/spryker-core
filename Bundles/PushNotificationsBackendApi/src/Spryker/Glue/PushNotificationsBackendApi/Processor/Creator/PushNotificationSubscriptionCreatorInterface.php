@@ -7,20 +7,20 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Creator;
 
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer;
+use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 
 interface PushNotificationSubscriptionCreatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer
+     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createPushNotificationSubscription(
-        ApiPushNotificationSubscriptionAttributesTransfer $apiPushNotificationSubscriptionAttributesTransfer,
+        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer;
 }

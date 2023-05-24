@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UsersBackendApi\Plugin\GlueJsonApiConvention;
+namespace Spryker\Glue\UsersBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
@@ -13,8 +13,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\UsersBackendApi\UsersBackendApiConfig;
 
 /**
- * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin} instead.
- *
  * @method \Spryker\Glue\UsersBackendApi\UsersBackendApiFactory getFactory()
  */
 class UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
@@ -34,7 +32,7 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin extends Abs
     {
         $this->getFactory()
             ->createUserByWarehouseUserAssignmentResourceRelationshipExpander()
-            ->addUserRelationshipsWithUsersRestAttributes($resources);
+            ->addUserRelationships($resources);
     }
 
     /**

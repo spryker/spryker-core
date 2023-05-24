@@ -8,7 +8,7 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Creator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionAttributesTransfer;
+use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
@@ -79,7 +79,7 @@ class ResponseCreator implements ResponseCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -115,16 +115,16 @@ class ResponseCreator implements ResponseCreatorInterface
     protected function createPushNotificationSubscriptionResourceTransfer(
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): GlueResourceTransfer {
-        $apiPushNotificationSubscriptionAttributesTransfer = $this->pushNotificationSubscriptionResourceMapper
-            ->mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionAttributesTransfer(
+        $apiPushNotificationSubscriptionsAttributesTransfer = $this->pushNotificationSubscriptionResourceMapper
+            ->mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionsAttributesTransfer(
                 $pushNotificationSubscriptionTransfer,
-                new ApiPushNotificationSubscriptionAttributesTransfer(),
+                new ApiPushNotificationSubscriptionsAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($pushNotificationSubscriptionTransfer->getUuidOrFail())
             ->setType(PushNotificationsBackendApiConfig::RESOURCE_PUSH_NOTIFICATION_SUBSCRIPTIONS)
-            ->setAttributes($apiPushNotificationSubscriptionAttributesTransfer);
+            ->setAttributes($apiPushNotificationSubscriptionsAttributesTransfer);
     }
 
     /**

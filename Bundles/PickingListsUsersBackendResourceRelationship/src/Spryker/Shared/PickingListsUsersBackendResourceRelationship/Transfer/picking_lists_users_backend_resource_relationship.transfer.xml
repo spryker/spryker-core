@@ -48,7 +48,7 @@
         <property name="uuid" type="string" strict="true"/>
     </transfer>
 
-    <transfer name="UsersRestAttributes" strict="true">
+    <transfer name="ApiUsersAttributes" strict="true">
     </transfer>
 
     <transfer name="UserResourceCollection" strict="true">
