@@ -1,0 +1,46 @@
+asyncapi: 2.6.0
+components:
+    schemas:
+        headers:
+            type: object
+            required:
+                - authorization
+                - timestamp
+                - correlationId
+                - event
+                - transferName
+                - publisher
+            properties:
+                authorization:
+                    type: string
+                    description: 'Authorization header for requesting a protected resource.'
+                timestamp:
+                    type: integer
+                    description: 'Timestamp when this message was created (microtime).'
+                correlationId:
+                    type: string
+                    description: 'Identifier of the current process.'
+                tenantIdentifier:
+                    type: string
+                    description: 'Identifier of the tenant that triggered the message.'
+                storeReference:
+                    type: string
+                    description: 'Identifier of the store for the triggered message.'
+                event:
+                    type: string
+                    description: 'Name of the current message.'
+                transferName:
+                    type: string
+                    description: 'Transfer name of the current message.'
+                publisher:
+                    type: object
+                    properties:
+                        appIdentifier:
+                            type: string
+                            description: 'Identifier of the app that triggered the message.'
+                        tenantIdentifier:
+                            type: string
+                            description: 'Identifier of the tenant that triggered the message.'
+                        storeReference:
+                            type: string
+                            description: 'Identifier of the store that triggered the message.'
