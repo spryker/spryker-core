@@ -94,7 +94,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $errorMessages = $this->errorMessageExtractor->extractErrorMessages($errorTransfers);
         $errorMessageTranslations = $this->glossaryStorageClient->translateBulk(
             $errorMessages,
-            $glueRequestTransfer->getLocaleOrFail(),
+            $glueRequestTransfer->getLocale() ?? $this->pushNotificationsBackendApiConfig->getDefaultLocaleName(),
         );
         foreach ($errorTransfers as $errorTransfer) {
             $errorData = $validationGlossaryKeyToRestErrorMapping[$errorTransfer->getMessageOrFail()] ?? $this->getDefaultErrorData();

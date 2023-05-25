@@ -73,6 +73,11 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
     protected const GLOSSARY_KEY_VALIDATION_SUBSCRIPTION_ALREADY_EXISTS = 'push_notification.validation.error.push_notification_already_exists';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE_NAME = 'en_US';
+
+    /**
      * Specification:
      * - Returns a map of glossary keys to REST Error data.
      *
@@ -96,5 +101,18 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
             ],
         ];
+    }
+
+    /**
+     * Specification:
+     * - Defines the default locale name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultLocaleName(): string
+    {
+        return static::DEFAULT_LOCALE_NAME;
     }
 }
