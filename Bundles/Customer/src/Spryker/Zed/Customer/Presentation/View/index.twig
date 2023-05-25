@@ -67,7 +67,11 @@
                     </tr>
                     <tr>
                         <th>{{ 'Date of birth' | trans }}</th>
-                        <td>{{ customer.dateOfBirth | formatDate }}</td>
+                        <td>
+                            {% if customer.dateOfBirth is not null %}
+                                {{ customer.dateOfBirth | formatDate }}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th>{{ 'Registered at' | trans }}</th>
