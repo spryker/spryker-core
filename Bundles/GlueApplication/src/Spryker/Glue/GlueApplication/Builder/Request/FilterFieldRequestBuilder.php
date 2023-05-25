@@ -35,11 +35,11 @@ class FilterFieldRequestBuilder implements RequestBuilderInterface
         }
 
         foreach ($queryParameters[static::QUERY_FILTER] as $key => $value) {
-            [$resource, $field] = explode('.', $key);
+            $explodedKey = explode('.', $key);
             $glueRequestTransfer->addFilter(
                 (new GlueFilterTransfer())
-                    ->setResource($resource)
-                    ->setField($field)
+                    ->setResource($explodedKey[0])
+                    ->setField($explodedKey[1] ?? null)
                     ->setValue($value),
             );
         }

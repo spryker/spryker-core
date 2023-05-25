@@ -34,6 +34,8 @@ use Spryker\Glue\GlueJsonApiConvention\Response\RelationshipResponseBuilder;
 use Spryker\Glue\GlueJsonApiConvention\Response\RelationshipResponseBuilderInterface;
 use Spryker\Glue\GlueJsonApiConvention\Response\ResponseSparseFieldFormatter;
 use Spryker\Glue\GlueJsonApiConvention\Response\ResponseSparseFieldFormatterInterface;
+use Spryker\Glue\GlueJsonApiConvention\Validator\Request\FilterRequestValidator;
+use Spryker\Glue\GlueJsonApiConvention\Validator\Request\RequestValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -222,5 +224,13 @@ class GlueJsonApiConventionFactory extends AbstractFactory
     public function createJsonApiSchemaParametersFormatter(): JsonApiSchemaParametersFormatterInterface
     {
         return new JsonApiSchemaParametersFormatter();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueJsonApiConvention\Validator\Request\RequestValidatorInterface
+     */
+    public function createFilterRequestValidator(): RequestValidatorInterface
+    {
+        return new FilterRequestValidator();
     }
 }

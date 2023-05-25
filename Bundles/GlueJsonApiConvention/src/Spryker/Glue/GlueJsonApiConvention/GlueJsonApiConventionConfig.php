@@ -30,6 +30,20 @@ class GlueJsonApiConventionConfig extends AbstractBundleConfig
     public const HEADER_CONTENT_TYPE = 'application/vnd.api+json';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_CODE_UNSUPPORTED_FILTER_FORMAT = '011';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_MESSAGE_UNSUPPORTED_FILTER_FORMAT = 'Unsupported `Filter` format is used. Please use `filter[resource.property]`';
+
+    /**
      * Specification:
      * - Domain name of current API application.
      *

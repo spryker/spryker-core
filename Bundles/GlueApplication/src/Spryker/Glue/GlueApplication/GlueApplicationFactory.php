@@ -130,6 +130,7 @@ use Spryker\Glue\GlueApplication\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplication\Validator\Request\AcceptedFormatValidator;
+use Spryker\Glue\GlueApplication\Validator\Request\FilterRequestValidator;
 use Spryker\Glue\GlueApplication\Validator\Request\RequestValidatorInterface as RequestRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Validator\RequestValidator;
 use Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface;
@@ -1258,6 +1259,7 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return [
             $this->createAcceptedFormatValidator(),
+            $this->createFilterRequestValidator(),
         ];
     }
 
@@ -1280,5 +1282,13 @@ class GlueApplicationFactory extends AbstractFactory
             $this->getConventionPlugins(),
             $this->getResponseEncoderStrategies(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Validator\Request\RequestValidatorInterface
+     */
+    public function createFilterRequestValidator(): RequestRequestValidatorInterface
+    {
+        return new FilterRequestValidator();
     }
 }

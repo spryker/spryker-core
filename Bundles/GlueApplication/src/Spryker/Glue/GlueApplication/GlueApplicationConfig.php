@@ -77,6 +77,20 @@ class GlueApplicationConfig extends AbstractBundleConfig
     public const ERROR_MESSAGE_UNSUPPORTED_ACCEPT_FORMAT = 'Unsupported `Accept` format used.';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_CODE_UNSUPPORTED_FILTER_FORMAT = '011';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_MESSAGE_UNSUPPORTED_FILTER_FORMAT = 'Unsupported `Filter` format is used. Please use `filter[resource.property]`';
+
+    /**
      * @var string
      */
     protected const DEFAULT_RESPONSE_FORMAT = 'application/json';
