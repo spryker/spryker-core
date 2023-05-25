@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -295,8 +296,16 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer
     {
-        $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
         $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())->addCompanyUserIds($idCompanyUser);
+        $companyUserCollectionTransfer = $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+
+        if (!$companyUserCollectionTransfer->getCompanyUsers()->count()) {
+            return $companyUserPermissionCollectionTransfer;
+        }
+
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
+        $companyUserTransfer = $companyUserCollectionTransfer->getCompanyUsers()->getIterator()->current();
 
         $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
         $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit());

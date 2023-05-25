@@ -249,4 +249,10 @@
     <transfer name="ProductAbstract">
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+    </transfer>
+
 </transfers>
