@@ -55,6 +55,7 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addCategoryFacade($container);
 
         return $container;
     }
