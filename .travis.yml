@@ -1,5 +1,5 @@
 language: php
-dist: bionic
+dist: focal
 
 git:
     depth: 1
@@ -18,6 +18,8 @@ env:
 
 before_install:
     - phpenv config-rm xdebug.ini
+    - nvm install 18
+    - nvm use 18
 
 install:
     - composer install --no-interaction --prefer-dist --optimize-autoloader

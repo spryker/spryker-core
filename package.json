@@ -19,8 +19,8 @@
         "mp:test": "ng test"
     },
     "engines": {
-        "node": ">=16.0.0",
-        "npm": ">=8.0.0"
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
     },
     "devDependencies": {
         "@angular/animations": "~15.0.3",
