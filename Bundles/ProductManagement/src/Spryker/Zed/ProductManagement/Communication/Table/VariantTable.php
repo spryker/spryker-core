@@ -135,8 +135,8 @@ class VariantTable extends AbstractProductTable
             static::COL_STATUS => 'Status',
             static::COL_IS_BUNDLE => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
-            static::COL_VALID_FROM => 'Valid from',
-            static::COL_VALID_TO => 'Valid to',
+            static::COL_VALID_FROM => 'Valid From (Time in UTC)',
+            static::COL_VALID_TO => 'Valid To (Time in UTC)',
         ]);
 
         $config->setRawColumns([

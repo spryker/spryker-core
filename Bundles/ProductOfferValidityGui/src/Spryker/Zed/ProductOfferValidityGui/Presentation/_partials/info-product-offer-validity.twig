@@ -2,13 +2,13 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Validity Dates' | trans } %}
         {% block widget_content %}
             <div class="row form-group">
-                <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
-                <div class="col-xs-10">{{ valid_from ? valid_from | date : '--' }}</div>
+                <div class="col-xs-2"><b>{{ 'Valid From (Time in UTC)' | trans }}</b></div>
+                <div class="col-xs-10">{{ valid_from ? valid_from | date('Y-m-d H:i') : '--' }}</div>
             </div>
 
             <div class="row form-group">
-                <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
-                <div class="col-xs-10">{{ valid_to ? valid_to | date : '--' }}</div>
+                <div class="col-xs-2"><b>{{ 'Valid To (Time in UTC)' | trans }}</b></div>
+                <div class="col-xs-10">{{ valid_to ? valid_to | date('Y-m-d H:i') : '--' }}</div>
             </div>
         {% endblock %}
     {% endembed %}

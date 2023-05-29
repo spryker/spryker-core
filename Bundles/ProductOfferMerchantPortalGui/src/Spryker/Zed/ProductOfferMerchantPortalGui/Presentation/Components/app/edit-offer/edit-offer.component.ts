@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { Image } from '../image-slider/image-slider.component';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ToJson } from '@spryker/utils';
+import { Image } from '../image-slider/image-slider.component';
 
 export interface ProductDetails {
     name: string;
     sku: string;
     validFrom: string | Date;
     validTo: string | Date;
+    validDateFormat: string;
     validFromTitle: string;
     validToTitle: string;
 }
@@ -21,19 +22,9 @@ export interface ProductDetails {
         class: 'mp-edit-offer',
     },
 })
-export class EditOfferComponent implements OnChanges {
+export class EditOfferComponent {
     @Input() @ToJson() product?: ProductDetails;
     @Input() @ToJson() images?: Image[];
     @Input() productDetailsTitle?: string;
     @Input() productCardTitle?: string;
-
-    validFrom?: string | Date;
-    validTo?: string | Date;
-
-    ngOnChanges(change: SimpleChanges) {
-        if ('product' in change) {
-            this.validFrom = this.product?.validFrom || '-';
-            this.validTo = this.product?.validTo || '-';
-        }
-    }
 }

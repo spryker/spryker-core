@@ -19,7 +19,7 @@
         "@spryker/card": "^1.0.1",
         "@spryker/checkbox": "^1.0.1",
         "@spryker/chips": "^1.0.0",
-        "@spryker/date-picker": "^1.0.1",
+        "@spryker/date-picker": "^1.0.2",
         "@spryker/form-item": "^1.0.1",
         "@spryker/headline": "^1.0.0",
         "@spryker/icon": "^1.0.1",

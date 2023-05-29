@@ -16,7 +16,7 @@
         "@spryker/button": "^1.0.0",
         "@spryker/card": "^1.0.1",
         "@spryker/chips": "^1.0.0",
-        "@spryker/date-picker": "^1.0.1",
+        "@spryker/date-picker": "^1.0.2",
         "@spryker/headline": "^1.0.0",
         "@spryker/styles": "^1.0.1",
         "@spryker/table": "^1.0.2",

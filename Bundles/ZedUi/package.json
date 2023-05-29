@@ -49,7 +49,7 @@
         "@spryker/datasource.http": "^1.0.0",
         "@spryker/datasource.inline": "^1.0.0",
         "@spryker/datasource.inline.table": "^1.0.0",
-        "@spryker/date-picker": "^1.0.1",
+        "@spryker/date-picker": "^1.0.2",
         "@spryker/drawer": "^1.0.0",
         "@spryker/dropdown": "^1.0.1",
         "@spryker/form-item": "^1.0.1",

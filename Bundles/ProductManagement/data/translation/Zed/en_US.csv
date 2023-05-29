@@ -97,8 +97,8 @@ Searchable,Searchable
 Stock,Stock
 "Sort order","Sort order"
 "Assign bundled products","Assign bundled products"
-"Valid From (GMT)","Valid From (GMT)"
-"Valid To (GMT)","Valid To (GMT)"
+"Valid From (Time in UTC)","Valid From (Time in UTC)"
+"Valid To (Time in UTC)","Valid To (Time in UTC)"
 Remove,Remove
 quantity,Quantity
 Price,Price

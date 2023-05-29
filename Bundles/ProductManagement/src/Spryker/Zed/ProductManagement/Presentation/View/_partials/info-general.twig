@@ -75,12 +75,12 @@
         </div>
 
         {% if currentProduct.id_product_concrete is defined %}
-            <div class="row">
-                <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
+            <div class="row m-t-sm">
+                <div class="col-xs-2"><b>{{ 'Valid From (Time in UTC)' | trans }}</b></div>
                 <div class="col-xs-4">{{ currentProduct.valid_from }}</div>
             </div>
             <div class="row">
-                <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
+                <div class="col-xs-2"><b>{{ 'Valid To (Time in UTC)' | trans }}</b></div>
                 <div class="col-xs-4">{{ currentProduct.valid_to }}</div>
             </div>
         {% endif %}

@@ -26,12 +26,16 @@
                 <div class="mp-edit-offer__product-dates">
                     <span class="mp-edit-offer__product-dates-col">
                         <span class="mp-edit-offer__product-dates-title">{{ product?.validFromTitle }}:</span>
-                        <span class="mp-edit-offer__product-dates-value">{{ validFrom }}</span>
+                        <span class="mp-edit-offer__product-dates-value">
+                            {{ product?.validFrom ? (product?.validFrom | date: product?.validDateFormat) : '-' }}
+                        </span>
                     </span>
 
                     <span class="mp-edit-offer__product-dates-col">
                         <span class="mp-edit-offer__product-dates-title">{{ product?.validToTitle }}:</span>
-                        <span class="mp-edit-offer__product-dates-value">{{ validTo }}</span>
+                        <span class="mp-edit-offer__product-dates-value">
+                            {{ product?.validTo ? (product?.validTo | date: product?.validDateFormat) : '-' }}
+                        </span>
                     </span>
                 </div>
 

@@ -22,18 +22,22 @@
 
 {% set productDetailsTitle = 'Description & Details' | trans %}
 {% set productCardTitle = 'Product' | trans %}
-
+{% set dates = {
+    from: form.children.productOfferValidity.children.validFrom.vars.value,
+    to: form.children.productOfferValidity.children.validTo.vars.value,
+} %}
 {% set productData = {
     name: productName,
     sku: product.sku,
-    validTo: product.validTo is null ? null : product.validTo | date('m.d.Y'),
-    validFrom: product.validFrom is null ? null : product.validFrom | date('m.d.Y'),
+    validFrom: dates.from,
+    validTo: dates.to,
+    validDateFormat: 'dd.MM.yyyy',
     validFromTitle: 'Valid from' | trans,
     validToTitle: 'Valid to' | trans,
 } %}
 
 {% macro spyFormItemCardInput(formField, className, attrs = {}) %}
-    <web-spy-card cloak spy-title="{{ formField.vars.label | trans }} {{ formField.vars.required ? '*' }}" class="{{ className }}__card">
+    <web-spy-card cloak spy-title="{{ formField.vars.label | trans ~ (formField.vars.required ? '*') }}" class="{{ className }}__card">
         <div class="{{ className }}__form-row">
             <div class="{{ className }}__form-row-col">
                 {{ form_row(formField, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
@@ -212,11 +216,6 @@
                     {% endblock %}
 
                     {% block validityDates %}
-                        {% set dates = {
-                            from: form.children.productOfferValidity.children.validFrom.vars.value,
-                            to: form.children.productOfferValidity.children.validTo.vars.value,
-                        } %}
-
                         {% block validityDatesInner %}
                             <web-spy-card cloak spy-title="{{ 'Validity Dates' | trans }}">
                                 <div class="{{ mainClass }}__form-row">

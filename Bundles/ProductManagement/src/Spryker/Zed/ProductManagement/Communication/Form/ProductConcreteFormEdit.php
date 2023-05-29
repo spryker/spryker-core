@@ -73,7 +73,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     /**
      * @var string
      */
-    public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
+    public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd HH:mm';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -166,7 +166,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             [
                 'format' => static::VALIDITY_DATETIME_FORMAT,
                 'html5' => false,
-                'label' => 'Valid From (GMT)',
+                'label' => 'Valid From (Time in UTC)',
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [
@@ -219,7 +219,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             [
                 'format' => static::VALIDITY_DATETIME_FORMAT,
                 'html5' => false,
-                'label' => 'Valid To (GMT)',
+                'label' => 'Valid To (Time in UTC)',
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [

@@ -97,8 +97,8 @@ Searchable,"Ist suchbar"
 Stock,Bestand
 "Sort order",Sortierreihenfolge
 "Assign bundled products","Bündelprodukte zuordnen"
-"Valid From (GMT)","Gültig ab (GMT)"
-"Valid To (GMT)","Gültig bis (GMT)"
+"Valid From (Time in UTC)","Gültig von (Zeit in UTC)"
+"Valid To (Time in UTC)","Gültig bis (Zeit in UTC)"
 Remove,Entfernen
 quantity,Menge
 Price,Preis

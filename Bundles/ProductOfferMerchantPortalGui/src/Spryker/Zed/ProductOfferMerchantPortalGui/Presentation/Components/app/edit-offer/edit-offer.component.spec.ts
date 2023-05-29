@@ -138,8 +138,9 @@ describe('EditOfferComponent', () => {
         const mockProduct = {
             name: 'name',
             sku: 'sku',
-            validFrom: 'validFrom',
-            validTo: 'validTo',
+            validFrom: '2023-03-15T00:00:00',
+            validTo: '2025-05-25T00:00:00',
+            validDateFormat: 'dd.MM.yyyy',
             validFromTitle: 'validFromTitle',
             validToTitle: 'validToTitle',
         };
@@ -161,8 +162,8 @@ describe('EditOfferComponent', () => {
 
         expect(productTitleElem.nativeElement.textContent).toContain(mockProduct.name);
         expect(productSkuElem.nativeElement.textContent).toContain(mockProduct.sku);
-        expect(validFromValueElem.nativeElement.textContent).toContain(mockProduct.validFrom);
-        expect(validToValueElem.nativeElement.textContent).toContain(mockProduct.validTo);
+        expect(validFromValueElem.nativeElement.textContent.trim()).toBe('15.03.2023');
+        expect(validToValueElem.nativeElement.textContent.trim()).toBe('25.05.2025');
         expect(validFromTitleElem.nativeElement.textContent).toContain(mockProduct.validFromTitle);
         expect(validToTitleElem.nativeElement.textContent).toContain(mockProduct.validToTitle);
     });
