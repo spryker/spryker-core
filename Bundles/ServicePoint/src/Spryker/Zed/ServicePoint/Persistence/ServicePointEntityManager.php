@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
-use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
+use Orm\Zed\ServicePoint\Persistence\SpyService;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePoint;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddress;
-use Orm\Zed\ServicePoint\Persistence\SpyServicePointService;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStore;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceType;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -146,49 +146,49 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function createServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer
+    public function createService(ServiceTransfer $serviceTransfer): ServiceTransfer
     {
-        $servicePointServiceMapper = $this->getFactory()->createServicePointServiceMapper();
-        $servicePointServiceEntity = $servicePointServiceMapper->mapServicePointServiceTransferToServicePointServiceEntity(
-            $servicePointServiceTransfer,
-            new SpyServicePointService(),
+        $serviceMapper = $this->getFactory()->createServiceMapper();
+        $serviceEntity = $serviceMapper->mapServiceTransferToServiceEntity(
+            $serviceTransfer,
+            new SpyService(),
         );
 
-        $servicePointServiceEntity->save();
+        $serviceEntity->save();
 
-        return $servicePointServiceMapper->mapServicePointServiceEntityToServicePointServiceTransfer(
-            $servicePointServiceEntity,
-            $servicePointServiceTransfer,
+        return $serviceMapper->mapServiceEntityToServiceTransfer(
+            $serviceEntity,
+            $serviceTransfer,
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function updateServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer
+    public function updateService(ServiceTransfer $serviceTransfer): ServiceTransfer
     {
-        $servicePointServiceMapper = $this->getFactory()->createServicePointServiceMapper();
-        $servicePointServiceEntity = $this->getFactory()
-            ->getServicePointServiceQuery()
-            ->filterByUuid($servicePointServiceTransfer->getUuidOrFail())
+        $serviceMapper = $this->getFactory()->createServiceMapper();
+        $serviceEntity = $this->getFactory()
+            ->getServiceQuery()
+            ->filterByUuid($serviceTransfer->getUuidOrFail())
             ->findOne();
 
-        if (!$servicePointServiceEntity) {
-            return $servicePointServiceTransfer;
+        if (!$serviceEntity) {
+            return $serviceTransfer;
         }
 
-        $servicePointServiceEntity->fromArray($servicePointServiceTransfer->modifiedToArray());
-        $servicePointServiceEntity->save();
+        $serviceEntity->fromArray($serviceTransfer->modifiedToArray());
+        $serviceEntity->save();
 
-        return $servicePointServiceMapper->mapServicePointServiceEntityToServicePointServiceTransfer(
-            $servicePointServiceEntity,
-            $servicePointServiceTransfer,
+        return $serviceMapper->mapServiceEntityToServiceTransfer(
+            $serviceEntity,
+            $serviceTransfer,
         );
     }
 

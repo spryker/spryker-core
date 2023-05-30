@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Updater;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
@@ -69,10 +67,11 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
     public function updateServicePoint(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         if (!$this->isRequestedEntityValid($glueRequestTransfer)) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
-                ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
-            );
+            return $this->errorResponseBuilder
+                ->createErrorResponseFromErrorMessage(
+                    ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
+                    $glueRequestTransfer->getLocale(),
+                );
         }
 
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
@@ -85,10 +84,11 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
         $servicePointTransfer = $this->findServicePoint($glueResourceTransfer->getIdOrFail());
 
         if (!$servicePointTransfer) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
-                ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND,
-            );
+            return $this->errorResponseBuilder
+                ->createErrorResponseFromErrorMessage(
+                    ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND,
+                    $glueRequestTransfer->getLocale(),
+                );
         }
 
         $servicePointTransfer = $this->servicePointMapper->mapApiServicePointsAttributesTransferToServicePointTransfer(
@@ -147,24 +147,6 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
             ->getServicePoints();
 
         return $servicePointTransfers->getIterator()->current();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function createErrorResponse(
-        GlueRequestTransfer $glueRequestTransfer,
-        string $errorMessage
-    ): GlueResponseTransfer {
-        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
-            $glueRequestTransfer->getLocale(),
-        );
     }
 
     /**

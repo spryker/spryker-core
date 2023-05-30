@@ -142,8 +142,8 @@
         <property name="countryConditions" type="CountryConditions"/>
     </transfer>
 
-    <transfer name="ServicePointService" strict="true">
-        <property name="idServicePointService" type="int"/>
+    <transfer name="Service" strict="true">
+        <property name="idService" type="int"/>
         <property name="uuid" type="string"/>
         <property name="serviceType" type="ServiceType"/>
         <property name="servicePoint" type="ServicePoint"/>
@@ -151,29 +151,29 @@
         <property name="key" type="string"/>
     </transfer>
 
-    <transfer name="ServicePointServiceCollection" strict="true">
-        <property name="servicePointServices" type="ServicePointService[]" singular="servicePointService"/>
+    <transfer name="ServiceCollection" strict="true">
+        <property name="services" type="Service[]" singular="service"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="ServicePointServiceCollectionRequest" strict="true">
+    <transfer name="ServiceCollectionRequest" strict="true">
         <property name="isTransactional" type="bool"/>
-        <property name="servicePointServices" type="ServicePointService[]" singular="servicePointService"/>
+        <property name="services" type="Service[]" singular="service"/>
     </transfer>
 
-    <transfer name="ServicePointServiceCollectionResponse" strict="true">
+    <transfer name="ServiceCollectionResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
-        <property name="servicePointServices" type="ServicePointService[]" singular="servicePointService"/>
+        <property name="services" type="Service[]" singular="service"/>
     </transfer>
 
-    <transfer name="ServicePointServiceCriteria" strict="true">
-        <property name="servicePointServiceConditions" type="ServicePointServiceConditions"/>
+    <transfer name="ServiceCriteria" strict="true">
+        <property name="serviceConditions" type="ServiceConditions"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="ServicePointServiceConditions" strict="true">
-        <property name="servicePointServiceIds" type="int[]" singular="idServicePointService"/>
+    <transfer name="ServiceConditions" strict="true">
+        <property name="serviceIds" type="int[]" singular="idService"/>
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="keys" type="string[]" singular="key"/>
         <property name="serviceTypeUuids" type="string[]" singular="serviceTypeUuid"/>

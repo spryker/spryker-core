@@ -64,11 +64,11 @@ class UpdateServiceTypeCollectionTest extends Unit
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_NAME_WRONG_LENGTH = 'service_point.validation.service_type_name_wrong_length';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\KeyImmutabilityServiceTypeValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABLILITY
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\KeyImmutabilityServiceTypeValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABILITY
      *
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABLILITY = 'service_point.validation.service_type_key_immutability';
+    protected const SERVICE_POINT_VALIDATION_SERVICE_TYPE_KEY_IMMUTABILITY = 'service_point.validation.service_type_key_immutability';
 
     /**
      * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\UuidExistenceServiceTypeValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_ENTITY_NOT_FOUND
@@ -243,7 +243,7 @@ class UpdateServiceTypeCollectionTest extends Unit
         $errorTransfer = $serviceTypeCollectionResponseTransfer->getErrors()->getIterator()->current();
 
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
-        $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABLILITY, $errorTransfer->getMessageOrFail());
+        $this->assertSame(static::SERVICE_POINT_VALIDATION_SERVICE_TYPE_KEY_IMMUTABILITY, $errorTransfer->getMessageOrFail());
     }
 
     /**

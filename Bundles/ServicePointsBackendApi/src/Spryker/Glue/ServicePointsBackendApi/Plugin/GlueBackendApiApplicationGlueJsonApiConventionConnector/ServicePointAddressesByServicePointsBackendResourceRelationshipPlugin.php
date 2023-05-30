@@ -31,7 +31,7 @@ class ServicePointAddressesByServicePointsBackendResourceRelationshipPlugin exte
     public function addRelationships(array $resources, GlueRequestTransfer $glueRequestTransfer): void
     {
         $this->getFactory()
-            ->createServicePointRelationshipExpander()
+            ->createServicePointAddressByServicePointRelationshipExpander()
             ->addServicePointAddressesResourceRelationships($resources, $glueRequestTransfer);
     }
 

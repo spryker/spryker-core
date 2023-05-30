@@ -78,7 +78,8 @@ class ServicePointsResourceController extends AbstractController
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointsAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
-     *              "403": "Unauthorized request"
+     *              "403": "Unauthorized request",
+     *              "404": "Not Found"
      *          }
      *     }
      * })

@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Creator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
@@ -70,10 +68,8 @@ class ServicePointCreator implements ServicePointCreatorInterface
         $apiServicePointsAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
         if (!$apiServicePointsAttributesTransfer) {
-            $errorTransfer = (new ErrorTransfer())->setMessage(ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
-
-            return $this->errorResponseBuilder->createErrorResponse(
-                new ArrayObject([$errorTransfer]),
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
+                ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
             );
         }

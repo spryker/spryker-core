@@ -9,14 +9,14 @@ namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
-use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\CountryMapper;
+use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper;
-use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointServiceMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper;
 
 /**
@@ -51,11 +51,11 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery
      */
-    public function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    public function getServiceQuery(): SpyServiceQuery
     {
-        return SpyServicePointServiceQuery::create();
+        return SpyServiceQuery::create();
     }
 
     /**
@@ -95,11 +95,11 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointServiceMapper
+     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceMapper
      */
-    public function createServicePointServiceMapper(): ServicePointServiceMapper
+    public function createServiceMapper(): ServiceMapper
     {
-        return new ServicePointServiceMapper();
+        return new ServiceMapper();
     }
 
     /**

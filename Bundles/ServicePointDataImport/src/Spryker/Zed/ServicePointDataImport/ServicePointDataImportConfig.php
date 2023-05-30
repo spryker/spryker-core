@@ -45,7 +45,7 @@ class ServicePointDataImportConfig extends DataImportConfig
      *
      * @var string
      */
-    public const IMPORT_TYPE_SERVICE_POINT_SERVICE = 'service-point-service';
+    public const IMPORT_TYPE_SERVICE = 'service';
 
     /**
      * @api
@@ -112,13 +112,13 @@ class ServicePointDataImportConfig extends DataImportConfig
      *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getServicePointServiceDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getServiceDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration(
-            $moduleDataImportDirectory . 'service_point_service.csv',
-            static::IMPORT_TYPE_SERVICE_POINT_SERVICE,
+            $moduleDataImportDirectory . 'service.csv',
+            static::IMPORT_TYPE_SERVICE,
         );
     }
 

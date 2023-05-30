@@ -89,10 +89,10 @@ class ServicePointDataImportFacade extends AbstractFacade implements ServicePoin
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importServicePointServices(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importServices(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getServicePointServiceDataImporter()
+            ->getServiceDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

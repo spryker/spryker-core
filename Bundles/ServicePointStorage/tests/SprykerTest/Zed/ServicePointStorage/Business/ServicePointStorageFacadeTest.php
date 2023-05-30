@@ -57,14 +57,9 @@ class ServicePointStorageFacadeTest extends Unit
     protected const FAKE_ID_SERVICE_POINT = -1;
 
     /**
-     * @var int
+     * @var string
      */
-    protected const TEST_ID_SERVICE_POINT = 888;
-
-    /**
-     * @var int
-     */
-    protected const TEST_ID_SERVICE_POINT_2 = 889;
+    protected const TEST_NAME_SERVICE_POINT = 'SP1';
 
     /**
      * @var string
@@ -441,6 +436,90 @@ class ServicePointStorageFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetServicePointStorageSynchronizationDataTransfersShouldReturnCorrectListWhenCorrectLimitIsProvided(): void
+    {
+        // Arrange
+        $this->tester->ensureServicePointStorageDatabaseTableIsEmpty();
+        $storeNames = [static::STORE_NAME_DE];
+
+        $expectedServicePointIds = [];
+        for ($i = 0; $i < 2; $i++) {
+            $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelations([], $storeNames);
+            $this->tester->createServicePointStorageByStoreRelations(
+                (new ServicePointStorageTransfer())->fromArray($servicePointTransfer->toArray(), true),
+                $storeNames,
+            );
+            $expectedServicePointIds[] = $servicePointTransfer->getIdServicePointOrFail();
+        }
+
+        // Act
+        $servicePointStorageSynchronizationDataTransfers = $this->tester->getFacade()
+            ->getServicePointStorageSynchronizationDataTransfers(0, 1);
+
+        // Assert
+        $resultServicePointIds = $this->extractServicePointIdsFromSynchronizationDataTransfers($servicePointStorageSynchronizationDataTransfers);
+        $this->assertSame([$expectedServicePointIds[0]], $resultServicePointIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetServicePointStorageSynchronizationDataTransfersShouldReturnCorrectListWhenCorrectOffsetIsProvided(): void
+    {
+        // Arrange
+        $this->tester->ensureServicePointStorageDatabaseTableIsEmpty();
+        $storeNames = [static::STORE_NAME_DE];
+
+        $expectedServicePointIds = [];
+        for ($i = 0; $i < 2; $i++) {
+            $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelations([], $storeNames);
+            $this->tester->createServicePointStorageByStoreRelations(
+                (new ServicePointStorageTransfer())->fromArray($servicePointTransfer->toArray(), true),
+                $storeNames,
+            );
+            $expectedServicePointIds[] = $servicePointTransfer->getIdServicePointOrFail();
+        }
+
+        // Act
+        $servicePointStorageSynchronizationDataTransfers = $this->tester->getFacade()
+            ->getServicePointStorageSynchronizationDataTransfers(1, 1);
+
+        // Assert
+        $resultServicePointIds = $this->extractServicePointIdsFromSynchronizationDataTransfers($servicePointStorageSynchronizationDataTransfers);
+        $this->assertSame([$expectedServicePointIds[1]], $resultServicePointIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetServicePointStorageSynchronizationDataTransfersShouldReturnCorrectList(): void
+    {
+        // Arrange
+        $this->tester->ensureServicePointStorageDatabaseTableIsEmpty();
+        $storeNames = [static::STORE_NAME_DE];
+
+        $expectedServicePointIds = [];
+        for ($i = 0; $i < 2; $i++) {
+            $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelations([], $storeNames);
+            $this->tester->createServicePointStorageByStoreRelations(
+                (new ServicePointStorageTransfer())->fromArray($servicePointTransfer->toArray(), true),
+                $storeNames,
+            );
+            $expectedServicePointIds[] = $servicePointTransfer->getIdServicePointOrFail();
+        }
+
+        // Act
+        $servicePointStorageSynchronizationDataTransfers = $this->tester->getFacade()
+            ->getServicePointStorageSynchronizationDataTransfers(0, 2, $expectedServicePointIds);
+
+        // Assert
+        $resultServicePointIds = $this->extractServicePointIdsFromSynchronizationDataTransfers($servicePointStorageSynchronizationDataTransfers);
+        $this->assertSame($expectedServicePointIds, $resultServicePointIds);
+    }
+
+    /**
      * @return array<string, array<array<string, mixed>|int|list<int>>>
      */
     protected function getServicePointStorageSynchronizationDataTransfersDataProvider(): array
@@ -450,25 +529,10 @@ class ServicePointStorageFacadeTest extends Unit
                 [], 0, 1, [], [],
             ],
             'Should return empty collection when offset is higher then number of service point storage' => [
-                [[ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT]], 1, 1, [], [],
+                [[ServicePointStorageTransfer::NAME => static::TEST_NAME_SERVICE_POINT]], 1, 1, [], [],
             ],
             'Should return empty collection when search by incorrect service point IDs' => [
-                [[ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT]], 0, 1, [static::FAKE_ID_SERVICE_POINT], [],
-            ],
-            'Should return correct number of items when correct limit is provided' => [
-                [[ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT]], 0, 1, [], [static::TEST_ID_SERVICE_POINT],
-            ],
-            'Should return correct items when correct offset is provided' => [
-                [
-                    [ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT],
-                    [ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT_2],
-                ], 1, 1, [], [static::TEST_ID_SERVICE_POINT_2],
-            ],
-            'Should return correct items search by correct service point IDs' => [
-                [
-                    [ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT],
-                    [ServicePointStorageTransfer::ID_SERVICE_POINT => static::TEST_ID_SERVICE_POINT_2],
-                ], 0, 1, [static::TEST_ID_SERVICE_POINT_2], [static::TEST_ID_SERVICE_POINT_2],
+                [[ServicePointStorageTransfer::NAME => static::TEST_NAME_SERVICE_POINT]], 0, 1, [static::FAKE_ID_SERVICE_POINT], [],
             ],
         ];
     }

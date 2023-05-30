@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ServicePoint\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ServicePoint\Business\Creator\ServiceCreator;
+use Spryker\Zed\ServicePoint\Business\Creator\ServiceCreatorInterface;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointAddressCreator;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointAddressCreatorInterface;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointCreator;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointCreatorInterface;
-use Spryker\Zed\ServicePoint\Business\Creator\ServicePointServiceCreator;
-use Spryker\Zed\ServicePoint\Business\Creator\ServicePointServiceCreatorInterface;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointStoreRelationCreator;
 use Spryker\Zed\ServicePoint\Business\Creator\ServicePointStoreRelationCreatorInterface;
 use Spryker\Zed\ServicePoint\Business\Creator\ServiceTypeCreator;
@@ -22,36 +22,44 @@ use Spryker\Zed\ServicePoint\Business\Expander\CountryExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\CountryExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointExpanderInterface;
-use Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServicePointExpander;
-use Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServicePointExpanderInterface;
-use Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServiceTypeExpander;
-use Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServiceTypeExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpanderInterface;
+use Spryker\Zed\ServicePoint\Business\Expander\ServiceTypeExpander;
+use Spryker\Zed\ServicePoint\Business\Expander\ServiceTypeExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractor;
 use Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractorInterface;
 use Spryker\Zed\ServicePoint\Business\Extractor\ServicePointStoreExtractor;
 use Spryker\Zed\ServicePoint\Business\Extractor\ServicePointStoreExtractorInterface;
+use Spryker\Zed\ServicePoint\Business\Filter\ServiceFilter;
+use Spryker\Zed\ServicePoint\Business\Filter\ServiceFilterInterface;
 use Spryker\Zed\ServicePoint\Business\Filter\ServicePointAddressFilter;
 use Spryker\Zed\ServicePoint\Business\Filter\ServicePointAddressFilterInterface;
 use Spryker\Zed\ServicePoint\Business\Filter\ServicePointFilter;
 use Spryker\Zed\ServicePoint\Business\Filter\ServicePointFilterInterface;
-use Spryker\Zed\ServicePoint\Business\Filter\ServicePointServiceFilter;
-use Spryker\Zed\ServicePoint\Business\Filter\ServicePointServiceFilterInterface;
 use Spryker\Zed\ServicePoint\Business\Filter\ServiceTypeFilter;
 use Spryker\Zed\ServicePoint\Business\Filter\ServiceTypeFilterInterface;
 use Spryker\Zed\ServicePoint\Business\Reader\ServicePointReader;
 use Spryker\Zed\ServicePoint\Business\Reader\ServicePointReaderInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointAddressUpdater;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointAddressUpdaterInterface;
-use Spryker\Zed\ServicePoint\Business\Updater\ServicePointServiceUpdater;
-use Spryker\Zed\ServicePoint\Business\Updater\ServicePointServiceUpdaterInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointStoreRelationUpdater;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointStoreRelationUpdaterInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointUpdater;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointUpdaterInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServiceTypeUpdater;
 use Spryker\Zed\ServicePoint\Business\Updater\ServiceTypeUpdaterInterface;
+use Spryker\Zed\ServicePoint\Business\Updater\ServiceUpdater;
+use Spryker\Zed\ServicePoint\Business\Updater\ServiceUpdaterInterface;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\KeyExistenceServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\KeyImmutabilityServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\KeyLengthServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\KeyUniquenessServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServicePointUuidExistenceServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceTypeExistenceServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceTypeUniquenessServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceTypeUuidExistenceServiceValidatorRule;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\UuidExistenceServiceValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ExistenceByUuidServicePointValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\KeyExistenceServicePointValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\KeyLengthServicePointValidatorRule;
@@ -68,16 +76,6 @@ use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress\Service
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress\ServicePointHasSingleServicePointAddressValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress\ServicePointUuidUniquenessServicePointAddressValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress\ZipCodeLengthServicePointAddressValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\KeyExistenceServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\KeyImmutabilityServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\KeyLengthServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\KeyUniquenessServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceTypeExistenceServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceTypeUniquenessServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointUuidExistenceServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServiceTypeUuidExistenceServicePointServiceValidatorRule;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\UuidExistenceServicePointServiceValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\KeyExistenceServiceTypeValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\KeyImmutabilityServiceTypeValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\KeyLengthServiceTypeValidatorRule;
@@ -89,12 +87,12 @@ use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\ServiceTypeVali
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServiceType\UuidExistenceServiceTypeValidatorRule;
 use Spryker\Zed\ServicePoint\Business\Validator\ServicePointAddressValidator;
 use Spryker\Zed\ServicePoint\Business\Validator\ServicePointAddressValidatorInterface;
-use Spryker\Zed\ServicePoint\Business\Validator\ServicePointServiceValidator;
-use Spryker\Zed\ServicePoint\Business\Validator\ServicePointServiceValidatorInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\ServicePointValidator;
 use Spryker\Zed\ServicePoint\Business\Validator\ServicePointValidatorInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\ServiceTypeValidator;
 use Spryker\Zed\ServicePoint\Business\Validator\ServiceTypeValidatorInterface;
+use Spryker\Zed\ServicePoint\Business\Validator\ServiceValidator;
+use Spryker\Zed\ServicePoint\Business\Validator\ServiceValidatorInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\ServicePoint\Dependency\Facade\ServicePointToCountryFacadeInterface;
@@ -531,195 +529,185 @@ class ServicePointBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Creator\ServicePointServiceCreatorInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Creator\ServiceCreatorInterface
      */
-    public function createServicePointServiceCreator(): ServicePointServiceCreatorInterface
+    public function createServiceCreator(): ServiceCreatorInterface
     {
-        return new ServicePointServiceCreator(
+        return new ServiceCreator(
             $this->getEntityManager(),
-            $this->createServicePointServiceCreateValidator(),
-            $this->createServicePointServiceFilter(),
-            $this->createServicePointServiceServicePointExpander(),
-            $this->createServicePointServiceServiceTypeExpander(),
+            $this->createServiceCreateValidator(),
+            $this->createServiceFilter(),
+            $this->createServicePointExpander(),
+            $this->createServiceTypeExpander(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServicePointExpanderInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Expander\ServiceTypeExpanderInterface
      */
-    public function createServicePointServiceServicePointExpander(): ServicePointServiceServicePointExpanderInterface
+    public function createServiceTypeExpander(): ServiceTypeExpanderInterface
     {
-        return new ServicePointServiceServicePointExpander(
+        return new ServiceTypeExpander(
             $this->getRepository(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Expander\ServicePointServiceServiceTypeExpanderInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Updater\ServiceUpdaterInterface
      */
-    public function createServicePointServiceServiceTypeExpander(): ServicePointServiceServiceTypeExpanderInterface
+    public function createServiceUpdater(): ServiceUpdaterInterface
     {
-        return new ServicePointServiceServiceTypeExpander(
-            $this->getRepository(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ServicePoint\Business\Updater\ServicePointServiceUpdaterInterface
-     */
-    public function createServicePointServiceUpdater(): ServicePointServiceUpdaterInterface
-    {
-        return new ServicePointServiceUpdater(
+        return new ServiceUpdater(
             $this->getEntityManager(),
-            $this->createServicePointServiceUpdateValidator(),
-            $this->createServicePointServiceFilter(),
+            $this->createServiceUpdateValidator(),
+            $this->createServiceFilter(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\ServicePointServiceValidatorInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\ServiceValidatorInterface
      */
-    public function createServicePointServiceCreateValidator(): ServicePointServiceValidatorInterface
+    public function createServiceCreateValidator(): ServiceValidatorInterface
     {
-        return new ServicePointServiceValidator($this->getServicePointServiceCreateValidatorRules());
+        return new ServiceValidator($this->getServiceCreateValidatorRules());
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\ServicePointServiceValidatorInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\ServiceValidatorInterface
      */
-    public function createServicePointServiceUpdateValidator(): ServicePointServiceValidatorInterface
+    public function createServiceUpdateValidator(): ServiceValidatorInterface
     {
-        return new ServicePointServiceValidator($this->getServicePointServiceUpdateValidatorRules());
+        return new ServiceValidator($this->getServiceUpdateValidatorRules());
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Filter\ServicePointServiceFilterInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Filter\ServiceFilterInterface
      */
-    public function createServicePointServiceFilter(): ServicePointServiceFilterInterface
+    public function createServiceFilter(): ServiceFilterInterface
     {
-        return new ServicePointServiceFilter(
+        return new ServiceFilter(
             $this->createErrorExtractor(),
         );
     }
 
     /**
-     * @return list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface>
+     * @return list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface>
      */
-    public function getServicePointServiceCreateValidatorRules(): array
+    public function getServiceCreateValidatorRules(): array
     {
         return [
-            $this->createServicePointUuidExistenceServicePointServiceValidatorRule(),
-            $this->createServiceTypeUuidExistenceServicePointServiceValidatorRule(),
-            $this->createServicePointServiceTypeUniquenessServicePointServiceValidatorRule(),
-            $this->createServicePointServiceTypeExistenceServicePointServiceValidatorRule(),
-            $this->createKeyUniquenessServicePointServiceValidatorRule(),
-            $this->createKeyLengthServicePointServiceValidatorRule(),
-            $this->createKeyExistenceServicePointServiceValidatorRule(),
+            $this->createServicePointUuidExistenceServiceValidatorRule(),
+            $this->createServiceTypeUuidExistenceServiceValidatorRule(),
+            $this->createServiceTypeUniquenessServiceValidatorRule(),
+            $this->createServiceTypeExistenceServiceValidatorRule(),
+            $this->createKeyUniquenessServiceValidatorRule(),
+            $this->createKeyLengthServiceValidatorRule(),
+            $this->createKeyExistenceServiceValidatorRule(),
         ];
     }
 
     /**
-     * @return list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface>
+     * @return list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface>
      */
-    public function getServicePointServiceUpdateValidatorRules(): array
+    public function getServiceUpdateValidatorRules(): array
     {
         return [
-            $this->createUuidExistenceServicePointServiceValidatorRule(),
-            $this->createKeyImmutabilityServicePointServiceValidatorRule(),
+            $this->createUuidExistenceServiceValidatorRule(),
+            $this->createKeyImmutabilityServiceValidatorRule(),
         ];
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createUuidExistenceServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createUuidExistenceServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new UuidExistenceServicePointServiceValidatorRule(
+        return new UuidExistenceServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createServicePointUuidExistenceServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createServicePointUuidExistenceServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new ServicePointUuidExistenceServicePointServiceValidatorRule(
+        return new ServicePointUuidExistenceServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createServiceTypeUuidExistenceServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createServiceTypeUuidExistenceServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new ServiceTypeUuidExistenceServicePointServiceValidatorRule(
+        return new ServiceTypeUuidExistenceServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createServicePointServiceTypeUniquenessServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createServiceTypeUniquenessServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new ServicePointServiceTypeUniquenessServicePointServiceValidatorRule(
+        return new ServiceTypeUniquenessServiceValidatorRule(
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createServicePointServiceTypeExistenceServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createServiceTypeExistenceServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new ServicePointServiceTypeExistenceServicePointServiceValidatorRule(
+        return new ServiceTypeExistenceServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createKeyImmutabilityServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createKeyImmutabilityServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new KeyImmutabilityServicePointServiceValidatorRule(
+        return new KeyImmutabilityServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createKeyUniquenessServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createKeyUniquenessServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new KeyUniquenessServicePointServiceValidatorRule(
+        return new KeyUniquenessServiceValidatorRule(
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createKeyLengthServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createKeyLengthServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new KeyLengthServicePointServiceValidatorRule(
+        return new KeyLengthServiceValidatorRule(
             $this->createErrorAdder(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointService\ServicePointServiceValidatorRuleInterface
+     * @return \Spryker\Zed\ServicePoint\Business\Validator\Rule\Service\ServiceValidatorRuleInterface
      */
-    public function createKeyExistenceServicePointServiceValidatorRule(): ServicePointServiceValidatorRuleInterface
+    public function createKeyExistenceServiceValidatorRule(): ServiceValidatorRuleInterface
     {
-        return new KeyExistenceServicePointServiceValidatorRule(
+        return new KeyExistenceServiceValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
         );

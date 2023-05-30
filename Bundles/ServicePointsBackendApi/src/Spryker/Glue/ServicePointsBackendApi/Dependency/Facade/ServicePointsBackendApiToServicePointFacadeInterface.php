@@ -7,6 +7,10 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\ServiceCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
@@ -15,6 +19,10 @@ use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 
 interface ServicePointsBackendApiToServicePointFacadeInterface
 {
@@ -71,4 +79,58 @@ interface ServicePointsBackendApiToServicePointFacadeInterface
     public function updateServicePointAddressCollection(
         ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
     ): ServicePointAddressCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionTransfer
+     */
+    public function getServiceTypeCollection(
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): ServiceTypeCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function createServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function updateServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCriteriaTransfer $serviceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function getServiceCollection(
+        ServiceCriteriaTransfer $serviceCriteriaTransfer
+    ): ServiceCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionResponseTransfer
+     */
+    public function createServiceCollection(
+        ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+    ): ServiceCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionResponseTransfer
+     */
+    public function updateServiceCollection(
+        ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+    ): ServiceCollectionResponseTransfer;
 }

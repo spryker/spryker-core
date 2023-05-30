@@ -9,18 +9,18 @@ namespace Spryker\Zed\ServicePoint\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
 use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 use Orm\Zed\ServicePoint\Persistence\Map\SpyServicePointTableMap;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
-use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -171,90 +171,91 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ServiceCriteriaTransfer $serviceCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
      */
-    public function getServicePointServiceCollection(
-        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
-    ): ServicePointServiceCollectionTransfer {
-        $servicePointServiceCollectionTransfer = new ServicePointServiceCollectionTransfer();
-        $servicePointServiceQuery = $this->getFactory()->getServicePointServiceQuery();
-        $servicePointServiceQuery = $this->applyServicePointServiceFilters(
-            $servicePointServiceQuery,
-            $servicePointServiceCriteriaTransfer,
+    public function getServiceCollection(
+        ServiceCriteriaTransfer $serviceCriteriaTransfer
+    ): ServiceCollectionTransfer {
+        $serviceCollectionTransfer = new ServiceCollectionTransfer();
+        $serviceQuery = $this->getFactory()
+            ->getServiceQuery()
+            ->joinWithServicePoint()
+            ->joinWithServiceType();
+        $serviceQuery = $this->applyServiceFilters(
+            $serviceQuery,
+            $serviceCriteriaTransfer,
         );
 
         /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
-        $sortTransfers = $servicePointServiceCriteriaTransfer->getSortCollection();
-        $servicePointServiceQuery = $this->applySorting($servicePointServiceQuery, $sortTransfers);
-        $paginationTransfer = $servicePointServiceCriteriaTransfer->getPagination();
+        $sortTransfers = $serviceCriteriaTransfer->getSortCollection();
+        $serviceQuery = $this->applySorting($serviceQuery, $sortTransfers);
+        $paginationTransfer = $serviceCriteriaTransfer->getPagination();
 
         if ($paginationTransfer) {
-            $servicePointServiceQuery = $this->applyPagination(
-                $servicePointServiceQuery,
+            $serviceQuery = $this->applyPagination(
+                $serviceQuery,
                 $paginationTransfer,
             );
 
-            $servicePointServiceCollectionTransfer->setPagination($paginationTransfer);
+            $serviceCollectionTransfer->setPagination($paginationTransfer);
         }
 
         return $this->getFactory()
-            ->createServicePointServiceMapper()
-            ->mapServicePointServiceEntitiesToServicePointServiceCollectionTransfer(
-                $servicePointServiceQuery->find(),
-                $servicePointServiceCollectionTransfer,
+            ->createServiceMapper()
+            ->mapServiceEntitiesToServiceCollectionTransfer(
+                $serviceQuery->find(),
+                $serviceCollectionTransfer,
             );
     }
 
     /**
-     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery $servicePointServiceQuery
-     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery $serviceQuery
+     * @param \Generated\Shared\Transfer\ServiceCriteriaTransfer $serviceCriteriaTransfer
      *
-     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery
      */
-    protected function applyServicePointServiceFilters(
-        SpyServicePointServiceQuery $servicePointServiceQuery,
-        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
-    ): SpyServicePointServiceQuery {
-        $servicePointServiceConditionsTransfer = $servicePointServiceCriteriaTransfer->getServicePointServiceConditions();
+    protected function applyServiceFilters(
+        SpyServiceQuery $serviceQuery,
+        ServiceCriteriaTransfer $serviceCriteriaTransfer
+    ): SpyServiceQuery {
+        $serviceConditionsTransfer = $serviceCriteriaTransfer->getServiceConditions();
 
-        if (!$servicePointServiceConditionsTransfer) {
-            return $servicePointServiceQuery;
+        if (!$serviceConditionsTransfer) {
+            return $serviceQuery;
         }
 
-        if ($servicePointServiceConditionsTransfer->getServicePointUuids()) {
-            $servicePointServiceQuery
-                ->joinWithServicePoint()
+        if ($serviceConditionsTransfer->getServicePointUuids()) {
+            $serviceQuery
                 ->useServicePointQuery()
-                    ->filterByUuid_In($servicePointServiceConditionsTransfer->getServicePointUuids())
+                    ->filterByUuid_In($serviceConditionsTransfer->getServicePointUuids())
                 ->endUse();
         }
 
-        if ($servicePointServiceConditionsTransfer->getServicePointServiceIds()) {
-            $servicePointServiceQuery->filterByIdServicePointService_In($servicePointServiceConditionsTransfer->getServicePointServiceIds());
+        if ($serviceConditionsTransfer->getServiceIds()) {
+            $serviceQuery->filterByIdService_In($serviceConditionsTransfer->getServiceIds());
         }
 
-        if ($servicePointServiceConditionsTransfer->getUuids()) {
-            $servicePointServiceQuery->filterByUuid(
-                $servicePointServiceConditionsTransfer->getUuids(),
-                $servicePointServiceConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
+        if ($serviceConditionsTransfer->getUuids()) {
+            $serviceQuery->filterByUuid(
+                $serviceConditionsTransfer->getUuids(),
+                $serviceConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
             );
         }
 
-        if ($servicePointServiceConditionsTransfer->getKeys()) {
-            $servicePointServiceQuery->filterByKey_In($servicePointServiceConditionsTransfer->getKeys());
+        if ($serviceConditionsTransfer->getKeys()) {
+            $serviceQuery->filterByKey_In($serviceConditionsTransfer->getKeys());
         }
 
-        if ($servicePointServiceConditionsTransfer->getServiceTypeUuids()) {
-            $servicePointServiceQuery
-                ->joinWithServiceType()
+        if ($serviceConditionsTransfer->getServiceTypeUuids()) {
+            $serviceQuery
                 ->useServiceTypeQuery()
-                    ->filterByUuid_In($servicePointServiceConditionsTransfer->getServiceTypeUuids())
+                    ->filterByUuid_In($serviceConditionsTransfer->getServiceTypeUuids())
                 ->endUse();
         }
 
-        return $servicePointServiceQuery;
+        return $serviceQuery;
     }
 
     /**

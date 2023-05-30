@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
+use Generated\Shared\Transfer\ServicePointResourceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 
 interface ServicePointMapperInterface
@@ -33,4 +35,15 @@ interface ServicePointMapperInterface
         ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer,
         ServicePointTransfer $servicePointTransfer
     ): ServicePointTransfer;
+
+    /**
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
+     * @param \Generated\Shared\Transfer\ServicePointResourceCollectionTransfer $servicePointResourceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointResourceCollectionTransfer
+     */
+    public function mapServicePointTransfersToServicePointResourceCollectionTransfer(
+        ArrayObject $servicePointTransfers,
+        ServicePointResourceCollectionTransfer $servicePointResourceCollectionTransfer
+    ): ServicePointResourceCollectionTransfer;
 }

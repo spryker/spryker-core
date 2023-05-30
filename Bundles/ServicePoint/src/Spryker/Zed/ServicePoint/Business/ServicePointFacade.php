@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ServicePoint\Business;
 
+use Generated\Shared\Transfer\ServiceCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
@@ -15,10 +19,6 @@ use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
@@ -187,15 +187,15 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ServiceCriteriaTransfer $serviceCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
      */
-    public function getServicePointServiceCollection(
-        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
-    ): ServicePointServiceCollectionTransfer {
+    public function getServiceCollection(
+        ServiceCriteriaTransfer $serviceCriteriaTransfer
+    ): ServiceCollectionTransfer {
         return $this->getRepository()
-            ->getServicePointServiceCollection($servicePointServiceCriteriaTransfer);
+            ->getServiceCollection($serviceCriteriaTransfer);
     }
 
     /**
@@ -203,16 +203,16 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\ServiceCollectionResponseTransfer
      */
-    public function createServicePointServiceCollection(
-        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
-    ): ServicePointServiceCollectionResponseTransfer {
+    public function createServiceCollection(
+        ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+    ): ServiceCollectionResponseTransfer {
         return $this->getFactory()
-            ->createServicePointServiceCreator()
-            ->createServicePointServiceCollection($servicePointServiceCollectionRequestTransfer);
+            ->createServiceCreator()
+            ->createServiceCollection($serviceCollectionRequestTransfer);
     }
 
     /**
@@ -220,15 +220,15 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\ServiceCollectionResponseTransfer
      */
-    public function updateServicePointServiceCollection(
-        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
-    ): ServicePointServiceCollectionResponseTransfer {
+    public function updateServiceCollection(
+        ServiceCollectionRequestTransfer $serviceCollectionRequestTransfer
+    ): ServiceCollectionResponseTransfer {
         return $this->getFactory()
-            ->createServicePointServiceUpdater()
-            ->updateServicePointServiceCollection($servicePointServiceCollectionRequestTransfer);
+            ->createServiceUpdater()
+            ->updateServiceCollection($serviceCollectionRequestTransfer);
     }
 }

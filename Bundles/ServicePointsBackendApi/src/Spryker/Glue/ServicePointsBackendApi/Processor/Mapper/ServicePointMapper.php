@@ -7,10 +7,14 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
+use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ServicePointResourceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
 class ServicePointMapper implements ServicePointMapperInterface
 {
@@ -68,6 +72,28 @@ class ServicePointMapper implements ServicePointMapperInterface
     }
 
     /**
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
+     * @param \Generated\Shared\Transfer\ServicePointResourceCollectionTransfer $servicePointResourceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointResourceCollectionTransfer
+     */
+    public function mapServicePointTransfersToServicePointResourceCollectionTransfer(
+        ArrayObject $servicePointTransfers,
+        ServicePointResourceCollectionTransfer $servicePointResourceCollectionTransfer
+    ): ServicePointResourceCollectionTransfer {
+        foreach ($servicePointTransfers as $servicePointTransfer) {
+            $servicePointResourceCollectionTransfer->addServicePointResource(
+                $this->mapServicePointTransferToServicePointResourceTransfer(
+                    $servicePointTransfer,
+                    new GlueResourceTransfer(),
+                ),
+            );
+        }
+
+        return $servicePointResourceCollectionTransfer;
+    }
+
+    /**
      * @param list<string> $storeNames
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
@@ -84,5 +110,27 @@ class ServicePointMapper implements ServicePointMapperInterface
         }
 
         return $storeRelationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResourceTransfer
+     */
+    protected function mapServicePointTransferToServicePointResourceTransfer(
+        ServicePointTransfer $servicePointTransfer,
+        GlueResourceTransfer $glueResourceTransfer
+    ): GlueResourceTransfer {
+        $apiServicePointsAttributesTransfer = $this
+            ->mapServicePointTransferToApiServicePointsAttributesTransfer(
+                $servicePointTransfer,
+                new ApiServicePointsAttributesTransfer(),
+            );
+
+        return $glueResourceTransfer
+            ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
+            ->setId($servicePointTransfer->getUuidOrFail())
+            ->setAttributes($apiServicePointsAttributesTransfer);
     }
 }

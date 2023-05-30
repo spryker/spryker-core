@@ -66,7 +66,7 @@ interface ServicePointDataImportFacadeInterface
 
     /**
      * Specification:
-     * - Imports service point services data from the specified file.
+     * - Imports services data from the specified file.
      * - Iterates over the data and stores the data at Persistence.
      *
      * @api
@@ -75,5 +75,5 @@ interface ServicePointDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importServicePointServices(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importServices(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }

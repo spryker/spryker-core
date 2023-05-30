@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Updater;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -74,9 +72,9 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
         $apiServicePointAddressesAttributesTransfer = (new ApiServicePointAddressesAttributesTransfer())->fromArray($glueRequestTransfer->getAttributes(), true);
 
         if (!$this->isRequestBodyValid($glueRequestTransfer, $apiServicePointAddressesAttributesTransfer)) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
@@ -86,9 +84,9 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
         $servicePointAddressTransfer = $this->findServicePointAddress($glueResourceTransfer->getIdOrFail());
 
         if (!$servicePointAddressTransfer) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ADDRESS_ENTITY_NOT_FOUND,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
@@ -163,24 +161,6 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
         $parentGlueResourceTransfer = $parentGlueResourceTransfers->getIterator()->current();
 
         return $parentGlueResourceTransfer ?: new GlueResourceTransfer();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function createErrorResponse(
-        GlueRequestTransfer $glueRequestTransfer,
-        string $errorMessage
-    ): GlueResponseTransfer {
-        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
-            $glueRequestTransfer->getLocale(),
-        );
     }
 
     /**

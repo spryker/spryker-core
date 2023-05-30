@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
-use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 
 interface ServicePointEntityManagerInterface
@@ -59,18 +59,18 @@ interface ServicePointEntityManagerInterface
     public function deleteServicePointStores(int $idServicePoint, array $storeIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function createServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer;
+    public function createService(ServiceTransfer $serviceTransfer): ServiceTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function updateServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer;
+    public function updateService(ServiceTransfer $serviceTransfer): ServiceTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer

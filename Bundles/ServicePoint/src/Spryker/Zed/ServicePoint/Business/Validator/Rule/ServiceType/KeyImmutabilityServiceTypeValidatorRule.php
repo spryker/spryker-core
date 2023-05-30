@@ -21,7 +21,7 @@ class KeyImmutabilityServiceTypeValidatorRule implements ServiceTypeValidatorRul
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABLILITY = 'service_point.validation.service_type_key_immutability';
+    protected const GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABILITY = 'service_point.validation.service_type_key_immutability';
 
     /**
      * @var \Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface
@@ -59,7 +59,7 @@ class KeyImmutabilityServiceTypeValidatorRule implements ServiceTypeValidatorRul
                 $this->errorAdder->addError(
                     $errorCollectionTransfer,
                     $entityIdentifier,
-                    static::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABLILITY,
+                    static::GLOSSARY_KEY_VALIDATION_SERVICE_TYPE_KEY_IMMUTABILITY,
                 );
             }
         }

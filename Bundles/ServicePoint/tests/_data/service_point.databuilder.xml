@@ -19,7 +19,7 @@
         <property name="city" dataBuilderRule="city()"/>
     </transfer>
 
-    <transfer name="ServicePointService" strict="true">
+    <transfer name="Service" strict="true">
         <property name="key" dataBuilderRule="unique()->text(30)"/>
         <property name="isActive" dataBuilderRule="boolean()"/>
     </transfer>

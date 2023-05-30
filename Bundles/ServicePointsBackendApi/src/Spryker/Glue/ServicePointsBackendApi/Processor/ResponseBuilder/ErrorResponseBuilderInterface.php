@@ -22,4 +22,12 @@ interface ErrorResponseBuilderInterface
         ArrayObject $errorTransfers,
         ?string $localeName = null
     ): GlueResponseTransfer;
+
+    /**
+     * @param string $errorMessage
+     * @param string|null $localeName
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function createErrorResponseFromErrorMessage(string $errorMessage, ?string $localeName = null): GlueResponseTransfer;
 }

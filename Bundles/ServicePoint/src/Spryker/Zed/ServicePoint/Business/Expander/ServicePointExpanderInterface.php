@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePoint\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
 
 interface ServicePointExpanderInterface
@@ -19,4 +20,13 @@ interface ServicePointExpanderInterface
     public function expandServicePointAddressCollectionWithServicePointIds(
         ServicePointAddressCollectionTransfer $servicePointAddressCollectionTransfer
     ): ServicePointAddressCollectionTransfer;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServiceTransfer> $serviceTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ServiceTransfer>
+     */
+    public function expandServicesWithServicePoints(
+        ArrayObject $serviceTransfers
+    ): ArrayObject;
 }

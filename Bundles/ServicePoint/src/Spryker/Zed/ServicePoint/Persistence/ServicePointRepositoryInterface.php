@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence;
 
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
-use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
 use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 
@@ -51,13 +51,13 @@ interface ServicePointRepositoryInterface
     ): ServicePointAddressCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ServiceCriteriaTransfer $serviceCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
      */
-    public function getServicePointServiceCollection(
-        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
-    ): ServicePointServiceCollectionTransfer;
+    public function getServiceCollection(
+        ServiceCriteriaTransfer $serviceCriteriaTransfer
+    ): ServiceCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer

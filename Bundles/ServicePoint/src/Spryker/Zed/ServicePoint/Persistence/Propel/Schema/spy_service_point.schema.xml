@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ServicePoint\Persistence" package="src.Orm.Zed.ServicePoint.Persistence">
 
-    <table name="spy_service_point" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+    <table name="spy_service_point" idMethod="native" identifierQuoting="true">
         <column name="id_service_point" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
@@ -25,7 +25,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_service_point_store" idMethod="native" allowPkInsert="true">
+    <table name="spy_service_point_store" idMethod="native" identifierQuoting="true">
         <column name="id_service_point_store" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_service_point" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
@@ -46,7 +46,7 @@
         <id-method-parameter value="spy_service_point_store_pk_seq"/>
     </table>
 
-    <table name="spy_service_point_address" idMethod="native" allowPkInsert="true">
+    <table name="spy_service_point_address" idMethod="native" identifierQuoting="true">
         <column name="id_service_point_address" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_service_point" type="INTEGER" required="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
@@ -86,45 +86,45 @@
         <id-method-parameter value="spy_service_point_address_pk_seq"/>
     </table>
 
-    <table name="spy_service_point_service" idMethod="native" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_service_point_service" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_service" idMethod="native" identifierQuoting="true">
+        <column name="id_service" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
         <column name="fk_service_point" type="INTEGER" required="true"/>
         <column name="fk_service_type" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true" size="255"/>
         <column name="is_active" type="BOOLEAN" required="true"/>
 
-        <foreign-key name="spy_service_point_service-fk_service_point" foreignTable="spy_service_point" phpName="ServicePoint" refPhpName="ServicePointService">
+        <foreign-key name="spy_service-fk_service_point" foreignTable="spy_service_point" phpName="ServicePoint" refPhpName="Service">
             <reference local="fk_service_point" foreign="id_service_point"/>
         </foreign-key>
 
-        <foreign-key name="spy_service_point_service-fk_service_type" foreignTable="spy_service_type" phpName="ServiceType" refPhpName="ServicePointService">
+        <foreign-key name="spy_service-fk_service_type" foreignTable="spy_service_type" phpName="ServiceType" refPhpName="Service">
             <reference local="fk_service_type" foreign="id_service_type"/>
         </foreign-key>
 
-        <unique name="spy_service_point_service-unique-uuid">
+        <unique name="spy_service-unique-uuid">
             <unique-column name="uuid"/>
         </unique>
 
-        <unique name="spy_service_point_service-unique-key">
+        <unique name="spy_service-unique-key">
             <unique-column name="key"/>
         </unique>
 
-        <unique name="spy_service_point_service-unique-fk_sp-fk_st">
+        <unique name="spy_service-unique-fk_sp-fk_st">
             <unique-column name="fk_service_point"/>
             <unique-column name="fk_service_type"/>
         </unique>
 
-        <id-method-parameter value="spy_service_point_service_pk_seq"/>
+        <id-method-parameter value="spy_service_pk_seq"/>
 
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_service_point_service"/>
+            <parameter name="key_columns" value="id_service"/>
         </behavior>
 
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_service_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+    <table name="spy_service_type" idMethod="native" identifierQuoting="true">
         <column name="id_service_type" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>

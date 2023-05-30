@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
@@ -93,10 +92,8 @@ class ServicePointReader implements ServicePointReaderInterface
             );
         }
 
-        $errorTransfer = (new ErrorTransfer())->setMessage(ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
+        return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
+            ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND,
             $glueRequestTransfer->getLocale(),
         );
     }

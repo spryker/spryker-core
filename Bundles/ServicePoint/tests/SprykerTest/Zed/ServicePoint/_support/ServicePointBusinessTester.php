@@ -10,19 +10,19 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\ServicePoint;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ServiceBuilder;
 use Generated\Shared\DataBuilder\ServicePointAddressBuilder;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
-use Generated\Shared\DataBuilder\ServicePointServiceBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
-use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
-use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 
 /**
@@ -70,7 +70,7 @@ class ServicePointBusinessTester extends Actor
         );
 
         $this->ensureDatabaseTableIsEmpty(
-            $this->getServicePointServiceQuery(),
+            $this->getServiceQuery(),
         );
     }
 
@@ -151,14 +151,14 @@ class ServicePointBusinessTester extends Actor
     /**
      * @param array<string, mixed> $seed
      *
-     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function createServicePointServiceTransferWithRelations(array $seed = []): ServicePointServiceTransfer
+    public function createServiceTransferWithRelations(array $seed = []): ServiceTransfer
     {
-        $servicePointTransfer = $this->haveServicePoint($seed[ServicePointServiceTransfer::SERVICE_POINT] ?? [])->toArray();
-        $serviceTypeTransfer = $this->haveServiceType($seed[ServicePointServiceTransfer::SERVICE_TYPE] ?? [])->toArray();
+        $servicePointTransfer = $this->haveServicePoint($seed[ServiceTransfer::SERVICE_POINT] ?? [])->toArray();
+        $serviceTypeTransfer = $this->haveServiceType($seed[ServiceTransfer::SERVICE_TYPE] ?? [])->toArray();
 
-        return (new ServicePointServiceBuilder($seed))
+        return (new ServiceBuilder($seed))
             ->withServicePoint($servicePointTransfer)
             ->withServiceType($serviceTypeTransfer)
             ->build();
@@ -181,10 +181,10 @@ class ServicePointBusinessTester extends Actor
     }
 
     /**
-     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery
      */
-    public function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    public function getServiceQuery(): SpyServiceQuery
     {
-        return SpyServicePointServiceQuery::create();
+        return SpyServiceQuery::create();
     }
 }

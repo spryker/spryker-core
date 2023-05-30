@@ -11,7 +11,7 @@
         "spryker/publisher-extension": "^1.0.0",
         "spryker/search": "^8.0.0",
         "spryker/search-extension": "^1.0.0",
-        "spryker/service-point": "^0.2.1 || ^0.3.0",
+        "spryker/service-point": "^0.2.1 || ^0.3.0 || ^0.4.0",
         "spryker/store": "^1.19.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.0.0",

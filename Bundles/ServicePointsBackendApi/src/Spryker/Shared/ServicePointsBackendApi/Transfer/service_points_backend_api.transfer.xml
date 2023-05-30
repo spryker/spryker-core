@@ -57,6 +57,84 @@
         <property name="withStoreRelations" type="bool"/>
     </transfer>
 
+    <transfer name="ApiServiceTypesAttributes" strict="true">
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ServiceType" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ServiceTypeCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
+    </transfer>
+
+    <transfer name="ServiceTypeCollectionRequest" strict="true">
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="ServiceTypeCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+        <property name="serviceTypeConditions" type="ServiceTypeConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="ServiceTypeCollection" strict="true">
+        <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
+    </transfer>
+
+    <transfer name="ServiceTypeConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="Service" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="servicePoint" type="ServicePoint"/>
+        <property name="serviceType" type="ServiceType"/>
+    </transfer>
+
+    <transfer name="ServiceCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="services" type="Service[]" singular="service"/>
+    </transfer>
+
+    <transfer name="ServiceCollectionRequest" strict="true">
+        <property name="services" type="Service[]" singular="service"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="ServiceCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+        <property name="serviceConditions" type="ServiceConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="ServiceCollection" strict="true">
+        <property name="services" type="Service[]" singular="service"/>
+    </transfer>
+
+    <transfer name="ServiceConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="serviceTypeUuids" type="string[]" singular="serviceTypeUuid"/>
+    </transfer>
+
+    <transfer name="ApiServicesAttributes" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ApiServicesRequestAttributes" strict="true">
+        <property name="serviceTypeUuid" type="string"/>
+        <property name="servicePointUuid" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="key" type="string"/>
+    </transfer>
+
     <transfer name="GlueResourceMethodCollection">
         <property name="getCollection" type="GlueResourceMethodConfiguration"/>
         <property name="get" type="GlueResourceMethodConfiguration"/>
@@ -88,6 +166,14 @@
         <property name="attributes" type="AbstractAttributes"/>
         <property name="type" type="string"/>
         <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
+    </transfer>
+
+    <transfer name="ServicePointResourceCollection">
+        <property name="servicePointResources" type="GlueResource[]" singular="servicePointResource"/>
+    </transfer>
+
+    <transfer name="ServiceTypeResourceCollection">
+        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource"/>
     </transfer>
 
     <transfer name="GlueError">
