@@ -24,6 +24,8 @@ use Spryker\Zed\ServicePoint\Business\Expander\ServicePointExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpanderInterface;
+use Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpander;
+use Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Expander\ServiceTypeExpander;
 use Spryker\Zed\ServicePoint\Business\Expander\ServiceTypeExpanderInterface;
 use Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractor;
@@ -114,6 +116,7 @@ class ServicePointBusinessFactory extends AbstractBusinessFactory
         return new ServicePointReader(
             $this->getRepository(),
             $this->createServicePointStoreRelationExpander(),
+            $this->createServiceRelationExpander(),
         );
     }
 
@@ -240,6 +243,16 @@ class ServicePointBusinessFactory extends AbstractBusinessFactory
     public function createServicePointStoreRelationExpander(): ServicePointStoreRelationExpanderInterface
     {
         return new ServicePointStoreRelationExpander(
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpanderInterface
+     */
+    public function createServiceRelationExpander(): ServiceRelationExpanderInterface
+    {
+        return new ServiceRelationExpander(
             $this->getRepository(),
         );
     }

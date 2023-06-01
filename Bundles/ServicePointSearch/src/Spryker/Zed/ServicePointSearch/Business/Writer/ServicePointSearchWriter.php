@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePointSearch\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
@@ -35,6 +36,13 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
      * @var string
      */
     protected const COL_SERVICE_POINT_STORE_FK_SERVICE_POINT = 'spy_service_point_store.fk_service_point';
+
+    /**
+     * @uses \Orm\Zed\ServicePoint\Persistence\Map\SpyServiceTableMap::COL_FK_SERVICE_POINT
+     *
+     * @var string
+     */
+    protected const COL_SERVICE_FK_SERVICE_POINT = 'spy_service.fk_service_point';
 
     /**
      * @var \Spryker\Zed\ServicePointSearch\Dependency\Facade\ServicePointSearchToServicePointFacadeInterface
@@ -133,6 +141,21 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByServiceEvents(array $eventTransfers): void
+    {
+        $servicePointIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers,
+            static::COL_SERVICE_FK_SERVICE_POINT,
+        );
+
+        $this->writeCollectionByServicePointIds(array_unique($servicePointIds));
+    }
+
+    /**
      * @param list<int> $servicePointIds
      *
      * @return void
@@ -170,6 +193,7 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
         $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
             ->setWithAddressRelation(true)
             ->setWithStoreRelations(true)
+            ->setWithServiceRelations(true)
             ->setServicePointIds($servicePointIds);
 
         $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
@@ -195,6 +219,8 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
 
                 continue;
             }
+
+            $this->filterOutInactiveServices($servicePointTransfer);
 
             $this->writeCollectionPerStore($servicePointTransfer, $servicePointSearchTransfers, $storeTransfers);
         }
@@ -311,5 +337,22 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
         }
 
         return $servicePointSearchIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     *
+     * @return void
+     */
+    protected function filterOutInactiveServices(ServicePointTransfer $servicePointTransfer): void
+    {
+        $activeServiceTransfers = new ArrayObject();
+        foreach ($servicePointTransfer->getServices() as $serviceTransfer) {
+            if ($serviceTransfer->getIsActive()) {
+                $activeServiceTransfers->append($serviceTransfer);
+            }
+        }
+
+        $servicePointTransfer->setServices($activeServiceTransfers);
     }
 }

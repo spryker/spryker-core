@@ -34,6 +34,7 @@ interface ServicePointFacadeInterface
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.servicePointIds` to filter by service point ids.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withStoreRelations` to load store relations.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withAddressRelation` to load address relation.
+     * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withServiceRelations` to load service relations.
      * - Inverses uuids filtering in case `ServicePointCriteriaTransfer.servicePointConditions.isUuidsConditionInversed` is set to `true`.
      * - Uses `ServicePointCriteriaTransfer.sort.field` to set the 'order by' field.
      * - Uses `ServicePointCriteriaTransfer.sort.isAscending` to set ascending/descending order.

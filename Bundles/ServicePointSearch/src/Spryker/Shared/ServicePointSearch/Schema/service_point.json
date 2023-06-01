@@ -69,6 +69,9 @@
                 "string-sort": {
                     "type": "object",
                     "properties": {}
+                },
+                "service-types": {
+                    "type": "keyword"
                 }
             }
         }

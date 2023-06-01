@@ -55,6 +55,20 @@ interface ServicePointSearchFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves all Service Points using `spy_service.fk_service_point` from `$eventTransfers`.
+     * - Updates entities from `spy_service_point_search` with actual data from obtained Service Points.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByServiceEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
      * - Deletes entities from `spy_service_point_search` based on IDs from `$eventTransfers`.
      * - Sends delete message to queue based on module config.
      *

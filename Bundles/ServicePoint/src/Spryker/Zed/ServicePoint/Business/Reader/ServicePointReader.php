@@ -10,6 +10,7 @@ namespace Spryker\Zed\ServicePoint\Business\Reader;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpanderInterface;
+use Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpanderInterface;
 use Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface;
 
 class ServicePointReader implements ServicePointReaderInterface
@@ -25,15 +26,23 @@ class ServicePointReader implements ServicePointReaderInterface
     protected ServicePointStoreRelationExpanderInterface $servicePointStoreRelationExpander;
 
     /**
+     * @var \Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpanderInterface
+     */
+    protected ServiceRelationExpanderInterface $serviceRelationExpander;
+
+    /**
      * @param \Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface $servicePointRepository
      * @param \Spryker\Zed\ServicePoint\Business\Expander\ServicePointStoreRelationExpanderInterface $servicePointStoreRelationExpander
+     * @param \Spryker\Zed\ServicePoint\Business\Expander\ServiceRelationExpanderInterface $serviceRelationExpander
      */
     public function __construct(
         ServicePointRepositoryInterface $servicePointRepository,
-        ServicePointStoreRelationExpanderInterface $servicePointStoreRelationExpander
+        ServicePointStoreRelationExpanderInterface $servicePointStoreRelationExpander,
+        ServiceRelationExpanderInterface $serviceRelationExpander
     ) {
         $this->servicePointRepository = $servicePointRepository;
         $this->servicePointStoreRelationExpander = $servicePointStoreRelationExpander;
+        $this->serviceRelationExpander = $serviceRelationExpander;
     }
 
     /**
@@ -48,9 +57,18 @@ class ServicePointReader implements ServicePointReaderInterface
             ->getServicePointCollection($servicePointCriteriaTransfer);
 
         $servicePointConditionsTransfer = $servicePointCriteriaTransfer->getServicePointConditions();
+        if (!$servicePointConditionsTransfer) {
+            return $servicePointCollectionTransfer;
+        }
 
-        if ($servicePointConditionsTransfer && $servicePointConditionsTransfer->getWithStoreRelations()) {
-            return $this->servicePointStoreRelationExpander->expandServicePointCollectionWithStoreRelations(
+        if ($servicePointConditionsTransfer->getWithStoreRelations()) {
+            $servicePointCollectionTransfer = $this->servicePointStoreRelationExpander->expandServicePointCollectionWithStoreRelations(
+                $servicePointCollectionTransfer,
+            );
+        }
+
+        if ($servicePointConditionsTransfer->getWithServiceRelations()) {
+            $servicePointCollectionTransfer = $this->serviceRelationExpander->expandServicePointCollectionWithServiceRelations(
                 $servicePointCollectionTransfer,
             );
         }

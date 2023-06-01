@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -462,6 +463,70 @@ class GetServicePointCollectionTest extends Unit
         // Assert
         $this->assertNull($servicePointCollectionTransfer->getServicePoints()->offsetGet(0)->getAddress());
         $this->assertNotNull($servicePointCollectionTransfer->getServicePoints()->offsetGet(1)->getAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsServicePointsWithServiceRelations(): void
+    {
+        // Arrange
+        $idStore = $this->tester->haveStore()->getIdStore();
+
+        $servicePointTransfer = $this->createServicePointWithStoreRelation([$idStore]);
+
+        $serviceData = [
+            ServiceTransfer::SERVICE_POINT => $servicePointTransfer->toArray(),
+        ];
+        $serviceTransfer = $this->tester->haveService($serviceData);
+        $secondServiceTransfer = $this->tester->haveService($serviceData);
+
+        $secondServicePointTransfer = $this->createServicePointWithStoreRelation([$idStore]);
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->setServicePointIds([$servicePointTransfer->getIdServicePoint(), $secondServicePointTransfer->getIdServicePoint()])
+            ->setWithServiceRelations(true);
+
+        $sortTransfer = (new SortTransfer())
+            ->setField(ServicePointTransfer::ID_SERVICE_POINT)
+            ->setIsAscending(true);
+
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer)
+            ->addSort($sortTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $servicePointCollectionTransfer->getServicePoints());
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $resultServicePointTransfer */
+        $resultServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->offsetGet(0);
+        $this->assertSame($servicePointTransfer->getIdServicePoint(), $resultServicePointTransfer->getIdServicePoint());
+        $this->assertCount(2, $resultServicePointTransfer->getServices());
+
+        /** @var \Generated\Shared\Transfer\ServiceTransfer $resultServiceTransfer */
+        $resultServiceTransfer = $resultServicePointTransfer->getServices()->offsetGet(0);
+        $this->assertSame($serviceTransfer->getIdService(), $resultServiceTransfer->getIdService());
+        $this->assertSame($serviceTransfer->getUuid(), $resultServiceTransfer->getUuid());
+        $this->assertSame($serviceTransfer->getKey(), $resultServiceTransfer->getKey());
+        $this->assertSame($serviceTransfer->getIsActive(), $resultServiceTransfer->getIsActive());
+        $this->assertSame($serviceTransfer->getServiceType()->toArray(), $resultServiceTransfer->getServiceType()->toArray());
+
+        /** @var \Generated\Shared\Transfer\ServiceTransfer $resultSecondServiceTransfer */
+        $resultSecondServiceTransfer = $resultServicePointTransfer->getServices()->offsetGet(1);
+        $this->assertSame($secondServiceTransfer->getIdService(), $resultSecondServiceTransfer->getIdService());
+        $this->assertSame($secondServiceTransfer->getUuid(), $resultSecondServiceTransfer->getUuid());
+        $this->assertSame($secondServiceTransfer->getKey(), $resultSecondServiceTransfer->getKey());
+        $this->assertSame($secondServiceTransfer->getIsActive(), $resultSecondServiceTransfer->getIsActive());
+        $this->assertSame($secondServiceTransfer->getServiceType()->toArray(), $resultSecondServiceTransfer->getServiceType()->toArray());
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $resultSecondServicePointTransfer */
+        $resultSecondServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->offsetGet(1);
+        $this->assertSame($secondServicePointTransfer->getIdServicePoint(), $resultSecondServicePointTransfer->getIdServicePoint());
+        $this->assertCount(0, $resultSecondServicePointTransfer->getServices());
     }
 
     /**

@@ -9,6 +9,7 @@
         <property name="isActive" type="bool"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property name="address" type="ServicePointAddress"/>
+        <property name="services" type="Service[]" singular="service"/>
     </transfer>
 
     <transfer name="ServicePointAddress" strict="true">
@@ -66,6 +67,7 @@
         <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
         <property name="withStoreRelations" type="bool"/>
         <property name="withAddressRelation" type="bool"/>
+        <property name="withServiceRelations" type="bool"/>
         <property name="isUuidsConditionInversed" type="bool"/>
     </transfer>
 

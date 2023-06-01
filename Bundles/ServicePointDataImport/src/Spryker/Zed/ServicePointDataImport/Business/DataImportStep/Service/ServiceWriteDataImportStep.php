@@ -10,11 +10,19 @@ namespace Spryker\Zed\ServicePointDataImport\Business\DataImportStep\Service;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ServicePointDataImport\Business\DataSet\ServiceDataSetInterface;
 
-class ServiceWriteDataImportStep implements DataImportStepInterface
+class ServiceWriteDataImportStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ServicePointSearch\ServicePointSearchConfig::SERVICE_POINT_PUBLISH
+     *
+     * @var string
+     */
+    protected const SERVICE_POINT_PUBLISH = 'ServicePoint.service_point.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -36,6 +44,8 @@ class ServiceWriteDataImportStep implements DataImportStepInterface
         $serviceEntity
             ->fromArray($dataSet->getArrayCopy())
             ->save();
+
+        $this->addPublishEvents(static::SERVICE_POINT_PUBLISH, $dataSet[ServiceDataSetInterface::COLUMN_ID_SERVICE_POINT]);
     }
 
     /**

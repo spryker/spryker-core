@@ -120,4 +120,24 @@ class ServicePointSearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_SERVICE_POINT_STORE_DELETE = 'Entity.spy_service_point_store.delete';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_service` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_CREATE = 'Entity.spy_service.create';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_service` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_UPDATE = 'Entity.spy_service.update';
 }

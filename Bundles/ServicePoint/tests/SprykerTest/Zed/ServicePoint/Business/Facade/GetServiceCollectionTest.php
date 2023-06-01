@@ -443,6 +443,35 @@ class GetServiceCollectionTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShouldReturnServiceCollectionWithServicePointUuidAndServiceTypeRelation(): void
+    {
+        // Arrange
+        $serviceTransfer = $this->serviceTransfers[0];
+
+        $serviceConditionsTransfer = (new ServiceConditionsTransfer())->addIdService($serviceTransfer->getIdService());
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())->setServiceConditions($serviceConditionsTransfer);
+
+        // Act
+        $serviceCollectionTransfer = $this->tester->getFacade()
+            ->getServiceCollection($serviceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $serviceCollectionTransfer->getServices());
+
+        /** @var \Generated\Shared\Transfer\ServiceTransfer $resultServiceTransfer */
+        $resultServiceTransfer = $serviceCollectionTransfer->getServices()->getIterator()->current();
+
+        $this->assertSame($serviceTransfer->getServiceType()->toArray(), $resultServiceTransfer->getServiceType()->toArray());
+
+        $this->assertSame($serviceTransfer->getServicePoint()->getUuid(), $resultServiceTransfer->getServicePoint()->getUuid());
+        $this->assertNull($resultServiceTransfer->getServicePoint()->getIdServicePoint());
+        $this->assertNull($resultServiceTransfer->getServicePoint()->getKey());
+        $this->assertNull($resultServiceTransfer->getServicePoint()->getName());
+    }
+
+    /**
      * @return list<\Generated\Shared\Transfer\ServiceTransfer>
      */
     protected function createDummyServiceTransfers(): array

@@ -74,6 +74,22 @@ class ServicePointSearchFacade extends AbstractFacade implements ServicePointSea
      *
      * @return void
      */
+    public function writeCollectionByServiceEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createServicePointSearchWriter()
+            ->writeCollectionByServiceEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
     public function deleteCollectionByServicePointEvents(array $eventTransfers): void
     {
         $this->getFactory()

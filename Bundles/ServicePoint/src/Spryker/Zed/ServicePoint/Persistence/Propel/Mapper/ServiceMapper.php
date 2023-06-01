@@ -17,6 +17,19 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ServiceMapper
 {
     /**
+     * @var \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper
+     */
+    protected ServiceTypeMapper $serviceTypeMapper;
+
+    /**
+     * @param \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper $serviceTypeMapper
+     */
+    public function __construct(ServiceTypeMapper $serviceTypeMapper)
+    {
+        $this->serviceTypeMapper = $serviceTypeMapper;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      * @param \Orm\Zed\ServicePoint\Persistence\SpyService $serviceEntity
      *
@@ -48,9 +61,11 @@ class ServiceMapper
             (new ServicePointTransfer())->setUuid($serviceEntity->getServicePoint()->getUuid()),
         );
 
-        $serviceTransfer->setServiceType(
-            (new ServiceTypeTransfer())->setUuid($serviceEntity->getServiceType()->getUuid()),
+        $serviceTypeTransfer = $this->serviceTypeMapper->mapServiceTypeEntityToServiceTypeTransfer(
+            $serviceEntity->getServiceType(),
+            new ServiceTypeTransfer(),
         );
+        $serviceTransfer->setServiceType($serviceTypeTransfer);
 
         return $serviceTransfer->fromArray(
             $serviceEntity->toArray(),

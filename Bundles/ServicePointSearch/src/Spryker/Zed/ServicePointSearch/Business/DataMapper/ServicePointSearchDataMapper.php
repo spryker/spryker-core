@@ -34,6 +34,7 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
             ServicePointIndexMap::SUGGESTION_TERMS => $this->getSuggestionTermsData($servicePointTransfer),
             ServicePointIndexMap::COMPLETION_TERMS => $this->getCompletionTermsData($servicePointTransfer),
             ServicePointIndexMap::STRING_SORT => $this->getStringSortData($servicePointTransfer),
+            ServicePointIndexMap::SERVICE_TYPES => $this->getServiceTypesData($servicePointTransfer),
         ];
     }
 
@@ -181,5 +182,24 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
             $servicePointAddressTransfer->getAddress2OrFail(),
             $servicePointAddressTransfer->getAddress3() ?? '',
         ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     *
+     * @return list<string>
+     */
+    protected function getServiceTypesData(ServicePointTransfer $servicePointTransfer): array
+    {
+        if (!count($servicePointTransfer->getServices())) {
+            return [];
+        }
+
+        $serviceTypesData = [];
+        foreach ($servicePointTransfer->getServices() as $serviceTransfer) {
+            $serviceTypesData[] = $serviceTransfer->getServiceTypeOrFail()->getKeyOrFail();
+        }
+
+        return array_unique($serviceTypesData);
     }
 }

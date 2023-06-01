@@ -63,6 +63,13 @@ class ServicePointSearchBusinessTester extends Actor
     protected const COUNTRY_ISO3_CODE = '000';
 
     /**
+     * @uses \Spryker\Shared\ServicePointSearch\ServicePointSearchConfig::SERVICE_POINT_RESOURCE_NAME
+     *
+     * @var string
+     */
+    protected const TYPE_SERVICE_POINT = 'service_point';
+
+    /**
      * @return void
      */
     public function setDependencies(): void
@@ -254,7 +261,7 @@ class ServicePointSearchBusinessTester extends Actor
      */
     public function assertServicePointData(ServicePointTransfer $servicePointTransfer, array $data): void
     {
-        $this->assertSame('service_point', $data[ServicePointIndexMap::TYPE]);
+        $this->assertSame(static::TYPE_SERVICE_POINT, $data[ServicePointIndexMap::TYPE]);
         $this->assertSame(static::TEST_STORE_DE, $data[ServicePointIndexMap::STORE]);
         $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT_BOOSTED]);
         $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT]);
@@ -285,7 +292,7 @@ class ServicePointSearchBusinessTester extends Actor
      */
     public function assertServicePointAddressData(ServicePointAddressTransfer $servicePointAddressTransfer, array $data): void
     {
-        $this->assertSame('service_point', $data[ServicePointIndexMap::TYPE]);
+        $this->assertSame(static::TYPE_SERVICE_POINT, $data[ServicePointIndexMap::TYPE]);
         $this->assertSame(static::TEST_STORE_DE, $data[ServicePointIndexMap::STORE]);
         $this->assertSame([$servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT_BOOSTED]);
         $this->assertSame([$servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail()], $data[ServicePointIndexMap::SUGGESTION_TERMS]);
@@ -349,6 +356,19 @@ class ServicePointSearchBusinessTester extends Actor
             $servicePointAddressTransfer->getRegionOrFail()->getNameOrFail(),
             $data[ServicePointTransfer::ADDRESS][ServicePointAddressTransfer::REGION][RegionTransfer::NAME],
         );
+    }
+
+    /**
+     * @param list<string> $serviceTypes
+     * @param array<string, mixed> $data
+     *
+     * @return void
+     */
+    public function assertServiceData(array $serviceTypes, array $data): void
+    {
+        $this->assertSame(static::TYPE_SERVICE_POINT, $data[ServicePointIndexMap::TYPE]);
+        $this->assertSame(static::TEST_STORE_DE, $data[ServicePointIndexMap::STORE]);
+        $this->assertSame($serviceTypes, $data[ServicePointIndexMap::SERVICE_TYPES]);
     }
 
     /**
