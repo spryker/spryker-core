@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\ShipmentTypeServicePoint\Persistence" package="src.Orm.Zed.ShipmentTypeServicePoint.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
+
+    <table name="spy_shipment_type_service_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_shipment_type_service_type" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="shipment_type_uuid" type="VARCHAR" required="true" size="36"/>
+        <column name="service_type_uuid" type="VARCHAR" required="true" size="36"/>
+
+        <unique name="spy_shipment_type_service_type-unique-shipment_type_uuid">
+            <unique-column name="shipment_type_uuid"/>
+        </unique>
+
+        <id-method-parameter value="spy_shipment_type_service_type_pk_seq"/>
+    </table>
+
+</database>

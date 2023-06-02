@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/service-point": "Added for future compatibility.",
+        "spryker/shipment-type": "Added for future compatibility."
+    }
+}
