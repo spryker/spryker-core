@@ -18,7 +18,18 @@ interface PickingListConditionsExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PickingListConditionsTransfer
      */
-    public function expandWithRequestData(
+    public function expandWithPickingListRequestData(
+        PickingListConditionsTransfer $pickingListConditionsTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): PickingListConditionsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PickingListConditionsTransfer $pickingListConditionsTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListConditionsTransfer
+     */
+    public function expandWithPickingListCollectionRequestData(
         PickingListConditionsTransfer $pickingListConditionsTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): PickingListConditionsTransfer;

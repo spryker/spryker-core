@@ -75,6 +75,9 @@ class PickingListResourceController extends AbstractBackendApiController
      *                  "ref": "Fields"
      *              },
      *              {
+     *                  "ref": "Filter"
+     *              },
+     *              {
      *                  "ref": "Sort"
      *              }
      *          ],

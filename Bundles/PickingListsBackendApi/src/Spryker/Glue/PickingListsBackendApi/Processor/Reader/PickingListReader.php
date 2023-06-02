@@ -90,7 +90,10 @@ class PickingListReader implements PickingListReaderInterface
     public function getPickingListCollection(
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        $pickingListConditionsTransfer = $this->pickingListConditionsExpander->expandWithRequestData(new PickingListConditionsTransfer(), $glueRequestTransfer);
+        $pickingListConditionsTransfer = $this->pickingListConditionsExpander->expandWithPickingListCollectionRequestData(
+            new PickingListConditionsTransfer(),
+            $glueRequestTransfer,
+        );
         $pickingListCriteriaTransfer = $this->pickingListMapper
             ->mapGlueRequestTransferToPickingListCriteriaTransfer(
                 $glueRequestTransfer,
@@ -122,7 +125,10 @@ class PickingListReader implements PickingListReaderInterface
                 $glueRequestTransfer,
                 (new PickingListConditionsTransfer())->addUuid($uuid),
             );
-        $pickingListConditionsTransfer = $this->pickingListConditionsExpander->expandWithRequestData($pickingListConditionsTransfer, $glueRequestTransfer);
+        $pickingListConditionsTransfer = $this->pickingListConditionsExpander->expandWithPickingListRequestData(
+            $pickingListConditionsTransfer,
+            $glueRequestTransfer,
+        );
         $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->setPickingListConditions($pickingListConditionsTransfer);
         $pickingListCollectionTransfer = $this->pickingListFacade->getPickingListCollection($pickingListCriteriaTransfer);
 

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestUserTransfer;
 use Generated\Shared\Transfer\PickingListConditionsTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 use Spryker\Glue\PickingListsBackendApi\Processor\Extractor\WarehouseUserAssignmentExtractorInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader;
@@ -53,7 +54,7 @@ class PickingListConditionsExpander implements PickingListConditionsExpanderInte
      *
      * @return \Generated\Shared\Transfer\PickingListConditionsTransfer
      */
-    public function expandWithRequestData(
+    public function expandWithPickingListRequestData(
         PickingListConditionsTransfer $pickingListConditionsTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): PickingListConditionsTransfer {
@@ -67,6 +68,51 @@ class PickingListConditionsExpander implements PickingListConditionsExpanderInte
         }
 
         $pickingListConditionsTransfer->addWarehouseUuid($stockTransfer->getUuidOrFail());
+
+        return $pickingListConditionsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PickingListConditionsTransfer $pickingListConditionsTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListConditionsTransfer
+     */
+    public function expandWithPickingListCollectionRequestData(
+        PickingListConditionsTransfer $pickingListConditionsTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): PickingListConditionsTransfer {
+        $pickingListConditionsTransfer = $this->expandWithFilters($pickingListConditionsTransfer, $glueRequestTransfer);
+
+        return $this->expandWithPickingListRequestData($pickingListConditionsTransfer, $glueRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PickingListConditionsTransfer $pickingListConditionsTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListConditionsTransfer
+     */
+    protected function expandWithFilters(
+        PickingListConditionsTransfer $pickingListConditionsTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): PickingListConditionsTransfer {
+        foreach ($glueRequestTransfer->getFilters() as $glueFilterTransfer) {
+            if ($glueFilterTransfer->getResourceOrFail() !== PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS) {
+                return $pickingListConditionsTransfer;
+            }
+
+            if ($glueFilterTransfer->getField() === PickingListConditionsTransfer::UUIDS) {
+                /** @var list<string>|string $filterValue */
+                $filterValue = $glueFilterTransfer->getValueOrFail();
+
+                if (!is_array($filterValue)) {
+                    continue;
+                }
+
+                $pickingListConditionsTransfer->setUuids(array_filter($filterValue, 'is_string'));
+            }
+        }
 
         return $pickingListConditionsTransfer;
     }

@@ -15,6 +15,7 @@ paths:
                 - $ref: '#/components/parameters/ContentType'
                 - $ref: '#/components/parameters/Page'
                 - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/Filter'
                 - $ref: '#/components/parameters/Sort'
             responses:
                 '200':
@@ -229,6 +230,22 @@ components:
             schema:
                 type: string
                 example: -sku
+        Filter:
+            name: filter
+            in: query
+            description: 'Parameter is used to filter items by specified values.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    picking-lists.uuids:
+                        type: array
+                        items:
+                            type: string
+                example:
+                    picking-lists.uuids: ['e824d418-4a36-46c3-8ecf-28f5fb6c1483']
     schemas:
         ApiPickingListItemsAttributes:
             required:
