@@ -77,15 +77,18 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     {
         $cachedProductViewTransfers = $this->getProductViewTransfersFromCache($productIds, $localeName, $selectedAttributes);
 
-        $productIds = array_diff($productIds, array_keys($cachedProductViewTransfers));
-        if (!$productIds) {
-            return $cachedProductViewTransfers;
+        $notCachedProductIds = array_diff($productIds, array_keys($cachedProductViewTransfers));
+        if (!$notCachedProductIds) {
+            return $this->sortProductViewTransfersByProductIds($cachedProductViewTransfers, $productIds);
         }
 
-        $productStorageDataCollection = $this->getBulkProductStorageData($productIds, $localeName);
+        $productStorageDataCollection = $this->getBulkProductStorageData($notCachedProductIds, $localeName);
         $productViewTransfers = $this->mapProductData($productStorageDataCollection, $localeName, $selectedAttributes);
 
-        return array_merge($cachedProductViewTransfers, $productViewTransfers);
+        return $this->sortProductViewTransfersByProductIds(
+            array_merge($cachedProductViewTransfers, $productViewTransfers),
+            $productIds,
+        );
     }
 
     /**
@@ -204,6 +207,22 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     {
         $selectedAttributesCacheKey = $this->createSelectedAttributesCacheKey($selectedAttributes);
         static::$productViewTransfersCache[$this->getProductId($productViewTransfer)][$localeName][$selectedAttributesCacheKey] = $productViewTransfer;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param list<int> $productIds
+     *
+     * @return list<\Generated\Shared\Transfer\ProductViewTransfer>
+     */
+    protected function sortProductViewTransfersByProductIds(array $productViewTransfers, array $productIds): array
+    {
+        usort($productViewTransfers, function (ProductViewTransfer $productViewTransfer, ProductViewTransfer $secondProductViewTransfer) use ($productIds) {
+            return array_search($this->getProductId($productViewTransfer), $productIds)
+                <=> array_search($this->getProductId($secondProductViewTransfer), $productIds);
+        });
+
+        return $productViewTransfers;
     }
 
     /**

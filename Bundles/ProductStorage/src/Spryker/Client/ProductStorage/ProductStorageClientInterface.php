@@ -287,6 +287,7 @@ interface ProductStorageClientInterface
      * - Filters restricted products.
      * - Maps raw product data to ProductViewTransfers for the current locale.
      * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
+     * - Sorts collection of `ProductViewTransfers` according to the order of IDs in `$productAbstractIds`.
      *
      * @api
      *
@@ -304,6 +305,7 @@ interface ProductStorageClientInterface
      * - Filters restricted concrete products.
      * - Maps raw product data to ProductViewTransfers for the current locale.
      * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
+     * - Sorts collection of `ProductViewTransfers` according to the order of IDs in `$productConcreteIds`.
      *
      * @api
      *

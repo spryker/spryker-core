@@ -83,14 +83,34 @@ class ProductStorageClientTest extends Unit
     protected const PRODUCT_CONCRETE_ID_2 = 10002;
 
     /**
-     * @var string
+     * @var int
      */
-    protected const LOCALE_NAME = 'DE';
+    protected const ID_PRODUCT = 8881;
+
+    /**
+     * @var int
+     */
+    protected const ID_PRODUCT_2 = 8882;
+
+    /**
+     * @var int
+     */
+    protected const ID_PRODUCT_3 = 8883;
+
+    /**
+     * @var int
+     */
+    protected const ID_PRODUCT_4 = 8884;
+
+    /**
+     * @var int
+     */
+    protected const ID_PRODUCT_5 = 8885;
 
     /**
      * @var \SprykerTest\Client\ProductStorage\ProductStorageClientTester
      */
-    protected $tester;
+    protected ProductStorageClientTester $tester;
 
     /**
      * @return void
@@ -124,7 +144,7 @@ class ProductStorageClientTest extends Unit
             ->getProductStorageClient()
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 [$idProductAbstract],
-                static::LOCALE_NAME,
+                ProductStorageClientTester::LOCALE_NAME,
                 $storeName,
             );
 
@@ -146,7 +166,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock, $productAttributeFilterMock))
-            ->expandProductVariantData($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductVariantData($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         $this->assertFalse($productConcreteStorageData[ProductViewTransfer::AVAILABLE]);
@@ -168,7 +188,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $expandedProductViewTransfer = $this->tester->getProductStorageClient()
-            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductViewWithProductVariant($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         $this->assertFalse($expandedProductViewTransfer->getAvailable());
@@ -195,7 +215,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $expandedProductViewTransfer = $this->tester->getProductStorageClient()
-            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductViewWithProductVariant($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         $this->assertSame($expectedSelectedAttributes, $expandedProductViewTransfer->getSelectedAttributes());
@@ -243,7 +263,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $expandedProductViewTransfer = $this->tester->getProductStorageClient()
-            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductViewWithProductVariant($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         foreach ($productConcreteStorageData as $productConcreteStoragePropertyKey => $productConcreteStoragePropertyValue) {
@@ -291,7 +311,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $expandedProductViewTransfer = $this->tester->getProductStorageClient()
-            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductViewWithProductVariant($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         $this->assertSame(
@@ -339,7 +359,7 @@ class ProductStorageClientTest extends Unit
 
         // Act
         $expandedProductViewTransfer = $this->tester->getProductStorageClient()
-            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+            ->expandProductViewWithProductVariant($productViewTransfer, ProductStorageClientTester::LOCALE_NAME);
 
         // Assert
         $this->assertSame(
@@ -350,6 +370,68 @@ class ProductStorageClientTest extends Unit
                 ]],
             $expandedProductViewTransfer->getAvailableAttributes(),
         );
+    }
+
+    /**
+     * @dataProvider getProductViewTransfersDataProvider
+     *
+     * @param list<int> $storageProductAbstractIds
+     * @param list<int> $productAbstractIds
+     * @param list<int> $secondProductAbstractIds
+     *
+     * @return void
+     */
+    public function testGetProductAbstractViewTransfers(
+        array $storageProductAbstractIds,
+        array $productAbstractIds,
+        array $secondProductAbstractIds
+    ): void {
+        // Arrange
+        $this->tester->createProductViewTransfersInStorage(
+            $storageProductAbstractIds,
+            ProductStorageClientTester::PRODUCT_ABSTRACT_RESOURCE_NAME,
+        );
+
+        // Act
+        $productViewTransfers = $this->tester->getProductStorageClient()
+            ->getProductAbstractViewTransfers($productAbstractIds, ProductStorageClientTester::LOCALE_NAME);
+        $secondProductViewTransfers = $this->tester->getProductStorageClient()
+            ->getProductAbstractViewTransfers($secondProductAbstractIds, ProductStorageClientTester::LOCALE_NAME);
+
+        // Assert
+        $this->assertProductViewTransfersOrder($productAbstractIds, $productViewTransfers, ProductStorageClientTester::PRODUCT_ABSTRACT_RESOURCE_NAME);
+        $this->assertProductViewTransfersOrder($secondProductAbstractIds, $secondProductViewTransfers, ProductStorageClientTester::PRODUCT_ABSTRACT_RESOURCE_NAME);
+    }
+
+    /**
+     * @dataProvider getProductViewTransfersDataProvider
+     *
+     * @param list<int> $storageProductConcreteIds
+     * @param list<int> $productConcreteIds
+     * @param list<int> $secondProductConcreteIds
+     *
+     * @return void
+     */
+    public function testGetProductConcreteViewTransfers(
+        array $storageProductConcreteIds,
+        array $productConcreteIds,
+        array $secondProductConcreteIds
+    ): void {
+        // Arrange
+        $this->tester->createProductViewTransfersInStorage(
+            $storageProductConcreteIds,
+            ProductStorageClientTester::PRODUCT_CONCRETE_RESOURCE_NAME,
+        );
+
+        // Act
+        $productViewTransfers = $this->tester->getProductStorageClient()
+            ->getProductConcreteViewTransfers($productConcreteIds, ProductStorageClientTester::LOCALE_NAME);
+        $secondProductViewTransfers = $this->tester->getProductStorageClient()
+            ->getProductConcreteViewTransfers($secondProductConcreteIds, ProductStorageClientTester::LOCALE_NAME);
+
+        // Assert
+        $this->assertProductViewTransfersOrder($productConcreteIds, $productViewTransfers, ProductStorageClientTester::PRODUCT_CONCRETE_RESOURCE_NAME);
+        $this->assertProductViewTransfersOrder($secondProductConcreteIds, $secondProductViewTransfers, ProductStorageClientTester::PRODUCT_CONCRETE_RESOURCE_NAME);
     }
 
     /**
@@ -514,5 +596,48 @@ class ProductStorageClientTest extends Unit
                 'expectedSelectedAttributes' => [],
             ],
         ];
+    }
+
+    /**
+     * @return array<string, array<list<int>>>
+     */
+    protected function getProductViewTransfersDataProvider(): array
+    {
+        return [
+            'Should return product views transfers ordered by given product ids when no items should be cached.' => [
+                [static::ID_PRODUCT, static::ID_PRODUCT_2, static::ID_PRODUCT_3, static::ID_PRODUCT_4],
+                [static::ID_PRODUCT_4, static::ID_PRODUCT],
+                [static::ID_PRODUCT_3, static::ID_PRODUCT_2],
+            ],
+            'Should return product views transfers ordered by given product ids when all items should be cached.' => [
+                [static::ID_PRODUCT, static::ID_PRODUCT_2, static::ID_PRODUCT_3, static::ID_PRODUCT_4],
+                [static::ID_PRODUCT_4, static::ID_PRODUCT_2, static::ID_PRODUCT],
+                [static::ID_PRODUCT_2, static::ID_PRODUCT_4, static::ID_PRODUCT],
+            ],
+            'Should return product views transfers ordered by given product ids when some of items should be cached.' => [
+                [static::ID_PRODUCT, static::ID_PRODUCT_2, static::ID_PRODUCT_3, static::ID_PRODUCT_4, static::ID_PRODUCT_5],
+                [static::ID_PRODUCT_4, static::ID_PRODUCT],
+                [static::ID_PRODUCT, static::ID_PRODUCT_5, static::ID_PRODUCT_3, static::ID_PRODUCT_2, static::ID_PRODUCT_4],
+            ],
+        ];
+    }
+
+    /**
+     * @param list<int> $productIds
+     * @param list<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param string $resourceName
+     *
+     * @return void
+     */
+    protected function assertProductViewTransfersOrder(array $productIds, array $productViewTransfers, string $resourceName): void
+    {
+        foreach ($productIds as $index => $expectedId) {
+            $this->assertArrayHasKey($index, $productViewTransfers);
+
+            $actualId = $resourceName === ProductStorageClientTester::PRODUCT_ABSTRACT_RESOURCE_NAME ?
+                $productViewTransfers[$index]->getIdProductAbstract() : $productViewTransfers[$index]->getIdProductConcrete();
+
+            $this->assertSame($expectedId, $actualId);
+        }
     }
 }
