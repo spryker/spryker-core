@@ -12,6 +12,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -160,14 +162,16 @@ class PriceProductFacadeTest extends Unit
      */
     public function testGetPriceTypeValuesShouldReturnListOfAllPersistedPriceTypes(): void
     {
-        $priceProductFacade = $this->getPriceProductFacade();
+        // Assert
+        $priceProductFacade = $this->tester->getFacade();
 
         $priceTypesBefore = $priceProductFacade->getPriceTypeValues();
 
+        // Act
         $priceProductFacade->createPriceType('test');
 
+        // Assert
         $priceTypesAfter = $priceProductFacade->getPriceTypeValues();
-
         $this->assertCount(count($priceTypesBefore) + 1, $priceTypesAfter);
     }
 
@@ -783,6 +787,67 @@ class PriceProductFacadeTest extends Unit
             'Testing that orphans are deleted when orphan removal is enabled by config' => [false, true, false],
             'Testing that orphans are kept when orphan removal is disabled by config' => [false, false, true],
         ];
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testDeletePriceProductCollectionDeletesPriceProductDefaultCollectionByPriceProductDefaultIds()
+    {
+        // Arrange
+        $productConcreteTransfer1 = $this->tester->haveProduct();
+        $priceProductTransfer1 = $this->tester->havePriceProduct([
+                PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer1->getAbstractSku(),
+            ]);
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $priceProductTransfer2 = $this->tester->havePriceProduct([
+                PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer2->getAbstractSku(),
+            ]);
+        $idPriceProductDefault1 = $priceProductTransfer1->getPriceDimensionOrFail()->getIdPriceProductDefault();
+        $idPriceProductDefault2 = $priceProductTransfer2->getPriceDimensionOrFail()->getIdPriceProductDefault();
+
+        $priceProductCollectionDeleteCriteriaTransfer = (new PriceProductCollectionDeleteCriteriaTransfer())
+            ->setPriceProductDefaultIds([
+                $idPriceProductDefault1,
+                $idPriceProductDefault2,
+                ]);
+
+        // Act
+        $priceProductCollectionResponseTransfer = $this->tester->getFacade()
+            ->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
+
+        // Assert
+        $this->assertInstanceOf(PriceProductCollectionResponseTransfer::class, $priceProductCollectionResponseTransfer);
+        $this->assertEmpty($this->tester->findPriceProductDefaults([$idPriceProductDefault1, $idPriceProductDefault1])->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeletePriceProductCollectionDoesNothingWhenPriceProductDefaultIdIsMissing()
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer = $this->tester->havePriceProduct([
+                PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            ]);
+        $idPriceProductStore = (int)$this->tester->havePriceProductStore($priceProductTransfer);
+
+        $idPriceProductDefault = $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefault();
+
+        $priceProductCollectionDeleteCriteriaTransfer = (new PriceProductCollectionDeleteCriteriaTransfer())
+            ->setPriceProductStoreIds([
+                $idPriceProductStore,
+            ]);
+
+        // Act
+        $priceProductCollectionResponseTransfer = $this->tester->getFacade()
+            ->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
+
+        // Assert
+        $this->assertInstanceOf(PriceProductCollectionResponseTransfer::class, $priceProductCollectionResponseTransfer);
+        $this->assertEquals(1, $this->tester->findPriceProductDefaults([$idPriceProductDefault])->count());
     }
 
     /**

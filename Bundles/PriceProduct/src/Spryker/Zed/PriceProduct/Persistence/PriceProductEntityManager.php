@@ -146,15 +146,18 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         if (!$priceProductCollectionDeleteCriteriaTransfer->getPriceProductDefaultIds()) {
             return;
         }
-        $priceProductDefaultCollection = $this->getFactory()
+        $priceProductDefaultQuery = $this->getFactory()
             ->createPriceProductDefaultQuery()
             ->filterByIdPriceProductDefault_In(
                 $priceProductCollectionDeleteCriteriaTransfer->getPriceProductDefaultIds(),
-            )
-            ->filterByFkPriceProductStore_In(
+            );
+
+        if ($priceProductCollectionDeleteCriteriaTransfer->getPriceProductStoreIds()) {
+            $priceProductDefaultQuery->filterByFkPriceProductStore_In(
                 $priceProductCollectionDeleteCriteriaTransfer->getPriceProductStoreIds(),
-            )
-            ->find();
+            );
+        }
+        $priceProductDefaultCollection = $priceProductDefaultQuery->find();
 
         $priceProductDefaultCollection->delete();
     }
