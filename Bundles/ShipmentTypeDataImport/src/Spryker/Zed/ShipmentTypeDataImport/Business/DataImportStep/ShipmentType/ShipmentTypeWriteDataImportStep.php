@@ -9,12 +9,20 @@ namespace Spryker\Zed\ShipmentTypeDataImport\Business\DataImportStep\ShipmentTyp
 
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentTypeDataImport\Business\DataSet\ShipmentTypeDataSetInterface;
 use Spryker\Zed\ShipmentTypeDataImport\Business\Validator\DataSetValidatorInterface;
 
-class ShipmentTypeWriteDataImportStep implements DataImportStepInterface
+class ShipmentTypeWriteDataImportStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig::SHIPMENT_TYPE_PUBLISH
+     *
+     * @var string
+     */
+    protected const SHIPMENT_TYPE_PUBLISH = 'ShipmentType.shipment_type.publish';
+
     /**
      * @var \Spryker\Zed\ShipmentTypeDataImport\Business\Validator\DataSetValidatorInterface
      */
@@ -41,9 +49,14 @@ class ShipmentTypeWriteDataImportStep implements DataImportStepInterface
             ->filterByKey($dataSet[ShipmentTypeDataSetInterface::COLUMN_KEY])
             ->findOneOrCreate();
 
-        $shipmentTypeEntity
-            ->fromArray($dataSet->getArrayCopy())
-            ->save();
+        $shipmentTypeEntity->fromArray($dataSet->getArrayCopy());
+
+        if (!$shipmentTypeEntity->isNew() && !$shipmentTypeEntity->isModified()) {
+            return;
+        }
+        $shipmentTypeEntity->save();
+
+        $this->addPublishEvents(static::SHIPMENT_TYPE_PUBLISH, $shipmentTypeEntity->getIdShipmentType());
     }
 
     /**

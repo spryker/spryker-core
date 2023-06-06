@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShipmentTypeStorageCollection" strict="true">
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorage" strict="true">
+        <property name="idShipmentType" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCriteria" strict="true">
+        <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageConditions" strict="true">
+        <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="idShipmentType" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeCollection" strict="true">
+        <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
+    </transfer>
+
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeConditions" strict="true">
+        <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
+        <property name="isActive" type="bool"/>
+        <property name="withStoreRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeCriteria" strict="true">
+        <property name="shipmentTypeConditions" type="ShipmentTypeConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+</transfers>

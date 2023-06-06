@@ -1,0 +1,52 @@
+{
+    "name": "spryker/shipment-type-storage",
+    "type": "library",
+    "description": "ShipmentTypeStorage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker/event-behavior": "^1.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/publisher-extension": "^1.0.0",
+        "spryker/shipment-type": "^0.1.0",
+        "spryker/storage": "^3.0.0",
+        "spryker/store": "^1.19.0",
+        "spryker/synchronization": "^1.9.0",
+        "spryker/synchronization-behavior": "^1.0.0",
+        "spryker/synchronization-extension": "^1.1.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/util-encoding": "^2.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -892,6 +892,7 @@
         "spryker/shipment-type-data-import": "*",
         "spryker/shipment-type-service-point": "*",
         "spryker/shipment-type-service-point-data-import": "*",
+        "spryker/shipment-type-storage": "*",
         "spryker/shipment-types-backend-api": "*",
         "spryker/shipments-backend-api": "*",
         "spryker/shipments-rest-api": "*",
