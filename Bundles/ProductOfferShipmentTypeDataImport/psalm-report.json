@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferShipmentTypeDataImport/src/Spryker/Zed/ProductOfferShipmentTypeDataImport/Business/DataImportStep/ProductOfferShipmentType/ProductOfferShipmentTypeDataSetValidationStep.php",
+            "snippet": "        if (!$productOfferCollectionTransfer->getProductOffers()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferShipmentTypeDataImport/src/Spryker/Zed/ProductOfferShipmentTypeDataImport/Business/DataImportStep/ProductOfferShipmentType/ProductOfferShipmentTypeDataSetValidationStep.php",
+            "snippet": "        if (!$shipmentTypeCollectionTransfer->getShipmentTypes()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [],
+    "count": 2
+}

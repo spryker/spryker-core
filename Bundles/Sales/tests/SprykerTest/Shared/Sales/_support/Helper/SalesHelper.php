@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Sales\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
@@ -26,9 +27,17 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Shared\Shipment\ShipmentConfig;
+use SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelperTrait;
 
 class SalesHelper extends Module
 {
+    use ShipmentMethodDataHelperTrait;
+
+    /**
+     * @var string
+     */
+    protected const SHIPMENT_METHOD_NAME_STANDARD = 'Standard';
+
     /**
      * @return int
      */
@@ -129,12 +138,13 @@ class SalesHelper extends Module
      */
     protected function addShipment(SpySalesOrder $salesOrderEntity, int $idSalesExpense): void
     {
-        $shipmentMethodQuery = new SpyShipmentMethodQuery();
-        $shipmentMethodEntity = $shipmentMethodQuery->filterByName('Standard')->findOne();
+        $shipmentMethodTransfer = $this->getShipmentMethodDataHelper()->haveShipmentMethod(
+            [ShipmentMethodTransfer::NAME => static::SHIPMENT_METHOD_NAME_STANDARD],
+        );
 
         $shipmentMethod = new SpySalesShipment();
-        $shipmentMethod->setName($shipmentMethodEntity->getName());
-        $shipmentMethod->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
+        $shipmentMethod->setName($shipmentMethodTransfer->getNameOrFail());
+        $shipmentMethod->setCarrierName($shipmentMethodTransfer->getCarrierNameOrFail());
         $shipmentMethod->setFkSalesExpense($idSalesExpense);
         $shipmentMethod->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $shipmentMethod->save();

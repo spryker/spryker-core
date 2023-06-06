@@ -25,6 +25,8 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper

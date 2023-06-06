@@ -693,6 +693,8 @@
         "spryker/product-offer-reservation-gui": "*",
         "spryker/product-offer-sales": "*",
         "spryker/product-offer-sales-rest-api": "*",
+        "spryker/product-offer-shipment-type": "*",
+        "spryker/product-offer-shipment-type-data-import": "*",
         "spryker/product-offer-shopping-list": "*",
         "spryker/product-offer-shopping-list-data-import": "*",
         "spryker/product-offer-shopping-lists-rest-api": "*",

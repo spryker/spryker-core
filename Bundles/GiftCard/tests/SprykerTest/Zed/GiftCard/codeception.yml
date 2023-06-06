@@ -23,6 +23,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\SalesPayment\Helper\SalesPaymentDataHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper

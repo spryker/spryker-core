@@ -13,6 +13,7 @@
         "spryker/merchant-sales-order": "*",
         "spryker/propel": "*",
         "spryker/sales": "*",
+        "spryker/shipment": "*",
         "spryker/testify": "*"
     },
     "autoload": {

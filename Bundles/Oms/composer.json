@@ -33,6 +33,7 @@
         "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/sales-payment": "*",
+        "spryker/shipment": "*",
         "spryker/testify": "*"
     },
     "suggest": {

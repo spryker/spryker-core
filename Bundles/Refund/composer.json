@@ -24,6 +24,7 @@
         "spryker/oms": "*",
         "spryker/propel": "^3.0.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/shipment": "*",
         "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/zed-navigation": "*"

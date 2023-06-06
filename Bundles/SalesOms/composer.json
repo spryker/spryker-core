@@ -17,6 +17,7 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/shipment": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
     },

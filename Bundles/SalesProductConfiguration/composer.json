@@ -16,6 +16,7 @@
         "spryker/code-sniffer": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/shipment": "*",
         "spryker/testify": "*"
     },
     "autoload": {
