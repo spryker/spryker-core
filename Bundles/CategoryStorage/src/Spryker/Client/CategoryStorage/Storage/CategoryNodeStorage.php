@@ -160,7 +160,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             $categoryNodeKeys[] = $this->generateKey($categoryNodeId, $localeName, $storeName);
         }
 
-        return $this->storageClient->getMulti($categoryNodeKeys);
+        return array_filter($this->storageClient->getMulti($categoryNodeKeys));
     }
 
     /**

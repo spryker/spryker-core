@@ -74,6 +74,31 @@ class CategoryStorageClientTest extends Unit
     protected const PRODUCT_ABSTRACT_ID = -1;
 
     /**
+     * @var string
+     */
+    protected const TEST_KEY = 'TEST_KEY';
+
+    /**
+     * @var string
+     */
+    protected const TEST_KEY_2 = 'TEST_KEY_2';
+
+    /**
+     * @var string
+     */
+    protected const TEST_KEY_3 = 'TEST_KEY_3';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_DE = 'DE';
+
+    /**
      * @var \SprykerTest\Client\CategoryStorage\CategoryStorageClientTester
      */
     protected CategoryStorageClientTester $tester;
@@ -219,20 +244,47 @@ class CategoryStorageClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCategoryNodeByIdsShouldFilterOutEmptyData(): void
+    {
+        // Arrange
+        $categoryNodeIds = [static::CATEGORY_NODE_ID_PARENT, static::CATEGORY_NODE_ID_ROOT];
+        $categoryStorageData = array_merge($this->getCategoryNodeStorageWithChildAndParentStorageData(), [
+            static::TEST_KEY_2 => null,
+            static::TEST_KEY_3 => '',
+        ]);
+        $categoryStorageFactoryMock = $this->getCategoryStorageFactoryMock([], $categoryStorageData);
+        $categoryStorageClientMock = $this->tester->getClientMock($categoryStorageFactoryMock);
+
+        // Act
+        $categoryNodeData = $categoryStorageClientMock->getCategoryNodeByIds($categoryNodeIds, static::LOCALE_DE, static::STORE_DE);
+
+        // Assert
+        $this->assertCount(1, $categoryNodeData);
+        $this->assertSame(static::CATEGORY_NODE_ID_ROOT, $categoryNodeData[static::CATEGORY_NODE_ID_ROOT]->getNodeId());
+    }
+
+    /**
      * @param list<string> $mockMethods
+     * @param array<string, string> $categoryStorageData
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory
      */
-    protected function getCategoryStorageFactoryMock(array $mockMethods = []): CategoryStorageFactory
+    protected function getCategoryStorageFactoryMock(array $mockMethods = [], array $categoryStorageData = []): CategoryStorageFactory
     {
         $mockMethods = array_merge($mockMethods, ['getStorageClient', 'getConfig']);
         $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
             ->onlyMethods($mockMethods)
             ->getMock();
 
+        if ($categoryStorageData === []) {
+            $categoryStorageData = $this->getCategoryNodeStorageWithChildAndParentStorageData();
+        }
+
         $categoryStorageFactoryMock
             ->method('getStorageClient')
-            ->willReturn($this->getStorageClientMock());
+            ->willReturn($this->getStorageClientMock($categoryStorageData));
 
         return $categoryStorageFactoryMock;
     }
@@ -240,25 +292,8 @@ class CategoryStorageClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface
      */
-    protected function getStorageClientMock(): CategoryStorageToStorageInterface
+    protected function getStorageClientMock(array $categoryStorageData): CategoryStorageToStorageInterface
     {
-        $categoryNodeStorageTransfers =
-            (new CategoryNodeStorageBuilder([
-                CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_ROOT,
-                CategoryNodeStorageTransfer::ID_CATEGORY => static::CATEGORY_ID_ROOT,
-                CategoryNodeStorageTransfer::CHILDREN => new ArrayObject([
-                    (new CategoryNodeStorageBuilder([
-                        CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_CHILDREN,
-                    ]))->build()->toArray(),
-                ]),
-                CategoryNodeStorageTransfer::PARENTS => new ArrayObject([
-                    (new CategoryNodeStorageBuilder([
-                        CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_PARENT,
-                        CategoryNodeStorageTransfer::ID_CATEGORY => static::CATEGORY_ID_PARENT,
-                    ]))->build()->toArray(),
-                ]),
-            ]))->build()->toArray();
-
         $storageClientMock = $this->getMockBuilder(CategoryStorageToStorageBridge::class)
             ->onlyMethods(['get', 'getMulti'])
             ->disableOriginalConstructor()
@@ -266,7 +301,7 @@ class CategoryStorageClientTest extends Unit
 
         $storageClientMock
             ->method('getMulti')
-            ->willReturn(['category_nodes_storage' => json_encode($categoryNodeStorageTransfers)]);
+            ->willReturn($categoryStorageData);
 
         return $storageClientMock;
     }
@@ -286,5 +321,29 @@ class CategoryStorageClientTest extends Unit
             ->willReturn($categoryNodeStorageTransfers);
 
         return $categoryNodeStorageMock;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function getCategoryNodeStorageWithChildAndParentStorageData(): array
+    {
+        $categoryNodeStorageData = (new CategoryNodeStorageBuilder([
+                CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_ROOT,
+                CategoryNodeStorageTransfer::ID_CATEGORY => static::CATEGORY_ID_ROOT,
+                CategoryNodeStorageTransfer::CHILDREN => new ArrayObject([
+                    (new CategoryNodeStorageBuilder([
+                        CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_CHILDREN,
+                    ]))->build()->toArray(),
+                ]),
+                CategoryNodeStorageTransfer::PARENTS => new ArrayObject([
+                    (new CategoryNodeStorageBuilder([
+                        CategoryNodeStorageTransfer::NODE_ID => static::CATEGORY_NODE_ID_PARENT,
+                        CategoryNodeStorageTransfer::ID_CATEGORY => static::CATEGORY_ID_PARENT,
+                    ]))->build()->toArray(),
+                ]),
+            ]))->build()->toArray();
+
+        return [static::TEST_KEY => json_encode($categoryNodeStorageData)];
     }
 }
