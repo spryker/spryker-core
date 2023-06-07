@@ -88,6 +88,7 @@
         <property name="labelName" type="string"/>
         <property name="groupName" type="string"/>
         <property name="isHidden" type="bool"/>
+        <property name="lastMessageTimestamp" type="string" strict="true"/>
         <property name="paymentAuthorizationEndpoint" type="string"/>
         <property name="isForeign" type="bool"/>
     </transfer>
@@ -159,6 +160,7 @@
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
         <property name="publisher" type="Publisher"/>
+        <property name="timestamp" type="string"/>
     </transfer>
 
     <transfer name="Publisher">

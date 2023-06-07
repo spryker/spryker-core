@@ -8,8 +8,12 @@
 namespace SprykerTest\Shared\Payment\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\PaymentMethodAddedBuilder;
 use Generated\Shared\DataBuilder\PaymentMethodBuilder;
+use Generated\Shared\DataBuilder\PaymentMethodDeletedBuilder;
 use Generated\Shared\DataBuilder\PaymentProviderBuilder;
+use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
+use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
@@ -116,6 +120,32 @@ class PaymentDataHelper extends Module
             return null;
         }
 
-        return $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
+        $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
+        $paymentMethodTransfer->setIdPaymentProvider($paymentMethodEntity->getFkPaymentProvider());
+
+        return $paymentMethodTransfer;
+    }
+
+    /**
+     * @param array<mixed> $seedData
+     * @param array<mixed> $messageAttributesSeedData
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodAddedTransfer
+     */
+    public function havePaymentMethodAddedTransfer(array $seedData = [], array $messageAttributesSeedData = []): PaymentMethodAddedTransfer
+    {
+        return (new PaymentMethodAddedBuilder($seedData))
+            ->withMessageAttributes($messageAttributesSeedData)
+            ->build();
+    }
+
+    /**
+     * @param array<mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodDeletedTransfer
+     */
+    public function havePaymentMethodDeletedTransfer(array $seedData = []): PaymentMethodDeletedTransfer
+    {
+        return (new PaymentMethodDeletedBuilder($seedData))->build();
     }
 }

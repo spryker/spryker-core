@@ -76,10 +76,12 @@ interface PaymentFacadeInterface
      * - Used to support only foreign payment methods.
      * - Requires `PaymentMethodAdded.labelName` transfer field to be set.
      * - Requires `PaymentMethodAdded.groupName` transfer field to be set.
+     * - Requires `PaymentMethodAdded.messageAttributes.storeReference` to be set
      * - Creates payment provider if respective provider doesn't exist in the database.
      * - Creates payment method if the payment method with provided key doesn't exist in the database.
-     * - Updates payment method otherwise.
-     * - Sets payment method `is_hidden` flag to `false` (if it exists in the database).
+     * - Updates payment method if the payment method with provided key exist in the database.
+     * - Sets payment method `is_hidden` flag to `false`.
+     * - Checks if there's a `PaymentMethodAdded.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      * - Returns `PaymentMethod` transfer filled with payment method data.
      *
      * @api
@@ -95,8 +97,11 @@ interface PaymentFacadeInterface
      * - Used to support only foreign payment methods.
      * - Requires `PaymentMethodDeleted.labelName` transfer field to be set.
      * - Requires `PaymentMethodDeleted.groupName` transfer field to be set.
+     * - Requires `PaymentMethodDeleted.messageAttributes.storeReference` to be set
      * - Uses the specified data to find a payment method.
      * - Sets payment method `is_hidden` flag to `true` (if it exists in the database).
+     * - Creates hidden payment method if its provided key doesn't exist in the database.
+     * - Checks if there's a `PaymentMethodDeleted.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      *
      * @api
      *
