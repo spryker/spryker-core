@@ -141,9 +141,9 @@ class ServicePointHelper extends Module
         }
 
         $serviceTransfer = (new ServiceBuilder($seed))
-            ->withServicePoint($servicePointTransfer->toArray())
-            ->withServiceType($serviceTypeTransfer->toArray())
-            ->build();
+            ->build()
+            ->setServicePoint($servicePointTransfer)
+            ->setServiceType($serviceTypeTransfer);
 
         $serviceEntity = (new SpyService())
             ->fromArray($serviceTransfer->toArray())
