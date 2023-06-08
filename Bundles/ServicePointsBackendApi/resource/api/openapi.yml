@@ -7,6 +7,12 @@ info:
 tags:
     - name: service-point
       description: Service Point endpoints.
+    - name: service-point-address
+      description: Service Point Address endpoints.
+    - name: service-type
+      description: Service Type endtypes.
+    - name: service
+      description: Service endtypes.
 security:
     - BearerAuth: []
 paths:
@@ -280,6 +286,286 @@ paths:
                                 items:
                                     $ref: '#/components/responses/ApiErrorResponse'
 
+    /service-types:
+        get:
+            tags:
+                - service-type
+            summary: Service Types list
+            description: Returns list of all Service Types in the system
+            operationId: getServiceTypes
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Sort'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceTypeAttributesCollection'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        post:
+            tags:
+                - service-type
+            summary: Create Service Type
+            description: Create Service Type
+            operationId: createServiceType
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServiceTypePostRequestPayload'
+            responses:
+                '201':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceTypeResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+    /service-types/{serviceTypeUuid}:
+        parameters:
+            - name: serviceTypeUuid
+              in: path
+              required: true
+              description: Service Type UUID
+              schema:
+                  type: string
+            - $ref: '#/components/parameters/AcceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - $ref: '#/components/parameters/Fields'
+        patch:
+            summary: Update Service Type
+            tags:
+                - service-type
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServiceTypePatchRequestPayload'
+            operationId: updateServiceType
+            responses:
+                200:
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceTypeResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        get:
+            tags:
+                - service-type
+            summary: Get Service Type by ID
+            description: Returns a single Service Type
+            operationId: getServiceTypeById
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceTypeResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+    /services:
+        get:
+            tags:
+                - service
+            summary: Services list
+            description: Returns list of all Services
+            operationId: getServices
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Sort'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceAttributesCollection'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        post:
+            tags:
+                - service
+            summary: Create Service
+            description: Create Service
+            operationId: createService
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePostRequestPayload'
+            responses:
+                '201':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+    /services/{serviceUuid}:
+        parameters:
+            - $ref: '#/components/parameters/AcceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - $ref: '#/components/parameters/Fields'
+        patch:
+            summary: Update Service
+            tags:
+                - service
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePatchRequestPayload'
+            operationId: updateService
+            responses:
+                200:
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        get:
+            tags:
+                - service
+            summary: Get Service by UUID
+            description: Returns a single Service Type
+            operationId: getServiceByUuid
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServiceResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
 components:
     requestBodies:
         ApiServicePointPostRequestPayload:
@@ -306,6 +592,30 @@ components:
                 application/vnd.api+json:
                     schema:
                         $ref: '#/components/schemas/ApiServicePointAddressPostRequestBody'
+        ApiServiceTypePostRequestPayload:
+            description: Represents create Service Type request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceTypeRequestBody'
+        ApiServiceTypePatchRequestPayload:
+            description: Represents update Service Type request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceTypePatchRequestBody'
+        ApiServicePostRequestPayload:
+            description: Represents create Service request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceRequestBody'
+        ApiServicePatchRequestPayload:
+            description: Represents update Service request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePatchRequestBody'
 
     responses:
         ApiServicePointAttributesCollection:
@@ -326,6 +636,30 @@ components:
                 application/vnd.api+json:
                     schema:
                         $ref: '#/components/schemas/ApiServicePointAddressAttributesCollection'
+        ApiServiceTypeAttributesCollection:
+            description: Listing of Service Types
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceTypeAttributesCollection'
+        ApiServiceTypeResponse:
+            description: Representation of Service Type
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceTypeResponse'
+        ApiServiceAttributesCollection:
+            description: Listing of Services
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceAttributesCollection'
+        ApiServiceResponse:
+            description: Representation of Service
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServiceResponse'
         ApiErrorResponse:
             description: Error response
             content:
@@ -641,6 +975,168 @@ components:
                 city:
                     type: string
                     example: Dreamtown
+        ApiServiceTypeAttributesCollection:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiServiceTypeResponseData'
+        ApiServiceAttributesCollection:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiServiceResponseData'
+        ApiServiceTypeResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServiceTypeResponseData'
+        ApiServiceResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServiceResponseData'
+        ApiServiceTypeResponseData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: service-types
+                id:
+                    type: string
+                    format: uuid
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                attributes:
+                    $ref: '#/components/schemas/ApiServiceTypesAttributes'
+                links:
+                    $ref: '#/components/schemas/ApiLinks'
+        ApiServiceResponseData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: services
+                id:
+                    type: string
+                    format: uuid
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                attributes:
+                    $ref: '#/components/schemas/ApiServicesAttributes'
+                links:
+                    $ref: '#/components/schemas/ApiLinks'
+        ApiServiceTypeRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServiceTypeRequestData'
+        ApiServiceTypePatchRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServiceTypePatchRequestData'
+        ApiServiceRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServiceRequestData'
+        ApiServicePatchRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePatchRequestData'
+        ApiServiceTypeRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'service-types'
+                attributes:
+                    $ref: '#/components/schemas/ApiServiceTypesRequestAttributes'
+        ApiServiceTypePatchRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'service-types'
+                attributes:
+                    $ref: '#/components/schemas/ApiServiceTypesPatchRequestAttributes'
+        ApiServiceRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'services'
+                attributes:
+                    $ref: '#/components/schemas/ApiServicesRequestAttributes'
+        ApiServicePatchRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'services'
+                attributes:
+                    $ref: '#/components/schemas/ApiServicesPatchRequestAttributes'
+        ApiServiceTypesRequestAttributes:
+            required:
+                - name
+                - key
+            type: object
+            properties:
+                name:
+                    type: string
+                    example: Collect Service
+                key:
+                    type: string
+                    example: collect
+        ApiServiceTypesPatchRequestAttributes:
+            type: object
+            properties:
+                name:
+                    type: string
+                    example: Collect Service
+        ApiServicesRequestAttributes:
+            required:
+                - isActive
+                - key
+            type: object
+            properties:
+                serviceTypeUuid:
+                    type: string
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                servicePointUuid:
+                    type: string
+                    example: 123e4567-e89b-12d3-a456-426614174001
+                isActive:
+                    type: boolean
+                    example: true
+                key:
+                    type: string
+                    example: service-point-1-collect
+        ApiServicesPatchRequestAttributes:
+            type: object
+            properties:
+                isActive:
+                    type: boolean
+                    example: true
+        ApiServiceTypesAttributes:
+            type: object
+            properties:
+                name:
+                    type: string
+                    example: Collect Service
+                key:
+                    type: string
+                    example: collect
+        ApiServicesAttributes:
+            type: object
+            properties:
+                isActive:
+                    type: boolean
+                    example: true
+                key:
+                    type: string
+                    example: service-point-1-collect
         ApiLinks:
             properties:
                 self:
