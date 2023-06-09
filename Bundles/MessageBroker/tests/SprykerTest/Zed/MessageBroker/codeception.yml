@@ -47,3 +47,4 @@ suites:
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Console\Helper\ConsoleHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

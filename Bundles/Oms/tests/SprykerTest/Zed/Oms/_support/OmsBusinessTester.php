@@ -12,6 +12,7 @@ use Codeception\Stub;
 use DateInterval;
 use DateTime;
 use Exception;
+use Generated\Shared\DataBuilder\ItemMetadataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -24,13 +25,19 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\Collection\ObjectCollection;
 use ReflectionClass;
+use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddlewarePlugin;
+use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
 use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
+use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\MessageBroker\CurrentStoreReferenceMessageAttributeProviderPlugin;
+use Spryker\Zed\Store\Communication\Plugin\MessageBroker\StoreReferenceMessageValidatorPlugin;
 
 /**
  * @method void wantToTest($text)
@@ -350,5 +357,53 @@ class OmsBusinessTester extends Actor
         if ($expectedLockedEntityCount !== $lockedEntityCount) {
             throw new ExpectationFailedException(sprintf('Expected to have "%s" locked entries but found "%s"', $expectedLockedEntityCount, $lockedEntityCount));
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransferForOrderStatusChanged(): OrderTransfer
+    {
+        $orderTransfer = $this->createOrderByStateMachineProcessName('Test01');
+        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
+        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
+
+        $itemMetadataTransfer = (new ItemMetadataBuilder())->build();
+        $itemMetadataTransfer->setImage('https://image.url');
+
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->setMetadata($itemMetadataTransfer);
+            $item->setSku('some_sku');
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransferAndSetupSalesFacadeMock(): OrderTransfer
+    {
+        $salesFacadeMock = Stub::makeEmpty(OmsToSalesInterface::class);
+
+        $this->setDependency(SalesPaymentDependencyProvider::FACADE_SALES, $salesFacadeMock);
+
+        $orderTransfer = $this->getOrderTransferForOrderStatusChanged();
+
+        $salesFacadeMock->method('getOrderByIdSalesOrder')->willReturn($orderTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function setupMessageBroker(): void
+    {
+        $this->setDependency(MessageBrokerDependencyProvider::PLUGINS_MIDDLEWARE, [new ValidationMiddlewarePlugin()]);
+
+        $this->setDependency(MessageBrokerDependencyProvider::PLUGINS_MESSAGE_ATTRIBUTE_PROVIDER, [new CurrentStoreReferenceMessageAttributeProviderPlugin()]);
+
+        $this->setDependency(MessageBrokerDependencyProvider::PLUGINS_EXTERNAL_VALIDATOR, [new StoreReferenceMessageValidatorPlugin()]);
     }
 }

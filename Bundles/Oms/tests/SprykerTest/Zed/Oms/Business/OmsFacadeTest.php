@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Oms\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\ItemMetadataBuilder;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderStatusChangedTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -26,11 +25,9 @@ use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
 use SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelperTrait;
 use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugin;
 
@@ -431,36 +428,13 @@ class OmsFacadeTest extends Unit
      */
     public function testOrderStatusChangedMessageIsSent(): void
     {
-        // setting the dependency
-        $testStateMachineProcessName = 'Test01';
-        $localeName = 'en_US';
+        // Arrange
+        $orderTransfer = $this->tester->getOrderTransferAndSetupSalesFacadeMock();
 
-        $salesFacadeMock = $this->createMock(
-            OmsToSalesInterface::class,
-        );
+        // Act
+        $this->sendOrderStatusChangedMessage($orderTransfer);
 
-        $this->tester->setDependency(SalesPaymentDependencyProvider::FACADE_SALES, $salesFacadeMock);
-
-        // configuring the mock
-        $orderTransfer = $this->tester->createOrderByStateMachineProcessName($testStateMachineProcessName);
-        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
-        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
-
-        $itemMetadataTransfer = (new ItemMetadataBuilder())->build();
-        $itemMetadataTransfer->setImage('https://image.url');
-
-        foreach ($orderTransfer->getItems() as $item) {
-            $item->setMetadata($itemMetadataTransfer);
-            $item->setSku('some_sku');
-        }
-
-        $salesFacadeMock->method('getOrderByIdSalesOrder')->willReturn($orderTransfer);
-
-        // running
-        $omsFacade = $this->createOmsFacade();
-
-        $omsFacade->sendOrderStatusChangedMessage($orderTransfer->getIdSalesOrder());
-
+        // Assert
         $this->tester->assertMessageWasSent(OrderStatusChangedTransfer::class);
 
         $properties = [
@@ -505,5 +479,58 @@ class OmsFacadeTest extends Unit
             },
             OrderStatusChangedTransfer::class,
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderStatusChangedMessageWhenStoreReferenceAndPluginsAreProvidedThenMessageIsSent(): void
+    {
+        // Arrange
+        $this->tester->setupMessageBroker();
+
+        $this->tester->setStoreReferenceData([
+            'DE' => 'dev-DE',
+            'AT' => 'dev-AT',
+        ]);
+
+        $orderTransfer = $this->tester->getOrderTransferAndSetupSalesFacadeMock();
+
+        // Act
+        $this->sendOrderStatusChangedMessage($orderTransfer);
+
+        // Assert
+        $this->tester->assertMessageWasSent(OrderStatusChangedTransfer::class);
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderStatusChangedMessageWhenPluginsAreProvidedAndStoreReferenceIsMissingThenMessageIsNotSent(): void
+    {
+        // Arrange
+        $this->tester->setupMessageBroker();
+
+        $this->tester->setStoreReferenceData([]);
+
+        $orderTransfer = $this->tester->getOrderTransferAndSetupSalesFacadeMock();
+
+        // Act
+        $this->sendOrderStatusChangedMessage($orderTransfer);
+
+        // Assert
+        $this->tester->assertMessageWasNotSent(OrderStatusChangedTransfer::class);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function sendOrderStatusChangedMessage(OrderTransfer $orderTransfer): void
+    {
+        $omsFacade = $this->createOmsFacade();
+
+        $omsFacade->sendOrderStatusChangedMessage($orderTransfer->getIdSalesOrder());
     }
 }

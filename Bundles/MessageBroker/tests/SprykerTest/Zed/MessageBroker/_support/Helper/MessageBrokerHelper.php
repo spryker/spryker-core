@@ -13,6 +13,7 @@ use Codeception\TestInterface;
 use Generated\Shared\DataBuilder\MessageAttributesBuilder;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface;
 use Spryker\Zed\MessageBroker\Business\Worker\Worker;
@@ -29,6 +30,7 @@ use SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelperTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\EventListener\StopWorkerOnTimeLimitListener;
+use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 use Symfony\Component\Messenger\Stamp\SentStamp;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
 use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
@@ -460,5 +462,25 @@ class MessageBrokerHelper extends Module
         $messageBrokerFactory = $this->getBusinessHelper()->getFactory('MessageBroker');
 
         return $messageBrokerFactory;
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Envelope
+     */
+    public function haveEnvelope(): Envelope
+    {
+        $messageTransfer = new MessageTransfer();
+
+        return new Envelope($messageTransfer);
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Envelope
+     */
+    public function haveEnvelopeWithReceivedStamp(): Envelope
+    {
+        $envelope = $this->haveEnvelope();
+
+        return $envelope->with(new ReceivedStamp('someTransport'));
     }
 }

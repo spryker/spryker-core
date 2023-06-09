@@ -8,9 +8,17 @@
 namespace SprykerTest\Zed\MessageBroker;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Codeception\Stub\Expected;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\MessageBroker\Business\MessageBrokerFacade;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
+use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddlewarePlugin;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+use Symfony\Component\Messenger\Middleware\StackInterface;
 
 /**
  * Inherited Methods
@@ -57,5 +65,75 @@ class MessageBrokerCommunicationTester extends Actor
         $command->setFacade($facade);
 
         return $this->getConsoleTester($command);
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddlewarePlugin
+     */
+    public function createValidationMiddlewarePluginThatCanHandleAMessage(): ValidationMiddlewarePlugin
+    {
+        $messageBrokerFacadeMock = Stub::make(MessageBrokerFacade::class, [
+            'canHandleMessage' => true,
+        ]);
+
+        $validationMiddlewarePlugin = new ValidationMiddlewarePlugin();
+        $validationMiddlewarePlugin->setFacade($messageBrokerFacadeMock);
+
+        return $validationMiddlewarePlugin;
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddlewarePlugin
+     */
+    public function createValidationMiddlewarePluginThatCanNotHandleAMessage(): ValidationMiddlewarePlugin
+    {
+        $messageBrokerFacadeMock = Stub::make(MessageBrokerFacade::class, [
+            'canHandleMessage' => false,
+        ]);
+
+        $validationMiddlewarePlugin = new ValidationMiddlewarePlugin();
+        $validationMiddlewarePlugin->setFacade($messageBrokerFacadeMock);
+
+        return $validationMiddlewarePlugin;
+    }
+
+    /**
+     * @param \Symfony\Component\Messenger\Envelope $envelope
+     *
+     * @return \Symfony\Component\Messenger\Middleware\MiddlewareInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createMiddlewareInterfaceMock(Envelope $envelope): MiddlewareInterface|MockObject
+    {
+        return Stub::makeEmpty(MiddlewareInterface::class, [
+            'handle' => $envelope,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Messenger\Envelope $envelope
+     *
+     * @return \Symfony\Component\Messenger\Middleware\StackInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createStackMockWithOnceCalledNextMethod(Envelope $envelope): StackInterface|MockObject
+    {
+        $stackMock = Stub::makeEmpty(StackInterface::class);
+
+        $middlewareInterfaceMock = $this->createMiddlewareInterfaceMock($envelope);
+
+        $stackMock->expects(Expected::once()->getMatcher())->method('next')->willReturn($middlewareInterfaceMock);
+
+        return $stackMock;
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Middleware\StackInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createStackMockWithNeverCalledNextMethod(): StackInterface|MockObject
+    {
+        $stackMock = Stub::makeEmpty(StackInterface::class);
+
+        $stackMock->expects(Expected::never()->getMatcher())->method('next');
+
+        return $stackMock;
     }
 }
