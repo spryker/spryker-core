@@ -8,13 +8,20 @@
 namespace SprykerTest\Zed\Asset\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Asset\AssetDependencyProvider;
+use DateTime;
+use DateTimeZone;
+use Generated\Shared\Transfer\AssetAddedTransfer;
+use Generated\Shared\Transfer\AssetDeletedTransfer;
+use Generated\Shared\Transfer\AssetTransfer;
+use Generated\Shared\Transfer\AssetUpdatedTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Spryker\Zed\Asset\Business\AssetBusinessFactory;
-use Spryker\Zed\Asset\Business\AssetFacadeInterface;
-use Spryker\Zed\Asset\Business\Exception\InvalidAssetException;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Asset\Business\AssetFacade;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
+use Spryker\Zed\Asset\Persistence\AssetEntityManager;
+use Spryker\Zed\Asset\Persistence\AssetPersistenceFactory;
 use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
-use SprykerTest\Zed\Asset\AssetBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -37,17 +44,7 @@ class AssetFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const ASSET_SLOT_SLT_FOOTER = 'slt-footer';
-
-    /**
-     * @var string
-     */
-    protected $tenantIdentifier;
-
-    /**
-     * @var string
-     */
-    protected $assetUuid;
+    protected const STORE_REFERENCE = 'dev-DE';
 
     /**
      * @var \SprykerTest\Zed\Asset\AssetBusinessTester
@@ -61,8 +58,7 @@ class AssetFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->assetUuid = $this->tester->getUuid();
-        $this->tester->setStoreReferenceData([static::TEST_STORE_NAME => AssetBusinessTester::STORE_REFERENCE]);
+        $this->tester->setStoreReferenceData([static::TEST_STORE_NAME => static::STORE_REFERENCE]);
     }
 
     /**
@@ -71,110 +67,36 @@ class AssetFacadeTest extends Unit
     public function testAddAssetAssertThrowsExceptionWhenStoreReferenceIsInvalid(): void
     {
         // Arrange
-        $assetAddedTransfer = $this->tester->buildAssetAddedTransfer(
-            '1',
-            'test',
-            $this->assetUuid,
-        );
+        $assetAddedTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => 'this-storeReference-does-not-exist',
+            ],
+        ]);
 
         // Assert
         $this->expectException(StoreReferenceNotFoundException::class);
 
         // Act
-        $this->getAssetFacade()->addAsset($assetAddedTransfer);
+        $this->tester->getFacade()->addAsset($assetAddedTransfer);
     }
 
     /**
      * @return void
      */
-    public function testAddAssetAssertThrowsExceptionWhenAssetIsAlreadyExist(): void
+    public function testUpdateAssetThrowsExceptionWhenStoreReferenceIsInvalid(): void
     {
         // Arrange
-        $assetAddedTransfer = $this->tester->buildAssetAddedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            'test',
-            $this->assetUuid,
-        );
-        $this->getAssetFacade()->addAsset($assetAddedTransfer);
-
-        // Assert
-        $this->expectException(InvalidAssetException::class);
-
-        // Act
-        $this->getAssetFacade()->addAsset($assetAddedTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddAssetAssertSuccessful(): void
-    {
-        // Arrange
-        $assetMessageTransfer = $this->tester->buildAssetAddedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            static::ASSET_SLOT_SLT_FOOTER,
-            $this->assetUuid,
-        );
-        $expectedAssetTransfer = $this->tester->buildAssetTransfer(
-            '<script>',
-            $this->assetUuid,
-            static::TEST_STORE_NAME,
-        );
-
-        // Act
-        $assetTransfer = $this->getAssetFacade()->addAsset($assetMessageTransfer);
-        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSET_SLOT_SLT_FOOTER);
-
-        // Assert
-        $this->assertEquals($expectedAssetTransfer, $assetTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateAssetAssertThrowsExceptionWhenStoreReferenceIsInvalid(): void
-    {
-        // Arrange
-        $assetUpdatedTransfer = $this->tester->buildAssetUpdatedTransfer('1');
+        $assetUpdatedTransfer = $this->tester->generateAssetUpdatedTransfer([
+            AssetUpdatedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => 'this-storeReference-does-not-exist',
+            ],
+        ]);
 
         // Assert
         $this->expectException(StoreReferenceNotFoundException::class);
 
         // Act
-        $this->getAssetFacade()->updateAsset($assetUpdatedTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateAssetAssertSuccessful(): void
-    {
-        // Arrange
-        $startAssetMessageTransfer = $this->tester->buildAssetAddedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            static::ASSET_SLOT_SLT_FOOTER,
-            $this->assetUuid,
-        );
-        $newAssetMessageTransfer = $this->tester->buildAssetUpdatedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            static::ASSET_SLOT_SLT_FOOTER,
-            $this->assetUuid,
-            '<script> </script>',
-        );
-        $expectedAssetTransfer = $this->tester->buildAssetTransfer(
-            '<script> </script>',
-            $this->assetUuid,
-            static::TEST_STORE_NAME,
-        );
-
-        // Act
-        $assetFacade = $this->getAssetFacade();
-        $assetFacade->addAsset($startAssetMessageTransfer);
-        $assetTransfer = $assetFacade->updateAsset($newAssetMessageTransfer);
-        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSET_SLOT_SLT_FOOTER);
-
-        // Assert
-        $this->assertEquals($expectedAssetTransfer, $assetTransfer);
+        $this->tester->getFacade()->updateAsset($assetUpdatedTransfer);
     }
 
     /**
@@ -183,44 +105,17 @@ class AssetFacadeTest extends Unit
     public function testDeleteAssetAssertThrowsExceptionWhenStoreReferenceIsInvalid(): void
     {
         // Arrange
-        $assetDeletedTransfer = $this->tester->buildAssetDeletedTransfer('1');
+        $assetDeletedTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => 'this-storeReference-does-not-exist',
+            ],
+        ]);
 
         // Assert
         $this->expectException(StoreReferenceNotFoundException::class);
 
         // Act
-        $this->getAssetFacade()->deleteAsset($assetDeletedTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteAssetAssertSuccessful(): void
-    {
-        // Arrange
-        $startAssetTransfer = $this->tester->buildAssetAddedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            static::ASSET_SLOT_SLT_FOOTER,
-            $this->assetUuid,
-        );
-        $delAssetTransfer = $this->tester->buildAssetDeletedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            $this->assetUuid,
-        );
-        $updateCheckTransfer = $this->tester->buildAssetUpdatedTransfer(
-            AssetBusinessTester::STORE_REFERENCE,
-            static::ASSET_SLOT_SLT_FOOTER,
-            $this->assetUuid,
-        );
-
-        // Assert
-        $this->expectException(InvalidAssetException::class);
-
-        // Act
-        $assetFacade = $this->getAssetFacade();
-        $assetFacade->addAsset($startAssetTransfer);
-        $assetFacade->deleteAsset($delAssetTransfer);
-        $assetFacade->updateAsset($updateCheckTransfer);
+        $this->tester->getFacade()->deleteAsset($assetDeletedTransfer);
     }
 
     /**
@@ -229,32 +124,495 @@ class AssetFacadeTest extends Unit
     public function testFindAssetById(): void
     {
         // Arrange
-        $expectedAsset = $this->tester->haveAsset(
-            ['assetSlot' => 'header'],
-        );
+        $expectedAssetTransfer = $this->tester->haveAsset([]);
 
         // Act
-        $asset = $this->getAssetFacade()->findAssetById($expectedAsset->getIdAsset());
+        $assetTransfer = $this->tester->getFacade()->findAssetById($expectedAssetTransfer->getIdAsset());
 
         // Assert
-        $this->assertEquals($expectedAsset, $asset);
+        $this->assertEquals($expectedAssetTransfer, $assetTransfer);
     }
 
     /**
-     * @return \Spryker\Zed\Asset\Business\AssetFacadeInterface
+     * @return void
      */
-    protected function getAssetFacade(): AssetFacadeInterface
+    public function testAddAssetWhenTheAssetDoesNotExistThenTheAssetIsAdded(): void
     {
-        /** @var \Spryker\Zed\Asset\Business\AssetFacadeInterface $assetFacade */
-        $assetFacade = $this->tester->getFacade();
+        // Arrange
+        $time = new DateTime('now', new DateTimeZone('UTC'));
 
-        $container = new Container();
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $time->format(AssetTimeStamp::TIMESTAMP_FORMAT),
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetAddedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddAssetWhenTheAssetAlreadyExistsAndTheMessageTimestampIsNullThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        $initialTransfer = $this->tester->haveAsset([]);
+
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetAddedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsOlderThanTheMessageThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialTransfer = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeOld,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $timeNew,
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetAddedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsNewerThanTheMessageTimestampThenTheAssetIsNotUpdated(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $expectedAssetTransfer = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeNew,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::ASSET_IDENTIFIER => $expectedAssetTransfer->getAssetUuid(),
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $timeOld,
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqual($expectedAssetTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddAssetWhenTheAssetAlreadyExistsButWasDeletedAndTheAssetTimestampIsOlderThanTheMessageTimestampThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialTransfer = $this->tester->haveAsset([
+            AssetTransfer::IS_ACTIVE => false,
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeOld,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $timeNew,
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetAddedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAssetWhenTheAssetDoesNotExistThenTheAssetIsAdded(): void
+    {
+        // Arrange
+        $assetMessageTransfer = $this->tester->generateAssetUpdatedTransfer([
+            AssetUpdatedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetUpdatedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAssetWhenTheAssetAlreadyExistsAndTheMessageTimestampIsNullThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        $initialTransfer = $this->tester->haveAsset([]);
+
+        $assetMessageTransfer = $this->tester->generateAssetUpdatedTransfer([
+            AssetUpdatedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetUpdatedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetUpdatedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsOlderThanTheMessageTimestampThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialTransfer = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeOld,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetUpdatedTransfer([
+            AssetUpdatedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetUpdatedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+                MessageAttributesTransfer::TIMESTAMP => $timeNew,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetUpdatedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsNewerThanTheMessageTimestampThenTheAssetIsNotUpdated(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $expectedAsset = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeNew,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetUpdatedTransfer([
+            AssetUpdatedTransfer::ASSET_IDENTIFIER => $expectedAsset->getAssetUuid(),
+            AssetUpdatedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+                MessageAttributesTransfer::TIMESTAMP => $timeOld,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqual($expectedAsset);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetDoesNotExistAndIsActiveColumnNotPresentThenNoAssetIsCreated(): void
+    {
+        // Arrange
+        $entityManagerMockedMethods = ['hasIsActiveColumn' => false];
+        $assetFacadeMock = $this->getFacadeMockWithMockedEntitymanager($entityManagerMockedMethods);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $assetFacadeMock->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetMessageTransfer->getAssetIdentifierOrFail())->findOne();
+        $this->assertNull($assetEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndIsActiveColumnNotPresentAndTheMessageTimestampIsNullThenTheAssetIsDeleted(): void
+    {
+        // Arrange
+        $entityManagerMockedMethods = ['hasIsActiveColumn' => false];
+        $assetFacadeMock = $this->getFacadeMockWithMockedEntitymanager($entityManagerMockedMethods);
+
+        $initialAsset = $this->tester->haveAsset([]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $initialAsset->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $assetFacadeMock->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($initialAsset->getAssetUuid())->findOne();
+        $this->assertNull($assetEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndIsActiveColumnNotPresentAndTheAssetTimestampIsOlderThanTheMessageTimestampThenTheAssetIsDeleted(): void
+    {
+        // Arrange
+        $entityManagerMockedMethods = ['hasIsActiveColumn' => false];
+        $assetFacadeMock = $this->getFacadeMockWithMockedEntitymanager($entityManagerMockedMethods);
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialAsset = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeOld,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $initialAsset->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+                MessageAttributesTransfer::TIMESTAMP => $timeNew,
+            ],
+        ]);
+
+        // Act
+        $assetFacadeMock->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($initialAsset->getAssetUuid())->findOne();
+        $this->assertNull($assetEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndIsActiveColumnNotPresentAndTheAssetTimestampIsNewerThanTheMessageTimestampThenTheAssetIsDeleted(): void
+    {
+        // Arrange
+        $entityManagerMockedMethods = ['hasIsActiveColumn' => false];
+        $assetFacadeMock = $this->getFacadeMockWithMockedEntitymanager($entityManagerMockedMethods);
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $expectedAsset = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeNew,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $expectedAsset->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+                MessageAttributesTransfer::TIMESTAMP => $timeOld,
+            ],
+        ]);
+
+        // Act
+        $assetFacadeMock->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqual($expectedAsset);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetDoesNotExistThenAnInactiveAssetIsCreated(): void
+    {
+        // Arrange
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetDeletedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndTheMessageTimestampIsNullThenTheAssetIsSetInactive(): void
+    {
+        // Arrange
+        $time = new DateTime('now', new DateTimeZone('UTC'));
+
+        $initialAssetTransfer = $this->tester->haveAsset([
+            AssetTransfer::IS_ACTIVE => true,
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $time->format(AssetTimeStamp::TIMESTAMP_FORMAT),
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $initialAssetTransfer->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+        $expectedAssetTransfer = clone $initialAssetTransfer;
+        $expectedAssetTransfer->setIsActive(false);
+
+        // Act
+        $this->tester->getFacade()->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqualWithNewerTimestamp($expectedAssetTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsOlderThanTheMessageTimestampThenTheAssetIsSetInactive(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialAssetTransfer = $this->tester->haveAsset([
+            AssetTransfer::IS_ACTIVE => true,
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeOld,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $initialAssetTransfer->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $timeNew,
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        $expectedAssetTransfer = clone $initialAssetTransfer;
+        $expectedAssetTransfer->setIsActive(false);
+
+        // Act
+        $this->tester->getFacade()->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqualWithNewerTimestamp($expectedAssetTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteAssetWhenTheAssetAlreadyExistsAndTheAssetTimestampIsNewerThanTheMessageTimestampThenTheAssetIsNotModified(): void
+    {
+        // Arrange
+        [$timeOld, $timeNew] = $this->tester->createOldAndNewDateTime();
+
+        $initialAssetTransfer = $this->tester->haveAsset([
+            AssetTransfer::IS_ACTIVE => true,
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => $timeNew,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetDeletedTransfer([
+            AssetDeletedTransfer::ASSET_IDENTIFIER => $initialAssetTransfer->getAssetUuid(),
+            AssetDeletedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::TIMESTAMP => $timeOld,
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->deleteAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetTransferAndAssetEntityAreEqual($initialAssetTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddAssetWhenTheAssetAlreadyExistsAndTheAssetLastMessageTimestampIsNullThenTheAssetIsUpdated(): void
+    {
+        // Arrange
+        $initialTransfer = $this->tester->haveAsset([
+            AssetTransfer::LAST_MESSAGE_TIMESTAMP => null,
+        ]);
+
+        $assetMessageTransfer = $this->tester->generateAssetAddedTransfer([
+            AssetAddedTransfer::ASSET_IDENTIFIER => $initialTransfer->getAssetUuid(),
+            AssetAddedTransfer::MESSAGE_ATTRIBUTES => [
+                MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->addAsset($assetMessageTransfer);
+
+        // Assert
+        $this->tester->assertAssetAddedTransferAndAssetEntityAreEqual($assetMessageTransfer);
+    }
+
+    /**
+     * @param array $entityManagerMockedMethods
+     *
+     * @return \Spryker\Zed\Asset\Business\AssetFacade
+     */
+    public function getFacadeMockWithMockedEntityManager(array $entityManagerMockedMethods): AssetFacade
+    {
+        $mockedMethods = array_keys($entityManagerMockedMethods);
+        $entityManagerMock = $this->getMockBuilder(AssetEntityManager::class)->onlyMethods($mockedMethods)->getMock();
+        foreach ($entityManagerMockedMethods as $method => $value) {
+            $entityManagerMock->method($method)->willReturn($value);
+        }
+
+        $entityManagerMock->setFactory(new AssetPersistenceFactory());
+        $assetFacadeMock = new AssetFacade();
         $assetBusinessFactory = new AssetBusinessFactory();
-        $dependencyProvider = new AssetDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $assetBusinessFactory->setContainer($container);
-        $assetFacade->setFactory($assetBusinessFactory);
+        $assetBusinessFactory->setEntityManager($entityManagerMock);
+        $assetFacadeMock->setFactory($assetBusinessFactory);
 
-        return $assetFacade;
+        return $assetFacadeMock;
     }
 }

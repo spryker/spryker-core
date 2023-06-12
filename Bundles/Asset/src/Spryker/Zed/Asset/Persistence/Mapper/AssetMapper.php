@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AssetCollectionTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Orm\Zed\Asset\Persistence\SpyAsset;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 
 class AssetMapper
 {
@@ -25,6 +26,11 @@ class AssetMapper
         AssetTransfer $assetTransfer
     ): AssetTransfer {
         $assetTransfer->fromArray($assetEntity->toArray(), true);
+
+        if (method_exists($assetEntity, 'getLastMessageTimestamp')) {
+            $timestamp = $assetEntity->getLastMessageTimestamp(AssetTimeStamp::TIMESTAMP_FORMAT);
+            $assetTransfer->setLastMessageTimestamp($timestamp);
+        }
 
         $assetEntity->initSpyAssetStores(false);
 

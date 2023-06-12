@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Asset\AssetConfig;
+use Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface;
@@ -29,6 +30,11 @@ class AssetDeleter implements AssetDeleterInterface
     protected $assetEntityManager;
 
     /**
+     * @var \Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface
+     */
+    protected $assetMapper;
+
+    /**
      * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface
      */
     protected $storeFacade;
@@ -41,17 +47,20 @@ class AssetDeleter implements AssetDeleterInterface
     /**
      * @param \Spryker\Zed\Asset\Persistence\AssetRepositoryInterface $assetRepository
      * @param \Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface $assetEntityManager
+     * @param \Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface $assetMapper
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface $storeFacade
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface $eventFacade
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetEntityManagerInterface $assetEntityManager,
+        AssetMapperInterface $assetMapper,
         AssetToStoreInterface $storeFacade,
         AssetToEventFacadeInterface $eventFacade
     ) {
         $this->assetRepository = $assetRepository;
         $this->assetEntityManager = $assetEntityManager;
+        $this->assetMapper = $assetMapper;
         $this->storeFacade = $storeFacade;
         $this->eventFacade = $eventFacade;
     }
@@ -63,7 +72,9 @@ class AssetDeleter implements AssetDeleterInterface
      */
     public function deleteAsset(AssetDeletedTransfer $assetDeletedTransfer): void
     {
-        $assetDeletedTransfer->requireAssetIdentifier();
+        $assetDeletedTransfer
+            ->requireAssetIdentifier()
+            ->requireMessageAttributes();
 
         $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $assetDeletedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
@@ -72,11 +83,27 @@ class AssetDeleter implements AssetDeleterInterface
             (string)$assetDeletedTransfer->getAssetIdentifier(),
         );
 
-        if (!$assetTransfer) {
+        if ($assetTransfer === null && !$this->assetEntityManager->hasIsActiveColumn()) {
             return;
         }
 
-        $this->assetEntityManager->deleteAsset($assetTransfer);
+        if ($assetTransfer === null) {
+            $assetTransfer = $this->assetMapper->generateAssetTransferFromAssetDeletedTransfer($assetDeletedTransfer);
+            $this->assetEntityManager->saveAsset($assetTransfer);
+
+            return;
+        }
+
+        $assetTransfer->setLastMessageTimestamp($assetDeletedTransfer->getMessageAttributesOrFail()->getTimestampOrFail());
+
+        if (!$this->assetEntityManager->hasIsActiveColumn()) {
+            $this->assetEntityManager->deleteAsset($assetTransfer);
+        } else {
+            $assetTransfer->setIsActive(false);
+
+            $assetTransfer = $this->assetEntityManager->saveAsset($assetTransfer);
+        }
+
         $this->assetEntityManager->deleteAssetStores($assetTransfer, [$storeTransfer]);
 
         $assetTransfer->setStores([$storeTransfer->getNameOrFail()]);

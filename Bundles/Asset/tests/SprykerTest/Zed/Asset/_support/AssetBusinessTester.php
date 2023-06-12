@@ -8,12 +8,17 @@
 namespace SprykerTest\Zed\Asset;
 
 use Codeception\Actor;
+use DateTime;
+use DateTimeZone;
+use Generated\Shared\DataBuilder\AssetAddedBuilder;
+use Generated\Shared\DataBuilder\AssetDeletedBuilder;
+use Generated\Shared\DataBuilder\AssetUpdatedBuilder;
 use Generated\Shared\Transfer\AssetAddedTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
-use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Ramsey\Uuid\Uuid;
+use Orm\Zed\Asset\Persistence\SpyAssetQuery;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 
 /**
  * Inherited Methods
@@ -36,102 +41,119 @@ class AssetBusinessTester extends Actor
     use _generated\AssetBusinessTesterActions;
 
     /**
-     * @var string
-     */
-    public const STORE_REFERENCE = 'dev-DE';
-
-    /**
-     * @param string $storeReference
-     * @param string $assetSlot
-     * @param string $assetUuid
+     * @param array $seed
      *
      * @return \Generated\Shared\Transfer\AssetAddedTransfer
      */
-    public function buildAssetAddedTransfer(string $storeReference, string $assetSlot, string $assetUuid): AssetAddedTransfer
+    public function generateAssetAddedTransfer(array $seed = []): AssetAddedTransfer
     {
-        return (new AssetAddedTransfer())
-            ->setAssetName('test')
-            ->setAssetView('<script>')
-            ->setAssetIdentifier($assetUuid)
-            ->setAssetSlot($assetSlot)
-            ->setMessageAttributes(
-                (new MessageAttributesTransfer())
-                    ->setEmitter($this->getUuid())
-                    ->setStoreReference($storeReference),
-            );
+        return (new AssetAddedBuilder($seed))->build();
     }
 
     /**
-     * @param string $storeReference
-     * @param string $assetSlot
-     * @param string|null $assetUuid
-     * @param string|null $assetView
-     *
-     * @return \Generated\Shared\Transfer\AssetUpdatedTransfer
-     */
-    public function buildAssetUpdatedTransfer(
-        string $storeReference,
-        string $assetSlot = 'test',
-        ?string $assetUuid = null,
-        ?string $assetView = '<script>'
-    ): AssetUpdatedTransfer {
-        $assetUuid = $assetUuid ?: $this->getUuid();
-
-        return (new AssetUpdatedTransfer())
-            ->setAssetView($assetView)
-            ->setAssetIdentifier($assetUuid)
-            ->setAssetSlot($assetSlot)
-            ->setMessageAttributes(
-                (new MessageAttributesTransfer())
-                    ->setEmitter($this->getUuid())
-                    ->setStoreReference($storeReference),
-            );
-    }
-
-    /**
-     * @param string $storeReference
-     * @param string|null $assetUuid
+     * @param array $seed
      *
      * @return \Generated\Shared\Transfer\AssetDeletedTransfer
      */
-    public function buildAssetDeletedTransfer(
-        string $storeReference,
-        ?string $assetUuid = null
-    ): AssetDeletedTransfer {
-        $assetUuid = $assetUuid ?: $this->getUuid();
-
-        return (new AssetDeletedTransfer())
-            ->setAssetIdentifier($assetUuid)
-            ->setMessageAttributes(
-                (new MessageAttributesTransfer())
-                    ->setEmitter($this->getUuid())
-                    ->setStoreReference($storeReference),
-            );
-    }
-
-    /**
-     * @return string
-     */
-    public function getUuid(): string
+    public function generateAssetDeletedTransfer(array $seed = []): AssetDeletedTransfer
     {
-        return Uuid::uuid4()->toString();
+        return (new AssetDeletedBuilder($seed))->build();
     }
 
     /**
-     * @param string $assetContent
-     * @param string $assetUuid
-     * @param string $storeName
+     * @param array $seed
      *
-     * @return \Generated\Shared\Transfer\AssetTransfer
+     * @return \Generated\Shared\Transfer\AssetUpdatedTransfer
      */
-    public function buildAssetTransfer(string $assetContent, string $assetUuid, string $storeName): AssetTransfer
+    public function generateAssetUpdatedTransfer(array $seed = []): AssetUpdatedTransfer
     {
-        return (new AssetTransfer())
-            ->setAssetSlot('slt-footer')
-            ->setAssetName('test')
-            ->setAssetContent($assetContent)
-            ->setIdAsset(1)
-            ->setAssetUuid($assetUuid)
-            ->addStore($storeName);
+        return (new AssetUpdatedBuilder($seed))->build();
+    }
+
+    /**
+     * @return array {string, string}
+     */
+    public function createOldAndNewDateTime(): array
+    {
+        $timeOld = new DateTime('now', new DateTimeZone('UTC'));
+        $timeNew = new DateTime('now', new DateTimeZone('UTC'));
+        $timeNew->modify('+50 microseconds');
+
+        return [$timeOld->format(AssetTimeStamp::TIMESTAMP_FORMAT), $timeNew->format(AssetTimeStamp::TIMESTAMP_FORMAT)];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
+     *
+     * @return void
+     */
+    public function assertAssetTransferAndAssetEntityAreEqual(AssetTransfer $assetTransfer): void
+    {
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetTransfer->getAssetUuid())->findOne();
+
+        $this->assertEquals($assetTransfer->getAssetContent(), $assetEntity->getAssetContent());
+        $this->assertEquals($assetTransfer->getIsActive(), $assetEntity->getIsActive());
+        $this->assertEquals($assetTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
+        $this->assertEquals($assetTransfer->getLastMessageTimestamp(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
+     *
+     * @return void
+     */
+    public function assertAssetTransferAndAssetEntityAreEqualWithNewerTimestamp(AssetTransfer $assetTransfer): void
+    {
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetTransfer->getAssetUuid())->findOne();
+
+        $this->assertEquals($assetTransfer->getAssetContent(), $assetEntity->getAssetContent());
+        $this->assertEquals($assetTransfer->getIsActive(), $assetEntity->getIsActive());
+        $this->assertEquals($assetTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
+        $this->assertGreaterThan($assetTransfer->getLastMessageTimestamp(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
+     *
+     * @return void
+     */
+    public function assertAssetAddedTransferAndAssetEntityAreEqual(AssetAddedTransfer $assetAddedTransfer): void
+    {
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetAddedTransfer->getAssetIdentifierOrFail())->findOne();
+
+        $this->assertEquals($assetAddedTransfer->getAssetview(), $assetEntity->getAssetContent());
+        $this->assertTrue($assetEntity->getIsActive());
+        $this->assertEquals($assetAddedTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
+        $this->assertEquals($assetAddedTransfer->getMessageAttributesOrFail()->getTimestampOrFail(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
+     *
+     * @return void
+     */
+    public function assertAssetUpdatedTransferAndAssetEntityAreEqual(AssetUpdatedTransfer $assetUpdatedTransfer): void
+    {
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetUpdatedTransfer->getAssetIdentifierOrFail())->findOne();
+
+        $this->assertEquals($assetUpdatedTransfer->getAssetview(), $assetEntity->getAssetContent());
+        $this->assertTrue($assetEntity->getIsActive());
+        $this->assertEquals($assetUpdatedTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
+        $this->assertEquals($assetUpdatedTransfer->getMessageAttributesOrFail()->getTimestampOrFail(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return void
+     */
+    public function assertAssetDeletedTransferAndAssetEntityAreEqual(AssetDeletedTransfer $assetDeletedTransfer): void
+    {
+        $assetEntity = SpyAssetQuery::create()->filterByAssetUuid($assetDeletedTransfer->getAssetIdentifierOrFail())->findOne();
+
+        $this->assertEquals($assetDeletedTransfer->getAssetView(), $assetEntity->getAssetContent());
+        $this->assertFalse($assetEntity->getIsActive());
+        $this->assertEquals($assetDeletedTransfer->getAssetSlot(), $assetEntity->getAssetSlot());
+        $this->assertEquals($assetDeletedTransfer->getMessageAttributesOrFail()->getTimestampOrFail(), $assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
     }
 }

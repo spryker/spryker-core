@@ -4,11 +4,36 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
-<transfer name="Asset" strict="true">
+    <transfer name="Asset" strict="true">
         <property name="assetUuid" dataBuilderRule="uuid()"/>
         <property name="assetName" type="string" dataBuilderRule="lexify('??????????')"/>
-        <property name="assetSlot" type="string" dataBuilderRule="=header-test"/>
+        <property name="assetSlot" type="string" dataBuilderRule="word()"/>
         <property name="assetContent" type="string" dataBuilderRule="lexify('??????????')"/>
         <property name="stores" type="string[]" dataBuilderRule="shuffle(array('DE', 'EN'))"/>
+        <property name="isActive" type="bool" dataBuilderRule="boolean(100)"/>
+    </transfer>
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+    <transfer name="AssetAdded">
+        <property name="assetIdentifier" type="string" dataBuilderRule="uuid()"/>
+        <property name="assetName" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetView" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetSlot" type="string" dataBuilderRule="word()"/>
+        <property name="messageAttributes" type="MessageAttributes" dataBuilderRule="MessageAttributes"/>
+    </transfer>
+    <transfer name="AssetUpdated">
+        <property name="assetIdentifier" type="string" dataBuilderRule="uuid()"/>
+        <property name="assetName" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetView" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetSlot" type="string" dataBuilderRule="word()"/>
+        <property name="messageAttributes" type="MessageAttributes" dataBuilderRule="MessageAttributes"/>
+    </transfer>
+    <transfer name="AssetDeleted">
+        <property name="assetIdentifier" type="string" dataBuilderRule="uuid()"/>
+        <property name="assetName" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetView" type="string" dataBuilderRule="lexify('??????????')"/>
+        <property name="assetSlot" type="string" dataBuilderRule="word()"/>
+        <property name="messageAttributes" type="MessageAttributes" dataBuilderRule="MessageAttributes"/>
     </transfer>
 </transfers>

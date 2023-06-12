@@ -43,4 +43,9 @@ interface AssetEntityManagerInterface
      * @return void
      */
     public function deleteAssetStores(AssetTransfer $assetTransfer, array $storeTransfers): void;
+
+    /**
+     * @return bool
+     */
+    public function hasIsActiveColumn(): bool;
 }

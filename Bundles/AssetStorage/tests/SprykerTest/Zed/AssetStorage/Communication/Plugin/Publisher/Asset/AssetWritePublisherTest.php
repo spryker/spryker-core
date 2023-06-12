@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\AssetStorage\Communication\Plugin\Publisher\Asset;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin;
@@ -48,6 +49,7 @@ class AssetWritePublisherTest extends Unit
         $this->assetTransfer = $this->tester->haveAssetTransfer([
             'idAsset' => AssetStorageCommunicationTester::ID_ASSET_DEFAULT,
             'stores' => AssetStorageCommunicationTester::STORE_NAMES_DEFAULT,
+            AssetTransfer::ASSET_SLOT => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
         ]);
         $this->tester->mockAssetFacade($this->assetTransfer);
     }
@@ -227,6 +229,7 @@ class AssetWritePublisherTest extends Unit
         $sameSlotAssetTransfer = $this->tester->haveAssetTransfer([
             'idAsset' => 20,
             'stores' => AssetStorageCommunicationTester::STORE_NAMES_DEFAULT,
+            AssetTransfer::ASSET_SLOT => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
         ]);
 
         $eventTransfer2 = (new EventEntityTransfer())

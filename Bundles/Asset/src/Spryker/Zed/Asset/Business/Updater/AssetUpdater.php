@@ -74,16 +74,17 @@ class AssetUpdater implements AssetUpdaterInterface
             ->requireAssetSlot();
 
         $storeTransfer = $this->storeFacade->getStoreByStoreReference($messageAttributes->getStoreReferenceOrFail());
-        $assetTransfer = $this->assetRepository
-            ->findAssetByAssetUuid((string)$assetUpdatedTransfer->getAssetIdentifier());
 
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid($assetUpdatedTransfer->getAssetIdentifierOrFail());
         if ($assetTransfer === null) {
             throw new InvalidAssetException('This asset doesn\'t exist in DB.');
         }
 
         $previousStateAssetTransfer = clone $assetTransfer;
         $assetTransfer->setAssetContent($assetUpdatedTransfer->getAssetView())
-            ->setAssetSlot($assetUpdatedTransfer->getAssetSlot());
+            ->setAssetSlot($assetUpdatedTransfer->getAssetSlot())
+            ->setIsActive(true)
+            ->setLastMessageTimestamp($assetUpdatedTransfer->getMessageAttributesOrFail()->getTimestamp());
 
         $assetTransfer = $this->assetEntityManager->saveAssetWithStores($assetTransfer, [$storeTransfer]);
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Asset\Business\Mapper;
 
 use Generated\Shared\Transfer\AssetAddedTransfer;
+use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 
 class AssetMapper implements AssetMapperInterface
@@ -26,6 +27,26 @@ class AssetMapper implements AssetMapperInterface
             ->setAssetUuid($assetAddedTransfer->getAssetIdentifier())
             ->setAssetContent($assetAddedTransfer->getAssetView())
             ->setAssetName($assetAddedTransfer->getAssetName())
-            ->setAssetSlot($assetAddedTransfer->getAssetSlot());
+            ->setAssetSlot($assetAddedTransfer->getAssetSlot())
+            ->setIsActive(true)
+            ->setLastMessageTimestamp($assetAddedTransfer->getMessageAttributesOrFail()->getTimestamp());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function generateAssetTransferFromAssetDeletedTransfer(AssetDeletedTransfer $assetDeletedTransfer): AssetTransfer
+    {
+        $assetTransfer = new AssetTransfer();
+        $assetTransfer->setAssetUuid($assetDeletedTransfer->getAssetIdentifier());
+        $assetTransfer->setAssetName($assetDeletedTransfer->getAssetNameOrFail());
+        $assetTransfer->setAssetContent($assetDeletedTransfer->getAssetViewOrFail());
+        $assetTransfer->setAssetSlot($assetDeletedTransfer->getAssetSlotOrFail());
+        $assetTransfer->setIsActive(false);
+        $assetTransfer->setLastMessageTimestamp($assetDeletedTransfer->getMessageAttributesOrFail()->getTimestamp());
+
+        return $assetTransfer;
     }
 }

@@ -18,12 +18,14 @@ interface AssetFacadeInterface
 {
     /**
      * Specification:
+     * - Does nothing if the `AssetAddedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
      * - Creates a new asset entity with new assetStoreEntity relations.
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
      * - Returns asset response with newly created asset transfer inside.
-     * - Throws InvalidAssetException in case a record is found.
+     * - If an asset with the same UUID is found, the asset is updated instead.
+     * - Requires `AssetAddedTransfer.messageAttributes.storeReference` to be set.
      *
      * @api
      *
@@ -35,12 +37,14 @@ interface AssetFacadeInterface
 
     /**
      * Specification:
-     * - Finds an asset record by ID in DB.
+     * - Does nothing if the `AssetUpdatedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
+     * - Finds an asset record by UUID in DB.
      * - Uses incoming transfer to update entity fields.
      * - Persists the entity to DB.
      * - Updates a new relations assetStoreEntity.
      * - Returns asset response with updated asset transfer inside.
-     * - Throws InvalidAssetException in case a record is not found.
+     * - If an asset with the same UUID is not found, a new asset is created instead.
+     * - Requires `AssetUpdatedTransfer.messageAttributes.storeReference` to be set.
      *
      * @api
      *
@@ -52,8 +56,12 @@ interface AssetFacadeInterface
 
     /**
      * Specification:
-     * - Removes an asset record by ID in DB.
-     * - Removes related entity assetStoreEntity.
+     * - Does nothing if the `AssetDeletedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
+     * - Deletes relation assetStoreEntity.
+     * - If an asset with the same UUID is found in DB and the `is_active` column exists in `spy_asset` table then the asset is soft deleted.
+     * - If an asset with the same UUID is found in DB and the `is_active` column does not exist in the `spy_asset` table then the asset is deleted.
+     * - If an asset with the same UUID is not found in DB and the `is_active` column exists in `spy_asset` table a new soft deleted asset is created.
+     * - Requires `AssetDeletedTransfer.messageAttributes.storeReference` to be set
      *
      * @api
      *

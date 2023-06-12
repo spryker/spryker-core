@@ -8,6 +8,8 @@
         <property name="assetSlot" type="string"/>
         <property name="assetContent" type="string"/>
         <property name="stores" type="string[]" singular="store"/>
+        <property name="isActive" type="bool"/>
+        <property name="lastMessageTimestamp" type="string"/>
     </transfer>
 
     <transfer name="AssetAdded">
@@ -58,6 +60,7 @@
         <property name="storeReference" type="string"/>
         <property name="emitter" type="string"/>
         <property name="publisher" type="Publisher" deprecated="Use emitter property instead."/>
+        <property name="timestamp" type="string"/>
     </transfer>
 
     <transfer name="Publisher" deprecated="Will be removed in next major.">

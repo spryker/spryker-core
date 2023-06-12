@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AssetTransfer;
 use Orm\Zed\Asset\Persistence\SpyAsset;
 use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Orm\Zed\Asset\Persistence\SpyAssetStoreQuery;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -49,7 +50,8 @@ class AssetDataHelper extends Module
                 ->setAssetSlot($assetTransfer->getAssetSlot())
                 ->setAssetContent($assetTransfer->getAssetContent())
                 ->setAssetUuid($assetTransfer->getAssetUuid())
-                ->setAssetName($assetTransfer->getAssetName());
+                ->setAssetName($assetTransfer->getAssetName())
+                ->setLastMessageTimestamp($assetTransfer->getLastMessageTimestamp());
 
             $assetEntity->save();
         }
@@ -60,6 +62,9 @@ class AssetDataHelper extends Module
 
         $assetTransfer = (new AssetTransfer())->fromArray($assetEntity->toArray(), true);
         $assetTransfer->setAssetSlot($assetEntity->getAssetSlot());
+        if ($assetEntity->getLastMessageTimestamp()) {
+            $assetTransfer->setLastMessageTimestamp($assetEntity->getLastMessageTimestamp()->format(AssetTimeStamp::TIMESTAMP_FORMAT));
+        }
 
         return $assetTransfer;
     }

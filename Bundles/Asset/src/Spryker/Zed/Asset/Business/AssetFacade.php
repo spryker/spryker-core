@@ -33,7 +33,7 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      */
     public function addAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer
     {
-        return $this->getFactory()->createAssetCreator()->addAsset($assetAddedTransfer);
+        return $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetAddedTransferRequest($assetAddedTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      */
     public function updateAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
     {
-        return $this->getFactory()->createAssetUpdater()->updateAsset($assetUpdatedTransfer);
+        return $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetUpdatedTransferRequest($assetUpdatedTransfer);
     }
 
     /**
@@ -61,7 +61,7 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      */
     public function deleteAsset(AssetDeletedTransfer $assetDeletedTransfer): void
     {
-        $this->getFactory()->createAssetDeleter()->deleteAsset($assetDeletedTransfer);
+        $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetDeletedTransferRequest($assetDeletedTransfer);
     }
 
     /**

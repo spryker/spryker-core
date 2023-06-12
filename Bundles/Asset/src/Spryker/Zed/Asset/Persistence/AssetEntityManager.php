@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Asset\Persistence;
 
 use Generated\Shared\Transfer\AssetTransfer;
+use Orm\Zed\Asset\Persistence\SpyAsset;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -48,11 +49,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
             ->filterByAssetUuid($assetTransfer->getAssetUuid())
             ->findOneOrCreate();
 
-        $assetEntity = $assetEntity
-            ->setAssetUuid((string)$assetTransfer->getAssetUuid())
-            ->setAssetContent((string)$assetTransfer->getAssetContent())
-            ->setAssetName((string)$assetTransfer->getAssetName())
-            ->setAssetSlot((string)$assetTransfer->getAssetSlot());
+        $assetEntity = $assetEntity->fromArray($assetTransfer->toArray());
 
         $assetEntity->save();
 
@@ -163,5 +160,13 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
             ->filterByFkStore($storeTransferIds, Criteria::NOT_IN)
             ->find()
             ->delete();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasIsActiveColumn(): bool
+    {
+        return SpyAsset::TABLE_MAP::getTableMap()->hasColumn('is_active');
     }
 }

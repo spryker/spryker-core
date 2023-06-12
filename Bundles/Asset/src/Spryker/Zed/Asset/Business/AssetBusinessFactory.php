@@ -14,6 +14,10 @@ use Spryker\Zed\Asset\Business\Deleter\AssetDeleter;
 use Spryker\Zed\Asset\Business\Deleter\AssetDeleterInterface;
 use Spryker\Zed\Asset\Business\Mapper\AssetMapper;
 use Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface;
+use Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcher;
+use Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcherInterface;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
+use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStampInterface;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdater;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdaterInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
@@ -27,6 +31,20 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AssetBusinessFactory extends AbstractBusinessFactory
 {
+ /**
+  * @return \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcherInterface
+  */
+    public function createAssetRequestDispatcher(): AssetRequestDispatcherInterface
+    {
+        return new AssetRequestDispatcher(
+            $this->getRepository(),
+            $this->createAssetCreator(),
+            $this->createAssetUpdater(),
+            $this->createAssetDeleter(),
+            $this->createAssetTimeStamp(),
+        );
+    }
+
     /**
      * @return \Spryker\Zed\Asset\Business\Creator\AssetCreatorInterface
      */
@@ -62,9 +80,18 @@ class AssetBusinessFactory extends AbstractBusinessFactory
         return new AssetDeleter(
             $this->getRepository(),
             $this->getEntityManager(),
+            $this->createAssetMapper(),
             $this->getStoreFacade(),
             $this->getEventFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStampInterface
+     */
+    public function createAssetTimeStamp(): AssetTimeStampInterface
+    {
+        return new AssetTimeStamp();
     }
 
     /**
