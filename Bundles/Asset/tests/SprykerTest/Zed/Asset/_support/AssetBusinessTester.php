@@ -10,9 +10,6 @@ namespace SprykerTest\Zed\Asset;
 use Codeception\Actor;
 use DateTime;
 use DateTimeZone;
-use Generated\Shared\DataBuilder\AssetAddedBuilder;
-use Generated\Shared\DataBuilder\AssetDeletedBuilder;
-use Generated\Shared\DataBuilder\AssetUpdatedBuilder;
 use Generated\Shared\Transfer\AssetAddedTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
@@ -39,36 +36,6 @@ use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 class AssetBusinessTester extends Actor
 {
     use _generated\AssetBusinessTesterActions;
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\AssetAddedTransfer
-     */
-    public function generateAssetAddedTransfer(array $seed = []): AssetAddedTransfer
-    {
-        return (new AssetAddedBuilder($seed))->build();
-    }
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\AssetDeletedTransfer
-     */
-    public function generateAssetDeletedTransfer(array $seed = []): AssetDeletedTransfer
-    {
-        return (new AssetDeletedBuilder($seed))->build();
-    }
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\AssetUpdatedTransfer
-     */
-    public function generateAssetUpdatedTransfer(array $seed = []): AssetUpdatedTransfer
-    {
-        return (new AssetUpdatedBuilder($seed))->build();
-    }
 
     /**
      * @return array {string, string}

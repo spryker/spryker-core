@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\MessageBroker\Business\Publisher;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
-use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Generated\Shared\Transfer\OutgoingMessageTransfer;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -46,7 +45,7 @@ class MessagePublisherTest extends Unit
     public function testPublishMessageThrowsExceptionWhenPassedTransferDoesNotHaveMessageAttributes(): void
     {
         // Arrange
-        $messageBrokerWorkerConfigTransfer = new MessageBrokerWorkerConfigTransfer();
+        $messageBrokerWorkerConfigTransfer = $this->tester->buildMessageBrokerWorkerConfigTransfer();
         $messagePublisher = $this->tester->getFactory()->createMessagePublisher();
 
         // Expect

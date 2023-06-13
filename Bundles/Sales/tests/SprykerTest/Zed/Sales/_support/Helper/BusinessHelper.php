@@ -69,14 +69,20 @@ class BusinessHelper extends Module
     /**
      * @param iterable|array $itemTransfers
      * @param array $salesOrderOverride
+     * @param string|null $omsStateName
+     * @param string|null $omsProcessName
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function haveSalesOrderEntity(iterable $itemTransfers = [], array $salesOrderOverride = []): SpySalesOrder
-    {
+    public function haveSalesOrderEntity(
+        iterable $itemTransfers = [],
+        array $salesOrderOverride = [],
+        ?string $omsStateName = self::DEFAULT_ITEM_STATE,
+        ?string $omsProcessName = self::DEFAULT_OMS_PROCESS_NAME
+    ): SpySalesOrder {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
-        $omsStateEntity = $this->createOmsState();
-        $omsProcessEntity = $this->createOmsProcess();
+        $omsStateEntity = $this->createOmsState($omsStateName);
+        $omsProcessEntity = $this->createOmsProcess($omsProcessName);
         $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity, $salesOrderOverride);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
@@ -282,12 +288,14 @@ class BusinessHelper extends Module
     }
 
     /**
+     * @param string $omsStateName
+     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    protected function createOmsState(): SpyOmsOrderItemState
+    protected function createOmsState(string $omsStateName): SpyOmsOrderItemState
     {
         $omsStateEntity = (new SpyOmsOrderItemStateQuery())
-            ->filterByName(static::DEFAULT_ITEM_STATE)
+            ->filterByName($omsStateName)
             ->findOneOrCreate();
 
         $omsStateEntity->save();
@@ -296,12 +304,14 @@ class BusinessHelper extends Module
     }
 
     /**
+     * @param string $omsProcessName
+     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    protected function createOmsProcess(): SpyOmsOrderProcess
+    protected function createOmsProcess(string $omsProcessName): SpyOmsOrderProcess
     {
         $omsProcessEntity = (new SpyOmsOrderProcessQuery())
-            ->filterByName(static::DEFAULT_OMS_PROCESS_NAME)
+            ->filterByName($omsProcessName)
             ->findOneOrCreate();
 
         $omsProcessEntity->save();

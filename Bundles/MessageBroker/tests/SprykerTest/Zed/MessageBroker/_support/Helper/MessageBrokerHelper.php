@@ -436,10 +436,27 @@ class MessageBrokerHelper extends Module
 
         $this->getBusinessHelper()->mockFactoryMethod('getEventDispatcher', $eventDispatcher, 'MessageBroker');
 
-        $messageBrokerWorkerConfigTransfer = new MessageBrokerWorkerConfigTransfer();
-        $messageBrokerWorkerConfigTransfer->setChannels([]);
+        $this->getFacade()->startWorker($this->buildMessageBrokerWorkerConfigTransfer());
+    }
 
-        $this->getFacade()->startWorker($messageBrokerWorkerConfigTransfer);
+    /**
+     * @param list<string> $channels
+     * @param int|null $timeLimit
+     *
+     * @return \Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer
+     */
+    public function buildMessageBrokerWorkerConfigTransfer(
+        array $channels = [],
+        ?int $timeLimit = null
+    ): MessageBrokerWorkerConfigTransfer {
+        $messageBrokerWorkerConfigTransfer = new MessageBrokerWorkerConfigTransfer();
+        $messageBrokerWorkerConfigTransfer->setChannels($channels);
+
+        if ($timeLimit) {
+            $messageBrokerWorkerConfigTransfer->setTimeLimit($timeLimit);
+        }
+
+        return $messageBrokerWorkerConfigTransfer;
     }
 
     /**

@@ -15,17 +15,22 @@ trait ContainerMocker
 {
     /**
      * @param \Spryker\Shared\Kernel\ContainerInterface $container
+     * @param string|null $factoryClassName
      *
      * @return \Spryker\Shared\Kernel\ContainerInterface
      */
-    protected function overwriteForTesting(ContainerInterface $container)
+    protected function overwriteForTesting(ContainerInterface $container, ?string $factoryClassName = null)
     {
         if (!$this->isContainerOverridingEnabled()) {
             return $container;
         }
 
+        if (!$factoryClassName) {
+            $factoryClassName = static::class;
+        }
+
         $containerGlobals = new ContainerGlobals();
-        $containerMocks = $containerGlobals->getContainerGlobals(static::class);
+        $containerMocks = $containerGlobals->getContainerGlobals($factoryClassName);
         if (count($containerMocks) === 0) {
             return $container;
         }

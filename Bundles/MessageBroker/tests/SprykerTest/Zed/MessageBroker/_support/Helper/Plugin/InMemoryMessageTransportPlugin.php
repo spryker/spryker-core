@@ -12,9 +12,10 @@ use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginIn
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
+use Symfony\Component\Messenger\Transport\Receiver\QueueReceiverInterface;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 
-class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSenderPluginInterface, MessageReceiverPluginInterface, TransportInterface
+class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSenderPluginInterface, MessageReceiverPluginInterface, TransportInterface, QueueReceiverInterface
 {
     /**
      * @var \Symfony\Component\Messenger\Transport\InMemoryTransport
@@ -43,6 +44,18 @@ class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSe
     public function get(): iterable
     {
         return $this->transport->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param array<string> $queueNames
+     *
+     * @return iterable<\Symfony\Component\Messenger\Envelope>
+     */
+    public function getFromQueues(array $queueNames): iterable
+    {
+        return $this->get();
     }
 
     /**
