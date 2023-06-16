@@ -1,0 +1,59 @@
+asyncapi: 2.6.0
+info:
+    title: 'Sales Payment AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    payment-commands:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/PaymentCancelReservationRequested'
+                    - $ref: '#/components/messages/PaymentConfirmationRequested'
+                    - $ref: '#/components/messages/PaymentRefundRequested'
+components:
+    messages:
+        PaymentCancelReservationRequested:
+            name: PaymentCancelReservationRequested
+            x-spryker:
+                module: SalesPayment
+            summary: 'Handle payment reservation cancellation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentConfirmationRequested:
+            name: PaymentConfirmationRequested
+            x-spryker:
+                module: SalesPayment
+            summary: 'Handle payment confirmation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentRefundRequested:
+            name: PaymentRefundRequested
+            x-spryker:
+                module: SalesPayment
+            summary: 'Handle payment refund request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+    schemas:
+        PaymentPayload:
+            type: object
+            properties:
+                orderReference:
+                    type: string
+                orderItemIds:
+                    type: array
+                amount:
+                    type: integer
+                currencyIsoCode:
+                    type: string
+            required:
+                - orderReference
+                - orderItemIds
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

@@ -1,16 +1,16 @@
-asyncapi: 2.2.0
+asyncapi: 2.6.0
 info:
     title: 'Merchant AsyncAPI definition.'
     version: 0.1.0
 channels:
-    merchants:
+    merchant-events:
         subscribe:
             message:
                 oneOf:
                     - $ref: '#/components/messages/MerchantExported'
                     - $ref: '#/components/messages/MerchantCreated'
                     - $ref: '#/components/messages/MerchantUpdated'
-
+    merchant-commands:
         publish:
             message:
                 oneOf:
@@ -29,7 +29,9 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/MerchantExported'
+                $ref: '#/components/schemas/Merchant'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
         MerchantCreated:
             name: MerchantCreated
@@ -37,7 +39,9 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/MerchantCreated'
+                $ref: '#/components/schemas/Merchant'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
         MerchantUpdated:
             name: MerchantUpdated
@@ -45,18 +49,11 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/MerchantUpdated'
+                $ref: '#/components/schemas/Merchant'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
     schemas:
-        MerchantExported:
-            $ref: '#/components/schemas/Merchant'
-
-        MerchantCreated:
-            $ref: '#/components/schemas/Merchant'
-
-        MerchantUpdated:
-            $ref: '#/components/schemas/Merchant'
-
         Merchant:
             type: object
             properties:
@@ -94,3 +91,6 @@ components:
                     example: STORE-001
             required:
                 - storeReference
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

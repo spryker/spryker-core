@@ -1,9 +1,9 @@
-asyncapi: 2.2.0
+asyncapi: 2.6.0
 info:
     title: 'Oms AsyncAPI definition.'
     version: 0.1.0
 channels:
-    orders:
+    order-events:
         subscribe:
             message:
                 oneOf:
@@ -13,14 +13,13 @@ components:
     messages:
         OrderStatusChanged:
             name: OrderStatusChanged
-            operationId: Oms
             x-spryker:
                 module: Oms
             summary: 'Order status has changed.'
             payload:
                 $ref: '#/components/schemas/OrderStatusChanged'
             headers:
-                $ref: '#/components/schemas/headers'
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
     schemas:
         OrderStatusChanged:
@@ -28,81 +27,76 @@ components:
             properties:
                 transactionDate:
                     type: string
-                    required: true
+                    example: '2019-09-21T11:36:47'
                 emailAddress:
                     type: string
-                    required: true
+                    example: 'example@email.com'
                 localeName:
                     type: string
-                    required: true
+                    example: en_US
                 userName:
                     type: string
-                    required: true
+                    example: 'Customer Username'
                 orderItems:
                     type: array
-                    required: true
                     items:
                         $ref: '#/components/schemas/OrderItem'
                 status:
                     type: string
-                    required: true
+                    example: 'shipped'
                 orderReference:
                     type: string
-                    required: true
+                    example: 'DE--123456'
                 merchants:
-                    type: object
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/OrderMerchant'
+            required:
+                - transactionDate
+                - emailAddress
+                - localeName
+                - userName
+                - orderItems
+                - status
+                - orderReference
 
         OrderItem:
             type: object
             properties:
                 productId:
                     type: string
-                    required: true
+                    example: 'some_sku'
                 name:
                     type: string
-                    required: true
+                    example: 'Product Name'
                 imageUrl:
                     type: string
                     nullable: true
+                    example: 'https://product-image-url.com'
                 price:
-                    type: int
-                    required: true
-
-        headers:
-            type: object
-            required:
-                - authorization
-                - timestamp
-                - correlationId
-                - storeReference
-                - event
-                - transferName
-                - publisher
-            properties:
-                authorization:
-                    type: string
-                    description: 'Authorization header for requesting a protected resource.'
-                timestamp:
                     type: integer
-                    description: 'Timestamp when this message was created (microtime).'
-                correlationId:
+                    example: 999, in cents.
+            required:
+                - productId
+                - name
+                - price
+
+        OrderMerchant:
+            type: object
+            properties:
+                merchantReference:
                     type: string
-                    description: 'Identifier of the current process.'
-                storeReference:
+                    example: 'MER000001'
+                name:
                     type: string
-                    description: 'Identifier of a store for the triggered event.'
-                event:
+                    example: 'Merchant Name'
+                imageUrl:
                     type: string
-                    description: 'Name of the current event.'
-                transferName:
-                    type: string
-                    description: 'Transfer name of the current event.'
-                publisher:
-                    type: object
-                    properties:
-                        appIdentifier:
-                            type: string
-                            description: 'Identifier of the app that triggered the event.'
-                        storeReference:
-                            type: string
-                            description: 'Identifier of a store that triggered the event.'
+                    nullable: true
+                    example: 'https://merchant-image-url.com'
+            required:
+                - merchantReference
+                - name
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

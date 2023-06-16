@@ -1,9 +1,9 @@
-asyncapi: 2.2.0
+asyncapi: 2.6.0
 info:
     title: 'Reviews AsyncAPI definition.'
     version: 0.1.0
 channels:
-    ratings:
+    product-review-commands:
         publish:
             message:
                 oneOf:
@@ -14,11 +14,12 @@ components:
         AddReviews:
             name: AddReviews
             description: The Command message will be sent when an external system reports reviews.
-            operationId: ProductReview
+            x-spryker:
+                module: ProductReview
             payload:
                 $ref: '#/components/schemas/AddReviews'
             headers:
-                $ref: '#/components/schemas/headers'
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
     schemas:
         AddReviews:
@@ -28,25 +29,24 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/Review'
-                    required: true
+            required:
+                - reviews
+
         Review:
             type: object
             properties:
                 productIdentifier:
                     type: string
                     example: 5da02a51-c9b3-48f4-b804-fab27b5f2239
-                    required: true
                 customerIdentifier:
                     type: string
                     example: 42b3b25b-93e9-41c2-a236-81891e8bb8df
-                    required: true
                 nickname:
                     type: string
                     example: 'Stereomon'
                 locale:
                     type: string
                     example: en_US
-                    required: true
                 reviewTitle:
                     type: string
                     example: 'Spryker is the best!'
@@ -54,50 +54,17 @@ components:
                     type: string
                     example: 'I can highly recommend to use Spryker, they are doing the best and offer really nice apps which are very easy to integrate.'
                 rating:
-                    type: int
-                    enum: [1, 2, 3, 4, 5]
+                    type: integer
                     example: 5
-                    required: true
                 status:
                     description: When this is not sent the review will be created in pending state
-                    type: int
-                    enum: ['pending', 'approved', 'rejected']
-
-        headers:
-            type: object
-            required:
-                - authorization
-                - timestamp
-                - correlationId
-                - storeReference
-                - event
-                - transferName
-                - publisher
-            properties:
-                authorization:
-                    type: string
-                    description: 'Authorization header for requesting a protected resource.'
-                timestamp:
                     type: integer
-                    description: 'Timestamp when this message was created (microtime).'
-                correlationId:
-                    type: string
-                    description: 'Identifier of the current process.'
-                storeReference:
-                    type: string
-                    description: 'Identifier of a store for the triggered event.'
-                event:
-                    type: string
-                    description: 'Name of the current event.'
-                transferName:
-                    type: string
-                    description: 'Transfer name of the current event.'
-                publisher:
-                    type: object
-                    properties:
-                        appIdentifier:
-                            type: string
-                            description: 'Identifier of the app that triggered the event.'
-                        storeReference:
-                            type: string
-                            description: 'Identifier of a store that triggered the event.'
+                    enum: ['pending', 'approved', 'rejected']
+            required:
+                - productIdentifier
+                - customerIdentifier
+                - locale
+                - rating
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

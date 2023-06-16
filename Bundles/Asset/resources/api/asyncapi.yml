@@ -1,0 +1,59 @@
+asyncapi: 2.6.0
+info:
+    title: 'Assets AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    asset-commands:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/AssetAdded'
+                    - $ref: '#/components/messages/AssetUpdated'
+                    - $ref: '#/components/messages/AssetDeleted'
+components:
+    messages:
+        AssetAdded:
+            name: AssetAdded
+            x-spryker:
+                module: Asset
+            payload:
+                $ref: '#/components/schemas/GenericAssetPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        AssetUpdated:
+            name: AssetUpdated
+            x-spryker:
+                module: Asset
+            payload:
+                $ref: '#/components/schemas/GenericAssetPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        AssetDeleted:
+            name: AssetDeleted
+            x-spryker:
+                module: Asset
+            payload:
+                $ref: '#/components/schemas/GenericAssetPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+    schemas:
+        GenericAssetPayload:
+            type: object
+            properties:
+                assetIdentifier:
+                    type: string
+                assetName:
+                    type: string
+                assetView:
+                    type: string
+                assetSlot:
+                    type: string
+            required:
+                - assetIdentifier
+                - assetName
+                - assetView
+                - assetSlot
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'
