@@ -184,6 +184,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => static::LABEL_CITY,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -202,6 +203,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => static::LABEL_ZIP_CODE,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 10]),
             ],
@@ -220,6 +222,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => static::LABEL_ADDRESS_1,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -238,6 +241,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => static::LABEL_ADDRESS_2,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [new Length(['max' => 255])],
         ]);
 
@@ -254,6 +258,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => static::LABEL_ADDRESS_3,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [new Length(['max' => 255])],
         ]);
 
@@ -278,6 +283,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_LONGITUDE, TextType::class, [
             'label' => static::LABEL_LONGITUDE,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
                 new Regex(['pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),
@@ -297,6 +303,7 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_LATITUDE, TextType::class, [
             'label' => static::LABEL_LATITUDE,
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
                 new Regex(['pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),

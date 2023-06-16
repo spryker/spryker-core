@@ -124,6 +124,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::CITY, TextType::class, [
             'label' => 'City',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 255]),
@@ -143,6 +144,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::ZIP_CODE, TextType::class, [
             'label' => 'Zip Code',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 10]),
@@ -162,6 +164,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::ADDRESS1, TextType::class, [
             'label' => 'Street',
             'required' => true,
+            'sanitize_xss' => true,
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 255]),
@@ -181,6 +184,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::ADDRESS2, TextType::class, [
             'label' => 'Number',
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -199,6 +203,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::ADDRESS3, TextType::class, [
             'label' => 'Addition to address',
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -217,6 +222,7 @@ class CompanyUnitAddressForm extends AbstractType
         $builder->add(CompanyUnitAddressTransfer::COMMENT, TextareaType::class, [
             'label' => 'Comment',
             'required' => false,
+            'sanitize_xss' => true,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
