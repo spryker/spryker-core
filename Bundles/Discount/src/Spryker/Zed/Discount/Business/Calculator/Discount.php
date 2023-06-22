@@ -102,31 +102,12 @@ class Discount implements DiscountInterface
             $this->getIdStore($quoteTransfer->getStore()),
         );
 
-        [$applicableDiscounts, $nonApplicableDiscounts] = $this->splitDiscountsByApplicability($activeDiscounts, $quoteTransfer);
-
+        $applicableDiscounts = $this->getApplicableDiscountForQuote($activeDiscounts, $quoteTransfer);
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
-        $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $discounts
-     *
-     * @return void
-     */
-    protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts): void
-    {
-        $usedNotAppliedVoucherCodes = $quoteTransfer->getUsedNotAppliedVoucherCodes();
-
-        foreach ($discounts as $discount) {
-            if ($discount->getVoucherCode() && !in_array($discount->getVoucherCode(), $usedNotAppliedVoucherCodes)) {
-                $quoteTransfer->addUsedNotAppliedVoucherCode($discount->getVoucherCode());
-            }
-        }
     }
 
     /**
@@ -186,15 +167,12 @@ class Discount implements DiscountInterface
      *
      * @return array [\Orm\Zed\Discount\Persistence\SpyDiscount[], \Orm\Zed\Discount\Persistence\SpyDiscount[]]
      */
-    protected function splitDiscountsByApplicability(array $discounts, QuoteTransfer $quoteTransfer)
+    protected function getApplicableDiscountForQuote(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $uniqueVoucherDiscounts = [];
         $applicableDiscounts = [];
-        $nonApplicableDiscounts = [];
-        foreach ($discounts as $key => $discountEntity) {
+        foreach ($discounts as $discountEntity) {
             if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity) || isset($uniqueVoucherDiscounts[$discountEntity->getIdDiscount()])) {
-                $nonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
-
                 continue;
             }
 
@@ -205,7 +183,7 @@ class Discount implements DiscountInterface
             $applicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
         }
 
-        return [$applicableDiscounts, $nonApplicableDiscounts];
+        return $applicableDiscounts;
     }
 
     /**

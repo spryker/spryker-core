@@ -11,7 +11,10 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -20,11 +23,15 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
+use Spryker\Zed\Discount\Business\Calculator\DiscountInterface;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use SprykerTest\Zed\Discount\DiscountBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -40,29 +47,54 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class DiscountTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const CURRENCY_NAME_EUR = 'EUR';
+
+    /**
+     * @var string
+     */
+    protected const ITEM_SKU = 'item-sku';
+
+    /**
      * @var \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $calculatorMock;
+    protected CalculatorInterface $calculatorMock;
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $storeFacadeMock;
+    protected DiscountToStoreFacadeInterface $storeFacadeMock;
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected DiscountToMessengerInterface $messengerFacadeMock;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $discountQueryContainerMock;
+    protected DiscountQueryContainerInterface $discountQueryContainerMock;
 
     /**
      * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $discountEntityMapperMock;
+    protected DiscountEntityMapperInterface $discountEntityMapperMock;
 
     /**
      * @var \Spryker\Zed\Discount\Business\Calculator\DiscountInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $discountMock;
+    protected DiscountInterface $discountMock;
+
+    /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected DiscountBusinessTester $tester;
 
     /**
      * @uses DiscountInterface::isDiscountApplicable()
@@ -82,6 +114,10 @@ class DiscountTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->messengerFacadeMock = $this->getMockBuilder(DiscountToMessengerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -97,6 +133,8 @@ class DiscountTest extends Unit
         $voucherValidatorMock = $this->getMockBuilder(VoucherValidatorInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->tester->setDependency(DiscountDependencyProvider::FACADE_MESSENGER, $this->messengerFacadeMock);
 
         $this->discountMock = $this->getMockBuilder(Discount::class)
             ->setConstructorArgs([
@@ -178,58 +216,92 @@ class DiscountTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateDiscountsWithNonApplicableButValidVoucherShouldAddErrorMessage(): void
+    public function testCalculateDiscountsWithNonApplicableButValidVoucherShouldNotApply(): void
     {
         // Assign
-        $expectedVoucherDiscount = (new DiscountTransfer())
-            ->setVoucherCode('code')
-            ->setDecisionRuleQueryString(
-                'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"',
-            )->setIdDiscount(5);
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => 'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"',
+        ]);
+        $discountConfigurationTransfer = $this->tester->getFacade()->findHydratedDiscountConfiguratorByIdDiscount($discountGeneralTransfer->getIdDiscount());
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+
+        $discountTransfer = (new DiscountTransfer())
+            ->fromArray($discountGeneralTransfer->toArray(), true)
+            ->setFkDiscountVoucherPool($discountConfigurationTransfer->getDiscountVoucher()->getFkDiscountVoucherPoolOrFail())
+            ->setVoucherCode('code');
+        $this->tester->haveDiscountStore($storeTransfer, $discountTransfer);
+
+        $this->tester->haveDiscountVoucher($discountTransfer->getVoucherCode(), $discountTransfer);
+
+        $currencyTransfer = (new CurrencyTransfer())->setCode(static::CURRENCY_NAME_EUR);
 
         $quoteTransfer = (new QuoteTransfer())
             ->setStore($this->getCurrentStore())
             ->setUsedNotAppliedVoucherCodes([])
-            ->setVoucherDiscounts(new ArrayObject([]));
-
-        $this->calculatorMock->expects($this->any())
-            ->method('calculate')
-            ->willReturn([]);
-
-        $this->storeFacadeMock->expects($this->any())
-            ->method('getStoreByName')
-            ->willReturn($this->getCurrentStore());
-
-        $discountQueryMock = $this->getMockBuilder(SpyDiscountQuery::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $discountQueryMock->expects($this->any())
-            ->method('find')
-            ->willReturn(new ObjectCollection([(new SpyDiscount())->setDiscountType(DiscountConstants::TYPE_VOUCHER)]));
-
-        $this->discountQueryContainerMock->expects($this->any())
-            ->method('queryActiveCartRulesForStore')
-            ->willReturn($discountQueryMock);
-
-        $this->discountEntityMapperMock->expects($this->any())
-            ->method('mapFromEntity')
-            ->willReturn($expectedVoucherDiscount);
-
-        $this->discountMock->expects($this->any())
-            ->method('isDiscountApplicable')
-            ->willReturn(false);
-
-        $this->discountMock->expects($this->any())
-            ->method('hydrateDiscountTransfer')
-            ->willReturn($expectedVoucherDiscount);
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::ITEM_SKU)
+                    ->setQuantity(1),
+            )
+            ->setCurrency($currencyTransfer)
+            ->setVoucherDiscounts(new ArrayObject([$discountTransfer]));
 
         // Act
-        $actualResult = $this->discountMock->calculate($quoteTransfer);
+        $actualResult = $this->tester->getFacade()->calculateDiscounts($quoteTransfer);
 
         // Assert
         $this->assertCount(0, $actualResult->getVoucherDiscounts());
-        $this->assertCount(1, $actualResult->getUsedNotAppliedVoucherCodes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountsWithUseNumberLimitReachedVoucherShouldAddErrorMessage(): void
+    {
+        // Assign
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $discountConfigurationTransfer = $this->tester->getFacade()->findHydratedDiscountConfiguratorByIdDiscount($discountGeneralTransfer->getIdDiscount());
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+
+        $discountTransfer = (new DiscountTransfer())
+            ->fromArray($discountGeneralTransfer->toArray(), true)
+            ->setFkDiscountVoucherPool($discountConfigurationTransfer->getDiscountVoucher()->getFkDiscountVoucherPoolOrFail())
+            ->setVoucherCode('code');
+        $this->tester->haveDiscountStore($storeTransfer, $discountTransfer);
+
+        $this->tester->haveDiscountVoucher(
+            $discountTransfer->getVoucherCode(),
+            $discountTransfer,
+            [
+                DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 1,
+                DiscountVoucherTransfer::NUMBER_OF_USES => 1,
+            ],
+        );
+
+        $currencyTransfer = (new CurrencyTransfer())->setCode(static::CURRENCY_NAME_EUR);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setStore($this->getCurrentStore())
+            ->setUsedNotAppliedVoucherCodes([])
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::ITEM_SKU)
+                    ->setQuantity(1),
+            )
+            ->setCurrency($currencyTransfer)
+            ->setVoucherDiscounts(new ArrayObject([$discountTransfer]));
+
+        $this->messengerFacadeMock->expects($this->once())
+            ->method('addErrorMessage');
+
+        // Act
+        $actualResult = $this->tester->getFacade()->calculateDiscounts($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $actualResult->getVoucherDiscounts());
     }
 
     /**

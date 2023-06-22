@@ -182,12 +182,14 @@ class DiscountDataHelper extends Module
     /**
      * @param string $voucherCode
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param array<string, mixed> $seed
      *
      * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
      */
-    public function haveDiscountVoucher(string $voucherCode, DiscountTransfer $discountTransfer): DiscountVoucherTransfer
+    public function haveDiscountVoucher(string $voucherCode, DiscountTransfer $discountTransfer, array $seed = []): DiscountVoucherTransfer
     {
-        $voucherEntity = new SpyDiscountVoucher();
+        $discountVoucherTransfer = (new DiscountVoucherBuilder($seed))->build();
+        $voucherEntity = (new SpyDiscountVoucher())->fromArray($discountVoucherTransfer->toArray());
         $voucherEntity->setFkDiscountVoucherPool($discountTransfer->getFkDiscountVoucherPool());
         $voucherEntity->setCode($voucherCode);
         $voucherEntity->setIsActive(true);
