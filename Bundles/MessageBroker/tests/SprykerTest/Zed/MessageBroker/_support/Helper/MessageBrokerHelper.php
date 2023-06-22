@@ -14,6 +14,8 @@ use Generated\Shared\DataBuilder\MessageAttributesBuilder;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Psr\Log\NullLogger;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface;
 use Spryker\Zed\MessageBroker\Business\Worker\Worker;
@@ -22,6 +24,7 @@ use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Receiver\Aws
 use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Sender\AwsSnsMessageSenderPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin;
 use SprykerTest\Zed\MessageBroker\Helper\Subscriber\StopWorkerWhenMessagesAreHandledEventDispatcherSubscriberPlugin;
 use SprykerTest\Zed\MessageBroker\MessageBrokerBusinessTester;
@@ -42,6 +45,7 @@ class MessageBrokerHelper extends Module
 {
     use BusinessHelperTrait;
     use DependencyProviderHelperTrait;
+    use ConfigHelperTrait;
 
     /**
      * @var array<string, mixed>
@@ -93,6 +97,8 @@ class MessageBrokerHelper extends Module
         putenv('SPRYKER_CHANNEL_TO_TRANSPORT_MAP');
         putenv('AOP_MESSAGE_BROKER_SNS_SENDER');
         putenv('AOP_MESSAGE_BROKER_SQS_RECEIVER');
+
+        $this->enableMessageBroker();
     }
 
     /**
@@ -117,6 +123,7 @@ class MessageBrokerHelper extends Module
             $messageBus,
             $eventDispatcher,
             $factory->getConfig(),
+            new NullLogger(),
         ];
 
         $mockedMethods = $mockRunMethod ? [
@@ -499,5 +506,21 @@ class MessageBrokerHelper extends Module
         $envelope = $this->haveEnvelope();
 
         return $envelope->with(new ReceivedStamp('someTransport'));
+    }
+
+    /**
+     * @return void
+     */
+    public function enableMessageBroker(): void
+    {
+        $this->getConfigHelper()->mockEnvironmentConfig(MessageBrokerConstants::IS_ENABLED, true);
+    }
+
+    /**
+     * @return void
+     */
+    public function disableMessageBroker(): void
+    {
+        $this->getConfigHelper()->mockEnvironmentConfig(MessageBrokerConstants::IS_ENABLED, false);
     }
 }

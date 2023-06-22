@@ -26,9 +26,9 @@ class Worker implements WorkerInterface
     protected EventDispatcherInterface $eventDispatcher;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
-    protected ?LoggerInterface $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @var \Symfony\Component\Messenger\Worker
@@ -45,14 +45,14 @@ class Worker implements WorkerInterface
      * @param \Symfony\Component\Messenger\MessageBusInterface $bus
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Spryker\Zed\MessageBroker\MessageBrokerConfig $config
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         array $messageReceiverPlugins,
         MessageBusInterface $bus,
         EventDispatcherInterface $eventDispatcher,
         MessageBrokerConfig $config,
-        ?LoggerInterface $logger = null
+        LoggerInterface $logger
     ) {
         $receivers = [];
 
@@ -74,6 +74,12 @@ class Worker implements WorkerInterface
      */
     public function runWorker(MessageBrokerWorkerConfigTransfer $messageBrokerWorkerConfigTransfer): void
     {
+        if (!$this->config->isEnabled()) {
+            $this->logger->error('Message broker is not enabled. No workers will be started.');
+
+            return;
+        }
+
         if ($messageBrokerWorkerConfigTransfer->getLimit()) {
             $this->eventDispatcher->addSubscriber(new StopWorkerOnMessageLimitListener($messageBrokerWorkerConfigTransfer->getLimit(), $this->logger));
         }

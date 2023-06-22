@@ -11,6 +11,7 @@ use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Config\JsonToArrayConfigFormatter;
@@ -60,6 +61,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
             $this->createMessageDecorator(),
             $this->createMessageBus(),
             $this->createMessagePublishLogger(),
+            $this->getConfig(),
         );
     }
 
@@ -270,12 +272,12 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Psr\Log\LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface
      */
-    public function createLogger(): ?LoggerInterface
+    public function createLogger(): LoggerInterface
     {
         if (!$this->getConfig()->isLoggingEnabled()) {
-            return null;
+            return $this->createNullLogger();
         }
 
         $logger = new Logger(static::LOGGER_NAME);
@@ -284,6 +286,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         );
 
         return $logger;
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function createNullLogger(): LoggerInterface
+    {
+        return new NullLogger();
     }
 
     /**

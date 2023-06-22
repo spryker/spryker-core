@@ -45,6 +45,8 @@ class MessagePublisherTest extends Unit
     public function testPublishMessageThrowsExceptionWhenPassedTransferDoesNotHaveMessageAttributes(): void
     {
         // Arrange
+        $this->tester->enableMessageBroker();
+
         $messageBrokerWorkerConfigTransfer = $this->tester->buildMessageBrokerWorkerConfigTransfer();
         $messagePublisher = $this->tester->getFactory()->createMessagePublisher();
 
@@ -205,6 +207,7 @@ class MessagePublisherTest extends Unit
             $this->tester->getFactory()->createMessageDecorator(),
             $messageBusMock,
             $messagePublishLoggerMock,
+            $this->tester->getModuleConfig(),
         ]);
 
         return $messagePublisher;

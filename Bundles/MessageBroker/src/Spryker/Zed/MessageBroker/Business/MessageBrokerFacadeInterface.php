@@ -20,6 +20,7 @@ interface MessageBrokerFacadeInterface
      * - Wraps message in a Symfony Envelope and sends it through the configured transport for this message.
      * - Writes Logger::INFO level log in case of successful envelope message sending.
      * - Writes Logger::ERROR level log in case of any error during envelope message sending.
+     * - Will not send message if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`
      *
      * @api
      *
@@ -32,6 +33,7 @@ interface MessageBrokerFacadeInterface
     /**
      * Specification:
      * - Starts a worker process for the defined channels.
+     * - Will not start worker if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`
      *
      * @api
      *

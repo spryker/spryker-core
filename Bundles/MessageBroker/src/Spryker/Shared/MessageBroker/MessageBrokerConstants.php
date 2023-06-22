@@ -26,4 +26,9 @@ interface MessageBrokerConstants
      * @var string
      */
     public const LOGGING_ENABLED = 'MESSAGE_BROKER:LOGGING_ENABLED';
+
+    /**
+     * @var string
+     */
+    public const IS_ENABLED = 'MESSAGE_BROKER:IS_ENABLED';
 }

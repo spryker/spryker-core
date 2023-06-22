@@ -11,13 +11,17 @@ use Exception;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\MessageBroker\Business\Exception\MessageBrokerException;
 use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
+use Spryker\Zed\MessageBroker\MessageBrokerConfig;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class MessagePublisher implements MessagePublisherInterface
 {
+    use LoggerTrait;
+
     /**
      * @var \Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface
      */
@@ -34,18 +38,26 @@ class MessagePublisher implements MessagePublisherInterface
     protected MessagePublishLoggerInterface $messagePublishLogger;
 
     /**
+     * @var \Spryker\Zed\MessageBroker\MessageBrokerConfig
+     */
+    protected MessageBrokerConfig $messageBrokerConfig;
+
+    /**
      * @param \Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface $messageDecorator
      * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
      * @param \Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface $messagePublishLogger
+     * @param \Spryker\Zed\MessageBroker\MessageBrokerConfig $messageBrokerConfig
      */
     public function __construct(
         MessageAttributeProviderInterface $messageDecorator,
         MessageBusInterface $messageBus,
-        MessagePublishLoggerInterface $messagePublishLogger
+        MessagePublishLoggerInterface $messagePublishLogger,
+        MessageBrokerConfig $messageBrokerConfig
     ) {
         $this->messageAttributeProvider = $messageDecorator;
         $this->messageBus = $messageBus;
         $this->messagePublishLogger = $messagePublishLogger;
+        $this->messageBrokerConfig = $messageBrokerConfig;
     }
 
     /**
@@ -57,11 +69,19 @@ class MessagePublisher implements MessagePublisherInterface
      */
     public function sendMessage(TransferInterface $messageTransfer): MessageResponseTransfer
     {
+        $messageResponseTransfer = new MessageResponseTransfer();
+        if ($this->messageBrokerConfig->isEnabled() !== true) {
+            $this->getLogger()->warning('Message broker is disabled. Message will not be sent.');
+
+            return $messageResponseTransfer;
+        }
+
         $startMicrotime = microtime(true);
 
         try {
             $messageTransfer = $this->provideMessageAttributes($messageTransfer);
             $envelope = $this->messageBus->dispatch($messageTransfer);
+            $messageResponseTransfer->setBody($envelope);
 
             $this->messagePublishLogger->logInfo($messageTransfer, $startMicrotime);
         } catch (Exception $e) {
@@ -70,7 +90,7 @@ class MessagePublisher implements MessagePublisherInterface
             throw $e;
         }
 
-        return (new MessageResponseTransfer())->setBody($envelope);
+        return $messageResponseTransfer;
     }
 
     /**

@@ -171,4 +171,16 @@ class MessageBrokerConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * Global on/off toggle for sending and receiving messages through the MessageBroker
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->get(MessageBrokerConstants::IS_ENABLED, true);
+    }
 }

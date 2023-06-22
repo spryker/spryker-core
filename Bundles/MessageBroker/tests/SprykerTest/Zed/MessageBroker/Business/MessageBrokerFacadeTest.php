@@ -9,11 +9,15 @@ namespace SprykerTest\Zed\MessageBroker\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
+use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
+use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\CorrelationIdMessageAttributeProviderPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
 use SprykerTest\Zed\MessageBroker\Helper\Plugin\SomethingHappenedMessageHandlerPlugin;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
  * Auto-generated group annotations
@@ -133,5 +137,52 @@ class MessageBrokerFacadeTest extends Unit
 
         //Assert
         $this->tester->assertMessageWasSentWithSender($messageResponseTransfer->getBody(), 'in-memory');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendMessageCanBeDisabledByConfiguration(): void
+    {
+        // Arrange
+        $this->tester->disableMessageBroker();
+
+        $messageBusMock = $this->createMock(MessageBusInterface::class);
+        $messageBusMock->expects($this->never())->method('dispatch');
+        $this->tester->mockFactoryMethod('createMessageBus', $messageBusMock);
+
+        $mockMessageDecorator = $this->createMock(MessageAttributeProviderInterface::class);
+        $mockMessageDecorator->expects($this->never())->method('provideMessageAttributes');
+        $this->tester->mockFactoryMethod('createMessageDecorator', $mockMessageDecorator);
+
+        $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
+
+        // Act
+        $messageResponseTransfer = $this->tester->getFacade()->sendMessage($messageBrokerTestMessageTransfer);
+
+        // Assert
+        $this->assertNull($messageResponseTransfer->getBody(), 'Message body must be null to indicate nothing was sent');
+    }
+
+    /**
+     * @return void
+     */
+    public function testStartWorkerDoesNothingWhenMessageBrokerIsDisabled(): void
+    {
+        // Arrange
+        $this->tester->disableMessageBroker();
+
+        // Expect
+        $messageReceiverPlugin = $this->createMock(MessageReceiverPluginInterface::class);
+        $messageReceiverPlugin
+            ->expects($this->never())
+            ->method('get');
+
+        $this->tester->setMessageReceiverPlugins([
+            $messageReceiverPlugin,
+        ]);
+
+        // Act
+        $this->tester->getFacade()->startWorker(new MessageBrokerWorkerConfigTransfer());
     }
 }
