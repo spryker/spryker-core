@@ -71,6 +71,13 @@ class RequestAuthorizationDataExpander implements RequestAuthorizationDataExpand
         $accessTokenRequestOptionsTransfer = (new AccessTokenRequestOptionsTransfer())
             ->setAudience($this->oauthClientConfig->getOauthOptionAudienceForMessageBroker());
 
+        if (
+            $this->oauthClientConfig->isAccessTokenRequestExpandedByMessageAttributes()
+            && $messageAttributesTransfer->getStoreReference()
+        ) {
+            $accessTokenRequestOptionsTransfer->setStoreReference($messageAttributesTransfer->getStoreReference());
+        }
+
         $accessTokenRequestTransfer = (new AccessTokenRequestTransfer())
             ->setGrantType($this->oauthClientConfig->getOauthGrantTypeForMessageBroker())
             ->setProviderName($this->oauthClientConfig->getOauthProviderNameForMessageBroker())

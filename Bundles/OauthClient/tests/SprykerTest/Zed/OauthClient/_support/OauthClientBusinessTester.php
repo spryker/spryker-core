@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\OauthClient;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Generated\Shared\DataBuilder\MessageAttributesBuilder;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Orm\Zed\OauthClient\Persistence\SpyOauthClientAccessTokenCacheQuery;
 use Spryker\Zed\OauthClient\OauthClientDependencyProvider;
 use Spryker\Zed\OauthClientExtension\Dependency\Plugin\OauthAccessTokenProviderPluginInterface;
@@ -89,5 +91,15 @@ class OauthClientBusinessTester extends Actor
         ]);
 
         return $oauthAccessTokenProviderPluginMock;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function haveMessageAttributes(array $seedData = []): MessageAttributesTransfer
+    {
+        return (new MessageAttributesBuilder($seedData))->build();
     }
 }

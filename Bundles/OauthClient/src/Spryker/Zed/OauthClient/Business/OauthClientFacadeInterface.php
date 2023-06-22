@@ -36,6 +36,7 @@ interface OauthClientFacadeInterface
      * Specification:
      * - Retrieves an access token from an access token provider by AccessTokenRequestTransfer.
      * - Throws exception `AccessTokenNotFoundException` in case if `AccessTokenResponseTransfer::isSuccessful = false`.
+     * - Populates `AccessTokenRequestOptions.storeReference` with `MessageAttributes.storeReference` if `OauthClientConfig::isAccessTokenRequestExpandedByMessageAttributes()` returns `true`.
      * - Updates the `MessageAttributes.authorization` property with the received access token.
      *
      * @api

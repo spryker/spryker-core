@@ -25,6 +25,16 @@ class OauthClientConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return bool
+     */
+    public function isAccessTokenRequestExpandedByMessageAttributes(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getOauthProviderNameForMessageBroker(): string

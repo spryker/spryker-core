@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
 use Orm\Zed\OauthClient\Persistence\SpyOauthClientAccessTokenCacheQuery;
 use Spryker\Zed\OauthClient\Business\Exception\AccessTokenProviderNotFoundException;
+use Spryker\Zed\OauthClient\Business\Provider\OauthAccessTokenProviderInterface;
 
 /**
  * Auto-generated group annotations
@@ -349,5 +350,81 @@ class OauthClientFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->getAccessToken($accessTokenRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenRequestOptionsExpandedWithStoreReferenceTakenFromMessageAttributes(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('isAccessTokenRequestExpandedByMessageAttributes', true);
+
+        $mesageAttributes = $this->tester->haveMessageAttributes(
+            [
+                'storeReference' => 'store-reference-1',
+            ],
+        );
+
+        $oauthAccessTokenProviderMock = $this->makeEmpty(OauthAccessTokenProviderInterface::class);
+        $oauthAccessTokenProviderMock->expects($this->once())
+            ->method('getAccessToken')
+            ->with(static::callback(function (AccessTokenRequestTransfer $accessTokenRequestTransfer): bool {
+                // Assert
+                self::assertSame('store-reference-1', $accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+
+                return true;
+            }))
+            ->willReturn(
+                $this->tester->haveAccessTokenResponseTransfer(
+                    [
+                        AccessTokenResponseTransfer::IS_SUCCESSFUL => true,
+                        AccessTokenResponseTransfer::ACCESS_TOKEN => static::TEST_TOKEN_FROM_PROVIDER,
+                        AccessTokenResponseTransfer::EXPIRES_AT => $this->expiresAt,
+                    ],
+                ),
+            );
+
+        $this->tester->mockFactoryMethod('createOauthAccessTokenProvider', $oauthAccessTokenProviderMock);
+
+        // Act
+        $expandedMessageAttributes = $this->tester->getFacade()->expandMessageAttributes($mesageAttributes);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenRequestOptionsExpandedWithCurrentStoreStoreReference(): void
+    {
+        // Arrange
+        $mesageAttributes = $this->tester->haveMessageAttributes(
+            [
+                'storeReference' => 'store-reference-1',
+            ],
+        );
+
+        $oauthAccessTokenProviderMock = $this->makeEmpty(OauthAccessTokenProviderInterface::class);
+        $oauthAccessTokenProviderMock->expects($this->once())
+            ->method('getAccessToken')
+            ->with(static::callback(function (AccessTokenRequestTransfer $accessTokenRequestTransfer): bool {
+                // Assert
+                self::assertNull($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+
+                return true;
+            }))
+            ->willReturn(
+                $this->tester->haveAccessTokenResponseTransfer(
+                    [
+                        AccessTokenResponseTransfer::IS_SUCCESSFUL => true,
+                        AccessTokenResponseTransfer::ACCESS_TOKEN => static::TEST_TOKEN_FROM_PROVIDER,
+                        AccessTokenResponseTransfer::EXPIRES_AT => $this->expiresAt,
+                    ],
+                ),
+            );
+
+        $this->tester->mockFactoryMethod('createOauthAccessTokenProvider', $oauthAccessTokenProviderMock);
+
+        // Act
+        $expandedMessageAttributes = $this->tester->getFacade()->expandMessageAttributes($mesageAttributes);
     }
 }

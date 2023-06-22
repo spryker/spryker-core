@@ -29,4 +29,9 @@
         <property name="errorDescription" dataBuilderRule="word(20)"/>
     </transfer>
 
+    <transfer name="MessageAttributes" strict="true">
+        <property name="authorization" dataBuilderRule="=''"/>
+        <property name="storeReference" dataBuilderRule="word(20)"/>
+    </transfer>
+
 </transfers>
