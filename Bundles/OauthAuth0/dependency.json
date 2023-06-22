@@ -1,5 +1,6 @@
 {
     "include": {
+        "spryker/guzzle": "Provides a basic HTTP client to send different requests.",
         "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality."
     }
 }

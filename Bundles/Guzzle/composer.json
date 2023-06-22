@@ -4,7 +4,7 @@
     "description": "Guzzle module",
     "license": "proprietary",
     "require": {
-        "guzzlehttp/guzzle": "^7.0.0",
+        "guzzlehttp/guzzle": "^7.5.1",
         "php": ">=8.0"
     },
     "minimum-stability": "dev",
