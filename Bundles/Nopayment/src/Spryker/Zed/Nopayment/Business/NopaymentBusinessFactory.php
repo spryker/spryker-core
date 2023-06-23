@@ -14,6 +14,8 @@ use Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter;
 use Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilterInterface;
 use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
 use Spryker\Zed\Nopayment\Business\Nopayment\PaidInterface;
+use Spryker\Zed\Nopayment\Business\Updater\QuotePaymentUpdater;
+use Spryker\Zed\Nopayment\Business\Updater\QuotePaymentUpdaterInterface;
 
 /**
  * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
@@ -45,5 +47,13 @@ class NopaymentBusinessFactory extends AbstractBusinessFactory
     public function createNopaymentCheckoutPreConditionChecker(): NopaymentCheckoutPreConditionCheckerInterface
     {
         return new NopaymentCheckoutPreConditionChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\Nopayment\Business\Updater\QuotePaymentUpdaterInterface
+     */
+    public function createQuotePaymentUpdater(): QuotePaymentUpdaterInterface
+    {
+        return new QuotePaymentUpdater();
     }
 }

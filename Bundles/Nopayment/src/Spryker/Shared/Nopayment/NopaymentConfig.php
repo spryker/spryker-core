@@ -12,11 +12,15 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class NopaymentConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const PAYMENT_PROVIDER_NAME = 'Nopayment';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const PAYMENT_METHOD_NAME = 'paid';

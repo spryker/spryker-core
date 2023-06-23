@@ -20,7 +20,10 @@ interface CartCodeFacadeInterface
      * - Executes quote recalculation after the quote extension.
      * - Executes CartCodePluginInterface::getOperationResponseMessage() methods of the used plugins. Each plugin can generate
      * a success or an error message depending on the result QuoteTransfer after code activation and recalculation.
-     * - The response will contain the updated and recalculated QuoteTransfer and an array of success and error messages.
+     * - Executes {@link \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePostAddPluginInterface} plugins stack.
+     * - Each plugin of stack updates `CartCodeResponseTransfer.isSuccessful` to `false` in case of error, otherwise `true`.
+     * - Further execution is prevented while `CartCodeResponseTransfer.isSuccessful` is `false`.
+     * - The response will contain the updated and recalculated `QuoteTransfer` and an array of success and error messages.
      *
      * @api
      *

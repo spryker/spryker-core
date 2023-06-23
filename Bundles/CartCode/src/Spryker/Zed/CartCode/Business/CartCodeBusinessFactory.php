@@ -37,6 +37,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteOperationChecker(),
             $this->createRecalculationResultProcessor(),
             $this->getCartCodePlugins(),
+            $this->getCartCodePostAddPlugins(),
         );
     }
 
@@ -98,10 +99,18 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
+     * @return list<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     public function getCartCodePlugins(): array
     {
         return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePostAddPluginInterface>
+     */
+    public function getCartCodePostAddPlugins(): array
+    {
+        return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE_POST_ADD);
     }
 }

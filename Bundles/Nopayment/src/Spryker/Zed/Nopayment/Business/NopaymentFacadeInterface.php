@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -67,4 +69,18 @@ interface NopaymentFacadeInterface
      * @return bool
      */
     public function checkOrderPreSaveConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks if `QuoteTransfer.totals.priceToPay` equals zero.
+     * - Updates `QuoteTransfer.payment` to `PaymentTransfer` with no payment if condition is met.
+     * - Returns `CartCodeRequestTransfer.isSuccessful` with `true`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function updateCartCodeQuotePayment(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -78,5 +80,21 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
         return $this->getFactory()
             ->createNopaymentCheckoutPreConditionChecker()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function updateCartCodeQuotePayment(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuotePaymentUpdater()
+            ->update($cartCodeRequestTransfer);
     }
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
+use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePostAddPluginInterface;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 use Spryker\Zed\GiftCard\Communication\Plugin\CartCode\GiftCardCartCodePlugin;
 
@@ -119,6 +120,24 @@ class CartCodeFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($cartCodeResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeShouldExecuteCartCodePostAddPlugins(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
+        $cartCodeRequestTransfer = (new CartCodeRequestTransfer())->setCartCode(static::CODE)->setQuote($quoteTransfer);
+        $cartCodePostAddPluginMock = $this->getMockBuilder(CartCodePostAddPluginInterface::class)->getMock();
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE_POST_ADD, [$cartCodePostAddPluginMock]);
+
+        // Assert
+        $cartCodePostAddPluginMock->expects($this->once())->method('execute');
+
+        // Act
+        $this->tester->getFacade()->addCartCode($cartCodeRequestTransfer);
     }
 
     /**

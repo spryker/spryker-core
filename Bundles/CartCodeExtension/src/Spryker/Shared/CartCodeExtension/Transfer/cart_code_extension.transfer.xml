@@ -12,4 +12,9 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="CartCodeRequest">
+    </transfer>
+
+    <transfer name="CartCodeResponse">
+    </transfer>
 </transfers>

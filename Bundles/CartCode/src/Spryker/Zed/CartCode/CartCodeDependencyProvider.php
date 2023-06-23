@@ -33,6 +33,11 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_CODE = 'PLUGINS_CART_CODE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_CART_CODE_POST_ADD = 'PLUGINS_CART_CODE_POST_ADD';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -40,9 +45,11 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addFacadeCalculation($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCartCodePlugins($container);
+        $container = $this->addCartCodePostAddPlugins($container);
 
         return $container;
     }
@@ -90,9 +97,31 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
+     * @return list<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     protected function getCartCodePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartCodePostAddPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_CODE_POST_ADD, function () {
+            return $this->getCartCodePostAddPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePostAddPluginInterface>
+     */
+    protected function getCartCodePostAddPlugins(): array
     {
         return [];
     }

@@ -41,4 +41,12 @@
         <property name="methodName" type="string"/>
     </transfer>
 
+    <transfer name="CartCodeRequest">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartCodeResponse">
+        <property name="quote" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
 </transfers>
