@@ -12,7 +12,7 @@ interface PickingListExtractorInterface
     /**
      * @param array<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers
      *
-     * @return list<int>
+     * @return list<string>
      */
-    public function extractIds(array $pickingListTransfers): array;
+    public function extractUuids(array $pickingListTransfers): array;
 }

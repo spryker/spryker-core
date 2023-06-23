@@ -57,7 +57,7 @@ class PushNotificationPayloadGenerator implements PushNotificationPayloadGenerat
         return [
             static::PAYLOAD_KEY_ACTION => $action,
             static::PAYLOAD_KEY_ENTITY => static::RESOURCE_PICKING_LISTS,
-            static::PAYLOAD_KEY_IDS => $this->pickingListExtractor->extractIds($pickingListTransfers),
+            static::PAYLOAD_KEY_IDS => $this->pickingListExtractor->extractUuids($pickingListTransfers),
         ];
     }
 }

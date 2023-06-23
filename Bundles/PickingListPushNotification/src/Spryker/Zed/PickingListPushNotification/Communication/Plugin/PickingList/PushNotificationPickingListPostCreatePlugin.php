@@ -27,7 +27,7 @@ class PushNotificationPickingListPostCreatePlugin extends AbstractPlugin impleme
     /**
      * @inheritDoc
      * - Requires `PushNotificationCollectionRequest.action` to be set.
-     * - Requires `PickingList.idPickingList`, `PickingList.warehouse.uuid` to be set for each element in `PushNotificationCollectionRequest.pickingLists`.
+     * - Requires `PickingList.uuid`, `PickingList.warehouse.uuid` to be set for each element in `PushNotificationCollectionRequest.pickingLists`.
      * - Filters picking lists considering `PickingList.modifiedAttributes()` and {@link \Spryker\Zed\PickingListPushNotification\PickingListPushNotificationConfig::getPickingListNotifiableAttributes()}.
      * - Groups picking lists by `PickingList.warehouse.uuid`.
      * - Creates push notification for each picking list group.

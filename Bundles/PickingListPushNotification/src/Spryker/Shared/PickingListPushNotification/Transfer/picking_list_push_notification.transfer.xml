@@ -13,6 +13,7 @@
 
     <transfer name="PickingList" strict="true">
         <property name="idPickingList" type="int"/>
+        <property name="uuid" type="string"/>
         <property name="warehouse" type="Stock"/>
         <property name="status" type="string"/>
         <property name="modifiedAttributes" type="string[]" singular="modifiedAttribute"/>

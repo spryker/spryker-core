@@ -83,19 +83,19 @@ class PickingListPushNotificationBusinessTester extends Actor
     protected const STOCK_UUID_2 = 'ff49cf5a-1d13-44c4-aaf4-3a66b80eb066';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PICKING_LIST_ID_1 = 123;
+    protected const PICKING_LIST_UUID_1 = '9a69ddce-10ea-11ee-be56-0242ac120001';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PICKING_LIST_ID_2 = 456;
+    protected const PICKING_LIST_UUID_2 = '9a69e09e-10ea-11ee-be56-0242ac120002';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PICKING_LIST_ID_3 = 789;
+    protected const PICKING_LIST_UUID_3 = '9a69e1f2-10ea-11ee-be56-0242ac120003';
 
     /**
      * @uses \Spryker\Zed\PickingListPushNotification\PickingListPushNotificationConfig::PUSH_NOTIFICATION_WAREHOUSE_GROUP
@@ -143,7 +143,7 @@ class PickingListPushNotificationBusinessTester extends Actor
 
         $pickingListTransfer = (new PickingListTransfer())
             ->setWarehouse($stockTransfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_1)
+            ->setUuid(static::PICKING_LIST_UUID_1)
             ->addModifiedAttribute(PickingListTransfer::STATUS);
 
         return (new PushNotificationCollectionRequestTransfer())
@@ -165,7 +165,7 @@ class PickingListPushNotificationBusinessTester extends Actor
 
         $pickingListTransfer = (new PickingListTransfer())
             ->setWarehouse($stockTransfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_1)
+            ->setUuid(static::PICKING_LIST_UUID_1)
             ->addModifiedAttribute(PickingListTransfer::UUID);
 
         return (new PushNotificationCollectionRequestTransfer())
@@ -191,15 +191,15 @@ class PickingListPushNotificationBusinessTester extends Actor
 
         $pickingList1Transfer = (new PickingListTransfer())
             ->setWarehouse($stock1Transfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_1)
+            ->setUuid(static::PICKING_LIST_UUID_1)
             ->addModifiedAttribute(PickingListTransfer::STATUS);
         $pickingList2Transfer = (new PickingListTransfer())
             ->setWarehouse($stock1Transfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_2)
+            ->setUuid(static::PICKING_LIST_UUID_2)
             ->addModifiedAttribute(PickingListTransfer::STATUS);
         $pickingList3Transfer = (new PickingListTransfer())
             ->setWarehouse($stock2Transfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_3)
+            ->setUuid(static::PICKING_LIST_UUID_3)
             ->addModifiedAttribute(PickingListTransfer::STATUS);
 
         return (new PushNotificationCollectionRequestTransfer())
@@ -223,16 +223,16 @@ class PickingListPushNotificationBusinessTester extends Actor
 
         $notifiablePickingListTransfer = (new PickingListTransfer())
             ->setWarehouse($stockTransfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_1)
+            ->setUuid(static::PICKING_LIST_UUID_1)
             ->addModifiedAttribute(PickingListTransfer::STATUS);
 
         $notNotifiablePickingList1Transfer = (new PickingListTransfer())
             ->setWarehouse($stockTransfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_2);
+            ->setUuid(static::PICKING_LIST_UUID_2);
 
         $notNotifiablePickingList2Transfer = (new PickingListTransfer())
             ->setWarehouse($stockTransfer)
-            ->setIdPickingList(static::PICKING_LIST_ID_3)
+            ->setUuid(static::PICKING_LIST_UUID_3)
             ->addModifiedAttribute(PickingListTransfer::UUID);
 
         return (new PushNotificationCollectionRequestTransfer())
@@ -258,7 +258,7 @@ class PickingListPushNotificationBusinessTester extends Actor
             ->setPayload([
                 'action' => 'create',
                 'entity' => 'picking-lists',
-                'ids' => [static::PICKING_LIST_ID_1],
+                'ids' => [static::PICKING_LIST_UUID_1],
             ]);
 
         $pushNotificationCollectionRequestTransfer = (new PushNotificationCollectionRequestTransfer())
@@ -306,7 +306,7 @@ class PickingListPushNotificationBusinessTester extends Actor
             ->setPayload([
                 'action' => 'create',
                 'entity' => 'picking-lists',
-                'ids' => [static::PICKING_LIST_ID_1, static::PICKING_LIST_ID_2],
+                'ids' => [static::PICKING_LIST_UUID_1, static::PICKING_LIST_UUID_2],
             ]);
         $pushNotification2Transfer = (new PushNotificationTransfer())
             ->setGroup($pushNotificationGroup2Transfer)
@@ -314,7 +314,7 @@ class PickingListPushNotificationBusinessTester extends Actor
             ->setPayload([
                 'action' => 'create',
                 'entity' => 'picking-lists',
-                'ids' => [static::PICKING_LIST_ID_3],
+                'ids' => [static::PICKING_LIST_UUID_3],
             ]);
 
         $pushNotificationCollectionRequestTransfer = (new PushNotificationCollectionRequestTransfer())

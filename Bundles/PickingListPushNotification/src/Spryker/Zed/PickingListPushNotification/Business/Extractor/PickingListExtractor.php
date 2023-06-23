@@ -12,15 +12,15 @@ class PickingListExtractor implements PickingListExtractorInterface
     /**
      * @param array<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers
      *
-     * @return list<int>
+     * @return list<string>
      */
-    public function extractIds(array $pickingListTransfers): array
+    public function extractUuids(array $pickingListTransfers): array
     {
-        $pickingListIds = [];
+        $pickingListUuids = [];
         foreach ($pickingListTransfers as $pickingListTransfer) {
-            $pickingListIds[] = $pickingListTransfer->getIdPickingListOrFail();
+            $pickingListUuids[] = $pickingListTransfer->getUuidOrFail();
         }
 
-        return $pickingListIds;
+        return $pickingListUuids;
     }
 }
