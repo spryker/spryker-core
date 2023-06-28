@@ -44,7 +44,7 @@ class PushNotificationValidator implements PushNotificationValidatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
@@ -67,7 +67,7 @@ class PushNotificationValidator implements PushNotificationValidatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer

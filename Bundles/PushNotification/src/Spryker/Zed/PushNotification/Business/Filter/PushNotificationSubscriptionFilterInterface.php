@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ErrorCollectionTransfer;
 interface PushNotificationSubscriptionFilterInterface
 {
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
@@ -24,7 +24,7 @@ interface PushNotificationSubscriptionFilterInterface
     ): ArrayObject;
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>

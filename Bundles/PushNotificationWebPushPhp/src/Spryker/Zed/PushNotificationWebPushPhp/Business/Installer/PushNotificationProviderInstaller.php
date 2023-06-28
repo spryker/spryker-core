@@ -35,13 +35,12 @@ class PushNotificationProviderInstaller implements PushNotificationProviderInsta
     public function installWebPushPhpProvider(): void
     {
         $pushNotificationProviderCriteriaTransfer = $this->createPushNotificationProviderCriteriaTransfer();
-        $pushNotificationProviderCollectionResponseTransfer = $this
-            ->pushNotificationFacade
+        $pushNotificationProviderCollectionTransfer = $this->pushNotificationFacade
             ->getPushNotificationProviderCollection($pushNotificationProviderCriteriaTransfer);
 
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderCollection */
-        $pushNotificationProviderCollection = $pushNotificationProviderCollectionResponseTransfer->getProviders();
-        if ($pushNotificationProviderCollection->count()) {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers */
+        $pushNotificationProviderTransfers = $pushNotificationProviderCollectionTransfer->getPushNotificationProviders();
+        if ($pushNotificationProviderTransfers->count()) {
             return;
         }
 
@@ -71,6 +70,7 @@ class PushNotificationProviderInstaller implements PushNotificationProviderInsta
         $pushNotificationProviderTransfer = $this->createPushNotificationProviderTransfer();
 
         return (new PushNotificationProviderCollectionRequestTransfer())
+            ->setIsTransactional(true)
             ->addPushNotificationProvider($pushNotificationProviderTransfer);
     }
 

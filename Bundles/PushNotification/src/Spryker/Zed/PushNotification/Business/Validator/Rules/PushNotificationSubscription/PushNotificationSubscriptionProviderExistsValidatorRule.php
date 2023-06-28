@@ -17,7 +17,7 @@ class PushNotificationSubscriptionProviderExistsValidatorRule implements PushNot
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_PROVIDER_NOT_FOUND = 'push_notification.validation.error.push_notification_provider_not_found';
+    protected const GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND = 'push_notification.validation.error.push_notification_provider_not_found';
 
     /**
      * @var \Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface
@@ -64,7 +64,7 @@ class PushNotificationSubscriptionProviderExistsValidatorRule implements PushNot
             }
             $errorTransfer = $this->errorCreator->createErrorTransfer(
                 (string)$i,
-                static::GLOSSARY_KEY_VALIDATION_PROVIDER_NOT_FOUND,
+                static::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND,
             );
             $errorCollectionTransfer->addError($errorTransfer);
         }

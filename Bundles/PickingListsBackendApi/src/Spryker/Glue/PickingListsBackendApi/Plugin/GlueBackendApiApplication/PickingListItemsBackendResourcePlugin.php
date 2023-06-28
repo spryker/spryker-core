@@ -10,7 +10,7 @@ namespace Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication;
 use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\PickingListsBackendApi\Controller\PickingListItemResourceController;

@@ -17,5 +17,5 @@ interface PickingListUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function update(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer;
+    public function startPicking(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer;
 }

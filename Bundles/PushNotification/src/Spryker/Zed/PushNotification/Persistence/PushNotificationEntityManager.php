@@ -139,6 +139,52 @@ class PushNotificationEntityManager extends AbstractEntityManager implements Pus
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
+     */
+    public function updatePushNotificationProvider(
+        PushNotificationProviderTransfer $pushNotificationProviderTransfer
+    ): PushNotificationProviderTransfer {
+        $pushNotificationProviderEntity = $this->getFactory()
+            ->createPushNotificationProviderQuery()
+            ->filterByUuid($pushNotificationProviderTransfer->getUuidOrFail())
+            ->findOne();
+
+        if (!$pushNotificationProviderEntity) {
+            return $pushNotificationProviderTransfer;
+        }
+
+        $pushNotificationProviderMapper = $this->getFactory()->createPushNotificationProviderMapper();
+        $pushNotificationProviderEntity = $pushNotificationProviderMapper->mapPushNotificationProviderTransferToPushNotificationProviderEntity(
+            $pushNotificationProviderTransfer,
+            $pushNotificationProviderEntity,
+        );
+
+        $pushNotificationProviderEntity->save();
+
+        return $pushNotificationProviderMapper->mapPushNotificationProviderEntityToPushNotificationProviderTransfer(
+            $pushNotificationProviderEntity,
+            $pushNotificationProviderTransfer,
+        );
+    }
+
+    /**
+     * @param list<string> $pushNotificationProviderUuids
+     *
+     * @return void
+     */
+    public function deletePushNotificationProviders(
+        array $pushNotificationProviderUuids
+    ): void {
+        $this->getFactory()
+            ->createPushNotificationProviderQuery()
+            ->filterByUuid_In($pushNotificationProviderUuids)
+            ->find()
+            ->delete();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PushNotificationGroupTransfer $pushNotificationGroupTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationGroupTransfer

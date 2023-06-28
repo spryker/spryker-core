@@ -8,17 +8,31 @@
 namespace Spryker\Glue\PickingListsBackendApi\Processor\Updater;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
+use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Creator\PickingListResponseCreatorInterface;
-use Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolverInterface;
+use Spryker\Glue\PickingListsBackendApi\Processor\Mapper\PickingListMapperInterface;
+use Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReaderInterface;
 
 class PickingListUpdater implements PickingListUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolverInterface
+     * @var \Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReaderInterface
      */
-    protected PickingListUpdateStrategyResolverInterface $pickingListUpdateStrategyResolver;
+    protected PickingListReaderInterface $pickingListReader;
+
+    /**
+     * @var \Spryker\Glue\PickingListsBackendApi\Processor\Mapper\PickingListMapperInterface
+     */
+    protected PickingListMapperInterface $pickingListMapper;
+
+    /**
+     * @var \Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface
+     */
+    protected PickingListsBackendApiToPickingListFacadeInterface $pickingListFacade;
 
     /**
      * @var \Spryker\Glue\PickingListsBackendApi\Processor\Creator\PickingListResponseCreatorInterface
@@ -26,14 +40,20 @@ class PickingListUpdater implements PickingListUpdaterInterface
     protected PickingListResponseCreatorInterface $pickingListResponseCreator;
 
     /**
-     * @param \Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolverInterface $pickingListUpdateStrategyResolver
+     * @param \Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReaderInterface $pickingListReader
+     * @param \Spryker\Glue\PickingListsBackendApi\Processor\Mapper\PickingListMapperInterface $pickingListMapper
+     * @param \Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface $pickingListFacade
      * @param \Spryker\Glue\PickingListsBackendApi\Processor\Creator\PickingListResponseCreatorInterface $pickingListResponseCreator
      */
     public function __construct(
-        PickingListUpdateStrategyResolverInterface $pickingListUpdateStrategyResolver,
+        PickingListReaderInterface $pickingListReader,
+        PickingListMapperInterface $pickingListMapper,
+        PickingListsBackendApiToPickingListFacadeInterface $pickingListFacade,
         PickingListResponseCreatorInterface $pickingListResponseCreator
     ) {
-        $this->pickingListUpdateStrategyResolver = $pickingListUpdateStrategyResolver;
+        $this->pickingListReader = $pickingListReader;
+        $this->pickingListMapper = $pickingListMapper;
+        $this->pickingListFacade = $pickingListFacade;
         $this->pickingListResponseCreator = $pickingListResponseCreator;
     }
 
@@ -42,14 +62,19 @@ class PickingListUpdater implements PickingListUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function update(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
+    public function startPicking(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        $pickingListUpdateStrategy = $this->pickingListUpdateStrategyResolver
-            ->resolve($glueRequestTransfer);
+        $glueResourceTransfer = $glueRequestTransfer->getParentResources()->getIterator()->current() ?? new GlueResourceTransfer();
+        $pickingListTransfer = $this->pickingListReader->getPickingListByPickingListUuid($glueResourceTransfer->getIdOrFail());
+        $pickingListTransfer = $this->pickingListMapper->mapGlueRequestTransferToPickingListTransfer($glueRequestTransfer, $pickingListTransfer);
+
+        $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())
+            ->addPickingList($pickingListTransfer)
+            ->setIsTransactional(true);
 
         return $this->createPickingListUpdateResponse(
             $glueRequestTransfer,
-            $pickingListUpdateStrategy->update($glueRequestTransfer),
+            $this->pickingListFacade->updatePickingListCollection($pickingListCollectionRequestTransfer),
         );
     }
 
@@ -67,11 +92,7 @@ class PickingListUpdater implements PickingListUpdaterInterface
         $errorTransfers = $pickingListCollectionResponseTransfer->getErrors();
 
         if ($errorTransfers->count()) {
-            return $this->pickingListResponseCreator
-                ->createPickingListErrorResponse(
-                    $errorTransfers,
-                    $glueRequestTransfer->getLocale(),
-                );
+            return $this->pickingListResponseCreator->createPickingListErrorResponse($errorTransfers, $glueRequestTransfer->getLocale());
         }
 
         /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */

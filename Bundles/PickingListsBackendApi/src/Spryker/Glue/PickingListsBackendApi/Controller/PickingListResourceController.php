@@ -18,45 +18,6 @@ class PickingListResourceController extends AbstractBackendApiController
 {
     /**
      * @Glue({
-     *     "patch": {
-     *          "summary": [
-     *              "Assigns the warehouse user to the picking list. Also, updates the picking list."
-     *          ],
-     *          "parameters": [
-     *              {
-     *                  "ref": "acceptLanguage"
-     *              },
-     *              {
-     *                  "ref": "ContentType"
-     *              },
-     *              {
-     *                  "ref": "Fields"
-     *              }
-     *          ],
-     *          "responses": {
-     *              "400": "Bad request",
-     *              "403": "Unauthorized request.",
-     *              "404": "Not found"
-     *          },
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiPickingListsRequestAttributesTransfer",
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiPickingListsAttributesTransfer"
-     *     }
-     * })
-     *
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    public function patchAction(
-        GlueRequestTransfer $glueRequestTransfer
-    ): GlueResponseTransfer {
-        return $this->getFactory()
-            ->createPickingListUpdater()
-            ->update($glueRequestTransfer);
-    }
-
-    /**
-     * @Glue({
      *     "getCollection": {
      *          "summary": [
      *              "Retrieves the picking list collection."

@@ -7,11 +7,10 @@
 
 namespace Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication;
 
-use Generated\Shared\Transfer\ApiPickingListsRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\RouteAuthorizationConfigTransfer;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationAuthorizationConnectorExtension\Dependency\Plugin\AuthorizationStrategyAwareResourceRoutePluginInterface;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\PickingListsBackendApi\Controller\PickingListResourceController;
@@ -62,11 +61,6 @@ class PickingListsBackendResourcePlugin extends AbstractResourcePlugin implement
     public function getDeclaredMethods(): GlueResourceMethodCollectionTransfer
     {
         return (new GlueResourceMethodCollectionTransfer())
-            ->setPatch(
-                (new GlueResourceMethodConfigurationTransfer())
-                    ->setAction('patchAction')
-                    ->setAttributes(ApiPickingListsRequestAttributesTransfer::class),
-            )
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getCollectionAction'),

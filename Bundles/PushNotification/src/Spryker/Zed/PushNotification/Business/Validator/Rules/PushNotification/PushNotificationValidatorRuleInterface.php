@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ErrorCollectionTransfer;
 interface PushNotificationValidatorRuleInterface
 {
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */

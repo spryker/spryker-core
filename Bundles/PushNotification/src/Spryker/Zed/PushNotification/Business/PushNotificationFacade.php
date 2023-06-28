@@ -9,6 +9,7 @@ namespace Spryker\Zed\PushNotification\Business;
 
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionTransfer;
@@ -47,6 +48,57 @@ class PushNotificationFacade extends AbstractFacade implements PushNotificationF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function createPushNotificationProviderCollection(
+        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+    ): PushNotificationProviderCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createPushNotificationProviderCreator()
+            ->createPushNotificationProviderCollection($pushNotificationProviderCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function updatePushNotificationProviderCollection(
+        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+    ): PushNotificationProviderCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createPushNotificationProviderUpdater()
+            ->updatePushNotificationProviderCollection($pushNotificationProviderCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer $pushNotificationProviderCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function deletePushNotificationProviderCollection(
+        PushNotificationProviderCollectionDeleteCriteriaTransfer $pushNotificationProviderCollectionDeleteCriteriaTransfer
+    ): PushNotificationProviderCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createPushNotificationDeleter()
+            ->deletePushNotificationProviderCollection($pushNotificationProviderCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer $pushNotificationSubscriptionCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer
@@ -74,23 +126,6 @@ class PushNotificationFacade extends AbstractFacade implements PushNotificationF
         return $this->getFactory()
             ->createPushNotificationCreator()
             ->createPushNotificationCollection($pushNotificationCollectionRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
-     */
-    public function createPushNotificationProviderCollection(
-        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
-    ): PushNotificationProviderCollectionResponseTransfer {
-        return $this->getFactory()
-            ->createPushNotificationProviderCreator()
-            ->createPushNotificationProviderCollection($pushNotificationProviderCollectionRequestTransfer);
     }
 
     /**

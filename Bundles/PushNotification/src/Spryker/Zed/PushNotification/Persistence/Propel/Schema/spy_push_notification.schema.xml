@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\PushNotification\Persistence" package="src.Orm.Zed.PushNotification.Persistence">
 
-    <table name="spy_push_notification" idMethod="native" allowPkInsert="true">
+    <table name="spy_push_notification" idMethod="native">
         <column name="id_push_notification" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="fk_push_notification_group" required="true" type="INTEGER"/>
@@ -33,7 +33,7 @@
         </behavior>
     </table>
 
-    <table name="spy_push_notification_subscription" idMethod="native" allowPkInsert="true">
+    <table name="spy_push_notification_subscription" idMethod="native">
         <column name="id_push_notification_subscription" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="fk_push_notification_group" required="true" type="INTEGER"/>
@@ -67,7 +67,7 @@
         </behavior>
     </table>
 
-    <table name="spy_push_notification_subscription_delivery_log" idMethod="native" allowPkInsert="true">
+    <table name="spy_push_notification_subscription_delivery_log" idMethod="native">
         <column name="id_push_notification_subscription_delivery_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_push_notification" required="true" type="INTEGER"/>
         <column name="fk_push_notification_subscription" required="true" type="INTEGER"/>
@@ -98,7 +98,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_push_notification_group" idMethod="native" allowPkInsert="true">
+    <table name="spy_push_notification_group" idMethod="native">
         <column name="id_push_notification_group" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="identifier" required="false" size="255" type="VARCHAR"/>
@@ -113,22 +113,22 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_push_notification_provider" idMethod="native" allowPkInsert="true">
+    <table name="spy_push_notification_provider" idMethod="native" identifierQuoting="true">
         <column name="id_push_notification_provider" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
-
-        <id-method-parameter value="id_push_notification_provider_pk_seq"/>
 
         <unique name="spy_push_notification_provider-name">
             <unique-column name="name"/>
         </unique>
 
-        <behavior name="timestampable"/>
+        <id-method-parameter value="id_push_notification_provider_pk_seq"/>
 
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_push_notification_provider.name"/>
+            <parameter name="key_columns" value="id_push_notification_provider"/>
         </behavior>
+
+        <behavior name="timestampable"/>
     </table>
 
 </database>

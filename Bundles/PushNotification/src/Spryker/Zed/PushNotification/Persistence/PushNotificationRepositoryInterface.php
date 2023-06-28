@@ -53,4 +53,22 @@ interface PushNotificationRepositoryInterface
     public function getPushNotificationSubscriptionCollection(
         PushNotificationSubscriptionCriteriaTransfer $pushNotificationSubscriptionCriteriaTransfer
     ): PushNotificationSubscriptionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCriteriaTransfer $pushNotificationSubscriptionCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function pushNotificationSubscriptionExists(
+        PushNotificationSubscriptionCriteriaTransfer $pushNotificationSubscriptionCriteriaTransfer
+    ): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function pushNotificationExists(
+        PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+    ): bool;
 }

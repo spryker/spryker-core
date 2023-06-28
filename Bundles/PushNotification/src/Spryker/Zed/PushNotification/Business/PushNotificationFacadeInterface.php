@@ -9,6 +9,7 @@ namespace Spryker\Zed\PushNotification\Business;
 
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionTransfer;
@@ -21,11 +22,15 @@ interface PushNotificationFacadeInterface
 {
     /**
      * Specification:
-     * - Fetches a collection of push notification providers from Persistence.
-     * - Uses `PushNotificationProviderCriteriaTransfer.pushNotificationConditionsTransfer.names` to filter push notification providers by names.
-     * - Uses `PushNotificationProviderCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
-     * - Uses `PushNotificationProviderCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
-     * - Returns `PushNotificationProviderCollectionTransfer` filled with found push notification providers.
+     * - Retrieves push notification provider entities filtered by criteria from Persistence.
+     * - Uses `PushNotificationProviderCriteriaTransfer.pushNotificationConditionsTransfer.names` to filter by push notification provider names.
+     * - Uses `PushNotificationProviderCriteriaTransfer.pushNotificationConditionsTransfer.uuids` to filter by push notification provider uuids.
+     * - Inverses uuids filtering in case `PushNotificationProviderCriteriaTransfer.pushNotificationConditionsTransfer.isUuidsConditionInversed` is set to `true`.
+     * - Uses `PushNotificationProviderCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `PushNotificationProviderCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `PushNotificationProviderCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `PushNotificationProviderCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `PushNotificationProviderCollectionTransfer` filled with found push notification provider entities.
      *
      * @api
      *
@@ -36,6 +41,70 @@ interface PushNotificationFacadeInterface
     public function getPushNotificationProviderCollection(
         PushNotificationProviderCriteriaTransfer $pushNotificationProviderCriteriaTransfer
     ): PushNotificationProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `PushNotificationProviderCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `PushNotificationProviderCollectionRequestTransfer.pushNotificationProviders` to be set.
+     * - Requires `PushNotificationProviderTransfer.name` to be set.
+     * - Validates push notification provider name length.
+     * - Validates push notification provider name uniqueness in scope of request collection.
+     * - Validates push notification provider name uniqueness among already persisted push notification providers.
+     * - Uses `PushNotificationProviderCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores push notification providers at Persistence.
+     * - Returns `PushNotificationProviderCollectionResponseTransfer` with push notification providers and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function createPushNotificationProviderCollection(
+        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+    ): PushNotificationProviderCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `PushNotificationProviderCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `PushNotificationProviderCollectionRequestTransfer.pushNotificationProviders` to be set.
+     * - Requires `PushNotificationProviderTransfer.uuid` to be set.
+     * - Requires `PushNotificationProviderTransfer.name` to be set.
+     * - Validates push notification provider existence using `PushNotificationProviderTransfer.uuid`.
+     * - Validates push notification provider name length.
+     * - Validates push notification provider name uniqueness in scope of request collection.
+     * - Validates push notification provider name uniqueness among already persisted push notification providers.
+     * - Uses `PushNotificationProviderCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Updates push notification providers at Persistence.
+     * - Returns `PushNotificationProviderCollectionResponseTransfer` filled with persisted push notification providers and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function updatePushNotificationProviderCollection(
+        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+    ): PushNotificationProviderCollectionResponseTransfer;
+
+    /**
+     * - Deletes collection of push notification providers from storage by delete criteria.
+     * - Validates push notification provider usage among persisted push notifications.
+     * - Validates push notification provider usage among persisted push notification subscriptions.
+     * - Uses `PushNotificationProviderCollectionDeleteCriteriaTransfer.uuids` to filter by push notification provider uuids.
+     * - Uses `PushNotificationProviderCollectionDeleteCriteriaTransfer.isTransactional` for transactional operation.
+     * - Returns `PushNotificationProviderCollectionResponseTransfer` filled with deleted push notification providers and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer $pushNotificationProviderCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    public function deletePushNotificationProviderCollection(
+        PushNotificationProviderCollectionDeleteCriteriaTransfer $pushNotificationProviderCollectionDeleteCriteriaTransfer
+    ): PushNotificationProviderCollectionResponseTransfer;
 
     /**
      * Specification:
@@ -77,24 +146,6 @@ interface PushNotificationFacadeInterface
     public function createPushNotificationCollection(
         PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
     ): PushNotificationCollectionResponseTransfer;
-
-    /**
-     * Specification:
-     * - Requires `PushNotificationProviderCollectionRequest.pushNotificationProviders.name` transfer property to be set.
-     * - Validates if push notification provider with given `PushNotificationProviderCollectionRequest.pushNotificationProviders.name` already exists.
-     * - Persists push notification providers to Persistence.
-     * - Returns persisted push notification providers and validation errors in case of `PushNotificationProviderCollectionRequestTransfer.isTransactional` is false.
-     * - Returns persisted push notification providers or validation errors in case of `PushNotificationProviderCollectionRequestTransfer.isTransactional` is true.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
-     */
-    public function createPushNotificationProviderCollection(
-        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
-    ): PushNotificationProviderCollectionResponseTransfer;
 
     /**
      * Specification:

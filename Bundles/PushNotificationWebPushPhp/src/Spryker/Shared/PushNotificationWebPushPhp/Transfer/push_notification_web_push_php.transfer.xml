@@ -66,6 +66,7 @@
     </transfer>
 
     <transfer name="PushNotificationProviderCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
         <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
     </transfer>
 
@@ -81,7 +82,7 @@
     </transfer>
 
     <transfer name="PushNotificationProviderCollection" strict="true">
-        <property name="providers" type="PushNotificationProvider[]" singular="provider"/>
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
     </transfer>
 
 </transfers>

@@ -55,7 +55,7 @@ class PushNotificationProviderMapper
                 $pushNotificationProviderEntity,
                 new PushNotificationProviderTransfer(),
             );
-            $pushNotificationProviderCollectionTransfer->addProvider($pushNotificationProviderTransfer);
+            $pushNotificationProviderCollectionTransfer->addPushNotificationProvider($pushNotificationProviderTransfer);
         }
 
         return $pushNotificationProviderCollectionTransfer;

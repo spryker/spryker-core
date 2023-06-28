@@ -37,9 +37,7 @@ class PickingListResourceTest extends Unit
     public function testGetTypeShouldReturnCorrectType(): void
     {
         //Act
-        $type = $this->tester
-            ->createPickingListsBackendResourcePlugin()
-            ->getType();
+        $type = $this->tester->createPickingListsBackendResourcePlugin()->getType();
 
         //Assert
         $this->assertSame($type, PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS);
@@ -51,24 +49,11 @@ class PickingListResourceTest extends Unit
     public function testDeclaredMethodsShouldReturnCorrectGlueResourceMethodCollectionTransfer(): void
     {
         //Act
-        $glueResourceMethodCollectionTransfer = $this->tester
-            ->createPickingListsBackendResourcePlugin()
-            ->getDeclaredMethods();
+        $glueResourceMethodCollectionTransfer = $this->tester->createPickingListsBackendResourcePlugin()->getDeclaredMethods();
 
         //Assert
         $this->assertInstanceOf(GlueResourceMethodCollectionTransfer::class, $glueResourceMethodCollectionTransfer);
-
-        $this->assertInstanceOf(
-            GlueResourceMethodConfigurationTransfer::class,
-            $glueResourceMethodCollectionTransfer->getPatch(),
-        );
-        $this->assertInstanceOf(
-            GlueResourceMethodConfigurationTransfer::class,
-            $glueResourceMethodCollectionTransfer->getGet(),
-        );
-        $this->assertInstanceOf(
-            GlueResourceMethodConfigurationTransfer::class,
-            $glueResourceMethodCollectionTransfer->getGetCollection(),
-        );
+        $this->assertInstanceOf(GlueResourceMethodConfigurationTransfer::class, $glueResourceMethodCollectionTransfer->getGet());
+        $this->assertInstanceOf(GlueResourceMethodConfigurationTransfer::class, $glueResourceMethodCollectionTransfer->getGetCollection());
     }
 }

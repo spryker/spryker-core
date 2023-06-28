@@ -13,7 +13,11 @@
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">
+        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
+        <property name="get" type="GlueResourceMethodConfiguration"/>
         <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="patch" type="GlueResourceMethodConfiguration"/>
+        <property name="delete" type="GlueResourceMethodConfiguration"/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
@@ -35,6 +39,9 @@
         <property name="locale" type="string"/>
         <property name="scopes" type="string[]" singular="scope"/>
         <property name="requestUser" type="GlueRequestUser"/>
+        <property name="resource" type="GlueResource"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="sortings" type="Sort[]" singular="sorting"/>
     </transfer>
 
     <transfer name="GlueResponse">
@@ -67,6 +74,7 @@
     </transfer>
 
     <transfer name="PushNotificationProvider" strict="true">
+        <property name="uuid" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
@@ -78,6 +86,7 @@
 
     <transfer name="Error">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
     <transfer name="GlueRequestUser">
@@ -86,4 +95,43 @@
         <property name="naturalIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="PushNotificationProviderCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCriteria" strict="true">
+        <property name="pushNotificationProviderConditions" type="PushNotificationProviderConditions"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollection" strict="true">
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ApiPushNotificationProvidersAttributes" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+    </transfer>
+
+    <transfer name="Sort">
+    </transfer>
 </transfers>

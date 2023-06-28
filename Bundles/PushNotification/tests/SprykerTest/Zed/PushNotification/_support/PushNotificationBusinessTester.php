@@ -26,6 +26,7 @@ use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\PushNotificationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Orm\Zed\PushNotification\Persistence\Map\SpyPushNotificationProviderTableMap;
+use Orm\Zed\PushNotification\Persistence\SpyPushNotificationProviderQuery;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLog;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLogQuery;
@@ -63,6 +64,40 @@ class PushNotificationBusinessTester extends Actor
      * @var string
      */
     public const TEST_PUSH_NOTIFICATION_PROVIDER_NAME_WWW_GOOGLE_FIREBASE = 'www-google-firebase-test';
+
+    /**
+     * @return void
+     */
+    public function ensurePushNotificationTablesAreEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getPushNotificationProviderQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getPushNotificationSubscriptionQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getPushNotificationSubscriptionDeliveryLogQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationProviderQuery
+     */
+    public function getPushNotificationProviderQuery(): SpyPushNotificationProviderQuery
+    {
+        return SpyPushNotificationProviderQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionQuery
+     */
+    public function getPushNotificationSubscriptionQuery(): SpyPushNotificationSubscriptionQuery
+    {
+        return SpyPushNotificationSubscriptionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLogQuery
+     */
+    public function getPushNotificationSubscriptionDeliveryLogQuery(): SpyPushNotificationSubscriptionDeliveryLogQuery
+    {
+        return SpyPushNotificationSubscriptionDeliveryLogQuery::create();
+    }
 
     /**
      * @return array<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>

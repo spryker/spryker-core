@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PushNotification\Business\Filter;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
 use Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractorInterface;
 
 class PushNotificationProviderFilter implements PushNotificationProviderFilterInterface
@@ -21,54 +21,53 @@ class PushNotificationProviderFilter implements PushNotificationProviderFilterIn
     /**
      * @param \Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractorInterface $errorEntityIdentifierExtractor
      */
-    public function __construct(
-        ErrorEntityIdentifierExtractorInterface $errorEntityIdentifierExtractor
-    ) {
+    public function __construct(ErrorEntityIdentifierExtractorInterface $errorEntityIdentifierExtractor)
+    {
         $this->errorEntityIdentifierExtractor = $errorEntityIdentifierExtractor;
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $validPushNotificationProviderTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $invalidPushNotificationProviderTransfers
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer>
      */
-    public function filterOutInvalidPushNotificationProviders(
-        ArrayObject $pushNotificationProviderTransfers,
-        ErrorCollectionTransfer $errorCollectionTransfer
+    public function mergePushNotificationProviders(
+        ArrayObject $validPushNotificationProviderTransfers,
+        ArrayObject $invalidPushNotificationProviderTransfers
     ): ArrayObject {
-        if (!$errorCollectionTransfer->getErrors()->count()) {
-            return $pushNotificationProviderTransfers;
-        }
-
-        $invalidPushNotificationProviderIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiers(
-            $errorCollectionTransfer,
-        );
-
-        return $this->filterValidPushNotificationProviders(
-            $pushNotificationProviderTransfers,
-            $invalidPushNotificationProviderIdentifiers,
-        );
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
-     * @param array<string> $invalidPushNotificationProviderIdentifiers
-     *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer>
-     */
-    protected function filterValidPushNotificationProviders(
-        ArrayObject $pushNotificationProviderTransfers,
-        array $invalidPushNotificationProviderIdentifiers
-    ): ArrayObject {
-        $validPushNotificationProviderTransfers = new ArrayObject();
-        foreach ($pushNotificationProviderTransfers as $i => $pushNotificationProviderTransfer) {
-            if (in_array($i, $invalidPushNotificationProviderIdentifiers)) {
-                continue;
-            }
-            $validPushNotificationProviderTransfers->append($pushNotificationProviderTransfer);
+        foreach ($invalidPushNotificationProviderTransfers as $entityIdentifier => $invalidPushNotificationProviderTransfer) {
+            $validPushNotificationProviderTransfers->offsetSet($entityIdentifier, $invalidPushNotificationProviderTransfer);
         }
 
         return $validPushNotificationProviderTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
+     *
+     * @return array<\ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer>>
+     */
+    public function filterPushNotificationProvidersByValidity(
+        PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
+    ): array {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = $pushNotificationProviderCollectionResponseTransfer->getErrors();
+        $erroredEntityIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
+
+        $validPushNotificationProviderTransfers = new ArrayObject();
+        $invalidPushNotificationProviderTransfers = new ArrayObject();
+
+        foreach ($pushNotificationProviderCollectionResponseTransfer->getPushNotificationProviders() as $entityIdentifier => $pushNotificationProviderTransfer) {
+            if (isset($erroredEntityIdentifiers[$entityIdentifier])) {
+                $invalidPushNotificationProviderTransfers->offsetSet($entityIdentifier, $pushNotificationProviderTransfer);
+
+                continue;
+            }
+
+            $validPushNotificationProviderTransfers->offsetSet($entityIdentifier, $pushNotificationProviderTransfer);
+        }
+
+        return [$validPushNotificationProviderTransfers, $invalidPushNotificationProviderTransfers];
     }
 }

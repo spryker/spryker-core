@@ -35,7 +35,7 @@ class PushNotificationProviderReader implements PushNotificationProviderReaderIn
             new PushNotificationProviderCriteriaTransfer(),
         );
         $pushNotificationProviderTransfersIndexedByName = [];
-        foreach ($pushNotificationProviderCollectionTransfer->getProviders() as $pushNotificationProviderTransfer) {
+        foreach ($pushNotificationProviderCollectionTransfer->getPushNotificationProviders() as $pushNotificationProviderTransfer) {
             $pushNotificationProviderTransfersIndexedByName[$pushNotificationProviderTransfer->getNameOrFail()] = $pushNotificationProviderTransfer;
         }
 

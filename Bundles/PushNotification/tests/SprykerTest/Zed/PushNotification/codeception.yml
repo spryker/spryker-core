@@ -7,9 +7,8 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist:
-        include:
-            - '../../../../src/*'
+    whitelist: { include: ['../../../../src/*'] }
+
 suites:
     Business:
         path: Business
@@ -17,11 +16,12 @@ suites:
         modules:
             enabled:
                 - Asserts
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\PushNotification\Helper\PushNotificationDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\PushNotification\Helper\PushNotificationHelper

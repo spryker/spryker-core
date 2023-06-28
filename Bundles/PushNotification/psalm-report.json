@@ -1,6 +1,79 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationGroupTransfer> variable $groupTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Reader/PushNotificationGroupReader.php",
+            "snippet": "        return $groupTransfers->count() ? $groupTransfers->offsetGet(0) : null;",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationGroupTransfer> variable $groupTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Reader/PushNotificationGroupReader.php",
+            "snippet": "        return $groupTransfers->count() ? $groupTransfers->offsetGet(0) : null;",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PushNotification\\Business\\Extractor\\PushNotificationSubscriptionDeliveryLogExtractorInterface::extractDeliveryLogs expects ArrayObject<int, Generated\\Shared\\Transfer\\PushNotificationTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Sender/PushNotificationSender.php",
+            "snippet": "            ->extractDeliveryLogs($pushNotificationCollectionResponseTransfer->getPushNotifications());",
+            "selected_text": "$pushNotificationCollectionResponseTransfer->getPushNotifications()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationSubscriptionTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Validator/Rules/PushNotificationSubscription/PushNotificationSubscriptionUniqueValidatorRule.php",
+            "snippet": "        return $pushNotificationSubscriptionCollectionTransfer->getPushNotificationSubscriptions()->count() === 0;",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PushNotification\\Persistence\\PushNotificationRepository::applyPushNotificationGroupFilters cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Persistence/PushNotificationRepository.php",
+            "snippet": "                $pushNotificationGroupCriteriaTransfer->getPushNotificationGroupConditions(),",
+            "selected_text": "$pushNotificationGroupCriteriaTransfer->getPushNotificationGroupConditions()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 476,
+            "line_to": 476,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\PushNotification\\Persistence\\PushNotificationRepository::groupPushNotificationProviderEntitiesByProviderAndGroup expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PushNotification\\Persistence\\SpyPushNotificationSubscription>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PushNotification\\Persistence\\SpyPushNotificationSubscription> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Persistence/PushNotificationRepository.php",
+            "snippet": "            $pushNotificationSubscriptionQuery->find(),",
+            "selected_text": "$pushNotificationSubscriptionQuery->find()",
+            "error_level": 3,
+            "shortcode": 193
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 6
 }

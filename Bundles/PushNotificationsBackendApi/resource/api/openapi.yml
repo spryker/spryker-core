@@ -1,84 +1,573 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
-    title: Push Notification Backend API
-    version: 1.0.0
+    title: Push Notifications BAPI
+    description: PushNotificationsBackendApi module provides endpoints for push notification management.
+    contact:
+        name: Spryker Systems GmbH - Support
+        url: https://spryker.my.site.com/support/s/
+    license:
+        name: Spryker Systems GmbH - Evaluation License Agreement
+        url: https://github.com/spryker/push-notifications-backend-api/blob/master/LICENSE
+    version: 0.3.0
+
+externalDocs:
+    description: Spryker Systems GmbH - Documentation center
+    url: hhttps://docs.spryker.com/
+
 servers:
     - url: http://glue-backend.de.spryker.local
-security:
-    - bearerAuth: []
+
+tags:
+    - name: push-notification-subscriptions
+      description: Available endpoints for push notification subscription.
+      externalDocs:
+          description: Spryker documentation center
+          url: hhttps://docs.spryker.com/
+    - name: push-notification-providers
+      description: Available endpoints for push notification provider.
+      externalDocs:
+          description: Spryker documentation center
+          url: hhttps://docs.spryker.com/
+
 paths:
     /push-notification-subscriptions:
         post:
-            description: 'Creates a push notification subscription.'
+            tags:
+                - push-notification-subscriptions
+            summary: Creates a push notification subscription.
+            description: |
+                This endpoint allows the creation of a new push notification subscription while sending a POST request with the required parameters. Upon success, the API will return the newly created subscription object with a unique identifier.
+            operationId: CreatePushNotificationSubscriptions
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
             requestBody:
                 content:
                     application/vnd.api+json:
                         schema:
-                            $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributes'
+                            $ref: '#/components/schemas/PostPushNotificationSubscriptionGlueRequest'
             responses:
                 '201':
-                    description: 'Expected response to a valid request.'
+                    description: The push notification subscription was successfully created.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributesResponse'
-                '400':
-                    description: 'Expected response to a bad request.'
+                                $ref: '#/components/schemas/PushNotificationSubscriptionsGlueResponse'
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/JsonApiErrorMessage'
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+
+    /push-notification-providers:
+        get:
+            tags:
+                - push-notification-providers
+            summary: Retrieves a collection of push notification providers.
+            description: |
+                This endpoint allows to retrieve a collection of push notification providers. By making a GET request while using available parameters to this endpoint, it's possible to fetch the list of available push notification providers from the system.
+            operationId: GetPushNotificationProviderCollection
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Sort'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successfully retrieved the push notification provider collection.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/PushNotificationProviderCollectionGlueResponse'
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+        post:
+            tags:
+                - push-notification-providers
+            summary: Creates a push notification provider.
+            description: |
+                This endpoint allows the creation of a new push notification provider while sending a POST request with the required parameters. Upon success, the API will return the newly created provider object with a unique identifier.
+            operationId: CreatePushNotificationProvider
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/PostPushNotificationProviderGlueRequest'
+            responses:
+                '201':
+                    description: The push notification provider was successfully created.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/PushNotificationProviderGlueResponse'
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+    /push-notification-providers/{pushNotificationProviderUuid}:
+        get:
+            tags:
+                - push-notification-providers
+            summary: Retrieves a push notification provider.
+            description: |
+                This endpoint allows to retrieve a push notification provider. By making a GET request while using available parameters to this endpoint, it's possible to fetch an available push notification provider from the system.
+            operationId: GetPushNotificationProvider
+            parameters:
+                - $ref: '#/components/parameters/PushNotificationProviderUuid'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successfully retrieved the push notification provider.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/PushNotificationProviderGlueResponse'
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+        patch:
+            tags:
+                - push-notification-providers
+            summary: Updates a push notification provider.
+            description: |
+                This endpoint allows to update a single push notification provider. By making PATCH request to this endpoint with the required parameters, it's possible to modify the details of an existing push notification provider from the system.
+            operationId: UpdatePushNotificationProvider
+            parameters:
+                - $ref: '#/components/parameters/PushNotificationProviderUuid'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/PatchPushNotificationProviderGlueRequest'
+            responses:
+                '200':
+                    description: The push notification provider was successfully updated.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/PushNotificationProviderGlueResponse'
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+        delete:
+            tags:
+                - push-notification-providers
+            summary: Deletes a push notification provider.
+            description: |
+                This endpoint allows to remove a single push notification provider. By making DELETE request to this endpoint with the required parameters, it's possible to remove an existing push notification provider from the system.
+            operationId: DeletePushNotificationProvider
+            parameters:
+                - $ref: '#/components/parameters/PushNotificationProviderUuid'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/PushNotificationProviderGlueRequest'
+            responses:
+                '204':
+                    description: The push notification provider was successfully deleted.
+                '403':
+                    description: The user does not have the necessary permissions.
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorGlueResponse'
 components:
+    schemas:
+        # API REQUEST SCHEMAS
+
+        ## PUSH NOTIFICATION SUBSCRIPTIONS
+
+        PostPushNotificationSubscriptionGlueRequest:
+            allOf:
+                - $ref: '#/components/schemas/PushNotificationSubscriptionGlueRequest'
+            description: |
+                The request schema for creating new push notification subscriptions. It includes the necessary parameters to define the properties and configuration of the new subscriptions.
+            properties:
+                data:
+                    properties:
+                        attributes:
+                            properties:
+                                providerName:
+                                    type: string
+                                    description: The name of the push notification provider.
+                                    example: My Push Notification Provider
+                                payload:
+                                    type: array
+                                    items:
+                                        properties:
+                                            endpoint:
+                                                type: string
+                                                example: http://glue-backend.de.spryker.local
+                                            publicKey:
+                                                type: string
+                                                example: my-public-key
+                                            authToken:
+                                                type: string
+                                                example: my-auth-token
+                                group:
+                                    type: object
+                                    properties:
+                                        name:
+                                            type: string
+                                            example: My Push Notification Group
+                                        identifier:
+                                            type: string
+                                            example: my-puhs-notification-group
+
+        PushNotificationSubscriptionGlueRequest:
+            description: |
+                The basic request schema that serves as the foundation for all API requests related to push notification subscriptions. It includes the necessary definitions and structure required for interacting with the push notification subscriptions functionality.
+            properties:
+                data:
+                    items:
+                        properties:
+                            type:
+                                type: string
+                                description: The resource type of the push notification provider.
+                                example: My Push Notification Provider
+
+        ## PUSH NOTIFICATION PROVIDERS
+
+        PatchPushNotificationProviderGlueRequest:
+            allOf:
+                - $ref: '#/components/schemas/PushNotificationProviderGlueRequest'
+            description: |
+                The request schema for updating existing push notification provider. It includes the necessary parameters to identify the provider to be updated the properties.
+            properties:
+                data:
+                    properties:
+                        attributes:
+                            properties:
+                                name:
+                                    type: string
+                                    description: The name of the push notification provider.
+                                    example: My Push Notification Provider
+
+        PostPushNotificationProviderGlueRequest:
+            allOf:
+                - $ref: '#/components/schemas/PushNotificationProviderGlueRequest'
+            description: |
+                The request schema for creating new push notification provider. It includes the necessary parameters to define the properties and configuration of new providers.
+            properties:
+                data:
+                    properties:
+                        attributes:
+                            properties:
+                                name:
+                                    type: string
+                                    description: The name of the push notification provider.
+                                    example: My Push Notification Provider
+
+        PushNotificationProviderGlueRequest:
+            description: |
+                The basic request schema that serves as the foundation for all API requests related to Push Notification Providers. It includes the necessary definitions and structure required for interacting with the Push Notification Providers functionality.
+            properties:
+                data:
+                    properties:
+                        type:
+                            type: string
+                            description: The resource type of the push notification provider.
+                            example: push-notification-providers
+
+        # API RESPONSE SCHEMAS
+
+        ## PUSH NOTIFICATION SUBSCRIPTIONS
+
+        PushNotificationSubscriptionsGlueResponse:
+            description: |
+                The basic response schema that serves as the foundation for all API responses related to Push Notification Providers. It includes the necessary structure and properties to represent the response data and metadata for interactions with the Push Notification Providers functionality.
+            properties:
+                data:
+                    items:
+                        $ref: '#/components/schemas/PushNotificationSubscriptionGlueResource'
+
+        ## PUSH NOTIFICATION PROVIDERS
+
+        PushNotificationProviderCollectionGlueResponse:
+            description: |
+                The basic response schema that serves as the foundation for all API responses related to Push Notification Providers. It includes the necessary structure and properties to represent the response data and metadata for interactions with the Push Notification Providers functionality.
+            properties:
+                data:
+                    items:
+                        $ref: '#/components/schemas/PushNotificationProviderGlueResource'
+
+        PushNotificationProviderGlueResponse:
+            description: |
+                The basic response schema that serves as the foundation for all API responses related to Push Notification Providers. It includes the necessary structure and properties to represent the response data and metadata for interactions with the Push Notification Providers functionality.
+            properties:
+                data:
+                    $ref: '#/components/schemas/PushNotificationProviderGlueResource'
+
+        ## GENERAL
+
+        ErrorGlueResponse:
+            description: |
+                The error response provides information about any errors that occur during API interactions related to Push Notification Providers. It includes details such as the error code, a descriptive message, and, optionally, additional error-specific data. The error response is returned when an API request encounters an issue that prevents successful execution or when there are validation errors.
+            properties:
+                errors:
+                    items:
+                        $ref: '#/components/schemas/GlueError'
+
+        # API GLUE RESOURCES SCHEMAS
+
+        ## PUSH NOTIFICATION SUBSCRIPTION
+
+        PushNotificationSubscriptionGlueResource:
+            description: |
+                Represents the resource of a push notification subscription.
+            properties:
+                id:
+                    type: string
+                    description: The unique identifier (UUID) of the push notification subscription.
+                    example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+                type:
+                    type: string
+                    description: The resource type of the push notification subscription.
+                    example: push-notification-subscriptions
+                attributes:
+                    $ref: '#/components/schemas/PushNotificationSubscriptionsAttributes'
+                links:
+                    $ref: '#/components/schemas/Links'
+
+        PushNotificationSubscriptionsAttributes:
+            description: |
+                Represents the attributes of a push notification subscription.
+            properties:
+                uuid:
+                    type: string
+                    description: The unique identifier (UUID) of the push notification subscription.
+                    example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+                providerName:
+                    type: string
+                    description: The name of the push notification subscription.
+                    example: My Push Notification Provider
+                payload:
+                    type: array
+                    items: {}
+                group:
+                    $ref: '#/components/schemas/PushNotificationGroupAttributes'
+
+        ## PUSH NOTIFICATION GROUPS
+
+        PushNotificationGroupAttributes:
+            description: |
+                Represents the attributes of a push notification group.
+            properties:
+                uuid:
+                    type: string
+                    description: The unique identifier (UUID) of the push notification subscription.
+                    example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+                name:
+                    type: string
+                    description: The name of the push notification subscription.
+                    example: My Push Notification Group
+                identifier:
+                    type: string
+                    example: My Push Notification Group Identifier
+
+        ## PUSH NOTIFICATION PROVIDERS
+
+        PushNotificationProviderGlueResource:
+            description: |
+                Represents the resource of a push notification provider.
+            properties:
+                id:
+                    type: string
+                    description: The unique identifier (UUID) of the push notification provider.
+                    example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+                type:
+                    type: string
+                    description: The resource type of the push notification provider.
+                    example: push-notification-providers
+                attributes:
+                    $ref: '#/components/schemas/PushNotificationProvidersAttributes'
+                links:
+                    $ref: '#/components/schemas/Links'
+
+        PushNotificationProvidersAttributes:
+            description: |
+                Represents the attributes of a push notification provider.
+            properties:
+                uuid:
+                    type: string
+                    description: The unique identifier (UUID) of the push notification provider.
+                    example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+                name:
+                    type: string
+                    description: The name of the push notification provider.
+                    example: My Push Notification Provider
+
+        ## MISC
+
+        GlueError:
+            description: |
+                Represents an error encountered during API interactions. It provides information about the error, including the error code, status, and an error message.
+            properties:
+                code:
+                    type: string
+                    description: The error code indicating the specific type of error encountered.
+                    example: 5400
+                status:
+                    type: integer
+                    description: The HTTP status code associated with the error.
+                    example: 400
+                message:
+                    type: string
+                    description: A descriptive message explaining the error.
+                    example: An unknown error occured.
+
+        Links:
+            description: |
+                Represents the links associated with a resource. It provides URLs for accessing related resources or performing additional actions.
+            properties:
+                self:
+                    type: string
+                    description: The URL for accessing the resource.
+                    example: http://glue-backend.de.spryker.local/push-notification-providers/56fa22a-42eb-4f73-ab5b-9f7e861378f3
+
+    parameters:
+        PushNotificationProviderUuid:
+            name: pushNotificationProviderUuid
+            in: path
+            required: true
+            schema:
+                type: string
+                description: The unique identifier (UUID) of the push notification provider.
+                example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+
+        Page:
+            name: page
+            description: |
+                The page parameter used to control the pagination behavior of the result set of API response.
+            example: ?page[offset]=10&page[limit]=20
+            in: query
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: The number of items to skip in the result set.
+                    limit:
+                        type: integer
+                        description: The maximum number of items to include in the result set.
+
+        Sort:
+            name: sort
+            description: |
+                The sorting parameter used to specify the sorting order of the result set of API response. To specify the sort direction, prepend a hyphen (-) in front of the field name, indicating descending order.
+            examples:
+                ascending:
+                    summary: Sort in ascending order by SKU
+                    value: sku
+                descending:
+                    summary: Sort in descending order by SKU
+                    value: -sku
+            in: query
+            required: false
+            style: form
+            explode: false
+            schema:
+                type: string
+                description: The field which the result set should be sorted by.
+
+        Fields:
+            name: fields
+            example: ?fields[pushNotificationProvider]=name,id
+            in: query
+            description: |
+                The parameter used to specify the fields to be extracted and included in the record set of API response.
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    resourceName:
+                        type: array
+                        items:
+                            type: string
+                            description: 'Array of field names to be extracted from the resource.'
+                            example: 'surname,lastname'
+
+        ContentType:
+            name: Content-Type
+            description: |
+                The content type specifies the media type of the request payload.
+            in: header
+            required: true
+            schema:
+                type: string
+                example: application/vnd.api+json
+
+        AcceptLanguage:
+            name: Accept-Language
+            description: |
+                The preferred language for the API response content negotiation, as specified by the client.
+            in: header
+            schema:
+                type: string
+                example: de-DE
+            required: false
+
     securitySchemes:
         bearerAuth:
             type: http
             scheme: bearer
             bearerFormat: JWT
-    schemas:
-        ApiPushNotificationGroupsAttributes:
-            properties:
-                name:
-                    type: string
-                identifier:
-                    type: string
-        ApiPushNotificationSubscriptionsAttributes:
-            properties:
-                providerName:
-                    type: string
-                group:
-                    $ref: '#/components/schemas/ApiPushNotificationGroupsAttributes'
-                payload:
-                    type: array
-                    items: {}
-        ApiPushNotificationSubscriptionsAttributesResponse:
-            properties:
-                data:
-                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionResponseData'
-                links:
-                    $ref: '#/components/schemas/Links'
-        ApiPushNotificationSubscriptionResponseData:
-            properties:
-                type:
-                    type: string
-                id:
-                    type: string
-                attributes:
-                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionsAttributes'
-                links:
-                    $ref: '#/components/schemas/Links'
-        JsonApiErrorMessage:
-            type: object
-            properties:
-                errors:
-                    type: object
-                    properties:
-                        status:
-                            type: integer
-                        code:
-                            type: string
-                        message:
-                            type: string
-        Links:
-            properties:
-                self:
-                    type: string

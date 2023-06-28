@@ -68,16 +68,11 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     public function createPushNotificationCollection(
         PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
     ): PushNotificationCollectionResponseTransfer {
-        /**
-         * @var \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
-         */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers */
         $pushNotificationTransfers = $pushNotificationCollectionRequestTransfer->getPushNotifications();
-        $errorCollectionTransfer = $this->pushNotificationValidator
-            ->validateCollection($pushNotificationTransfers);
+        $errorCollectionTransfer = $this->pushNotificationValidator->validateCollection($pushNotificationTransfers);
 
-        /**
-         * @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
         $pushNotificationCollectionResponseTransfer = $this->createPushNotificationCollectionResponseTransfer(
             $pushNotificationTransfers,
@@ -100,7 +95,7 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
@@ -191,8 +186,8 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return \Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer
      */

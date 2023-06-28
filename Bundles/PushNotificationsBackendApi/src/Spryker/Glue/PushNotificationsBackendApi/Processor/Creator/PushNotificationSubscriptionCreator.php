@@ -9,12 +9,17 @@ namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Creator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Glue\PushNotificationsBackendApi\Dependency\Facade\PushNotificationsBackendApiToPushNotificationFacadeInterface;
-use Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionResourceMapperInterface;
+use Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionMapperInterface;
+use Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface;
+use Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\PushNotificationSubscriptionResponseBuilderInterface;
+use Spryker\Glue\PushNotificationsBackendApi\PushNotificationsBackendApiConfig;
 
 class PushNotificationSubscriptionCreator implements PushNotificationSubscriptionCreatorInterface
 {
@@ -24,28 +29,36 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     protected PushNotificationsBackendApiToPushNotificationFacadeInterface $pushNotificationFacade;
 
     /**
-     * @var \Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionResourceMapperInterface
+     * @var \Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\PushNotificationSubscriptionResponseBuilderInterface
      */
-    protected PushNotificationSubscriptionResourceMapperInterface $pushNotificationSubscriptionResourceMapper;
+    protected PushNotificationSubscriptionResponseBuilderInterface $pushNotificationSubscriptionResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\PushNotificationsBackendApi\Processor\Creator\ResponseCreatorInterface
+     * @var \Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionMapperInterface
      */
-    protected ResponseCreatorInterface $responseCreator;
+    protected PushNotificationSubscriptionMapperInterface $pushNotificationSubscriptionMapper;
+
+    /**
+     * @var \Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface
+     */
+    protected ErrorResponseBuilderInterface $errorResponseBuilder;
 
     /**
      * @param \Spryker\Glue\PushNotificationsBackendApi\Dependency\Facade\PushNotificationsBackendApiToPushNotificationFacadeInterface $pushNotificationFacade
-     * @param \Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionResourceMapperInterface $pushNotificationSubscriptionResourceMapper
-     * @param \Spryker\Glue\PushNotificationsBackendApi\Processor\Creator\ResponseCreatorInterface $responseCreator
+     * @param \Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionMapperInterface $pushNotificationSubscriptionMapper
+     * @param \Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\PushNotificationSubscriptionResponseBuilderInterface $pushNotificationSubscriptionResponseBuilder
+     * @param \Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface $errorResponseBuilder
      */
     public function __construct(
         PushNotificationsBackendApiToPushNotificationFacadeInterface $pushNotificationFacade,
-        PushNotificationSubscriptionResourceMapperInterface $pushNotificationSubscriptionResourceMapper,
-        ResponseCreatorInterface $responseCreator
+        PushNotificationSubscriptionMapperInterface $pushNotificationSubscriptionMapper,
+        PushNotificationSubscriptionResponseBuilderInterface $pushNotificationSubscriptionResponseBuilder,
+        ErrorResponseBuilderInterface $errorResponseBuilder
     ) {
         $this->pushNotificationFacade = $pushNotificationFacade;
-        $this->pushNotificationSubscriptionResourceMapper = $pushNotificationSubscriptionResourceMapper;
-        $this->responseCreator = $responseCreator;
+        $this->pushNotificationSubscriptionMapper = $pushNotificationSubscriptionMapper;
+        $this->pushNotificationSubscriptionResponseBuilder = $pushNotificationSubscriptionResponseBuilder;
+        $this->errorResponseBuilder = $errorResponseBuilder;
     }
 
     /**
@@ -58,36 +71,68 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
         ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        $pushNotificationSubscriptionTransfer = $this
-            ->pushNotificationSubscriptionResourceMapper
+        /** @var \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer|null $apiPushNotificationSubscriptionsAttributesTransfer */
+        $apiPushNotificationSubscriptionsAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+
+        if (!$apiPushNotificationSubscriptionsAttributesTransfer) {
+            $errorTransfer = (new ErrorTransfer())->setMessage(PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
+
+            return $this->errorResponseBuilder->createErrorResponse(
+                new ArrayObject([$errorTransfer]),
+                $glueRequestTransfer->getLocale(),
+            );
+        }
+
+        $pushNotificationSubscriptionTransfer = $this->pushNotificationSubscriptionMapper
             ->mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
                 $apiPushNotificationSubscriptionsAttributesTransfer,
                 new PushNotificationSubscriptionTransfer(),
             );
-        $pushNotificationSubscriptionTransfer = $this
-            ->pushNotificationSubscriptionResourceMapper
-            ->mapGlueRequestTransferToPushNotificationSubscriptionTransfer(
-                $glueRequestTransfer,
-                $pushNotificationSubscriptionTransfer,
-            );
 
-        $pushNotificationSubscriptionCollectionRequestTransfer = (new PushNotificationSubscriptionCollectionRequestTransfer())
-            ->setIsTransactional(true)
-            ->setPushNotificationSubscriptions(new ArrayObject([$pushNotificationSubscriptionTransfer]));
-
-        $pushNotificationSubscriptionCollectionResponseTransfer = $this
-            ->pushNotificationFacade
+        $pushNotificationSubscriptionCollectionRequestTransfer = $this->createPushNotificationProviderCollectionRequestTransfer($pushNotificationSubscriptionTransfer);
+        $pushNotificationSubscriptionCollectionResponseTransfer = $this->pushNotificationFacade
             ->createPushNotificationSubscriptionCollection($pushNotificationSubscriptionCollectionRequestTransfer);
 
-        if ($pushNotificationSubscriptionCollectionResponseTransfer->getErrors()->count() !== 0) {
-            return $this->responseCreator->createPushNotificationSubscriptionErrorResponse(
-                $pushNotificationSubscriptionCollectionResponseTransfer->getErrors(),
-                $glueRequestTransfer,
+        return $this->createGlueResponseTransfer(
+            $pushNotificationSubscriptionCollectionResponseTransfer,
+            $glueRequestTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer $pushNotificationSubscriptionCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    protected function createGlueResponseTransfer(
+        PushNotificationSubscriptionCollectionResponseTransfer $pushNotificationSubscriptionCollectionResponseTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): GlueResponseTransfer {
+        $errorTransfers = $pushNotificationSubscriptionCollectionResponseTransfer->getErrors();
+
+        if ($errorTransfers->count()) {
+            return $this->errorResponseBuilder->createErrorResponse(
+                $errorTransfers,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
-        return $this->responseCreator->createPushNotificationSubscriptionResponse(
+        return $this->pushNotificationSubscriptionResponseBuilder->createPushNotificationSubscriptionResponse(
             $pushNotificationSubscriptionCollectionResponseTransfer->getPushNotificationSubscriptions(),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer
+     */
+    protected function createPushNotificationProviderCollectionRequestTransfer(
+        PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+    ): PushNotificationSubscriptionCollectionRequestTransfer {
+        return (new PushNotificationSubscriptionCollectionRequestTransfer())
+            ->addPushNotificationSubscription($pushNotificationSubscriptionTransfer)
+            ->setIsTransactional(true);
     }
 }

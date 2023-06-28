@@ -18,6 +18,8 @@ use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionCr
 use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionCreatorInterface;
 use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreator;
 use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreatorInterface;
+use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationProviderDeleter;
+use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationProviderDeleterInterface;
 use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationSubscriptionDeleter;
 use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationSubscriptionDeleterInterface;
 use Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpander;
@@ -44,6 +46,8 @@ use Spryker\Zed\PushNotification\Business\Reader\PushNotificationSubscriptionRea
 use Spryker\Zed\PushNotification\Business\Reader\PushNotificationSubscriptionReaderInterface;
 use Spryker\Zed\PushNotification\Business\Sender\PushNotificationSender;
 use Spryker\Zed\PushNotification\Business\Sender\PushNotificationSenderInterface;
+use Spryker\Zed\PushNotification\Business\Updater\PushNotificationProviderUpdater;
+use Spryker\Zed\PushNotification\Business\Updater\PushNotificationProviderUpdaterInterface;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidator;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscriptionValidator;
@@ -53,12 +57,19 @@ use Spryker\Zed\PushNotification\Business\Validator\PushNotificationValidatorInt
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationProviderExistsValidatorRule as PushNotificationPushNotificationProviderExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationValidatorRuleInterface;
-use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderExistsValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\NameExistencePushNotificationProviderValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\NameLengthPushNotificationProviderValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\NameUniquenessPushNotificationProviderValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationExistsPushNotificationProviderValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\UuidExistencePushNotificationProviderValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionGroupNameAllowedValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionProviderExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionUniqueValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionValidatorRuleInterface;
+use Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdder;
+use Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilEncodingServiceInterface;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilTextServiceInterface;
 use Spryker\Zed\PushNotification\PushNotificationDependencyProvider;
@@ -95,18 +106,6 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
             $this->createPushNotificationCreateValidator(),
             $this->createPushNotificationFilter(),
             $this->createPushNotificationProviderReader(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PushNotification\Business\Creator\PushNotificationProviderCreatorInterface
-     */
-    public function createPushNotificationProviderCreator(): PushNotificationProviderCreatorInterface
-    {
-        return new PushNotificationProviderCreator(
-            $this->createPushNotificationProviderCreateValidator(),
-            $this->createPushNotificationProviderFilter(),
-            $this->getEntityManager(),
         );
     }
 
@@ -159,16 +158,173 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PushNotification\Business\Creator\PushNotificationProviderCreatorInterface
+     */
+    public function createPushNotificationProviderCreator(): PushNotificationProviderCreatorInterface
+    {
+        return new PushNotificationProviderCreator(
+            $this->createPushNotificationProviderCreateValidator(),
+            $this->createPushNotificationProviderFilter(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface
      */
     public function createPushNotificationProviderCreateValidator(): PushNotificationProviderValidatorInterface
     {
-        return new PushNotificationProviderValidator(
-            [
-                $this->createPushNotificationProviderExistsValidatorRule(),
-            ],
-            $this->createErrorCollectionExpander(),
+        return new PushNotificationProviderValidator($this->getPushNotificationProviderCreateValidatorRules());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface>
+     */
+    public function getPushNotificationProviderCreateValidatorRules(): array
+    {
+        return [
+            $this->createNameExistencePushNotificationProviderValidatorRule(),
+            $this->createNameLengthPushNotificationProviderValidatorRule(),
+            $this->createNameUniquenessPushNotificationProviderValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Updater\PushNotificationProviderUpdaterInterface
+     */
+    public function createPushNotificationProviderUpdater(): PushNotificationProviderUpdaterInterface
+    {
+        return new PushNotificationProviderUpdater(
+            $this->getEntityManager(),
+            $this->createPushNotificationProviderUpdateValidator(),
+            $this->createPushNotificationProviderFilter(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface
+     */
+    public function createPushNotificationProviderUpdateValidator(): PushNotificationProviderValidatorInterface
+    {
+        return new PushNotificationProviderValidator($this->getPushNotificationProviderUpdateValidatorRules());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface>
+     */
+    public function getPushNotificationProviderUpdateValidatorRules(): array
+    {
+        return [
+            $this->createUuidExistencePushNotificationProviderValidatorRule(),
+            $this->createNameExistencePushNotificationProviderValidatorRule(),
+            $this->createNameLengthPushNotificationProviderValidatorRule(),
+            $this->createNameUniquenessPushNotificationProviderValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Deleter\PushNotificationProviderDeleterInterface
+     */
+    public function createPushNotificationDeleter(): PushNotificationProviderDeleterInterface
+    {
+        return new PushNotificationProviderDeleter(
+            $this->getEntityManager(),
+            $this->createPushNotificationProviderDeleteValidator(),
+            $this->createPushNotificationProviderFilter(),
+            $this->createPushNotificationProviderReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface
+     */
+    public function createPushNotificationProviderDeleteValidator(): PushNotificationProviderValidatorInterface
+    {
+        return new PushNotificationProviderValidator($this->getPushNotificationProviderDeleteValidatorRules());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface>
+     */
+    public function getPushNotificationProviderDeleteValidatorRules(): array
+    {
+        return [
+            $this->createUuidExistencePushNotificationProviderValidatorRule(),
+            $this->createPushNotificationExistsPushNotificationProviderValidatorRule(),
+            $this->createPushNotificationSubscriptionExistsPushNotificationProviderValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface
+     */
+    public function createNameExistencePushNotificationProviderValidatorRule(): PushNotificationProviderValidatorRuleInterface
+    {
+        return new NameExistencePushNotificationProviderValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface
+     */
+    public function createNameLengthPushNotificationProviderValidatorRule(): PushNotificationProviderValidatorRuleInterface
+    {
+        return new NameLengthPushNotificationProviderValidatorRule(
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface
+     */
+    public function createNameUniquenessPushNotificationProviderValidatorRule(): PushNotificationProviderValidatorRuleInterface
+    {
+        return new NameUniquenessPushNotificationProviderValidatorRule(
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface
+     */
+    public function createUuidExistencePushNotificationProviderValidatorRule(): PushNotificationProviderValidatorRuleInterface
+    {
+        return new UuidExistencePushNotificationProviderValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationExistsPushNotificationProviderValidatorRule
+     */
+    public function createPushNotificationExistsPushNotificationProviderValidatorRule(): PushNotificationExistsPushNotificationProviderValidatorRule
+    {
+        return new PushNotificationExistsPushNotificationProviderValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule
+     */
+    public function createPushNotificationSubscriptionExistsPushNotificationProviderValidatorRule(): PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule
+    {
+        return new PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdderInterface
+     */
+    public function createErrorAdder(): ErrorAdderInterface
+    {
+        return new ErrorAdder();
     }
 
     /**
@@ -279,17 +435,6 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     public function createPushNotificationSubscriptionProviderExistsValidatorRule(): PushNotificationSubscriptionValidatorRuleInterface
     {
         return new PushNotificationSubscriptionProviderExistsValidatorRule(
-            $this->createPushNotificationProviderReader(),
-            $this->createErrorCreator(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface
-     */
-    public function createPushNotificationProviderExistsValidatorRule(): PushNotificationProviderValidatorRuleInterface
-    {
-        return new PushNotificationProviderExistsValidatorRule(
             $this->createPushNotificationProviderReader(),
             $this->createErrorCreator(),
         );

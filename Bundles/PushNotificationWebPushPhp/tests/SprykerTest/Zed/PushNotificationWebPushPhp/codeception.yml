@@ -23,6 +23,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\PushNotification\Helper\PushNotificationDataHelper
+                - \SprykerTest\Shared\PushNotification\Helper\PushNotificationHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper

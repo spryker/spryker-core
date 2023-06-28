@@ -9,48 +9,99 @@ namespace Spryker\Zed\PushNotification\Business\Validator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
-use Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpanderInterface;
+use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\TerminationAwareValidatorRuleInterface;
 
 class PushNotificationProviderValidator implements PushNotificationProviderValidatorInterface
 {
     /**
-     * @var array<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface>
+     * @var list<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface>
      */
-    protected array $pushNotificationProviderValidatorRules = [];
+    protected array $pushNotificationProviderValidatorRules;
 
     /**
-     * @var \Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpanderInterface
+     * @param list<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface> $pushNotificationProviderValidatorRules
      */
-    protected ErrorCollectionExpanderInterface $errorCollectionExpander;
-
-    /**
-     * @param array<\Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface> $pushNotificationProviderValidatorRules
-     * @param \Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpanderInterface $errorCollectionExpander
-     */
-    public function __construct(array $pushNotificationProviderValidatorRules, ErrorCollectionExpanderInterface $errorCollectionExpander)
+    public function __construct(array $pushNotificationProviderValidatorRules)
     {
         $this->pushNotificationProviderValidatorRules = $pushNotificationProviderValidatorRules;
-        $this->errorCollectionExpander = $errorCollectionExpander;
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
      */
-    public function validateCollection(ArrayObject $pushNotificationProviderTransfers): ErrorCollectionTransfer
-    {
-        $errorCollectionTransfer = new ErrorCollectionTransfer();
+    public function validate(
+        PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
+    ): PushNotificationProviderCollectionResponseTransfer {
         foreach ($this->pushNotificationProviderValidatorRules as $pushNotificationProviderValidatorRule) {
-            $ruleErrorCollectionTransfer = $pushNotificationProviderValidatorRule->validateCollection(
-                $pushNotificationProviderTransfers,
-            );
-            $errorCollectionTransfer = $this->errorCollectionExpander->expandErrorCollection(
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers */
+            $pushNotificationProviderTransfers = $pushNotificationProviderCollectionResponseTransfer->getPushNotificationProviders();
+            $errorCollectionTransfer = $pushNotificationProviderValidatorRule->validate($pushNotificationProviderTransfers);
+
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers */
+            $initialErrorTransfers = $pushNotificationProviderCollectionResponseTransfer->getErrors();
+
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers */
+            $postValidationErrorTransfers = $errorCollectionTransfer->getErrors();
+
+            $pushNotificationProviderCollectionResponseTransfer = $this->mergeErrors(
+                $pushNotificationProviderCollectionResponseTransfer,
                 $errorCollectionTransfer,
-                $ruleErrorCollectionTransfer,
             );
+
+            if ($this->isValidationTerminated($pushNotificationProviderValidatorRule, $initialErrorTransfers, $postValidationErrorTransfers)) {
+                break;
+            }
         }
 
-        return $errorCollectionTransfer;
+        return $pushNotificationProviderCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationProviderValidatorRuleInterface $pushNotificationProviderValidatorRule
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers
+     *
+     * @return bool
+     */
+    protected function isValidationTerminated(
+        PushNotificationProviderValidatorRuleInterface $pushNotificationProviderValidatorRule,
+        ArrayObject $initialErrorTransfers,
+        ArrayObject $postValidationErrorTransfers
+    ): bool {
+        if (!$pushNotificationProviderValidatorRule instanceof TerminationAwareValidatorRuleInterface) {
+            return false;
+        }
+
+        return $pushNotificationProviderValidatorRule->isTerminated($initialErrorTransfers, $postValidationErrorTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
+     */
+    protected function mergeErrors(
+        PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer,
+        ErrorCollectionTransfer $errorCollectionTransfer
+    ): PushNotificationProviderCollectionResponseTransfer {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $pushNotificationProviderCollectionResponseErrorTransfers */
+        $pushNotificationProviderCollectionResponseErrorTransfers = $pushNotificationProviderCollectionResponseTransfer->getErrors();
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorCollectionErrorTransfers */
+        $errorCollectionErrorTransfers = $errorCollectionTransfer->getErrors();
+
+        $mergedErrorTransfers = array_merge(
+            $pushNotificationProviderCollectionResponseErrorTransfers->getArrayCopy(),
+            $errorCollectionErrorTransfers->getArrayCopy(),
+        );
+
+        return $pushNotificationProviderCollectionResponseTransfer->setErrors(
+            new ArrayObject($mergedErrorTransfers),
+        );
     }
 }

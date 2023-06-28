@@ -68,6 +68,24 @@ interface PushNotificationEntityManagerInterface
     public function updatePushNotification(PushNotificationTransfer $pushNotificationTransfer): PushNotificationTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
+     */
+    public function updatePushNotificationProvider(
+        PushNotificationProviderTransfer $pushNotificationProviderTransfer
+    ): PushNotificationProviderTransfer;
+
+    /**
+     * @param list<string> $pushNotificationProviderUuids
+     *
+     * @return void
+     */
+    public function deletePushNotificationProviders(
+        array $pushNotificationProviderUuids
+    ): void;
+
+    /**
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
      *
      * @return void

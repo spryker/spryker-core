@@ -36,16 +36,15 @@ class PushNotificationFilter implements PushNotificationFilterInterface
         ArrayObject $pushNotificationTransfers,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ArrayObject {
-        /**
-         * @var \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
+
         if (!$errorTransfers->count()) {
             return $pushNotificationTransfers;
         }
-        $invalidPushNotificationIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiers(
-            $errorCollectionTransfer,
-        );
+
+        $invalidPushNotificationIdentifiers = $this->errorEntityIdentifierExtractor
+            ->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
 
         return $this->filterValidPushNotifications(
             $pushNotificationTransfers,
@@ -63,16 +62,15 @@ class PushNotificationFilter implements PushNotificationFilterInterface
         ArrayObject $pushNotificationTransfers,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ArrayObject {
-        /**
-         * @var \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
+
         if (!$errorTransfers->count()) {
             return new ArrayObject();
         }
-        $invalidPushNotificationIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiers(
-            $errorCollectionTransfer,
-        );
+
+        $invalidPushNotificationIdentifiers = $this->errorEntityIdentifierExtractor
+            ->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
 
         return $this->filterInvalidPushNotifications(
             $pushNotificationTransfers,

@@ -38,11 +38,6 @@ use Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReaderInterf
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReader;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader;
-use Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolver;
-use Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolverInterface;
-use Spryker\Glue\PickingListsBackendApi\Processor\Strategy\DefaultPickingListUpdateStrategy;
-use Spryker\Glue\PickingListsBackendApi\Processor\Strategy\PickingListUpdateStrategyInterface;
-use Spryker\Glue\PickingListsBackendApi\Processor\Strategy\StartPickingPickingListUpdateStrategy;
 use Spryker\Glue\PickingListsBackendApi\Processor\Updater\PickingListItemUpdater;
 use Spryker\Glue\PickingListsBackendApi\Processor\Updater\PickingListItemUpdaterInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Updater\PickingListUpdater;
@@ -59,7 +54,9 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     public function createPickingListUpdater(): PickingListUpdaterInterface
     {
         return new PickingListUpdater(
-            $this->createPickingListUpdateStrategyResolver(),
+            $this->createPickingListReader(),
+            $this->createPickingListMapper(),
+            $this->getPickingListFacade(),
             $this->createPickingListResponseCreator(),
         );
     }
@@ -76,41 +73,6 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
             $this->createPickingListMapper(),
             $this->createPickingListResponseCreator(),
             $this->createPickingListRequestMapper(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\PickingListsBackendApi\Processor\Resolver\PickingListUpdateStrategyResolverInterface
-     */
-    public function createPickingListUpdateStrategyResolver(): PickingListUpdateStrategyResolverInterface
-    {
-        return new PickingListUpdateStrategyResolver(
-            $this->createDefaultPickingListUpdateStrategy(),
-            $this->getPickingListUpdateStrategyList(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\PickingListsBackendApi\Processor\Strategy\PickingListUpdateStrategyInterface
-     */
-    public function createDefaultPickingListUpdateStrategy(): PickingListUpdateStrategyInterface
-    {
-        return new DefaultPickingListUpdateStrategy(
-            $this->createPickingListReader(),
-            $this->createPickingListMapper(),
-            $this->getPickingListFacade(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\PickingListsBackendApi\Processor\Strategy\PickingListUpdateStrategyInterface
-     */
-    public function createStartPickingPickingListUpdateStrategy(): PickingListUpdateStrategyInterface
-    {
-        return new StartPickingPickingListUpdateStrategy(
-            $this->createPickingListReader(),
-            $this->createPickingListMapper(),
-            $this->getPickingListFacade(),
         );
     }
 
@@ -240,16 +202,6 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     public function createStockReader(): StockReaderInterface
     {
         return new StockReader($this->getStockFacade());
-    }
-
-    /**
-     * @return list<\Spryker\Glue\PickingListsBackendApi\Processor\Strategy\PickingListUpdateStrategyInterface>
-     */
-    public function getPickingListUpdateStrategyList(): array
-    {
-        return [
-            $this->createStartPickingPickingListUpdateStrategy(),
-        ];
     }
 
     /**

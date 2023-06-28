@@ -89,7 +89,7 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
         PushNotificationSubscriptionCollectionRequestTransfer $pushNotificationSubscriptionCollectionRequestTransfer
     ): PushNotificationSubscriptionCollectionResponseTransfer {
         /**
-         * @var \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+         * @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
          */
         $pushNotificationSubscriptionTransfers = $pushNotificationSubscriptionCollectionRequestTransfer->getPushNotificationSubscriptions();
         $pushNotificationSubscriptionTransfers = $this->generateCheckSum($pushNotificationSubscriptionTransfers);
@@ -123,7 +123,7 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
@@ -231,7 +231,7 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer
@@ -246,9 +246,9 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
      */
     protected function generateCheckSum(ArrayObject $pushNotificationSubscriptionTransfers): ArrayObject
     {

@@ -13,11 +13,9 @@ use Generated\Shared\Transfer\ErrorCollectionTransfer;
 interface PushNotificationProviderValidatorRuleInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validateCollection(
-        ArrayObject $pushNotificationProviderTransfers
-    ): ErrorCollectionTransfer;
+    public function validate(ArrayObject $pushNotificationProviderTransfers): ErrorCollectionTransfer;
 }

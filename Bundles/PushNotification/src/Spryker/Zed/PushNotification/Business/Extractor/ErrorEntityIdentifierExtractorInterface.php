@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\PushNotification\Business\Extractor;
 
-use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use ArrayObject;
 
 interface ErrorEntityIdentifierExtractorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
-     * @return array<string>
+     * @return array<string, string>
      */
-    public function extractEntityIdentifiers(ErrorCollectionTransfer $errorCollectionTransfer): array;
+    public function extractEntityIdentifiersFromErrorTransfers(ArrayObject $errorTransfers): array;
 }

@@ -44,7 +44,7 @@ class PushNotificationSubscriptionValidator implements PushNotificationSubscript
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
@@ -69,7 +69,7 @@ class PushNotificationSubscriptionValidator implements PushNotificationSubscript
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer

@@ -57,7 +57,7 @@ class WarehouseUserAssignmentReader implements WarehouseUserAssignmentReaderInte
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
      */
     protected function getWarehouseUserAssignmentTransfers(ArrayObject $pushNotificationSubscriptionTransfers): ArrayObject
     {

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
-use Spryker\Glue\PushNotificationsBackendApi\Controller\PushNotificationSubscriptionResourceController;
+use Spryker\Glue\PushNotificationsBackendApi\Controller\PushNotificationSubscriptionsResourceController;
 use Spryker\Glue\PushNotificationsBackendApi\PushNotificationsBackendApiConfig;
 
 class PushNotificationSubscriptionsBackendResourcePlugin extends AbstractResourcePlugin implements JsonApiResourceInterface
@@ -40,7 +40,7 @@ class PushNotificationSubscriptionsBackendResourcePlugin extends AbstractResourc
      */
     public function getController(): string
     {
-        return PushNotificationSubscriptionResourceController::class;
+        return PushNotificationSubscriptionsResourceController::class;
     }
 
     /**

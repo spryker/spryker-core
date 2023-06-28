@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\GlueResourceTransfer;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\PickingListItemsBackendResourcePlugin;
 use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\PickingListsBackendResourcePlugin;
+use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\PickingListStartPickingBackendResourcePlugin;
 
 /**
  * Inherited Methods
@@ -28,7 +29,7 @@ use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\Picking
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PickingListsBackendApi\PHPMD)
  */
 class PickingListsBackendApiTester extends Actor
 {
@@ -48,6 +49,14 @@ class PickingListsBackendApiTester extends Actor
     public function createPickingListItemsBackendResourcePlugin(): JsonApiResourceInterface
     {
         return new PickingListItemsBackendResourcePlugin();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface
+     */
+    public function createPickingListStartPickingBackendResourcePlugin(): JsonApiResourceInterface
+    {
+        return new PickingListStartPickingBackendResourcePlugin();
     }
 
     /**

@@ -36,16 +36,15 @@ class PushNotificationSubscriptionFilter implements PushNotificationSubscription
         ArrayObject $pushNotificationSubscriptionTransfers,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ArrayObject {
-        /**
-         * @var \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
+
         if (!$errorTransfers->count()) {
             return $pushNotificationSubscriptionTransfers;
         }
-        $invalidPushNotificationSubscriptionIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiers(
-            $errorCollectionTransfer,
-        );
+
+        $invalidPushNotificationSubscriptionIdentifiers = $this->errorEntityIdentifierExtractor
+            ->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
 
         return $this->filterValidPushNotificationSubscriptions(
             $pushNotificationSubscriptionTransfers,
@@ -63,16 +62,14 @@ class PushNotificationSubscriptionFilter implements PushNotificationSubscription
         ArrayObject $pushNotificationSubscriptionTransfers,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ArrayObject {
-        /**
-         * @var \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
+
         if (!$errorTransfers->count()) {
             return new ArrayObject();
         }
-        $invalidPushNotificationSubscriptionIdentifiers = $this->errorEntityIdentifierExtractor->extractEntityIdentifiers(
-            $errorCollectionTransfer,
-        );
+        $invalidPushNotificationSubscriptionIdentifiers = $this->errorEntityIdentifierExtractor
+            ->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
 
         return $this->filterInvalidPushNotificationSubscriptions(
             $pushNotificationSubscriptionTransfers,

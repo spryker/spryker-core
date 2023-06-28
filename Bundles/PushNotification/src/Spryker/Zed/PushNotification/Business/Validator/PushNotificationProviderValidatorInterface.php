@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\PushNotification\Business\Validator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
 
 interface PushNotificationProviderValidatorInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer
      */
-    public function validateCollection(ArrayObject $pushNotificationProviderTransfers): ErrorCollectionTransfer;
+    public function validate(
+        PushNotificationProviderCollectionResponseTransfer $pushNotificationProviderCollectionResponseTransfer
+    ): PushNotificationProviderCollectionResponseTransfer;
 }

@@ -1,17 +1,41 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
     title: Picking List Backend API
-    version: 1.0.0
+    description: PickingListsBackendApi module provides endpoints for picking lists and picking list items management.
+    contact:
+        name: Spryker Systems GmbH - Support
+        url: https://spryker.my.site.com/support/s/
+    license:
+        name: Spryker Systems GmbH - Evaluation License Agreement
+        url: https://github.com/spryker/push-notifications-backend-api/blob/master/LICENSE
+    version: 0.3.0
+externalDocs:
+    description: Spryker Systems GmbH - Documentation center
+    url: hhttps://docs.spryker.com/
 servers:
     - url: http://glue-backend.de.spryker.local
-security:
-    - bearerAuth: []
+tags:
+    - name: picking-lists
+      description: Available endpoints for picking lists.
+      externalDocs:
+          description: Spryker documentation center
+          url: hhttps://docs.spryker.com/
+    - name: picking-list-items
+      description: Available endpoints for picking list items.
+      externalDocs:
+          description: Spryker documentation center
+          url: hhttps://docs.spryker.com/
 paths:
     /picking-lists:
         get:
-            description: Retrieves the picking list collection.
+            tags:
+                - picking-lists
+            summary: Retrieves a collection of picking lists.
+            description: |
+                This endpoint allows to retrieve a collection of picking lists. By making a GET request while using available parameters to this endpoint, it's possible to fetch the list of available picking lists from the system.
+            operationId: GetPickingListCollection
             parameters:
-                - $ref: '#/components/parameters/acceptLanguage'
+                - $ref: '#/components/parameters/AcceptLanguage'
                 - $ref: '#/components/parameters/ContentType'
                 - $ref: '#/components/parameters/Page'
                 - $ref: '#/components/parameters/Fields'
@@ -19,108 +43,102 @@ paths:
                 - $ref: '#/components/parameters/Sort'
             responses:
                 '200':
-                    description: Retrieves the picking list collection.
+                    description: Successfully retrieved the picking list collection.
                     content:
                         application/vnd.api+json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiPickingListsAttributes'
+                                properties:
+                                    data:
+                                        items:
+                                            $ref: '#/components/schemas/PickingListGlueResource'
                 '403':
-                    description: Unauthorized request.
+                    description: The user does not have the necessary permissions.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
                     content:
                         application/vnd.api+json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
     /picking-lists/{pickingListUuid}:
-        parameters:
-            - $ref: '#/components/parameters/acceptLanguage'
-            - $ref: '#/components/parameters/ContentType'
-            - $ref: '#/components/parameters/Fields'
-            - name: pickingListUuid
-              in: path
-              required: true
-              description: Picking List UUID
-              schema:
-                  type: string
         get:
-            description: Retrieves the picking list.
+            tags:
+                - picking-lists
+            summary: Retrieves a picking list.
+            description: |
+                This endpoint allows to retrieve a picking list. By making a GET request while using available parameters to this endpoint, it's possible to fetch an available picking list from the system.
+            operationId: GetPickingList
+            parameters:
+                - $ref: '#/components/parameters/PickingListUuid'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+                - $ref: '#/components/parameters/Fields'
             responses:
                 '200':
-                    description: Retrieves the picking list.
+                    description: Successfully retrieved the picking list.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiPickingListsAttributes'
+                                properties:
+                                    data:
+                                        $ref: '#/components/schemas/PickingListGlueResource'
                 '403':
-                    description: Unauthorized request.
+                    description: The user does not have the necessary permissions.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
                     content:
                         application/vnd.api+json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
-                '404':
-                    description: Not found.
-                    content:
-                        application/vnd.api+json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
-        patch:
-            description: Assigns the warehouse user to the picking list.
-            requestBody:
-                required: true
-                content:
-                    application/vnd.api+json:
-                        schema:
-                            $ref: '#/components/schemas/ApiPickingListsRequestAttributes'
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
+    /picking-lists/{pickingListUuid}/start-picking:
+        post:
+            tags:
+                - picking-lists
+            summary: Updates a picking list so that picking is in progress.
+            description: |
+                This endpoint allows to update a single picking so that picking is in progress by assigned warehouse user. By making POST request to this endpoint with the required parameters, it's possible to modify the mentioned details of an existing picking list from the system.
+            operationId: PostPickingListStartPicking
+            parameters:
+                - $ref: '#/components/parameters/PickingListUuid'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
             responses:
                 '200':
-                    description: Assigns the warehouse user to the picking list.
+                    description: Successfully updated the picking list to be in progress by assigning warehouse user.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiPickingListsAttributes'
-                '400':
-                    description: Bad request.
-                    content:
-                        application/vnd.api+json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
+                                properties:
+                                    data:
+                                        $ref: '#/components/schemas/PickingListGlueResource'
                 '403':
-                    description: Unauthorized.
+                    description: The user does not have the necessary permissions.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
                     content:
                         application/vnd.api+json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
-                '404':
-                    description: Not found.
-                    content:
-                        application/vnd.api+json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
     /picking-lists/{pickingListUuid}/picking-list-items:
-        parameters:
-            - $ref: '#/components/parameters/acceptLanguage'
-            - $ref: '#/components/parameters/ContentType'
-            - name: pickingListUuid
-              in: path
-              required: true
-              description: Picking List UUID
-              schema:
-                  type: string
         patch:
-            description: Updates `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked`.
+            tags:
+                - picking-list-items
+            summary: Updates picking list number of picked and unpicked picking list items.
+            description: |
+                This endpoint allows to update `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked` of a single picking list. By making PATCH request to this endpoint with the required parameters, it's possible to modify the mentioned details of an existing picking list from the system.
+            operationId: UpdatePickingListItems
+            parameters:
+                - $ref: '#/components/parameters/PickingListUuid'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
             requestBody:
                 required: true
                 content:
@@ -128,66 +146,118 @@ paths:
                         schema:
                             type: array
                             items:
-                                $ref: '#/components/schemas/ApiPickingListItemsAttributes'
+                                $ref: '#/components/schemas/PickingListItemsGlueResource'
             responses:
                 '200':
-                    description: Updates `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked`.
+                    description: The values of `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked` got successfully updated.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiPickingListsAttributes'
-                '400':
-                    description: Bad request.
-                    content:
-                        application/vnd.api+json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
+                                $ref: '#/components/schemas/PickingListItemsGlueResource'
                 '403':
-                    description: Unauthorized.
+                    description: The user does not have the necessary permissions.
+                '4XX':
+                    description: The request is invalid or missing required parameters.
                     content:
                         application/vnd.api+json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
-                '404':
-                    description: Not found.
-                    content:
-                        application/vnd.api+json:
-                            schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/ApiErrorResponse'
-
+                                $ref: '#/components/schemas/ErrorGlueResponse'
+                '500':
+                    description: |
+                        Internal Server Error - An unexpected error occurred on the server. If encountering this response, it indicates a server-side issue. Contact the system administrator or API provider for further investigation and resolution.
 components:
-    securitySchemes:
-        bearerAuth:
-            type: http
-            scheme: bearer
-            bearerFormat: JWT
-
+    schemas:
+        PickingListGlueResource:
+            properties:
+                status:
+                    type: string
+                    description: Represents the current status of the picking list.
+                    example: ready-for-picking
+                createdAt:
+                    type: string
+                    description: Represents the date and time when the picking list was created.
+                    example: 2023-01-31 12:56:59.000000
+                updatedAt:
+                    type: string
+                    description: Represents the date and time when the picking list was last updated.
+                    example: 2023-02-01 16:42:44.000000
+        PickingListItemsGlueResource:
+            required:
+                - numberOfPicked
+                - numberOfNotPicked
+            properties:
+                numberOfPicked:
+                    type: integer
+                    description: The number of items that have been successfully picked from the picking list.
+                    example: 3
+                numberOfNotPicked:
+                    type: integer
+                    description: The number of items that are yet to be picked from the picking list.
+                    example: 0
+        ErrorGlueResponse:
+            description: |
+                The error response provides information about any errors that occur during API interactions. It includes details such as the error code, a descriptive message, and, optionally, additional error-specific data. The error response is returned when an API request encounters an issue that prevents successful execution or when there are validation errors.
+            properties:
+                errors:
+                    items:
+                        $ref: '#/components/schemas/GlueError'
+        GlueError:
+            description: |
+                Represents an error encountered during API interactions. It provides information about the error, including the error code, status, and an error message.
+            properties:
+                code:
+                    type: string
+                    description: The error code indicating the specific type of error encountered.
+                    example: 5400
+                status:
+                    type: integer
+                    description: The HTTP status code associated with the error.
+                    example: 400
+                message:
+                    type: string
+                    description: A descriptive message explaining the error.
+                    example: An unknown error occured.
+        Links:
+            description: |
+                Represents the links associated with a resource. It provides URLs for accessing related resources or performing additional actions.
+            properties:
+                self:
+                    type: string
+                    description: The URL for accessing the resource.
+                    example: http://glue-backend.de.spryker.local/picking-lists/56fa22a-42eb-4f73-ab5b-9f7e861378f3
     parameters:
-        acceptLanguage:
-            name: Accept-Language
-            in: header
-            description: 'Locale value relevant for the store.'
+        PickingListUuid:
+            name: pickingListUuid
+            in: path
+            required: true
             schema:
                 type: string
+                description: The unique identifier (UUID) of the picking list.
+                example: c56fa22a-42eb-4f73-ab5b-9f7e861378f3
+        AcceptLanguage:
+            name: Accept-Language
+            description: |
+                The preferred language for the API response content negotiation, as specified by the client.
+            in: header
+            schema:
+                type: string
+                example: de-DE
             required: false
         ContentType:
             name: Content-Type
+            description: |
+                The content type specifies the media type of the request payload.
             in: header
-            description: 'Content-Type header required for all the requests.'
             required: true
             schema:
                 type: string
                 example: application/vnd.api+json
         Page:
             name: page
+            description: |
+                The page parameter used to control the pagination behavior of the result set of API response.
+            example: ?page[offset]=10&page[limit]=20
             in: query
-            description: 'Parameter is used to limit requested items.'
             required: false
             style: deepObject
             explode: true
@@ -196,17 +266,16 @@ components:
                 properties:
                     offset:
                         type: integer
-                        description: 'The number of items to skip before starting to collect the result set.'
+                        description: The number of items to skip in the result set.
                     limit:
                         type: integer
-                        description: 'The numbers of items to return.'
-                example:
-                    offset: 0
-                    limit: 10
+                        description: The maximum number of items to include in the result set.
         Fields:
             name: fields
+            example: ?fields[pushNotificationProvider]=name,id
             in: query
-            description: 'Parameter is used to extract specified items\` fields.'
+            description: |
+                The parameter used to specify the fields to be extracted and included in the record set of API response.
             required: false
             style: deepObject
             explode: true
@@ -217,19 +286,8 @@ components:
                         type: array
                         items:
                             type: string
-                        description: 'The name of resource.'
-                example:
-                    people: 'name,last-name'
-        Sort:
-            name: sort
-            in: query
-            description: 'Parameter is used to sort items. Use dash `-` for DESC direction.'
-            required: false
-            style: form
-            explode: false
-            schema:
-                type: string
-                example: -sku
+                            description: 'Array of field names to be extracted from the resource.'
+                            example: 'surname,lastname'
         Filter:
             name: filter
             in: query
@@ -246,55 +304,26 @@ components:
                             type: string
                 example:
                     picking-lists.uuids: ['e824d418-4a36-46c3-8ecf-28f5fb6c1483']
-    schemas:
-        ApiPickingListItemsAttributes:
-            required:
-                - numberOfPicked
-                - numberOfNotPicked
-            properties:
-                numberOfPicked:
-                    type: integer
-                    example: 3
-                numberOfNotPicked:
-                    type: integer
-                    example: 0
-        ApiPickingListsRequestAttributes:
-            required:
-                - action
-            properties:
-                action:
-                    type: string
-                    example: startPicking
-        ApiPickingListsAttributes:
-            properties:
-                status:
-                    type: string
-                    example: ready-for-picking
-                createdAt:
-                    type: string
-                    example: 2023-01-31 12:56:59.000000
-                updatedAt:
-                    type: string
-                    example: 2023-02-01 16:42:44.000000
-        ApiErrorResponse:
-            properties:
-                errors:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/ApiError'
-        ApiError:
-            properties:
-                status:
-                    type: number
-                    example: 403
-                code:
-                    type: string
-                    example: 5301
-                message:
-                    type: string
-                    example: Unauthorized request.
-        ApiLinks:
-            properties:
-                self:
-                    type: string
-                    example: https://glue-backend.de.spryker.local/picking-lists
+        Sort:
+            name: sort
+            description: |
+                The sorting parameter used to specify the sorting order of the result set of API response. To specify the sort direction, prepend a hyphen (-) in front of the field name, indicating descending order.
+            examples:
+                ascending:
+                    summary: Sort in ascending order by SKU
+                    value: sku
+                descending:
+                    summary: Sort in descending order by SKU
+                    value: -sku
+            in: query
+            required: false
+            style: form
+            explode: false
+            schema:
+                type: string
+                description: The field which the result set should be sorted by.
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT

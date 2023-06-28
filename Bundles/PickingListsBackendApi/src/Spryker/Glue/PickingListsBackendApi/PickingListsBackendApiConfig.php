@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 class PickingListsBackendApiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const DEFAULT_LOCALE = 'en_US';
@@ -30,6 +32,16 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Resource name of picking list start picking path.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const RESOURCE_PICKING_LIST_START_PICKING = 'start-picking';
+
+    /**
+     * Specification:
      * - Resource name of picking list items path.
      *
      * @api
@@ -39,21 +51,22 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
     public const RESOURCE_PICKING_LIST_ITEMS = 'picking-list-items';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY = 'picking_list.validation.wrong_request_body';
 
     /**
-     * @var string
-     */
-    public const RESPONSE_CODE_WRONG_REQUEST_BODY = '5301';
-
-    /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_DETAILS_AUTHORIZATION_FAILED = 'Authorization failed.';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const RESPONSE_CODE_AUTHORIZATION_FAILED = '5302';
@@ -61,9 +74,16 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Zed\PickingList\Business\Validator\Rules\PickingList\PickingListExistsPickingListValidatorCompositeRule::GLOSSARY_KEY_VALIDATION_ENTITY_NOT_FOUND
      *
+     * @api
+     *
      * @var string
      */
     public const GLOSSARY_KEY_VALIDATION_ENTITY_NOT_FOUND = 'picking_list.validation.picking_list_entity_not_found';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_WRONG_REQUEST_BODY = '5301';
 
     /**
      * @var string

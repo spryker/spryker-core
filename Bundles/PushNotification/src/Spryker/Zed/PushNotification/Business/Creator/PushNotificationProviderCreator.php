@@ -57,51 +57,74 @@ class PushNotificationProviderCreator implements PushNotificationProviderCreator
     public function createPushNotificationProviderCollection(
         PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
     ): PushNotificationProviderCollectionResponseTransfer {
-        $errorCollectionTransfer = $this->pushNotificationProviderValidator->validateCollection(
-            $pushNotificationProviderCollectionRequestTransfer->getPushNotificationProviders(),
-        );
-        if (
-            $pushNotificationProviderCollectionRequestTransfer->getIsTransactional()
-            && $errorCollectionTransfer->getErrors()->count() !== 0
-        ) {
-            return (new PushNotificationProviderCollectionResponseTransfer())
-                ->setPushNotificationProviders(new ArrayObject())
-                ->setErrors($errorCollectionTransfer->getErrors());
+        $this->assertRequiredFields($pushNotificationProviderCollectionRequestTransfer);
+
+        $pushNotificationProviderCollectionResponseTransfer = (new PushNotificationProviderCollectionResponseTransfer())
+            ->setPushNotificationProviders($pushNotificationProviderCollectionRequestTransfer->getPushNotificationProviders());
+
+        $pushNotificationProviderCollectionResponseTransfer = $this->pushNotificationProviderValidator
+            ->validate($pushNotificationProviderCollectionResponseTransfer);
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = $pushNotificationProviderCollectionResponseTransfer->getErrors();
+
+        if ($pushNotificationProviderCollectionRequestTransfer->getIsTransactional() && $errorTransfers->count()) {
+            return $pushNotificationProviderCollectionResponseTransfer;
         }
 
-        $validPushNotificationProviderTransfers = $this->pushNotificationProviderFilter->filterOutInvalidPushNotificationProviders(
-            $pushNotificationProviderCollectionRequestTransfer->getPushNotificationProviders(),
-            $errorCollectionTransfer,
+        [$validPushNotificationProviderTransfers, $invalidPushNotificationProviderTransfers] = $this->pushNotificationProviderFilter
+            ->filterPushNotificationProvidersByValidity($pushNotificationProviderCollectionResponseTransfer);
+
+        if ($validPushNotificationProviderTransfers->count()) {
+            $validPushNotificationProviderTransfers = $this->getTransactionHandler()->handleTransaction(function () use ($validPushNotificationProviderTransfers) {
+                return $this->executeCreatePushNotificationProviderCollectionTransaction($validPushNotificationProviderTransfers);
+            });
+        }
+
+        $pushNotificationProviderTransfers = $this->pushNotificationProviderFilter->mergePushNotificationProviders(
+            $validPushNotificationProviderTransfers,
+            $invalidPushNotificationProviderTransfers,
         );
 
-        $persistedPushNotificationProviderTransfers = $this->getTransactionHandler()->handleTransaction(
-            function () use ($validPushNotificationProviderTransfers) {
-                return $this->executeCreatePushNotificationProviderCollectionTransaction(
-                    $validPushNotificationProviderTransfers,
-                );
-            },
-        );
-
-        return (new PushNotificationProviderCollectionResponseTransfer())
-            ->setPushNotificationProviders($persistedPushNotificationProviderTransfers)
-            ->setErrors($errorCollectionTransfer->getErrors());
+        return $pushNotificationProviderCollectionResponseTransfer->setPushNotificationProviders($pushNotificationProviderTransfers);
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationProviderTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer>
      */
     protected function executeCreatePushNotificationProviderCollectionTransaction(
         ArrayObject $pushNotificationProviderTransfers
     ): ArrayObject {
         $persistedPushNotificationProviderTransfers = new ArrayObject();
-        foreach ($pushNotificationProviderTransfers as $pushNotificationProviderTransfer) {
-            $persistedPushNotificationProviderTransfers->append(
-                $this->pushNotificationEntityManager->createPushNotificationProvider($pushNotificationProviderTransfer),
+
+        foreach ($pushNotificationProviderTransfers as $entityIdentifier => $pushNotificationProviderTransfer) {
+            $pushNotificationProviderTransfer = $this->pushNotificationEntityManager->createPushNotificationProvider($pushNotificationProviderTransfer);
+            $persistedPushNotificationProviderTransfers->offsetSet(
+                $entityIdentifier,
+                $pushNotificationProviderTransfer,
             );
         }
 
         return $persistedPushNotificationProviderTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+     *
+     * @return void
+     */
+    protected function assertRequiredFields(
+        PushNotificationProviderCollectionRequestTransfer $pushNotificationProviderCollectionRequestTransfer
+    ): void {
+        $pushNotificationProviderCollectionRequestTransfer
+            ->requireIsTransactional()
+            ->requirePushNotificationProviders();
+
+        foreach ($pushNotificationProviderCollectionRequestTransfer->getPushNotificationProviders() as $pushNotificationProviderTransfer) {
+            $pushNotificationProviderTransfer
+                ->requireName();
+        }
     }
 }

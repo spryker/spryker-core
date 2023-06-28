@@ -88,7 +88,7 @@
     </transfer>
 
     <transfer name="PushNotificationProviderCollection" strict="true">
-        <property name="providers" type="PushNotificationProvider[]" singular="provider"/>
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
@@ -107,6 +107,11 @@
         <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
     </transfer>
 
+    <transfer name="PushNotificationProviderCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
     <transfer name="PushNotificationProvider" strict="true">
         <property name="idPushNotificationProvider" type="int"/>
         <property name="uuid" type="string"/>
@@ -114,7 +119,9 @@
     </transfer>
 
     <transfer name="PushNotificationProviderConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
         <property name="names" type="string[]" singular="name"/>
+        <property name="isUuidsConditionInversed" type="bool"/>
     </transfer>
 
     <transfer name="PushNotificationGroupConditions" strict="true">
@@ -136,6 +143,7 @@
     <transfer name="Error">
         <property name="message" type="string"/>
         <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
     <transfer name="PushNotificationCollection" strict="true">
@@ -153,6 +161,7 @@
         <property name="pushNotificationIds" type="int[]" singular="idPushNotification"/>
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="notificationSent" type="bool"/>
+        <property name="pushNotificationProviderIds" type="int[]" singular="idPushNotificationProvider"/>
     </transfer>
 
     <transfer name="Pagination">
