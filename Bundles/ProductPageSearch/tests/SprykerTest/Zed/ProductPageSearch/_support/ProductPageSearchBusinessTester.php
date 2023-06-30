@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
@@ -99,6 +100,18 @@ class ProductPageSearchBusinessTester extends Actor
         }
 
         return $storeNames;
+    }
+
+    /**
+     * @param list<int> $productAbstractIds
+     *
+     * @return int
+     */
+    public function getProductAbstractPageSearchCountByProductAbstractIds(array $productAbstractIds): int
+    {
+        return SpyProductAbstractPageSearchQuery::create()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->count();
     }
 
     /**

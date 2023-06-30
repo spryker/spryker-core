@@ -54,6 +54,10 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
 
         $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            if (!isset($productAbstractStoreIds[$productConcreteTransfer->getFkProductAbstract()])) {
+                continue;
+            }
+
             foreach ($productAbstractStoreIds[$productConcreteTransfer->getFkProductAbstract()] as $storeId) {
                 $productConcreteTransfer->addStores(
                     (new StoreTransfer())

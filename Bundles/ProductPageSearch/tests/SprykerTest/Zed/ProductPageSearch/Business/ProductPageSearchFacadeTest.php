@@ -113,6 +113,23 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testPublishProductAbstractPageShouldNotPublishToSearchWithoutStoreConnection(): void
+    {
+        // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        // Act
+        $this->productPageSearchFacade->publish([$productAbstractTransfer->getIdProductAbstract()]);
+
+        $productAbstractPageSearchCount = $this->tester->getProductAbstractPageSearchCountByProductAbstractIds([$productAbstractTransfer->getIdProductAbstract()]);
+
+        // Assert
+        $this->assertSame(0, $productAbstractPageSearchCount);
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsDataWithProductImages(): void
     {
         // Arrange
