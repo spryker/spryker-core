@@ -9,6 +9,9 @@ namespace Spryker\Zed\OauthAuth0;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\OauthAuth0\OauthAuth0Config getSharedConfig()
+ */
 class OauthAuth0Config extends AbstractBundleConfig
 {
     /**
@@ -42,5 +45,25 @@ class OauthAuth0Config extends AbstractBundleConfig
     public function getProviderName(): string
     {
         return static::PROVIDER_NAME;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getClientId(): string
+    {
+        return $this->getSharedConfig()->getClientId();
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->getSharedConfig()->getClientSecret();
     }
 }

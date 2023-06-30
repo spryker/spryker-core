@@ -5,6 +5,7 @@
         <property name="grantType" type="string"/>
         <property name="accessTokenRequestOptions" type="AccessTokenRequestOptions"/>
         <property name="providerName" type="string"/>
+        <property name="cacheKeySeed" type="string"/>
     </transfer>
 
     <transfer name="AccessTokenRequestOptions">

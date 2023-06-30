@@ -23,4 +23,17 @@ interface OauthAuth0FacadeInterface
      * @return \Generated\Shared\Transfer\AccessTokenResponseTransfer
      */
     public function getAccessToken(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands `AccessTokenRequest.cacheKeySeed` with credentials hash.
+     * - Makes no change if `AccessTokenRequest.providerName` is the same as `OauthAuth0Config::PROVIDER_NAME`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer;
 }

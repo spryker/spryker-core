@@ -9,6 +9,8 @@ namespace Spryker\Zed\OauthAuth0\Business;
 
 use Spryker\Client\OauthAuth0\OauthAuth0ClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthAuth0\Business\Expander\CacheKeySeedAccessTokenRequestExpander;
+use Spryker\Zed\OauthAuth0\Business\Expander\CacheKeySeedAccessTokenRequestExpanderInterface;
 use Spryker\Zed\OauthAuth0\Business\Provider\OauthAuth0TokenProvider;
 use Spryker\Zed\OauthAuth0\Business\Provider\OauthAuth0TokenProviderInterface;
 use Spryker\Zed\OauthAuth0\OauthAuth0DependencyProvider;
@@ -32,5 +34,15 @@ class OauthAuth0BusinessFactory extends AbstractBusinessFactory
     public function getOauthAuth0Client(): OauthAuth0ClientInterface
     {
         return $this->getProvidedDependency(OauthAuth0DependencyProvider::CLIENT_OAUTH_AUTH0);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthAuth0\Business\Expander\CacheKeySeedAccessTokenRequestExpanderInterface
+     */
+    public function createCacheKeySeedAccessTokenRequestExpander(): CacheKeySeedAccessTokenRequestExpanderInterface
+    {
+        return new CacheKeySeedAccessTokenRequestExpander(
+            $this->getConfig(),
+        );
     }
 }

@@ -29,4 +29,20 @@ class OauthAuth0Facade extends AbstractFacade implements OauthAuth0FacadeInterfa
     {
         return $this->getFactory()->createOauthAuth0TokenProvider()->getAccessToken($accessTokenRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer
+    {
+        return $this->getFactory()
+            ->createCacheKeySeedAccessTokenRequestExpander()
+            ->expand($accessTokenRequestTransfer);
+    }
 }
