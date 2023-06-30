@@ -25,7 +25,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'; sandbox allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation; base-uri \'self\'; form-action \'self\'';
+    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'; base-uri \'self\'; form-action \'self\'';
 
     /**
      * @var string
