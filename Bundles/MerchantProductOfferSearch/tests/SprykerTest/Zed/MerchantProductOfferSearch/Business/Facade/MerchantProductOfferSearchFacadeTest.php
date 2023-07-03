@@ -9,15 +9,14 @@ namespace SprykerTest\Zed\MerchantProductOfferSearch\Business\Facade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantConditionsTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 
@@ -50,6 +49,13 @@ class MerchantProductOfferSearchFacadeTest extends Unit
     protected const KEY_MERCHANT_REFERENCES = 'references';
 
     /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_APPROVAL_STATUS_DENIED = 'denied';
+
+    /**
      * @var \SprykerTest\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchCommunicationTester
      */
     protected $tester;
@@ -60,59 +66,78 @@ class MerchantProductOfferSearchFacadeTest extends Unit
     public function testGetProductAbstractMerchantsByProductAbstractIds(): void
     {
         // Arrange
-        $productConcrete1 = $this->tester->haveProduct([
-            ProductConcreteTransfer::IS_ACTIVE => true,
-        ]);
-        $productConcrete2 = $this->tester->haveProduct([
-            ProductConcreteTransfer::IS_ACTIVE => true,
-        ]);
-
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
-            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
-        ])->build();
-
-        $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
-
-        $this->tester->haveProductOffer([
-            ProductOfferTransfer::MERCHANT_REFERENCE => $merchant->getMerchantReference(),
-            ProductOfferTransfer::CONCRETE_SKU => $productConcrete1->getSku(),
-            ProductOfferTransfer::IS_ACTIVE => true,
-            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
-        ]);
-
-        $this->tester->haveProductOffer([
-            ProductOfferTransfer::MERCHANT_REFERENCE => $merchant->getMerchantReference(),
-            ProductOfferTransfer::CONCRETE_SKU => $productConcrete2->getSku(),
-            ProductOfferTransfer::IS_ACTIVE => true,
-            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
-        ]);
-
-        $productAbstractMerchantTransfer1 = (new ProductAbstractMerchantTransfer())
-            ->setIdProductAbstract($productConcrete1->getFkProductAbstract())
-            ->setMerchantNames([$storeTransfer->getName() => [$merchant->getName()]])
-            ->setMerchantReferences([$storeTransfer->getName() => [$merchant->getMerchantReference()]]);
-
-        $productAbstractMerchantTransfer2 = (new ProductAbstractMerchantTransfer())
-            ->setIdProductAbstract($productConcrete2->getFkProductAbstract())
-            ->setMerchantNames([$storeTransfer->getName() => [$merchant->getName()]])
-            ->setMerchantReferences([$storeTransfer->getName() => [$merchant->getMerchantReference()]]);
-
-        $expectedResult = [
-            $productAbstractMerchantTransfer1,
-            $productAbstractMerchantTransfer2,
-        ];
+        $expectedResult = $this->tester->haveProductAbstractMerchantData();
 
         // Act
         $productAbstractMerchantTransfers = $this->tester
             ->getFacade()
             ->getProductAbstractMerchantDataByProductAbstractIds([
-                $productConcrete1->getFkProductAbstract(),
-                $productConcrete2->getFkProductAbstract(),
+                $expectedResult[0]->getIdProductAbstractOrFail(),
+                $expectedResult[1]->getIdProductAbstractOrFail(),
             ]);
 
         // Assert
-        $this->assertIsArray($productAbstractMerchantTransfers);
+        $this->assertEquals($productAbstractMerchantTransfers, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantsByProductAbstractIdsReturnsEmptyCollectionWhenNoIdsArePassed(): void
+    {
+        // Arrange
+        $this->tester->haveProductAbstractMerchantData();
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantDataByProductAbstractIds([]);
+
+        // Assert
+        $this->assertEmpty($productAbstractMerchantTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantsByProductAbstractIdsFindsActiveOffersOnly(): void
+    {
+        // Arrange
+        $expectedResult = $this->tester->haveProductAbstractMerchantData(false);
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantDataByProductAbstractIds([
+                $expectedResult[0]->getIdProductAbstractOrFail(),
+                $expectedResult[1]->getIdProductAbstractOrFail(),
+            ]);
+
+        // Assert
+        $this->assertCount(1, $productAbstractMerchantTransfers);
+        $this->assertEquals($productAbstractMerchantTransfers[0], $expectedResult[1]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantsByProductAbstractIdsFindsOffersWithDifferentApprovalStatuses(): void
+    {
+        // Arrange
+        $expectedResult = $this->tester->haveProductAbstractMerchantData(
+            true,
+            static::PRODUCT_OFFER_APPROVAL_STATUS_DENIED,
+        );
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantDataByProductAbstractIds([
+                $expectedResult[0]->getIdProductAbstractOrFail(),
+                $expectedResult[1]->getIdProductAbstractOrFail(),
+            ]);
+
+        // Assert
         $this->assertEquals($productAbstractMerchantTransfers, $expectedResult);
     }
 
@@ -197,5 +222,111 @@ class MerchantProductOfferSearchFacadeTest extends Unit
         // Assert
         $this->assertCount(0, $pageMapTransfer->getMerchantReferences());
         $this->assertCount(0, $pageMapTransfer->getFullTextBoosted());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantCollectionReturnsCorrectDataByProductAbstractIds(): void
+    {
+        // Arrange
+        $expectedResult = $this->tester->haveProductAbstractMerchantData();
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())->setProductAbstractIds([
+                    $expectedResult[0]->getIdProductAbstractOrFail(),
+                    $expectedResult[1]->getIdProductAbstractOrFail(),
+                ]),
+            );
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer)
+            ->getProductAbstractMerchants()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertEquals($productAbstractMerchantTransfers, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantCollectionReturnsEmptyCollectionWhenNoIdsArePassed(): void
+    {
+        // Arrange
+        $this->tester->haveProductAbstractMerchantData();
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())->setProductAbstractIds([]),
+            );
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer)
+            ->getProductAbstractMerchants()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertEmpty($productAbstractMerchantTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantCollectionFilteredByOfferIsActive(): void
+    {
+        // Arrange
+        $expectedResult = $this->tester->haveProductAbstractMerchantData(false);
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())->setProductAbstractIds([
+                    $expectedResult[0]->getIdProductAbstractOrFail(),
+                    $expectedResult[1]->getIdProductAbstractOrFail(),
+                ])->setIsProductOfferActive(false),
+            );
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer)
+            ->getProductAbstractMerchants()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertCount(1, $productAbstractMerchantTransfers);
+        $this->assertEquals($productAbstractMerchantTransfers[0], $expectedResult[0]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractMerchantCollectionFilteredByApprovalStatus(): void
+    {
+        // Arrange
+        $expectedResult = $this->tester->haveProductAbstractMerchantData(
+            true,
+            static::PRODUCT_OFFER_APPROVAL_STATUS_DENIED,
+        );
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())->setProductAbstractIds([
+                    $expectedResult[0]->getIdProductAbstractOrFail(),
+                    $expectedResult[1]->getIdProductAbstractOrFail(),
+                ])->addProductOfferApprovalStatus(static::PRODUCT_OFFER_APPROVAL_STATUS_DENIED),
+            );
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer)
+            ->getProductAbstractMerchants()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertCount(1, $productAbstractMerchantTransfers);
+        $this->assertEquals($productAbstractMerchantTransfers[0], $expectedResult[0]);
     }
 }

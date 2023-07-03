@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantConditionsTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -55,22 +59,34 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     /**
      * @module Store
      * @module Merchant
+     * @module ProductOffer
      *
-     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer
      */
-    public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array
-    {
+    public function getProductAbstractMerchantCollection(
+        ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+    ): ProductAbstractMerchantCollectionTransfer {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
-        $productOfferPropelQuery->filterByIsActive(true)
+        $productAbstractMerchantConditionsTransfer = $productAbstractMerchantCriteriaTransfer->getProductAbstractMerchantConditionsOrFail();
+        $productOfferPropelQuery
             ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
             ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL))
             ->addJoin(SpyMerchantTableMap::COL_ID_MERCHANT, SpyMerchantStoreTableMap::COL_FK_MERCHANT, Criteria::INNER_JOIN)
             ->addJoin(SpyMerchantStoreTableMap::COL_FK_STORE, SpyStoreTableMap::COL_ID_STORE, Criteria::INNER_JOIN)
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, Criteria::INNER_JOIN)
-            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $productAbstractIds, Criteria::IN));
+            ->addAnd($productOfferPropelQuery->getNewCriterion(
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+                $productAbstractMerchantConditionsTransfer->getProductAbstractIds(),
+                Criteria::IN,
+            ));
+
+        $productOfferPropelQuery = $this->applyProductAbstractMerchantFilters(
+            $productOfferPropelQuery,
+            $productAbstractMerchantConditionsTransfer,
+        );
 
         $merchantData = $productOfferPropelQuery
             ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME, static::KEY_MERCHANT_REFERENCE])
@@ -83,18 +99,20 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->getData();
 
         $groupedMerchantDataByProductAbstractId = $this->groupMerchantDataByProductAbstractId($merchantData);
-        $productAbstractMerchantTransfers = [];
+
+        $productAbstractMerchantMapper = $this->getFactory()->createProductAbstractMerchantMapper();
+        $productAbstractMerchantCollectionTransfer = new ProductAbstractMerchantCollectionTransfer();
 
         foreach ($groupedMerchantDataByProductAbstractId as $idProductAbstract => $productAbstractMerchantData) {
-            $productAbstractMerchantTransfers[] = $this->getFactory()
-                ->createProductAbstractMerchantMapper()
-                ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
+            $productAbstractMerchantCollectionTransfer->addProductAbstractMerchant(
+                $productAbstractMerchantMapper->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
                     $productAbstractMerchantData,
                     new ProductAbstractMerchantTransfer(),
-                );
+                ),
+            );
         }
 
-        return $productAbstractMerchantTransfers;
+        return $productAbstractMerchantCollectionTransfer;
     }
 
     /**
@@ -181,5 +199,26 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
         }
 
         return $groupedProductAbstractMerchantData;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantConditionsTransfer $productAbstractMerchantConditionsTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function applyProductAbstractMerchantFilters(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductAbstractMerchantConditionsTransfer $productAbstractMerchantConditionsTransfer
+    ): SpyProductOfferQuery {
+        if ($productAbstractMerchantConditionsTransfer->getIsProductOfferActive() !== null) {
+            $productOfferQuery->filterByIsActive($productAbstractMerchantConditionsTransfer->getIsProductOfferActiveOrFail());
+        }
+
+        if ($productAbstractMerchantConditionsTransfer->getProductOfferApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productAbstractMerchantConditionsTransfer->getProductOfferApprovalStatuses());
+        }
+
+        return $productOfferQuery;
     }
 }

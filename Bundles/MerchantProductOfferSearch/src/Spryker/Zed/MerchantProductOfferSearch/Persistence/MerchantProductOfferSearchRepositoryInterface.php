@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
+
 interface MerchantProductOfferSearchRepositoryInterface
 {
     /**
-     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer
      */
-    public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array;
+    public function getProductAbstractMerchantCollection(
+        ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+    ): ProductAbstractMerchantCollectionTransfer;
 
     /**
      * @param array<int> $merchantIds

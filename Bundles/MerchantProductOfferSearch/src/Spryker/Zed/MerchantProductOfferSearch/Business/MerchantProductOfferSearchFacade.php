@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
@@ -87,6 +89,8 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacade::getProductAbstractMerchantCollection()} instead.
+     *
      * @param array<int> $productAbstractIds
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
@@ -124,5 +128,20 @@ class MerchantProductOfferSearchFacade extends AbstractFacade implements Merchan
                 $productData,
                 $localeTransfer,
             );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer
+     */
+    public function getProductAbstractMerchantCollection(
+        ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+    ): ProductAbstractMerchantCollectionTransfer {
+        return $this->getRepository()->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer);
     }
 }

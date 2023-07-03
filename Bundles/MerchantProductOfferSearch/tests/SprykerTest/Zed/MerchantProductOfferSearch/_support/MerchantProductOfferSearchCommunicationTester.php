@@ -7,11 +7,15 @@
 
 namespace SprykerTest\Zed\MerchantProductOfferSearch;
 
+use ArrayObject;
 use Codeception\Actor;
 use Codeception\Stub;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
@@ -53,6 +57,13 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
      * @var string
      */
     protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_APPROVAL_STATUS_APPROVED = 'approved';
 
     /**
      * @return void
@@ -122,6 +133,59 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
             $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names'][$storeTransfer->getName()]);
         }
+    }
+
+    /**
+     * @param \SprykerTest\Zed\MerchantProductOfferSearch\bool|bool $isOffer1Active
+     * @param \SprykerTest\Zed\MerchantProductOfferSearch\string|string $offer1ApprovalStatus
+     *
+     * @return list<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
+     */
+    public function haveProductAbstractMerchantData(
+        bool $isOffer1Active = true,
+        string $offer1ApprovalStatus = self::PRODUCT_OFFER_APPROVAL_STATUS_APPROVED
+    ): array {
+        $productConcrete1 = $this->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+        $productConcrete2 = $this->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
+
+        $merchantTransfer = $this->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
+
+        $this->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::CONCRETE_SKU => $productConcrete1->getSku(),
+            ProductOfferTransfer::IS_ACTIVE => $isOffer1Active,
+            ProductOfferTransfer::APPROVAL_STATUS => $offer1ApprovalStatus,
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+        ]);
+
+        $this->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::CONCRETE_SKU => $productConcrete2->getSku(),
+            ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::APPROVAL_STATUS => static::PRODUCT_OFFER_APPROVAL_STATUS_APPROVED,
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+        ]);
+
+        $productAbstractMerchantTransfer1 = (new ProductAbstractMerchantTransfer())
+            ->setIdProductAbstract($productConcrete1->getFkProductAbstract())
+            ->setMerchantNames([$storeTransfer->getName() => [$merchantTransfer->getName()]])
+            ->setMerchantReferences([$storeTransfer->getName() => [$merchantTransfer->getMerchantReference()]]);
+
+        $productAbstractMerchantTransfer2 = (new ProductAbstractMerchantTransfer())
+            ->setIdProductAbstract($productConcrete2->getFkProductAbstract())
+            ->setMerchantNames([$storeTransfer->getName() => [$merchantTransfer->getName()]])
+            ->setMerchantReferences([$storeTransfer->getName() => [$merchantTransfer->getMerchantReference()]]);
+
+        return [$productAbstractMerchantTransfer1, $productAbstractMerchantTransfer2];
     }
 
     /**

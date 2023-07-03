@@ -84,4 +84,18 @@
         <property name="values" type="array" singular="value"/>
     </transfer>
 
+    <transfer name="ProductAbstractMerchantCollection" strict="true">
+        <property name="productAbstractMerchants" type="ProductAbstractMerchant[]" singular="productAbstractMerchant"/>
+    </transfer>
+
+    <transfer name="ProductAbstractMerchantCriteria" strict="true">
+        <property name="productAbstractMerchantConditions" type="ProductAbstractMerchantConditions"/>
+    </transfer>
+
+    <transfer name="ProductAbstractMerchantConditions" strict="true">
+        <property name="isProductOfferActive" type="bool"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="productOfferApprovalStatuses" type="string[]" singular="productOfferApprovalStatus"/>
+    </transfer>
+
 </transfers>

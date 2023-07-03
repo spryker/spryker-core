@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Business\Reader;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantConditionsTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface;
 
 class MerchantProductOfferSearchReader implements MerchantProductOfferSearchReaderInterface
@@ -31,7 +33,16 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
      */
     public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())
+                    ->setProductAbstractIds($productAbstractIds)
+                    ->setIsProductOfferActive(true),
+            );
+
         return $this->merchantProductOfferSearchRepository
-            ->getMerchantDataByProductAbstractIds($productAbstractIds);
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer)
+            ->getProductAbstractMerchants()
+            ->getArrayCopy();
     }
 }

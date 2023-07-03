@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantConditionsTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
@@ -22,6 +24,13 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_STATUS_APPROVED = 'approved';
+
+    /**
      * {@inheritDoc}
      * - Expands ProductPageLoadTransfer object with merchant data.
      * - Merges merchant name from PayloadTransfer with merchant names from given merchant data.
@@ -34,12 +43,21 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
+        $productAbstractMerchantCriteriaTransfer = (new ProductAbstractMerchantCriteriaTransfer())
+            ->setProductAbstractMerchantConditions(
+                (new ProductAbstractMerchantConditionsTransfer())
+                    ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds())
+                    ->setIsProductOfferActive(true)
+                    ->addProductOfferApprovalStatus(static::PRODUCT_OFFER_STATUS_APPROVED),
+            );
 
-        $productAbstractMerchantData = $this->getFacade()
-            ->getProductAbstractMerchantDataByProductAbstractIds($productAbstractIds);
+        $productAbstractMerchantCollectionTransfer = $this->getFacade()
+            ->getProductAbstractMerchantCollection($productAbstractMerchantCriteriaTransfer);
 
-        return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);
+        return $this->setMerchantDataToPayloadTransfers(
+            $productPageLoadTransfer,
+            $productAbstractMerchantCollectionTransfer->getProductAbstractMerchants()->getArrayCopy(),
+        );
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 interface MerchantProductOfferSearchFacadeInterface
@@ -79,6 +81,8 @@ interface MerchantProductOfferSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface::getProductAbstractMerchantCollection()} instead.
+     *
      * @param array<int> $productAbstractIds
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
@@ -105,4 +109,25 @@ interface MerchantProductOfferSearchFacadeInterface
         array $productData,
         LocaleTransfer $localeTransfer
     ): PageMapTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract merchant data from Persistence.
+     * - Requires `ProductAbstractMerchantCriteriaTransfer.productAbstractMerchantConditions` to be set.
+     * - Filters by `ProductAbstractMerchantCriteriaTransfer.productAbstractMerchantConditions.productAbstractIds`.
+     * - Returns an empty collection if `ProductAbstractMerchantCriteriaTransfer.productAbstractMerchantConditions.productAbstractIds` is empty.
+     * - If `ProductAbstractMerchantCriteriaTransfer.productAbstractMerchantConditions.isProductOfferActive` is provided
+     * filters by product offer active status.
+     * - If `ProductAbstractMerchantCriteriaTransfer.productAbstractMerchantConditions.productOfferApprovalStatuses`
+     * is not empty filters by product offer approval status.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantCollectionTransfer
+     */
+    public function getProductAbstractMerchantCollection(
+        ProductAbstractMerchantCriteriaTransfer $productAbstractMerchantCriteriaTransfer
+    ): ProductAbstractMerchantCollectionTransfer;
 }
