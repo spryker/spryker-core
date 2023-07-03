@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclMerchantPortal\Dependency\Facade;
 
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
@@ -33,7 +34,7 @@ class AclMerchantPortalToAclFacadeBridge implements AclMerchantPortalToAclFacade
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
      */
-    public function addRule(RuleTransfer $ruleTransfer)
+    public function addRule(RuleTransfer $ruleTransfer): RuleTransfer
     {
         return $this->aclFacade->addRule($ruleTransfer);
     }
@@ -75,7 +76,7 @@ class AclMerchantPortalToAclFacadeBridge implements AclMerchantPortalToAclFacade
      *
      * @return int
      */
-    public function addUserToGroup($idUser, $idGroup)
+    public function addUserToGroup(int $idUser, int $idGroup): int
     {
         return $this->aclFacade->addUserToGroup($idUser, $idGroup);
     }
@@ -85,7 +86,7 @@ class AclMerchantPortalToAclFacadeBridge implements AclMerchantPortalToAclFacade
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
-    public function getUserGroups($idUser)
+    public function getUserGroups(int $idUser): GroupsTransfer
     {
         return $this->aclFacade->getUserGroups($idUser);
     }

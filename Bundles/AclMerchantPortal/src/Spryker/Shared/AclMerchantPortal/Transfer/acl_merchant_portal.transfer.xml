@@ -106,6 +106,7 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="idUser" type="int"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="MerchantUser">

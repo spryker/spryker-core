@@ -40,7 +40,7 @@ use Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig;
  * @method void pause()
  * @method \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\AclMerchantPortal\PHPMD)
  */
 class AclMerchantPortalBusinessTester extends Actor
 {

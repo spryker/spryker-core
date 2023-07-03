@@ -22,7 +22,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
     /**
      * @var \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig
      */
-    protected $aclMerchantPortalConfig;
+    protected AclMerchantPortalConfig $aclMerchantPortalConfig;
 
     /**
      * @param \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig $aclMerchantPortalConfig
@@ -147,8 +147,19 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
      *
      * @return string
      */
-    protected function generateMerchantNameToMerchantUserNameConjunction(MerchantTransfer $merchantTransfer, UserTransfer $userTransfer): string
-    {
+    protected function generateMerchantNameToMerchantUserNameConjunction(
+        MerchantTransfer $merchantTransfer,
+        UserTransfer $userTransfer
+    ): string {
+        if ($this->aclMerchantPortalConfig->isMerchantToMerchantUserConjunctionByUsernameEnabled()) {
+            return sprintf(
+                '%s - %s - %s',
+                $merchantTransfer->getNameOrFail(),
+                static::KEY_MERCHANT_PORTAL,
+                $userTransfer->getUsernameOrFail(),
+            );
+        }
+
         return sprintf(
             '%s - %s - %s %s',
             $merchantTransfer->getNameOrFail(),
