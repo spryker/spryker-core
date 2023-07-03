@@ -52,11 +52,7 @@ class ServicePointSearchDataMapper implements ServicePointSearchDataMapperInterf
             ServicePointTransfer::KEY => $servicePointTransfer->getKeyOrFail(),
         ];
 
-        $servicePointAddressTransfer = $servicePointTransfer->getAddress();
-
-        if (!$servicePointAddressTransfer) {
-            return $searchResultData;
-        }
+        $servicePointAddressTransfer = $servicePointTransfer->getAddressOrFail();
 
         $searchResultData[ServicePointTransfer::ADDRESS] = [
             ServicePointAddressTransfer::ID_SERVICE_POINT_ADDRESS => $servicePointAddressTransfer->getIdServicePointAddressOrFail(),

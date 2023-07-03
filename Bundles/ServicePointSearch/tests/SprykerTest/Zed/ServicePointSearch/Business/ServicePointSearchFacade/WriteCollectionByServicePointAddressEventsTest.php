@@ -9,7 +9,8 @@ namespace SprykerTest\Zed\ServicePointSearch\Business\ServicePointSearchFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Search\ServicePointIndexMap;
-use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\ServicePointSearch\ServicePointSearchBusinessTester;
 
 /**
@@ -56,16 +57,18 @@ class WriteCollectionByServicePointAddressEventsTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByServicePointAddressEventsShouldUpdateServicePointSearchEntities(): void
+    public function testWriteCollectionByServicePointAddressEventsShouldPublishServicePointSearchEntities(): void
     {
         // Arrange
-        $servicePointTransfer = $this->tester->createPublishedServicePointForTwoStores();
-        $idServicePoint = $servicePointTransfer->getIdServicePointOrFail();
-        $servicePointAddressTransfer = $this->tester->createServicePointAddressTransferWithRelations([
-            ServicePointAddressTransfer::SERVICE_POINT => $servicePointTransfer,
-        ]);
+        $storeDE = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
 
-        $servicePointAddressTransfer = $this->tester->haveServicePointAddress($servicePointAddressTransfer->toArray());
+        $servicePointTransfer = $this->tester->createServicePointWithStoreRelation(
+            [$storeDE->getIdStoreOrFail()],
+            [ServicePointTransfer::IS_ACTIVE => true],
+        );
+        $servicePointTransfer = $this->tester->addServicePointAddressForServicePoint($servicePointTransfer);
+
+        $idServicePoint = $servicePointTransfer->getIdServicePoint();
 
         $eventEntityTransfers = $this->tester->createEventEntityTransfersFromForeignKeys(
             static::COL_SERVICE_POINT_ADDRESS_FK_SERVICE_POINT,
@@ -86,9 +89,9 @@ class WriteCollectionByServicePointAddressEventsTest extends Unit
         $data = $publishedServicePointSearchEntities->getIterator()->current()->getData();
         $structuredData = json_decode($publishedServicePointSearchEntities->getIterator()->current()->getStructuredData(), true);
 
-        $this->tester->assertServicePointAddressData($servicePointAddressTransfer, $data);
-        $this->tester->assertServicePointAddressSearchData($servicePointAddressTransfer, $data[ServicePointIndexMap::SEARCH_RESULT_DATA]);
-        $this->tester->assertServicePointAddressSearchData($servicePointAddressTransfer, $structuredData);
+        $this->tester->assertServicePointData($servicePointTransfer, $data);
+        $this->tester->assertServicePointAddressSearchData($servicePointTransfer->getAddressOrFail(), $data[ServicePointIndexMap::SEARCH_RESULT_DATA]);
+        $this->tester->assertServicePointAddressSearchData($servicePointTransfer->getAddressOrFail(), $structuredData);
     }
 
     /**

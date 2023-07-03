@@ -71,6 +71,9 @@ class WriteCollectionByServicePointEventsTest extends Unit
             [ServicePointTransfer::IS_ACTIVE => true],
         );
 
+        $this->tester->addServicePointAddressForServicePoint($secondServicePointTransfer);
+        $this->tester->addServicePointAddressForServicePoint($firstServicePointTransfer);
+
         $servicePointIds = [
             $firstServicePointTransfer->getIdServicePointOrFail(),
             $secondServicePointTransfer->getIdServicePointOrFail(),
@@ -102,6 +105,43 @@ class WriteCollectionByServicePointEventsTest extends Unit
             [$storeDE->getIdStoreOrFail(), $storeAT->getIdStoreOrFail()],
             [ServicePointTransfer::IS_ACTIVE => false],
         );
+
+        $this->tester->addServicePointAddressForServicePoint($secondServicePointTransfer);
+        $this->tester->addServicePointAddressForServicePoint($firstServicePointTransfer);
+
+        $servicePointIds = [
+            $firstServicePointTransfer->getIdServicePointOrFail(),
+            $secondServicePointTransfer->getIdServicePointOrFail(),
+        ];
+
+        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds($servicePointIds);
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByServicePointEvents($eventEntityTransfers);
+
+        // Assert
+        $this->assertSame(2, $this->tester->getServicePointSearchEntitiesByServicePointIds($servicePointIds)->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByServicePointEventsShouldSaveOnlyServicePointWithAddresses(): void
+    {
+        // Arrange
+        $storeDE = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+        $storeAT = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+
+        $firstServicePointTransfer = $this->tester->createServicePointWithStoreRelation(
+            [$storeDE->getIdStoreOrFail(), $storeAT->getIdStoreOrFail()],
+            [ServicePointTransfer::IS_ACTIVE => true],
+        );
+        $secondServicePointTransfer = $this->tester->createServicePointWithStoreRelation(
+            [$storeDE->getIdStoreOrFail(), $storeAT->getIdStoreOrFail()],
+            [ServicePointTransfer::IS_ACTIVE => false],
+        );
+
+        $this->tester->addServicePointAddressForServicePoint($firstServicePointTransfer);
 
         $servicePointIds = [
             $firstServicePointTransfer->getIdServicePointOrFail(),
@@ -159,7 +199,7 @@ class WriteCollectionByServicePointEventsTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByServicePointEventsShouldMapServicePointToSearchData(): void
+    public function testWriteCollectionByServicePointEventsShouldMapServicePointAndServicePointAddressToSearchData(): void
     {
         // Arrange
         $storeDE = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
@@ -167,6 +207,8 @@ class WriteCollectionByServicePointEventsTest extends Unit
             [$storeDE->getIdStoreOrFail()],
             [ServicePointTransfer::IS_ACTIVE => true],
         );
+
+        $servicePointTransfer = $this->tester->addServicePointAddressForServicePoint($servicePointTransfer);
 
         $servicePointIds = [
             $servicePointTransfer->getIdServicePointOrFail(),
@@ -186,34 +228,7 @@ class WriteCollectionByServicePointEventsTest extends Unit
         $this->tester->assertServicePointData($servicePointTransfer, $data);
         $this->tester->assertServicePointSearchData($servicePointTransfer, $data[ServicePointIndexMap::SEARCH_RESULT_DATA]);
         $this->tester->assertServicePointSearchData($servicePointTransfer, $structuredData);
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByServicePointEventsShouldMapServicePointAddressToSearchData(): void
-    {
-        // Arrange
-        $servicePointAddressTransfer = $this->tester->createServicePointAddressTransferWithRelations();
-        $servicePointAddressTransfer = $this->tester->haveServicePointAddress($servicePointAddressTransfer->toArray());
-
-        $servicePointIds = [
-            $servicePointAddressTransfer->getServicePointOrFail()->getIdServicePointOrFail(),
-        ];
-
-        $eventEntityTransfers = $this->tester->createEventEntityTransfersFromIds($servicePointIds);
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByServicePointEvents($eventEntityTransfers);
-
-        // Assert
-        $publishedServicePointSearchEntities = $this->tester->getServicePointSearchEntitiesByServicePointIds($servicePointIds);
-
-        $data = $publishedServicePointSearchEntities->getIterator()->current()->getData();
-        $structuredData = json_decode($publishedServicePointSearchEntities->getIterator()->current()->getStructuredData(), true);
-
-        $this->tester->assertServicePointAddressData($servicePointAddressTransfer, $data);
-        $this->tester->assertServicePointAddressSearchData($servicePointAddressTransfer, $data[ServicePointIndexMap::SEARCH_RESULT_DATA]);
-        $this->tester->assertServicePointAddressSearchData($servicePointAddressTransfer, $structuredData);
+        $this->tester->assertServicePointAddressSearchData($servicePointTransfer->getAddressOrFail(), $data[ServicePointIndexMap::SEARCH_RESULT_DATA]);
+        $this->tester->assertServicePointAddressSearchData($servicePointTransfer->getAddressOrFail(), $structuredData);
     }
 }

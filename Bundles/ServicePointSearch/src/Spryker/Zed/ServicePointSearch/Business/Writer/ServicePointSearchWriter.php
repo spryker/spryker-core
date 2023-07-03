@@ -220,6 +220,10 @@ class ServicePointSearchWriter implements ServicePointSearchWriterInterface
                 continue;
             }
 
+            if (!$servicePointTransfer->getAddress()) {
+                continue;
+            }
+
             $this->filterOutInactiveServices($servicePointTransfer);
 
             $this->writeCollectionPerStore($servicePointTransfer, $servicePointSearchTransfers, $storeTransfers);

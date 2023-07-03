@@ -18,6 +18,10 @@ use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Orm\Zed\ServicePointSearch\Persistence\SpyServicePointSearchQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Client\Kernel\Container;
@@ -36,7 +40,7 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  * @method void pause()
  * @method \Spryker\Zed\ServicePointSearch\Business\ServicePointSearchFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ServicePointSearch\PHPMD)
  */
 class ServicePointSearchBusinessTester extends Actor
 {
@@ -82,7 +86,11 @@ class ServicePointSearchBusinessTester extends Actor
      */
     public function cleanUpDatabase(): void
     {
-        $this->cleanUpServicePointSearchTable();
+        $this->ensureDatabaseTableIsEmpty($this->createServicePointSearchQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServicePointQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServiceTypeQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServiceQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServicePointAddressQuery());
     }
 
     /**
@@ -153,6 +161,8 @@ class ServicePointSearchBusinessTester extends Actor
             [ServicePointTransfer::IS_ACTIVE => true],
         );
 
+        $servicePointTransfer = $this->addServicePointAddressForServicePoint($servicePointTransfer);
+
         $eventEntityTransfers = $this->createEventEntityTransfersFromIds([$servicePointTransfer->getIdServicePointOrFail()]);
         $this->getFacade()->writeCollectionByServicePointEvents($eventEntityTransfers);
 
@@ -199,6 +209,9 @@ class ServicePointSearchBusinessTester extends Actor
             [ServicePointTransfer::IS_ACTIVE => true],
         );
 
+        $this->addServicePointAddressForServicePoint($firstServicePointTransfer);
+        $this->addServicePointAddressForServicePoint($secondServicePointTransfer);
+
         $this->createServicePointSearchEntities([
             $firstServicePointTransfer->getIdServicePointOrFail() => [
                 static::TEST_STORE_DE,
@@ -217,40 +230,19 @@ class ServicePointSearchBusinessTester extends Actor
     }
 
     /**
-     * @param array<string, mixed> $seed
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     * @param array<string, mixed> $serviceAddressData
      *
-     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     * @return \Generated\Shared\Transfer\ServicePointTransfer
      */
-    public function createServicePointAddressTransferWithRelations(array $seed = []): ServicePointAddressTransfer
+    public function addServicePointAddressForServicePoint(ServicePointTransfer $servicePointTransfer, array $serviceAddressData = []): ServicePointTransfer
     {
-        $servicePointAddressTransfer = (new ServicePointAddressBuilder($seed))->build();
+        $serviceAddressData[ServicePointAddressTransfer::SERVICE_POINT] = $servicePointTransfer;
+        $servicePointAddressTransfer = $this->haveServicePointAddress(
+            $this->createServicePointAddressTransferWithRelations($serviceAddressData)->toArray(),
+        );
 
-        $countryTransfer = $this->haveCountryTransfer([
-            CountryTransfer::ISO2_CODE => static::COUNTRY_ISO2_CODE,
-            CountryTransfer::ISO3_CODE => static::COUNTRY_ISO3_CODE,
-        ]);
-
-        if (!$servicePointAddressTransfer->getServicePoint()) {
-            $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
-            $servicePointTransfer = $this->createServicePointWithStoreRelation(
-                [$storeTransfer->getIdStoreOrFail()],
-                [ServicePointTransfer::IS_ACTIVE => true],
-            );
-            $servicePointAddressTransfer->setServicePoint($servicePointTransfer);
-        }
-
-        if (!$servicePointAddressTransfer->getCountry()) {
-            $servicePointAddressTransfer->setCountry($countryTransfer);
-        }
-
-        if (!$servicePointAddressTransfer->getRegion()) {
-            $regionTransfer = $this->haveRegion([
-                RegionTransfer::FK_COUNTRY => $countryTransfer->getIdCountry(),
-            ]);
-            $servicePointAddressTransfer->setRegion($regionTransfer);
-        }
-
-        return $servicePointAddressTransfer;
+        return $servicePointTransfer->setAddress($servicePointAddressTransfer);
     }
 
     /**
@@ -264,10 +256,19 @@ class ServicePointSearchBusinessTester extends Actor
         $this->assertSame(static::TYPE_SERVICE_POINT, $data[ServicePointIndexMap::TYPE]);
         $this->assertSame(static::TEST_STORE_DE, $data[ServicePointIndexMap::STORE]);
         $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT_BOOSTED]);
-        $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT]);
         $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::SUGGESTION_TERMS]);
         $this->assertSame([$servicePointTransfer->getNameOrFail()], $data[ServicePointIndexMap::COMPLETION_TERMS]);
-        $this->assertSame([], $data[ServicePointIndexMap::STRING_SORT]);
+
+        $servicePointAddressTransfer = $servicePointTransfer->getAddressOrFail();
+        $this->assertSame([ServicePointAddressTransfer::CITY => $servicePointAddressTransfer->getCityOrFail()], $data[ServicePointIndexMap::STRING_SORT]);
+        $this->assertSame([
+            $servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail(),
+            $servicePointAddressTransfer->getCityOrFail(),
+            $servicePointAddressTransfer->getZipCodeOrFail(),
+            $servicePointAddressTransfer->getCountryOrFail()->getNameOrFail(),
+            trim(sprintf('%s %s %s', $servicePointAddressTransfer->getAddress1OrFail(), $servicePointAddressTransfer->getAddress2OrFail(), $servicePointAddressTransfer->getAddress3())),
+            $servicePointAddressTransfer->getRegionOrFail()->getNameOrFail(),
+        ], $data[ServicePointIndexMap::FULL_TEXT]);
     }
 
     /**
@@ -282,30 +283,6 @@ class ServicePointSearchBusinessTester extends Actor
         $this->assertSame($servicePointTransfer->getUuidOrFail(), $data[ServicePointTransfer::UUID]);
         $this->assertSame($servicePointTransfer->getNameOrFail(), $data[ServicePointTransfer::NAME]);
         $this->assertSame($servicePointTransfer->getKeyOrFail(), $data[ServicePointTransfer::KEY]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
-     * @param array $data
-     *
-     * @return void
-     */
-    public function assertServicePointAddressData(ServicePointAddressTransfer $servicePointAddressTransfer, array $data): void
-    {
-        $this->assertSame(static::TYPE_SERVICE_POINT, $data[ServicePointIndexMap::TYPE]);
-        $this->assertSame(static::TEST_STORE_DE, $data[ServicePointIndexMap::STORE]);
-        $this->assertSame([$servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail()], $data[ServicePointIndexMap::FULL_TEXT_BOOSTED]);
-        $this->assertSame([$servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail()], $data[ServicePointIndexMap::SUGGESTION_TERMS]);
-        $this->assertSame([$servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail()], $data[ServicePointIndexMap::COMPLETION_TERMS]);
-        $this->assertSame([ServicePointAddressTransfer::CITY => $servicePointAddressTransfer->getCityOrFail()], $data[ServicePointIndexMap::STRING_SORT]);
-        $this->assertSame([
-            $servicePointAddressTransfer->getServicePointOrFail()->getNameOrFail(),
-            $servicePointAddressTransfer->getCityOrFail(),
-            $servicePointAddressTransfer->getZipCodeOrFail(),
-            $servicePointAddressTransfer->getCountryOrFail()->getNameOrFail(),
-            trim(sprintf('%s %s %s', $servicePointAddressTransfer->getAddress1OrFail(), $servicePointAddressTransfer->getAddress2OrFail(), $servicePointAddressTransfer->getAddress3())),
-            $servicePointAddressTransfer->getRegionOrFail()->getNameOrFail(),
-        ], $data[ServicePointIndexMap::FULL_TEXT]);
     }
 
     /**
@@ -395,6 +372,43 @@ class ServicePointSearchBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    protected function createServicePointAddressTransferWithRelations(array $seed = []): ServicePointAddressTransfer
+    {
+        $servicePointAddressTransfer = (new ServicePointAddressBuilder($seed))->build();
+
+        $countryTransfer = $this->haveCountryTransfer([
+            CountryTransfer::ISO2_CODE => static::COUNTRY_ISO2_CODE,
+            CountryTransfer::ISO3_CODE => static::COUNTRY_ISO3_CODE,
+        ]);
+
+        if (!$servicePointAddressTransfer->getServicePoint()) {
+            $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+            $servicePointTransfer = $this->createServicePointWithStoreRelation(
+                [$storeTransfer->getIdStoreOrFail()],
+                [ServicePointTransfer::IS_ACTIVE => true],
+            );
+            $servicePointAddressTransfer->setServicePoint($servicePointTransfer);
+        }
+
+        if (!$servicePointAddressTransfer->getCountry()) {
+            $servicePointAddressTransfer->setCountry($countryTransfer);
+        }
+
+        if (!$servicePointAddressTransfer->getRegion()) {
+            $regionTransfer = $this->haveRegion([
+                RegionTransfer::FK_COUNTRY => $countryTransfer->getIdCountry(),
+            ]);
+            $servicePointAddressTransfer->setRegion($regionTransfer);
+        }
+
+        return $servicePointAddressTransfer;
+    }
+
+    /**
      * @return void
      */
     protected function setQueueAdaptersDependency(): void
@@ -407,18 +421,42 @@ class ServicePointSearchBusinessTester extends Actor
     }
 
     /**
-     * @return void
-     */
-    protected function cleanUpServicePointSearchTable(): void
-    {
-        $this->ensureDatabaseTableIsEmpty($this->createServicePointSearchQuery());
-    }
-
-    /**
      * @return \Orm\Zed\ServicePointSearch\Persistence\SpyServicePointSearchQuery
      */
     protected function createServicePointSearchQuery(): SpyServicePointSearchQuery
     {
         return SpyServicePointSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
+     */
+    protected function getServicePointQuery(): SpyServicePointQuery
+    {
+        return SpyServicePointQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    protected function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery
+     */
+    protected function getServiceQuery(): SpyServiceQuery
+    {
+        return SpyServiceQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    protected function getServicePointAddressQuery(): SpyServicePointAddressQuery
+    {
+        return SpyServicePointAddressQuery::create();
     }
 }
