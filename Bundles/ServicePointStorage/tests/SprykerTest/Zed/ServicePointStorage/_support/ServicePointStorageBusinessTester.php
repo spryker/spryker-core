@@ -17,8 +17,6 @@ use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ServicePointStorage\Persistence\SpyServicePointStorageQuery;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 
 /**
  * Inherited Methods
@@ -42,18 +40,6 @@ class ServicePointStorageBusinessTester extends Actor
     use _generated\ServicePointStorageBusinessTesterActions;
 
     /**
-     * @return void
-     */
-    public function addDependencies(): void
-    {
-        $this->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
-    }
-
-    /**
      * @param array<string, mixed> $servicePointSeedData
      * @param list<string> $storeNames
      *
@@ -65,7 +51,7 @@ class ServicePointStorageBusinessTester extends Actor
     ): ServicePointTransfer {
         $storesData = [];
         foreach ($storeNames as $storeName) {
-            $storeTransfer = $this->haveStore((new StoreTransfer())->setName($storeName)->toArray());
+            $storeTransfer = $this->haveStore([StoreTransfer::NAME => $storeName]);
             $storesData[] = $storeTransfer->toArray();
         }
 

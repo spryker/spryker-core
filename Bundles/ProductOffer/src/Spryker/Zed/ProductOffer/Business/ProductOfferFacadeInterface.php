@@ -159,6 +159,7 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Fetches a collection of product offers from the Persistence.
      * - Uses `ProductOfferCriteriaTransfer.pagination.limit` and `ProductOfferCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Uses `ProductOfferCriteriaTransfer.productOfferConditions.productOfferIds` to filter by product offer IDs.
      * - Uses `ProductOfferCriteriaTransfer.productOfferConditions.productOfferReferences` to filter by product offer references.
      * - Uses `ProductOfferCriteriaTransfer.productOfferConditions.storeIds` to filter by product offer stores.
      * - Returns `ProductOfferCollectionTransfer` filled with found product offers.

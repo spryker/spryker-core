@@ -180,7 +180,11 @@
         <property name="keys" type="string[]" singular="key"/>
         <property name="serviceTypeUuids" type="string[]" singular="serviceTypeUuid"/>
         <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
         <property name="isUuidsConditionInversed" type="bool"/>
+        <property name="isActive" type="bool"/>
+        <property name="isActiveServicePoint" type="bool"/>
+        <property name="withServicePointRelations" type="bool"/>
     </transfer>
 
     <transfer name="ServiceType" strict="true">

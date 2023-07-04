@@ -8,13 +8,16 @@
 namespace Spryker\Zed\ProductOfferServicePoint\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer;
 
 interface ProductOfferServicePointRepositoryInterface
 {
     /**
-     * @param list<string> $productOfferReferences
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer
      */
-    public function getProductOfferServiceCollectionByProductOfferReferences(array $productOfferReferences): ProductOfferServiceCollectionTransfer;
+    public function getProductOfferServiceCollection(
+        ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
+    ): ProductOfferServiceCollectionTransfer;
 }

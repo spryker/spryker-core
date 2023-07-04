@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferServicePoint\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferServicePoint\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\ProductOfferServicePoint\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Expander\ProductOfferServiceExpander;
+use Spryker\Zed\ProductOfferServicePoint\Business\Expander\ProductOfferServiceExpanderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ErrorExtractor;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ErrorExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferExtractor;
@@ -20,6 +22,12 @@ use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ServiceExtractor;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ServiceExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Filter\ProductOfferFilter;
 use Spryker\Zed\ProductOfferServicePoint\Business\Filter\ProductOfferFilterInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Iterator\ProductOfferServiceIterator;
+use Spryker\Zed\ProductOfferServicePoint\Business\Iterator\ProductOfferServiceIteratorInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapper;
+use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReader;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReader;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Saver\ProductOfferServiceSaver;
@@ -55,6 +63,19 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
             $this->createServiceReader(),
             $this->createProductOfferServiceExtractor(),
             $this->createProductOfferExtractor(),
+            $this->createProductOfferReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Expander\ProductOfferServiceExpanderInterface
+     */
+    public function createProductOfferServiceExpander(): ProductOfferServiceExpanderInterface
+    {
+        return new ProductOfferServiceExpander(
+            $this->createProductOfferServiceExtractor(),
+            $this->createProductOfferReader(),
+            $this->createServiceReader(),
         );
     }
 
@@ -141,6 +162,7 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
     {
         return new ServiceReader(
             $this->getServicePointFacade(),
+            $this->createProductOfferServiceMapper(),
         );
     }
 
@@ -161,8 +183,39 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
     public function createReferenceExistsProductOfferValidatorRule(): ProductOfferValidatorRuleInterface
     {
         return new ReferenceExistsProductOfferValidatorRule(
-            $this->getProductOfferFacade(),
             $this->createErrorAdder(),
+            $this->createProductOfferReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface
+     */
+    public function createProductOfferReader(): ProductOfferReaderInterface
+    {
+        return new ProductOfferReader(
+            $this->getProductOfferFacade(),
+            $this->createProductOfferServiceMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface
+     */
+    public function createProductOfferServiceMapper(): ProductOfferServiceMapperInterface
+    {
+        return new ProductOfferServiceMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Iterator\ProductOfferServiceIteratorInterface
+     */
+    public function createProductOfferServiceIterator(): ProductOfferServiceIteratorInterface
+    {
+        return new ProductOfferServiceIterator(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->createProductOfferServiceExpander(),
         );
     }
 

@@ -17,17 +17,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductOfferServicePointEntityManager extends AbstractEntityManager implements ProductOfferServicePointEntityManagerInterface
 {
     /**
-     * @param string $productOfferReference
-     * @param list<string> $serviceUuids
+     * @param int $idProductOffer
+     * @param list<int> $serviceIds
      *
      * @return void
      */
-    public function deleteProductOfferServicesByProductOfferReferenceAndServiceUuids(string $productOfferReference, array $serviceUuids): void
+    public function deleteProductOfferServicesByIdProductOfferAndServiceIds(int $idProductOffer, array $serviceIds): void
     {
         $this->getFactory()
             ->getProductOfferServiceQuery()
-            ->filterByProductOfferReference($productOfferReference)
-            ->filterByServiceUuid_In($serviceUuids)
+            ->filterByFkProductOffer($idProductOffer)
+            ->filterByFkService_In($serviceIds)
             ->find()
             ->delete();
     }

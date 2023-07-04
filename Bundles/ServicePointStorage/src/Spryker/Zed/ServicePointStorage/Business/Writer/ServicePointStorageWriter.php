@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePointStorage\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
@@ -33,6 +34,13 @@ class ServicePointStorageWriter implements ServicePointStorageWriterInterface
      * @var string
      */
     protected const SERVICE_POINT_STORE_COL_FK_SERVICE_POINT = 'spy_service_point_store.fk_service_point';
+
+    /**
+     * @uses \Orm\Zed\ServicePoint\Persistence\Map\SpyServiceTableMap::COL_FK_SERVICE_POINT
+     *
+     * @var string
+     */
+    protected const SERVICE_COL_FK_SERVICE_POINT = 'spy_service.fk_service_point';
 
     /**
      * @var \Spryker\Zed\ServicePointStorage\Dependency\Facade\ServicePointStorageToEventBehaviorFacadeInterface
@@ -123,6 +131,21 @@ class ServicePointStorageWriter implements ServicePointStorageWriterInterface
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServicePointStorageCollectionByServiceEvents(array $eventEntityTransfers): void
+    {
+        $servicePointIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            static::SERVICE_COL_FK_SERVICE_POINT,
+        );
+
+        $this->writeServicePointStorageCollection($servicePointIds);
+    }
+
+    /**
      * @param list<int> $servicePointIds
      *
      * @return void
@@ -139,6 +162,7 @@ class ServicePointStorageWriter implements ServicePointStorageWriterInterface
             (new ServicePointConditionsTransfer())
                 ->setServicePointIds($servicePointIds)
                 ->setWithStoreRelations(true)
+                ->setWithServiceRelations(true)
                 ->setWithAddressRelation(true),
         );
 
@@ -171,6 +195,8 @@ class ServicePointStorageWriter implements ServicePointStorageWriterInterface
 
             return;
         }
+
+        $this->filterOutInactiveServices($servicePointTransfer);
 
         foreach ($storeTransfers as $storeTransfer) {
             if (!$this->isServicePointAvailableInStore($servicePointTransfer, $storeTransfer)) {
@@ -206,5 +232,22 @@ class ServicePointStorageWriter implements ServicePointStorageWriterInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     *
+     * @return void
+     */
+    protected function filterOutInactiveServices(ServicePointTransfer $servicePointTransfer): void
+    {
+        $activeServiceTransfers = new ArrayObject();
+        foreach ($servicePointTransfer->getServices() as $serviceTransfer) {
+            if ($serviceTransfer->getIsActive()) {
+                $activeServiceTransfers->append($serviceTransfer);
+            }
+        }
+
+        $servicePointTransfer->setServices($activeServiceTransfers);
     }
 }

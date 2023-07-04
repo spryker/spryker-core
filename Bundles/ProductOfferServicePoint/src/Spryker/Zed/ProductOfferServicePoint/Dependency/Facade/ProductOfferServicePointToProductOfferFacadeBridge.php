@@ -34,4 +34,14 @@ class ProductOfferServicePointToProductOfferFacadeBridge implements ProductOffer
     {
         return $this->productOfferFacade->getProductOfferCollection($productOfferCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
+    {
+        return $this->productOfferFacade->get($productOfferCriteria);
+    }
 }

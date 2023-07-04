@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferServicePoint\Business;
 
+use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -50,5 +53,37 @@ class ProductOfferServicePointFacade extends AbstractFacade implements ProductOf
         return $this->getFactory()
             ->createProductOfferServiceSaver()
             ->saveProductOfferServices($productOfferServiceCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer
+     */
+    public function getProductOfferServiceCollection(
+        ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
+    ): ProductOfferServiceCollectionTransfer {
+        return $this->getRepository()->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+     *
+     * @return iterable<list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>>
+     */
+    public function iterateProductOfferServices(
+        IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+    ): iterable {
+        return $this->getFactory()
+            ->createProductOfferServiceIterator()
+            ->iterateProductOfferServices($iterableProductOfferServicesCriteriaTransfer);
     }
 }

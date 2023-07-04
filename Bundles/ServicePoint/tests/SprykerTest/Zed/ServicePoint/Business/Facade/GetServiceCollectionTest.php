@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use SprykerTest\Zed\ServicePoint\ServicePointBusinessTester;
@@ -37,6 +38,11 @@ class GetServiceCollectionTest extends Unit
      * @var int
      */
     protected const NUMBER_OF_SERVICES = 5;
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\ServicePoint\ServicePointBusinessTester
@@ -469,6 +475,169 @@ class GetServiceCollectionTest extends Unit
         $this->assertNull($resultServiceTransfer->getServicePoint()->getIdServicePoint());
         $this->assertNull($resultServiceTransfer->getServicePoint()->getKey());
         $this->assertNull($resultServiceTransfer->getServicePoint()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnServiceCollectionByServicePointIds(): void
+    {
+        // Arrange
+        $serviceTransfer = $this->tester->haveService();
+        $this->tester->haveService();
+
+        $serviceConditionsTransfer = (new ServiceConditionsTransfer())
+            ->addIdServicePoint($serviceTransfer->getServicePointOrFail()->getIdServicePointOrFail());
+
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())
+            ->setServiceConditions($serviceConditionsTransfer);
+
+        // Act
+        $serviceCollectionTransfer = $this->tester->getFacade()
+            ->getServiceCollection($serviceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $serviceCollectionTransfer->getServices());
+        $this->assertNull($serviceCollectionTransfer->getPagination());
+
+        $this->assertSame(
+            $serviceTransfer->getUuidOrFail(),
+            $serviceCollectionTransfer
+                ->getServices()
+                ->getIterator()
+                ->current()
+                ->getUuidOrFail(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnServiceCollectionByIsActive(): void
+    {
+        // Arrange
+        $serviceTransfer = $this->tester->haveService([
+            ServiceTransfer::IS_ACTIVE => true,
+        ]);
+        $secondServiceTransfer = $this->tester->haveService([
+            ServiceTransfer::IS_ACTIVE => false,
+        ]);
+
+        $serviceConditionsTransfer = (new ServiceConditionsTransfer())
+            ->setServiceIds([
+                $serviceTransfer->getIdService(),
+                $secondServiceTransfer->getIdService(),
+            ])
+            ->setIsActive(true);
+
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())
+            ->setServiceConditions($serviceConditionsTransfer);
+
+        // Act
+        $serviceCollectionTransfer = $this->tester->getFacade()
+            ->getServiceCollection($serviceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $serviceCollectionTransfer->getServices());
+        $this->assertNull($serviceCollectionTransfer->getPagination());
+
+        $this->assertSame(
+            $serviceTransfer->getUuidOrFail(),
+            $serviceCollectionTransfer
+                ->getServices()
+                ->getIterator()
+                ->current()
+                ->getUuidOrFail(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnServiceCollectionByIsServicePointActive(): void
+    {
+        // Arrange
+        $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelation(static::STORE_NAME_DE, [
+            ServicePointTransfer::IS_ACTIVE => true,
+        ]);
+        $serviceTransfer = $this->tester->haveService([
+            ServiceTransfer::SERVICE_POINT => $servicePointTransfer->toArray(),
+        ]);
+
+        $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelation(static::STORE_NAME_DE, [
+            ServicePointTransfer::IS_ACTIVE => false,
+        ]);
+        $secondServiceTransfer = $this->tester->haveService([
+            ServiceTransfer::SERVICE_POINT => $servicePointTransfer->toArray(),
+        ]);
+
+        $serviceConditionsTransfer = (new ServiceConditionsTransfer())
+            ->setServiceIds([
+                $serviceTransfer->getIdService(),
+                $secondServiceTransfer->getIdService(),
+            ])
+            ->setIsActiveServicePoint(true);
+
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())
+            ->setServiceConditions($serviceConditionsTransfer);
+
+        // Act
+        $serviceCollectionTransfer = $this->tester->getFacade()
+            ->getServiceCollection($serviceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $serviceCollectionTransfer->getServices());
+        $this->assertNull($serviceCollectionTransfer->getPagination());
+
+        $this->assertSame(
+            $serviceTransfer->getUuidOrFail(),
+            $serviceCollectionTransfer
+                ->getServices()
+                ->getIterator()
+                ->current()
+                ->getUuidOrFail(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnServiceCollectionWithServicePointRelation(): void
+    {
+        // Arrange
+        $serviceTransfer = $this->tester->haveService([
+            ServiceTransfer::SERVICE_POINT => $this->tester->createServicePointTransferWithStoreRelation(static::STORE_NAME_DE)->toArray(),
+        ]);
+
+        $serviceConditionsTransfer = (new ServiceConditionsTransfer())
+            ->addIdService($serviceTransfer->getIdService())
+            ->setWithServicePointRelations(true);
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())->setServiceConditions($serviceConditionsTransfer);
+
+        // Act
+        $serviceCollectionTransfer = $this->tester->getFacade()
+            ->getServiceCollection($serviceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $serviceCollectionTransfer->getServices());
+
+        $servicePointTransfer = $serviceTransfer->getServicePoint();
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $resultServicePointTransfer */
+        $resultServicePointTransfer = $serviceCollectionTransfer->getServices()->getIterator()->current()->getServicePoint();
+
+        $this->assertSame($servicePointTransfer->getUuid(), $resultServicePointTransfer->getUuid());
+        $this->assertSame($servicePointTransfer->getIdServicePoint(), $resultServicePointTransfer->getIdServicePoint());
+        $this->assertSame($servicePointTransfer->getKey(), $resultServicePointTransfer->getKey());
+        $this->assertSame($servicePointTransfer->getName(), $resultServicePointTransfer->getName());
+
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $servicePointTransfer->getStoreRelation()->getStores()->getIterator()->current();
+
+        /** @var \Generated\Shared\Transfer\StoreTransfer $resultStoreTransfer */
+        $resultStoreTransfer = $resultServicePointTransfer->getStoreRelation()->getStores()->getIterator()->current();
+
+        $this->assertSame($storeTransfer->getIdStore(), $resultStoreTransfer->getIdStore());
     }
 
     /**

@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceConditionsTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -92,9 +94,7 @@ class ProductOfferServiceSaver implements ProductOfferServiceSaverInterface
     ): ProductOfferServiceCollectionResponseTransfer {
         $this->assertRequiredFields($productOfferServiceCollectionRequestTransfer);
 
-        $productOfferServiceCollectionRequestTransfer = $this->productOfferExpander->expandProductOfferServiceCollectionRequestServicesWithServicePoints(
-            $productOfferServiceCollectionRequestTransfer,
-        );
+        $productOfferServiceCollectionRequestTransfer = $this->expandProductOfferServiceCollectionRequestTransfer($productOfferServiceCollectionRequestTransfer);
         $productOfferServiceCollectionResponseTransfer = (new ProductOfferServiceCollectionResponseTransfer())
             ->setProductOffers($productOfferServiceCollectionRequestTransfer->getProductOffers());
 
@@ -137,13 +137,18 @@ class ProductOfferServiceSaver implements ProductOfferServiceSaverInterface
      */
     protected function executeSaveProductOfferServicesTransaction(ArrayObject $productOfferTransfers): ArrayObject
     {
-        $productOfferServiceCollectionTransfer = $this->productOfferServicePointRepository->getProductOfferServiceCollectionByProductOfferReferences(
-            $this->productOfferExtractor->extractProductOfferReferencesFromProductOfferTransfers($productOfferTransfers),
-        );
-        $serviceUuidsGroupedByProductOfferReference = $this->groupServiceUuidsByProductOfferReference($productOfferServiceCollectionTransfer);
+        $productOfferServiceConditionsTransfer = (new ProductOfferServiceConditionsTransfer())
+            ->setProductOfferIds(
+                $this->productOfferExtractor->extractProductOfferIdsFromProductOfferTransfers($productOfferTransfers),
+            )
+            ->setGroupByIdProductOffer(true);
+        $productOfferServiceCriteriaTransfer = (new ProductOfferServiceCriteriaTransfer())->setProductOfferServiceConditions($productOfferServiceConditionsTransfer);
+
+        $productOfferServiceCollectionTransfer = $this->productOfferServicePointRepository->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
+        $serviceIdsGroupedByIdProductOffer = $this->getServiceIdsGroupedByIdProductOffer($productOfferServiceCollectionTransfer);
 
         foreach ($productOfferTransfers as $productOfferTransfer) {
-            $this->persistProductOfferServices($productOfferTransfer, $serviceUuidsGroupedByProductOfferReference);
+            $this->persistProductOfferServices($productOfferTransfer, $serviceIdsGroupedByIdProductOffer);
         }
 
         return $productOfferTransfers;
@@ -151,30 +156,32 @@ class ProductOfferServiceSaver implements ProductOfferServiceSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     * @param array<string, list<string>> $serviceUuidsGroupedByProductOfferReference
+     * @param array<int, list<int>> $serviceIdsGroupedByIdProductOffer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     protected function persistProductOfferServices(
         ProductOfferTransfer $productOfferTransfer,
-        array $serviceUuidsGroupedByProductOfferReference
+        array $serviceIdsGroupedByIdProductOffer
     ): ProductOfferTransfer {
-        $requestedServiceUuids = $this->productOfferExtractor->extractServiceUuidsFromProductOfferTransfers(new ArrayObject([$productOfferTransfer]));
-        $assignedServiceUuids = $serviceUuidsGroupedByProductOfferReference[$productOfferTransfer->getProductOfferReferenceOrFail()] ?? [];
+        $requestedServiceIds = $this->productOfferExtractor->extractServiceIdsFromProductOfferTransfers(new ArrayObject([$productOfferTransfer]));
+        $assignedServiceIds = $serviceIdsGroupedByIdProductOffer[$productOfferTransfer->getIdProductOfferOrFail()] ?? [];
 
-        $serviceUuidsToAssign = array_diff($requestedServiceUuids, $assignedServiceUuids);
-        /** @var list<string> $serviceUuidsToUnassign */
-        $serviceUuidsToUnassign = array_diff($assignedServiceUuids, $requestedServiceUuids);
+        $serviceIdsToAssign = array_diff($requestedServiceIds, $assignedServiceIds);
 
-        $this->productOfferServicePointEntityManager->deleteProductOfferServicesByProductOfferReferenceAndServiceUuids(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
-            $serviceUuidsToUnassign,
-        );
+        /** @var list<int> $serviceIdsToUnassign */
+        $serviceIdsToUnassign = array_diff($assignedServiceIds, $requestedServiceIds);
+        if ($serviceIdsToUnassign !== []) {
+            $this->productOfferServicePointEntityManager->deleteProductOfferServicesByIdProductOfferAndServiceIds(
+                $productOfferTransfer->getIdProductOfferOrFail(),
+                $serviceIdsToUnassign,
+            );
+        }
 
-        foreach ($serviceUuidsToAssign as $serviceUuid) {
+        foreach ($serviceIdsToAssign as $idService) {
             $productOfferServiceTransfer = (new ProductOfferServiceTransfer())
-                ->setProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail())
-                ->setServiceUuid($serviceUuid);
+                ->setIdProductOffer($productOfferTransfer->getIdProductOfferOrFail())
+                ->setIdService($idService);
 
             $this->productOfferServicePointEntityManager->createProductOfferService($productOfferServiceTransfer);
         }
@@ -185,19 +192,20 @@ class ProductOfferServiceSaver implements ProductOfferServiceSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
      *
-     * @return array<string, list<string>>
+     * @return array<int, list<int>>
      */
-    protected function groupServiceUuidsByProductOfferReference(
+    protected function getServiceIdsGroupedByIdProductOffer(
         ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
     ): array {
-        $serviceUuidsGroupedByProductOfferReference = [];
-
-        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServiceTransfer) {
-            $serviceUuidsGroupedByProductOfferReference[$productOfferServiceTransfer->getProductOfferReferenceOrFail()][]
-                = $productOfferServiceTransfer->getServiceUuidOrFail();
+        $serviceIdsGroupedByIdProductOffer = [];
+        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
+            $idProductOffer = $productOfferServicesTransfer->getProductOfferOrFail()->getIdProductOfferOrFail();
+            foreach ($productOfferServicesTransfer->getServices() as $serviceTransfer) {
+                $serviceIdsGroupedByIdProductOffer[$idProductOffer][] = $serviceTransfer->getIdServiceOrFail();
+            }
         }
 
-        return $serviceUuidsGroupedByProductOfferReference;
+        return $serviceIdsGroupedByIdProductOffer;
     }
 
     /**
@@ -217,5 +225,22 @@ class ProductOfferServiceSaver implements ProductOfferServiceSaverInterface
                 $serviceTransfer->requireUuid();
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer
+     */
+    protected function expandProductOfferServiceCollectionRequestTransfer(
+        ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+    ): ProductOfferServiceCollectionRequestTransfer {
+        $productOfferServiceCollectionRequestTransfer = $this->productOfferExpander->expandProductOfferServiceCollectionRequestWithProductOffersIds(
+            $productOfferServiceCollectionRequestTransfer,
+        );
+
+        return $this->productOfferExpander->expandProductOfferServiceCollectionRequestServicesWithServicePoints(
+            $productOfferServiceCollectionRequestTransfer,
+        );
     }
 }

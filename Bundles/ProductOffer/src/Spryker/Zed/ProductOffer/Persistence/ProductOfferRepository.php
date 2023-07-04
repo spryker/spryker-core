@@ -182,6 +182,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return $productOfferQuery;
         }
 
+        if ($productOfferConditionsTransfer->getProductOfferIds()) {
+            $productOfferQuery->filterByIdProductOffer_In($productOfferConditionsTransfer->getProductOfferIds());
+        }
+
         if ($productOfferConditionsTransfer->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferConditionsTransfer->getProductOfferReferences());
         }

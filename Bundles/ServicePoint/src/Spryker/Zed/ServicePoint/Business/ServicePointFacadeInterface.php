@@ -284,12 +284,16 @@ interface ServicePointFacadeInterface
      * - Uses `ServiceCriteriaTransfer.serviceConditions.uuids` to filter by service uuids.
      * - Uses `ServiceCriteriaTransfer.serviceConditions.keys` to filter by service keys.
      * - Uses `ServiceCriteriaTransfer.serviceConditions.serviceTypeUuids` to filter by service type uuids.
+     * - Uses `ServiceCriteriaTransfer.serviceConditions.servicePointIds` to filter by service point ids.
      * - Uses `ServiceCriteriaTransfer.serviceConditions.servicePointUuids` to filter by service point uuids.
+     * - Uses `ServiceCriteriaTransfer.serviceConditions.isActive` to filter by active status.
+     * - Uses `ServiceCriteriaTransfer.serviceConditions.isActiveServicePoint` to filter by active service points.
      * - Inverses uuids filtering in case `ServiceCriteriaTransfer.serviceConditions.isUuidsConditionInversed` is set to `true`.
      * - Uses `ServiceCriteriaTransfer.sort.field` to set the 'order by' field.
      * - Uses `ServiceCriteriaTransfer.sort.isAscending` to set ascending/descending order.
      * - Uses `ServiceCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
      * - Uses `ServiceCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Uses `ServiceCriteriaTransfer.serviceConditions.withServicePointRelations` to load service point relations.
      * - Returns `ServiceCollectionTransfer` filled with found services.
      *
      * @api

@@ -11,9 +11,9 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ProductOfferHasOneServiceValidationDataImportStep;
-use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ProductOfferReferenceValidationDataImportStep;
+use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ProductOfferReferenceToIdProductOfferDataImportStep;
 use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ProductOfferServiceWriteDataImportStep;
-use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ServiceKeyToServiceUuidDataImportStep;
+use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataImportStep\ProductOfferService\ServiceKeyToIdServiceDataImportStep;
 
 /**
  * @method \Spryker\Zed\ProductOfferServicePointDataImport\ProductOfferServicePointDataImportConfig getConfig()
@@ -30,8 +30,8 @@ class ProductOfferServicePointDataImportBusinessFactory extends DataImportBusine
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createServiceKeyToServiceUuidDataImportStep());
-        $dataSetStepBroker->addStep($this->createProductOfferReferenceValidationDataImportStep());
+        $dataSetStepBroker->addStep($this->createServiceKeyToIdServiceDataImportStep());
+        $dataSetStepBroker->addStep($this->createProductOfferReferenceToIdProductOfferDataImportStep());
         $dataSetStepBroker->addStep($this->createProductOfferHasOneServiceValidationDataImportStep());
         $dataSetStepBroker->addStep($this->createProductOfferServiceWriteDataImportStep());
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -50,9 +50,9 @@ class ProductOfferServicePointDataImportBusinessFactory extends DataImportBusine
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createServiceKeyToServiceUuidDataImportStep(): DataImportStepInterface
+    public function createServiceKeyToIdServiceDataImportStep(): DataImportStepInterface
     {
-        return new ServiceKeyToServiceUuidDataImportStep();
+        return new ServiceKeyToIdServiceDataImportStep();
     }
 
     /**
@@ -66,8 +66,8 @@ class ProductOfferServicePointDataImportBusinessFactory extends DataImportBusine
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductOfferReferenceValidationDataImportStep(): DataImportStepInterface
+    public function createProductOfferReferenceToIdProductOfferDataImportStep(): DataImportStepInterface
     {
-        return new ProductOfferReferenceValidationDataImportStep();
+        return new ProductOfferReferenceToIdProductOfferDataImportStep();
     }
 }

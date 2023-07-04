@@ -118,12 +118,12 @@ class SaveProductOfferServicesTest extends Unit
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferService([
-            ProductOfferServiceTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReferenceOrFail(),
-            ProductOfferServiceTransfer::SERVICE_UUID => $this->tester->haveService()->getUuidOrFail(),
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $this->tester->haveService()->getIdServiceOrFail(),
         ]);
         $this->tester->haveProductOfferService([
-            ProductOfferServiceTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReferenceOrFail(),
-            ProductOfferServiceTransfer::SERVICE_UUID => $this->tester->haveService()->getUuidOrFail(),
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $this->tester->haveService()->getIdServiceOrFail(),
         ]);
 
         $persistedServiceTransfer = $this->tester->haveService();
@@ -151,12 +151,12 @@ class SaveProductOfferServicesTest extends Unit
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferService([
-            ProductOfferServiceTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReferenceOrFail(),
-            ProductOfferServiceTransfer::SERVICE_UUID => $this->tester->haveService()->getUuidOrFail(),
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $this->tester->haveService()->getIdServiceOrFail(),
         ]);
         $this->tester->haveProductOfferService([
-            ProductOfferServiceTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReferenceOrFail(),
-            ProductOfferServiceTransfer::SERVICE_UUID => $this->tester->haveService()->getUuidOrFail(),
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $this->tester->haveService()->getIdServiceOrFail(),
         ]);
 
         $productOfferServiceCollectionRequestTransfer = (new ProductOfferServiceCollectionRequestTransfer())
@@ -183,6 +183,7 @@ class SaveProductOfferServicesTest extends Unit
         $productOfferServiceCollectionRequestTransfer = (new ProductOfferServiceCollectionRequestTransfer())
             ->setIsTransactional(true)
             ->addProductOffer($productOfferTransfer);
+
         // Act
         $this->tester
             ->getFacade()
@@ -479,6 +480,35 @@ class SaveProductOfferServicesTest extends Unit
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_UUID_NOT_FOUND, $errorTransfer->getMessageOrFail());
         $this->assertSame(0, $this->tester->getNumberOfPersistedProductOfferServices($productOfferTransfer));
+    }
+
+    /**
+     * @group test
+     *
+     * @return void
+     */
+    public function testShouldExpandProductOfferWithIdProductOfferWhenIdProductOfferIsMissing(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferTransfer->addService($this->tester->haveService());
+
+        $expectedIdProductOffer = $productOfferTransfer->getIdProductOfferOrFail();
+        $productOfferTransfer->setIdProductOffer(null);
+
+        $productOfferServiceCollectionRequestTransfer = (new ProductOfferServiceCollectionRequestTransfer())
+            ->setThrowExceptionOnValidation(true)
+            ->setIsTransactional(false)
+            ->addProductOffer($productOfferTransfer);
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->saveProductOfferServices($productOfferServiceCollectionRequestTransfer);
+
+        // Assert
+        $this->assertProductOfferHasServicesPersisted($productOfferTransfer);
+        $this->assertSame($expectedIdProductOffer, $productOfferTransfer->getIdProductOfferOrFail());
     }
 
     /**

@@ -27,4 +27,13 @@ interface ProductOfferExpanderInterface
     public function expandProductOfferServiceCollectionRequestServicesWithServicePoints(
         ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
     ): ProductOfferServiceCollectionRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer
+     */
+    public function expandProductOfferServiceCollectionRequestWithProductOffersIds(
+        ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+    ): ProductOfferServiceCollectionRequestTransfer;
 }

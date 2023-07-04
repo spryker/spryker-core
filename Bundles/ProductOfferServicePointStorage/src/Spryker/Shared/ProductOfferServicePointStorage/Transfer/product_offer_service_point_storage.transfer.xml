@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ProductOfferServiceStorage" strict="true">
+        <property name="productOfferReference" type="string"/>
+        <property name="servicePointUuid" type="string"/>
+        <property name="serviceUuids" type="string[]" singular="serviceUuid"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceStorageCollection" strict="true">
+        <property name="productOfferServices" type="ProductOfferServiceStorage[]" singular="productOfferService"/>
+    </transfer>
+
+    <transfer name="ServiceStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="services" type="ServiceStorage[]" singular="service"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageCollection" strict="true">
+        <property name="servicePointStorages" type="ServicePointStorage[]" singular="servicePointStorage"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageCriteria" strict="true">
+        <property name="servicePointStorageConditions" type="ServicePointStorageConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointStorageConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointStorage" strict="true">
+        <property name="services" type="ServiceStorage[]" singular="service"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferServices" strict="true">
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="services" type="Service[]" singular="service"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceCriteria" strict="true">
+        <property name="productOfferServiceConditions" type="ProductOfferServiceConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceConditions" strict="true">
+        <property name="productOfferServiceIds" type="int[]" singular="idProductOfferService"/>
+        <property name="serviceIds" type="int[]" singular="idService"/>
+        <property name="groupByIdProductOffer" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceCollection" strict="true">
+        <property name="productOfferServices" type="ProductOfferServices[]" singular="productOfferServices"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteria">
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="IterableProductOfferServicesConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="productOfferApprovalStatuses" type="string[]" singular="productOfferApprovalStatus"/>
+        <property name="isActiveProductOffer" type="bool"/>
+        <property name="isActiveConcreteProduct" type="bool"/>
+        <property name="isActiveService" type="bool"/>
+        <property name="isActiveServicePoint" type="bool"/>
+        <property name="withServicePointRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="IterableProductOfferServicesCriteria" strict="true">
+        <property name="iterableProductOfferServicesConditions" type="IterableProductOfferServicesConditions"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="stores" type="Store[]" singular="store"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
+    <transfer name="Service" strict="true">
+        <property name="servicePoint" type="ServicePoint"/>
+        <property name="uuid" type="string"/>
+        <property name="idService" type="int"/>
+    </transfer>
+
+    <transfer name="ServiceCriteria" strict="true">
+        <property name="serviceConditions" type="ServiceConditions"/>
+    </transfer>
+
+    <transfer name="ServiceConditions" strict="true">
+        <property name="serviceIds" type="int[]" singular="idService"/>
+        <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
+    </transfer>
+
+    <transfer name="ServiceCollection" strict="true">
+        <property name="services" type="Service[]" singular="service"/>
+    </transfer>
+
+    <transfer name="ServicePoint" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+</transfers>

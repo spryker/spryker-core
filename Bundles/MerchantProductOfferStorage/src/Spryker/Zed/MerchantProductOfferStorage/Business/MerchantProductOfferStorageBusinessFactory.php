@@ -8,11 +8,14 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferServiceStorageFilter;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferServiceStorageFilterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferStorageFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
 
@@ -48,6 +51,16 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferServiceStorageFilterInterface
+     */
+    public function createMerchantProductOfferServiceStorageFilter(): MerchantProductOfferServiceStorageFilterInterface
+    {
+        return new MerchantProductOfferServiceStorageFilter(
+            $this->getMerchantFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade(): MerchantProductOfferStorageToEventBehaviorFacadeInterface
@@ -61,5 +74,13 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getProductOfferStorageFacade(): MerchantProductOfferStorageToProductOfferStorageFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_PRODUCT_OFFER_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductOfferStorageToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_MERCHANT);
     }
 }

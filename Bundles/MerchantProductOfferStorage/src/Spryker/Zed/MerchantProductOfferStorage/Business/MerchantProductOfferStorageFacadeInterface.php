@@ -42,4 +42,16 @@ interface MerchantProductOfferStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Filters product offer services collection by active and approved merchants.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicesTransfer> $productOfferServicesTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
+     */
+    public function filterProductOfferServices(array $productOfferServicesTransfers): array;
 }

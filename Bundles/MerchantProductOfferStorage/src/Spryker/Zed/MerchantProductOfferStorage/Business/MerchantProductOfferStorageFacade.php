@@ -45,4 +45,20 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
     {
         $this->getFactory()->createProductOfferStorageWriter()->writeCollectionByMerchantEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicesTransfer> $productOfferServicesTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
+     */
+    public function filterProductOfferServices(array $productOfferServicesTransfers): array
+    {
+        return $this->getFactory()
+            ->createMerchantProductOfferServiceStorageFilter()
+            ->filterProductOfferServices($productOfferServicesTransfers);
+    }
 }

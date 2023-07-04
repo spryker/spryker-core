@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ProductOfferServiceTransfer;
 interface ProductOfferServicePointEntityManagerInterface
 {
     /**
-     * @param string $productOfferReference
-     * @param list<string> $serviceUuids
+     * @param int $idProductOffer
+     * @param list<int> $serviceIds
      *
      * @return void
      */
-    public function deleteProductOfferServicesByProductOfferReferenceAndServiceUuids(string $productOfferReference, array $serviceUuids): void;
+    public function deleteProductOfferServicesByIdProductOfferAndServiceIds(int $idProductOffer, array $serviceIds): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceTransfer $productOfferServiceTransfer

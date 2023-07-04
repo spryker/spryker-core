@@ -7,16 +7,19 @@
 
 namespace Spryker\Zed\ProductOfferServicePoint\Business;
 
+use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer;
 
 interface ProductOfferServicePointFacadeInterface
 {
     /**
      * Specification:
      * - Requires `ProductOfferCollectionTransfer.productOffers` to be set.
-     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
      * - Expands `ProductOfferTransfer.services` with services from persistence.
      *
      * @api
@@ -53,4 +56,53 @@ interface ProductOfferServicePointFacadeInterface
     public function saveProductOfferServices(
         ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
     ): ProductOfferServiceCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves product offer service entities from Persistence.
+     * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.productOfferServiceIds` to filter by product offer service IDs.
+     * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.productOfferIds` to filter by product offer IDs.
+     * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.serviceIds` to filter by service IDs.
+     * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.groupByIdProductOffer` to group by product offer IDs.
+     * - Uses `ProductOfferServiceCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ProductOfferServiceCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ProductOfferServiceCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `ProductOfferServiceCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - If grouping by product offer IDs is not requested, `ProductOfferServicesCollectionTransfer.productOfferServices` will represent individual product offer service entities.
+     * - Otherwise, `ProductOfferServicesCollectionTransfer.productOfferServices` will contain all services related to the same product offer ID, and `ProductOfferServicesCollectionTransfer.productOfferServices.idProductOfferService` will not be set.
+     * - Returns `ProductOfferServiceCollectionTransfer` filled with found product offer services.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer
+     */
+    public function getProductOfferServiceCollection(
+        ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
+    ): ProductOfferServiceCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions` to be set.
+     * - Expects `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.productOfferIds` to be set.
+     * - Retrieves product offer service entities filtered by product offer IDs and grouped by product offer ID from Persistence.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.productOfferIds` to filter by product offer IDs.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.productOfferApprovalStatuses` to filter by product offer approval statuses.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.isActiveProductOffer` to filter by active product offers.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.isActiveConcreteProduct` to filter by active concrete products.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.isActiveService` to filter by active services.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.isActiveServicePoint` to filter by active service points.
+     * - Uses `IterableProductOfferServicesCriteriaTransfer.iterableProductOfferServicesConditions.withServicePointRelations` to load service point relations.
+     * - Returns a generator to get a list of `ProductOfferServicesTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+     *
+     * @return iterable<list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>>
+     */
+    public function iterateProductOfferServices(
+        IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+    ): iterable;
 }

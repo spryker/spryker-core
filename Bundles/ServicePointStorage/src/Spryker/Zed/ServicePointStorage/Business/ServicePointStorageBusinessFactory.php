@@ -24,9 +24,9 @@ use Spryker\Zed\ServicePointStorage\ServicePointStorageDependencyProvider;
  */
 class ServicePointStorageBusinessFactory extends AbstractBusinessFactory
 {
- /**
-  * @return \Spryker\Zed\ServicePointStorage\Business\Writer\ServicePointStorageWriterInterface
-  */
+    /**
+     * @return \Spryker\Zed\ServicePointStorage\Business\Writer\ServicePointStorageWriterInterface
+     */
     public function createServicePointStorageWriter(): ServicePointStorageWriterInterface
     {
         return new ServicePointStorageWriter(

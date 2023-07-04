@@ -11,6 +11,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToMerchantFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferStorageFacadeBridge;
 
 /**
@@ -31,6 +32,11 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
     /**
      * @var string
      */
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
 
     /**
@@ -44,6 +50,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductOfferStorageFacade($container);
+        $container = $this->addMerchantFacade($container);
 
         return $container;
     }
@@ -102,6 +109,22 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         $container->set(static::FACADE_PRODUCT_OFFER_STORAGE, function (Container $container) {
             return new MerchantProductOfferStorageToProductOfferStorageFacadeBridge(
                 $container->getLocator()->productOfferStorage()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantProductOfferStorageToMerchantFacadeBridge(
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

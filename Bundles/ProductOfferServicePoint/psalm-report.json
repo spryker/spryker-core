@@ -1,6 +1,19 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [],
-    "count": 0
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\ProductOfferCriteriaTransfer::setProductOfferIds has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferServicePoint/src/Spryker/Zed/ProductOfferServicePoint/Business/Mapper/ProductOfferServiceMapper.php",
+            "snippet": "            ->setProductOfferIds($iterableProductOfferServicesConditionsTransfer->getProductOfferIds())",
+            "selected_text": "setProductOfferIds",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 1
 }

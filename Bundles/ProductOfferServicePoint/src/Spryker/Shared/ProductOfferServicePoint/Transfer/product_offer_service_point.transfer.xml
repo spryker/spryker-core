@@ -2,12 +2,47 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductOfferService" strict="true">
-        <property name="productOfferReference" type="string"/>
-        <property name="serviceUuid" type="string"/>
+        <property name="idProductOffer" type="int"/>
+        <property name="idService" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferServices" strict="true">
+        <property name="idProductOfferService" type="int"/>
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="services" type="Service[]" singular="service"/>
     </transfer>
 
     <transfer name="ProductOfferServiceCollection" strict="true">
-        <property name="productOfferServices" type="ProductOfferService[]" singular="productOfferService"/>
+        <property name="productOfferServices" type="ProductOfferServices[]" singular="productOfferServices"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceCriteria" strict="true">
+        <property name="productOfferServiceConditions" type="ProductOfferServiceConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductOfferServiceConditions" strict="true">
+        <property name="productOfferServiceIds" type="int[]" singular="idProductOfferService"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="serviceIds" type="int[]" singular="idService"/>
+        <property name="groupByIdProductOffer" type="bool"/>
+    </transfer>
+
+    <transfer name="IterableProductOfferServicesCriteria" strict="true">
+        <property name="iterableProductOfferServicesConditions" type="IterableProductOfferServicesConditions"/>
+    </transfer>
+
+    <transfer name="IterableProductOfferServicesConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="serviceIds" type="int[]" singular="idService"/>
+        <property name="productOfferApprovalStatuses" type="string[]" singular="productOfferApprovalStatus"/>
+        <property name="isActiveProductOffer" type="bool"/>
+        <property name="isActiveConcreteProduct" type="bool"/>
+        <property name="isActiveService" type="bool"/>
+        <property name="isActiveServicePoint" type="bool"/>
+        <property name="withServicePointRelations" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferServiceCollectionRequest" strict="true">
@@ -22,11 +57,13 @@
     </transfer>
 
     <transfer name="ProductOffer">
-        <property name="productOfferReference" type="string"/>
+        <property name="idProductOffer" type="int"/>
         <property name="services" type="Service[]" singular="service" strict="true"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Service" strict="true">
+        <property name="idService" type="int"/>
         <property name="uuid" type="string"/>
         <property name="servicePoint" type="ServicePoint"/>
     </transfer>
@@ -45,15 +82,24 @@
     </transfer>
 
     <transfer name="ServiceConditions" strict="true">
+        <property name="serviceIds" type="int[]" singular="idService"/>
+        <property name="isActive" type="bool"/>
+        <property name="isActiveServicePoint" type="bool"/>
+        <property name="withServicePointRelations" type="bool"/>
         <property name="uuids" type="string[]" singular="uuid"/>
     </transfer>
 
     <transfer name="ProductOfferConditions" strict="true">
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
     </transfer>
 
     <transfer name="ProductOfferCriteria">
         <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="isActive" type="bool"/>
+        <property name="isActiveConcreteProduct" type="bool"/>
+        <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -68,6 +114,25 @@
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
         <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
 </transfers>

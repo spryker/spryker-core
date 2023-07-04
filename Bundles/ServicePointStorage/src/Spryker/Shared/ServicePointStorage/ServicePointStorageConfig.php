@@ -15,6 +15,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * Specification:
      * - Defines resource name, that will be used for key generation.
      *
+     * @api
+     *
      * @var string
      */
     public const SERVICE_POINT_RESOURCE_NAME = 'service_point';
@@ -22,6 +24,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - This event will be used for `spy_service_point` entity creation.
+     *
+     * @api
      *
      * @var string
      */
@@ -31,6 +35,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * Specification:
      * - This event will be used for `spy_service_point` entity changes.
      *
+     * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SERVICE_POINT_UPDATE = 'Entity.spy_service_point.update';
@@ -38,6 +44,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - This event will be used for `spy_service_point_address` entity creation.
+     *
+     * @api
      *
      * @var string
      */
@@ -47,6 +55,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * Specification:
      * - This event will be used for `spy_service_point_address` entity changes.
      *
+     * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SERVICE_POINT_ADDRESS_UPDATE = 'Entity.spy_service_point_address.update';
@@ -54,6 +64,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - This event will be used for `spy_service_point_store` entity changes.
+     *
+     * @api
      *
      * @var string
      */
@@ -63,6 +75,8 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * Specification:
      * - This event will be used for `spy_service_point_store` entity deletion.
      *
+     * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SERVICE_POINT_STORE_DELETE = 'Entity.spy_service_point_store.delete';
@@ -71,9 +85,31 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * Specification:
      * - This event will be used for `ServicePoint` publish.
      *
+     * @api
+     *
      * @var string
      */
     public const SERVICE_POINT_PUBLISH = 'ServicePoint.service_point.publish';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_service` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_CREATE = 'Entity.spy_service.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_service` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_UPDATE = 'Entity.spy_service.update';
 
     /**
      * Specification:

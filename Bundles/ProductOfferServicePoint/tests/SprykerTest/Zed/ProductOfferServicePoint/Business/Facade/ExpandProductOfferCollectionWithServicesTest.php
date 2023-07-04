@@ -51,8 +51,8 @@ class ExpandProductOfferCollectionWithServicesTest extends Unit
         $persistedServiceTransfer = $this->tester->haveService();
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferService([
-            ProductOfferServiceTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReferenceOrFail(),
-            ProductOfferServiceTransfer::SERVICE_UUID => $persistedServiceTransfer->getUuidOrFail(),
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $persistedServiceTransfer->getIdServiceOrFail(),
         ]);
         $productOfferCollectionTransfer = (new ProductOfferCollectionTransfer())
             ->addProductOffer($productOfferTransfer);
@@ -73,7 +73,7 @@ class ExpandProductOfferCollectionWithServicesTest extends Unit
         /** @var \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer */
         $serviceTransfer = $productOfferTransfer->getServices()->getIterator()->current();
 
-        $this->assertSame($serviceTransfer->getUuidOrFail(), $persistedServiceTransfer->getUuidOrFail());
+        $this->assertSame($serviceTransfer->getIdServiceOrFail(), $persistedServiceTransfer->getIdServiceOrFail());
     }
 
     /**
@@ -103,7 +103,7 @@ class ExpandProductOfferCollectionWithServicesTest extends Unit
     /**
      * @return void
      */
-    public function testShouldThrowExceptionWhileProductOfferReferenceIsMissing(): void
+    public function testShouldThrowExceptionWhileIdProductOfferIsMissing(): void
     {
         // Arrange
         $productOfferTransfer = new ProductOfferTransfer();

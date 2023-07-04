@@ -864,6 +864,28 @@ class ProductOfferFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductOfferCollectionReturnsCorrectProductOffersFilteredByProductOfferIds(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $this->tester->haveProductOffer();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferConditions(
+            (new ProductOfferConditionsTransfer())->addIdProductOffer($productOfferTransfer->getIdProductOffer()),
+        );
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer));
+    }
+
+    /**
      * @param string $sku
      * @param int $quantity
      * @param string $merchantReference

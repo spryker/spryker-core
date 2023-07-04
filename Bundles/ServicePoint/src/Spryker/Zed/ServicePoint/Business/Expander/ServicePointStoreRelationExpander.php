@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ServicePoint\Business\Expander;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface;
@@ -51,6 +52,28 @@ class ServicePointStoreRelationExpander implements ServicePointStoreRelationExpa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function expandServiceCollectionWithServicePointStoreRelations(
+        ServiceCollectionTransfer $serviceCollectionTransfer
+    ): ServiceCollectionTransfer {
+        $servicePointCollectionTransfer = $this->extractServicePointCollectionFromServiceCollection($serviceCollectionTransfer);
+        $servicePointCollectionTransfer = $this->expandServicePointCollectionWithStoreRelations($servicePointCollectionTransfer);
+
+        $servicePointTransfersIndexedByServicePointIds = $this->getServicePointTransfersIndexedByServicePointIds($servicePointCollectionTransfer);
+
+        foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
+            $serviceTransfer->setServicePoint(
+                $servicePointTransfersIndexedByServicePointIds[$serviceTransfer->getServicePointOrFail()->getIdServicePointOrFail()],
+            );
+        }
+
+        return $serviceCollectionTransfer;
+    }
+
+    /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
      * @param array<int, list<\Generated\Shared\Transfer\StoreTransfer>> $storeTransfersGroupedByIdServicePoint
      *
@@ -91,5 +114,39 @@ class ServicePointStoreRelationExpander implements ServicePointStoreRelationExpa
         }
 
         return $servicePointIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointCollectionTransfer
+     */
+    protected function extractServicePointCollectionFromServiceCollection(ServiceCollectionTransfer $serviceCollectionTransfer): ServicePointCollectionTransfer
+    {
+        $servicePointTransfers = [];
+        foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
+            if (array_key_exists($serviceTransfer->getServicePointOrFail()->getIdServicePointOrFail(), $servicePointTransfers)) {
+                continue;
+            }
+
+            $servicePointTransfers[$serviceTransfer->getServicePointOrFail()->getIdServicePointOrFail()] = $serviceTransfer->getServicePointOrFail();
+        }
+
+        return (new ServicePointCollectionTransfer())->setServicePoints(new ArrayObject($servicePointTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointCollectionTransfer $servicePointCollectionTransfer
+     *
+     * @return array<int, \Generated\Shared\Transfer\ServicePointTransfer>
+     */
+    protected function getServicePointTransfersIndexedByServicePointIds(ServicePointCollectionTransfer $servicePointCollectionTransfer): array
+    {
+        $servicePointTransfersIndexedByServicePointIds = [];
+        foreach ($servicePointCollectionTransfer->getServicePoints() as $servicePointTransfer) {
+            $servicePointTransfersIndexedByServicePointIds[$servicePointTransfer->getIdServicePointOrFail()] = $servicePointTransfer;
+        }
+
+        return $servicePointTransfersIndexedByServicePointIds;
     }
 }

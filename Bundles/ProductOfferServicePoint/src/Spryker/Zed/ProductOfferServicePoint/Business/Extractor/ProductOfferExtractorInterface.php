@@ -24,12 +24,26 @@ interface ProductOfferExtractorInterface
      *
      * @return list<string>
      */
-    public function extractProductOfferReferencesFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
+    public function extractServiceUuidsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
 
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      *
      * @return list<string>
      */
-    public function extractServiceUuidsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
+    public function extractProductOfferReferencesFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
+     *
+     * @return list<int>
+     */
+    public function extractProductOfferIdsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
+     *
+     * @return list<int>
+     */
+    public function extractServiceIdsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array;
 }

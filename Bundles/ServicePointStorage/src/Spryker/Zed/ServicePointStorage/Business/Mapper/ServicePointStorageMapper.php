@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ServicePointStorage\Business\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceStorageTransfer;
+use Generated\Shared\Transfer\ServiceTransfer;
 
 class ServicePointStorageMapper implements ServicePointStorageMapperInterface
 {
@@ -22,6 +25,29 @@ class ServicePointStorageMapper implements ServicePointStorageMapperInterface
         ServicePointTransfer $servicePointTransfer,
         ServicePointStorageTransfer $servicePointStorageTransfer
     ): ServicePointStorageTransfer {
-        return $servicePointStorageTransfer->fromArray($servicePointTransfer->toArray(), true);
+        $servicePointStorageTransfer = $servicePointStorageTransfer->fromArray($servicePointTransfer->toArray(), true);
+
+        $servicePointStorageTransfer->setServices(new ArrayObject());
+        foreach ($servicePointTransfer->getServices() as $serviceTransfer) {
+            $serviceStorageTransfer = $this->mapServiceTransferToServiceStorageTransfer($serviceTransfer, new ServiceStorageTransfer());
+
+            $servicePointStorageTransfer->addService($serviceStorageTransfer);
+        }
+
+        return $servicePointStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
+     * @param \Generated\Shared\Transfer\ServiceStorageTransfer $serviceStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceStorageTransfer
+     */
+    protected function mapServiceTransferToServiceStorageTransfer(
+        ServiceTransfer $serviceTransfer,
+        ServiceStorageTransfer $serviceStorageTransfer
+    ): ServiceStorageTransfer {
+        return $serviceStorageTransfer->fromArray($serviceTransfer->toArray(), true)
+            ->setServiceType($serviceTransfer->getServiceTypeOrFail()->getKeyOrFail());
     }
 }

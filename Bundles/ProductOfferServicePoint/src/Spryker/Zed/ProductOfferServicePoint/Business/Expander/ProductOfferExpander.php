@@ -11,10 +11,13 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceConditionsTransfer;
+use Generated\Shared\Transfer\ProductOfferServiceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Persistence\ProductOfferServicePointRepositoryInterface;
 
@@ -41,21 +44,29 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     protected ProductOfferExtractorInterface $productOfferExtractor;
 
     /**
+     * @var \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface
+     */
+    protected ProductOfferReaderInterface $productOfferReader;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePoint\Persistence\ProductOfferServicePointRepositoryInterface $productOfferServicePointRepository
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface $serviceReader
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface $productOfferServiceExtractor
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferExtractorInterface $productOfferExtractor
+     * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface $productOfferReader
      */
     public function __construct(
         ProductOfferServicePointRepositoryInterface $productOfferServicePointRepository,
         ServiceReaderInterface $serviceReader,
         ProductOfferServiceExtractorInterface $productOfferServiceExtractor,
-        ProductOfferExtractorInterface $productOfferExtractor
+        ProductOfferExtractorInterface $productOfferExtractor,
+        ProductOfferReaderInterface $productOfferReader
     ) {
         $this->productOfferServicePointRepository = $productOfferServicePointRepository;
         $this->serviceReader = $serviceReader;
         $this->productOfferServiceExtractor = $productOfferServiceExtractor;
         $this->productOfferExtractor = $productOfferExtractor;
+        $this->productOfferReader = $productOfferReader;
     }
 
     /**
@@ -67,25 +78,28 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     {
         /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
         $productOfferTransfers = $productOfferCollectionTransfer->getProductOffers();
-        $productOfferServiceCollectionTransfer = $this->productOfferServicePointRepository->getProductOfferServiceCollectionByProductOfferReferences(
-            $this->productOfferExtractor->extractProductOfferReferencesFromProductOfferTransfers($productOfferTransfers),
-        );
-        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferServiceTransfer> $productOfferServiceTransfers */
-        $productOfferServiceTransfers = $productOfferServiceCollectionTransfer->getProductOfferServices();
 
-        if (!$productOfferServiceTransfers->count()) {
+        $productOfferServiceConditionsTransfer = (new ProductOfferServiceConditionsTransfer())
+            ->setProductOfferIds(
+                $this->productOfferExtractor->extractProductOfferIdsFromProductOfferTransfers($productOfferTransfers),
+            )
+            ->setGroupByIdProductOffer(true);
+        $productOfferServiceCriteriaTransfer = (new ProductOfferServiceCriteriaTransfer())->setProductOfferServiceConditions($productOfferServiceConditionsTransfer);
+
+        $productOfferServiceCollectionTransfer = $this->productOfferServicePointRepository->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
+        if (!count($productOfferServiceCollectionTransfer->getProductOfferServices())) {
             return $productOfferCollectionTransfer;
         }
 
-        $serviceTransfersIndexedByProductOfferReference = $this->getServiceTransfersIndexedByProductOfferReference($productOfferServiceCollectionTransfer);
+        $serviceTransfersIndexedByIdProductOffer = $this->getServiceTransfersIndexedByIdProductOffer($productOfferServiceCollectionTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!isset($serviceTransfersIndexedByProductOfferReference[$productOfferTransfer->getProductOfferReferenceOrFail()])) {
+            if (!isset($serviceTransfersIndexedByIdProductOffer[$productOfferTransfer->getIdProductOfferOrFail()])) {
                 continue;
             }
 
             $productOfferTransfer->setServices(
-                new ArrayObject($serviceTransfersIndexedByProductOfferReference[$productOfferTransfer->getProductOfferReferenceOrFail()]),
+                new ArrayObject($serviceTransfersIndexedByIdProductOffer[$productOfferTransfer->getIdProductOfferOrFail()]),
             );
         }
 
@@ -102,12 +116,40 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     ): ProductOfferServiceCollectionRequestTransfer {
         /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
         $productOfferTransfers = $productOfferServiceCollectionRequestTransfer->getProductOffers();
+
         $serviceUuids = $this->productOfferExtractor->extractServiceUuidsFromProductOfferTransfers($productOfferTransfers);
         $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByServiceUuids($serviceUuids);
         $serviceTransfersIndexedByServiceUuid = $this->getServiceTransfersIndexedByServiceUuid($serviceCollectionTransfer);
 
         foreach ($productOfferTransfers as $productOfferTransfer) {
             $this->expandProductOfferServicesWithServicePoints($productOfferTransfer, $serviceTransfersIndexedByServiceUuid);
+        }
+
+        return $productOfferServiceCollectionRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionRequestTransfer
+     */
+    public function expandProductOfferServiceCollectionRequestWithProductOffersIds(
+        ProductOfferServiceCollectionRequestTransfer $productOfferServiceCollectionRequestTransfer
+    ): ProductOfferServiceCollectionRequestTransfer {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
+        $productOfferTransfers = $productOfferServiceCollectionRequestTransfer->getProductOffers();
+
+        $productOfferReferences = $this->productOfferExtractor->extractProductOfferReferencesFromProductOfferTransfers($productOfferTransfers);
+        $productOfferCollectionTransfer = $this->productOfferReader->getProductOfferCollectionByProductOfferReferences($productOfferReferences);
+        $productOfferTransfersIndexedByProductOfferReference = $this->getProductOfferTransfersIndexedByProductOfferReference($productOfferCollectionTransfer);
+
+        foreach ($productOfferTransfers as $productOfferTransfer) {
+            $fetchedProductOfferTransfer = $productOfferTransfersIndexedByProductOfferReference[$productOfferTransfer->getProductOfferReferenceOrFail()] ?? null;
+            if (!$fetchedProductOfferTransfer) {
+                continue;
+            }
+
+            $productOfferTransfer->setIdProductOffer($fetchedProductOfferTransfer->getIdProductOfferOrFail());
         }
 
         return $productOfferServiceCollectionRequestTransfer;
@@ -137,23 +179,27 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
      *
-     * @return array<string, list<\Generated\Shared\Transfer\ServiceTransfer>>
+     * @return array<int, list<\Generated\Shared\Transfer\ServiceTransfer>>
      */
-    protected function getServiceTransfersIndexedByProductOfferReference(
+    protected function getServiceTransfersIndexedByIdProductOffer(
         ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
     ): array {
-        $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByServiceUuids(
-            $this->productOfferServiceExtractor->extractServiceUuidsFromProductOfferServiceCollectionTransfer($productOfferServiceCollectionTransfer),
+        $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByServiceIds(
+            $this->productOfferServiceExtractor->extractServiceIdsFromProductOfferServiceCollectionTransfer($productOfferServiceCollectionTransfer),
         );
-        $serviceTransfersIndexedByServiceUuid = $this->getServiceTransfersIndexedByServiceUuid($serviceCollectionTransfer);
-        $serviceTransfersIndexedByProductOfferReference = [];
+        $serviceTransfersIndexedByIdService = $this->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
+        $serviceTransfersIndexedByIdProductOffer = [];
 
-        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServiceTransfer) {
-            $serviceTransfersIndexedByProductOfferReference[$productOfferServiceTransfer->getProductOfferReferenceOrFail()][]
-                = $serviceTransfersIndexedByServiceUuid[$productOfferServiceTransfer->getServiceUuidOrFail()];
+        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
+            $idProductOffer = $productOfferServicesTransfer->getProductOfferOrFail()->getIdProductOfferOrFail();
+
+            foreach ($productOfferServicesTransfer->getServices() as $serviceTransfer) {
+                $serviceTransfersIndexedByIdProductOffer[$idProductOffer][]
+                    = $serviceTransfersIndexedByIdService[$serviceTransfer->getIdServiceOrFail()];
+            }
         }
 
-        return $serviceTransfersIndexedByProductOfferReference;
+        return $serviceTransfersIndexedByIdProductOffer;
     }
 
     /**
@@ -164,11 +210,40 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     protected function getServiceTransfersIndexedByServiceUuid(ServiceCollectionTransfer $serviceCollectionTransfer): array
     {
         $serviceTransfersIndexedByServiceUuid = [];
-
         foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
             $serviceTransfersIndexedByServiceUuid[$serviceTransfer->getUuidOrFail()] = $serviceTransfer;
         }
 
         return $serviceTransfersIndexedByServiceUuid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
+     *
+     * @return array<int, \Generated\Shared\Transfer\ServiceTransfer>
+     */
+    protected function getServiceTransfersIndexedByIdService(ServiceCollectionTransfer $serviceCollectionTransfer): array
+    {
+        $serviceTransfersIndexedByIdService = [];
+        foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
+            $serviceTransfersIndexedByIdService[$serviceTransfer->getIdServiceOrFail()] = $serviceTransfer;
+        }
+
+        return $serviceTransfersIndexedByIdService;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\ProductOfferTransfer>
+     */
+    protected function getProductOfferTransfersIndexedByProductOfferReference(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
+    {
+        $productOfferCollectionTransfersIndexedByProductOfferReference = [];
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            $productOfferCollectionTransfersIndexedByProductOfferReference[$productOfferTransfer->getProductOfferReferenceOrFail()] = $productOfferTransfer;
+        }
+
+        return $productOfferCollectionTransfersIndexedByProductOfferReference;
     }
 }

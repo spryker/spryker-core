@@ -11,4 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferServicePointConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
+    protected const PRODUCT_OFFER_SERVICES_PROCESS_BATCH_SIZE = 1000;
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductOfferServicesProcessBatchSize(): int
+    {
+        return static::PRODUCT_OFFER_SERVICES_PROCESS_BATCH_SIZE;
+    }
 }

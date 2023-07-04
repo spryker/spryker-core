@@ -56,9 +56,9 @@ class MerchantProductOfferBusinessTester extends Actor
      */
     public function ensureProductOfferTablesAreEmpty(): void
     {
-        SpyProductOfferValidityQuery::create()->deleteAll();
-        SpyProductOfferStockQuery::create()->deleteAll();
-        SpyProductOfferStoreQuery::create()->deleteAll();
-        SpyProductOfferQuery::create()->deleteAll();
+        $this->ensureDatabaseTableIsEmpty(SpyProductOfferValidityQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyProductOfferStockQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyProductOfferStoreQuery::create());
+        $this->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
     }
 }

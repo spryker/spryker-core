@@ -22,7 +22,7 @@ class ServiceProductOfferExpanderPlugin extends AbstractPlugin implements Produc
     /**
      * {@inheritDoc}
      * - Requires `ProductOfferCollectionTransfer.productOffers` to be set.
-     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
      * - Expands `ProductOfferTransfer.services` with services from persistence.
      *
      * @api

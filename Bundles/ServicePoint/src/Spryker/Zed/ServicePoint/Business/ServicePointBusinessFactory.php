@@ -42,6 +42,8 @@ use Spryker\Zed\ServicePoint\Business\Filter\ServiceTypeFilter;
 use Spryker\Zed\ServicePoint\Business\Filter\ServiceTypeFilterInterface;
 use Spryker\Zed\ServicePoint\Business\Reader\ServicePointReader;
 use Spryker\Zed\ServicePoint\Business\Reader\ServicePointReaderInterface;
+use Spryker\Zed\ServicePoint\Business\Reader\ServiceReader;
+use Spryker\Zed\ServicePoint\Business\Reader\ServiceReaderInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointAddressUpdater;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointAddressUpdaterInterface;
 use Spryker\Zed\ServicePoint\Business\Updater\ServicePointStoreRelationUpdater;
@@ -117,6 +119,18 @@ class ServicePointBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createServicePointStoreRelationExpander(),
             $this->createServiceRelationExpander(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Business\Reader\ServiceReaderInterface
+     */
+    public function createServiceReader(): ServiceReaderInterface
+    {
+        return new ServiceReader(
+            $this->getRepository(),
+            $this->createServicePointExpander(),
+            $this->createServicePointStoreRelationExpander(),
         );
     }
 

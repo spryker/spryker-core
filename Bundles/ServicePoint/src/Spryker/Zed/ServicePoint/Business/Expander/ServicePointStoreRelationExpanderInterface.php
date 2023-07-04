@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePoint\Business\Expander;
 
+use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 
 interface ServicePointStoreRelationExpanderInterface
@@ -19,4 +20,13 @@ interface ServicePointStoreRelationExpanderInterface
     public function expandServicePointCollectionWithStoreRelations(
         ServicePointCollectionTransfer $servicePointCollectionTransfer
     ): ServicePointCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function expandServiceCollectionWithServicePointStoreRelations(
+        ServiceCollectionTransfer $serviceCollectionTransfer
+    ): ServiceCollectionTransfer;
 }

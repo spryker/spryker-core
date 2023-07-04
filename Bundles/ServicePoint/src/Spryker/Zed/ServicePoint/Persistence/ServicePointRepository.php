@@ -233,6 +233,20 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 ->endUse();
         }
 
+        if ($serviceConditionsTransfer->getServicePointIds()) {
+            $serviceQuery
+                ->useServicePointQuery()
+                    ->filterByIdServicePoint_In($serviceConditionsTransfer->getServicePointIds())
+                ->endUse();
+        }
+
+        if ($serviceConditionsTransfer->getIsActiveServicePoint() !== null) {
+            $serviceQuery
+                ->useServicePointQuery()
+                    ->filterByIsActive($serviceConditionsTransfer->getIsActiveServicePointOrFail())
+                ->endUse();
+        }
+
         if ($serviceConditionsTransfer->getServiceIds()) {
             $serviceQuery->filterByIdService_In($serviceConditionsTransfer->getServiceIds());
         }
@@ -253,6 +267,10 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 ->useServiceTypeQuery()
                     ->filterByUuid_In($serviceConditionsTransfer->getServiceTypeUuids())
                 ->endUse();
+        }
+
+        if ($serviceConditionsTransfer->getIsActive() !== null) {
+            $serviceQuery->filterByIsActive($serviceConditionsTransfer->getIsActiveOrFail());
         }
 
         return $serviceQuery;

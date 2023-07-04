@@ -29,4 +29,11 @@ interface ServicePointStorageWriterInterface
      * @return void
      */
     public function writeServicePointStorageCollectionByServicePointStoreEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServicePointStorageCollectionByServiceEvents(array $eventEntityTransfers): void;
 }

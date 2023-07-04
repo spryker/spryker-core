@@ -194,7 +194,8 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
     public function getServiceCollection(
         ServiceCriteriaTransfer $serviceCriteriaTransfer
     ): ServiceCollectionTransfer {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createServiceReader()
             ->getServiceCollection($serviceCriteriaTransfer);
     }
 

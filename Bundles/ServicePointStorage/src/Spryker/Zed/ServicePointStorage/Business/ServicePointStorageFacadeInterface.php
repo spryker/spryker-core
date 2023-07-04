@@ -53,6 +53,20 @@ interface ServicePointStorageFacadeInterface
 
     /**
      * Specification:
+     * - Extracts service point IDs from the `$eventEntityTransfers` created by service entity events.
+     * - Stores data in storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServicePointStorageCollectionByServiceEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
      * - Retrieves a collection of service point storage transfers according to provided offset, limit and IDs.
      *
      * @api

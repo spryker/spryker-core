@@ -27,7 +27,7 @@ use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferServicePointDataImport\PHPMD)
  */
 class ProductOfferServicePointDataImportCommunicationTester extends Actor
 {

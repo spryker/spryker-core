@@ -9,11 +9,9 @@ namespace Spryker\Zed\ProductOfferServicePoint\Business\Validator\Rule\ProductOf
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Validator\Util\ErrorAdderInterface;
-use Spryker\Zed\ProductOfferServicePoint\Dependency\Facade\ProductOfferServicePointToProductOfferFacadeInterface;
 
 class ReferenceExistsProductOfferValidatorRule implements ProductOfferValidatorRuleInterface
 {
@@ -28,25 +26,25 @@ class ReferenceExistsProductOfferValidatorRule implements ProductOfferValidatorR
     protected const GLOSSARY_KEY_PARAMETER_PRODUCT_OFFER_REFERENCE = '%product_offer_reference%';
 
     /**
-     * @var \Spryker\Zed\ProductOfferServicePoint\Dependency\Facade\ProductOfferServicePointToProductOfferFacadeInterface
-     */
-    protected ProductOfferServicePointToProductOfferFacadeInterface $productOfferFacade;
-
-    /**
      * @var \Spryker\Zed\ProductOfferServicePoint\Business\Validator\Util\ErrorAdderInterface
      */
     protected ErrorAdderInterface $errorAdder;
 
     /**
-     * @param \Spryker\Zed\ProductOfferServicePoint\Dependency\Facade\ProductOfferServicePointToProductOfferFacadeInterface $productOfferFacade
+     * @var \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface
+     */
+    protected ProductOfferReaderInterface $productOfferReader;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Validator\Util\ErrorAdderInterface $errorAdder
+     * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface $productOfferReader
      */
     public function __construct(
-        ProductOfferServicePointToProductOfferFacadeInterface $productOfferFacade,
-        ErrorAdderInterface $errorAdder
+        ErrorAdderInterface $errorAdder,
+        ProductOfferReaderInterface $productOfferReader
     ) {
-        $this->productOfferFacade = $productOfferFacade;
         $this->errorAdder = $errorAdder;
+        $this->productOfferReader = $productOfferReader;
     }
 
     /**
@@ -81,14 +79,9 @@ class ReferenceExistsProductOfferValidatorRule implements ProductOfferValidatorR
      */
     protected function hasProductOfferReference(ProductOfferTransfer $productOfferTransfer): bool
     {
-        $productOfferConditionsTransfer = (new ProductOfferConditionsTransfer())
-            ->addProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail());
-        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
-            ->setProductOfferConditions($productOfferConditionsTransfer);
-
         /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
-        $productOfferTransfers = $this->productOfferFacade
-            ->getProductOfferCollection($productOfferCriteriaTransfer)
+        $productOfferTransfers = $this->productOfferReader
+            ->getProductOfferCollectionByProductOfferReferences([$productOfferTransfer->getProductOfferReferenceOrFail()])
             ->getProductOffers();
 
         return $productOfferTransfers->count() > 0;

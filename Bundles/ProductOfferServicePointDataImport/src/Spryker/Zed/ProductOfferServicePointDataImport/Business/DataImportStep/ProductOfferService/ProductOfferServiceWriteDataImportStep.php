@@ -17,6 +17,13 @@ use Spryker\Zed\ProductOfferServicePointDataImport\Business\DataSet\ProductOffer
 class ProductOfferServiceWriteDataImportStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
+     * @uses \Spryker\Shared\ProductOfferServicePointStorage\ProductOfferServicePointStorageConfig::PRODUCT_OFFER_SERVICE_PUBLISH
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_SERVICE_PUBLISH = 'ProductOfferService.product_offer_service.publish';
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -26,15 +33,15 @@ class ProductOfferServiceWriteDataImportStep extends PublishAwareStep implements
         $this->assertDataSet($dataSet);
 
         $productOfferServiceEntity = $this->getProductOfferServiceQuery()
-            ->filterByProductOfferReference($dataSet[ProductOfferServiceDataSetInterface::COLUMN_PRODUCT_OFFER_REFERENCE])
-            ->filterByServiceUuid($dataSet[ProductOfferServiceDataSetInterface::COLUMN_SERVICE_UUID])
+            ->filterByFkProductOffer($dataSet[ProductOfferServiceDataSetInterface::COLUMN_ID_PRODUCT_OFFER])
+            ->filterByFkService($dataSet[ProductOfferServiceDataSetInterface::COLUMN_ID_SERVICE])
             ->findOneOrCreate();
 
-        if (!$productOfferServiceEntity->isNew()) {
-            return;
+        if ($productOfferServiceEntity->isNew()) {
+            $productOfferServiceEntity->save();
         }
 
-        $productOfferServiceEntity->save();
+        $this->addPublishEvents(static::PRODUCT_OFFER_SERVICE_PUBLISH, $productOfferServiceEntity->getIdProductOfferService());
     }
 
     /**

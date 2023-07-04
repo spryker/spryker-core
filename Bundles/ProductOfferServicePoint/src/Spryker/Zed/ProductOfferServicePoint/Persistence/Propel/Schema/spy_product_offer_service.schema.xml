@@ -3,22 +3,22 @@
 
     <table name="spy_product_offer_service" idMethod="native" identifierQuoting="true">
         <column name="id_product_offer_service" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="product_offer_reference" type="VARCHAR" required="true" size="255"/>
-        <column name="service_uuid" type="VARCHAR" required="true" size="36"/>
+        <column name="fk_product_offer" type="INTEGER" required="true"/>
+        <column name="fk_service" type="INTEGER" required="true"/>
 
         <id-method-parameter value="spy_product_offer_service_pk_seq"/>
 
-        <index name="spy_product_offer_service-product_offer_reference">
-            <index-column name="product_offer_reference"/>
-        </index>
+        <foreign-key name="spy_product_offer_service-fk_product_offer" foreignTable="spy_product_offer" phpName="ProductOffer" refPhpName="ProductOfferService">
+            <reference local="fk_product_offer" foreign="id_product_offer"/>
+        </foreign-key>
 
-        <index name="spy_product_offer_service-service_uuid">
-            <index-column name="service_uuid"/>
-        </index>
+        <foreign-key name="spy_product_offer_service-fk_service" foreignTable="spy_service" phpName="Service" refPhpName="ProductOfferService">
+            <reference local="fk_service" foreign="id_service"/>
+        </foreign-key>
 
-        <unique name="spy_product_offer_service-unique-service_uuid-p_o_r">
-            <unique-column name="product_offer_reference"/>
-            <unique-column name="service_uuid"/>
+        <unique name="spy_product_offer_service-unique-fk_product_offer-fk_service">
+            <unique-column name="fk_product_offer"/>
+            <unique-column name="fk_service"/>
         </unique>
     </table>
 

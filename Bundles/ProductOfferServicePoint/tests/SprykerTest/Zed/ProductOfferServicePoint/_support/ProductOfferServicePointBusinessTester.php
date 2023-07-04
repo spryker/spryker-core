@@ -10,11 +10,13 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\ProductOfferServicePoint;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOfferServiceTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOfferServicePoint\Persistence\SpyProductOfferServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 
 /**
@@ -32,7 +34,7 @@ use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\ProductOfferServicePoint\Business\ProductOfferServicePointFacadeInterface getFacade(?string $moduleName = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferServicePoint\PHPMD)
  */
 class ProductOfferServicePointBusinessTester extends Actor
 {
@@ -45,8 +47,31 @@ class ProductOfferServicePointBusinessTester extends Actor
     {
         $this->ensureDatabaseTableIsEmpty($this->getProductOfferServiceQuery());
         $this->ensureDatabaseTableIsEmpty($this->getProductOfferQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServiceQuery());
         $this->ensureDatabaseTableIsEmpty($this->getServicePointQuery());
         $this->ensureDatabaseTableIsEmpty($this->getServiceTypeQuery());
+    }
+
+    /**
+     * @param int $count
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferServiceTransfer>
+     */
+    public function createProductOfferServiceTransfers(int $count): array
+    {
+        $productOfferServiceTransfers = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $serviceTransfer = $this->haveService();
+            $productOfferTransfer = $this->haveProductOffer();
+
+            $productOfferServiceTransfers[] = $this->haveProductOfferService([
+                ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+                ProductOfferServiceTransfer::ID_SERVICE => $serviceTransfer->getIdServiceOrFail(),
+            ]);
+        }
+
+        return $productOfferServiceTransfers;
     }
 
     /**
@@ -58,8 +83,8 @@ class ProductOfferServicePointBusinessTester extends Actor
     public function hasProductOfferService(ProductOfferTransfer $productOfferTransfer, ServiceTransfer $serviceTransfer): bool
     {
         return $this->getProductOfferServiceQuery()
-            ->filterByProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail())
-            ->filterByServiceUuid($serviceTransfer->getUuidOrFail())
+            ->filterByFkProductOffer($productOfferTransfer->getIdProductOfferOrFail())
+            ->filterByFkService($serviceTransfer->getIdServiceOrFail())
             ->exists();
     }
 
@@ -71,14 +96,33 @@ class ProductOfferServicePointBusinessTester extends Actor
     public function getNumberOfPersistedProductOfferServices(ProductOfferTransfer $productOfferTransfer): int
     {
         return $this->getProductOfferServiceQuery()
-            ->filterByProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail())
+            ->filterByFkProductOffer($productOfferTransfer->getIdProductOfferOrFail())
             ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceTransfer $productOfferServiceTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductOfferService(ProductOfferServiceTransfer $productOfferServiceTransfer): ?int
+    {
+        $productOfferServiceEntity = $this->getProductOfferServiceQuery()
+            ->filterByFkProductOffer($productOfferServiceTransfer->getIdProductOfferOrFail())
+            ->filterByFkService($productOfferServiceTransfer->getIdServiceOrFail())
+            ->findOne();
+
+        if (!$productOfferServiceEntity) {
+            return null;
+        }
+
+        return $productOfferServiceEntity->getIdProductOfferService();
     }
 
     /**
      * @return \Orm\Zed\ProductOfferServicePoint\Persistence\SpyProductOfferServiceQuery
      */
-    public function getProductOfferServiceQuery(): SpyProductOfferServiceQuery
+    protected function getProductOfferServiceQuery(): SpyProductOfferServiceQuery
     {
         return SpyProductOfferServiceQuery::create();
     }
@@ -86,15 +130,23 @@ class ProductOfferServicePointBusinessTester extends Actor
     /**
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    public function getProductOfferQuery(): SpyProductOfferQuery
+    protected function getProductOfferQuery(): SpyProductOfferQuery
     {
         return SpyProductOfferQuery::create();
     }
 
     /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceQuery
+     */
+    protected function getServiceQuery(): SpyServiceQuery
+    {
+        return SpyServiceQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
      */
-    public function getServicePointQuery(): SpyServicePointQuery
+    protected function getServicePointQuery(): SpyServicePointQuery
     {
         return SpyServicePointQuery::create();
     }
@@ -102,7 +154,7 @@ class ProductOfferServicePointBusinessTester extends Actor
     /**
      * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
      */
-    public function getServiceTypeQuery(): SpyServiceTypeQuery
+    protected function getServiceTypeQuery(): SpyServiceTypeQuery
     {
         return SpyServiceTypeQuery::create();
     }

@@ -14,9 +14,18 @@ interface ProductOfferServiceExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
      *
-     * @return list<string>
+     * @return list<int>
      */
-    public function extractServiceUuidsFromProductOfferServiceCollectionTransfer(
+    public function extractServiceIdsFromProductOfferServiceCollectionTransfer(
+        ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+     *
+     * @return list<int>
+     */
+    public function extractProductOfferIdsFromProductOfferServiceCollectionTransfer(
         ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
     ): array;
 }

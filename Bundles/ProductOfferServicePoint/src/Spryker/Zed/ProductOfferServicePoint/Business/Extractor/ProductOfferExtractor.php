@@ -33,10 +33,26 @@ class ProductOfferExtractor implements ProductOfferExtractorInterface
      *
      * @return list<string>
      */
+    public function extractServiceUuidsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array
+    {
+        $serviceUuids = [];
+        foreach ($productOfferTransfers as $productOfferTransfer) {
+            foreach ($productOfferTransfer->getServices() as $serviceTransfer) {
+                $serviceUuids[] = $serviceTransfer->getUuidOrFail();
+            }
+        }
+
+        return $serviceUuids;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
+     *
+     * @return list<string>
+     */
     public function extractProductOfferReferencesFromProductOfferTransfers(ArrayObject $productOfferTransfers): array
     {
         $productOfferReferences = [];
-
         foreach ($productOfferTransfers as $productOfferTransfer) {
             $productOfferReferences[] = $productOfferTransfer->getProductOfferReferenceOrFail();
         }
@@ -47,18 +63,32 @@ class ProductOfferExtractor implements ProductOfferExtractorInterface
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      *
-     * @return list<string>
+     * @return list<int>
      */
-    public function extractServiceUuidsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array
+    public function extractProductOfferIdsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array
     {
-        $serviceUuids = [];
+        $productOfferIds = [];
+        foreach ($productOfferTransfers as $productOfferTransfer) {
+            $productOfferIds[] = $productOfferTransfer->getIdProductOfferOrFail();
+        }
 
+        return $productOfferIds;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
+     *
+     * @return list<int>
+     */
+    public function extractServiceIdsFromProductOfferTransfers(ArrayObject $productOfferTransfers): array
+    {
+        $serviceIds = [];
         foreach ($productOfferTransfers as $productOfferTransfer) {
             foreach ($productOfferTransfer->getServices() as $serviceTransfer) {
-                $serviceUuids[] = $serviceTransfer->getUuidOrFail();
+                $serviceIds[] = $serviceTransfer->getIdServiceOrFail();
             }
         }
 
-        return $serviceUuids;
+        return $serviceIds;
     }
 }

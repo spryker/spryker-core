@@ -76,7 +76,6 @@ class ServiceExistsProductOfferValidatorRule implements ProductOfferValidatorRul
         foreach ($productOfferTransfers as $entityIdentifier => $productOfferTransfer) {
             /** @var list<string> $productOfferServiceUuids */
             $productOfferServiceUuids = array_unique($this->productOfferExtractor->extractServiceUuidsFromProductOfferTransfers(new ArrayObject([$productOfferTransfer])));
-
             if (!$productOfferServiceUuids) {
                 continue;
             }

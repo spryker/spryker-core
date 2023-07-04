@@ -69,6 +69,22 @@ class ServicePointStorageFacade extends AbstractFacade implements ServicePointSt
      *
      * @api
      *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServicePointStorageCollectionByServiceEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createServicePointStorageWriter()
+            ->writeServicePointStorageCollectionByServiceEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $offset
      * @param int $limit
      * @param list<int> $servicePointIds

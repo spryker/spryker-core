@@ -8,7 +8,7 @@
         "spryker/event-behavior": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/publisher-extension": "^1.0.0",
-        "spryker/service-point": "^0.3.0 || ^0.4.0",
+        "spryker/service-point": "^0.4.1",
         "spryker/storage": "^3.0.0",
         "spryker/store": "^1.19.0",
         "spryker/synchronization": "^1.9.0",
@@ -22,7 +22,6 @@
         "spryker/container": "*",
         "spryker/country": "*",
         "spryker/propel": "*",
-        "spryker/queue": "*",
         "spryker/testify": "*"
     },
     "autoload": {

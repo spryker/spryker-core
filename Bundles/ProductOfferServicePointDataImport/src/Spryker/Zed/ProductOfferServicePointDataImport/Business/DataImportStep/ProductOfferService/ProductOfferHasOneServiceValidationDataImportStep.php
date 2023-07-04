@@ -30,7 +30,7 @@ class ProductOfferHasOneServiceValidationDataImportStep extends PublishAwareStep
     {
         $servicePointCount = $this->getServiceQuery()
             ->select(SpyServiceTableMap::COL_FK_SERVICE_POINT)
-            ->filterByUuid_In($this->getServiceUuidsByProductOffer($dataSet))
+            ->filterByIdService_In($this->getServiceIdsByIdProductOffer($dataSet))
             ->distinct()
             ->find()
             ->count();
@@ -61,15 +61,15 @@ class ProductOfferHasOneServiceValidationDataImportStep extends PublishAwareStep
      *
      * @return list<string>
      */
-    protected function getServiceUuidsByProductOffer(DataSetInterface $dataSet): array
+    protected function getServiceIdsByIdProductOffer(DataSetInterface $dataSet): array
     {
         $serviceUuids = $this->getProductOfferServiceQuery()
-            ->select(SpyProductOfferServiceTableMap::COL_SERVICE_UUID)
-            ->filterByProductOfferReference($dataSet[ProductOfferServiceDataSetInterface::COLUMN_PRODUCT_OFFER_REFERENCE])
+            ->select(SpyProductOfferServiceTableMap::COL_FK_SERVICE)
+            ->filterByFkProductOffer($dataSet[ProductOfferServiceDataSetInterface::COLUMN_ID_PRODUCT_OFFER])
             ->find()
             ->getData();
 
-        $serviceUuids[] = $dataSet[ProductOfferServiceDataSetInterface::COLUMN_SERVICE_UUID];
+        $serviceUuids[] = $dataSet[ProductOfferServiceDataSetInterface::COLUMN_ID_SERVICE];
 
         return array_unique($serviceUuids);
     }

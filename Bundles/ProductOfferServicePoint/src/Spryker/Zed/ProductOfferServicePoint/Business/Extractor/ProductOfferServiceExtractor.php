@@ -14,17 +14,34 @@ class ProductOfferServiceExtractor implements ProductOfferServiceExtractorInterf
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
      *
-     * @return list<string>
+     * @return list<int>
      */
-    public function extractServiceUuidsFromProductOfferServiceCollectionTransfer(
+    public function extractServiceIdsFromProductOfferServiceCollectionTransfer(
         ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
     ): array {
-        $serviceUuids = [];
-
-        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServiceTransfer) {
-            $serviceUuids[] = $productOfferServiceTransfer->getServiceUuidOrFail();
+        $serviceIds = [];
+        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
+            foreach ($productOfferServicesTransfer->getServices() as $serviceTransfer) {
+                $serviceIds[] = $serviceTransfer->getIdServiceOrFail();
+            }
         }
 
-        return $serviceUuids;
+        return $serviceIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+     *
+     * @return list<int>
+     */
+    public function extractProductOfferIdsFromProductOfferServiceCollectionTransfer(
+        ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+    ): array {
+        $productOfferIds = [];
+        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
+            $productOfferIds[] = $productOfferServicesTransfer->getProductOfferOrFail()->getIdProductOfferOrFail();
+        }
+
+        return $productOfferIds;
     }
 }

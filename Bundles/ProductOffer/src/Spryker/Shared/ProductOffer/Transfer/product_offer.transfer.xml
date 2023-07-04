@@ -46,7 +46,7 @@
 
     <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
-        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer" deprecated="Use ProductOfferConditions.productOfferIds instead."/>
         <property name="idStore" type="int" deprecated="Use ProductOfferConditions.storeIds instead."/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
@@ -61,6 +61,7 @@
     </transfer>
 
     <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>

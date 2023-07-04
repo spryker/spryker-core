@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferServicePoint\Business\Reader;
 
+use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
+use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface;
 use Spryker\Zed\ProductOfferServicePoint\Dependency\Facade\ProductOfferServicePointToServicePointFacadeInterface;
 
 class ServiceReader implements ServiceReaderInterface
@@ -20,12 +22,20 @@ class ServiceReader implements ServiceReaderInterface
     protected ProductOfferServicePointToServicePointFacadeInterface $servicePointFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface
+     */
+    protected ProductOfferServiceMapperInterface $productOfferServiceMapper;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePoint\Dependency\Facade\ProductOfferServicePointToServicePointFacadeInterface $servicePointFacade
+     * @param \Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface $productOfferServiceMapper
      */
     public function __construct(
-        ProductOfferServicePointToServicePointFacadeInterface $servicePointFacade
+        ProductOfferServicePointToServicePointFacadeInterface $servicePointFacade,
+        ProductOfferServiceMapperInterface $productOfferServiceMapper
     ) {
         $this->servicePointFacade = $servicePointFacade;
+        $this->productOfferServiceMapper = $productOfferServiceMapper;
     }
 
     /**
@@ -39,6 +49,36 @@ class ServiceReader implements ServiceReaderInterface
             ->setUuids($serviceUuids);
         $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())
             ->setServiceConditions($serviceConditionsTransfer);
+
+        return $this->servicePointFacade->getServiceCollection($serviceCriteriaTransfer);
+    }
+
+    /**
+     * @param list<int> $serviceIds
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function getServiceCollectionByServiceIds(array $serviceIds): ServiceCollectionTransfer
+    {
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())->setServiceConditions(
+            (new ServiceConditionsTransfer())->setServiceIds($serviceIds),
+        );
+
+        return $this->servicePointFacade->getServiceCollection($serviceCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function getServiceCollectionByIterableProductOfferServicesCriteria(
+        IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
+    ): ServiceCollectionTransfer {
+        $serviceCriteriaTransfer = $this->productOfferServiceMapper->mapIterableProductOfferServicesCriteriaTransferToServiceCriteriaTransfer(
+            $iterableProductOfferServicesCriteriaTransfer,
+            new ServiceCriteriaTransfer(),
+        );
 
         return $this->servicePointFacade->getServiceCollection($serviceCriteriaTransfer);
     }

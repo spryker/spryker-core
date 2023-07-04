@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\ProductOfferServicePoint\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\ProductOfferServiceBuilder;
 use Generated\Shared\Transfer\ProductOfferServiceTransfer;
 use Orm\Zed\ProductOfferServicePoint\Persistence\SpyProductOfferService;
 use Orm\Zed\ProductOfferServicePoint\Persistence\SpyProductOfferServiceQuery;
@@ -25,16 +24,19 @@ class ProductOfferServiceHelper extends Module
      */
     public function haveProductOfferService(array $seed = []): ProductOfferServiceTransfer
     {
-        $productOfferServiceTransfer = (new ProductOfferServiceBuilder($seed))->build();
+        $productOfferServiceTransfer = (new ProductOfferServiceTransfer())->fromArray($seed, true);
 
-        $productOfferServiceEntity = (new SpyProductOfferService())->fromArray($productOfferServiceTransfer->toArray());
+        $productOfferServiceEntity = (new SpyProductOfferService())
+            ->setFkProductOffer($productOfferServiceTransfer->getIdProductOfferOrFail())
+            ->setFkService($productOfferServiceTransfer->getIdServiceOrFail());
+
         $productOfferServiceEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferServiceEntity): void {
             $this->deleteProductOfferService($productOfferServiceEntity->getIdProductOfferService());
         });
 
-        return $productOfferServiceTransfer->fromArray($productOfferServiceEntity->toArray(), true);
+        return $productOfferServiceTransfer;
     }
 
     /**
@@ -44,7 +46,7 @@ class ProductOfferServiceHelper extends Module
      */
     protected function deleteProductOfferService(int $idProductOfferService): void
     {
-        $productOfferServiceEntity = $this->getProductOfferServiceQuery()->findOneByIdProductOfferServicePoint($idProductOfferService);
+        $productOfferServiceEntity = $this->getProductOfferServiceQuery()->findOneByIdProductOfferService($idProductOfferService);
 
         if ($productOfferServiceEntity) {
             $productOfferServiceEntity->delete();

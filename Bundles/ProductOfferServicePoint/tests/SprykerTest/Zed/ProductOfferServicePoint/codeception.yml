@@ -29,3 +29,4 @@ suites:
                 - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ProductOfferServicePoint\Helper\ProductOfferServiceHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

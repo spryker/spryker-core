@@ -22,5 +22,10 @@ interface ProductOfferServiceDataSetInterface
     /**
      * @var string
      */
-    public const COLUMN_SERVICE_UUID = 'service_uuid';
+    public const COLUMN_ID_PRODUCT_OFFER = 'id_product_offer';
+
+    /**
+     * @var string
+     */
+    public const COLUMN_ID_SERVICE = 'id_service';
 }

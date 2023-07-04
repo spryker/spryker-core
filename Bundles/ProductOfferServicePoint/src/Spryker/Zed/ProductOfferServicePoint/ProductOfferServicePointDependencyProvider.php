@@ -36,8 +36,8 @@ class ProductOfferServicePointDependencyProvider extends AbstractBundleDependenc
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addServicePoint($container);
-        $container = $this->addProductOffer($container);
+        $container = $this->addServicePointFacade($container);
+        $container = $this->addProductOfferFacade($container);
 
         return $container;
     }
@@ -47,7 +47,7 @@ class ProductOfferServicePointDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addServicePoint(Container $container): Container
+    protected function addServicePointFacade(Container $container): Container
     {
         $container->set(static::FACADE_SERVICE_POINT, function (Container $container) {
             return new ProductOfferServicePointToServicePointFacadeBridge(
@@ -63,7 +63,7 @@ class ProductOfferServicePointDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductOffer(Container $container): Container
+    protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferServicePointToProductOfferFacadeBridge(
