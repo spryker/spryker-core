@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business;
 
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
+
 interface MerchantProductOfferStorageFacadeInterface
 {
     /**
@@ -54,4 +56,20 @@ interface MerchantProductOfferStorageFacadeInterface
      * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
      */
     public function filterProductOfferServices(array $productOfferServicesTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `ProductOfferShipmentTypeCollectionTransfer.productOfferShipmentTypes.productOffer` to be set.
+     * - Filters out `ProductOfferShipmentTypeCollectionTransfer.productOfferShipmentTypes` with product offers with inactive merchants.
+     * - Doesn't filter out product offers without merchant references.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer
+     */
+    public function filterProductOfferShipmentTypeCollection(
+        ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
+    ): ProductOfferShipmentTypeCollectionTransfer;
 }

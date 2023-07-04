@@ -44,15 +44,15 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      */
     public function expandProductOfferWithShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        $shipmentTypeUuids = $this->productOfferShipmentTypeRepository->getShipmentTypeUuidsByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $shipmentTypeIds = $this->productOfferShipmentTypeRepository->getShipmentTypeIdsByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
-        if (!$shipmentTypeUuids) {
+        if (!$shipmentTypeIds) {
             return $productOfferTransfer;
         }
 
         $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())
-            ->setUuids($shipmentTypeUuids);
+            ->setShipmentTypeIds($shipmentTypeIds);
         $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
             ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
 

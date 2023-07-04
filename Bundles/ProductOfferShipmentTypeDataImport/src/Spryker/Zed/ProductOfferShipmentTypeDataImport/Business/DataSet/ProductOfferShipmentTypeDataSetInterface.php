@@ -22,5 +22,10 @@ interface ProductOfferShipmentTypeDataSetInterface
     /**
      * @var string
      */
-    public const UUID_SHIPMENT_TYPE = 'uuid_shipment_type';
+    public const ID_SHIPMENT_TYPE = 'id_shipment_type';
+
+    /**
+     * @var string
+     */
+    public const ID_PRODUCT_OFFER = 'id_product_offer';
 }

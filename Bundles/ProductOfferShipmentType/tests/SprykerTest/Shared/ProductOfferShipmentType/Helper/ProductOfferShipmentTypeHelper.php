@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\ProductOfferShipmentType\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentType;
@@ -22,21 +23,26 @@ class ProductOfferShipmentTypeHelper extends Module
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer
      */
     public function haveProductOfferShipmentType(
         ProductOfferTransfer $productOfferTransfer,
         ShipmentTypeTransfer $shipmentTypeTransfer
-    ): void {
+    ): ProductOfferShipmentTypeTransfer {
         $productOfferShipmentTypeEntity = new SpyProductOfferShipmentType();
-        $productOfferShipmentTypeEntity->setProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail());
-        $productOfferShipmentTypeEntity->setShipmentTypeUuid($shipmentTypeTransfer->getUuidOrFail());
+        $productOfferShipmentTypeEntity->setFkProductOffer($productOfferTransfer->getIdProductOfferOrFail());
+        $productOfferShipmentTypeEntity->setFkShipmentType($shipmentTypeTransfer->getIdShipmentTypeOrFail());
 
         $productOfferShipmentTypeEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferShipmentTypeEntity): void {
             $this->deleteProductOfferShipmentType($productOfferShipmentTypeEntity->getIdProductOfferShipmentType());
         });
+
+        return (new ProductOfferShipmentTypeTransfer())
+            ->setIdProductOfferShipmentType($productOfferShipmentTypeEntity->getIdProductOfferShipmentType())
+            ->setProductOffer($productOfferTransfer)
+            ->addShipmentType($shipmentTypeTransfer);
     }
 
     /**

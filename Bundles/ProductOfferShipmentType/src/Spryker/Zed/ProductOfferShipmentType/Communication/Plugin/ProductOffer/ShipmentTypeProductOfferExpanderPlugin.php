@@ -19,7 +19,7 @@ class ShipmentTypeProductOfferExpanderPlugin extends AbstractPlugin implements P
 {
     /**
      * {@inheritDoc}
-     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
      * - Expands `ProductOfferTransfer` with related shipment types.
      *
      * @api

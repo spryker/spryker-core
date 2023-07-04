@@ -260,7 +260,11 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN,
             );
-            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteria->getIsActiveConcreteProduct());
+            $productOfferQuery->addAnd(
+                SpyProductTableMap::COL_IS_ACTIVE,
+                $productOfferCriteria->getIsActiveConcreteProductOrFail(),
+                Criteria::EQUAL,
+            );
         }
 
         return $productOfferQuery;

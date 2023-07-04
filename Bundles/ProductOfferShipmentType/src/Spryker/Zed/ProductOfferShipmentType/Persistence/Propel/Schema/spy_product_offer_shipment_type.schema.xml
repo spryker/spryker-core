@@ -3,12 +3,20 @@
 
     <table name="spy_product_offer_shipment_type">
         <column name="id_product_offer_shipment_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="shipment_type_uuid" required="true" type="VARCHAR" size="255"/>
+        <column name="fk_product_offer" required="true" type="INTEGER"/>
+        <column name="fk_shipment_type" required="true" type="INTEGER"/>
 
-        <unique name="spy_product_offer_shipment_type-prod_offer_ref-ship_type_uuid">
-            <unique-column name="product_offer_reference"/>
-            <unique-column name="shipment_type_uuid"/>
+        <foreign-key name="spy_post-fk_product_offer" foreignTable="spy_product_offer" phpName="ProductOffer" refPhpName="ProductOfferShipmentType">
+            <reference local="fk_product_offer" foreign="id_product_offer"/>
+        </foreign-key>
+
+        <foreign-key name="spy_post-fk_shipment_type" foreignTable="spy_shipment_type" phpName="ShipmentType" refPhpName="ProductOfferShipmentType">
+            <reference local="fk_shipment_type" foreign="id_shipment_type"/>
+        </foreign-key>
+
+        <unique name="spy_product_offer_shipment_type-fk_prod_offer-fk_ship_type">
+            <unique-column name="fk_product_offer"/>
+            <unique-column name="fk_shipment_type"/>
         </unique>
 
         <id-method-parameter value="spy_product_offer_shipment_type_pk_seq"/>

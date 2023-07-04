@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\ProductOfferShipmentType;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentTypeQuery;
 use Propel\Runtime\Collection\Collection;
 
@@ -26,22 +29,46 @@ use Propel\Runtime\Collection\Collection;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\ProductOfferShipmentType\Business\ProductOfferShipmentTypeFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferShipmentType\PHPMD)
  */
 class ProductOfferShipmentTypeBusinessTester extends Actor
 {
     use _generated\ProductOfferShipmentTypeBusinessTesterActions;
 
     /**
-     * @param string $productOfferReference
+     * @param int $idProductOffer
      *
      * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentType>
      */
-    public function getProductOfferShipmentTypeEntitiesByProductOfferReference(string $productOfferReference): Collection
+    public function getProductOfferShipmentTypeEntitiesByIdProductOffer(int $idProductOffer): Collection
     {
         return $this->getProductOfferShipmentTypeQuery()
-            ->filterByProductOfferReference($productOfferReference)
+            ->filterByFkProductOffer($idProductOffer)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer $productOfferShipmentTypeTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
+     *
+     * @return void
+     */
+    public function assertProductOfferShipmentTypeTransfer(
+        ProductOfferShipmentTypeTransfer $productOfferShipmentTypeTransfer,
+        ProductOfferTransfer $productOfferTransfer,
+        ShipmentTypeTransfer $shipmentTypeTransfer
+    ): void {
+        $this->assertNotNull($productOfferShipmentTypeTransfer->getProductOffer());
+        $this->assertSame(
+            $productOfferTransfer->getIdProductOfferOrFail(),
+            $productOfferShipmentTypeTransfer->getProductOffer()->getIdProductOffer(),
+        );
+        $this->assertCount(1, $productOfferShipmentTypeTransfer->getShipmentTypes());
+        $this->assertSame(
+            $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+            $productOfferShipmentTypeTransfer->getShipmentTypes()->getIterator()->current()->getIdShipmentType(),
+        );
     }
 
     /**

@@ -1,0 +1,28 @@
+namespace: SprykerTest\Client\ProductOfferShipmentTypeStorage
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+
+suites:
+    Client:
+        path: .
+        actor: ProductOfferShipmentTypeStorageClientTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Client\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Storage\Helper\StorageHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

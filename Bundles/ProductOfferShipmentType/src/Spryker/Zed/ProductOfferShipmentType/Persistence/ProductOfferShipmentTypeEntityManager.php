@@ -16,32 +16,32 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductOfferShipmentTypeEntityManager extends AbstractEntityManager implements ProductOfferShipmentTypeEntityManagerInterface
 {
     /**
-     * @param string $productOfferReference
-     * @param string $shipmentTypeUuid
+     * @param int $idProductOffer
+     * @param int $idShipmentType
      *
      * @return void
      */
-    public function createProductOfferShipmentType(string $productOfferReference, string $shipmentTypeUuid): void
+    public function createProductOfferShipmentType(int $idProductOffer, int $idShipmentType): void
     {
         $productOfferShipmentTypeEntity = (new SpyProductOfferShipmentType())
-            ->setProductOfferReference($productOfferReference)
-            ->setShipmentTypeUuid($shipmentTypeUuid);
+            ->setFkProductOffer($idProductOffer)
+            ->setFkShipmentType($idShipmentType);
 
         $productOfferShipmentTypeEntity->save();
     }
 
     /**
-     * @param string $productOfferReference
-     * @param array<string> $shipmentTypeUuids
+     * @param int $idProductOffer
+     * @param array<int> $shipmentTypeIds
      *
      * @return void
      */
-    public function deleteProductOfferShipmentTypes(string $productOfferReference, array $shipmentTypeUuids): void
+    public function deleteProductOfferShipmentTypes(int $idProductOffer, array $shipmentTypeIds): void
     {
         $this->getFactory()
             ->createProductOfferShipmentTypeQuery()
-            ->filterByProductOfferReference($productOfferReference)
-            ->filterByShipmentTypeUuid_In($shipmentTypeUuids)
+            ->filterByFkProductOffer($idProductOffer)
+            ->filterByFkShipmentType_In($shipmentTypeIds)
             ->find()
             ->delete();
     }

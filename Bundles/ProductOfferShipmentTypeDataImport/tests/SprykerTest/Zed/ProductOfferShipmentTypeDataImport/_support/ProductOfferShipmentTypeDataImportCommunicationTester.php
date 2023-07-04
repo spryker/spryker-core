@@ -13,8 +13,11 @@ use Orm\Zed\ProductOfferShipmentType\Persistence\Map\SpyProductOfferShipmentType
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\Map\SpyShipmentTypeTableMap;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ProductOfferReferenceToIdProductOfferDataImportStep;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ShipmentTypeKeyToIdShipmentTypeDataImportStep;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\Communication\Plugin\DataImport\ProductOfferShipmentTypeDataImportPlugin;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
 /**
  * Inherited Methods
@@ -30,11 +33,12 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferShipmentTypeDataImport\PHPMD)
  */
 class ProductOfferShipmentTypeDataImportCommunicationTester extends Actor
 {
     use _generated\ProductOfferShipmentTypeDataImportCommunicationTesterActions;
+    use StaticVariablesHelper;
 
     /**
      * @return void
@@ -47,25 +51,32 @@ class ProductOfferShipmentTypeDataImportCommunicationTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function cleanUpStaticCacheData(): void
+    {
+        $this->cleanupStaticCache(ProductOfferReferenceToIdProductOfferDataImportStep::class, 'productOfferIdsIndexedByProductOfferReference', []);
+        $this->cleanupStaticCache(ShipmentTypeKeyToIdShipmentTypeDataImportStep::class, 'shipmentTypeIdsIndexedByShipmentTypeKey', []);
+    }
+
+    /**
      * @param list<string> $shipmentTypeKeys
      *
      * @return int
      */
     public function getProductOfferShipmentTypeEntitiesByShipmentTypeKeysCount(array $shipmentTypeKeys): int
     {
-        $productOfferShipmentTypeQuery = $this->getProductOfferShipmentTypeQuery();
-
          return $this->getProductOfferShipmentTypeQuery()
              ->addJoin(
-                 SpyProductOfferShipmentTypeTableMap::COL_SHIPMENT_TYPE_UUID,
-                 SpyShipmentTypeTableMap::COL_UUID,
+                 SpyProductOfferShipmentTypeTableMap::COL_FK_SHIPMENT_TYPE,
+                 SpyShipmentTypeTableMap::COL_ID_SHIPMENT_TYPE,
                  Criteria::INNER_JOIN,
              )
-             ->addAnd($productOfferShipmentTypeQuery->getNewCriterion(
+             ->addAnd(
                  SpyShipmentTypeTableMap::COL_KEY,
                  $shipmentTypeKeys,
                  Criteria::IN,
-             ))
+             )
              ->find()
              ->count();
     }

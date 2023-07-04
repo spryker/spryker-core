@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business;
 
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -63,5 +66,37 @@ class ProductOfferShipmentTypeFacade extends AbstractFacade implements ProductOf
         return $this->getFactory()
             ->createProductOfferShipmentTypeUpdater()
             ->updateProductOfferShipmentTypes($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer $productOfferShipmentTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer
+     */
+    public function getProductOfferShipmentTypeCollection(
+        ProductOfferShipmentTypeCriteriaTransfer $productOfferShipmentTypeCriteriaTransfer
+    ): ProductOfferShipmentTypeCollectionTransfer {
+        return $this->getRepository()->getProductOfferShipmentTypeCollection($productOfferShipmentTypeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer $productOfferShipmentTypeIteratorCriteriaTransfer
+     *
+     * @return iterable<\ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer>>
+     */
+    public function getProductOfferShipmentTypesIterator(
+        ProductOfferShipmentTypeIteratorCriteriaTransfer $productOfferShipmentTypeIteratorCriteriaTransfer
+    ): iterable {
+        return $this->getFactory()
+            ->createProductOfferShipmentTypeReader()
+            ->getProductOfferShipmentTypesIterator($productOfferShipmentTypeIteratorCriteriaTransfer);
     }
 }

@@ -19,8 +19,8 @@ class ShipmentTypeProductOfferPostCreatePlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
-     * - Requires `ShipmentTypeTransfer.shipmentTypeUuid` to be set for each `ShipmentTypeTransfer` in `ProductOfferTransfer.shipmentTypes` collection.
+     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
+     * - Requires `ShipmentTypeTransfer.idShipmentType` to be set for each `ShipmentTypeTransfer` in `ProductOfferTransfer.shipmentTypes` collection.
      * - Iterates over `ProductOfferTransfer.shipmentTypes`.
      * - Persists product offer shipment types to persistence.
      *

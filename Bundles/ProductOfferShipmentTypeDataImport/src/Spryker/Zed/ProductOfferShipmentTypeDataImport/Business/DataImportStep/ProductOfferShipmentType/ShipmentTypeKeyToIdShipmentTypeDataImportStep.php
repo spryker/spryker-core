@@ -7,19 +7,25 @@
 
 namespace Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType;
 
-use Orm\Zed\ShipmentType\Persistence\Map\SpyShipmentTypeTableMap;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataSet\ProductOfferShipmentTypeDataSetInterface;
 
-class ShipmentTypeKeyToUuidShipmentTypeDataImportStep implements DataImportStepInterface
+class ShipmentTypeKeyToIdShipmentTypeDataImportStep implements DataImportStepInterface
 {
     /**
-     * @var array<string, string>
+     * @uses \Orm\Zed\ShipmentType\Persistence\Map\SpyShipmentTypeTableMap::COL_ID_SHIPMENT_TYPE
+     *
+     * @var string
      */
-    protected static array $shipmentTypeUuidsIndexedByShipmentTypeKey = [];
+    protected const COL_ID_SHIPMENT_TYPE = 'spy_shipment_type.id_shipment_type';
+
+    /**
+     * @var array<string, int>
+     */
+    protected static array $shipmentTypeIdsIndexedByShipmentTypeKey = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -31,11 +37,11 @@ class ShipmentTypeKeyToUuidShipmentTypeDataImportStep implements DataImportStepI
         /** @var string $shipmentTypeKey */
         $shipmentTypeKey = $dataSet[ProductOfferShipmentTypeDataSetInterface::COLUMN_SHIPMENT_TYPE_KEY];
 
-        if (!isset($this->shipmentTypeUuidsIndexedByShipmentTypeKey[$shipmentTypeKey])) {
-            static::$shipmentTypeUuidsIndexedByShipmentTypeKey[$shipmentTypeKey] = $this->getUuidShipmentTypeByKey($shipmentTypeKey);
+        if (!isset(static::$shipmentTypeIdsIndexedByShipmentTypeKey[$shipmentTypeKey])) {
+            static::$shipmentTypeIdsIndexedByShipmentTypeKey[$shipmentTypeKey] = $this->getIdShipmentTypeByKey($shipmentTypeKey);
         }
 
-        $dataSet[ProductOfferShipmentTypeDataSetInterface::UUID_SHIPMENT_TYPE] = static::$shipmentTypeUuidsIndexedByShipmentTypeKey[$shipmentTypeKey];
+        $dataSet[ProductOfferShipmentTypeDataSetInterface::ID_SHIPMENT_TYPE] = static::$shipmentTypeIdsIndexedByShipmentTypeKey[$shipmentTypeKey];
     }
 
     /**
@@ -43,22 +49,22 @@ class ShipmentTypeKeyToUuidShipmentTypeDataImportStep implements DataImportStepI
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
-     * @return string
+     * @return int
      */
-    protected function getUuidShipmentTypeByKey(string $shipmentTypeKey): string
+    protected function getIdShipmentTypeByKey(string $shipmentTypeKey): int
     {
-        /** @var string $uuidShipmentType */
-        $uuidShipmentType = $this->getShipmentTypeQuery()
-            ->select(SpyShipmentTypeTableMap::COL_UUID)
+        /** @var int $idShipmentType */
+        $idShipmentType = $this->getShipmentTypeQuery()
+            ->select(static::COL_ID_SHIPMENT_TYPE)
             ->findOneByKey($shipmentTypeKey);
 
-        if (!$uuidShipmentType) {
+        if (!$idShipmentType) {
             throw new EntityNotFoundException(
                 sprintf('Could not find shipment type by key "%s"', $shipmentTypeKey),
             );
         }
 
-        return $uuidShipmentType;
+        return $idShipmentType;
     }
 
     /**

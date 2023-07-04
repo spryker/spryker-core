@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferServiceStorageFilter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferServiceStorageFilterInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferShipmentTypeStorageFilter;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferShipmentTypeStorageFilterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
@@ -20,7 +22,6 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
  */
@@ -58,6 +59,14 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new MerchantProductOfferServiceStorageFilter(
             $this->getMerchantFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Filter\MerchantProductOfferShipmentTypeStorageFilterInterface
+     */
+    public function createMerchantProductOfferShipmentTypeStorageFilter(): MerchantProductOfferShipmentTypeStorageFilterInterface
+    {
+        return new MerchantProductOfferShipmentTypeStorageFilter($this->getMerchantFacade());
     }
 
     /**

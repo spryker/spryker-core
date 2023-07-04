@@ -59,19 +59,19 @@ class UpdateProductOfferShipmentTypesTest extends Unit
         $productOfferTransfer = $this->tester->getFacade()->updateProductOfferShipmentTypes($productOfferTransfer);
 
         // Assert
-        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
         $this->assertCount(3, $productOfferShipmentTypeEntities);
-        $shipmentTypeUuids = array_unique(
+        $shipmentTypeIds = array_unique(
             [
-                $persistedShipmentTypeTransfer->getUuidOrFail(),
-                $newShipmentType1Transfer->getUuidOrFail(),
-                $newShipmentType2Transfer->getUuidOrFail(),
+                $persistedShipmentTypeTransfer->getIdShipmentTypeOrFail(),
+                $newShipmentType1Transfer->getIdShipmentTypeOrFail(),
+                $newShipmentType2Transfer->getIdShipmentTypeOrFail(),
             ],
         );
         foreach ($productOfferShipmentTypeEntities as $productOfferShipmentTypeEntity) {
-            $this->assertContains($productOfferShipmentTypeEntity->getShipmentTypeUuid(), $shipmentTypeUuids);
+            $this->assertContains($productOfferShipmentTypeEntity->getFkShipmentType(), $shipmentTypeIds);
         }
     }
 
@@ -98,14 +98,14 @@ class UpdateProductOfferShipmentTypesTest extends Unit
         $productOfferTransfer = $this->tester->getFacade()->updateProductOfferShipmentTypes($productOfferTransfer);
 
         // Assert
-        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
         $this->assertCount(1, $productOfferShipmentTypeEntities);
         $productOfferShipmentTypeEntity = $productOfferShipmentTypeEntities->offsetGet(0);
         $this->assertSame(
-            $persistedShipmentType1Transfer->getUuidOrFail(),
-            $productOfferShipmentTypeEntity->getShipmentTypeUuid(),
+            $persistedShipmentType1Transfer->getIdShipmentTypeOrFail(),
+            $productOfferShipmentTypeEntity->getFkShipmentType(),
         );
     }
 
@@ -127,16 +127,16 @@ class UpdateProductOfferShipmentTypesTest extends Unit
             ->addShipmentType($shipmentType1Transfer)
             ->addShipmentType($shipmentType2Transfer);
 
-        $productOfferShipmentTypeEntitiesBeforePluginExecution = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntitiesBeforePluginExecution = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
 
         // Act
         $productOfferTransfer = $this->tester->getFacade()->updateProductOfferShipmentTypes($productOfferTransfer);
 
         // Assert
-        $productOfferShipmentTypeEntitiesAfterPluginExecution = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntitiesAfterPluginExecution = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
 
         $this->assertEquals(

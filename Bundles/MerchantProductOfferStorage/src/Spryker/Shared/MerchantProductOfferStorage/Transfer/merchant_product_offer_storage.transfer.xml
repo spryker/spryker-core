@@ -34,4 +34,13 @@
     <transfer name="Merchant">
         <property name="merchantReference" type="string"/>
     </transfer>
+
+    <transfer name="ProductOfferShipmentTypeCollection" strict="true">
+        <property name="productOfferShipmentTypes" type="ProductOfferShipmentType[]" singular="productOfferShipmentType"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentType" strict="true">
+        <property name="productOffer" type="ProductOffer"/>
+    </transfer>
+
 </transfers>

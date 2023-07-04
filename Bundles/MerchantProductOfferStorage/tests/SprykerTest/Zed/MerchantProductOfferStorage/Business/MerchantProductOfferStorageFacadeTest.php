@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferServicesTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -35,6 +37,13 @@ class MerchantProductOfferStorageFacadeTest extends Unit
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     *
+     * @var string
+     */
+    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_DENIED
@@ -170,5 +179,95 @@ class MerchantProductOfferStorageFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productOfferServiceTransfers);
         $this->assertSame($productOfferTransfer->getProductOfferReferenceOrFail(), $productOfferServiceTransfers[0]->getProductOfferOrFail()->getProductOfferReferenceOrFail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductOfferShipmentTypeCollectionFiltersOutProductOfferShipmentTypesWithInactiveMerchantReferences(): void
+    {
+        // Arrange
+        $activeMerchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
+        $inactiveMerchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => false,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
+        $notApprovedMerchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_WAITING_FOR_APPROVAL,
+        ]);
+        $productOfferTransfer1 = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => $activeMerchantTransfer->getMerchantReferenceOrFail()]);
+        $productOfferTransfer2 = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => $inactiveMerchantTransfer->getMerchantReferenceOrFail()]);
+        $productOfferTransfer3 = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => $notApprovedMerchantTransfer->getMerchantReferenceOrFail()]);
+
+        $productOfferShipmentTypeCollectionTransfer = (new ProductOfferShipmentTypeCollectionTransfer())
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer1))
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer2))
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer3));
+
+        // Act
+        $productOfferShipmentTypeCollectionTransfer = $this->tester->getFacade()
+            ->filterProductOfferShipmentTypeCollection($productOfferShipmentTypeCollectionTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes());
+        $this->assertSame(
+            $productOfferTransfer1->getProductOfferReferenceOrFail(),
+            $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->getIterator()->current()->getProductOfferOrFail()->getProductOfferReferenceOrFail(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductOfferShipmentTypeCollectionDoesNotFilterOutProductOfferShipmentTypesWithoutMerchantReferences(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => null]);
+        $productOfferShipmentTypeCollectionTransfer = (new ProductOfferShipmentTypeCollectionTransfer())
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer));
+
+        // Act
+        $productOfferShipmentTypeCollectionTransfer = $this->tester->getFacade()
+            ->filterProductOfferShipmentTypeCollection($productOfferShipmentTypeCollectionTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes());
+        $this->assertSame(
+            $productOfferTransfer->getProductOfferReferenceOrFail(),
+            $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->getIterator()->current()->getProductOfferOrFail()->getProductOfferReferenceOrFail(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductOfferShipmentTypeCollectionFiltersOutProductOfferShipmentTypesWithInactiveMerchantReferencesAndLeavesOnesWithoutMerchantReferences(): void
+    {
+        // Arrange
+        $inactiveMerchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => false,
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
+        $productOfferTransfer1 = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => null]);
+        $productOfferTransfer2 = $this->tester->haveProductOffer([ProductOfferTransfer::MERCHANT_REFERENCE => $inactiveMerchantTransfer->getMerchantReferenceOrFail()]);
+
+        $productOfferShipmentTypeCollectionTransfer = (new ProductOfferShipmentTypeCollectionTransfer())
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer1))
+            ->addProductOfferShipmentType((new ProductOfferShipmentTypeTransfer())->setProductOffer($productOfferTransfer2));
+
+        // Act
+        $productOfferShipmentTypeCollectionTransfer = $this->tester->getFacade()
+            ->filterProductOfferShipmentTypeCollection($productOfferShipmentTypeCollectionTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes());
+        $this->assertSame(
+            $productOfferTransfer1->getProductOfferReferenceOrFail(),
+            $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->getIterator()->current()->getProductOfferOrFail()->getProductOfferReferenceOrFail(),
+        );
     }
 }

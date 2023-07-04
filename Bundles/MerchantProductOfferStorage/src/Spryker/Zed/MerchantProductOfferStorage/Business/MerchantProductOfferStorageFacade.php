@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business;
 
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -60,5 +61,22 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
         return $this->getFactory()
             ->createMerchantProductOfferServiceStorageFilter()
             ->filterProductOfferServices($productOfferServicesTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer
+     */
+    public function filterProductOfferShipmentTypeCollection(
+        ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
+    ): ProductOfferShipmentTypeCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantProductOfferShipmentTypeStorageFilter()
+            ->filterProductOfferShipmentTypeCollection($productOfferShipmentTypeCollectionTransfer);
     }
 }

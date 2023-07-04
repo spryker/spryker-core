@@ -7,12 +7,24 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Persistence;
 
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
+
 interface ProductOfferShipmentTypeRepositoryInterface
 {
     /**
-     * @param string $productOfferReference
+     * @param int $idProductOffer
      *
-     * @return array<string>
+     * @return array<int>
      */
-    public function getShipmentTypeUuidsByProductOfferReference(string $productOfferReference): array;
+    public function getShipmentTypeIdsByIdProductOffer(int $idProductOffer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer $productOfferShipmentTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer
+     */
+    public function getProductOfferShipmentTypeCollection(
+        ProductOfferShipmentTypeCriteriaTransfer $productOfferShipmentTypeCriteriaTransfer
+    ): ProductOfferShipmentTypeCollectionTransfer;
 }

@@ -18,8 +18,6 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/product": "*",
-        "spryker/product-offer-stock": "*",
-        "spryker/product-offer-validity": "*",
         "spryker/propel": "*",
         "spryker/store": "*",
         "spryker/testify": "*"

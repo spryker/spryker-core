@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business\Updater;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ShipmentTypeExtractorInterface;
 use Spryker\Zed\ProductOfferShipmentType\Persistence\ProductOfferShipmentTypeEntityManagerInterface;
 use Spryker\Zed\ProductOfferShipmentType\Persistence\ProductOfferShipmentTypeRepositoryInterface;
 
@@ -28,15 +28,23 @@ class ProductOfferShipmentTypeUpdater implements ProductOfferShipmentTypeUpdater
     protected ProductOfferShipmentTypeRepositoryInterface $productOfferShipmentTypeRepository;
 
     /**
+     * @var \Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ShipmentTypeExtractorInterface
+     */
+    protected ShipmentTypeExtractorInterface $shipmentTypeExtractor;
+
+    /**
      * @param \Spryker\Zed\ProductOfferShipmentType\Persistence\ProductOfferShipmentTypeEntityManagerInterface $productOfferShipmentTypeEntityManager
      * @param \Spryker\Zed\ProductOfferShipmentType\Persistence\ProductOfferShipmentTypeRepositoryInterface $productOfferShipmentTypeRepository
+     * @param \Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ShipmentTypeExtractorInterface $shipmentTypeExtractor
      */
     public function __construct(
         ProductOfferShipmentTypeEntityManagerInterface $productOfferShipmentTypeEntityManager,
-        ProductOfferShipmentTypeRepositoryInterface $productOfferShipmentTypeRepository
+        ProductOfferShipmentTypeRepositoryInterface $productOfferShipmentTypeRepository,
+        ShipmentTypeExtractorInterface $shipmentTypeExtractor
     ) {
         $this->productOfferShipmentTypeEntityManager = $productOfferShipmentTypeEntityManager;
         $this->productOfferShipmentTypeRepository = $productOfferShipmentTypeRepository;
+        $this->shipmentTypeExtractor = $shipmentTypeExtractor;
     }
 
     /**
@@ -60,67 +68,54 @@ class ProductOfferShipmentTypeUpdater implements ProductOfferShipmentTypeUpdater
      */
     protected function executeUpdateProductOfferShipmentTypesTransaction(ProductOfferTransfer $productOfferTransfer): void
     {
-        $persistedShipmentTypeUuids = $this->productOfferShipmentTypeRepository->getShipmentTypeUuidsByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $persistedShipmentTypeIds = $this->productOfferShipmentTypeRepository->getShipmentTypeIdsByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
-        $shipmentTypeUuids = $this->extractShipmentTypeUuids($productOfferTransfer->getShipmentTypes());
+        $shipmentTypeIds = $this->shipmentTypeExtractor->extractShipmentTypeIdsFromShipmentTypeTransfers(
+            $productOfferTransfer->getShipmentTypes(),
+        );
 
-        $shipmentTypeUuidsToDelete = array_diff($persistedShipmentTypeUuids, $shipmentTypeUuids);
+        $shipmentTypeIdsToDelete = array_diff($persistedShipmentTypeIds, $shipmentTypeIds);
         $this->deleteProductOfferShipmentTypes(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
-            $shipmentTypeUuidsToDelete,
+            $productOfferTransfer->getIdProductOfferOrFail(),
+            $shipmentTypeIdsToDelete,
         );
 
-        $shipmentTypeUuidsToCreate = array_diff($shipmentTypeUuids, $persistedShipmentTypeUuids);
+        $shipmentTypeIdsToCreate = array_diff($shipmentTypeIds, $persistedShipmentTypeIds);
         $this->createProductOfferShipmentTypes(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
-            $shipmentTypeUuidsToCreate,
+            $productOfferTransfer->getIdProductOfferOrFail(),
+            $shipmentTypeIdsToCreate,
         );
     }
 
     /**
-     * @param string $productOfferReference
-     * @param array<string> $shipmentTypeUuids
+     * @param int $idProductOffer
+     * @param list<int> $shipmentTypeIds
      *
      * @return void
      */
-    protected function deleteProductOfferShipmentTypes(string $productOfferReference, array $shipmentTypeUuids): void
+    protected function deleteProductOfferShipmentTypes(int $idProductOffer, array $shipmentTypeIds): void
     {
-        if (!$shipmentTypeUuids) {
+        if (!$shipmentTypeIds) {
             return;
         }
 
         $this->productOfferShipmentTypeEntityManager->deleteProductOfferShipmentTypes(
-            $productOfferReference,
-            $shipmentTypeUuids,
+            $idProductOffer,
+            $shipmentTypeIds,
         );
     }
 
     /**
-     * @param string $productOfferReference
-     * @param array<string> $shipmentTypeUuids
+     * @param int $idProductOffer
+     * @param list<int> $shipmentTypeIds
      *
      * @return void
      */
-    protected function createProductOfferShipmentTypes(string $productOfferReference, array $shipmentTypeUuids): void
+    protected function createProductOfferShipmentTypes(int $idProductOffer, array $shipmentTypeIds): void
     {
-        foreach ($shipmentTypeUuids as $shipmentTypeUuid) {
-            $this->productOfferShipmentTypeEntityManager->createProductOfferShipmentType($productOfferReference, $shipmentTypeUuid);
+        foreach ($shipmentTypeIds as $idShipmentType) {
+            $this->productOfferShipmentTypeEntityManager->createProductOfferShipmentType($idProductOffer, $idShipmentType);
         }
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
-     *
-     * @return array<string>
-     */
-    protected function extractShipmentTypeUuids(ArrayObject $shipmentTypeTransfers): array
-    {
-        $shipmentTypeUuids = [];
-        foreach ($shipmentTypeTransfers as $shipmentTypeTransfer) {
-            $shipmentTypeUuids[] = $shipmentTypeTransfer->getUuidOrFail();
-        }
-
-        return $shipmentTypeUuids;
     }
 }

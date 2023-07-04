@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
@@ -128,6 +129,40 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsProductOfferCollectionFilteredByProductConcreteActiveStatus(): void
+    {
+        // Arrange
+        $activeProductConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::IS_ACTIVE => true]);
+        $inactiveProductConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::IS_ACTIVE => false]);
+        $productOfferTransfer1 = $this->tester->haveProductOffer([
+            ProductOfferTransfer::CONCRETE_SKU => $activeProductConcreteTransfer->getSkuOrFail(),
+        ]);
+        $productOfferTransfer2 = $this->tester->haveProductOffer([
+            ProductOfferTransfer::CONCRETE_SKU => $inactiveProductConcreteTransfer->getSkuOrFail(),
+        ]);
+
+        $productOfferConditionsTransfer = (new ProductOfferConditionsTransfer())->setProductOfferReferences([
+            $productOfferTransfer1->getProductOfferReferenceOrFail(),
+            $productOfferTransfer2->getProductOfferReferenceOrFail(),
+        ]);
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setIsActiveConcreteProduct(false)
+            ->setProductOfferConditions($productOfferConditionsTransfer);
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertSame(
+            $productOfferTransfer2->getIdProductOfferOrFail(),
+            $productOfferCollectionTransfer->getProductOffers()->getIterator()->current()->getIdProductOffer(),
+        );
     }
 
     /**

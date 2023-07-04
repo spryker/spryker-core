@@ -10,18 +10,18 @@ namespace Spryker\Zed\ProductOfferShipmentType\Persistence;
 interface ProductOfferShipmentTypeEntityManagerInterface
 {
     /**
-     * @param string $productOfferReference
-     * @param string $shipmentTypeUuid
+     * @param int $idProductOffer
+     * @param int $idShipmentType
      *
      * @return void
      */
-    public function createProductOfferShipmentType(string $productOfferReference, string $shipmentTypeUuid): void;
+    public function createProductOfferShipmentType(int $idProductOffer, int $idShipmentType): void;
 
     /**
-     * @param string $productOfferReference
-     * @param array<string> $shipmentTypeUuids
+     * @param int $idProductOffer
+     * @param array<int> $shipmentTypeIds
      *
      * @return void
      */
-    public function deleteProductOfferShipmentTypes(string $productOfferReference, array $shipmentTypeUuids): void;
+    public function deleteProductOfferShipmentTypes(int $idProductOffer, array $shipmentTypeIds): void;
 }

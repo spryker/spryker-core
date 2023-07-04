@@ -54,19 +54,19 @@ class CreateProductOfferShipmentTypesTest extends Unit
         $productOfferTransfer = $this->tester->getFacade()->createProductOfferShipmentTypes($productOfferTransfer);
 
         // Assert
-        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
         $this->assertNotEmpty($productOfferShipmentTypeEntities);
         $this->assertCount($productOfferTransfer->getShipmentTypes()->count(), $productOfferShipmentTypeEntities);
-        $shipmentTypeUuids = array_unique(
+        $shipmentTypeIds = array_unique(
             [
-                $shipmentType1Transfer->getUuidOrFail(),
-                $shipmentType2Transfer->getUuidOrFail(),
+                $shipmentType1Transfer->getIdShipmentTypeOrFail(),
+                $shipmentType2Transfer->getIdShipmentTypeOrFail(),
             ],
         );
         foreach ($productOfferShipmentTypeEntities as $productOfferShipmentTypeEntity) {
-            $this->assertContains($productOfferShipmentTypeEntity->getShipmentTypeUuid(), $shipmentTypeUuids);
+            $this->assertContains($productOfferShipmentTypeEntity->getFkShipmentType(), $shipmentTypeIds);
         }
     }
 
@@ -82,8 +82,8 @@ class CreateProductOfferShipmentTypesTest extends Unit
         $productOfferTransfer = $this->tester->getFacade()->createProductOfferShipmentTypes($productOfferTransfer);
 
         // Assert
-        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByProductOfferReference(
-            $productOfferTransfer->getProductOfferReferenceOrFail(),
+        $productOfferShipmentTypeEntities = $this->tester->getProductOfferShipmentTypeEntitiesByIdProductOffer(
+            $productOfferTransfer->getIdProductOfferOrFail(),
         );
         $this->assertEmpty($productOfferShipmentTypeEntities);
     }

@@ -699,6 +699,8 @@
         "spryker/product-offer-service-point-storage-extension": "*",
         "spryker/product-offer-shipment-type": "*",
         "spryker/product-offer-shipment-type-data-import": "*",
+        "spryker/product-offer-shipment-type-storage": "*",
+        "spryker/product-offer-shipment-type-storage-extension": "*",
         "spryker/product-offer-shopping-list": "*",
         "spryker/product-offer-shopping-list-data-import": "*",
         "spryker/product-offer-shopping-lists-rest-api": "*",

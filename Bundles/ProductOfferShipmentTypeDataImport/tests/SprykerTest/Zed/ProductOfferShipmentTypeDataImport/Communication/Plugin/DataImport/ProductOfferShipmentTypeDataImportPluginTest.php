@@ -94,7 +94,8 @@ class ProductOfferShipmentTypeDataImportPluginTest extends Unit
     {
         parent::tearDown();
 
-        $this->tester->cleanupData();
+        $this->tester->cleanUpStaticCacheData();
+        $this->tester->cleanUpData();
     }
 
     /**
@@ -138,6 +139,7 @@ class ProductOfferShipmentTypeDataImportPluginTest extends Unit
     }
 
     /**
+     * @group test
      * @return void
      */
     public function testImportDoesntImportDataWithAnEmptyProductOfferReference(): void

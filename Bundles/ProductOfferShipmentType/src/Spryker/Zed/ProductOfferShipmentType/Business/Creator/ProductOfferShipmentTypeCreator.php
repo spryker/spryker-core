@@ -51,8 +51,8 @@ class ProductOfferShipmentTypeCreator implements ProductOfferShipmentTypeCreator
     {
         foreach ($productOfferTransfer->getShipmentTypes() as $shipmentTypeTransfer) {
             $this->productOfferShipmentTypeEntityManager->createProductOfferShipmentType(
-                $productOfferTransfer->getProductOfferReferenceOrFail(),
-                $shipmentTypeTransfer->getUuidOrFail(),
+                $productOfferTransfer->getIdProductOfferOrFail(),
+                $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
             );
         }
     }

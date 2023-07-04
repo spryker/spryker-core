@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferShipmentType\Persistence;
 
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOfferShipmentType\Persistence\Propel\Mapper\ProductOfferShipmentTypeMapper;
 
 /**
  * @method \Spryker\Zed\ProductOfferShipmentType\ProductOfferShipmentTypeConfig getConfig()
@@ -23,5 +24,13 @@ class ProductOfferShipmentTypePersistenceFactory extends AbstractPersistenceFact
     public function createProductOfferShipmentTypeQuery(): SpyProductOfferShipmentTypeQuery
     {
         return SpyProductOfferShipmentTypeQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Persistence\Propel\Mapper\ProductOfferShipmentTypeMapper
+     */
+    public function createProductOfferShipmentTypeMapper(): ProductOfferShipmentTypeMapper
+    {
+        return new ProductOfferShipmentTypeMapper();
     }
 }

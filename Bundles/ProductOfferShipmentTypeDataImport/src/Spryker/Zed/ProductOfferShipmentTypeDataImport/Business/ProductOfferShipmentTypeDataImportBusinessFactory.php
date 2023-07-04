@@ -10,9 +10,10 @@ namespace Spryker\Zed\ProductOfferShipmentTypeDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ProductOfferReferenceToIdProductOfferDataImportStep;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ProductOfferShipmentTypeDataSetValidationStep;
 use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ProductOfferShipmentTypeWriteDataImportStep;
-use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ShipmentTypeKeyToUuidShipmentTypeDataImportStep;
+use Spryker\Zed\ProductOfferShipmentTypeDataImport\Business\DataImportStep\ProductOfferShipmentType\ShipmentTypeKeyToIdShipmentTypeDataImportStep;
 
 /**
  * @method \Spryker\Zed\ProductOfferShipmentTypeDataImport\ProductOfferShipmentTypeDataImportConfig getConfig()
@@ -31,7 +32,8 @@ class ProductOfferShipmentTypeDataImportBusinessFactory extends DataImportBusine
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
 
         $dataSetStepBroker->addStep($this->createProductOfferShipmentTypeDataSetValidationStep());
-        $dataSetStepBroker->addStep($this->createShipmentTypeKeyToUuidShipmentTypeDataImportStep());
+        $dataSetStepBroker->addStep($this->createProductOfferReferenceToIdProductOfferDataImportStep());
+        $dataSetStepBroker->addStep($this->createShipmentTypeKeyToIdShipmentTypeDataImportStep());
         $dataSetStepBroker->addStep($this->createProductOfferShipmentTypeWriteDataImportStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -50,9 +52,17 @@ class ProductOfferShipmentTypeDataImportBusinessFactory extends DataImportBusine
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createShipmentTypeKeyToUuidShipmentTypeDataImportStep(): DataImportStepInterface
+    public function createProductOfferReferenceToIdProductOfferDataImportStep(): DataImportStepInterface
     {
-        return new ShipmentTypeKeyToUuidShipmentTypeDataImportStep();
+        return new ProductOfferReferenceToIdProductOfferDataImportStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createShipmentTypeKeyToIdShipmentTypeDataImportStep(): DataImportStepInterface
+    {
+        return new ShipmentTypeKeyToIdShipmentTypeDataImportStep();
     }
 
     /**

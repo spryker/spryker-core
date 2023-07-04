@@ -9,9 +9,6 @@ namespace SprykerTest\Zed\MerchantProductOffer;
 
 use Codeception\Actor;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
-use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
-use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
 
 /**
  * @method void wantToTest($text)
@@ -27,7 +24,7 @@ use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
  *
  * @method \Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MerchantProductOffer\PHPMD)
  */
 class MerchantProductOfferBusinessTester extends Actor
 {
@@ -56,9 +53,14 @@ class MerchantProductOfferBusinessTester extends Actor
      */
     public function ensureProductOfferTablesAreEmpty(): void
     {
-        $this->ensureDatabaseTableIsEmpty(SpyProductOfferValidityQuery::create());
-        $this->ensureDatabaseTableIsEmpty(SpyProductOfferStockQuery::create());
-        $this->ensureDatabaseTableIsEmpty(SpyProductOfferStoreQuery::create());
-        $this->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $this->ensureDatabaseTableIsEmpty($this->getProductOfferQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function getProductOfferQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
     }
 }
