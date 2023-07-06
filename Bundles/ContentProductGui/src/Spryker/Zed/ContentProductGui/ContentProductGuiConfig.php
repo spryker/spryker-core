@@ -42,4 +42,17 @@ class ContentProductGuiConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getTwigFunctionName();
     }
+
+    /**
+     * Specification:
+     * - Return the max number of abstract products that can be shown in the list of selected products.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxProductsInProductAbstractList(): int
+    {
+        return static::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST;
+    }
 }

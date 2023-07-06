@@ -53,6 +53,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierSuffix,
             $idProductAbstracts,
+            $this->getConfig(),
         );
     }
 
