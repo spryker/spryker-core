@@ -40,6 +40,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     {
         $salesOrderTotalsEntity = SpySalesOrderTotalsQuery::create()
             ->orderByCreatedAt(Criteria::DESC)
+            ->orderByIdSalesOrderTotals(Criteria::DESC)
             ->filterByFkSalesOrder($this->getIdSalesOrder())
             ->findOne();
 

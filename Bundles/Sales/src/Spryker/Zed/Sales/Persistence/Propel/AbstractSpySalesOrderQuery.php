@@ -123,6 +123,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
             )
             ->limit(1)
             ->orderByCreatedAt(Criteria::DESC)
+            ->orderByIdSalesOrderTotals(Criteria::DESC)
             ->endUse();
 
         $this->addSubQueryResultField($subQuery, $resultFieldName);

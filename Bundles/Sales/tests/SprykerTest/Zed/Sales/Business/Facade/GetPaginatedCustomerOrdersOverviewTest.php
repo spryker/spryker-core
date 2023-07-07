@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -36,6 +37,16 @@ class GetPaginatedCustomerOrdersOverviewTest extends Unit
      * @var int
      */
     protected const TEST_NON_EXISTING_CUSTOMER_ID = -1;
+
+    /**
+     * @var string
+     */
+    protected const COL_CREATED_AT = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_GRAND_TOTAL = 'grand_total';
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
@@ -76,8 +87,7 @@ class GetPaginatedCustomerOrdersOverviewTest extends Unit
             ->setFilter($filterTransfer);
 
         // Act
-        $orderTransfers = $this->tester
-            ->getFacade()
+        $orderTransfers = $this->tester->getFacade()
             ->getPaginatedCustomerOrdersOverview($orderListTransfer, $orderTransfer->getCustomer()->getIdCustomer())
             ->getOrders();
 
@@ -99,6 +109,40 @@ class GetPaginatedCustomerOrdersOverviewTest extends Unit
 
         // Assert
         $this->assertCount(0, $orderListTransfer->getOrders());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsOrdersExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        $idCustomer = $orderTransfer->getCustomerOrFail()->getIdCustomerOrFail();
+        $orderListTransfer = (new OrderListTransfer())->setIdCustomer($idCustomer);
+
+        // Act
+        $orderTransfers = $this->tester->getFacade()
+            ->getPaginatedCustomerOrdersOverview($orderListTransfer, $idCustomer)
+            ->getOrders();
+
+        // Assert
+        $this->assertCount(1, $orderTransfers);
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfers->getIterator()->current()->getTotals()->getGrandTotal(),
+        );
     }
 
     /**

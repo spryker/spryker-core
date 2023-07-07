@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -45,6 +47,21 @@ class SalesFacadeTest extends Unit
      * @var string
      */
     protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
+
+    /**
+     * @var string
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'customer_reference';
+
+    /**
+     * @var string
+     */
+    protected const COL_CREATED_AT = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_GRAND_TOTAL = 'grand_total';
 
     /**
      * @var array<string, string>
@@ -231,6 +248,199 @@ class SalesFacadeTest extends Unit
         );
 
         $this->assertNull($order->getIdSalesOrder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPaginatedCustomerOrdersReturnsOrdersExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        $idCustomer = $orderTransfer->getCustomerOrFail()->getIdCustomerOrFail();
+        $orderListTransfer = (new OrderListTransfer())->setIdCustomer($idCustomer);
+
+        // Act
+        $orderTransfers = $this->tester->getFacade()
+            ->getPaginatedCustomerOrders($orderListTransfer, $idCustomer)
+            ->getOrders();
+
+        // Assert
+        $this->assertCount(1, $orderTransfers);
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfers->getIterator()->current()->getTotals()->getGrandTotal(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOffsetPaginatedCustomerOrderListReturnsOrdersExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        $orderListRequestTransfer = $this->tester->createOrderListRequestTransfer([
+            OrderListRequestTransfer::CUSTOMER_REFERENCE => $salesOrderEntity->getCustomerReference(),
+        ]);
+
+        // Act
+        $orderTransfers = $this->tester->getFacade()
+            ->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer)
+            ->getOrders();
+
+        // Assert
+        $this->assertCount(1, $orderTransfers);
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfers->getIterator()->current()->getTotals()->getGrandTotal(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerOrdersReturnsOrdersExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        $idCustomer = $orderTransfer->getCustomerOrFail()->getIdCustomerOrFail();
+        $orderListTransfer = (new OrderListTransfer())->setIdCustomer($idCustomer);
+
+        // Act
+        $orderTransfers = $this->tester->getFacade()
+            ->getCustomerOrders($orderListTransfer, $idCustomer)
+            ->getOrders();
+
+        // Assert
+        $this->assertCount(1, $orderTransfers);
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfers->getIterator()->current()->getTotals()->getGrandTotal(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerOrderByOrderReferenceReturnsOrderExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+        $orderTransfer = (new OrderTransfer())
+            ->setOrderReference($salesOrderEntity->getOrderReference())
+            ->setCustomerReference($salesOrderEntity->getCustomerReference());
+
+        // Act
+        $orderTransfer = $this->tester->getFacade()->getCustomerOrderByOrderReference($orderTransfer);
+
+        // Assert
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOrderByIdSalesOrderReturnsOrderExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        // Act
+        $orderTransfer = $this->tester->getFacade()->findOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
+
+        // Assert
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrderReturnsOrderExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($salesOrderEntity->getIdSalesOrder(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($salesOrderEntity->getIdSalesOrder());
+
+        // Act
+        $orderTransfer = $this->tester->getFacade()->getOrder($orderFilterTransfer);
+
+        // Assert
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
+        );
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
@@ -17,6 +18,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
+use SprykerTest\Zed\Sales\SalesBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -78,9 +80,19 @@ class CancelOrderTest extends Unit
     protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
+     * @var string
+     */
+    protected const COL_CREATED_AT = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_GRAND_TOTAL = 'grand_total';
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
-    protected $tester;
+    protected SalesBusinessTester $tester;
 
     /**
      * @return void
@@ -288,6 +300,43 @@ class CancelOrderTest extends Unit
         $this->assertSame(
             static::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED,
             $orderCancelResponseTransfer->getMessages()[0]->getValue(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsOrderExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrderOrFail())
+            ->setCustomer($orderTransfer->getCustomerOrFail());
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester->getFacade()->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderCancelResponseTransfer->getOrder()->getTotals()->getGrandTotal(),
         );
     }
 

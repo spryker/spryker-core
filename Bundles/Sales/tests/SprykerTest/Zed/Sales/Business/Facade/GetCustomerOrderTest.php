@@ -8,11 +8,13 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface;
+use SprykerTest\Zed\Sales\SalesBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -38,9 +40,19 @@ class GetCustomerOrderTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
+     * @var string
+     */
+    protected const COL_CREATED_AT = 'created_at';
+
+    /**
+     * @var string
+     */
+    protected const COL_GRAND_TOTAL = 'grand_total';
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
-    protected $tester;
+    protected SalesBusinessTester $tester;
 
     /**
      * @return void
@@ -135,6 +147,39 @@ class GetCustomerOrderTest extends Unit
         // Assert
         $this->assertSame($orderTransfer->getIdSalesOrder(), $storedOrderTransfer->getIdSalesOrder());
         $this->assertNotSame($customerTransfer->getCustomerReference(), $storedOrderTransfer->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsOrderExpandedWithLastGrandTotal(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $dateTime = new DateTime();
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+        $salesOrderTotalsLastEntity = $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => $dateTime,
+            static::COL_GRAND_TOTAL => 600,
+        ]);
+
+        // Act
+        $orderTransfer = $this->tester->getFacade()->getCustomerOrder(
+            (new OrderTransfer())
+                ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
+                ->setFkCustomer($orderTransfer->getCustomerOrFail()->getIdCustomerOrFail())
+                ->setCustomer($orderTransfer->getCustomerOrFail()),
+        );
+
+        // Assert
+        $this->assertSame(
+            $salesOrderTotalsLastEntity->getGrandTotal(),
+            $orderTransfer->getTotals()->getGrandTotal(),
+        );
     }
 
     /**

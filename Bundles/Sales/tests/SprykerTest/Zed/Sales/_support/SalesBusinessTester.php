@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 
 /**
  * @method void wantToTest($text)
@@ -125,5 +126,21 @@ class SalesBusinessTester extends Actor
     public function hasItemUuidField(): bool
     {
         return property_exists(SpySalesOrderItem::class, 'uuid');
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param array<string, mixed> $salesOrderTotalsData
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
+     */
+    public function createSalesOrderTotals(int $idSalesOrder, array $salesOrderTotalsData = []): SpySalesOrderTotals
+    {
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setFkSalesOrder($idSalesOrder);
+        $salesOrderTotalsEntity->fromArray($salesOrderTotalsData);
+        $salesOrderTotalsEntity->save();
+
+        return $salesOrderTotalsEntity;
     }
 }
