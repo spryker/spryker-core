@@ -44,11 +44,20 @@ class ProtectedPathAuthorizationChecker implements ProtectedPathAuthorizationChe
     protected $glueBackendApiApplicationAuthorizationConfig;
 
     /**
-     * @param \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig
+     * @var array<\Spryker\Zed\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedPathCollectionExpanderPluginInterface>
      */
-    public function __construct(GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig)
-    {
+    protected array $protectedPathCollectionExpanderPlugins = [];
+
+    /**
+     * @param \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig
+     * @param array<\Spryker\Zed\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedPathCollectionExpanderPluginInterface> $protectedPathCollectionExpanderPlugins
+     */
+    public function __construct(
+        GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig,
+        array $protectedPathCollectionExpanderPlugins
+    ) {
         $this->glueBackendApiApplicationAuthorizationConfig = $glueBackendApiApplicationAuthorizationConfig;
+        $this->protectedPathCollectionExpanderPlugins = $protectedPathCollectionExpanderPlugins;
     }
 
     /**
@@ -84,6 +93,8 @@ class ProtectedPathAuthorizationChecker implements ProtectedPathAuthorizationChe
     public function isProtected(RouteTransfer $routeTransfer): bool
     {
         $protectedPaths = $this->glueBackendApiApplicationAuthorizationConfig->getProtectedPaths();
+        $protectedPaths = $this->executeProtectedPathCollectionExpanderPlugins($protectedPaths);
+
         if ($protectedPaths === []) {
             return false;
         }
@@ -165,5 +176,19 @@ class ProtectedPathAuthorizationChecker implements ProtectedPathAuthorizationChe
         }
 
         return false;
+    }
+
+    /**
+     * @param array<string, mixed> $protectedPaths
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeProtectedPathCollectionExpanderPlugins(array $protectedPaths): array
+    {
+        foreach ($this->protectedPathCollectionExpanderPlugins as $protectedPathCollectionExpanderPlugin) {
+            $protectedPaths = $protectedPathCollectionExpanderPlugin->expand($protectedPaths);
+        }
+
+        return $protectedPaths;
     }
 }

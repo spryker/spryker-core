@@ -24,13 +24,20 @@ class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterfa
     protected $customRouteFormatters;
 
     /**
+     * @var array<\Spryker\Glue\DocumentationGeneratorOpenApiExtension\Dependency\Plugin\OpenApiSchemaFormatterPluginInterface>
+     */
+    protected $openApiSchemaFormatterPlugins;
+
+    /**
      * @param array<\Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor\PathMethodFormatterInterface> $pathMethodFormatters
      * @param array<\Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor\CustomPathMethodFormatterInterface> $customRouteFormatters
+     * @param array<\Spryker\Glue\DocumentationGeneratorOpenApiExtension\Dependency\Plugin\OpenApiSchemaFormatterPluginInterface> $openApiSchemaFormatterPlugins
      */
-    public function __construct(array $pathMethodFormatters, array $customRouteFormatters)
+    public function __construct(array $pathMethodFormatters, array $customRouteFormatters, array $openApiSchemaFormatterPlugins)
     {
         $this->pathMethodFormatters = $pathMethodFormatters;
         $this->customRouteFormatters = $customRouteFormatters;
+        $this->openApiSchemaFormatterPlugins = $openApiSchemaFormatterPlugins;
     }
 
     /**
@@ -47,6 +54,23 @@ class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterfa
 
         foreach ($apiApplicationSchemaContextTransfer->getCustomRoutesContexts() as $customRoutesContext) {
             $formattedData = $this->applyCustomRouteFormatters($formattedData, $customRoutesContext);
+        }
+
+        $formattedData = $this->executeOpenApiSchemaFormatterPlugins($formattedData, $apiApplicationSchemaContextTransfer);
+
+        return $formattedData;
+    }
+
+    /**
+     * @param array<mixed> $formattedData
+     * @param \Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function executeOpenApiSchemaFormatterPlugins(array $formattedData, ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer): array
+    {
+        foreach ($this->openApiSchemaFormatterPlugins as $openApiSchemaFormatterPlugin) {
+            $formattedData = $openApiSchemaFormatterPlugin->format($formattedData, $apiApplicationSchemaContextTransfer);
         }
 
         return $formattedData;

@@ -11,6 +11,7 @@ use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Process
 use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Processor\ProtectedPathAuthorization\Checker\ProtectedPathAuthorizationCheckerInterface;
 use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Processor\ProtectedPathAuthorization\Expander\ProtectedPathAuthorizationExpander;
 use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Processor\ProtectedPathAuthorization\Expander\ProtectedPathAuthorizationExpanderInterface;
+use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -23,7 +24,10 @@ class GlueBackendApiApplicationAuthorizationConnectorBusinessFactory extends Abs
      */
     public function createProtectedPathAuthorizationChecker(): ProtectedPathAuthorizationCheckerInterface
     {
-        return new ProtectedPathAuthorizationChecker($this->getConfig());
+        return new ProtectedPathAuthorizationChecker(
+            $this->getConfig(),
+            $this->getProtectedPathCollectionExpanderPlugins(),
+        );
     }
 
     /**
@@ -32,5 +36,13 @@ class GlueBackendApiApplicationAuthorizationConnectorBusinessFactory extends Abs
     public function createProtectedPathAuthorizationExpander(): ProtectedPathAuthorizationExpanderInterface
     {
         return new ProtectedPathAuthorizationExpander($this->createProtectedPathAuthorizationChecker());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedPathCollectionExpanderPluginInterface>
+     */
+    public function getProtectedPathCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::PLUGINS_PROTECTED_PATH_COLLECTION_EXPANDER);
     }
 }

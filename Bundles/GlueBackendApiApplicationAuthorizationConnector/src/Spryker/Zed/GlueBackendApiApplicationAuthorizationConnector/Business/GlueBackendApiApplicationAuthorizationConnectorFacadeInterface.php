@@ -17,6 +17,7 @@ interface GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
      * Specification:
      * - Checks if the requested path is found by the fully qualified path name in an array of protected paths.
      * - Checks if the requested path is found by a regular expression in an array of protected paths.
+     * - Executes {@link \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedPathCollectionExpanderPluginInterface} plugin stack.
      *
      * @api
      *

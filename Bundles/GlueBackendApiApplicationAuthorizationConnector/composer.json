@@ -10,7 +10,7 @@
         "spryker/documentation-generator-api-extension": "^1.0.0",
         "spryker/glue-application-authorization-connector-extension": "^1.0.0",
         "spryker/glue-application-extension": "^1.11.0",
-        "spryker/glue-backend-api-application-authorization-connector-extension": "^1.0.0",
+        "spryker/glue-backend-api-application-authorization-connector-extension": "^1.1.0",
         "spryker/kernel": "^3.62.0",
         "spryker/symfony": "^3.7.0",
         "spryker/transfer": "^3.32.0"

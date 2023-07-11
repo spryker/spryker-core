@@ -96,6 +96,7 @@ class DocumentationGeneratorOpenApiFactory extends AbstractFactory
         return new OpenApiSpecificationPathFormatter(
             $this->getResourcePathMethodFormatters(),
             $this->getCustomRoutesPathMethodFormatters(),
+            $this->getOpenApiSchemaFormatterPlugins(),
         );
     }
 
@@ -121,6 +122,14 @@ class DocumentationGeneratorOpenApiFactory extends AbstractFactory
         return [
             $this->createCustomRoutesPathMethodFormatter(),
         ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\DocumentationGeneratorOpenApiExtension\Dependency\Plugin\OpenApiSchemaFormatterPluginInterface>
+     */
+    public function getOpenApiSchemaFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(DocumentationGeneratorOpenApiDependencyProvider::PLUGINS_OPEN_API_SCHEMA_FORMATTER);
     }
 
     /**

@@ -8,6 +8,7 @@
         "php": ">=8.0",
         "spryker/doctrine-inflector": "^1.0.0",
         "spryker/documentation-generator-api-extension": "^1.0.0",
+        "spryker/documentation-generator-open-api-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.25.0",

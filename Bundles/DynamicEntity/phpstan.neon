@@ -1,0 +1,8 @@
+parameters:
+    level: 8
+    ignoreErrors:
+            - '#Call to an undefined method .+ActiveRecordInterface::save\(\).#'
+            - '#Call to an undefined method .+ActiveRecordInterface::isNew\(\).#'
+            - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
+            - '#Call to an undefined method object::getColumn\(\).#'
+            - '#Call to an undefined method .+ActiveRecordInterface::getByName\(\).#'

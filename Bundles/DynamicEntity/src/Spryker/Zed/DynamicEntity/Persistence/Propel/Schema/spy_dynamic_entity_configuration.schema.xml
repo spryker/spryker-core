@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\DynamicEntity\Persistence" package="src.Orm.Zed.DynamicEntity.Persistence">
+
+    <table name="spy_dynamic_entity_configuration" idMethod="native">
+        <column name="id_dynamic_entity_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="table_alias" required="true" size="255" type="VARCHAR"/>
+        <column name="table_name" required="true" size="255" type="VARCHAR"/>
+        <column name="is_active" required="true" type="BOOLEAN" defaultValue="false"/>
+        <column name="definition" required="true" type="LONGVARCHAR"/>
+
+        <id-method-parameter value="spy_dynamic_entity_configuration_pk_seq"/>
+        <unique name="spy_dynamic_entity_configuration-table_alias">
+            <unique-column name="table_alias"/>
+        </unique>
+        <unique name="spy_dynamic_entity_configuration-table_name">
+            <unique-column name="table_name"/>
+        </unique>
+        <behavior name="timestampable"/>
+    </table>
+
+</database>

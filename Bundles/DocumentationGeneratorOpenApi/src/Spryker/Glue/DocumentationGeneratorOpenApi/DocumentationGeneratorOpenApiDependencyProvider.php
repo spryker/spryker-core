@@ -40,6 +40,11 @@ class DocumentationGeneratorOpenApiDependencyProvider extends AbstractBundleDepe
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_OPEN_API_SCHEMA_FORMATTER = 'PLUGINS_OPEN_API_SCHEMA_FORMATTER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -50,6 +55,7 @@ class DocumentationGeneratorOpenApiDependencyProvider extends AbstractBundleDepe
         $container = $this->addOpenApiWriter($container);
         $container = $this->addFinder($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addOpenApiSchemaFormatterPlugins($container);
 
         return $container;
     }
@@ -110,5 +116,27 @@ class DocumentationGeneratorOpenApiDependencyProvider extends AbstractBundleDepe
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addOpenApiSchemaFormatterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OPEN_API_SCHEMA_FORMATTER, function () {
+            return $this->getOpenApiSchemaFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\DocumentationGeneratorOpenApiExtension\Dependency\Plugin\OpenApiSchemaFormatterPluginInterface>
+     */
+    protected function getOpenApiSchemaFormatterPlugins(): array
+    {
+        return [];
     }
 }
