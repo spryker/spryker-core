@@ -22,6 +22,16 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuilderInterface
 {
     /**
+     * @var string
+     */
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    /**
+     * @var string
+     */
+    protected const KEY_SKU = 'sku';
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -45,19 +55,25 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param string $productAbstractSku
+     * @param int $httpStatusCode
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewRestResponse(ProductReviewTransfer $productReviewTransfer): RestResponseInterface
-    {
+    public function createProductReviewRestResponse(
+        ProductReviewTransfer $productReviewTransfer,
+        string $productAbstractSku,
+        int $httpStatusCode
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $restResponse->addResource($this->createProductReviewRestResource($productReviewTransfer));
+        $restResponse->addResource($this->createProductReviewRestResource($productReviewTransfer, $productAbstractSku));
 
-        return $restResponse->setStatus(Response::HTTP_ACCEPTED);
+        return $restResponse->setStatus($httpStatusCode);
     }
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers
+     * @param string $productAbstractSku
      * @param int $totalItems
      * @param int $pageLimit
      *
@@ -65,6 +81,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
      */
     public function createProductReviewsCollectionRestResponse(
         array $productReviewTransfers,
+        string $productAbstractSku,
         int $totalItems = 0,
         int $pageLimit = 0
     ): RestResponseInterface {
@@ -74,7 +91,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         );
 
         foreach ($productReviewTransfers as $productReviewTransfer) {
-            $restResource = $this->createProductReviewRestResource($productReviewTransfer);
+            $restResource = $this->createProductReviewRestResource($productReviewTransfer, $productAbstractSku);
 
             $restResponse->addResource($restResource);
         }
@@ -84,15 +101,19 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
 
     /**
      * @param array<array<\Generated\Shared\Transfer\ProductReviewTransfer>> $indexedProductReviewTransfers
+     * @param array<int, array<string, mixed>> $productAbstractDataCollection
      *
      * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
-    public function createRestResourceCollection(array $indexedProductReviewTransfers): array
+    public function createRestResourceCollection(array $indexedProductReviewTransfers, array $productAbstractDataCollection): array
     {
         $productReviewRestResourceCollection = [];
         foreach ($indexedProductReviewTransfers as $idProductAbstract => $productReviewTransfers) {
             foreach ($productReviewTransfers as $productReviewTransfer) {
-                $productReviewRestResourceCollection[$idProductAbstract][] = $this->createProductReviewRestResource($productReviewTransfer);
+                $productReviewRestResourceCollection[$idProductAbstract][] = $this->createProductReviewRestResource(
+                    $productReviewTransfer,
+                    $productAbstractDataCollection[$idProductAbstract][static::KEY_SKU],
+                );
             }
         }
 
@@ -126,6 +147,21 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
+     * @param string $idProductReview
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductReviewNotFoundErrorResponse(string $idProductReview): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_REVIEW)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_PRODUCT_REVIEW);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createNotImplementedErrorResponse(): RestResponseInterface
@@ -156,10 +192,11 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param string $productAbstractSku
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface
+    protected function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer, string $productAbstractSku): RestResourceInterface
     {
         $restProductReviewsAttributesTransfer = $this->productReviewMapper
             ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
@@ -175,21 +212,24 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
             $restProductReviewsAttributesTransfer,
         )->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($resourceId),
+            $this->createSelfLink($productReviewTransfer, $productAbstractSku),
         );
     }
 
     /**
-     * @param string $resourceId
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param string $productAbstractSku
      *
      * @return string
      */
-    protected function createSelfLink(string $resourceId): string
+    protected function createSelfLink(ProductReviewTransfer $productReviewTransfer, string $productAbstractSku): string
     {
         return sprintf(
-            '%s/%s',
+            '%s/%s/%s/%s',
+            ProductReviewsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $productAbstractSku,
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId,
+            $productReviewTransfer->getIdProductReviewOrFail(),
         );
     }
 }

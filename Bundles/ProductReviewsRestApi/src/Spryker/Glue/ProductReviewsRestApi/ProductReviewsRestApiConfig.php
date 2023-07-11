@@ -48,6 +48,16 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT = '301';
 
     /**
+     * Specification:
+     * - Response code for the case when product review was not found.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_CANT_FIND_PRODUCT_REVIEW = '302';
+
+    /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED
      *
      * @var string
@@ -60,6 +70,11 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT = 'Abstract product is not found.';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_DETAIL_CANT_FIND_PRODUCT_REVIEW = 'Product review is not found.';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED

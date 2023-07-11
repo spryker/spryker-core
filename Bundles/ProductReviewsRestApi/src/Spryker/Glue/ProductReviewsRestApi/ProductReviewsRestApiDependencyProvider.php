@@ -12,6 +12,7 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientBridge;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientBridge;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientBridge;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientBridge;
 
 /**
  * @method \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig getConfig()
@@ -34,6 +35,11 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
     public const CLIENT_PRODUCT_REVIEW = 'CLIENT_PRODUCT_REVIEW';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -45,6 +51,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addProductReviewStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductReviewClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -91,6 +98,22 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::CLIENT_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewsRestApiToProductReviewClientBridge(
                 $container->getLocator()->productReview()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductReviewsRestApiToStoreClientBridge(
+                $container->getLocator()->store()->client(),
             );
         });
 

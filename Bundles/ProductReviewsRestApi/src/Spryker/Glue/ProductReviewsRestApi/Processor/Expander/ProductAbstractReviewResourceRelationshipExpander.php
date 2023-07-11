@@ -83,14 +83,9 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
             return;
         }
 
-        $productAbstractIds = [];
-        foreach ($productAbstractDataCollection as $productAbstractData) {
-            $productAbstractIds[] = $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT];
-        }
-
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
-                $productAbstractIds,
+                $productAbstractDataCollection,
                 $this->createFilterTransfer(),
             );
 

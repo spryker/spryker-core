@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
@@ -44,6 +45,11 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
     protected $productStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientInterface
+     */
+    protected ProductReviewsRestApiToStoreClientInterface $storeClient;
+
+    /**
      * @var \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig
      */
     protected $productReviewsRestApiConfig;
@@ -51,15 +57,18 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
     /**
      * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface $productReviewReader
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientInterface $storeClient
      * @param \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig $productReviewsRestApiConfig
      */
     public function __construct(
         ProductReviewReaderInterface $productReviewReader,
         ProductReviewsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductReviewsRestApiToStoreClientInterface $storeClient,
         ProductReviewsRestApiConfig $productReviewsRestApiConfig
     ) {
         $this->productReviewReader = $productReviewReader;
         $this->productStorageClient = $productStorageClient;
+        $this->storeClient = $storeClient;
         $this->productReviewsRestApiConfig = $productReviewsRestApiConfig;
     }
 
@@ -88,9 +97,18 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
             $productAbstractIds[] = $productConcrete[static::KEY_ID_PRODUCT_ABSTRACT];
         }
 
-        $productReviewsRestResourcesCollection = $this->productReviewReader
-            ->getProductReviewsResourceCollection(
+        $productAbstractDataCollection = $this
+            ->productStorageClient
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 $productAbstractIds,
+                $restRequest->getMetadata()->getLocale(),
+                $this->storeClient->getCurrentStore()->getNameOrFail(),
+            );
+
+        $productReviewsRestResourcesCollection = $this
+            ->productReviewReader
+            ->getProductReviewsResourceCollection(
+                $productAbstractDataCollection,
                 $this->createFilterTransfer(),
             );
 

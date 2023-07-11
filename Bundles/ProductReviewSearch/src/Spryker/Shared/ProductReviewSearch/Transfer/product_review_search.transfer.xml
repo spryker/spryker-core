@@ -21,6 +21,9 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="ProductReview">
+        <property name="idProductReview" type="int"/>
+    </transfer>
 
     <transfer name="ProductPayload">
         <property name="averageRating" type="float"/>

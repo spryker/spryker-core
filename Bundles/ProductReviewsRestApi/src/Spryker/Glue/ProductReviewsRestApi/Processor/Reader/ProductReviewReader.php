@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
@@ -19,6 +20,7 @@ use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiTo
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
@@ -33,6 +35,11 @@ class ProductReviewReader implements ProductReviewReaderInterface
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
+     * @var string
+     */
+    protected const KEY_SKU = 'sku';
+
+    /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin::NAME
      *
      * @var string
@@ -45,6 +52,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
      * @var string
      */
     protected const PAGINATION = 'pagination';
+
+    /**
+     * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\FilterByReviewIdQueryExpanderPlugin::REQUEST_PARAM_ID_PRODUCT_REVIEW
+     *
+     * @var string
+     */
+    protected const REQUEST_PARAM_ID_PRODUCT_REVIEW = ProductReviewTransfer::ID_PRODUCT_REVIEW;
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
@@ -91,10 +105,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
      */
     public function getProductReviews(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if ($restRequest->getResource()->getId()) {
-            return $this->productReviewRestResponseBuilder->createNotImplementedErrorResponse();
-        }
-
         $parentResource = $restRequest->findParentResourceByType(ProductReviewsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
             return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
@@ -110,26 +120,37 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return $this->productReviewRestResponseBuilder->createProductAbstractNotFoundErrorResponse();
         }
 
-        $productReviews = $this->getProductReviewsInSearch($restRequest, $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
+        if ($restRequest->getResource()->getId()) {
+            return $this->getProductReview($productAbstractData, $restRequest->getResource()->getId());
+        }
+
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
+        }
+        $productReviews = $this->getProductReviewsInSearch(
+            $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
+            $this->createRequestParamsWithPaginationParameters($restRequest->getPage()),
+        );
 
         return $this->productReviewRestResponseBuilder->createProductReviewsCollectionRestResponse(
             $productReviews[static::PRODUCT_REVIEWS],
+            $productAbstractData[static::KEY_SKU],
             $productReviews[static::PAGINATION]->getNumFound(),
             $restRequest->getPage()->getLimit(),
         );
     }
 
     /**
-     * @param array<int> $productAbstractIds
+     * @param array<int, array<string, mixed>> $productAbstractDataCollection
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
-    public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array
+    public function getProductReviewsResourceCollection(array $productAbstractDataCollection, FilterTransfer $filterTransfer): array
     {
         /** @var array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
-            $productAbstractIds,
+            $this->extractProductAbstractIds($productAbstractDataCollection),
             $filterTransfer,
         )[static::PRODUCT_REVIEWS];
 
@@ -138,34 +159,53 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $indexedProductReviewTransfers[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
         }
 
-        return $this->productReviewRestResponseBuilder->createRestResourceCollection($indexedProductReviewTransfers);
+        return $this->productReviewRestResponseBuilder->createRestResourceCollection($indexedProductReviewTransfers, $productAbstractDataCollection);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array<string, mixed> $productAbstractData
+     * @param string $resourceId
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getProductReview(array $productAbstractData, string $resourceId): RestResponseInterface
+    {
+        $productReviews = $this->getProductReviewsInSearch(
+            $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
+            [static::REQUEST_PARAM_ID_PRODUCT_REVIEW => $resourceId],
+        );
+        $productReviewTransfers = $productReviews[static::PRODUCT_REVIEWS];
+        if (!$productReviewTransfers) {
+            return $this->productReviewRestResponseBuilder->createProductReviewNotFoundErrorResponse($resourceId);
+        }
+        $productReviewTransfer = count($productReviewTransfers) > 1
+            ? $this->findProductReviewTransferByIdProductReview($productReviewTransfers, $resourceId)
+            : $productReviewTransfers[0];
+
+        if (!$productReviewTransfer) {
+            return $this->productReviewRestResponseBuilder->createProductReviewNotFoundErrorResponse($resourceId);
+        }
+
+        return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
+            $productReviewTransfer,
+            $productAbstractData[static::KEY_SKU],
+            Response::HTTP_OK,
+        );
+    }
+
+    /**
      * @param int $idProductAbstract
+     * @param array<string, mixed> $requestParams
      *
      * @return array
      */
-    protected function getProductReviewsInSearch(
-        RestRequestInterface $restRequest,
-        int $idProductAbstract
-    ): array {
-        if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
-        }
-
-        $page = $restRequest->getPage();
-
-        $requestParams = $this->createRequestParamsWithPaginationParameters($page);
-
-        $productReviews = $this->productReviewClient->findProductReviewsInSearch(
+    protected function getProductReviewsInSearch(int $idProductAbstract, array $requestParams): array
+    {
+        return $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)
                 ->setIdProductAbstract($idProductAbstract),
         );
-
-        return $productReviews;
     }
 
     /**
@@ -198,5 +238,37 @@ class ProductReviewReader implements ProductReviewReaderInterface
             RequestConstantsInterface::QUERY_OFFSET => $page->getOffset(),
             RequestConstantsInterface::QUERY_LIMIT => $page->getLimit(),
         ];
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers
+     * @param string $idProductReview
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewTransfer|null
+     */
+    protected function findProductReviewTransferByIdProductReview(array $productReviewTransfers, string $idProductReview): ?ProductReviewTransfer
+    {
+        foreach ($productReviewTransfers as $productReviewTransfer) {
+            if ((string)$productReviewTransfer->getIdProductReviewOrFail() === $idProductReview) {
+                return $productReviewTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $productAbstractDataCollection
+     *
+     * @return list<int>
+     */
+    protected function extractProductAbstractIds(array $productAbstractDataCollection): array
+    {
+        $productAbstractIds = [];
+        foreach ($productAbstractDataCollection as $productAbstractData) {
+            $productAbstractIds[] = $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        return $productAbstractIds;
     }
 }

@@ -21,10 +21,10 @@ interface ProductReviewReaderInterface
     public function getProductReviews(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param array<int> $productAbstractIds
+     * @param array<int, array<string, mixed>> $productAbstractDataCollection
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
-    public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array;
+    public function getProductReviewsResourceCollection(array $productAbstractDataCollection, FilterTransfer $filterTransfer): array;
 }

@@ -75,4 +75,23 @@ class ProductReviewsRestApiToProductStorageClientBridge implements ProductReview
             $localeName,
         );
     }
+
+    /**
+     * @param list<int> $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array {
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+            $productAbstractIds,
+            $localeName,
+            $storeName,
+        );
+    }
 }

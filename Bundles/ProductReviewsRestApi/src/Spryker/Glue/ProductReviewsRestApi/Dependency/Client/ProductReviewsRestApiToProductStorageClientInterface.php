@@ -47,4 +47,17 @@ interface ProductReviewsRestApiToProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
+
+    /**
+     * @param list<int> $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 }

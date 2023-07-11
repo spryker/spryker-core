@@ -15,6 +15,7 @@ use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiTo
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
@@ -29,6 +30,11 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    /**
+     * @var string
+     */
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
@@ -99,7 +105,11 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         }
 
         return $this->productReviewRestResponseBuilder
-            ->createProductReviewRestResponse($productReviewResponseTransfer->getProductReview());
+            ->createProductReviewRestResponse(
+                $productReviewResponseTransfer->getProductReview(),
+                $productAbstractData[static::KEY_SKU],
+                Response::HTTP_ACCEPTED,
+            );
     }
 
     /**

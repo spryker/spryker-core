@@ -21,13 +21,13 @@ class ProductReviewsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves abstract product review by sku."
+     *              "Retrieves abstract product review by id."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "501": "Resource is not available."
+     *              "404": "Abstract product review not found."
      *          }
      *     },
      *      "getCollection": {

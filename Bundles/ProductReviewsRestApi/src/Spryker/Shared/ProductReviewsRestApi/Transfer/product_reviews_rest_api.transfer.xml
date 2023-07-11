@@ -57,6 +57,10 @@
         <property name="idProductReview" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
         <property name="detail" type="string"/>

@@ -11,6 +11,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreator;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreatorInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductAbstractReviewResourceRelationshipExpander;
@@ -105,6 +106,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductConcreteReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
             $this->getProductStorageClient(),
+            $this->getStoreClient(),
             $this->getConfig(),
         );
     }
@@ -134,6 +136,14 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     public function getProductStorageClient(): ProductReviewsRestApiToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductReviewsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): ProductReviewsRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductReviewsRestApiDependencyProvider::CLIENT_STORE);
     }
 
     /**
