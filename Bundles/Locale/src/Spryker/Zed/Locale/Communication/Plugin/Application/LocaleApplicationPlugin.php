@@ -45,10 +45,28 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $container->set(static::BC_FEATURE_FLAG_LOCALE_LISTENER, false);
         $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {
             $localeTransfer = $this->getFactory()->getLocalePlugin()->getLocaleTransfer($container);
+            $localeName = $localeTransfer->getLocaleNameOrFail();
+            $this->setStoreCurrentLocale($localeName);
 
-            return $localeTransfer->getLocaleNameOrFail();
+            return $localeName;
         });
 
         return $container;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function setStoreCurrentLocale(string $localeName): void
+    {
+        if ($this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
+            return;
+        }
+
+        $this->getFactory()->getStore()->setCurrentLocale($localeName);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Locale\Communication;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\LocaleExtension\Dependency\Plugin\LocalePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface;
@@ -34,5 +35,15 @@ class LocaleCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade(): LocaleToStoreFacadeInterface
     {
         return $this->getProvidedDependency(LocaleDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(LocaleDependencyProvider::STORE);
     }
 }

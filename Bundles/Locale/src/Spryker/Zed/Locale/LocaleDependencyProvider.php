@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Locale;
 
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\LocaleExtension\Dependency\Plugin\LocalePluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -40,6 +41,13 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @var string
+     */
+    public const STORE = 'STORE';
+
+    /**
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
@@ -53,6 +61,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addLocalePlugin($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -138,6 +147,32 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @deprecated Exists for BC-reasons only.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container): Container
+    {
+        $container->set(static::STORE, function () {
+            return $this->getStore();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Exists for BC-reasons only.
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return Store::getInstance();
     }
 
     /**
