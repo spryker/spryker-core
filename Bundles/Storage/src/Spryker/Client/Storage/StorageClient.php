@@ -358,6 +358,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         if (static::$cachedKeys === null) {
             $this->loadKeysFromCache();
+            static::$bufferedValues = null;
         }
 
         if (static::$bufferedValues === null) {
