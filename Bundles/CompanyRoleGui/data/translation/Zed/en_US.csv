@@ -26,3 +26,10 @@ Roles,Roles
 "Delete company role","Delete company role"
 "Company role has been successfully removed","Company role has been successfully removed"
 "You can not delete a default role, please set another default role before delete action","You can not delete a default role, please set another default role before delete action."
+"Company Name","Company Name"
+Name,Name
+Actions,Actions
+Delete,Delete
+Edit,Edit
+Company,Company
+"At least one role must be assigned to a user.","At least one role must be assigned to a user."

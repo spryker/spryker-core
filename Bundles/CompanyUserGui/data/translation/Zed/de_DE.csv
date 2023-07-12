@@ -6,6 +6,7 @@
 "Customer Access",Kundenzugang
 "Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
 E-Mail,E-Mail
+Email,Email
 "Edit Company User","Benutzer bearbeiten"
 "List of Company Users","Liste der Benutzer"
 "Overview of Company Users","Übersicht der Benutzer"
@@ -29,3 +30,12 @@ Mr,Herr
 Mrs,Frau
 Ms,Frau
 Dr,Dr
+"Company Name","Name der Firma"
+Salutation,Anrede
+"Select one","Eins auswählen"
+"First Name",Vorname
+"Last Name",Nachname
+Gender,Geschlecht
+"Send password token through email","Passwort-Token per E-Mail senden"
+Phone,Telefon
+"Date of birth",Geburtsdatum

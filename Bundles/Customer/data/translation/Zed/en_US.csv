@@ -51,3 +51,9 @@ ZipCode,ZipCode
 "Comment successfully added","Comment successfully added."
 "Address (2nd line)","Address (2nd line)"
 "Address (3rd line)","Address (3rd line)"
+"Last Name","Last Name"
+"Zip Code","Zip Code"
+Actions,Actions
+Status,Status
+Comment,Comment
+Store,Store

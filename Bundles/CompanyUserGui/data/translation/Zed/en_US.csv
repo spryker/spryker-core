@@ -6,6 +6,7 @@
 "Customer Access","Customer Access"
 "Customer with id `%s` does not exist","Customer with id `%s` does not exist"
 E-Mail,E-Mail
+Email,Email
 "Edit Company User","Edit Company User"
 "List of Company Users","List of Company Users"
 "Overview of Company Users","Overview of Company Users"
@@ -29,3 +30,12 @@ Mr,Mr
 Mrs,Mrs
 Ms,Ms
 Dr,Dr
+"Company Name","Company Name"
+Salutation,Salutation
+"Select one","Select one"
+"First Name","First Name"
+"Last Name","Last Name"
+Gender,Gender
+"Send password token through email","Send password token through email"
+Phone,Phone
+"Date of birth","Date of birth"

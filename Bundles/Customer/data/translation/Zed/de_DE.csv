@@ -51,3 +51,9 @@ ZipCode,Postleitzahl
 "Comment successfully added","Kommentar erfolgreich hinzugefügt."
 "Address (2nd line)","Adresse (zweite Zeile)"
 "Address (3rd line)","Adresse (dritte Zeile)"
+"Last Name",Nachname
+"Zip Code",Postleitzahl
+Actions,Aktionen
+Status,Status
+Comment,Kommentar
+Store,Store

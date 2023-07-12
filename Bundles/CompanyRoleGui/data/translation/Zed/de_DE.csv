@@ -26,3 +26,10 @@ Roles,Rollen
 "Delete company role","Rolle löschen"
 "Company role has been successfully removed","Rolle wurde erfolgreich gelöscht"
 "You can not delete a default role, please set another default role before delete action","Sie können eine Standardrolle nicht löschen. Bitte  eine andere Standardrolle vor dem Löschen setzen."
+"Company Name","Name der Firma"
+Name,Name
+Actions,Aktionen
+Delete,Löschen
+Edit,Bearbeiten
+Company,Unternehmen
+"At least one role must be assigned to a user.","Mindestens eine Rolle muss einem Benutzer zugewiesen sein."
