@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Agent\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * Auto-generated group annotations
@@ -23,6 +24,18 @@ use Generated\Shared\Transfer\CustomerQueryTransfer;
  */
 class AgentFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const TEST_CUSTOMER_FIRST_NAME = 'customerFirstName';
+
+    /**
+     * @uses \Spryker\Zed\Agent\AgentConfig::DEFAULT_CUSTOMER_PAGINATION_LIMIT
+     *
+     * @var int
+     */
+    protected const DEFAULT_CUSTOMER_PAGINATION_LIMIT = 10;
+
     /**
      * @var \SprykerTest\Zed\Agent\AgentBusinessTester
      */
@@ -112,6 +125,26 @@ class AgentFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindCustomersByQueryUsesDefaultLimitWhenNoLimitProvided(): void
+    {
+        // Arrange
+        for ($i = 0; $i < static::DEFAULT_CUSTOMER_PAGINATION_LIMIT + 1; $i++) {
+            $this->tester->haveCustomer([CustomerTransfer::FIRST_NAME => static::TEST_CUSTOMER_FIRST_NAME . $i]);
+        }
+        $customerQueryTransfer = (new CustomerQueryTransfer())->setQuery(static::TEST_CUSTOMER_FIRST_NAME);
+
+        // Act
+        $customerAutocompleteResponseTransfer = $this->tester->getFacade()
+            ->findCustomersByQuery($customerQueryTransfer);
+
+        // Assert
+        $this->assertSame(static::DEFAULT_CUSTOMER_PAGINATION_LIMIT, $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage());
+        $this->assertCount(static::DEFAULT_CUSTOMER_PAGINATION_LIMIT, $customerAutocompleteResponseTransfer->getCustomers());
+    }
+
+    /**
      * @dataProvider findCustomersByQueryWithOffsetAndLimitRetrivesCustomersDataProvider
      *
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
@@ -151,33 +184,33 @@ class AgentFacadeTest extends Unit
         return [
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('customerFirstName')
+                    ->setQuery(static::TEST_CUSTOMER_FIRST_NAME)
                     ->setLimit(10),
                 0,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('customerFirstName')
+                    ->setQuery(static::TEST_CUSTOMER_FIRST_NAME)
                     ->setLimit(5),
                 0,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('customerFirstName')
+                    ->setQuery(static::TEST_CUSTOMER_FIRST_NAME)
                     ->setLimit(5)
                     ->setOffset(5),
                 5,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('customerFirstName')
+                    ->setQuery(static::TEST_CUSTOMER_FIRST_NAME)
                     ->setLimit(3)
                     ->setOffset(5),
                 3,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('customerFirstName')
+                    ->setQuery(static::TEST_CUSTOMER_FIRST_NAME)
                     ->setLimit(3)
                     ->setOffset(6),
                 6,

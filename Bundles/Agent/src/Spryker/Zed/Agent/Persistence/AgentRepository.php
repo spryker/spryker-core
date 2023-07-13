@@ -50,7 +50,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
         $query = $customerQueryTransfer->getQuery() ?? '';
         $queryPattern = $query . '%';
         $offset = $customerQueryTransfer->getOffset();
-        $limit = $customerQueryTransfer->getLimit() ?? 1;
+        $limit = $customerQueryTransfer->getLimit() ?? $this->getFactory()->getConfig()->getDefaultCustomerPaginationLimit();
 
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()

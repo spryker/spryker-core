@@ -30,6 +30,7 @@ interface AgentFacadeInterface
      * Specification:
      * - Returns CustomerAutocompleteResponseTransfer with list of customers found by query.
      * - Search matches by partial first name, last name, email or exact customer reference.
+     * - If `CustomerQueryTransfer.limit` is not provided, uses default limit defined in {@link \Spryker\Zed\Agent\AgentConfig::getDefaultCustomerPaginationLimit()}.
      * - If customers by query are not exist, collection will be empty.
      *
      * @api
