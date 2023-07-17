@@ -76,6 +76,11 @@
     <transfer name="ProductImageSetConditions" strict="true">
         <property name="skus" type="string[]" singular="sku"/>
         <property name="localeNames" type="string[]" singular="localeName"/>
+        <property name="names" type="string[]" singular="name"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="localeIds" type="int[]" singular="idLocale"/>
+        <property name="addFallbackLocale" type="bool"/>
     </transfer>
 
     <transfer name="Sort">

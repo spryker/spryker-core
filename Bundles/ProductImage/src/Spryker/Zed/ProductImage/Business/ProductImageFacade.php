@@ -289,6 +289,8 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\ProductImageFacade::getConcreteProductImageSetCollection()} instead.
+     *
      * @param array<int> $productIds
      * @param string $productImageSetName
      *
@@ -366,5 +368,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageSetReader()
             ->getConcreteProductImageSetCollection($productImageSetCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getAbstractProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer {
+        return $this->getFactory()
+            ->createProductImageSetReader()
+            ->getAbstractProductImageSetCollection($productImageSetCriteriaTransfer);
     }
 }

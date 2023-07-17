@@ -9,15 +9,12 @@ namespace Spryker\Zed\ProductImageCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageItemExpanderInterface} instead.
- */
-interface ProductImageExpanderInterface
+interface ProductImageItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer);
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

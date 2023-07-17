@@ -14,7 +14,10 @@ use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -118,6 +121,16 @@ class ProductImageDataHelper extends Module
             ->save();
 
         return $productImageSetToProductImage;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductImageSetDatabaseTablesAreEmpty(): void
+    {
+        SpyProductImageSetToProductImageQuery::create()->deleteAll();
+        SpyProductImageSetQuery::create()->deleteAll();
+        SpyProductImageQuery::create()->deleteAll();
     }
 
     /**

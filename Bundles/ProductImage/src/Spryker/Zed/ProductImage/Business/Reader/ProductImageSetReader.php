@@ -42,6 +42,20 @@ class ProductImageSetReader implements ProductImageSetReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getAbstractProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer {
+        $productImageSetCollectionTransfer = $this->productImageRepository
+            ->getAbstractProductImageSetCollection($productImageSetCriteriaTransfer);
+
+        return $this->expandProductImageSetWithProductImages($productImageSetCollectionTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer

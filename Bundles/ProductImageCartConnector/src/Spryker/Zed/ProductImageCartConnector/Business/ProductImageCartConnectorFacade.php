@@ -20,6 +20,8 @@ class ProductImageCartConnectorFacade extends AbstractFacade implements ProductI
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacade::expandCartChangeItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
@@ -28,6 +30,22 @@ class ProductImageCartConnectorFacade extends AbstractFacade implements ProductI
     {
         return $this->getFactory()
             ->createProductExpander()
+            ->expandItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createProductImageItemExpander()
             ->expandItems($cartChangeTransfer);
     }
 }

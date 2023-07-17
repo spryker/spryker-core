@@ -35,6 +35,25 @@ class ProductImageSetMapper
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntityCollection
+     * @param \Generated\Shared\Transfer\ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function mapAbstractProductImageSetEntityCollectionToProductImageSetCollectionTransfer(
+        ObjectCollection $productImageSetEntityCollection,
+        ProductImageSetCollectionTransfer $productImageSetCollectionTransfer
+    ): ProductImageSetCollectionTransfer {
+        foreach ($productImageSetEntityCollection as $productImageSetEntity) {
+            $productImageSetCollectionTransfer->addProductImageSet(
+                $this->mapAbstractProductImageSetEntityToProductImageSetTransfer($productImageSetEntity, new ProductImageSetTransfer()),
+            );
+        }
+
+        return $productImageSetCollectionTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
@@ -47,8 +66,30 @@ class ProductImageSetMapper
         $productImageSetTransfer = $productImageSetTransfer->fromArray($productImageSetEntity->toArray(), true);
         $productImageSetTransfer
             ->setIdProduct($productImageSetEntity->getFkProduct())
-            ->setLocale((new LocaleTransfer())->fromArray($productImageSetEntity->getSpyLocale()->toArray(), true))
             ->setSku($productImageSetEntity->getSpyProduct()->getSku());
+
+        if ($productImageSetEntity->getFkLocale()) {
+            $productImageSetTransfer->setLocale(
+                (new LocaleTransfer())->fromArray($productImageSetEntity->getSpyLocale()->toArray(), true),
+            );
+        }
+
+        return $productImageSetTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    protected function mapAbstractProductImageSetEntityToProductImageSetTransfer(
+        SpyProductImageSet $productImageSetEntity,
+        ProductImageSetTransfer $productImageSetTransfer
+    ): ProductImageSetTransfer {
+        $productImageSetTransfer = $productImageSetTransfer->fromArray($productImageSetEntity->toArray(), true);
+        $productImageSetTransfer
+            ->setIdProductAbstract($productImageSetEntity->getFkProductAbstract());
 
         return $productImageSetTransfer;
     }

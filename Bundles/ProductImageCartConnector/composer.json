@@ -5,8 +5,11 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/cart-extension": "^1.10.0 || ^2.6.0 || ^4.2.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-image": "^3.7.0"
+        "spryker/locale": "^3.0.0 || ^4.0.0",
+        "spryker/product-image": "^3.17.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/cart": "*",

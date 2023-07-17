@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductImage\Business\Model;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -178,6 +179,11 @@ class ProductImageFacadeTest extends Unit
      * @var string
      */
     public const LOCALE_DE_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    public const LOCALE_EN_EN = 'en_EN';
 
     /**
      * @var string
@@ -1431,6 +1437,46 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetConcreteProductImageSetCollectionRetrievesProductImageSetsFilteredByLocaleId(): void
+    {
+        // Arrange
+        $this->tester->ensureProductImageSetDatabaseTablesAreEmpty();
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE_DE]);
+        $localeTransfer2 = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_EN_EN]);
+
+        $firstProductConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer,
+        ]);
+        $secondProductConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer2,
+        ]);
+
+        $productImageSetConditionsTransfer = (new ProductImageSetConditionsTransfer())
+            ->addIdLocale($localeTransfer->getIdLocale());
+
+        $productImageSetCriteriaTransfer = (new ProductImageSetCriteriaTransfer())
+            ->setProductImageSetConditions($productImageSetConditionsTransfer);
+
+        // Act
+        $productImageSetCollectionTransfer = $this->productImageFacade
+            ->getConcreteProductImageSetCollection($productImageSetCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productImageSetCollectionTransfer->getProductImageSets());
+        $this->assertSame(
+            $localeTransfer->getIdLocale(),
+            $productImageSetCollectionTransfer->getProductImageSets()->offsetGet(0)->getLocaleOrFail()->getIdLocale(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testGetConcreteProductImageSetCollectionRetrievesProductImageSetsFilteredBySkuWithTwoProductImageSets(): void
     {
         // Arrange
@@ -1484,6 +1530,40 @@ class ProductImageFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productImageSetCollectionTransfer->getProductImageSets());
         $this->assertCount(2, $productImageSetCollectionTransfer->getProductImageSets()->getIterator()->current()->getProductImages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductImageSetCollectionShouldReturnProductImageSetsWithFallbackLocale(): void
+    {
+        // Arrange
+        $this->tester->ensureProductImageSetDatabaseTablesAreEmpty();
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE_DE]);
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => null,
+        ]);
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer,
+        ]);
+
+        $productImageSetCriteriaTransfer = (new ProductImageSetCriteriaTransfer())
+            ->setProductImageSetConditions(
+                (new ProductImageSetConditionsTransfer())
+                    ->addIdLocale($localeTransfer->getIdLocaleOrFail())
+                    ->setAddFallbackLocale(true),
+            );
+
+        // Act
+        $productImageSetCollectionTransfer = $this->tester->getFacade()
+            ->getConcreteProductImageSetCollection($productImageSetCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productImageSetCollectionTransfer->getProductImageSets());
     }
 
     /**

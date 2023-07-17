@@ -9,6 +9,10 @@ namespace Spryker\Zed\ProductImageCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageExpander;
+use Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageItemExpander;
+use Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageItemExpanderInterface;
+use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToLocaleFacadeInterface;
+use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeInterface;
 use Spryker\Zed\ProductImageCartConnector\ProductImageCartConnectorDependencyProvider;
 
 /**
@@ -28,10 +32,29 @@ class ProductImageCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface
+     * @return \Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageItemExpanderInterface
      */
-    protected function getProductImageFacade()
+    public function createProductImageItemExpander(): ProductImageItemExpanderInterface
+    {
+        return new ProductImageItemExpander(
+            $this->getProductImageFacade(),
+            $this->getLocaleFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ProductImageCartConnectorToProductImageFacadeInterface
     {
         return $this->getProvidedDependency(ProductImageCartConnectorDependencyProvider::FACADE_PRODUCT_IMAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductImageCartConnectorToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductImageCartConnectorDependencyProvider::FACADE_LOCALE);
     }
 }

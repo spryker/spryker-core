@@ -233,6 +233,8 @@ interface ProductImageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface::getConcreteProductImageSetCollection()} instead.
+     *
      * @param array<int> $productIds
      * @param string $productImageSetName
      *
@@ -289,13 +291,17 @@ interface ProductImageFacadeInterface
      * Specification:
      * - Retrieves concrete product image set entities filtered by criteria.
      * - Retrieves ONLY product image sets with defined `fk_product` field inside `spy_product_image_set` table.
-     * - Uses `ProductImageSetCriteriaTransfer.ProductImageSetConditions.skus` to filter productImageSets by product skus.
-     * - Uses `ProductImageSetCriteriaTransfer.ProductImageSetConditions.localeNames` to filter productImageSets by localeNames.
-     * - Uses `ProductImageSetCriteriaTransfer.SortTransfer.field` to set the `order by` field.
-     * - Uses `ProductImageSetCriteriaTransfer.SortTransfer.isAscending` to set ascending order otherwise will be used descending order.
-     * - Uses `ProductImageSetCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
-     * - Uses `ProductImageSetCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
-     * - Returns `ProductImageSetCollectionTransfer` filled with found productImageSets.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.productConcreteIds` to filter product image sets by concrete product IDs.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.productConcreteIds` to filter product image sets by names.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.skus` to filter productImageSets by product skus.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.localeNames` to filter product image sets by locale names.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.localeIds` to filter product image sets by locale IDs.
+     * - Uses `ProductImageSetCriteriaTransfer.sort.field` to set the `order by` field.
+     * - Uses `ProductImageSetCriteriaTransfer.sort.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductImageSetCriteriaTransfer.pagination.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductImageSetCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - If `ProductImageSetCriteriaTransfer.addFallbackLocale` is set to true - fallback locale will be retrieved.
+     * - Returns `ProductImageSetCollectionTransfer` filled with found product image sets.
      *
      * @api
      *
@@ -304,6 +310,30 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
      */
     public function getConcreteProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves abstract product image set entities filtered by criteria.
+     * - Retrieves ONLY product image sets with defined `fk_product_abstract` field inside `spy_product_image_set` table.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.productAbstractIds` to filter product image sets by abstract product IDs.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.names` to filter product image sets by names.
+     * - Uses `ProductImageSetCriteriaTransfer.productImageSetConditions.localeIds` to filter product image sets by locale IDs.
+     * - Uses `ProductImageSetCriteriaTransfer.sort.field` to set the `order by` field.
+     * - Uses `ProductImageSetCriteriaTransfer.sort.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductImageSetCriteriaTransfer.pagination.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductImageSetCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - If `ProductImageSetCriteriaTransfer.addFallbackLocale` is set to true - fallback locale will be retrieved.
+     * - Returns `ProductImageSetCollectionTransfer` filled with found product image sets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getAbstractProductImageSetCollection(
         ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
     ): ProductImageSetCollectionTransfer;
 }

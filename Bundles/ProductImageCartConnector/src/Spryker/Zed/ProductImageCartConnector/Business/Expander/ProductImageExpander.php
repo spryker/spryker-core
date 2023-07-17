@@ -11,20 +11,23 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\ProductImageCartConnector\ProductImageCartConnectorConfig;
-use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface;
+use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageItemExpander} instead.
+ */
 class ProductImageExpander implements ProductImageExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface
+     * @var \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeInterface
      */
     protected $productImageFacade;
 
     /**
-     * @param \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeInterface $productImageFacade
      */
     public function __construct(
-        ProductImageCartConnectorToProductImageInterface $productImageFacade
+        ProductImageCartConnectorToProductImageFacadeInterface $productImageFacade
     ) {
         $this->productImageFacade = $productImageFacade;
     }

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetConditionsTransfer;
 use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -181,13 +182,12 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
     ): ProductImageSetCollectionTransfer {
         $productImageSetCollectionTransfer = new ProductImageSetCollectionTransfer();
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery */
         $productImageSetQuery = $this->getFactory()
             ->createProductImageSetQuery()
-            ->joinWithSpyLocale()
+            ->leftJoinWithSpyLocale()
             ->joinWithSpyProduct();
 
-        $productImageSetQuery = $this->applyProductImageSetCriteriaFilters(
+        $productImageSetQuery = $this->applyConcreteProductImageSetCriteriaFilters(
             $productImageSetQuery,
             $productImageSetCriteriaTransfer,
         );
@@ -217,12 +217,54 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
+     * @module Product
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getAbstractProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer {
+        $productImageSetCollectionTransfer = new ProductImageSetCollectionTransfer();
+        $productImageSetQuery = $this->getFactory()->createProductImageSetQuery();
+
+        $productImageSetQuery = $this->applyAbstractProductImageSetCriteriaFilters(
+            $productImageSetQuery,
+            $productImageSetCriteriaTransfer,
+        );
+
+        $productImageSetQuery = $this->applyProductImageSetSorting(
+            $productImageSetQuery,
+            $productImageSetCriteriaTransfer->getSortCollection(),
+        );
+
+        $paginationTransfer = $productImageSetCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $productImageSetQuery = $this->applyProductImageSetPagination($productImageSetQuery, $paginationTransfer);
+            $productImageSetCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $productImageSetEntityCollection = $productImageSetQuery->find();
+        if ($productImageSetEntityCollection->count() === 0) {
+            return $productImageSetCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createProductImageSetMapper()
+            ->mapAbstractProductImageSetEntityCollectionToProductImageSetCollectionTransfer(
+                $productImageSetEntityCollection,
+                $productImageSetCollectionTransfer,
+            );
+    }
+
+    /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
      * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    protected function applyProductImageSetCriteriaFilters(
+    protected function applyConcreteProductImageSetCriteriaFilters(
         SpyProductImageSetQuery $productImageSetQuery,
         ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
     ): SpyProductImageSetQuery {
@@ -243,6 +285,55 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
                 ->useSpyLocaleQuery()
                     ->filterByLocaleName_In($productImageSetConditionsTransfer->getLocaleNames())
                 ->endUse();
+        }
+
+        if ($productImageSetConditionsTransfer->getNames()) {
+            $productImageSetQuery
+                ->filterByName_In($productImageSetConditionsTransfer->getNames());
+        }
+
+        if ($productImageSetConditionsTransfer->getProductConcreteIds()) {
+            $productImageSetQuery
+                ->filterByFkProduct_In($productImageSetConditionsTransfer->getProductConcreteIds());
+        }
+
+        if ($productImageSetConditionsTransfer->getLocaleIds()) {
+            $productImageSetQuery
+                ->filterByFkLocale_In($productImageSetConditionsTransfer->getLocaleIds());
+            $productImageSetQuery = $this->addFallbackLocaleCondition($productImageSetQuery, $productImageSetConditionsTransfer);
+        }
+
+        return $productImageSetQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function applyAbstractProductImageSetCriteriaFilters(
+        SpyProductImageSetQuery $productImageSetQuery,
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): SpyProductImageSetQuery {
+        $productImageSetConditionsTransfer = $productImageSetCriteriaTransfer->getProductImageSetConditions();
+        if (!$productImageSetConditionsTransfer) {
+            return $productImageSetQuery;
+        }
+
+        if ($productImageSetConditionsTransfer->getProductAbstractIds()) {
+            $productImageSetQuery
+                ->filterByFkProductAbstract_In($productImageSetConditionsTransfer->getProductAbstractIds());
+        }
+
+        if ($productImageSetConditionsTransfer->getNames()) {
+            $productImageSetQuery->filterByName_In($productImageSetConditionsTransfer->getNames());
+        }
+
+        if ($productImageSetConditionsTransfer->getLocaleIds()) {
+            $productImageSetQuery
+                ->filterByFkLocale_In($productImageSetConditionsTransfer->getLocaleIds());
+            $productImageSetQuery = $this->addFallbackLocaleCondition($productImageSetQuery, $productImageSetConditionsTransfer);
         }
 
         return $productImageSetQuery;
@@ -302,6 +393,23 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
                 ->setPreviousPage($paginationModel->getPreviousPage());
 
             return $paginationModel->getQuery();
+        }
+
+        return $productImageSetQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
+     * @param \Generated\Shared\Transfer\ProductImageSetConditionsTransfer $productImageSetConditionsTransfer
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function addFallbackLocaleCondition(
+        SpyProductImageSetQuery $productImageSetQuery,
+        ProductImageSetConditionsTransfer $productImageSetConditionsTransfer
+    ): SpyProductImageSetQuery {
+        if ($productImageSetConditionsTransfer->getAddFallbackLocale()) {
+            $productImageSetQuery->_or()->filterByFkLocale(null, Criteria::ISNULL);
         }
 
         return $productImageSetQuery;

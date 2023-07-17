@@ -1,36 +1,29 @@
 [
     {
-        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Type should be defined for param `productId` in method `Spryker\\Zed\\ProductImageCartConnector\\Dependency\\Facade\\ProductImageCartConnectorToProductImageBridge::getProductImagesSetCollectionByProductId()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesSetCollectionByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesSetCollectionByProductIdForCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
+        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageFacadeBridge.php",
         "description": "Bridges: Method `getProductImagesByProductIdsAndProductImageSetName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getProductImagesSetCollectionByProductId()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageFacadeBridge.php",
+        "description": "Bridges: Method `getConcreteProductImageSetCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageFacadeBridge.php",
+        "description": "Bridges: Method `getAbstractProductImageSetCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

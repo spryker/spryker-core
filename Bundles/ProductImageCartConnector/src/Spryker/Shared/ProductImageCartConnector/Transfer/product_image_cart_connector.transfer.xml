@@ -4,6 +4,7 @@
     <transfer name="Item">
         <property name="images" type="ProductImage[]" singular="image"/>
         <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -11,6 +12,32 @@
     </transfer>
 
     <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="ProductImageSetCriteria" strict="true">
+        <property name="productImageSetConditions" type="ProductImageSetConditions"/>
+    </transfer>
+
+    <transfer name="ProductImageSetConditions" strict="true">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="localeIds" type="int[]" singular="idLocale"/>
+        <property name="addFallbackLocale" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageSetCollection" strict="true">
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="idProduct" type="int"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 </transfers>

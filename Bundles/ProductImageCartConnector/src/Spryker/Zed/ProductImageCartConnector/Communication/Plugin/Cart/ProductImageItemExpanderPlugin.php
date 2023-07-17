@@ -5,23 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImageCartConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductImageCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductImageCartConnector\Communication\Plugin\Cart\ProductImageItemExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageCartConnector\Communication\ProductImageCartConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImageCartConnector\ProductImageCartConnectorConfig getConfig()
  */
-class ProductImageCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class ProductImageItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Requires `ItemTransfer.id` and `ItemTransfer.productAbstractId` to be set for each `CartChangeTransfer.items`.
+     * - Gets product image sets by concrete product IDs.
+     * - If product image sets less than cart items - gets more product image sets by abstract product IDs.
+     * - Expands `CartChangeTransfer.items` with product image sets.
+     * - Returns the expanded `CartChangeTransfer`.
      *
      * @api
      *
@@ -29,10 +32,8 @@ class ProductImageCartPlugin extends AbstractPlugin implements ItemExpanderPlugi
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $this->getFacade()->expandItems($cartChangeTransfer);
-
-        return $cartChangeTransfer;
+        return $this->getFacade()->expandCartChangeItems($cartChangeTransfer);
     }
 }
