@@ -29,7 +29,7 @@ use Symfony\Component\Finder\Finder;
  * @method void pause()
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\GlueApplication\PHPMD)
  */
 class GlueApplicationTester extends Actor
 {

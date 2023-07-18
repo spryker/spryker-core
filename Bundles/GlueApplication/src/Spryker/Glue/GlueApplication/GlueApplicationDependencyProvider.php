@@ -177,9 +177,16 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CONVENTION = 'PLUGINS_CONVENTION';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGINS_CONTROLLER_CACHE_COLLECTOR = 'PLUGINS_CONTROLLER_CACHE_COLLECTOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_CONTROLLER_CONFIGURATION_CACHE_COLLECTOR = 'PLUGINS_CONTROLLER_CONFIGURATION_CACHE_COLLECTOR';
 
     /**
      * @var string
@@ -264,6 +271,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCommunicationProtocolPlugins($container);
         $container = $this->addConventionPlugins($container);
         $container = $this->addControllerCacheCollectorPlugins($container);
+        $container = $this->addControllerConfigurationCacheCollectorPlugins($container);
         $container = $this->addFilesystem($container);
         $container = $this->addGlueApplicationRouterProviderPlugins($container);
         $container = $this->addRoutesProviderPlugins($container);
@@ -861,6 +869,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider::addControllerConfigurationCacheCollectorPlugins()} instead.
+     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -875,9 +885,33 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addControllerConfigurationCacheCollectorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONTROLLER_CONFIGURATION_CACHE_COLLECTOR, function () {
+            return $this->getControllerConfigurationCacheCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider::getControllerConfigurationCacheCollectorPlugins()} instead.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
      */
     protected function getControllerCacheCollectorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerConfigurationCacheCollectorPluginInterface>
+     */
+    protected function getControllerConfigurationCacheCollectorPlugins(): array
     {
         return [];
     }

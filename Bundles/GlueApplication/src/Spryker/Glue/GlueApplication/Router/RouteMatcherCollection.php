@@ -56,7 +56,7 @@ class RouteMatcherCollection implements RouteMatcherInterface
     public function route(GlueRequestTransfer $glueRequestTransfer): ResourceInterface
     {
         if ($this->glueApplicationConfig->isDevelopmentMode()) {
-            $this->routerCacheCollector->warmUp();
+            $this->routerCacheCollector->warmUp([$glueRequestTransfer->getApplication()]);
         }
 
         foreach ($this->routeMatchers as $routeMatcherType => $routeMatcher) {

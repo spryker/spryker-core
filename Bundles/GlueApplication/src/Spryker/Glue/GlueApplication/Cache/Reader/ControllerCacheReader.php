@@ -63,7 +63,7 @@ class ControllerCacheReader implements ControllerCacheReaderInterface
 
         $controllerCachePath = $this->config->getControllerCachePath() . DIRECTORY_SEPARATOR . GlueApplicationConfig::API_CONTROLLER_CACHE_FILENAME;
         if (!file_exists($controllerCachePath)) {
-            $this->controllerCacheWriter->cache();
+            $this->controllerCacheWriter->cache($glueRequestTransfer->getApplication());
         }
 
         $controllerCache = file_get_contents($controllerCachePath);

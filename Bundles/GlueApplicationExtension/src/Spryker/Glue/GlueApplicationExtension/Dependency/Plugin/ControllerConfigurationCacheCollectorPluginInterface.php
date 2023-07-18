@@ -8,11 +8,9 @@
 namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 /**
- * @deprecated Use {@link \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerConfigurationCacheCollectorPluginInterface} instead.
- *
  * Use this plugin interface to collect controllers cache for API applications.
  */
-interface ControllerCacheCollectorPluginInterface
+interface ControllerConfigurationCacheCollectorPluginInterface
 {
     /**
      * Specification:
@@ -34,4 +32,16 @@ interface ControllerCacheCollectorPluginInterface
      * @return array<string, array<string, \Generated\Shared\Transfer\ApiControllerConfigurationTransfer>>
      */
     public function getControllerConfiguration(): array;
+
+    /**
+     * Specification:
+     * - Checks whether the requested application scope is applicable.
+     *
+     * @api
+     *
+     * @param string $apiApplication
+     *
+     * @return bool
+     */
+    public function isApplicable(string $apiApplication): bool;
 }

@@ -7,17 +7,22 @@
 
 namespace Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication;
 
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerConfigurationCacheCollectorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ControllerConfigurationCacheCollectorPlugin} instead.
- *
  * @method \Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationFactory getFactory()
  * @method \Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationConfig getConfig()
  */
-class ControllerCacheCollectorPlugin extends AbstractPlugin implements ControllerCacheCollectorPluginInterface
+class ControllerConfigurationCacheCollectorPlugin extends AbstractPlugin implements ControllerConfigurationCacheCollectorPluginInterface
 {
+    /**
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_BACKEND_API_APPLICATION
+     *
+     * @var string
+     */
+    protected const GLUE_BACKEND_API_APPLICATION = 'GLUE_BACKEND_API_APPLICATION';
+
     /**
      * {@inheritDoc}
      * - Returns controllers configuration for GlueBackendApiApplication.
@@ -29,5 +34,20 @@ class ControllerCacheCollectorPlugin extends AbstractPlugin implements Controlle
     public function getControllerConfiguration(): array
     {
         return $this->getFactory()->createControllerCacheCollector()->collect();
+    }
+
+    /**
+     * {@inheritDoc}
+     *  - Checks whether the requested application context equals to GlueBackendApiApplication.
+     *
+     * @api
+     *
+     * @param string $apiApplication
+     *
+     * @return bool
+     */
+    public function isApplicable(string $apiApplication): bool
+    {
+        return $apiApplication === static::GLUE_BACKEND_API_APPLICATION;
     }
 }

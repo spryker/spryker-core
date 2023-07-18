@@ -929,6 +929,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->getControllerCacheCollectorPlugins(),
             $this->getConfig(),
             $this->getFilesystem(),
+            $this->getControllerConfigurationCacheCollectorPlugins(),
         );
     }
 
@@ -952,11 +953,21 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\GlueApplicationFactory::getControllerConfigurationCacheCollectorPlugins()} instead.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
      */
     public function getControllerCacheCollectorPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_CONTROLLER_CACHE_COLLECTOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerConfigurationCacheCollectorPluginInterface>
+     */
+    public function getControllerConfigurationCacheCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_CONTROLLER_CONFIGURATION_CACHE_COLLECTOR);
     }
 
     /**

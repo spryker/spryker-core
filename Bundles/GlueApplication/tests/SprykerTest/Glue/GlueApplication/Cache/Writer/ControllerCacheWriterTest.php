@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriter;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemAdapter;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerConfigurationCacheCollectorPluginInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -42,6 +43,8 @@ class ControllerCacheWriterTest extends Unit
     }
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
      * @return void
      */
     public function testCacheShouldCreateFile(): void
@@ -52,15 +55,42 @@ class ControllerCacheWriterTest extends Unit
             ->method('getControllerCachePath')
             ->willReturn(Configuration::dataDir());
 
-        $сontrollerCacheCollectorPluginMock = $this->createMock(ControllerCacheCollectorPluginInterface::class);
-        $сontrollerCacheCollectorPluginMock->expects($this->once())
+        $controllerCacheCollectorPluginMock = $this->createMock(ControllerCacheCollectorPluginInterface::class);
+        $controllerCacheCollectorPluginMock->expects($this->once())
             ->method('getControllerConfiguration')
             ->willReturn(
                 $this->tester->haveApiControllerConfigurationTransfers(),
             );
 
         //Act
-        (new ControllerCacheWriter([$сontrollerCacheCollectorPluginMock], $configMock, new GlueApplicationToSymfonyFilesystemAdapter()))->cache();
+        (new ControllerCacheWriter([$controllerCacheCollectorPluginMock], $configMock, new GlueApplicationToSymfonyFilesystemAdapter(), []))->cache();
+
+        //Assert
+        $finder = new Finder();
+        $finder->in(Configuration::dataDir())->name(GlueApplicationConfig::API_CONTROLLER_CACHE_FILENAME);
+        $this->assertCount(1, $finder);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCacheShouldCreateOneFile(): void
+    {
+        //Arrange
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->expects($this->once())
+            ->method('getControllerCachePath')
+            ->willReturn(Configuration::dataDir());
+
+        $controllerConfigurationCacheCollectorPluginMock = $this->createMock(ControllerConfigurationCacheCollectorPluginInterface::class);
+        $controllerConfigurationCacheCollectorPluginMock->expects($this->once())
+            ->method('getControllerConfiguration')
+            ->willReturn(
+                $this->tester->haveApiControllerConfigurationTransfers(),
+            );
+
+        //Act
+        (new ControllerCacheWriter([], $configMock, new GlueApplicationToSymfonyFilesystemAdapter(), [$controllerConfigurationCacheCollectorPluginMock]))->cache();
 
         //Assert
         $finder = new Finder();

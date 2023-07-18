@@ -69,7 +69,7 @@ class ResourceExecutor implements ResourceExecutorInterface
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         if ($this->glueApplicationConfig->isDevelopmentMode()) {
-            $this->controllerCacheWriter->cache();
+            $this->controllerCacheWriter->cache($glueRequestTransfer->getApplication());
         }
 
         $executableResource = $resource->getResource($glueRequestTransfer);

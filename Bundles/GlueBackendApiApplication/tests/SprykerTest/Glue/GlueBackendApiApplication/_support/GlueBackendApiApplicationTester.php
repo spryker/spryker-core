@@ -24,7 +24,7 @@ use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\GlueBackendApiApplication\PHPMD)
  */
 class GlueBackendApiApplicationTester extends Actor
 {
