@@ -13,9 +13,11 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
+use Spryker\Zed\StateMachine\StateMachineConfig as SprykerStateMachineConfig;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 use SprykerTest\Zed\StateMachine\Mocks\StateMachineConfig;
 use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
@@ -80,6 +82,42 @@ class StateMachineFacadeExceptionTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDrawProcessThrowsExceptionWhenXmlFileDoNotExist(): void
+    {
+        // Arrange
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName('not_existing_process_name');
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        // Assert
+        $this->expectException(StateMachineException::class);
+        $this->expectExceptionMessage('State machine XML file not found in "vendor/spryker/spryker/Bundles/StateMachine/tests/SprykerTest/Zed/StateMachine/Business/../_support/Fixtures".');
+
+        // Act
+        $this->getStateMachineFacadeWithConfigMock()->drawProcess($stateMachineProcessTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDrawProcessThrowsExceptionWhenFileExistsButNotWhitelisted(): void
+    {
+        // Arrange
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName('TestRestricted');
+        $stateMachineProcessTransfer->setStateMachineName('../FixturesRestricted');
+
+        // Assert
+        $this->expectException(StateMachineException::class);
+        $this->expectExceptionMessage('State machine XML file not found in "vendor/spryker/spryker/Bundles/StateMachine/tests/SprykerTest/Zed/StateMachine/Business/../_support/Fixtures".');
+
+        // Act
+        $this->getStateMachineFacadeWithConfigMock()->drawProcess($stateMachineProcessTransfer);
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
@@ -111,5 +149,36 @@ class StateMachineFacadeExceptionTest extends Unit
         $stateMachineFacade->setFactory($stateMachineBusinessFactory);
 
         return $stateMachineFacade;
+    }
+
+    /**
+     * @param string $configuredPathToStateMachineXmlFiles
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\StateMachineConfig
+     */
+    protected function getStateMachineConfigMock(string $configuredPathToStateMachineXmlFiles): SprykerStateMachineConfig
+    {
+        $stateMachineConfigMock = $this->getMockBuilder(SprykerStateMachineConfig::class)
+            ->onlyMethods(['getPathToStateMachineXmlFiles'])
+            ->getMock();
+
+        $stateMachineConfigMock
+            ->method('getPathToStateMachineXmlFiles')
+            ->willReturn($configuredPathToStateMachineXmlFiles);
+
+        return $stateMachineConfigMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
+     */
+    protected function getStateMachineFacadeWithConfigMock(): StateMachineFacade
+    {
+        $stateMachineConfigMock = $this->getStateMachineConfigMock(
+            __DIR__ . '/../_support/Fixtures',
+        );
+        $stateMachineBusinessFactory = (new StateMachineBusinessFactory())->setConfig($stateMachineConfigMock);
+
+        return (new StateMachineFacade())->setFactory($stateMachineBusinessFactory);
     }
 }

@@ -270,11 +270,11 @@ class Builder implements BuilderInterface
     {
         $pathToXml = $pathToXml . DIRECTORY_SEPARATOR . $fileName . '.xml';
 
-        if (!file_exists($pathToXml)) {
+        if (!$this->isValidPath($pathToXml)) {
             throw new StateMachineException(
                 sprintf(
                     'State machine XML file not found in "%s".',
-                    $pathToXml,
+                    str_replace(APPLICATION_ROOT_DIR, '', $this->stateMachineConfig->getPathToStateMachineXmlFiles()),
                 ),
             );
         }
@@ -290,6 +290,19 @@ class Builder implements BuilderInterface
         }
 
         return $this->loadXml($xmlContents);
+    }
+
+    /**
+     * @param string $pathToXml
+     *
+     * @return bool
+     */
+    protected function isValidPath(string $pathToXml): bool
+    {
+        $realPathToXml = realpath($pathToXml);
+        $realPathToStateMachineXmlFiles = realpath($this->stateMachineConfig->getPathToStateMachineXmlFiles());
+
+        return $realPathToXml && strpos($realPathToXml, $realPathToStateMachineXmlFiles . '/') === 0;
     }
 
     /**

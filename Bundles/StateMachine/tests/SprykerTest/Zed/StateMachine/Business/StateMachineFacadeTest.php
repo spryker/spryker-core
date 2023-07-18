@@ -820,6 +820,23 @@ class StateMachineFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDrawProcessReturnsRenderedGraph(): void
+    {
+        // Arrange
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName(static::TEST_PROCESS_NAME);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        // Act
+        $renderedGraphString = $this->createStateMachineFacade(new TestStateMachineHandler())->drawProcess($stateMachineProcessTransfer);
+
+        // Assert
+        $this->assertNotEmpty($renderedGraphString);
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
