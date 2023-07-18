@@ -34,6 +34,10 @@
         <property name="group" type="PushNotificationGroup"/>
     </transfer>
 
+    <transfer name="PushNotificationSubscriptionCollection" strict="true">
+        <property name="pushNotificationSubscriptions" type="PushNotificationSubscription[]" singular="pushNotificationSubscription"/>
+    </transfer>
+
     <transfer name="PushNotificationUser" strict="true">
         <property name="reference" type="string"/>
         <property name="uuid" type="string"/>

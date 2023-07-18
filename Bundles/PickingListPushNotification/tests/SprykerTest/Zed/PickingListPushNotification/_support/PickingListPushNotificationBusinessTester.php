@@ -41,7 +41,7 @@ use Spryker\Zed\PickingListPushNotification\PickingListPushNotificationDependenc
  * @method void pause($vars = [])
  * @method \Spryker\Zed\PickingListPushNotification\Business\PickingListPushNotificationFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\PickingListPushNotification\PHPMD)
  */
 class PickingListPushNotificationBusinessTester extends Actor
 {

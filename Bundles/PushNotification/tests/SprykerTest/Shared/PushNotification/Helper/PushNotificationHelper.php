@@ -12,12 +12,15 @@ use Generated\Shared\DataBuilder\PushNotificationProviderBuilder;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionDeliveryLogTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\PushNotificationTransfer;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotification;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationGroupQuery;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationProviderQuery;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationQuery;
+use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLog;
+use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLogQuery;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -159,6 +162,43 @@ class PushNotificationHelper extends Module
     }
 
     /**
+     * @param array<string, mixed> $pushNotificationSubscriptionDeliveryLogOverride
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionDeliveryLogTransfer
+     */
+    public function havePushNotificationSubscriptionDeliveryLog(
+        array $pushNotificationSubscriptionDeliveryLogOverride = []
+    ): PushNotificationSubscriptionDeliveryLogTransfer {
+        $pushNotificationOverride = $pushNotificationSubscriptionDeliveryLogOverride[PushNotificationSubscriptionDeliveryLogTransfer::PUSH_NOTIFICATION] ?? [];
+        $pushNotificationTransfer = (new PushNotificationTransfer())->fromArray($pushNotificationOverride);
+        if (!$pushNotificationTransfer->getIdPushNotification()) {
+            $pushNotificationTransfer = $this->havePushNotification($pushNotificationOverride);
+        }
+
+        $pushNotificationSubscriptionOverride = $pushNotificationSubscriptionDeliveryLogOverride[PushNotificationSubscriptionDeliveryLogTransfer::PUSH_NOTIFICATION_SUBSCRIPTION] ?? [];
+        $pushNotificationSubscriptionTransfer = (new PushNotificationSubscriptionTransfer())->fromArray($pushNotificationSubscriptionOverride);
+        if (!$pushNotificationSubscriptionTransfer->getIdPushNotificationSubscription()) {
+            $pushNotificationSubscriptionTransfer = $this->havePushNotificationSubscription($pushNotificationSubscriptionOverride);
+        }
+
+        $pushNotificationSubscriptionDeliveryLogEntity = (new SpyPushNotificationSubscriptionDeliveryLog())
+            ->setFkPushNotification($pushNotificationTransfer->getIdPushNotificationOrFail())
+            ->setFkPushNotificationSubscription($pushNotificationSubscriptionTransfer->getIdPushNotificationSubscriptionOrFail());
+        $pushNotificationSubscriptionDeliveryLogEntity->save();
+
+        $pushNotificationSubscriptionDeliveryLogTransfer = (new PushNotificationSubscriptionDeliveryLogTransfer())
+            ->setIdPushNotificationSubscriptionDeliveryLog($pushNotificationSubscriptionDeliveryLogEntity->getIdPushNotificationSubscriptionDeliveryLog())
+            ->setPushNotification($pushNotificationTransfer)
+            ->setPushNotificationSubscription($pushNotificationSubscriptionTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($pushNotificationSubscriptionDeliveryLogTransfer): void {
+            $this->deletePushNotificationSubscriptionDeliveryLog($pushNotificationSubscriptionDeliveryLogTransfer->getIdPushNotificationSubscriptionDeliveryLogOrFail());
+        });
+
+        return $pushNotificationSubscriptionDeliveryLogTransfer;
+    }
+
+    /**
      * @param int $idPushNotificationGroup
      *
      * @return void
@@ -217,6 +257,21 @@ class PushNotificationHelper extends Module
     }
 
     /**
+     * @param int $idPushNotificationSubscriptionDeliveryLog
+     *
+     * @return void
+     */
+    protected function deletePushNotificationSubscriptionDeliveryLog(int $idPushNotificationSubscriptionDeliveryLog): void
+    {
+        $pushNotificationSubscriptionDeliveryLogEntity = $this->getPushNotificationSubscriptionDeliveryLogQuery()
+            ->findByIdPushNotificationSubscriptionDeliveryLog($idPushNotificationSubscriptionDeliveryLog);
+
+        if ($pushNotificationSubscriptionDeliveryLogEntity) {
+            $pushNotificationSubscriptionDeliveryLogEntity->delete();
+        }
+    }
+
+    /**
      * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationGroupQuery
      */
     protected function getPushNotificationGroupQuery(): SpyPushNotificationGroupQuery
@@ -246,5 +301,13 @@ class PushNotificationHelper extends Module
     protected function getPushNotificationProviderQuery(): SpyPushNotificationProviderQuery
     {
         return SpyPushNotificationProviderQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLogQuery
+     */
+    protected function getPushNotificationSubscriptionDeliveryLogQuery(): SpyPushNotificationSubscriptionDeliveryLogQuery
+    {
+        return SpyPushNotificationSubscriptionDeliveryLogQuery::create();
     }
 }

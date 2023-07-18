@@ -37,7 +37,7 @@ use SprykerTest\Zed\PushNotificationWebPushPhp\Mock\FlushResponseMock;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\PushNotificationWebPushPhp\PHPMD)
  */
 class PushNotificationWebPushPhpBusinessTester extends Actor
 {

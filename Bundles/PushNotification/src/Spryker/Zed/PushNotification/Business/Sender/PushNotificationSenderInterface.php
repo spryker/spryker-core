@@ -7,12 +7,17 @@
 
 namespace Spryker\Zed\PushNotification\Business\Sender;
 
+use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
 
 interface PushNotificationSenderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer
      */
-    public function sendPushNotifications(): PushNotificationCollectionResponseTransfer;
+    public function sendPushNotifications(
+        PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+    ): PushNotificationCollectionResponseTransfer;
 }

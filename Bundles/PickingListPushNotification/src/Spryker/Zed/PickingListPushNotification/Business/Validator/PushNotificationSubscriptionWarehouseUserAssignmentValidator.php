@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PickingListPushNotification\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Zed\PickingListPushNotification\Business\Reader\WarehouseUserAssignmentReaderInterface;
 use Spryker\Zed\PickingListPushNotification\PickingListPushNotificationConfig;
@@ -44,12 +44,16 @@ class PushNotificationSubscriptionWarehouseUserAssignmentValidator implements Pu
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validateSubscriptions(ArrayObject $pushNotificationSubscriptionTransfers): ErrorCollectionTransfer
-    {
+    public function validateSubscriptions(
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
+    ): ErrorCollectionTransfer {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers */
+        $pushNotificationSubscriptionTransfers = $pushNotificationSubscriptionCollectionTransfer->getPushNotificationSubscriptions();
+
         $warehouseUserAssignmentTransfersGroupedByUserUuidAndWarehouseUuid = $this
             ->warehouseUserAssignmentReader
             ->getWarehouseUserAssignmentTransfersGroupedByUserUuidAndWarehouseUuid(
@@ -69,7 +73,7 @@ class PushNotificationSubscriptionWarehouseUserAssignmentValidator implements Pu
                 (string)$i,
                 static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND,
             );
-            $errorCollectionTransfer->getErrors()->append($errorTransfer);
+            $errorCollectionTransfer->addError($errorTransfer);
         }
 
         return $errorCollectionTransfer;

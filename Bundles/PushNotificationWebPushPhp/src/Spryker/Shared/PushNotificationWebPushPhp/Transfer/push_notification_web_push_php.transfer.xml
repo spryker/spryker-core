@@ -30,6 +30,10 @@
         <property name="subscriptions" type="PushNotificationSubscription[]" singular="subscription"/>
     </transfer>
 
+    <transfer name="PushNotificationCollection" strict="true">
+        <property name="pushNotifications" type="PushNotification[]" singular="pushNotification"/>
+    </transfer>
+
     <transfer name="PushNotificationSubscription" strict="true">
         <property name="idPushNotificationSubscription" type="int"/>
         <property name="uuid" type="string"/>
@@ -37,6 +41,10 @@
         <property name="group" type="PushNotificationGroup"/>
         <property name="deliveryLogs" type="PushNotificationSubscriptionDeliveryLog[]" singular="deliveryLog"/>
         <property name="payload" type="array" associative="true" singular="payloadItem"/>
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollection" strict="true">
+        <property name="pushNotificationSubscriptions" type="PushNotificationSubscription[]" singular="pushNotificationSubscription"/>
     </transfer>
 
     <transfer name="PushNotificationProvider" strict="true">

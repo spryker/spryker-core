@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Communication\Plugin\PushNotification;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationValidatorPluginInterface;
 
@@ -21,22 +21,22 @@ class PushNotificationWebPushPhpPayloadLengthPushNotificationValidatorPlugin ext
 {
     /**
      * {@inheritDoc}
-     * - Requires `PushNotificationTransfer.provider.name` transfer field to be set.
-     * - Applies when `PushNotificationSubscriptionTransfer.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
-     * - Json encodes of `PushNotificationTransfer.payload`.
+     * - Requires `PushNotificationCollectionTransfer.pushNotification.provider.name` transfer field to be set.
+     * - Applies when `PushNotificationCollectionTransfer.pushNotification.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
+     * - Encodes `PushNotificationCollectionTransfer.pushNotification.payload` to JSON.
      * - Validates whether the length of the payload is exceeded {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::getPushNotificationPayloadMaxLength()}.
      * - Returns a collection of validation errors.
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validate(
-        ArrayObject $pushNotificationTransfers
+        PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
     ): ErrorCollectionTransfer {
         return $this->getFacade()
-            ->validatePayloadLength($pushNotificationTransfers);
+            ->validatePayloadLength($pushNotificationCollectionTransfer);
     }
 }

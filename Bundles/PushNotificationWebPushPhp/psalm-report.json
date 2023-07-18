@@ -1,6 +1,31 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PushNotificationWebPushPhp\\Business\\Expander\\PushNotificationSubscriptionDeliveryLogExpander::getPushNotificationSubscriptionTransfersIndexedByIdPushNotificationSubscription expects ArrayObject<int, Generated\\Shared\\Transfer\\PushNotificationSubscriptionTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationSubscriptionTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationWebPushPhp/src/Spryker/Zed/PushNotificationWebPushPhp/Business/Expander/PushNotificationSubscriptionDeliveryLogExpander.php",
+            "snippet": "            $pushNotificationTransfer->getSubscriptions(),",
+            "selected_text": "$pushNotificationTransfer->getSubscriptions()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PushNotificationWebPushPhp\\Business\\Filter\\PushNotificationFilterInterface::filterPushNotificationCollectionByProviderName expects ArrayObject<int, Generated\\Shared\\Transfer\\PushNotificationTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationWebPushPhp/src/Spryker/Zed/PushNotificationWebPushPhp/Business/Sender/PushNotificationSender.php",
+            "snippet": "            $pushNotificationCollectionRequestTransfer->getPushNotifications(),",
+            "selected_text": "$pushNotificationCollectionRequestTransfer->getPushNotifications()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 2
 }

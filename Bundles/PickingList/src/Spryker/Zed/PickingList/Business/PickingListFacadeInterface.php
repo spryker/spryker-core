@@ -8,11 +8,16 @@
 namespace Spryker\Zed\PickingList\Business;
 
 use Generated\Shared\Transfer\GeneratePickingListsRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingFinishedRequestTransfer;
+use Generated\Shared\Transfer\PickingFinishedResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
+use Generated\Shared\Transfer\PickingListGenerationFinishedRequestTransfer;
+use Generated\Shared\Transfer\PickingListGenerationFinishedResponseTransfer;
+use Generated\Shared\Transfer\PickingStartedRequestTransfer;
+use Generated\Shared\Transfer\PickingStartedResponseTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 
 interface PickingListFacadeInterface
@@ -124,39 +129,63 @@ interface PickingListFacadeInterface
 
     /**
      * Specification:
-     * - Checks if picking lists generation is finished for the given order.
+     * - Expects `PickingListGenerationFinishedRequestTransfer.order` to be set.
+     * - Expects `PickingListGenerationFinishedRequestTransfer.order.item` to be set.
+     * - Requires `PickingListGenerationFinishedRequestTransfer.order.idSalesOrder` to be set.
+     * - Requires `PickingListGenerationFinishedRequestTransfer.order.item.uuid` to be set.
+     * - Checks if picking lists generation is finished for each order.
+     * - Expands `PickingListGenerationFinishedResponseTransfer.order.isPickingListGenerationFinished` with check result.
+     * - Returns `PickingListGenerationFinishedResponseTransfer` with expanded orders.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingListGenerationFinishedRequestTransfer $pickingListGenerationFinishedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingListGenerationFinishedResponseTransfer
      */
-    public function isPickingListGenerationFinishedForOrder(OrderTransfer $orderTransfer): bool;
+    public function isPickingListGenerationFinished(
+        PickingListGenerationFinishedRequestTransfer $pickingListGenerationFinishedRequestTransfer
+    ): PickingListGenerationFinishedResponseTransfer;
 
     /**
      * Specification:
-     * - Checks if picking of at least one picking list is started for the given order.
+     * - Expects `PickingStartedRequestTransfer.order` to be set.
+     * - Expects `PickingStartedRequestTransfer.order.item` to be set.
+     * - Requires `PickingStartedRequestTransfer.order.idSalesOrder` to be set.
+     * - Requires `PickingStartedRequestTransfer.order.item.uuid` to be set.
+     * - Checks if picking of at least one picking list is started for each order.
+     * - Expands `PickingStartedResponseTransfer.order.isPickingStarted` with check result.
+     * - Returns `PickingStartedResponseTransfer` with expanded orders.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingStartedRequestTransfer $pickingStartedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingStartedResponseTransfer
      */
-    public function isPickingStartedForOrder(OrderTransfer $orderTransfer): bool;
+    public function isPickingStarted(
+        PickingStartedRequestTransfer $pickingStartedRequestTransfer
+    ): PickingStartedResponseTransfer;
 
     /**
      * Specification:
-     * - Checks if all picking lists are finished for the given order.
+     * - Expects `PickingFinishedRequestTransfer.order` to be set.
+     * - Expects `PickingFinishedRequestTransfer.order.item` to be set.
+     * - Requires `PickingFinishedRequestTransfer.order.idSalesOrder` to be set.
+     * - Requires `PickingFinishedRequestTransfer.order.item.uuid` to be set.
+     * - Checks if all picking lists are finished for each order.
+     * - Expands `PickingFinishedResponseTransfer.order.isPickingFinished` with check result.
+     * - Returns `PickingFinishedResponseTransfer` with expanded orders.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingFinishedRequestTransfer $pickingFinishedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingFinishedResponseTransfer
      */
-    public function isPickingFinishedForOrder(OrderTransfer $orderTransfer): bool;
+    public function isPickingFinished(
+        PickingFinishedRequestTransfer $pickingFinishedRequestTransfer
+    ): PickingFinishedResponseTransfer;
 
     /**
      * Specification:

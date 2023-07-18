@@ -74,9 +74,9 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     public function createPushNotificationCollection(
         PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
     ): PickingListCollectionResponseTransfer {
-        $pickingListTransfers = $this->pickingListFilter->filterNotifiablePickingLists(
-            $pushNotificationCollectionRequestTransfer->getPickingLists(),
-        );
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */
+        $pickingListTransfers = $pushNotificationCollectionRequestTransfer->getPickingLists();
+        $pickingListTransfers = $this->pickingListFilter->filterNotifiablePickingLists($pickingListTransfers);
 
         $pickingListCollectionResponseTransfer = (new PickingListCollectionResponseTransfer())
             ->setPickingLists($pushNotificationCollectionRequestTransfer->getPickingLists());

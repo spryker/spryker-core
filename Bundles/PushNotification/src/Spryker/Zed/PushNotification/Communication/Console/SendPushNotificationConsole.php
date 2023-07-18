@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\PushNotification\Communication\Console;
 
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationConditionsTransfer;
+use Generated\Shared\Transfer\PushNotificationCriteriaTransfer;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,9 +20,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\PushNotification\Business\PushNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface getRepository()
  * @method \Spryker\Zed\PushNotification\Communication\PushNotificationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PushNotification\PushNotificationConfig getConfig()
  */
 class SendPushNotificationConsole extends Console
 {
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var string
      */
@@ -53,7 +61,15 @@ class SendPushNotificationConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $pushNotificationCollectionResponseTransfer = $this->getFacade()->sendPushNotifications();
+        $pushNotificationFacade = $this->getFacade();
+
+        $pushNotificationCollectionTransfer = $pushNotificationFacade->getPushNotificationCollection(
+            $this->createPushNotificationCriteriaTransfer(),
+        );
+
+        $pushNotificationCollectionResponseTransfer = $pushNotificationFacade->sendPushNotifications(
+            (new PushNotificationCollectionRequestTransfer())->setPushNotifications($pushNotificationCollectionTransfer->getPushNotifications()),
+        );
 
         /**
          * @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
@@ -75,5 +91,22 @@ class SendPushNotificationConsole extends Console
         }
 
         return static::CODE_ERROR;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PushNotificationCriteriaTransfer
+     */
+    protected function createPushNotificationCriteriaTransfer(): PushNotificationCriteriaTransfer
+    {
+        $paginationTransfer = (new PaginationTransfer())
+            ->setOffset(0)
+            ->setLimit($this->getConfig()->getPushNotificationSendBatchSize());
+
+        $pushNotificationConditionsTransfer = (new PushNotificationConditionsTransfer())
+            ->setNotificationSent(false);
+
+        return (new PushNotificationCriteriaTransfer())
+            ->setPushNotificationConditions($pushNotificationConditionsTransfer)
+            ->setPagination($paginationTransfer);
     }
 }

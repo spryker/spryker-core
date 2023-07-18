@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 
 interface PushNotificationSubscriptionPayloadStructureValidatorInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validateSubscriptions(
-        ArrayObject $pushNotificationSubscriptionTransfers
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
     ): ErrorCollectionTransfer;
 }

@@ -7,50 +7,51 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 
 interface PushNotificationWebPushPhpFacadeInterface
 {
     /**
      * Specification:
-     * - Requires `PushNotificationSubscriptionTransfer.provider.name` transfer field to be set.
-     * - Applies when `PushNotificationSubscriptionTransfer.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
-     * - Validates `PushNotificationSubscription.payload` format.
+     * - Requires `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.provider.name` transfer field to be set.
+     * - Applies when `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
+     * - Validates `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload` format.
      * - The following payload keys combinations considered as valid:
-     * - `PushNotificationSubscription.payload.endpoint`.
-     * - `PushNotificationSubscription.payload.endpoint` + `PushNotificationSubscription.payload.publicKey` + `PushNotificationSubscription.payload.authToken`.
-     * - `PushNotificationSubscription.payload.endpoint` + `PushNotificationSubscription.payload.keys.p256dh` + `PushNotificationSubscription.payload.keys.auth`.
+     * - `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.endpoint`.
+     * - `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.endpoint` + `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.publicKey` + `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.authToken`.
+     * - `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.endpoint` + `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.keys.p256dh` + `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.payload.keys.auth`.
      * - Returns a collection of validation errors.
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validateSubscriptions(
-        ArrayObject $pushNotificationSubscriptionTransfers
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
     ): ErrorCollectionTransfer;
 
     /**
      * Specification:
-     * - Requires `PushNotificationTransfer.provider.name` transfer field to be set.
-     * - Applies when `PushNotificationSubscriptionTransfer.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
-     * - Json encodes of `PushNotificationTransfer.payload`.
+     * - Requires `PushNotificationCollectionTransfer.pushNotification.provider.name` transfer field to be set.
+     * - Applies when `PushNotificationCollectionTransfer.pushNotification.provider.name` is equal to {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::WEB_PUSH_PHP_PROVIDER_NAME} only.
+     * - Encodes `PushNotificationCollectionTransfer.pushNotification.payload` to JSON.
      * - Validates whether the length of the payload is exceeded {@link \Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig::getPushNotificationPayloadMaxLength()}.
      * - Returns a collection of validation errors.
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validatePayloadLength(
-        ArrayObject $pushNotificationTransfers
+        PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
     ): ErrorCollectionTransfer;
 
     /**

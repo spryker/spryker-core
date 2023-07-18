@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PickingList\Communication\Plugin\Oms;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingStartedRequestTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
@@ -21,6 +22,7 @@ class IsPickingStartedConditionPlugin extends AbstractPlugin implements Conditio
 {
     /**
      * {@inheritDoc}
+     * - Requires `SpySalesOrderItem.uuid` to be set.
      * - Checks if picking of at least one picking list is started for the given sales order item.
      *
      * @api
@@ -29,12 +31,20 @@ class IsPickingStartedConditionPlugin extends AbstractPlugin implements Conditio
      *
      * @return bool
      */
-    public function check(SpySalesOrderItem $orderItem)
+    public function check(SpySalesOrderItem $orderItem): bool
     {
         $orderTransfer = $this->getFactory()
             ->createPickingListMapper()
             ->mapSalesOrderItemEntityToOrderTransfer($orderItem, new OrderTransfer());
 
-        return $this->getFacade()->isPickingStartedForOrder($orderTransfer);
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers */
+        $orderTransfers = $this->getFacade()
+            ->isPickingStarted((new PickingStartedRequestTransfer())->addOrder($orderTransfer))
+            ->getOrders();
+
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $orderTransfers->getIterator()->current();
+
+        return $orderTransfer->getIsPickingStartedOrFail();
     }
 }

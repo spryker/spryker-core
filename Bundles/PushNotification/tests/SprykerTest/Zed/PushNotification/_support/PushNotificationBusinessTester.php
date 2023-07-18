@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\PushNotificationTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Orm\Zed\PushNotification\Persistence\Map\SpyPushNotificationProviderTableMap;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationProviderQuery;
+use Orm\Zed\PushNotification\Persistence\SpyPushNotificationQuery;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLog;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionDeliveryLogQuery;
@@ -49,7 +50,7 @@ use Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSend
  * @method void pause()
  * @method \Spryker\Zed\PushNotification\Business\PushNotificationFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\PushNotification\PHPMD)
  */
 class PushNotificationBusinessTester extends Actor
 {
@@ -73,6 +74,7 @@ class PushNotificationBusinessTester extends Actor
         $this->ensureDatabaseTableIsEmpty($this->getPushNotificationProviderQuery());
         $this->ensureDatabaseTableIsEmpty($this->getPushNotificationSubscriptionQuery());
         $this->ensureDatabaseTableIsEmpty($this->getPushNotificationSubscriptionDeliveryLogQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getPushNotificationQueryQuery());
     }
 
     /**
@@ -472,5 +474,13 @@ class PushNotificationBusinessTester extends Actor
         return $pushNotificationTransfer
             ->setGroup($pushNotificationGroupTransfer)
             ->setProvider($pushNotificationProviderTransfer);
+    }
+
+    /**
+     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationQuery
+     */
+    protected function getPushNotificationQueryQuery(): SpyPushNotificationQuery
+    {
+        return SpyPushNotificationQuery::create();
     }
 }

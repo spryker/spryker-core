@@ -38,8 +38,12 @@ use Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGenerator;
 use Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGeneratorInterface;
 use Spryker\Zed\PickingList\Business\Updater\PickingListUpdater;
 use Spryker\Zed\PickingList\Business\Updater\PickingListUpdaterInterface;
-use Spryker\Zed\PickingList\Business\Validator\PickingListStatusValidator;
-use Spryker\Zed\PickingList\Business\Validator\PickingListStatusValidatorInterface;
+use Spryker\Zed\PickingList\Business\Validator\PickingListGenerationFinishedValidator;
+use Spryker\Zed\PickingList\Business\Validator\PickingListGenerationFinishedValidatorInterface;
+use Spryker\Zed\PickingList\Business\Validator\PickingListPickingFinishedValidator;
+use Spryker\Zed\PickingList\Business\Validator\PickingListPickingFinishedValidatorInterface;
+use Spryker\Zed\PickingList\Business\Validator\PickingListPickingStartedValidator;
+use Spryker\Zed\PickingList\Business\Validator\PickingListPickingStartedValidatorInterface;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorComposite;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeInterface;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeRuleInterface;
@@ -71,6 +75,7 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
         return new PickingListReader(
             $this->getRepository(),
             $this->createPickingListExpander(),
+            $this->createPickingListMapper(),
             $this->getPickingListCollectionExpanderPlugins(),
         );
     }
@@ -267,15 +272,30 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PickingList\Business\Validator\PickingListStatusValidatorInterface
+     * @return \Spryker\Zed\PickingList\Business\Validator\PickingListGenerationFinishedValidatorInterface
      */
-    public function createPickingListStatusValidator(): PickingListStatusValidatorInterface
+    public function createPickingListGenerationFinishedValidator(): PickingListGenerationFinishedValidatorInterface
     {
-        return new PickingListStatusValidator(
-            $this->getRepository(),
-            $this->createPickingListMapper(),
+        return new PickingListGenerationFinishedValidator($this->createPickingListReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\PickingList\Business\Validator\PickingListPickingStartedValidatorInterface
+     */
+    public function createPickingListPickingStartedValidator(): PickingListPickingStartedValidatorInterface
+    {
+        return new PickingListPickingStartedValidator(
+            $this->createPickingListReader(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PickingList\Business\Validator\PickingListPickingFinishedValidatorInterface
+     */
+    public function createPickingListPickingFinishedValidator(): PickingListPickingFinishedValidatorInterface
+    {
+        return new PickingListPickingFinishedValidator($this->createPickingListReader());
     }
 
     /**

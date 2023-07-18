@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Bundles\PickingListPushNotification\tests\SprykerTest\Zed\PickingListPushNotification\Business;
+namespace SprykerTest\Zed\PickingListPushNotification\Business\Facade;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PickingListTransfer;
 use SprykerTest\Zed\PickingListPushNotification\PickingListPushNotificationBusinessTester;
@@ -15,18 +14,15 @@ use SprykerTest\Zed\PickingListPushNotification\PickingListPushNotificationBusin
 /**
  * Auto-generated group annotations
  *
- * @group Bundles
- * @group PickingListPushNotification
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group PickingListPushNotification
  * @group Business
  * @group Facade
- * @group PickingListPushNotificationFacadeTest
+ * @group CreatePushNotificationCollectionTest
  * Add your own group annotations below this line
  */
-class PickingListPushNotificationFacadeTest extends Unit
+class CreatePushNotificationCollectionTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\PickingListPushNotification\Communication\Plugin\PickingList\PushNotificationPickingListPostCreatePlugin::ACTION_CREATE
@@ -46,6 +42,7 @@ class PickingListPushNotificationFacadeTest extends Unit
     protected function _setUp(): void
     {
         parent::_setUp();
+
         $this->tester->mockConfigMethod('getPickingListNotifiableAttributes', [PickingListTransfer::STATUS]);
         $this->tester->mockConfigMethod('getPushNotificationProviderName', PickingListPushNotificationBusinessTester::TEST_PROVIDER_NAME);
     }
@@ -53,7 +50,7 @@ class PickingListPushNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePushNotificationCollectionCreatesOnePushNotificationWhenSinglePickingListCollectionGiven(): void
+    public function testShouldCreateOnePushNotificationWhenSinglePickingListCollectionIsGiven(): void
     {
         // Arrange
         $pushNotificationCollectionRequestTransfer = $this->tester->createPushNotificationCollectionRequestTransferWithNotifiablePickingList(
@@ -70,7 +67,7 @@ class PickingListPushNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePushNotificationCollectionCreatesTwoPushNotificationWhenThreePickingListWithTwoDifferentWarehouseGiven(): void
+    public function testShouldCreateTwoPushNotificationsWhenThreePickingListsWithTwoDifferentWarehousesAreGiven(): void
     {
         // Arrange
         $pushNotificationCollectionRequestTransfer = $this
@@ -87,7 +84,7 @@ class PickingListPushNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePushNotificationCollectionDoesntCreatePushNotificationWhenPickingListWithNoModifiedNotifiableAttributeGiven(): void
+    public function testShouldNotCreatePushNotificationWhenPickingListWithNoModifiedNotifiableAttributeIsGiven(): void
     {
         // Arrange
         $pushNotificationCollectionRequestTransfer = $this->tester->createPushNotificationCollectionRequestTransferWithNotNotifiablePickingList(
@@ -104,7 +101,7 @@ class PickingListPushNotificationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePushNotificationCollectionCreatesPushNotificationForNotifiablePickingListsOnlyWhenNotifiableAndNonNotifiablePickingListsGiven(): void
+    public function testShouldCreatePushNotificationForNotifiablePickingListsOnlyWhenNotifiableAndNonNotifiablePickingListsAreGiven(): void
     {
         // Arrange
         $pushNotificationCollectionRequestTransfer = $this->tester->createPushNotificationCollectionRequestTransferWithNotifiableAndNotNotifiablePickingList(
@@ -116,46 +113,5 @@ class PickingListPushNotificationFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->createPushNotificationCollection($pushNotificationCollectionRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateSubscriptionsShouldReturnNoValidationErrorsWhenUserHasActiveWarehouseUserAssignment(): void
-    {
-        // Arrange
-        $pushNotificationSubscriptionTransfer = $this->tester->createPushNotificationSubscriptionTransfer();
-
-        $this->tester->mockGetWarehouseUserFacadeFactoryMethodWithActiveWarehouseUserAssignmentMock(
-            $pushNotificationSubscriptionTransfer,
-        );
-
-        // Act
-        $errorCollectionTransfer = $this->tester->getFacade()->validateSubscriptions(
-            new ArrayObject([$pushNotificationSubscriptionTransfer]),
-        );
-
-        // Assert
-        $this->assertEmpty($errorCollectionTransfer->getErrors());
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateSubscriptionsShouldReturnValidationErrorsWhenUserHasNoWarehouseUserAssignment(): void
-    {
-        // Arrange
-        $pushNotificationSubscriptionTransfer = $this->tester->createPushNotificationSubscriptionTransfer();
-
-        // Assert
-        $this->tester->mockGetWarehouseUserFacadeFactoryMethodWithEmptyWarehouseUserAssignmentCollectionMock();
-
-        // Act
-        $errorCollectionTransfer = $this->tester->getFacade()->validateSubscriptions(
-            new ArrayObject([$pushNotificationSubscriptionTransfer]),
-        );
-
-        // Assert
-        $this->assertNotEmpty($errorCollectionTransfer->getErrors());
     }
 }

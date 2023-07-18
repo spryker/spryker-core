@@ -146,6 +146,9 @@
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
         <property name="idSalesOrder" type="int"/>
+        <property name="isPickingListGenerationFinished" type="bool" strict="true"/>
+        <property name="isPickingStarted" type="bool" strict="true"/>
+        <property name="isPickingFinished" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="User">
@@ -166,4 +169,29 @@
     <transfer name="UserCollection" strict="true">
         <property name="users" type="User[]" singular="user"/>
     </transfer>
+
+    <transfer name="PickingListGenerationFinishedRequest" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="PickingListGenerationFinishedResponse" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="PickingStartedRequest" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="PickingStartedResponse" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="PickingFinishedRequest" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="PickingFinishedResponse" strict="true">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
 </transfers>

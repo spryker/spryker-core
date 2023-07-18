@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PickingListPushNotification\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -40,14 +40,15 @@ class PickingListPushNotificationFacade extends AbstractFacade implements Pickin
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validateSubscriptions(ArrayObject $pushNotificationSubscriptionTransfers): ErrorCollectionTransfer
-    {
+    public function validateSubscriptions(
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
+    ): ErrorCollectionTransfer {
         return $this->getFactory()
             ->createPushNotificationSubscriptionWarehouseUserAssignmentValidator()
-            ->validateSubscriptions($pushNotificationSubscriptionTransfers);
+            ->validateSubscriptions($pushNotificationSubscriptionCollectionTransfer);
     }
 }

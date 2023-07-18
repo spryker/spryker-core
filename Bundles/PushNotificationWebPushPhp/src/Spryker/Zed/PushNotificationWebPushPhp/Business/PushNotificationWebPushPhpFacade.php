@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PushNotificationWebPushPhp\Business\PushNotificationWebPushPhpBusinessFactory getFactory()
- * @method \Spryker\Zed\PushNotificationWebPushPhp\Persistence\PushNotificationWebPushPhpRepositoryInterface getRepository()
- * @method \Spryker\Zed\PushNotificationWebPushPhp\Persistence\PushNotificationWebPushPhpEntityManagerInterface getEntityManager()
  */
 class PushNotificationWebPushPhpFacade extends AbstractFacade implements PushNotificationWebPushPhpFacadeInterface
 {
@@ -25,16 +24,16 @@ class PushNotificationWebPushPhpFacade extends AbstractFacade implements PushNot
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validateSubscriptions(
-        ArrayObject $pushNotificationSubscriptionTransfers
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
     ): ErrorCollectionTransfer {
         return $this->getFactory()
             ->createPushNotificationSubscriptionPayloadStructureValidator()
-            ->validateSubscriptions($pushNotificationSubscriptionTransfers);
+            ->validateSubscriptions($pushNotificationSubscriptionCollectionTransfer);
     }
 
     /**
@@ -42,16 +41,16 @@ class PushNotificationWebPushPhpFacade extends AbstractFacade implements PushNot
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validatePayloadLength(
-        ArrayObject $pushNotificationTransfers
+        PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
     ): ErrorCollectionTransfer {
         return $this->getFactory()
             ->createPushNotificationPayloadLengthValidator()
-            ->validatePayloadLength($pushNotificationTransfers);
+            ->validatePayloadLength($pushNotificationCollectionTransfer);
     }
 
     /**

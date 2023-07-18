@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PickingList\Communication\Plugin\Oms;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingFinishedRequestTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
@@ -21,6 +22,7 @@ class IsPickingFinishedConditionPlugin extends AbstractPlugin implements Conditi
 {
     /**
      * {@inheritDoc}
+     * - Requires `SpySalesOrderItem.uuid` to be set.
      * - Checks if all picking lists are finished for the given sales order item.
      *
      * @api
@@ -29,12 +31,20 @@ class IsPickingFinishedConditionPlugin extends AbstractPlugin implements Conditi
      *
      * @return bool
      */
-    public function check(SpySalesOrderItem $orderItem)
+    public function check(SpySalesOrderItem $orderItem): bool
     {
         $orderTransfer = $this->getFactory()
             ->createPickingListMapper()
             ->mapSalesOrderItemEntityToOrderTransfer($orderItem, new OrderTransfer());
 
-        return $this->getFacade()->isPickingFinishedForOrder($orderTransfer);
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers */
+        $orderTransfers = $this->getFacade()
+            ->isPickingFinished((new PickingFinishedRequestTransfer())->addOrder($orderTransfer))
+            ->getOrders();
+
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $orderTransfers->getIterator()->current();
+
+        return $orderTransfer->getIsPickingFinishedOrFail();
     }
 }

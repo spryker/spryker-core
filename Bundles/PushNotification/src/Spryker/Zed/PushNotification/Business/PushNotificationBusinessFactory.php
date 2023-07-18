@@ -349,8 +349,6 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new PushNotificationSender(
             $this->getPushNotificationSenderPlugins(),
-            $this->getRepository(),
-            $this->getConfig(),
             $this->createPushNotificationSubscriptionDeliveryLogExtractor(),
             $this->createPushNotificationSubscriptionDeliveryLogCreator(),
         );

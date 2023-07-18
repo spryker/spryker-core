@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Zed\PushNotificationWebPushPhp\Business\Creator\ErrorCreatorInterface;
 use Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig;
@@ -64,15 +64,15 @@ class PushNotificationSubscriptionPayloadStructureValidator implements PushNotif
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validateSubscriptions(
-        ArrayObject $pushNotificationSubscriptionTransfers
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
     ): ErrorCollectionTransfer {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
-        foreach ($pushNotificationSubscriptionTransfers as $i => $pushNotificationSubscriptionTransfer) {
+        foreach ($pushNotificationSubscriptionCollectionTransfer->getPushNotificationSubscriptions() as $i => $pushNotificationSubscriptionTransfer) {
             if (!$this->isApplicable($pushNotificationSubscriptionTransfer)) {
                 continue;
             }

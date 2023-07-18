@@ -17,8 +17,8 @@ interface PushNotificationSenderPluginInterface
 {
     /**
      * Specification:
-     * - Sends push notifications.
-     * - Expects provider to be set.
+     * - Expects `PushNotificationSubscriptionTransfer.provider.name` transfer field to be set.
+     * - Sends push notifications according to provided push notification provider name.
      *
      * @api
      *

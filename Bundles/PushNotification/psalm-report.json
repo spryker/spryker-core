@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 82,
+            "line_to": 82,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\PushNotification\\Business\\Extractor\\PushNotificationSubscriptionDeliveryLogExtractorInterface::extractDeliveryLogs expects ArrayObject<int, Generated\\Shared\\Transfer\\PushNotificationTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Sender/PushNotificationSender.php",
@@ -51,20 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\PushNotification\\Persistence\\PushNotificationRepository::applyPushNotificationGroupFilters cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Persistence/PushNotificationRepository.php",
-            "snippet": "                $pushNotificationGroupCriteriaTransfer->getPushNotificationGroupConditions(),",
-            "selected_text": "$pushNotificationGroupCriteriaTransfer->getPushNotificationGroupConditions()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 476,
-            "line_to": 476,
+            "line_from": 477,
+            "line_to": 477,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\PushNotification\\Persistence\\PushNotificationRepository::groupPushNotificationProviderEntitiesByProviderAndGroup expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PushNotification\\Persistence\\SpyPushNotificationSubscription>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PushNotification\\Persistence\\SpyPushNotificationSubscription> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Persistence/PushNotificationRepository.php",
@@ -75,5 +63,5 @@
         }
     ],
     "deprecation": [],
-    "count": 6
+    "count": 5
 }

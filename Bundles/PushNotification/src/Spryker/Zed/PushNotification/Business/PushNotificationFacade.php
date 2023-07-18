@@ -9,6 +9,8 @@ namespace Spryker\Zed\PushNotification\Business;
 
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
@@ -133,13 +135,16 @@ class PushNotificationFacade extends AbstractFacade implements PushNotificationF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer
      */
-    public function sendPushNotifications(): PushNotificationCollectionResponseTransfer
-    {
+    public function sendPushNotifications(
+        PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+    ): PushNotificationCollectionResponseTransfer {
         return $this->getFactory()
             ->createPushNotificationSender()
-            ->sendPushNotifications();
+            ->sendPushNotifications($pushNotificationCollectionRequestTransfer);
     }
 
     /**
@@ -157,5 +162,20 @@ class PushNotificationFacade extends AbstractFacade implements PushNotificationF
         $this->getFactory()
             ->createPushNotificationSubscriptionDeleter()
             ->deletePushNotificationSubscriptions($pushNotificationSubscriptionCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationCollectionTransfer
+     */
+    public function getPushNotificationCollection(
+        PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+    ): PushNotificationCollectionTransfer {
+        return $this->getRepository()->getPushNotificationCollection($pushNotificationCriteriaTransfer);
     }
 }

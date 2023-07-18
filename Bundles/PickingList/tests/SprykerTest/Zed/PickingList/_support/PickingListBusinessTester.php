@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\PickingListBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -35,7 +36,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\PickingList\PHPMD)
  *
  * @method \Spryker\Zed\PickingList\Business\PickingListFacadeInterface getFacade(?string $moduleName = null)
  */
@@ -201,5 +202,82 @@ class PickingListBusinessTester extends Actor
         return SpyPickingListQuery::create()
             ->filterByUserUuid($userTransfer->getUuidOrFail())
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function createPickingListByOrder(OrderTransfer $orderTransfer, bool $withUser = true): void
+    {
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
+        $itemTransferCollection = $orderTransfer->getItems();
+
+        $pickingListItemTransfer = $this->createPickingListItemTransfer([
+            PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+        ]);
+
+        $pickingListTransfer = $this->createPickingListTransfer([
+            PickingListTransfer::USER => $withUser ? $this->haveUser() : null,
+            PickingListTransfer::WAREHOUSE => $this->haveStock(),
+            PickingListTransfer::PICKING_LIST_ITEMS => [
+                $pickingListItemTransfer,
+            ],
+        ]);
+        $this->havePickingList($pickingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function createPickingListWithOnePickedAndOneNotPickedItems(OrderTransfer $orderTransfer): void
+    {
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
+        $itemTransferCollection = $orderTransfer->getItems();
+
+        $pickedPickingListItemTransfer = $this->createPickingListItemTransfer([
+            PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+            PickingListItemTransfer::QUANTITY => 5,
+            PickingListItemTransfer::NUMBER_OF_PICKED => 5,
+        ]);
+
+        $notPickedPickingListItemTransfer = $this->createPickingListItemTransfer([
+            PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+            PickingListItemTransfer::QUANTITY => 3,
+            PickingListItemTransfer::NUMBER_OF_NOT_PICKED => 3,
+        ]);
+
+        $this->createPickingListWithItems([$pickedPickingListItemTransfer, $notPickedPickingListItemTransfer]);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItems
+     *
+     * @return void
+     */
+    public function createPickingListWithItems(array $pickingListItems): void
+    {
+        $pickingListBusinessFactory = $this->mockFactoryMethod(
+            'getCreatePickingListValidatorCompositeRules',
+            [],
+        );
+
+        $pickingListFacade = $this->getFacade();
+        $pickingListFacade->setFactory($pickingListBusinessFactory);
+
+        $pickingListTransfer = $this->createPickingListTransfer([
+            PickingListTransfer::USER => $this->haveUser(),
+            PickingListTransfer::WAREHOUSE => $this->haveStock(),
+            PickingListTransfer::PICKING_LIST_ITEMS => $pickingListItems,
+        ]);
+
+        $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())
+            ->addPickingList($pickingListTransfer)
+            ->setIsTransactional(true);
+
+        $pickingListFacade->createPickingListCollection($pickingListCollectionRequestTransfer);
     }
 }

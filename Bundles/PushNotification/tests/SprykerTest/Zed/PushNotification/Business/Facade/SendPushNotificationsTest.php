@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PushNotification\Business\Facade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Spryker\Zed\PushNotification\PushNotificationDependencyProvider;
@@ -68,7 +69,9 @@ class SendPushNotificationsTest extends Unit
         $pushNotificationFacade = $this->tester->getFacade();
 
         // Act
-        $pushNotificationCollectionResponseTransfer = $pushNotificationFacade->sendPushNotifications();
+        $pushNotificationCollectionResponseTransfer = $pushNotificationFacade->sendPushNotifications(
+            (new PushNotificationCollectionRequestTransfer())->addPushNotification($pushNotificationTransfer),
+        );
 
         // Assert
         $this->assertCount(1, $pushNotificationCollectionResponseTransfer->getPushNotifications());
@@ -101,7 +104,9 @@ class SendPushNotificationsTest extends Unit
         );
 
         // Act
-        $pushNotificationCollectionResponseTransfer = $this->tester->getFacade()->sendPushNotifications();
+        $this->tester->getFacade()->sendPushNotifications(
+            (new PushNotificationCollectionRequestTransfer())->addPushNotification($pushNotificationTransfer),
+        );
 
         // Assert
         $pushNotificationSubscriptionDeliveryLogEntity = $this->tester->findPushNotificationSubscriptionDeliveryLogEntity(
@@ -134,7 +139,9 @@ class SendPushNotificationsTest extends Unit
         $pushNotificationFacade = $this->tester->getFacade();
 
         // Act
-        $pushNotificationCollectionResponseTransfer = $pushNotificationFacade->sendPushNotifications();
+        $pushNotificationCollectionResponseTransfer = $pushNotificationFacade->sendPushNotifications(
+            new PushNotificationCollectionRequestTransfer(),
+        );
 
         // Assert
         $this->assertEmpty($pushNotificationCollectionResponseTransfer->getPushNotifications());

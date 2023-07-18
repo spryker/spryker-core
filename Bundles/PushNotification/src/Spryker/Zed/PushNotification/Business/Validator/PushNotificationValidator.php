@@ -9,6 +9,7 @@ namespace Spryker\Zed\PushNotification\Business\Validator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
 use Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpanderInterface;
 
 class PushNotificationValidator implements PushNotificationValidatorInterface
@@ -76,8 +77,11 @@ class PushNotificationValidator implements PushNotificationValidatorInterface
         ArrayObject $pushNotificationTransfers,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ErrorCollectionTransfer {
+        $pushNotificationCollectionTransfer = (new PushNotificationCollectionTransfer())
+            ->setPushNotifications($pushNotificationTransfers);
+
         foreach ($this->pushNotificationValidatorPlugins as $pushNotificationValidatorPlugin) {
-            $pluginErrorCollectionTransfer = $pushNotificationValidatorPlugin->validate($pushNotificationTransfers);
+            $pluginErrorCollectionTransfer = $pushNotificationValidatorPlugin->validate($pushNotificationCollectionTransfer);
             $errorCollectionTransfer = $this->errorCollectionExpander->expandErrorCollection(
                 $errorCollectionTransfer,
                 $pluginErrorCollectionTransfer,

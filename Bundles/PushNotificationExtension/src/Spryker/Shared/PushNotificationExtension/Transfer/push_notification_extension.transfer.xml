@@ -7,6 +7,9 @@
     <transfer name="PushNotification" strict="true">
     </transfer>
 
+    <transfer name="PushNotificationCollection" strict="true">
+    </transfer>
+
     <transfer name="PushNotificationCollectionResponse" strict="true">
     </transfer>
 

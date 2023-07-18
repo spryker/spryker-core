@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PickingList\Business;
+namespace SprykerTest\Zed\PickingList\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\PickingListBuilder;
@@ -23,10 +23,10 @@ use SprykerTest\Zed\PickingList\PickingListBusinessTester;
  * @group PickingList
  * @group Business
  * @group Facade
- * @group UnassignPickingListsFromUserFacadeTest
+ * @group UnassignPickingListsFromUserTest
  * Add your own group annotations below this line
  */
-class UnassignPickingListsFromUserFacadeTest extends Unit
+class UnassignPickingListsFromUserTest extends Unit
 {
     /**
      * @uses {@link \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE}

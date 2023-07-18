@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\PushNotificationWebPushPhp\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Orm\Zed\PushNotification\Persistence\SpyPushNotificationProviderQuery;
 use Spryker\Zed\PushNotificationWebPushPhp\PushNotificationWebPushPhpConfig;
@@ -55,10 +57,13 @@ class PushNotificationWebPushPhpFacadeTest extends Unit
         // Arrange
         /** @var \Spryker\Zed\PushNotificationWebPushPhp\Business\PushNotificationWebPushPhpFacadeInterface $pushNotificationWebPushPhpFacade */
         $pushNotificationWebPushPhpFacade = $this->tester->getFacade();
+        $pushNotificationSubscriptionCollectionTransfer = (new PushNotificationSubscriptionCollectionTransfer())->setPushNotificationSubscriptions(
+            new ArrayObject($pushNotificationSubscriptionTransfers),
+        );
 
         // Act
         $pushNotificationSubscriptionCollectionResponseTransfer = $pushNotificationWebPushPhpFacade->validateSubscriptions(
-            new ArrayObject($pushNotificationSubscriptionTransfers),
+            $pushNotificationSubscriptionCollectionTransfer,
         );
 
         // Assert
@@ -85,10 +90,13 @@ class PushNotificationWebPushPhpFacadeTest extends Unit
         // Arrange
         /** @var \Spryker\Zed\PushNotificationWebPushPhp\Business\PushNotificationWebPushPhpFacadeInterface $pushNotificationWebPushPhpFacade */
         $pushNotificationWebPushPhpFacade = $this->tester->getFacade();
+        $pushNotificationSubscriptionCollectionTransfer = (new PushNotificationSubscriptionCollectionTransfer())->setPushNotificationSubscriptions(
+            new ArrayObject($pushNotificationSubscriptionTransfers),
+        );
 
         // Act
         $pushNotificationSubscriptionCollectionResponseTransfer = $pushNotificationWebPushPhpFacade->validateSubscriptions(
-            new ArrayObject($pushNotificationSubscriptionTransfers),
+            $pushNotificationSubscriptionCollectionTransfer,
         );
 
         // Assert
@@ -197,7 +205,7 @@ class PushNotificationWebPushPhpFacadeTest extends Unit
 
         // Act
         $pushNotificationCollectionResponseTransfer = $pushNotificationWebPushPhpFacade->validatePayloadLength(
-            new ArrayObject([$pushNotificationTransfer]),
+            (new PushNotificationCollectionTransfer())->addPushNotification($pushNotificationTransfer),
         );
 
         // Assert
@@ -216,7 +224,7 @@ class PushNotificationWebPushPhpFacadeTest extends Unit
 
         // Act
         $pushNotificationCollectionResponseTransfer = $pushNotificationWebPushPhpFacade->validatePayloadLength(
-            new ArrayObject([$pushNotificationTransfer]),
+            (new PushNotificationCollectionTransfer())->addPushNotification($pushNotificationTransfer),
         );
 
         // Assert

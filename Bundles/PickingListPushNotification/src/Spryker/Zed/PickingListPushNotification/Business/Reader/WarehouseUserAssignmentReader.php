@@ -67,6 +67,7 @@ class WarehouseUserAssignmentReader implements WarehouseUserAssignmentReaderInte
 
         $warehouseUserAssignmentCollectionTransfer = $this->warehouseUserFacade->getWarehouseUserAssignmentCollection($warehouseUserAssignmentCriteriaTransfer);
 
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> */
         return $warehouseUserAssignmentCollectionTransfer->getWarehouseUserAssignments();
     }
 

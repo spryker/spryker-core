@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PickingList\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
 
@@ -20,4 +21,11 @@ interface PickingListReaderInterface
     public function getPickingListCollection(
         PickingListCriteriaTransfer $pickingListCriteriaTransfer
     ): PickingListCollectionTransfer;
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\PickingListTransfer>>
+     */
+    public function getPickingListTransfersGroupedByIdSalesOrder(ArrayObject $orderTransfers): array;
 }

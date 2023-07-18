@@ -9,6 +9,8 @@ namespace Spryker\Zed\PushNotification\Business;
 
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionResponseTransfer;
@@ -149,7 +151,7 @@ interface PushNotificationFacadeInterface
 
     /**
      * Specification:
-     * - Fetches collection of not sent PushNotifications from the Persistence.
+     * - Expects `PushNotificationCollectionRequestTransfer.pushNotifications` to be provided.
      * - Sends push notifications according to provider in a batch mode {@link \Spryker\Zed\PushNotification\PushNotificationConfig::getPushNotificationSendBatchSize()}.
      * - Executes the stack of {@link \Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSenderPluginInterface}.
      * - Sets `PushNotification.isNotificationSent` to true in a case of successful send.
@@ -157,9 +159,13 @@ interface PushNotificationFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer
      */
-    public function sendPushNotifications(): PushNotificationCollectionResponseTransfer;
+    public function sendPushNotifications(
+        PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+    ): PushNotificationCollectionResponseTransfer;
 
     /**
      * Specification:
@@ -176,4 +182,27 @@ interface PushNotificationFacadeInterface
     public function deletePushNotificationSubscriptionCollection(
         PushNotificationSubscriptionCollectionDeleteCriteriaTransfer $pushNotificationSubscriptionCollectionDeleteCriteriaTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Retrieves push notification entities filtered by criteria from Persistence.
+     * - Uses `PushNotificationCriteriaTransfer.pushNotificationConditions.pushNotificationIds` to filter by push notification IDs.
+     * - Uses `PushNotificationCriteriaTransfer.pushNotificationConditions.pushNotificationProviderIds` to filter by push notification provider IDs.
+     * - Uses `PushNotificationCriteriaTransfer.pushNotificationConditions.uuids` to filter by push notification UUIDs.
+     * - Uses `PushNotificationCriteriaTransfer.pushNotificationConditions.notificationSent` to filter by successful sent push notifications.
+     * - Uses `PushNotificationCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `PushNotificationCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `PushNotificationCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `PushNotificationCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `PushNotificationCollectionTransfer` filled with found push notifications.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationCollectionTransfer
+     */
+    public function getPushNotificationCollection(
+        PushNotificationCriteriaTransfer $pushNotificationCriteriaTransfer
+    ): PushNotificationCollectionTransfer;
 }

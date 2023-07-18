@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
 
 interface PushNotificationPayloadLengthValidatorInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validatePayloadLength(
-        ArrayObject $pushNotificationTransfers
+        PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
     ): ErrorCollectionTransfer;
 }

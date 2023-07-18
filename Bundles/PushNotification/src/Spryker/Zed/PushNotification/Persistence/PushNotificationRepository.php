@@ -339,7 +339,7 @@ class PushNotificationRepository extends AbstractRepository implements PushNotif
         if ($pushNotificationConditionsTransfer->getNotificationSent() === false) {
             $pushNotificationQuery
                 ->useSpyPushNotificationSubscriptionDeliveryLogQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIdPushNotificationSubscriptionDeliveryLog(null, Criteria::ISNULL)
+                    ->filterByIdPushNotificationSubscriptionDeliveryLog(null, Criteria::ISNULL)
                 ->endUse();
 
             return $pushNotificationQuery;
@@ -347,7 +347,8 @@ class PushNotificationRepository extends AbstractRepository implements PushNotif
 
         $pushNotificationQuery
             ->useSpyPushNotificationSubscriptionDeliveryLogQuery(null, Criteria::LEFT_JOIN)
-            ->filterByIdPushNotificationSubscriptionDeliveryLog(null, Criteria::ISNOTNULL);
+                ->filterByIdPushNotificationSubscriptionDeliveryLog(null, Criteria::ISNOTNULL)
+            ->endUse();
 
         return $pushNotificationQuery;
     }

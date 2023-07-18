@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PickingListPushNotification\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 
 interface PickingListPushNotificationFacadeInterface
 {
@@ -35,15 +35,18 @@ interface PickingListPushNotificationFacadeInterface
 
     /**
      * Specification:
-     * - Requires `PushNotificationSubscription.user.uuid`, `PushNotificationSubscription.group.identifier` to be set.
+     * - Requires `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.user.uuid` to be set.
+     * - Requires `PushNotificationSubscriptionCollectionTransfer.pushNotificationSubscription.group.identifier` to be set.
      * - Calls {@link \Spryker\Zed\WarehouseUser\Business\WarehouseUserFacade::getWarehouseUserAssignmentCollection()} to get warehouse user assignment collection.
-     * - Return a collection of validation errors in the case when no active warehouse user assignment was not found.
+     * - Returns a collection of validation errors when no active warehouse user assignment was found.
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validateSubscriptions(ArrayObject $pushNotificationSubscriptionTransfers): ErrorCollectionTransfer;
+    public function validateSubscriptions(
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
+    ): ErrorCollectionTransfer;
 }

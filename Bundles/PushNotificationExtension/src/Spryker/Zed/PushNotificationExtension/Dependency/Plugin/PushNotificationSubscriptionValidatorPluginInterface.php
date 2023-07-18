@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PushNotificationExtension\Dependency\Plugin;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer;
 
 /**
  * Plugins are triggered before a push notification subscription is created in order to validate request parameters.
@@ -17,15 +17,16 @@ interface PushNotificationSubscriptionValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Validates push notification subscriptions.
+     * - Validates a collection of push notification subscriptions.
+     * - Returns a collection of validation errors.
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validate(
-        ArrayObject $pushNotificationSubscriptionTransfers
+        PushNotificationSubscriptionCollectionTransfer $pushNotificationSubscriptionCollectionTransfer
     ): ErrorCollectionTransfer;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PickingList\Business;
+namespace SprykerTest\Zed\PickingList\Business\Facade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -29,10 +29,10 @@ use SprykerTest\Zed\PickingList\Plugin\PickingListGeneratorStrategyPluginMock;
  * @group PickingList
  * @group Business
  * @group Facade
- * @group GeneratePickingListsFacadeTest
+ * @group GeneratePickingListsTest
  * Add your own group annotations below this line
  */
-class GeneratePickingListsFacadeTest extends Unit
+class GeneratePickingListsTest extends Unit
 {
     /**
      * @var string

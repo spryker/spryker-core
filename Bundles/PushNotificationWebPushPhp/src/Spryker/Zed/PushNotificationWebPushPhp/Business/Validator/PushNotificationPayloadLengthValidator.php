@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PushNotificationWebPushPhp\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Generated\Shared\Transfer\PushNotificationCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationTransfer;
 use Spryker\Zed\PushNotificationWebPushPhp\Business\Creator\ErrorCreatorInterface;
 use Spryker\Zed\PushNotificationWebPushPhp\Dependency\Service\PushNotificationWebPushPhpToUtilEncodingServiceInterface;
@@ -52,15 +52,15 @@ class PushNotificationPayloadLengthValidator implements PushNotificationPayloadL
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     public function validatePayloadLength(
-        ArrayObject $pushNotificationTransfers
+        PushNotificationCollectionTransfer $pushNotificationCollectionTransfer
     ): ErrorCollectionTransfer {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
-        foreach ($pushNotificationTransfers as $i => $pushNotificationTransfer) {
+        foreach ($pushNotificationCollectionTransfer->getPushNotifications() as $i => $pushNotificationTransfer) {
             if (!$this->isApplicable($pushNotificationTransfer)) {
                 continue;
             }

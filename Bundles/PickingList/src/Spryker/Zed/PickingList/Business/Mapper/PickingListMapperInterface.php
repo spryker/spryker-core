@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\PickingList\Business\Mapper;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
 
 interface PickingListMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      * @param \Generated\Shared\Transfer\PickingListCriteriaTransfer $pickingListCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PickingListCriteriaTransfer
      */
-    public function mapOrderTransferToPickingListCriteriaTransfer(
-        OrderTransfer $orderTransfer,
+    public function mapOrderCollectionToPickingListCriteriaTransfer(
+        ArrayObject $orderTransfers,
         PickingListCriteriaTransfer $pickingListCriteriaTransfer
     ): PickingListCriteriaTransfer;
 }

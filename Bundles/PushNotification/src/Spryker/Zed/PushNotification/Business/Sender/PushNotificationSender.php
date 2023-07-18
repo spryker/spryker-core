@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\PushNotification\Business\Sender;
 
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
-use Generated\Shared\Transfer\PushNotificationConditionsTransfer;
-use Generated\Shared\Transfer\PushNotificationCriteriaTransfer;
 use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreatorInterface;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface;
 use Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface;
-use Spryker\Zed\PushNotification\PushNotificationConfig;
 
 class PushNotificationSender implements PushNotificationSenderInterface
 {
@@ -30,11 +26,6 @@ class PushNotificationSender implements PushNotificationSenderInterface
     protected PushNotificationRepositoryInterface $pushNotificationRepository;
 
     /**
-     * @var \Spryker\Zed\PushNotification\PushNotificationConfig
-     */
-    protected PushNotificationConfig $pushNotificationConfig;
-
-    /**
      * @var \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface
      */
     protected PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor;
@@ -46,39 +37,27 @@ class PushNotificationSender implements PushNotificationSenderInterface
 
     /**
      * @param array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSenderPluginInterface> $pushNotificationSenderPlugins
-     * @param \Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface $pushNotificationRepository
-     * @param \Spryker\Zed\PushNotification\PushNotificationConfig $pushNotificationConfig
      * @param \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor
      * @param \Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreatorInterface $pushNotificationSubscriptionDeliveryLogCreator
      */
     public function __construct(
         array $pushNotificationSenderPlugins,
-        PushNotificationRepositoryInterface $pushNotificationRepository,
-        PushNotificationConfig $pushNotificationConfig,
         PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor,
         PushNotificationSubscriptionDeliveryLogCreatorInterface $pushNotificationSubscriptionDeliveryLogCreator
     ) {
         $this->pushNotificationSenderPlugins = $pushNotificationSenderPlugins;
-        $this->pushNotificationRepository = $pushNotificationRepository;
-        $this->pushNotificationConfig = $pushNotificationConfig;
         $this->pushNotificationSubscriptionDeliveryLogExtractor = $pushNotificationSubscriptionDeliveryLogExtractor;
         $this->pushNotificationSubscriptionDeliveryLogCreator = $pushNotificationSubscriptionDeliveryLogCreator;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer
      */
-    public function sendPushNotifications(): PushNotificationCollectionResponseTransfer
-    {
-        $notSentPushNotifications = $this->pushNotificationRepository->getPushNotificationCollection(
-            $this->createPushNotificationCriteriaTransfer(),
-        );
-        $pushNotificationCollectionRequestTransfer = (new PushNotificationCollectionRequestTransfer())
-            ->setIsTransactional(false)
-            ->setPushNotifications(
-                $notSentPushNotifications->getPushNotifications(),
-            );
-
+    public function sendPushNotifications(
+        PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+    ): PushNotificationCollectionResponseTransfer {
         $pushNotificationCollectionResponseTransfer = $this->executePushNotificationSenderPlugins(
             $pushNotificationCollectionRequestTransfer,
         );
@@ -171,22 +150,5 @@ class PushNotificationSender implements PushNotificationSenderInterface
         }
 
         return $pushNotificationCollectionResponseTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PushNotificationCriteriaTransfer
-     */
-    protected function createPushNotificationCriteriaTransfer(): PushNotificationCriteriaTransfer
-    {
-        $paginationTransfer = (new PaginationTransfer())
-            ->setPage(1)
-            ->setMaxPerPage($this->pushNotificationConfig->getPushNotificationSendBatchSize());
-
-        $pushNotificationConditionsTransfer = (new PushNotificationConditionsTransfer())
-            ->setNotificationSent(false);
-
-        return (new PushNotificationCriteriaTransfer())
-            ->setPushNotificationConditions($pushNotificationConditionsTransfer)
-            ->setPagination($paginationTransfer);
     }
 }

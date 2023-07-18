@@ -8,11 +8,16 @@
 namespace Spryker\Zed\PickingList\Business;
 
 use Generated\Shared\Transfer\GeneratePickingListsRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingFinishedRequestTransfer;
+use Generated\Shared\Transfer\PickingFinishedResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
+use Generated\Shared\Transfer\PickingListGenerationFinishedRequestTransfer;
+use Generated\Shared\Transfer\PickingListGenerationFinishedResponseTransfer;
+use Generated\Shared\Transfer\PickingStartedRequestTransfer;
+use Generated\Shared\Transfer\PickingStartedResponseTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -96,15 +101,16 @@ class PickingListFacade extends AbstractFacade implements PickingListFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingListGenerationFinishedRequestTransfer $pickingListGenerationFinishedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingListGenerationFinishedResponseTransfer
      */
-    public function isPickingListGenerationFinishedForOrder(OrderTransfer $orderTransfer): bool
-    {
+    public function isPickingListGenerationFinished(
+        PickingListGenerationFinishedRequestTransfer $pickingListGenerationFinishedRequestTransfer
+    ): PickingListGenerationFinishedResponseTransfer {
         return $this->getFactory()
-            ->createPickingListStatusValidator()
-            ->isPickingListGenerationFinishedForOrder($orderTransfer);
+            ->createPickingListGenerationFinishedValidator()
+            ->isPickingListGenerationFinished($pickingListGenerationFinishedRequestTransfer);
     }
 
     /**
@@ -112,15 +118,16 @@ class PickingListFacade extends AbstractFacade implements PickingListFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingStartedRequestTransfer $pickingStartedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingStartedResponseTransfer
      */
-    public function isPickingStartedForOrder(OrderTransfer $orderTransfer): bool
-    {
+    public function isPickingStarted(
+        PickingStartedRequestTransfer $pickingStartedRequestTransfer
+    ): PickingStartedResponseTransfer {
         return $this->getFactory()
-            ->createPickingListStatusValidator()
-            ->isPickingStartedForOrder($orderTransfer);
+            ->createPickingListPickingStartedValidator()
+            ->isPickingStarted($pickingStartedRequestTransfer);
     }
 
     /**
@@ -128,15 +135,16 @@ class PickingListFacade extends AbstractFacade implements PickingListFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\PickingFinishedRequestTransfer $pickingFinishedRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PickingFinishedResponseTransfer
      */
-    public function isPickingFinishedForOrder(OrderTransfer $orderTransfer): bool
-    {
+    public function isPickingFinished(
+        PickingFinishedRequestTransfer $pickingFinishedRequestTransfer
+    ): PickingFinishedResponseTransfer {
         return $this->getFactory()
-            ->createPickingListStatusValidator()
-            ->isPickingFinishedForOrder($orderTransfer);
+            ->createPickingListPickingFinishedValidator()
+            ->isPickingFinished($pickingFinishedRequestTransfer);
     }
 
     /**
