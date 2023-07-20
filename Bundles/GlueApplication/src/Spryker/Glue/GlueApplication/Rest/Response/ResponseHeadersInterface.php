@@ -28,4 +28,11 @@ interface ResponseHeadersInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Response $httpResponse
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addCorsAllowOriginHeader(Response $httpResponse): Response;
 }

@@ -69,15 +69,27 @@ class ResponseHeaders implements ResponseHeadersInterface
         );
 
         if ($this->config->getCorsAllowOrigin()) {
-            $httpResponse->headers->set(
-                RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
-                $this->config->getCorsAllowOrigin(),
-            );
+            $httpResponse = $this->addCorsAllowOriginHeader($httpResponse);
         }
 
         $httpResponse = $this->executeResponseHeaderPlugins($httpResponse, $restResponse, $restRequest);
 
         $this->setHeadersFromRestResponse($httpResponse, $restResponse);
+
+        return $httpResponse;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Response $httpResponse
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addCorsAllowOriginHeader(Response $httpResponse): Response
+    {
+        $httpResponse->headers->set(
+            RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
+            $this->config->getCorsAllowOrigin(),
+        );
 
         return $httpResponse;
     }

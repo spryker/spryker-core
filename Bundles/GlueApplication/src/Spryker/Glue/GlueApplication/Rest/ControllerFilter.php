@@ -150,7 +150,13 @@ class ControllerFilter implements ControllerFilterInterface
                     return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
                 }
 
-                return $controller->$action($httpRequest);
+                $httpResponse = $controller->$action($httpRequest);
+
+                if ($this->applicationConfig->getCorsAllowOrigin()) {
+                    $httpResponse = $this->responseHeaders->addCorsAllowOriginHeader($httpResponse);
+                }
+
+                return $httpResponse;
             }
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
