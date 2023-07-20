@@ -62,62 +62,52 @@ class GlueResponseDynamicEntityMapper
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_PARAMETERS_ARE_INVALID = 501;
+    protected const RESPONSE_CODE_PARAMETERS_ARE_INVALID = 1301;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_DATA_PERSISTENCE_FAILED = 502;
+    protected const RESPONSE_CODE_DATA_PERSISTENCE_FAILED = 1302;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_MODEL_DOES_NOT_EXIST = 503;
+    protected const RESPONSE_CODE_ENTITY_DOES_NOT_EXIST = 1303;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_ENTITY_DOES_NOT_EXIST = 504;
+    protected const RESPONSE_CODE_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED = 1304;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED = 505;
+    protected const RESPONSE_CODE_INVALID_FIELD_TYPE = 1305;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_CONFIG_IS_NOT_FOUND = 506;
+    protected const RESPONSE_CODE_INVALID_FIELD_VALUE = 1306;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_INVALID_FIELD_TYPE = 507;
+    protected const RESPONSE_CODE_REQUIRED_FIELD_IS_MISSING = 1307;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_INVALID_FIELD_VALUE = 508;
+    protected const RESPONSE_CODE_IDENTIFIER_IS_NOT_CREATABLE = 1308;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_REQUIRED_FIELD_IS_MISSING = 509;
+    protected const RESPONSE_CODE_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 1309;
 
     /**
      * @var int
      */
-    protected const RESPONSE_CODE_IDENTIFIER_IS_NOT_CREATABLE = 510;
-
-    /**
-     * @var int
-     */
-    protected const RESPONSE_CODE_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 511;
-
-    /**
-     * @var int
-     */
-    protected const RESPONSE_CODE_MISSING_IDENTIFIER = 512;
+    protected const RESPONSE_CODE_MISSING_IDENTIFIER = 1310;
 
     /**
      * @var string
