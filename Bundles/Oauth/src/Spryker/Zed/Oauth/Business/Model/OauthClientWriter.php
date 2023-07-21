@@ -19,11 +19,20 @@ class OauthClientWriter implements OauthClientWriterInterface
     protected $oauthEntityManager;
 
     /**
-     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @var \Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface
      */
-    public function __construct(OauthEntityManagerInterface $oauthEntityManager)
-    {
+    protected OauthClientReaderInterface $oauthClientReader;
+
+    /**
+     * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
+     * @param \Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface $oauthClientReader
+     */
+    public function __construct(
+        OauthEntityManagerInterface $oauthEntityManager,
+        OauthClientReaderInterface $oauthClientReader
+    ) {
         $this->oauthEntityManager = $oauthEntityManager;
+        $this->oauthClientReader = $oauthClientReader;
     }
 
     /**
@@ -35,6 +44,14 @@ class OauthClientWriter implements OauthClientWriterInterface
     {
         $oauthClientEntityTransfer = new SpyOauthClientEntityTransfer();
         $oauthClientEntityTransfer->fromArray($oauthClientTransfer->toArray());
+
+        $existingOauthClient = $this->oauthClientReader->findClientByIdentifier($oauthClientTransfer);
+        if ($existingOauthClient !== null) {
+            $oauthClientTransfer->setIdOauthClient($existingOauthClient->getIdOauthClientOrFail());
+            $oauthClientTransfer->setSecret($oauthClientEntityTransfer->getSecretOrFail());
+
+            return $this->oauthEntityManager->updateClient($oauthClientTransfer);
+        }
 
         $oauthClientEntityTransfer = $this->oauthEntityManager->saveClient($oauthClientEntityTransfer);
 

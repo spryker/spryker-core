@@ -150,7 +150,10 @@ class OauthBusinessFactory extends AbstractBusinessFactory
      */
     public function createOauthClientWriter(): OauthClientWriterInterface
     {
-        return new OauthClientWriter($this->getEntityManager());
+        return new OauthClientWriter(
+            $this->getEntityManager(),
+            $this->createOauthClientReader(),
+        );
     }
 
     /**

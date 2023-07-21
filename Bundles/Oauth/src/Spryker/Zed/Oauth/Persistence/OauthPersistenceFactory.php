@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Persistence;
 
 use Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery;
+use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -50,5 +51,13 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     public function createOauthTokenMapper(): OauthTokenMapper
     {
         return new OauthTokenMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Oauth\Persistence\SpyOauthClient
+     */
+    public function createSpyOauthClient(): SpyOauthClient
+    {
+        return new SpyOauthClient();
     }
 }

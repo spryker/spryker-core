@@ -70,10 +70,6 @@ class OauthClientInstaller implements OauthClientInstallerInterface
         $oauthClientTransfer = (new OauthClientTransfer())
             ->fromArray($clientConfiguration, true);
 
-        if ($this->oauthClientReader->findClientByIdentifier($oauthClientTransfer)) {
-            return;
-        }
-
         /** @var string $secret */
         $secret = password_hash($oauthClientTransfer->getSecret(), PASSWORD_BCRYPT);
 

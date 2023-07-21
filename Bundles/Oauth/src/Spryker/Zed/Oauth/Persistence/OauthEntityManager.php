@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
@@ -46,6 +47,21 @@ class OauthEntityManager extends AbstractEntityManager implements OauthEntityMan
         $spyOauthClientEntityTransfer = $this->save($spyOauthClientEntityTransfer);
 
         return $spyOauthClientEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthClientTransfer
+     */
+    public function updateClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer
+    {
+        $oauthClient = $this->getFactory()->createSpyOauthClient();
+        $oauthClient->fromArray($oauthClientTransfer->toArray());
+        $oauthClient->setNew(false);
+        $oauthClient->save();
+
+        return $oauthClientTransfer;
     }
 
     /**
