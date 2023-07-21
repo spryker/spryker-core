@@ -10,6 +10,7 @@ namespace Spryker\Zed\MessageBroker\Business\MessageSender;
 use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
 use Spryker\Zed\MessageBroker\MessageBrokerConfig;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginAcceptClientInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Sender\SendersLocatorInterface;
 
@@ -62,8 +63,9 @@ class MessageSenderLocator implements SendersLocatorInterface
         $clientName = $this->getSenderClientNameForMessage($envelope);
 
         $clientMessageSenderPlugins = [];
+
         foreach ($this->messageSenderPlugins as $messageSenderPlugin) {
-            if ($clientName === null || $clientName === $messageSenderPlugin->getTransportName()) {
+            if ($clientName === null || $clientName === $messageSenderPlugin->getTransportName() || ($messageSenderPlugin instanceof MessageSenderPluginAcceptClientInterface && $messageSenderPlugin->acceptClient($clientName))) {
                 $clientMessageSenderPlugins[$messageSenderPlugin->getTransportName()] = $messageSenderPlugin;
             }
         }

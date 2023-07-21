@@ -27,11 +27,13 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/ramsey-uuid": "*",
         "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
+            "SprykerTest\\AsyncApi\\Merchant\\Helper\\": "tests/SprykerTest/AsyncApi/Merchant/_support/Helper/",
             "SprykerTest\\Zed\\Merchant\\Helper\\": "tests/SprykerTest/Zed/Merchant/_support/Helper/"
         }
     },

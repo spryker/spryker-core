@@ -8,11 +8,8 @@
 namespace SprykerTest\Zed\Merchant\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantCreatedTransfer;
 use Generated\Shared\Transfer\MerchantExportCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantExportedTransfer;
 use Generated\Shared\Transfer\MerchantPublisherConfigTransfer;
-use Generated\Shared\Transfer\MerchantUpdatedTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Event\Business\EventFacade;
 use Spryker\Zed\Merchant\Business\Exception\MerchantPublisherEventNameMismatchException;
@@ -101,50 +98,6 @@ class MerchantFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->triggerMerchantExportEvents($merchantExportCriteriaTransfer);
-    }
-
-    /**
-     * @dataProvider merchantEventsDataProvider
-     *
-     * @param string $messageType
-     *
-     * @return void
-     */
-    public function testMerchantEventMessagesSentSuccessfullyToMessageBroker(string $messageType): void
-    {
-        // Arrange
-        $merchantTransfer = $this->tester->haveMerchantWithStore();
-        $storeReferences = $this->tester->getStoreReferences();
-
-        $merchantPublisherConfigTransfer = (new MerchantPublisherConfigTransfer())
-            ->setMerchantIds([$merchantTransfer->getIdMerchant()])
-            ->setEventName($messageType);
-
-        // Act
-        $this->tester->getFacade()->emitPublishMerchantToMessageBroker($merchantPublisherConfigTransfer);
-
-        // Assert
-        $this->tester->assertMessageWasSent($messageType);
-
-        $this->getInMemoryMessageBrokerHelper()->assertMessagesByCallbackForMessageName(
-            function (array $envelopes) use ($merchantTransfer, $messageType, $storeReferences): void {
-                /** @var array<\Symfony\Component\Messenger\Envelope> $envelopes */
-                $this->assertCount(count($storeReferences), $envelopes);
-
-                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $message */
-                $message = $envelopes[0]->getMessage();
-
-                /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransferFromMessage */
-                $merchantTransferFromMessage = $message->getMerchant();
-
-                $this->assertContains($message->getMessageAttributes()->getStoreReference(), $storeReferences);
-                $this->assertNotNull($merchantTransferFromMessage);
-                $this->assertEquals($merchantTransfer->getName(), $merchantTransferFromMessage->getName());
-                $this->assertEquals($merchantTransfer->getEmail(), $merchantTransferFromMessage->getEmail());
-                $this->assertEquals($merchantTransfer->getMerchantReference(), $merchantTransferFromMessage->getMerchantReference());
-            },
-            $messageType,
-        );
     }
 
     /**
@@ -237,17 +190,5 @@ class MerchantFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->emitPublishMerchantToMessageBroker($merchantPublisherConfigTransfer);
-    }
-
-    /**
-     * @return array
-     */
-    public function merchantEventsDataProvider(): array
-    {
-        return [
-            [MerchantExportedTransfer::class],
-            [MerchantCreatedTransfer::class],
-            [MerchantUpdatedTransfer::class],
-        ];
     }
 }

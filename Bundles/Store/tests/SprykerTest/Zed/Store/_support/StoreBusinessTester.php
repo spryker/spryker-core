@@ -29,7 +29,7 @@ use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Store\PHPMD)
  */
 class StoreBusinessTester extends Actor
 {

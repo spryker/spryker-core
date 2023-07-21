@@ -34,7 +34,7 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MessageBroker\PHPMD)
  */
 class MessageBrokerCommunicationTester extends Actor
 {

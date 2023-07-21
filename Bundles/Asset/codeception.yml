@@ -1,5 +1,6 @@
 namespace: SprykerTest
 include:
+    - tests/SprykerTest/AsyncApi/Asset
     - tests/SprykerTest/Zed/Asset
 paths:
     tests: tests/

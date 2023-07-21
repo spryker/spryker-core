@@ -9,13 +9,14 @@ namespace SprykerTest\Zed\MessageBroker\Helper\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginAcceptClientInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
 use Symfony\Component\Messenger\Transport\Receiver\QueueReceiverInterface;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 
-class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSenderPluginInterface, MessageReceiverPluginInterface, TransportInterface, QueueReceiverInterface
+class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSenderPluginInterface, MessageReceiverPluginInterface, TransportInterface, QueueReceiverInterface, MessageSenderPluginAcceptClientInterface
 {
     /**
      * @var \Symfony\Component\Messenger\Transport\InMemoryTransport
@@ -28,6 +29,16 @@ class InMemoryMessageTransportPlugin extends AbstractPlugin implements MessageSe
     public function __construct(InMemoryTransport $transport)
     {
         $this->transport = $transport;
+    }
+
+    /**
+     * @param string $client
+     *
+     * @return string
+     */
+    public function acceptClient(string $client): string
+    {
+        return true;
     }
 
     /**

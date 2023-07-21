@@ -31,7 +31,7 @@ use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Asset\PHPMD)
  */
 class AssetBusinessTester extends Actor
 {

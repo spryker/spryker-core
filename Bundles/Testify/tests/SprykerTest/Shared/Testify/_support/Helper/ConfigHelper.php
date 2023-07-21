@@ -112,15 +112,16 @@ class ConfigHelper extends Module
      * @param string $methodName
      * @param mixed $return
      * @param string|null $moduleName
+     * @param string|null $applicationName
      *
      * @throws \Exception
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    public function mockConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractBundleConfig
+    public function mockConfigMethod(string $methodName, $return, ?string $moduleName = null, ?string $applicationName = null): ?AbstractBundleConfig
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName);
+        $className = $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName, $applicationName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));

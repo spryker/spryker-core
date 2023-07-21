@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MessageBroker\PHPMD)
  *
  * @method \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface getFacade(?string $moduleName = null)
  * @method \Spryker\Zed\MessageBroker\Business\MessageBrokerBusinessFactory getFactory(?string $moduleName = null)

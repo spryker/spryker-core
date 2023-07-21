@@ -39,7 +39,7 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Merchant\PHPMD)
  */
 class MerchantBusinessTester extends Actor
 {

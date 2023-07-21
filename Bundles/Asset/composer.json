@@ -15,13 +15,16 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/message-broker": "*",
         "spryker/propel": "*",
+        "spryker/ramsey-uuid": "*",
         "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\Asset\\Helper\\": "tests/SprykerTest/Shared/Asset/_support/Helper/"
+            "SprykerTest\\Shared\\Asset\\Helper\\": "tests/SprykerTest/Shared/Asset/_support/Helper/",
+            "SprykerTest\\AsyncApi\\Asset\\Helper\\": "tests/SprykerTest/AsyncApi/Asset/_support/Helper/"
         }
     },
     "autoload-dev": {

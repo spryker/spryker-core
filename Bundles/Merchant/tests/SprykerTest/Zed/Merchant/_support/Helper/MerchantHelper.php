@@ -12,8 +12,10 @@ use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Merchant\MerchantConfig;
+use SprykerTest\Shared\Store\Helper\StoreDataHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -21,6 +23,7 @@ class MerchantHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
+    use StoreDataHelperTrait;
 
     /**
      * @param array $seedData
@@ -53,11 +56,34 @@ class MerchantHelper extends Module
                 ->getMerchant();
         }
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer): void {
             $this->getMerchantQuery()->filterByIdMerchant($merchantTransfer->getIdMerchant())->delete();
         });
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function haveMerchantWithStore(): MerchantTransfer
+    {
+        $storeRelationTransfer = $this->getStoreRelationTransfer();
+
+        return $this->haveMerchant([MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationTransfer(): StoreRelationTransfer
+    {
+        $storeTransfer = $this->getStoreDataHelper()->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
+
+        return $storeRelationTransfer;
     }
 
     /**

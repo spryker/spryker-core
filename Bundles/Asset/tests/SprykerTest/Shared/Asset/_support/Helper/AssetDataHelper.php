@@ -8,19 +8,20 @@
 namespace SprykerTest\Shared\Asset\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\AssetBuilder;
 use Generated\Shared\DataBuilder\AssetAddedBuilder;
+use Generated\Shared\DataBuilder\AssetBuilder;
 use Generated\Shared\DataBuilder\AssetDeletedBuilder;
 use Generated\Shared\DataBuilder\AssetUpdatedBuilder;
 use Generated\Shared\Transfer\AssetAddedTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
-use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Orm\Zed\Asset\Persistence\SpyAsset;
 use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Orm\Zed\Asset\Persistence\SpyAssetStoreQuery;
 use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
+use Spryker\Zed\Asset\Persistence\AssetEntityManager;
+use Spryker\Zed\Asset\Persistence\AssetRepository;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -96,6 +97,35 @@ class AssetDataHelper extends Module
         $this->getDataCleanupHelper()->_addCleanup(function () use ($assetStoreEntity): void {
             $assetStoreEntity->delete();
         });
+    }
+
+    /**
+     * @param string $assetUuid
+     *
+     * @return void
+     */
+    public function removeAsset(string $assetUuid): void
+    {
+        $assetTransfer = $this->getPersistedAssetByUuid($assetUuid);
+
+        if (!$assetTransfer) {
+            return;
+        }
+
+        $assetEntityManager = new AssetEntityManager();
+        $assetEntityManager->deleteAsset($assetTransfer);
+    }
+
+    /**
+     * @param string $assetUuid
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer|null
+     */
+    public function getPersistedAssetByUuid(string $assetUuid): ?AssetTransfer
+    {
+        $assetRepository = new AssetRepository();
+
+        return $assetRepository->findAssetByAssetUuid($assetUuid);
     }
 
     /**

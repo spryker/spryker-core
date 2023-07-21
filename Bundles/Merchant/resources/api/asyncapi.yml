@@ -29,7 +29,7 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/Merchant'
+                $ref: '#/components/schemas/MerchantPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
@@ -39,7 +39,7 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/Merchant'
+                $ref: '#/components/schemas/MerchantPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
@@ -49,11 +49,18 @@ components:
             x-spryker:
                 module: Merchant
             payload:
-                $ref: '#/components/schemas/Merchant'
+                $ref: '#/components/schemas/MerchantPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
     schemas:
+        MerchantPayload:
+            type: object
+            properties:
+                merchant:
+                    $ref: '#/components/schemas/Merchant'
+            required:
+                - merchant
         Merchant:
             type: object
             properties:
@@ -76,6 +83,8 @@ components:
                             type: array
                             items:
                                 $ref: '#/components/schemas/Store'
+                    required:
+                        - stores
             required:
                 - merchantReference
                 - name

@@ -143,6 +143,14 @@ abstract class AbstractDependencyProviderHelper extends Module
     }
 
     /**
+     * @return void
+     */
+    public function cleanUp(): void
+    {
+        $this->cleanupStaticCache(AbstractFactory::class, 'containers');
+    }
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
