@@ -28,7 +28,7 @@ class StoresResourceController extends AbstractController
      *     },
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves current store data."
+     *              "Retrieves current store data in case of Dynamic Store is off and all stores - if the Dynamic Store is on."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

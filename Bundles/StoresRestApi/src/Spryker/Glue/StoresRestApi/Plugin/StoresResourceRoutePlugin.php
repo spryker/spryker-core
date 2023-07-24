@@ -14,6 +14,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoresResource} instead.
+ *
  * @method \Spryker\Glue\StoresRestApi\StoresRestApiFactory getFactory()
  */
 class StoresResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface

@@ -23,6 +23,7 @@ use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReader;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReader;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class StoresRestApiFactory extends AbstractFactory
 {
@@ -108,5 +109,13 @@ class StoresRestApiFactory extends AbstractFactory
     public function createStoresCurrencyResourceMapper(): StoresCurrencyResourceMapperInterface
     {
         return new StoresCurrencyResourceMapper();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function createRequest(): Request
+    {
+        return Request::createFromGlobals();
     }
 }

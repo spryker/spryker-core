@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Store;
 
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -67,5 +69,21 @@ class StoreClient extends AbstractClient implements StoreClientInterface
     public function isCurrentStoreDefined(): bool
     {
         return $this->getFactory()->getCurrentStoreDefinedFlag();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\StoreStorage\StoreStorageClient::getStoreNames()} instead.
+     *
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    {
+        return $this->getFactory()->createStoreStub()->getStoreCollection($storeCriteriaTransfer);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\StoresRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class StoresRestApiToStoreClientBridge implements StoresRestApiToStoreClientInterface
@@ -30,5 +32,33 @@ class StoresRestApiToStoreClientBridge implements StoresRestApiToStoreClientInte
     public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    {
+        return $this->storeClient->getStoreCollection($storeCriteriaTransfer);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeClient->isDynamicStoreEnabled();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName(string $storeName): StoreTransfer
+    {
+        return $this->storeClient->getStoreByName($storeName);
     }
 }

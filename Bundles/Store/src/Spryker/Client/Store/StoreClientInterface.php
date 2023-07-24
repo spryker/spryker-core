@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Store;
 
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface StoreClientInterface
@@ -53,4 +55,18 @@ interface StoreClientInterface
      * @return bool
      */
     public function isCurrentStoreDefined(): bool;
+
+    /**
+     * Specification:
+     * - Retrieves filtered stores using StoreCriteriaTransfer.
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\StoreStorage\StoreStorageClientInterface::getStoreNames()} instead.
+     *
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer;
 }

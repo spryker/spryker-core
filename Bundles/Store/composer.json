@@ -16,6 +16,7 @@
         "spryker/store-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",
+        "spryker/zed-request": "^3.3.0",
         "spryker/zed-request-extension": "^1.1.0"
     },
     "require-dev": {

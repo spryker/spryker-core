@@ -9,6 +9,7 @@ namespace Spryker\Client\Store;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Store\Dependency\Client\StoreToZedRequestClientBridge;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 
@@ -47,6 +48,11 @@ class StoreDependencyProvider extends AbstractDependencyProvider
     public const CURRENT_STORE_PROVIDED_FLAG = 'CURRENT_STORE_PROVIDED_FLAG';
 
     /**
+     * @var string
+     */
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -60,6 +66,7 @@ class StoreDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStoreExpanderPlugins($container);
         $container = $this->addDynamicStoreMode($container);
         $container = $this->addCurrentStoreProvidedFlag($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -165,6 +172,22 @@ class StoreDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CURRENT_STORE_PROVIDED_FLAG, function (Container $container) {
             return !$this->isDynamicStoreModeEnabled() || $container->hasApplicationService(static::SERVICE_STORE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
+            return new StoreToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client(),
+            );
         });
 
         return $container;

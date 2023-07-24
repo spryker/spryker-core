@@ -10,9 +10,10 @@ namespace Spryker\Glue\StoresRestApi\Plugin\Application;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin} for SAPI and {@link \Spryker\Glue\StoresBackendApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin} for BAPI instead.
+ *
  * @method \Spryker\Glue\StoresRestApi\StoresRestApiFactory getFactory()
  */
 class StoreHttpHeaderApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
@@ -28,8 +29,13 @@ class StoreHttpHeaderApplicationPlugin extends AbstractPlugin implements Applica
     protected const SERVICE_STORE = 'store';
 
     /**
+     * @var string
+     */
+    protected const PARAMETER_STORE_NAME = '_store';
+
+    /**
      * {@inheritDoc}
-     * - Gets store name from the Request header.
+     * - Gets store name from the Request header or from the Request parameter.
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -37,12 +43,30 @@ class StoreHttpHeaderApplicationPlugin extends AbstractPlugin implements Applica
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_STORE, function () {
-            $request = Request::createFromGlobals();
+        $storeName = $this->getStoreName();
 
-            return $request->headers->get(static::HEADER_STORE_NAME);
+        if ($storeName === '') {
+            return $container;
+        }
+
+        $container->set(static::SERVICE_STORE, function (ContainerInterface $container) use ($storeName) {
+            return $storeName;
         });
 
         return $container;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        $request = $this->getFactory()->createRequest();
+
+        if ($request->query->get(static::PARAMETER_STORE_NAME)) {
+            return (string)$request->query->get(static::PARAMETER_STORE_NAME);
+        }
+
+        return (string)$request->headers->get(static::HEADER_STORE_NAME);
     }
 }

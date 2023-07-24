@@ -59,4 +59,11 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
+    </transfer>
+
 </transfers>

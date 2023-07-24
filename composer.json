@@ -944,6 +944,8 @@
         "spryker/store-gui": "*",
         "spryker/store-gui-extension": "*",
         "spryker/store-storage": "*",
+        "spryker/stores-api": "*",
+        "spryker/stores-backend-api": "*",
         "spryker/stores-rest-api": "*",
         "spryker/symfony": "*",
         "spryker/symfony-mailer": "*",

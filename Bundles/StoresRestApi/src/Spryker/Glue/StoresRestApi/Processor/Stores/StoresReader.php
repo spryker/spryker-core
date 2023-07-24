@@ -8,6 +8,8 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -71,26 +73,73 @@ class StoresReader implements StoresReaderInterface
      */
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $currentStore = $this->storeClient->getCurrentStore();
-        $response = $this->restResourceBuilder->createRestResponse();
-
-        $storeId = $restRequest->getResource()->getId();
-        if ($storeId && ($storeId !== $currentStore->getName())) {
-            return $this->addInvalidStoreIdErrorToResponse($response);
+        if ($this->storeClient->isDynamicStoreEnabled()) {
+            return $this->getDynamicStoreStoresAttributes($restRequest);
         }
 
+        $currentStore = $this->storeClient->getCurrentStore();
+        $storeId = $restRequest->getResource()->getId();
+
+        if ($storeId && ($storeId !== $currentStore->getName())) {
+            return $this->getInvalidStoreRestResponse();
+        }
+
+        return $this->getRestResponse($currentStore, $this->restResourceBuilder->createRestResponse());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getDynamicStoreStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $response = $this->restResourceBuilder->createRestResponse();
+        $storeId = $restRequest->getResource()->getId();
+        if ($storeId !== null) {
+            $storeTransfer = $this->storeClient->getStoreByName($storeId);
+
+            return $this->getRestResponse($storeTransfer, $response);
+        }
+
+        $storeCollectionTransfer = $this->storeClient->getStoreCollection(new StoreCriteriaTransfer());
+        foreach ($storeCollectionTransfer->getStores() as $storeTransfer) {
+            $response = $this->getRestResponse($storeTransfer, $response);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getRestResponse(
+        StoreTransfer $storeTransfer,
+        RestResponseInterface $restResponse
+    ): RestResponseInterface {
         $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
-            $this->countryReader->getStoresCountryAttributes($currentStore->getCountries()),
-            $this->currencyReader->getStoresCurrencyAttributes($currentStore->getAvailableCurrencyIsoCodes()),
+            $this->countryReader->getStoresCountryAttributes($storeTransfer->getCountries()),
+            $this->currencyReader->getStoresCurrencyAttributes($storeTransfer->getAvailableCurrencyIsoCodes()),
         );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             StoresRestApiConfig::RESOURCE_STORES,
-            $currentStore->getName(),
+            $storeTransfer->getName(),
             $storesRestAttributes,
         );
 
-        return $response->addResource($restResource);
+        return $restResponse->addResource($restResource);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getInvalidStoreRestResponse(): RestResponseInterface
+    {
+        return $this->addInvalidStoreIdErrorToResponse($this->restResourceBuilder->createRestResponse());
     }
 
     /**

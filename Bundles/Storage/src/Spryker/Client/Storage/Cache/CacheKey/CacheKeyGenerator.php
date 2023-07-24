@@ -71,7 +71,7 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     public function generateCacheKey(?Request $request = null): string
     {
-        if (!$this->config->isStorageCachingEnabled()) {
+        if (!$this->config->isStorageCachingEnabled() || !$this->storeClient->isCurrentStoreDefined()) {
             return '';
         }
 
@@ -144,11 +144,7 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     protected function buildCacheKey(string $urlSegments, string $queryStringParametersKey): string
     {
-        $storeName = '';
-        if ($this->storeClient->isCurrentStoreDefined()) {
-            $storeName = $this->getStoreName();
-        }
-
+        $storeName = $this->getStoreName();
         $locale = $this->localeClient->getCurrentLocale();
 
         return implode(static::KEY_NAME_SEPARATOR, [

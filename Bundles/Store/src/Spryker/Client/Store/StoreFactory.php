@@ -8,9 +8,12 @@
 namespace Spryker\Client\Store;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Store\Dependency\Client\StoreToZedRequestClientInterface;
 use Spryker\Client\Store\Plugin\Expander\StoreExpanderInterface;
 use Spryker\Client\Store\Plugin\Expander\StoreStoreReferenceExpander;
 use Spryker\Client\Store\Reader\StoreReader as ClientStoreReader;
+use Spryker\Client\Store\Zed\StoreStub;
+use Spryker\Client\Store\Zed\StoreStubInterface;
 use Spryker\Shared\Store\Reader\StoreReader;
 
 /**
@@ -103,5 +106,21 @@ class StoreFactory extends AbstractFactory
     public function createStoreReferenceExpander(): StoreExpanderInterface
     {
         return new StoreStoreReferenceExpander($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\Store\Zed\StoreStubInterface
+     */
+    public function createStoreStub(): StoreStubInterface
+    {
+        return new StoreStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Store\Dependency\Client\StoreToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): StoreToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
