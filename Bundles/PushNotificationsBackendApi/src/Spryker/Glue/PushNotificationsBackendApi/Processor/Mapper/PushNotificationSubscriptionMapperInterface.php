@@ -8,6 +8,7 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
+use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 
 interface PushNotificationSubscriptionMapperInterface
@@ -31,6 +32,17 @@ interface PushNotificationSubscriptionMapperInterface
      */
     public function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
         ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+        PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+    ): PushNotificationSubscriptionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer
+     */
+    public function mapGlueRequestTransferToPushNotificationSubscriptionTransfer(
+        GlueRequestTransfer $glueRequestTransfer,
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): PushNotificationSubscriptionTransfer;
 }

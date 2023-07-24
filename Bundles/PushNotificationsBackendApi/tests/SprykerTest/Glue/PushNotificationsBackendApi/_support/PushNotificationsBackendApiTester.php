@@ -25,7 +25,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PushNotificationsBackendApi\PHPMD)
  */
 class PushNotificationsBackendApiTester extends Actor
 {

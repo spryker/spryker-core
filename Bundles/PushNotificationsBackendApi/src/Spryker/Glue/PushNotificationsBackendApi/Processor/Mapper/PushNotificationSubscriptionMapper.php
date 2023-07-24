@@ -9,9 +9,11 @@ namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ApiPushNotificationGroupsAttributesTransfer;
 use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
+use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\PushNotificationUserTransfer;
 
 class PushNotificationSubscriptionMapper implements PushNotificationSubscriptionMapperInterface
 {
@@ -76,6 +78,36 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
         return $pushNotificationSubscriptionTransfer
             ->setProvider($pushNotificationProviderTransfer)
             ->setGroup($pushNotificationGroupTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer
+     */
+    public function mapGlueRequestTransferToPushNotificationSubscriptionTransfer(
+        GlueRequestTransfer $glueRequestTransfer,
+        PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
+    ): PushNotificationSubscriptionTransfer {
+        $glueRequestUserTransfer = $glueRequestTransfer->getRequestUserOrFail();
+
+        $pushNotificationUserTransfer = new PushNotificationUserTransfer();
+        if ($pushNotificationSubscriptionTransfer->getUser()) {
+            $pushNotificationUserTransfer = $pushNotificationSubscriptionTransfer->getUserOrFail();
+        }
+
+        $pushNotificationUserTransfer
+            ->setReference((string)$glueRequestUserTransfer->getSurrogateIdentifierOrFail())
+            ->setUuid($glueRequestUserTransfer->getNaturalIdentifierOrFail());
+
+        if ($glueRequestUserTransfer->getScopes()) {
+            $pushNotificationUserTransfer->setType(
+                current($glueRequestUserTransfer->getScopes()),
+            );
+        }
+
+        return $pushNotificationSubscriptionTransfer->setUser($pushNotificationUserTransfer);
     }
 
     /**

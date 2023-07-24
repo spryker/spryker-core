@@ -89,6 +89,12 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
                 new PushNotificationSubscriptionTransfer(),
             );
 
+        $pushNotificationSubscriptionTransfer = $this->pushNotificationSubscriptionMapper
+            ->mapGlueRequestTransferToPushNotificationSubscriptionTransfer(
+                $glueRequestTransfer,
+                $pushNotificationSubscriptionTransfer,
+            );
+
         $pushNotificationSubscriptionCollectionRequestTransfer = $this->createPushNotificationProviderCollectionRequestTransfer($pushNotificationSubscriptionTransfer);
         $pushNotificationSubscriptionCollectionResponseTransfer = $this->pushNotificationFacade
             ->createPushNotificationSubscriptionCollection($pushNotificationSubscriptionCollectionRequestTransfer);
