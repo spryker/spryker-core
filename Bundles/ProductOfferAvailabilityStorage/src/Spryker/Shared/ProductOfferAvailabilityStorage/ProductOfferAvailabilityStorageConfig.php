@@ -76,4 +76,34 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE = 'Entity.spy_product_offer_store.delete';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_stock_store` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_STOCK_STORE_CREATE = 'Entity.spy_stock_store.create';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_stock_store` entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_STOCK_STORE_DELETE = 'Entity.spy_stock_store.delete';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_stock` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_STOCK_UPDATE = 'Entity.spy_stock.update';
 }

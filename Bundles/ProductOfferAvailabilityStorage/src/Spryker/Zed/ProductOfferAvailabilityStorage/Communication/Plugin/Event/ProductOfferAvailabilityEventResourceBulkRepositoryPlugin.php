@@ -50,21 +50,21 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setPagination(
                 (new PaginationTransfer())
-                    ->setPage(($offset / $limit) + 1)
+                    ->setPage((int)($offset / $limit) + 1)
                     ->setMaxPerPage($limit),
             );
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
         $productOfferTransfers = $this->getFactory()
             ->getProductOfferFacade()
             ->get($productOfferCriteriaTransfer)
-            ->getProductOffers()
-            ->getArrayCopy();
+            ->getProductOffers();
 
-        if ($this->isOutOfPages($productOfferCriteriaTransfer->getPagination())) {
+        if ($this->isOutOfPages($productOfferCriteriaTransfer->getPaginationOrFail())) {
             return [];
         }
 
-        return $productOfferTransfers;
+        return $productOfferTransfers->getArrayCopy();
     }
 
     /**
@@ -99,6 +99,6 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
     protected function isOutOfPages(PaginationTransfer $paginationTransfer): bool
     {
         return $paginationTransfer->getNbResults()
-            <= $paginationTransfer->getMaxPerPage() * ($paginationTransfer->getPage() - 1);
+            <= $paginationTransfer->getMaxPerPageOrFail() * ($paginationTransfer->getPageOrFail() - 1);
     }
 }

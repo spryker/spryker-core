@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
-use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Publisher\ProductOfferAvailability\ProductOfferAvailabilityProductOfferStoreStoragePublisherPlugin;
 use SprykerTest\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageCommunicationTester;
 
@@ -66,15 +65,12 @@ class ProductOfferAvailabilityProductOfferStoreStoragePublisherTest extends Unit
     public function testProductOfferAvailabilityProductOfferStoreStoragePublisherStoresDataForProductOfferAvailability(): void
     {
         // Arrange
-        $stockQuantity = 5;
-        $expectedAvailability = $stockQuantity;
-
         $storeTransfer = $this->tester->haveStore();
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
-        $this->tester->haveProductOfferStock([
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::QUANTITY => 5,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
@@ -83,6 +79,7 @@ class ProductOfferAvailabilityProductOfferStoreStoragePublisherTest extends Unit
                 ],
             ],
         ]);
+        $this->tester->updateStock($productOfferStockTransfer->getStock()->setIsActive(true));
 
         $productOfferAvailabilityProductOfferStorageStoragePublisherPlugin = new ProductOfferAvailabilityProductOfferStoreStoragePublisherPlugin();
         $productOfferAvailabilityProductOfferStorageStoragePublisherPlugin->setFacade($this->tester->getFacade());
@@ -105,6 +102,6 @@ class ProductOfferAvailabilityProductOfferStoreStoragePublisherTest extends Unit
             $productOfferTransfer->getProductOfferReference(),
         );
 
-        $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());
+        $this->assertSame($productOfferStockTransfer->getQuantityOrFail()->toInt(), $productOfferAvailability->toInt());
     }
 }

@@ -1,5 +1,2 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Cannot call method (\w+)\(\) on .+Transfer\|null.#'

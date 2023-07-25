@@ -4,6 +4,7 @@
     <transfer name="ProductOfferStockRequest">
         <property name="productOfferReference" type="string"/>
         <property name="store" type="Store"/>
+        <property name="isStockActive" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="ProductOfferStock">

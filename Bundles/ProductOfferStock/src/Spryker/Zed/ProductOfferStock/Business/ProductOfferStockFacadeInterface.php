@@ -17,9 +17,10 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
+     * - Requires ProductOfferStockRequestTransfer.store to be set.
+     * - Requires ProductOfferStockRequestTransfer.productOfferReference to be set.
+     * - Uses `ProductOfferStockRequestTransfer.isStockActive` to filter stocks by active status.
      * - Provides resulting data of all the stocks for provided store and productOfferReference.
-     * - Expects ProductOfferStockRequestTransfer.store to be provided.
-     * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
      *
      * @api
      *
@@ -35,8 +36,10 @@ interface ProductOfferStockFacadeInterface
 
     /**
      * Specification:
+     * - Requires `ProductOfferStockRequestTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferStockRequestTransfer.store.name` to be set.
+     * - Uses `ProductOfferStockRequestTransfer.isStockActive` to filter stocks by active status.
      * - Retrieves product offer stocks from database for provided productOfferReference.
-     * - Expects ProductOfferStockRequestTransfer.productOfferReference to be provided.
      *
      * @api
      *

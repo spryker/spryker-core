@@ -65,10 +65,14 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
             return;
         }
 
-        $this->getFactory()
+        $stockStoreEntities = $this->getFactory()
             ->createStockStoreQuery()
             ->filterByFkStock($idStock)
             ->filterByFkStore_In($storeIds)
-            ->delete();
+            ->find();
+
+        if ($stockStoreEntities->count()) {
+            $stockStoreEntities->delete();
+        }
     }
 }

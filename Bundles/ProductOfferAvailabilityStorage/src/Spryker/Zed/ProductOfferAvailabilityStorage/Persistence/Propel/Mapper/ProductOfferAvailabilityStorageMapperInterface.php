@@ -29,6 +29,11 @@ interface ProductOfferAvailabilityStorageMapperInterface
     /**
      * @var string
      */
+    public const COL_ALIAS_ID_STOCK = 'id_stock';
+
+    /**
+     * @var string
+     */
     public const COL_ALIAS_ID_STORE = 'id_store';
 
     /**
@@ -37,7 +42,7 @@ interface ProductOfferAvailabilityStorageMapperInterface
     public const COL_ALIAS_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**
-     * @param array $productOfferAvailabilityRequestData
+     * @param array<string, mixed> $productOfferAvailabilityRequestData
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer

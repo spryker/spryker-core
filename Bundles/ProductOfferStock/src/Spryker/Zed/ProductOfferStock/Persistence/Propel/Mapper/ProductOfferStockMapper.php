@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductOfferStockMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productOfferStockEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock> $productOfferStockEntities
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>

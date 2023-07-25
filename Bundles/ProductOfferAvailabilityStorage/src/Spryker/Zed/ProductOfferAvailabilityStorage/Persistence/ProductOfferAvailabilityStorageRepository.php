@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage;
+use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -24,6 +25,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductOfferAvailabilityStorageRepository extends AbstractRepository implements ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
+     * @module Stock
+     *
      * @param array<string> $productOfferStockIds
      *
      * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
@@ -48,6 +51,8 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
+     * @module Stock
+     *
      * @param array<int> $productOfferIds
      *
      * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
@@ -94,6 +99,32 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
+     * @module Stock
+     *
+     * @param list<int> $stockIds
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
+     */
+    public function getProductOfferAvailabilityRequestsByStockIds(array $stockIds): array
+    {
+        $productOfferStockPropelQuery = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->filterByFkStock_In($stockIds)
+            ->joinSpyProductOffer()
+            ->useStockQuery()
+                ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->joinStore(null, Criteria::LEFT_JOIN)
+                ->endUse()
+            ->endUse();
+
+        $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
+            ->find()
+            ->getData();
+
+        return $this->convertProductOfferAvailabilityRequestsDataToTransfers($productOfferAvailabilityRequestsData);
+    }
+
+    /**
      * @param string $offerReference
      * @param string $storeName
      *
@@ -114,7 +145,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array<int> $ids
      *
-     * @return array<\Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer>
+     * @return list<\Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer>
      */
     public function getFilteredProductOfferAvailabilityStorageEntityTransfers(FilterTransfer $filterTransfer, array $ids): array
     {
@@ -125,8 +156,11 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
             $productOfferAvailabilityStoragePropelQuery->filterByIdProductOfferAvailabilityStorage_In($ids);
         }
 
-        return $this->buildQueryFromCriteria($productOfferAvailabilityStoragePropelQuery, $filterTransfer)
+        /** @var list<\Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer> $productOfferAvailabilityStorageEntityTransfers */
+        $productOfferAvailabilityStorageEntityTransfers = $this->buildQueryFromCriteria($productOfferAvailabilityStoragePropelQuery, $filterTransfer)
             ->find();
+
+        return $productOfferAvailabilityStorageEntityTransfers;
     }
 
     /**
@@ -158,11 +192,13 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     protected function addProductOfferAvailabilityRequestSelectColumns(ModelCriteria $query): ModelCriteria
     {
         return $query
+            ->withColumn(SpyProductOfferStockTableMap::COL_FK_STOCK, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STOCK)
             ->withColumn(SpyStoreTableMap::COL_ID_STORE, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STORE)
             ->withColumn(SpyStoreTableMap::COL_NAME, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_STORE_NAME)
             ->withColumn(SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_PRODUCT_OFFER_REFERENCE)
             ->withColumn(SpyProductOfferTableMap::COL_CONCRETE_SKU, ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_SKU)
             ->select([
+                SpyProductOfferStockTableMap::COL_FK_STOCK => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STOCK,
                 SpyStoreTableMap::COL_NAME => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_STORE_NAME,
                 SpyStoreTableMap::COL_ID_STORE => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_ID_STORE,
                 SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => ProductOfferAvailabilityStorageMapperInterface::COL_ALIAS_PRODUCT_OFFER_REFERENCE,

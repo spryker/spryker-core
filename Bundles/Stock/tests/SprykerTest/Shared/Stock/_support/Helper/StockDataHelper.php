@@ -115,6 +115,22 @@ class StockDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockTransfer
+    {
+        /** @var \Orm\Zed\Stock\Persistence\SpyStock $stockEntity */
+        $stockEntity = SpyStockQuery::create()->findOneByIdStock($stockTransfer->getIdStockOrFail());
+
+        $stockEntity->fromArray($stockTransfer->modifiedToArray());
+        $stockEntity->save();
+
+        return $stockTransfer->fromArray($stockEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

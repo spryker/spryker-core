@@ -25,7 +25,7 @@ use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterfa
  * @method void pause()
  * @method \Spryker\Zed\ProductOfferStock\Business\ProductOfferStockFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferStock\PHPMD)
  */
 class ProductOfferStockBusinessTester extends Actor
 {

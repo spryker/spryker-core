@@ -148,6 +148,7 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     ): ?ProductOfferStockResultTransfer {
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
             ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setIsStockActive(true)
             ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
         $productOfferStockResultTransfer = $this->productOfferStockFacade->getProductOfferStockResult($productOfferStockRequestTransfer);

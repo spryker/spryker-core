@@ -147,6 +147,40 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductOfferStockResultShouldReturnQuantityOfZeroIfStockIsInactive(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::QUANTITY => 6,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+        $this->tester->updateStock($productOfferStockTransfer->getStock()->setIsActive(false));
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setIsStockActive(true)
+            ->setStore($storeTransfer);
+
+        // Act
+        $productOfferStockTransfer = $this->tester->getFacade()
+            ->getProductOfferStockResult($productOfferStockRequestTransfer)->getQuantity();
+
+        // Assert
+        $this->assertSame(0, $productOfferStockTransfer->toInt());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductOfferStockResultReturnsZeroQuantityIfProductOfferNotExists(): void
     {
         // Arrange

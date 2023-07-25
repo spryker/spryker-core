@@ -31,7 +31,12 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME = 'DE';
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var \SprykerTest\Zed\ProductOfferAvailability\ProductOfferAvailabilityBusinessTester
@@ -48,7 +53,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $reservedQuantity = 3;
         $expectedAvailability = $stockQuantity - $reservedQuantity;
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $this->tester->haveProductOfferStock([
@@ -89,7 +94,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     public function testFindProductConcreteAvailabilityReturnsAvailabilityZeroWhenProductOfferHasNoCurrentStore(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
@@ -98,6 +103,42 @@ class ProductOfferAvailabilityFacadeTest extends Unit
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
                         $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
+        $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
+            ->setStore($storeTransfer)
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setSku($productOfferTransfer->getConcreteSku());
+
+        // Act
+        $productConcreteAvailabilityTransfer = $this->tester->getFacade()
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($productConcreteAvailabilityTransfer);
+        $this->assertSame(0, $productConcreteAvailabilityTransfer->getAvailability()->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcreteAvailabilityReturnsAvailabilityZeroWhenStockHasNoStoreConnection(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::QUANTITY => 5,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransferAT->getIdStore(),
                     ],
                 ],
             ],

@@ -12,7 +12,7 @@
         "spryker/product-offer-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/stock": "^7.0.0 || ^8.0.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

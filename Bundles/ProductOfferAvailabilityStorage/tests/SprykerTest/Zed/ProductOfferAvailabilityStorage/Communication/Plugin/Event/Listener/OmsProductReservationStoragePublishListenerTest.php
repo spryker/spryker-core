@@ -77,7 +77,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
-        $this->tester->haveProductOfferStock([
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
@@ -88,6 +88,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
                 ],
             ],
         ]);
+        $this->tester->updateStock($productOfferStockTransfer->getStock()->setIsActive(true));
 
         $omsProductOfferReservationTransfer = $this->tester->haveOmsProductOfferReservation([
             OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),

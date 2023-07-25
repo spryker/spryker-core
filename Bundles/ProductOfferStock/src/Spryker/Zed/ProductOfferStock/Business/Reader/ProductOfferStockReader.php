@@ -71,7 +71,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     {
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
-            ->getStore()
+            ->getStoreOrFail()
             ->requireName();
 
         $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
@@ -80,7 +80,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             throw new ProductOfferNotFoundException(
                 sprintf(
                     'Product offer stock with product reference: %s, not found',
-                    $productOfferStockRequestTransfer->getProductOfferReference(),
+                    $productOfferStockRequestTransfer->getProductOfferReferenceOrFail(),
                 ),
             );
         }

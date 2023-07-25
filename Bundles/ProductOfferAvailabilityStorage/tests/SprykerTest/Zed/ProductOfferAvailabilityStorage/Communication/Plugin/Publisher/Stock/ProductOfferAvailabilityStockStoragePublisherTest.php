@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener;
+namespace SprykerTest\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Publisher\Stock;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
-use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
-use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\ProductOfferStockStoragePublishListener;
+use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Publisher\Stock\ProductOfferAvailabilityStockStoragePublisherPlugin;
+use SprykerTest\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,27 +26,22 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Liste
  * @group ProductOfferAvailabilityStorage
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
- * @group ProductOfferStockStoragePublishListenerTest
+ * @group Publisher
+ * @group Stock
+ * @group ProductOfferAvailabilityStockStoragePublisherTest
  * Add your own group annotations below this line
  */
-class ProductOfferStockStoragePublishListenerTest extends Unit
+class ProductOfferAvailabilityStockStoragePublisherTest extends Unit
 {
-    /**
-     * @var string
-     */
-    protected const STORE_NAME = 'DE';
-
     /**
      * @var \SprykerTest\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageCommunicationTester
      */
-    protected $tester;
+    protected ProductOfferAvailabilityStorageCommunicationTester $tester;
 
     /**
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -57,27 +50,20 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
-
-        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [
-            new ProductOfferOmsReservationReaderStrategyPlugin(),
-        ]);
     }
 
     /**
      * @return void
      */
-    public function testProductOfferStockStoragePublishListenerStoresDataForProductOfferAvailability(): void
+    public function testStoresDataForProductOfferAvailability(): void
     {
         // Arrange
-        $stockQuantity = 5;
-        $expectedAvailability = $stockQuantity;
-
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore();
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-            ProductOfferStockTransfer::QUANTITY => $stockQuantity,
+            ProductOfferStockTransfer::QUANTITY => 5,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => [
@@ -88,15 +74,18 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
         ]);
         $this->tester->updateStock($productOfferStockTransfer->getStock()->setIsActive(true));
 
-        $productOfferStockStoragePublishListener = new ProductOfferStockStoragePublishListener();
-        $productOfferStockStoragePublishListener->setFacade($this->tester->getFacade());
+        $productOfferAvailabilityStockStoragePublisherPlugin = new ProductOfferAvailabilityStockStoragePublisherPlugin();
+        $productOfferAvailabilityStockStoragePublisherPlugin->setFacade($this->tester->getFacade());
 
         $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($productOfferStockTransfer->getIdProductOfferStock()),
+            (new EventEntityTransfer())->setId($productOfferStockTransfer->getStock()->getIdStock()),
         ];
 
         // Act
-        $productOfferStockStoragePublishListener->handleBulk($eventEntityTransfers, ProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH);
+        $productOfferAvailabilityStockStoragePublisherPlugin->handleBulk(
+            $eventEntityTransfers,
+            ProductOfferAvailabilityStorageConfig::ENTITY_SPY_STOCK_UPDATE,
+        );
 
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
@@ -104,6 +93,6 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
             $productOfferTransfer->getProductOfferReference(),
         );
 
-        $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());
+        $this->assertSame($productOfferStockTransfer->getQuantityOrFail()->toInt(), $productOfferAvailability->toInt());
     }
 }

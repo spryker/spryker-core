@@ -30,18 +30,21 @@ class ProductOfferStockProductOfferPostCreatePlugin extends AbstractPlugin imple
      */
     public function execute(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        if (!$productOfferTransfer->getProductOfferStocks()->count()) {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers */
+        $productOfferStockTransfers = $productOfferTransfer->getProductOfferStocks();
+
+        if (!$productOfferStockTransfers->count()) {
             return $productOfferTransfer;
         }
 
-        $productOfferStockTransfers = new ArrayObject();
+        $savedProductOfferStockTransfers = new ArrayObject();
 
-        foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
+        foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
             $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
             $productOfferStockTransfer = $this->getFacade()->create($productOfferStockTransfer);
-            $productOfferStockTransfers->append($productOfferStockTransfer);
+            $savedProductOfferStockTransfers->append($productOfferStockTransfer);
         }
 
-        return $productOfferTransfer->setProductOfferStocks($productOfferStockTransfers);
+        return $productOfferTransfer->setProductOfferStocks($savedProductOfferStockTransfers);
     }
 }

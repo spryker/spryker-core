@@ -10,7 +10,7 @@
         "spryker/kernel": "^3.33.0",
         "spryker/oms": "^11.7.0",
         "spryker/product-offer": "^1.8.0",
-        "spryker/product-offer-stock": "^1.1.0",
+        "spryker/product-offer-stock": "^1.3.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

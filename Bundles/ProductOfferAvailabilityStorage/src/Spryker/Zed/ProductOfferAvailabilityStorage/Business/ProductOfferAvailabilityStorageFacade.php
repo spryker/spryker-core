@@ -79,4 +79,36 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
             ->createProductOfferAvailabilityStorageWriter()
             ->writeCollectionByProductOfferIdEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByStockStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferAvailabilityStorageWriter()
+            ->writeCollectionByStockStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByStockEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferAvailabilityStorageWriter()
+            ->writeCollectionByStockEvents($eventTransfers);
+    }
 }

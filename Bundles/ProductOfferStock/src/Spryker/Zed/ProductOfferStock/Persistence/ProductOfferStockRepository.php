@@ -52,6 +52,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      */
     public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock> $productOfferStockEntities */
         $productOfferStockEntities = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
             $productOfferStockRequestTransfer,
@@ -66,6 +67,9 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
     }
 
     /**
+     * @module Stock
+     * @module Store
+     *
      * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery $productOfferStockQuery
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
@@ -82,14 +86,21 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
                 ->endUse();
         }
 
-        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getName()) {
+        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStoreOrFail()->getName()) {
             $productOfferStockQuery
                 ->useStockQuery()
                     ->useStockStoreQuery()
                         ->useStoreQuery()
-                            ->filterByName($productOfferStockRequestTransfer->getStore()->getName())
+                            ->filterByName($productOfferStockRequestTransfer->getStoreOrFail()->getNameOrFail())
                         ->endUse()
                     ->endUse()
+                ->endUse();
+        }
+
+        if ($productOfferStockRequestTransfer->getIsStockActive() !== null) {
+            $productOfferStockQuery
+                ->useStockQuery()
+                    ->filterByIsActive($productOfferStockRequestTransfer->getIsStockActiveOrFail())
                 ->endUse();
         }
 
