@@ -14,7 +14,7 @@ parameters:
         - '#Method Spryker\\Yves\\Application\\Plugin\\Provider\\ExceptionServiceProvider::getListener\(\) should return Symfony\\Component\\EventDispatcher\\EventSubscriberInterface but returns Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener.#'
         - '#Comparison operation "<" between int<1, max> and 1 is always false.#'
         - '#Cannot access offset non-empty-string on Spryker\\Service\\Container\\ContainerInterface.#'
-        - '#Parameter \#2 \$callable of class Twig\\TwigFunction constructor expects \(callable\(\): mixed\)\|null, string given.#'
+        - '#Parameter \#2 \$callable of class Twig\\TwigFunction constructor expects .+callable.+ given.#'
         - '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Event\\ResponseEvent and#'
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ResponseEvent\:\:isMainRequest\(\).#'
         - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\KernelEvent\:\:isMainRequest\(\).#'
