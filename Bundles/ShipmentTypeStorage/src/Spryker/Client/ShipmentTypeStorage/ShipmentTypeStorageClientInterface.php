@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ShipmentTypeStorage;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
 
@@ -20,6 +22,7 @@ interface ShipmentTypeStorageClientInterface
      * - Uses `ShipmentTypeStorageCriteriaTransfer.shipmentTypeStorageConditions.shipmentTypeIds` to filter by shipment type IDs.
      * - Uses `ShipmentTypeStorageCriteriaTransfer.shipmentTypeStorageConditions.uuids` to filter by shipment type uuids.
      * - Can filter either by `shipmentTypeIds` or `uuids` at the same time.
+     * - If no filters were provided, will return all available shipment types for the store.
      * - Returns `ShipmentTypeStorageCollectionTransfer` filled with found shipment types.
      *
      * @api
@@ -31,4 +34,19 @@ interface ShipmentTypeStorageClientInterface
     public function getShipmentTypeStorageCollection(
         ShipmentTypeStorageCriteriaTransfer $shipmentTypeStorageCriteriaTransfer
     ): ShipmentTypeStorageCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.store.name` to be set.
+     * - Retrieves all available shipment type storage data filtered by store name.
+     * - Executes stack of {@link \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface} plugins.
+     * - Returns `ShipmentTypeCollectionTransfer` filled with available shipment types for provided quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getAvailableShipmentTypes(QuoteTransfer $quoteTransfer): ShipmentTypeCollectionTransfer;
 }

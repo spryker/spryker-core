@@ -22,10 +22,11 @@ class ShipmentTypeServiceTypeWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $shipmentTypeServiceTypeEntity = $this->getShipmentTypeServiceTypeQuery()
-            ->filterByShipmentTypeUuid($dataSet[ShipmentTypeServiceTypeDataSetInterface::SHIPMENT_TYPE_UUID])
+            ->filterByFkShipmentType($dataSet[ShipmentTypeServiceTypeDataSetInterface::ID_SHIPMENT_TYPE])
             ->findOneOrCreate();
 
-        $shipmentTypeServiceTypeEntity->setServiceTypeUuid($dataSet[ShipmentTypeServiceTypeDataSetInterface::SERVICE_TYPE_UUID]);
+        $shipmentTypeServiceTypeEntity->setFkServiceType($dataSet[ShipmentTypeServiceTypeDataSetInterface::ID_SERVICE_TYPE]);
+
         if ($shipmentTypeServiceTypeEntity->isNew() || $shipmentTypeServiceTypeEntity->isModified()) {
             $shipmentTypeServiceTypeEntity->save();
         }

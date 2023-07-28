@@ -36,7 +36,7 @@ class ShipmentTypePublisherTriggerPlugin extends AbstractPlugin implements Publi
      * @param int $offset
      * @param int $limit
      *
-     * @return array<\Generated\Shared\Transfer\ServicePointTransfer>
+     * @return array<\Generated\Shared\Transfer\ShipmentTypeTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

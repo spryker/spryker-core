@@ -34,6 +34,11 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER = 'PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -57,6 +62,7 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addShipmentTypeFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addShipmentTypeStorageExpanderPlugins($container);
 
         return $container;
     }
@@ -107,5 +113,27 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentTypeStorageExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER, function () {
+            return $this->getShipmentTypeStorageExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    protected function getShipmentTypeStorageExpanderPlugins(): array
+    {
+        return [];
     }
 }

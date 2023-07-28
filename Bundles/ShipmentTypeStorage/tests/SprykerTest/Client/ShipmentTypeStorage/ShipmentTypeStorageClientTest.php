@@ -8,11 +8,17 @@
 namespace SprykerTest\Client\ShipmentTypeStorage;
 
 use Codeception\Test\Unit;
+use Exception;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageDependencyProvider;
+use Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
@@ -99,19 +105,79 @@ class ShipmentTypeStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetShipmentTypeStorageCollectionReturnsEmptyCollectionWhenEmptyConditionsTransferIsProvided(): void
+    public function testGetShipmentTypeStorageCollectionThrowsAnExceptionWhenStoreNameCriteriaWasNotProvided(): void
     {
+        // Assert
+        $this->expectException(NullValueException::class);
+
         // Arrange
         $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())->setShipmentTypeStorageConditions(
             (new ShipmentTypeStorageConditionsTransfer()),
         );
 
         // Act
-        $shipmentTypeStorageCollection = $this->tester->getClient()
+        $this->tester->getClient()->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShipmentTypeStorageCollectionReturnsCollectionFilteredByStoreName(): void
+    {
+        // Arrange
+        $storageClientMock = $this->createStorageClientMock();
+        $storageClientMock->expects($this->never())->method('getKeys');
+
+        $storageClientMock->method('getMulti')->willReturn([
+            'fake_storage_key_1' => [
+                static::KEY_ID => static::TEST_ID_SHIPMENT_TYPE,
+                ShipmentTypeStorageTransfer::ID_SHIPMENT_TYPE => static::TEST_ID_SHIPMENT_TYPE,
+            ],
+            'fake_storage_key_2' => [
+                static::KEY_ID => static::TEST_ID_SHIPMENT_TYPE,
+                ShipmentTypeStorageTransfer::ID_SHIPMENT_TYPE => static::TEST_ID_SHIPMENT_TYPE,
+            ],
+        ]);
+        $storageClientMock->method('scanKeys')->willReturn(
+            (new StorageScanResultTransfer())->setKeys(['fake_storage_key_1', 'fake_storage_key_2']),
+        );
+
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
+        $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())->setShipmentTypeStorageConditions(
+            (new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester
+            ->getClient()
             ->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
 
         // Assert
-        $this->assertCount(0, $shipmentTypeStorageCollection->getShipmentTypeStorages());
+        $this->assertCount(2, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShipmentTypeStorageCollectionReturnsCollectionFilteredByStoreNameByGetKeysFallbackFunction(): void
+    {
+        // Arrange
+        $storageClientMock = $this->createStorageClientMock();
+        $storageClientMock->method('scanKeys')->willThrowException(new Exception());
+
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
+
+        $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())->setShipmentTypeStorageConditions(
+            (new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE),
+        );
+
+        // Assert
+        $storageClientMock->expects($this->once())->method('getKeys');
+
+        // Act
+        $this->tester->getClient()->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
     }
 
     /**
@@ -266,8 +332,6 @@ class ShipmentTypeStorageClientTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testGetShipmentTypeStorageCollectionReturnsCollectionOfFoundStorageDataFilteredByUuids(): void
@@ -311,10 +375,65 @@ class ShipmentTypeStorageClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetAvailableShipmentTypesThrowsExceptionWithoutProvidedStore(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->tester->getClient()->getAvailableShipmentTypes((new QuoteTransfer()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableShipmentTypesThrowsExceptionWithoutProvidedStoreName(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->tester->getClient()->getAvailableShipmentTypes((new QuoteTransfer())->setStore(new StoreTransfer()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableShipmentTypesExecutesAvailableShipmentTypeFilterPlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER, [
+            $this->getAvailableShipmentTypeFilterPluginMock(),
+        ]);
+
+        // Arrange
+        $quoteTransfer = (new QuoteTransfer())->setStore((new StoreTransfer())->setName(static::STORE_NAME_DE));
+
+        // Act
+        $this->tester->getClient()->getAvailableShipmentTypes($quoteTransfer);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface
      */
     protected function createStorageClientMock(): ShipmentTypeStorageToStorageClientInterface
     {
         return $this->getMockBuilder(ShipmentTypeStorageToStorageClientInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface
+     */
+    protected function getAvailableShipmentTypeFilterPluginMock(): AvailableShipmentTypeFilterPluginInterface
+    {
+        $availableShipmentTypeFilterPluginMock = $this->getMockBuilder(AvailableShipmentTypeFilterPluginInterface::class)->getMock();
+        $availableShipmentTypeFilterPluginMock
+            ->expects($this->once())
+            ->method('filter')
+            ->willReturn((new ShipmentTypeStorageCollectionTransfer()));
+
+        return $availableShipmentTypeFilterPluginMock;
     }
 }

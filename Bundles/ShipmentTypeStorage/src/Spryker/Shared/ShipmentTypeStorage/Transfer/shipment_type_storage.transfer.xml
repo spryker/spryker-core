@@ -72,4 +72,12 @@
         <property name="store" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="StorageScanResult">
+        <property name="keys" type="array" singular="keys"/>
+    </transfer>
+
 </transfers>

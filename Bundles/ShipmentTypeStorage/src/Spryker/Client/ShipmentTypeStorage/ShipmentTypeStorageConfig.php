@@ -11,4 +11,21 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class ShipmentTypeStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
+    protected const SCAN_KEY_STORE_LIMIT = 10;
+
+    /**
+     * Specification:
+     * - Restricts the number of scan keys due to performance reasons.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getScanKeyStoreLimit(): int
+    {
+        return static::SCAN_KEY_STORE_LIMIT;
+    }
 }

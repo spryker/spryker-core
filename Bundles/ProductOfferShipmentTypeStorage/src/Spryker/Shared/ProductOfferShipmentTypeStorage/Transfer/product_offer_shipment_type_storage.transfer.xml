@@ -4,6 +4,7 @@
     <transfer name="ProductOfferStorage">
         <property name="productOfferReference" type="string"/>
         <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
+        <property name="productConcreteSku" type="string"/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageCollection" strict="true">
@@ -11,6 +12,7 @@
     </transfer>
 
     <transfer name="ShipmentTypeStorage" strict="true">
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferShipmentTypeStorage" strict="true">
@@ -112,6 +114,23 @@
 
     <transfer name="ProductOfferConditions" strict="true">
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

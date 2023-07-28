@@ -1,6 +1,224 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": [],
-    "count": 0
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $requestParameters using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Builder/ServicePointSearchPaginationConfigBuilder.php",
+            "snippet": "            return (int)$requestParameters[$paramName];",
+            "selected_text": "$requestParameters",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $requestParameters using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Builder/ServicePointSearchPaginationConfigBuilder.php",
+            "snippet": "        $perPage = $requestParameters[$this->paginationConfigTransfer->getItemsPerPageParameterName()] ?? null;",
+            "selected_text": "$requestParameters",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 185,
+            "line_to": 185,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/ServicePointSearchQueryPlugin.php",
+            "snippet": "            sprintf('*%s*', $this->searchString),",
+            "selected_text": "$this->searchString",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 196,
+            "line_to": 196,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/ServicePointSearchQueryPlugin.php",
+            "snippet": "            sprintf('*%s*', $this->searchString),",
+            "selected_text": "$this->searchString",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "UndefinedInterfaceMethod",
+            "message": "Method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface::getSearchString does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/SortedServicePointSearchQueryExpanderPlugin.php",
+            "snippet": "        return (bool)$searchQuery->getSearchString();",
+            "selected_text": "getSearchString",
+            "error_level": 5,
+            "shortcode": 181
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/SortedServicePointSearchQueryExpanderPlugin.php",
+            "snippet": "        $sortField = sprintf('%s.%s', $sortConfigTransfer->getFieldName(), $sortConfigTransfer->getName());",
+            "selected_text": "$sortConfigTransfer->getFieldName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/SortedServicePointSearchQueryExpanderPlugin.php",
+            "snippet": "        $sortField = sprintf('%s.%s', $sortConfigTransfer->getFieldName(), $sortConfigTransfer->getName());",
+            "selected_text": "$sortConfigTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, but possibly different type Elastica\\Query\\AbstractQuery|array<string, array<string, mixed>> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/StoreServicePointSearchQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery),",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ServicePointSearch\\Persistence\\ServicePointSearchEntityManagerInterface::deleteServicePointSearchByServicePointIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Deleter/ServicePointSearchDeleter.php",
+            "snippet": "            ->deleteServicePointSearchByServicePointIds(array_unique($servicePointIds));",
+            "selected_text": "array_unique($servicePointIds)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ServicePointSearch\\Business\\Writer\\ServicePointSearchWriter::writeCollectionByServicePointIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "        $this->writeCollectionByServicePointIds(array_unique($servicePointIds));",
+            "selected_text": "array_unique($servicePointIds)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ServicePointSearch\\Business\\Writer\\ServicePointSearchWriter::writeCollectionByServicePointIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "        $this->writeCollectionByServicePointIds(array_unique($servicePointIds));",
+            "selected_text": "array_unique($servicePointIds)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ServicePointSearch\\Business\\Writer\\ServicePointSearchWriter::writeCollectionByServicePointIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "        $this->writeCollectionByServicePointIds(array_unique($servicePointIds));",
+            "selected_text": "array_unique($servicePointIds)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ServicePointSearch\\Business\\Writer\\ServicePointSearchWriter::writeCollectionByServicePointIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "        $this->writeCollectionByServicePointIds(array_unique($servicePointIds));",
+            "selected_text": "array_unique($servicePointIds)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ServicePointTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "        if (!$servicePointCollectionTransfer->getServicePoints()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ServicePointTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Business/Writer/ServicePointSearchWriter.php",
+            "snippet": "            $servicePointCollectionTransfer->getServicePoints()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ServicePointTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Communication/Plugin/Publisher/ServicePointPublisherTriggerPlugin.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 99,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\ServicePointSearch\\Persistence\\SpyServicePointSearch>' for Spryker\\Zed\\ServicePointSearch\\Persistence\\ServicePointSearchRepository::getServicePointSearchEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Zed/ServicePointSearch/Persistence/ServicePointSearchRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($servicePointSearchQuery, $filterTransfer)\n            ->setFormatter(ModelCriteria::FORMAT_OBJECT)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($servicePointSearchQuery, $filterTransfer)\n            ->setFormatter(ModelCriteria::FORMAT_OBJECT)\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ServicePointSearch/src/Spryker/Client/ServicePointSearch/Plugin/Elasticsearch/Query/ServicePointSearchQueryPlugin.php",
+            "snippet": "class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface",
+            "selected_text": "ServicePointSearchQueryPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ],
+    "count": 18
 }

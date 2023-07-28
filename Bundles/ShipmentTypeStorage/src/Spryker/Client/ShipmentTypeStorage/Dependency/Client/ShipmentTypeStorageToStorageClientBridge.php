@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ShipmentTypeStorage\Dependency\Client;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
 class ShipmentTypeStorageToStorageClientBridge implements ShipmentTypeStorageToStorageClientInterface
 {
     /**
@@ -30,5 +32,27 @@ class ShipmentTypeStorageToStorageClientBridge implements ShipmentTypeStorageToS
     public function getMulti(array $keys): array
     {
         return $this->storageClient->getMulti($keys);
+    }
+
+    /**
+     * @param string $pattern
+     * @param int $limit
+     * @param int|null $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer
+    {
+        return $this->storageClient->scanKeys($pattern, $limit, $cursor);
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return array<string, string|null>
+     */
+    public function getKeys(string $pattern): array
+    {
+        return $this->storageClient->getKeys($pattern);
     }
 }

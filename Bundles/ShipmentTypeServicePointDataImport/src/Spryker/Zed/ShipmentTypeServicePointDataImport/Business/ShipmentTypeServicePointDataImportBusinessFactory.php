@@ -10,8 +10,8 @@ namespace Spryker\Zed\ShipmentTypeServicePointDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ServiceTypeKeyToServiceTypeUuidStep;
-use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ShipmentTypeKeyToShipmentTypeUuidStep;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ServiceTypeKeyToIdServiceTypeStep;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ShipmentTypeKeyToIdShipmentTypeStep;
 use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ShipmentTypeServiceTypeWriterStep;
 
 /**
@@ -30,8 +30,8 @@ class ShipmentTypeServicePointDataImportBusinessFactory extends DataImportBusine
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createShipmentTypeKeyToShipmentTypeUuidStep())
-            ->addStep($this->createServiceTypeKeyToServiceTypeUuidStep())
+            ->addStep($this->createShipmentTypeKeyToIdShipmentTypeStep())
+            ->addStep($this->createServiceTypeKeyToIdServiceTypeStep())
             ->addStep($this->createShipmentTypeServiceTypeWriterStep());
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -41,17 +41,17 @@ class ShipmentTypeServicePointDataImportBusinessFactory extends DataImportBusine
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createShipmentTypeKeyToShipmentTypeUuidStep(): DataImportStepInterface
+    public function createShipmentTypeKeyToIdShipmentTypeStep(): DataImportStepInterface
     {
-        return new ShipmentTypeKeyToShipmentTypeUuidStep();
+        return new ShipmentTypeKeyToIdShipmentTypeStep();
     }
 
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createServiceTypeKeyToServiceTypeUuidStep(): DataImportStepInterface
+    public function createServiceTypeKeyToIdServiceTypeStep(): DataImportStepInterface
     {
-        return new ServiceTypeKeyToServiceTypeUuidStep();
+        return new ServiceTypeKeyToIdServiceTypeStep();
     }
 
     /**

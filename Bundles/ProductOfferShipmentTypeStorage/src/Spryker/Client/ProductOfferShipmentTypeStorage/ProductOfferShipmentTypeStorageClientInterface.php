@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductOfferShipmentTypeStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 
 interface ProductOfferShipmentTypeStorageClientInterface
 {
@@ -26,4 +28,22 @@ interface ProductOfferShipmentTypeStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
     public function expandProductOfferStorageWithShipmentTypes(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer;
+
+    /**
+     * Specification:
+     * - Collects product offer SKUs from `QuoteTransfer.items`.
+     * - Retrieves product offers by SKUs from storage.
+     * - Filters out shipment types without product offer shipment type relation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    public function filterUnavailableProductOfferShipmentTypes(
+        ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
+        QuoteTransfer $quoteTransfer,
+    ): ShipmentTypeStorageCollectionTransfer;
 }

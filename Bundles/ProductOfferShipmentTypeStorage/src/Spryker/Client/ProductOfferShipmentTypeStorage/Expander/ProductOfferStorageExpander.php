@@ -21,7 +21,7 @@ class ProductOfferStorageExpander implements ProductOfferStorageExpanderInterfac
     /**
      * @var string
      */
-    protected const KEY_SHIPMENT_TYPE_UUIDS = 'shipmentTypeUuids';
+    protected const KEY_SHIPMENT_TYPE_UUIDS = 'shipment_type_uuids';
 
     /**
      * @var \Spryker\Client\ProductOfferShipmentTypeStorage\Generator\ProductOfferShipmentTypeKeyGeneratorInterface

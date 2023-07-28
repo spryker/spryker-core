@@ -53,24 +53,32 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
     protected ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade;
 
     /**
+     * @var list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    protected array $shipmentTypeStorageExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ShipmentTypeStorage\Persistence\ShipmentTypeStorageEntityManagerInterface $shipmentTypeStorageEntityManager
      * @param \Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapperInterface $shipmentTypeStorageMapper
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface $shipmentTypeFacade
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface> $shipmentTypeStorageExpanderPlugins
      */
     public function __construct(
         ShipmentTypeStorageEntityManagerInterface $shipmentTypeStorageEntityManager,
         ShipmentTypeStorageMapperInterface $shipmentTypeStorageMapper,
         ShipmentTypeStorageToShipmentTypeFacadeInterface $shipmentTypeFacade,
         ShipmentTypeStorageToStoreFacadeInterface $storeFacade,
-        ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+        ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        array $shipmentTypeStorageExpanderPlugins
     ) {
         $this->shipmentTypeStorageEntityManager = $shipmentTypeStorageEntityManager;
         $this->shipmentTypeStorageMapper = $shipmentTypeStorageMapper;
         $this->shipmentTypeFacade = $shipmentTypeFacade;
         $this->storeFacade = $storeFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
+        $this->shipmentTypeStorageExpanderPlugins = $shipmentTypeStorageExpanderPlugins;
     }
 
     /**
@@ -134,6 +142,7 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
                 [],
             );
 
+            $shipmentTypeStorageTransfers = $this->executeShipmentTypeStorageExpanderPlugins($shipmentTypeStorageTransfers);
             $this->writeShipmentTypeStorageTransfersForStore($shipmentTypeStorageTransfers, $storeName);
         }
     }
@@ -210,5 +219,19 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
             ->setWithStoreRelations(true);
 
         return (new ShipmentTypeCriteriaTransfer())->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     */
+    protected function executeShipmentTypeStorageExpanderPlugins(array $shipmentTypeStorageTransfers): array
+    {
+        foreach ($this->shipmentTypeStorageExpanderPlugins as $shipmentTypeStorageExpanderPlugin) {
+            $shipmentTypeStorageTransfers = $shipmentTypeStorageExpanderPlugin->expand($shipmentTypeStorageTransfers);
+        }
+
+        return $shipmentTypeStorageTransfers;
     }
 }

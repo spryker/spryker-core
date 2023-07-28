@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ShipmentTypeStorage;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -31,5 +33,21 @@ class ShipmentTypeStorageClient extends AbstractClient implements ShipmentTypeSt
         return $this->getFactory()
             ->createShipmentTypeStorageReader()
             ->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getAvailableShipmentTypes(QuoteTransfer $quoteTransfer): ShipmentTypeCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentTypeReader()
+            ->getAvailableShipmentTypes($quoteTransfer);
     }
 }

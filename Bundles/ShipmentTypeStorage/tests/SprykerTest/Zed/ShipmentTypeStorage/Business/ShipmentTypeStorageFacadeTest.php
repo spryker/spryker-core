@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ShipmentTypeStorage\ShipmentTypeStorageDependencyProvider;
+use Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface;
 use SprykerTest\Zed\ShipmentTypeStorage\ShipmentTypeStorageBusinessTester;
 
 /**
@@ -376,5 +378,72 @@ class ShipmentTypeStorageFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $synchronizationDataTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteShipmentTypeStorageCollectionByShipmentTypeEventsExecutesExpanderPlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            ShipmentTypeStorageDependencyProvider::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER,
+            [$this->getShipmentTypeStorageExpanderPluginMock()],
+        );
+
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $eventEntityTransfer = (new EventEntityTransfer())->setId($shipmentTypeTransfer->getIdShipmentTypeOrFail());
+
+        // Act
+        $this->tester->getFacade()->writeShipmentTypeStorageCollectionByShipmentTypeEvents([$eventEntityTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteShipmentTypeStorageCollectionByShipmentTypeStoreEventsExecutesExpanderPlugins(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            ShipmentTypeStorageDependencyProvider::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER,
+            [$this->getShipmentTypeStorageExpanderPluginMock()],
+        );
+
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
+            static::COL_FK_SHIPMENT_TYPE => $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->writeShipmentTypeStorageCollectionByShipmentTypeStoreEvents([$eventEntityTransfer]);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getShipmentTypeStorageExpanderPluginMock(): ShipmentTypeStorageExpanderPluginInterface
+    {
+        $shipmentTypeStorageExpanderPluginMock = $this
+            ->getMockBuilder(ShipmentTypeStorageExpanderPluginInterface::class)
+            ->getMock();
+
+        $shipmentTypeStorageExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturnCallback(function (array $shipmentTypeStorageTransfers) {
+                return $shipmentTypeStorageTransfers;
+            });
+
+        return $shipmentTypeStorageExpanderPluginMock;
     }
 }

@@ -9,11 +9,15 @@ namespace Spryker\Client\ProductOfferShipmentTypeStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientBridge;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToShipmentTypeStorageClientBridge;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToStorageClientBridge;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToStoreClientBridge;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Service\ProductOfferShipmentTypeStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageConfig getConfig()
+ */
 class ProductOfferShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
 {
     /**
@@ -37,6 +41,11 @@ class ProductOfferShipmentTypeStorageDependencyProvider extends AbstractDependen
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
+     * @var string
+     */
+    public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -48,6 +57,7 @@ class ProductOfferShipmentTypeStorageDependencyProvider extends AbstractDependen
         $container = $this->addStoreClient($container);
         $container = $this->addStorageClient($container);
         $container = $this->addShipmentTypeStorageClient($container);
+        $container = $this->addProductOfferStorageClient($container);
 
         $container = $this->addSynchronizationService($container);
 
@@ -112,6 +122,22 @@ class ProductOfferShipmentTypeStorageDependencyProvider extends AbstractDependen
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductOfferShipmentTypeStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductOfferStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
+            return new ProductOfferShipmentTypeStorageToProductOfferStorageClientBridge(
+                $container->getLocator()->productOfferStorage()->client(),
             );
         });
 

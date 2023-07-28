@@ -14,19 +14,19 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataSet\ShipmentTypeServiceTypeDataSetInterface;
 
-class ServiceTypeKeyToServiceTypeUuidStep implements DataImportStepInterface
+class ServiceTypeKeyToIdServiceTypeStep implements DataImportStepInterface
 {
     /**
-     * @uses \Orm\Zed\ServicePoint\Persistence\Map\SpyServiceTypeTableMap::COL_UUID
+     * @uses \Orm\Zed\ServicePoint\Persistence\Map\SpyServiceTypeTableMap::COL_ID_SERVICE_TYPE
      *
      * @var string
      */
-    protected const COL_UUID = 'spy_service_type.uuid';
+    protected const COL_ID_SERVICE_TYPE = 'spy_service_type.id_service_type';
 
     /**
-     * @var array<string, string>
+     * @var array<string, int>
      */
-    protected static array $serviceTypeUuidsIndexedByServiceTypeKey = [];
+    protected static array $serviceTypeIdsIndexedByServiceTypeKey = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -43,7 +43,7 @@ class ServiceTypeKeyToServiceTypeUuidStep implements DataImportStepInterface
             throw new InvalidDataException(sprintf('"%s" is required.', ShipmentTypeServiceTypeDataSetInterface::COLUMN_SERVICE_TYPE_KEY));
         }
 
-        $dataSet[ShipmentTypeServiceTypeDataSetInterface::SERVICE_TYPE_UUID] = $this->getServiceTypeUuid($serviceTypeKey);
+        $dataSet[ShipmentTypeServiceTypeDataSetInterface::ID_SERVICE_TYPE] = $this->getIdServiceType($serviceTypeKey);
     }
 
     /**
@@ -51,25 +51,26 @@ class ServiceTypeKeyToServiceTypeUuidStep implements DataImportStepInterface
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
-     * @return string
+     * @return int
      */
-    protected function getServiceTypeUuid(string $serviceTypeKey): string
+    protected function getIdServiceType(string $serviceTypeKey): int
     {
-        if (isset(static::$serviceTypeUuidsIndexedByServiceTypeKey[$serviceTypeKey])) {
-            return static::$serviceTypeUuidsIndexedByServiceTypeKey[$serviceTypeKey];
+        if (isset(static::$serviceTypeIdsIndexedByServiceTypeKey[$serviceTypeKey])) {
+            return static::$serviceTypeIdsIndexedByServiceTypeKey[$serviceTypeKey];
         }
 
-        $uuidServiceType = $this->getServiceTypeQuery()
-            ->select(static::COL_UUID)
+        /** @var int|null $idServiceType */
+        $idServiceType = $this->getServiceTypeQuery()
+            ->select(static::COL_ID_SERVICE_TYPE)
             ->findOneByKey($serviceTypeKey);
 
-        if (!$uuidServiceType) {
+        if (!$idServiceType) {
             throw new EntityNotFoundException(sprintf('Could not find service type by key "%s"', $serviceTypeKey));
         }
 
-        static::$serviceTypeUuidsIndexedByServiceTypeKey[$serviceTypeKey] = $uuidServiceType;
+        static::$serviceTypeIdsIndexedByServiceTypeKey[$serviceTypeKey] = $idServiceType;
 
-        return static::$serviceTypeUuidsIndexedByServiceTypeKey[$serviceTypeKey];
+        return static::$serviceTypeIdsIndexedByServiceTypeKey[$serviceTypeKey];
     }
 
     /**

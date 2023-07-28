@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ShipmentTypeStorage\Generator\ShipmentTypeStorageKeyGeneratorInterface;
+use Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface;
 
 class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
 {
@@ -38,18 +39,26 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
     protected ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
+     * @var \Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface
+     */
+    protected ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner;
+
+    /**
      * @param \Spryker\Client\ShipmentTypeStorage\Generator\ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner
      */
     public function __construct(
         ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator,
         ShipmentTypeStorageToStorageClientInterface $storageClient,
-        ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService
+        ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService,
+        ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner
     ) {
         $this->shipmentTypeStorageKeyGenerator = $shipmentTypeStorageKeyGenerator;
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;
+        $this->shipmentTypeStorageKeyScanner = $shipmentTypeStorageKeyScanner;
     }
 
     /**
@@ -61,6 +70,14 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
         ShipmentTypeStorageCriteriaTransfer $shipmentTypeStorageCriteriaTransfer
     ): ShipmentTypeStorageCollectionTransfer {
         $shipmentTypeStorageConditionsTransfer = $shipmentTypeStorageCriteriaTransfer->getShipmentTypeStorageConditionsOrFail();
+
+        if (
+            !$shipmentTypeStorageConditionsTransfer->getShipmentTypeIds()
+            && !$shipmentTypeStorageConditionsTransfer->getUuids()
+        ) {
+            return $this->getShipmentTypeStorageByStore($shipmentTypeStorageConditionsTransfer->getStoreNameOrFail());
+        }
+
         if ($shipmentTypeStorageConditionsTransfer->getUuids() !== []) {
             return $this->getShipmentTypeStorageByUuids($shipmentTypeStorageConditionsTransfer);
         }
@@ -70,6 +87,20 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
         }
 
         return new ShipmentTypeStorageCollectionTransfer();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    protected function getShipmentTypeStorageByStore(string $storeName): ShipmentTypeStorageCollectionTransfer
+    {
+        $shipmentTypeStorageConditionsTransfer = (new ShipmentTypeStorageConditionsTransfer())
+            ->setUuids($this->shipmentTypeStorageKeyScanner->scanShipmentTypeUuids())
+            ->setStoreName($storeName);
+
+        return $this->getShipmentTypeStorageByUuids($shipmentTypeStorageConditionsTransfer);
     }
 
     /**

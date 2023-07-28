@@ -14,8 +14,8 @@ use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceType;
 use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery;
-use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ServiceTypeKeyToServiceTypeUuidStep;
-use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ShipmentTypeKeyToShipmentTypeUuidStep;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ServiceTypeKeyToIdServiceTypeStep;
+use Spryker\Zed\ShipmentTypeServicePointDataImport\Business\DataImportStep\ShipmentTypeServiceType\ShipmentTypeKeyToIdShipmentTypeStep;
 use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
 /**
@@ -32,7 +32,7 @@ use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShipmentTypeServicePointDataImport\PHPMD)
  */
 class ShipmentTypeServicePointDataImportCommunicationTester extends Actor
 {
@@ -40,16 +40,16 @@ class ShipmentTypeServicePointDataImportCommunicationTester extends Actor
     use StaticVariablesHelper;
 
     /**
-     * @param string $shipmentTypeUuid
-     * @param string $serviceTypeUuid
+     * @param int $idShipmentType
+     * @param int $idServiceType
      *
      * @return \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceType|null
      */
-    public function findShipmentTypeServiceType(string $shipmentTypeUuid, string $serviceTypeUuid): ?SpyShipmentTypeServiceType
+    public function findShipmentTypeServiceType(int $idShipmentType, int $idServiceType): ?SpyShipmentTypeServiceType
     {
         return $this->getShipmentTypeServiceTypeQuery()
-            ->filterByShipmentTypeUuid($shipmentTypeUuid)
-            ->filterByServiceTypeUuid($serviceTypeUuid)
+            ->filterByFkShipmentType($idShipmentType)
+            ->filterByFkServiceType($idServiceType)
             ->findOne();
     }
 
@@ -58,8 +58,10 @@ class ShipmentTypeServicePointDataImportCommunicationTester extends Actor
      */
     public function cleanUpTestData(): void
     {
-        $this->cleanupStaticCache(ShipmentTypeKeyToShipmentTypeUuidStep::class, 'shipmentTypeUuidsIndexedByShipmentTypeKey', []);
-        $this->cleanupStaticCache(ServiceTypeKeyToServiceTypeUuidStep::class, 'serviceTypeUuidsIndexedByServiceTypeKey', []);
+        $this->cleanupStaticCache(ShipmentTypeKeyToIdShipmentTypeStep::class, 'shipmentTypeIdsIndexedByShipmentTypeKey', []);
+        $this->cleanupStaticCache(ServiceTypeKeyToIdServiceTypeStep::class, 'serviceTypeIdsIndexedByServiceTypeKey', []);
+
+        $this->ensureShipmentTypeServiceTypeTableIsEmpty();
 
         $this->getShipmentTypeQuery()
             ->filterByKey_Like('test-shipment-type-key-*')
@@ -68,8 +70,6 @@ class ShipmentTypeServicePointDataImportCommunicationTester extends Actor
         $this->getServiceTypeQuery()
             ->filterByKey_Like('test-service-type-key-*')
             ->delete();
-
-        $this->ensureShipmentTypeServiceTypeTableIsEmpty();
     }
 
     /**

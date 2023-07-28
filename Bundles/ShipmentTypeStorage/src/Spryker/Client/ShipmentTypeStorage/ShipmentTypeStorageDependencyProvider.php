@@ -34,6 +34,11 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER = 'PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -44,6 +49,7 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addAvailableShipmentTypeFilterPlugins($container);
 
         return $container;
     }
@@ -94,5 +100,27 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAvailableShipmentTypeFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER, function () {
+            return $this->getAvailableShipmentTypeFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface>
+     */
+    protected function getAvailableShipmentTypeFilterPlugins(): array
+    {
+        return [];
     }
 }

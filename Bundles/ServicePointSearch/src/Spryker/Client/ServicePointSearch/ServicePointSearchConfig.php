@@ -101,6 +101,20 @@ class ServicePointSearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return \Generated\Shared\Transfer\SortConfigTransfer
+     */
+    public function getDefaultSortConfigTransfer(): SortConfigTransfer
+    {
+        return (new SortConfigTransfer())
+            ->setName(static::SORT_CITY)
+            ->setParameterName(static::SORT_PARAMETER_CITY_ASC)
+            ->setFieldName(ServicePointIndexMap::STRING_SORT)
+            ->setIsDescending(false);
+    }
+
+    /**
+     * @api
+     *
      * @return int
      */
     public function getElasticsearchFullTextBoostedBoostingValue(): int

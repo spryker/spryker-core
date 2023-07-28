@@ -8,8 +8,15 @@
 namespace SprykerTest\Client\ProductOfferShipmentTypeStorage;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
+use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface;
+use Spryker\Client\ProductOfferShipmentTypeStorage\ProductOfferShipmentTypeStorageDependencyProvider;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
@@ -23,6 +30,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
  */
 class ProductOfferShipmentTypeStorageClientTest extends Unit
 {
+    /**
+     * @uses \Spryker\Client\ProductOfferShipmentTypeStorage\Expander\ProductOfferStorageExpander::KEY_SHIPMENT_TYPE_UUIDS
+     *
+     * @var string
+     */
+    protected const KEY_SHIPMENT_TYPE_UUIDS = 'shipment_type_uuids';
+
     /**
      * @var string
      */
@@ -47,6 +61,31 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
      * @var string
      */
     protected const SHIPMENT_TYPE_UUID = 'uuid1';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_SKU_1 = 'fake_sku_1';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_SKU_2 = 'fake_sku_2';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_SKU_3 = 'fake_sku_3';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_DELIVERY = 'fake_delivery';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_PICKUP = 'fake_pickup';
 
     /**
      * @var int
@@ -94,7 +133,7 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
         $productOfferStorageTransfer = (new ProductOfferStorageTransfer())->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE_1);
         $this->tester->mockProductOfferShipmentTypeStorageData(
             static::TEST_PRODUCT_OFFER_REFERENCE_2,
-            ['shipmentTypeUuids' => [static::SHIPMENT_TYPE_UUID]],
+            [static::KEY_SHIPMENT_TYPE_UUIDS => [static::SHIPMENT_TYPE_UUID]],
             static::STORE_NAME_DE,
         );
 
@@ -121,7 +160,7 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
         $productOfferStorageTransfer = (new ProductOfferStorageTransfer())->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE_1);
         $this->tester->mockProductOfferShipmentTypeStorageData(
             static::TEST_PRODUCT_OFFER_REFERENCE_1,
-            ['shipmentTypeUuids' => [$shipmentTypeTransfer->getUuidOrFail()]],
+            [static::KEY_SHIPMENT_TYPE_UUIDS => [$shipmentTypeTransfer->getUuidOrFail()]],
             static::STORE_NAME_DE,
         );
 
@@ -153,7 +192,7 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
             ->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE_1);
         $this->tester->mockProductOfferShipmentTypeStorageData(
             static::TEST_PRODUCT_OFFER_REFERENCE_1,
-            ['shipmentTypeUuids' => [$shipmentTypeTransfer->getUuidOrFail()]],
+            [static::KEY_SHIPMENT_TYPE_UUIDS => [$shipmentTypeTransfer->getUuidOrFail()]],
             static::STORE_NAME_DE,
         );
 
@@ -177,7 +216,7 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
         $shipmentTypeTransfer = $this->tester->haveShipmentType();
         $this->tester->mockProductOfferShipmentTypeStorageData(
             static::TEST_PRODUCT_OFFER_REFERENCE_1,
-            ['shipmentTypeUuids' => [$shipmentTypeTransfer->getUuidOrFail()]],
+            [static::KEY_SHIPMENT_TYPE_UUIDS => [$shipmentTypeTransfer->getUuidOrFail()]],
             static::STORE_NAME_DE,
         );
 
@@ -194,5 +233,175 @@ class ProductOfferShipmentTypeStorageClientTest extends Unit
         // Assert
         $this->assertCount(1, $productOfferStorageTransfer->getShipmentTypes());
         $this->assertSame($shipmentTypeTransfer->getUuidOrFail(), $productOfferStorageTransfer->getShipmentTypes()->offsetGet(0)->getUuidOrFail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUnavailableProductOfferShipmentTypesFiltersOutShipmentTypesWithoutProductOfferShipmentTypes(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE,
+            $this->createProductOfferStorageClientMock(new ProductOfferStorageCollectionTransfer()),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester->getClient()->filterUnavailableProductOfferShipmentTypes(
+            $this->createShipmentTypeStorageCollection(),
+            $this->createQuote(),
+        );
+
+        // Assert
+        $this->assertCount(0, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUnavailableProductOfferShipmentTypesFiltersOutOnlyPickupShipmentType(): void
+    {
+        // Arrange
+        $productOfferStorageCollectionTransfer = (new ProductOfferStorageCollectionTransfer())
+            ->addProductOffer((new ProductOfferStorageTransfer())
+                ->setProductConcreteSku(static::FAKE_SKU_2)
+                ->addShipmentType((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_DELIVERY)));
+
+        $this->tester->setDependency(
+            ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE,
+            $this->createProductOfferStorageClientMock($productOfferStorageCollectionTransfer),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester->getClient()->filterUnavailableProductOfferShipmentTypes(
+            $this->createShipmentTypeStorageCollection(),
+            $this->createQuote(),
+        );
+
+        // Assert
+        $this->assertCount(1, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+        $this->assertSame(static::FAKE_DELIVERY, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages()->offsetGet(0)->getKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUnavailableProductOfferShipmentTypesFiltersOutNothingWhenOneOfferContainsBothShipmentTypes(): void
+    {
+        // Arrange
+        $productOfferStorageCollectionTransfer = (new ProductOfferStorageCollectionTransfer())
+            ->addProductOffer((new ProductOfferStorageTransfer())
+                ->setProductConcreteSku(static::FAKE_SKU_2)
+                ->addShipmentType((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_DELIVERY))
+                ->addShipmentType((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_PICKUP)));
+
+        $this->tester->setDependency(
+            ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE,
+            $this->createProductOfferStorageClientMock($productOfferStorageCollectionTransfer),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester->getClient()->filterUnavailableProductOfferShipmentTypes(
+            $this->createShipmentTypeStorageCollection(),
+            $this->createQuote(),
+        );
+
+        // Assert
+        $this->assertCount(2, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUnavailableProductOfferShipmentTypesFiltersOutNothingWhenOffersContainsBothShipmentTypes(): void
+    {
+        // Arrange
+        $productOfferStorageCollectionTransfer = (new ProductOfferStorageCollectionTransfer())
+            ->addProductOffer((new ProductOfferStorageTransfer())
+                ->setProductConcreteSku(static::FAKE_SKU_1)
+                ->addShipmentType((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_DELIVERY)))
+            ->addProductOffer((new ProductOfferStorageTransfer())
+                ->setProductConcreteSku(static::FAKE_SKU_2)
+                ->addShipmentType((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_PICKUP)));
+
+        $this->tester->setDependency(
+            ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE,
+            $this->createProductOfferStorageClientMock($productOfferStorageCollectionTransfer),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester->getClient()->filterUnavailableProductOfferShipmentTypes(
+            $this->createShipmentTypeStorageCollection(),
+            $this->createQuote(),
+        );
+
+        // Assert
+        $this->assertCount(2, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUnavailableProductOfferShipmentTypesFiltersOutShipmentTypesWithoutRelations(): void
+    {
+        // Arrange
+        $productOfferStorageCollectionTransfer = (new ProductOfferStorageCollectionTransfer())
+            ->addProductOffer((new ProductOfferStorageTransfer())->setProductConcreteSku(static::FAKE_SKU_1))
+            ->addProductOffer((new ProductOfferStorageTransfer())->setProductConcreteSku(static::FAKE_SKU_2))
+            ->addProductOffer((new ProductOfferStorageTransfer())->setProductConcreteSku(static::FAKE_SKU_3));
+
+        $this->tester->setDependency(
+            ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE,
+            $this->createProductOfferStorageClientMock($productOfferStorageCollectionTransfer),
+        );
+
+        // Act
+        $shipmentTypeStorageCollectionTransfer = $this->tester->getClient()->filterUnavailableProductOfferShipmentTypes(
+            $this->createShipmentTypeStorageCollection(),
+            $this->createQuote(),
+        );
+
+        // Assert
+        $this->assertCount(0, $shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    protected function createShipmentTypeStorageCollection(): ShipmentTypeStorageCollectionTransfer
+    {
+        return (new ShipmentTypeStorageCollectionTransfer())
+            ->addShipmentTypeStorage((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_DELIVERY))
+            ->addShipmentTypeStorage((new ShipmentTypeStorageTransfer())->setKey(static::FAKE_PICKUP));
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuote(): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->addItem((new ItemTransfer())->setSku(static::FAKE_SKU_1))
+            ->addItem((new ItemTransfer())->setSku(static::FAKE_SKU_2))
+            ->addItem((new ItemTransfer())->setSku(static::FAKE_SKU_3));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
+     *
+     * @return \Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface
+     */
+    protected function createProductOfferStorageClientMock(
+        ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
+    ): ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface {
+        $productOfferStorageClientMock = $this
+            ->getMockBuilder(ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface::class)
+            ->getMock();
+
+        $productOfferStorageClientMock
+            ->method('getProductOfferStoragesBySkus')
+            ->willReturn($productOfferStorageCollectionTransfer);
+
+        return $productOfferStorageClientMock;
     }
 }

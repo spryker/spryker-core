@@ -22,10 +22,10 @@ interface ShipmentTypeServiceTypeDataSetInterface
     /**
      * @var string
      */
-    public const SHIPMENT_TYPE_UUID = 'shipment_type_uuid';
+    public const ID_SHIPMENT_TYPE = 'id_shipment_type';
 
     /**
      * @var string
      */
-    public const SERVICE_TYPE_UUID = 'service_type_uuid';
+    public const ID_SERVICE_TYPE = 'id_service_type';
 }

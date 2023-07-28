@@ -9,7 +9,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/service-point": "^0.4.0",
         "spryker/shipment-type": "^0.1.0",
-        "spryker/shipment-type-service-point": "^0.1.0"
+        "spryker/shipment-type-service-point": "^0.2.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

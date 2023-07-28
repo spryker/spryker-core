@@ -8,11 +8,9 @@
 namespace Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
-use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\MatchAll;
-use Elastica\Query\MatchQuery;
-use Elastica\Query\MultiMatch;
+use Elastica\Query\Term;
+use Elastica\Query\Wildcard;
 use Elastica\Suggest;
 use Generated\Shared\Search\ServicePointIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -53,7 +51,7 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
 
     public function __construct()
     {
-        $this->query = $this->createSearchQuery();
+        $this->query = $this->createQuery();
     }
 
     /**
@@ -79,8 +77,8 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        if (!$this->hasSearchContext()) {
-            $this->setupDefaultSearchContext();
+        if (!$this->searchContextTransfer) {
+            $this->searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier(static::SOURCE_IDENTIFIER);
         }
 
         return $this->searchContextTransfer;
@@ -113,7 +111,7 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
     public function setSearchString($searchString): void
     {
         $this->searchString = $searchString;
-        $this->query = $this->createSearchQuery();
+        $this->query = $this->createQuery();
     }
 
     /**
@@ -131,97 +129,17 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
     /**
      * @return \Elastica\Query
      */
-    protected function createSearchQuery(): Query
+    protected function createQuery(): Query
     {
-        $query = new Query();
+        $query = new BoolQuery();
+        $query = $this->addTypeQuery($query);
+        $query = $this->addFullTextQuery($query);
+        $suggest = (new Suggest())->setGlobalText((string)$this->getSearchString());
 
-        $query = $this->addFulltextSearchToQuery($query);
-        $query = $query->setSource([ServicePointIndexMap::SEARCH_RESULT_DATA]);
-
-        return $query;
-    }
-
-    /**
-     * @param \Elastica\Query $baseQuery
-     *
-     * @return \Elastica\Query
-     */
-    protected function addFulltextSearchToQuery(Query $baseQuery): Query
-    {
-        $matchQuery = $this->searchString ? $this->createFulltextSearchQuery($this->searchString) : new MatchAll();
-        $baseQuery->setQuery($this->createBoolQuery($matchQuery));
-
-        /** @var \Elastica\Query\BoolQuery $boolQuery */
-        $boolQuery = $baseQuery->getQuery();
-
-        $this->setTypeFilter($boolQuery);
-        $this->setSuggestion($baseQuery);
-
-        return $baseQuery;
-    }
-
-    /**
-     * @param \Elastica\Query $baseQuery
-     *
-     * @return void
-     */
-    protected function setSuggestion(Query $baseQuery): void
-    {
-        $suggest = (new Suggest())
-            ->setGlobalText((string)$this->getSearchString());
-
-        $baseQuery->setSuggest($suggest);
-    }
-
-    /**
-     * @param \Elastica\Query $baseQuery
-     *
-     * @return \Elastica\Query
-     */
-    protected function addTypeToQuery(Query $baseQuery): Query
-    {
-        $boolQuery = $this->setTypeFilter(new BoolQuery());
-
-        return $baseQuery->setQuery($boolQuery);
-    }
-
-    /**
-     * @param string $searchString
-     *
-     * @return \Elastica\Query\MultiMatch
-     */
-    protected function createFulltextSearchQuery(string $searchString): MultiMatch
-    {
-        $fields = [
-            ServicePointIndexMap::FULL_TEXT,
-            ServicePointIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
-        ];
-
-        return $this->createMultiMatchQuery($fields, $searchString);
-    }
-
-    /**
-     * @param array<string> $fields
-     * @param string $searchString
-     *
-     * @return \Elastica\Query\MultiMatch
-     */
-    protected function createMultiMatchQuery(array $fields, string $searchString): MultiMatch
-    {
-        return (new MultiMatch())
-            ->setFields($fields)
-            ->setQuery($searchString)
-            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
-    }
-
-    /**
-     * @param \Elastica\Query\AbstractQuery $matchQuery
-     *
-     * @return \Elastica\Query\BoolQuery
-     */
-    protected function createBoolQuery(AbstractQuery $matchQuery): BoolQuery
-    {
-        return (new BoolQuery())->addMust($matchQuery);
+        return (new Query())
+            ->setQuery($query)
+            ->setSuggest($suggest)
+            ->setSource(ServicePointIndexMap::SEARCH_RESULT_DATA);
     }
 
     /**
@@ -229,44 +147,62 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
      *
      * @return \Elastica\Query\BoolQuery
      */
-    protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
+    protected function addTypeQuery(BoolQuery $boolQuery): BoolQuery
     {
-        $matchQuery = new MatchQuery();
-
-        $typeFilter = $matchQuery->setField(
+        $typeQuery = (new Term())->setTerm(
             ServicePointIndexMap::TYPE,
             ServicePointSearchConfig::SERVICE_POINT_RESOURCE_NAME,
         );
 
-        return $boolQuery->addMust($typeFilter);
+        return $boolQuery->addMust($typeQuery);
     }
 
     /**
-     * @return void
+     * @param \Elastica\Query\BoolQuery $boolQuery
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function setupDefaultSearchContext(): void
+    protected function addFullTextQuery(BoolQuery $boolQuery): BoolQuery
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        if (!$this->searchString) {
+            return $boolQuery;
+        }
 
-        $this->searchContextTransfer = $searchContextTransfer;
+        $fullTextQuery = (new BoolQuery())
+            ->addShould($this->createFullTextWildcard())
+            ->addShould($this->createFullTextBoostedWildcard());
+
+        return $boolQuery->addMust($fullTextQuery);
     }
 
     /**
-     * @return bool
+     * @return \Elastica\Query\Wildcard
      */
-    protected function hasSearchContext(): bool
+    protected function createFullTextWildcard(): Wildcard
     {
-        return (bool)$this->searchContextTransfer;
+        return new Wildcard(
+            ServicePointIndexMap::FULL_TEXT,
+            $this->createWildcardValue(),
+        );
     }
 
     /**
-     * @return int
+     * @return \Elastica\Query\Wildcard
      */
-    protected function getFullTextBoostedBoostingValue(): int
+    protected function createFullTextBoostedWildcard(): Wildcard
     {
-        return $this->getFactory()
-            ->getServicePointSearchConfig()
-            ->getElasticsearchFullTextBoostedBoostingValue();
+        return new Wildcard(
+            ServicePointIndexMap::FULL_TEXT_BOOSTED,
+            $this->createWildcardValue(),
+            $this->getFactory()->getServicePointSearchConfig()->getElasticsearchFullTextBoostedBoostingValue(),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function createWildcardValue(): string
+    {
+        return sprintf('*%s*', (string)$this->searchString);
     }
 }

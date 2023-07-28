@@ -21,7 +21,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ServicePointSearch\PHPMD)
  */
 class ServicePointSearchClientTester extends Actor
 {

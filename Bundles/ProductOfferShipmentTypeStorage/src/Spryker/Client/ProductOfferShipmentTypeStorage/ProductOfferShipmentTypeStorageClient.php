@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductOfferShipmentTypeStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -30,5 +32,24 @@ class ProductOfferShipmentTypeStorageClient extends AbstractClient implements Pr
             ->getFactory()
             ->createProductOfferStorageExpander()
             ->expandProductOfferStorageWithShipmentTypes($productOfferStorageTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    public function filterUnavailableProductOfferShipmentTypes(
+        ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
+        QuoteTransfer $quoteTransfer,
+    ): ShipmentTypeStorageCollectionTransfer {
+        return $this->getFactory()
+            ->createShipmentTypeFilter()
+            ->filterUnavailableProductOfferShipmentTypes($shipmentTypeStorageCollectionTransfer, $quoteTransfer);
     }
 }

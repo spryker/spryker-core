@@ -22,6 +22,7 @@ class ShipmentTypeWriterPublisherPlugin extends AbstractPlugin implements Publis
      * {@inheritDoc}
      * - Publishes shipment type data by `SpyShipmentType` entity events.
      * - Extracts shipment type IDs from the `$eventEntityTransfers` created by shipment type entity events and shipment type publish event.
+     * - Executes stack of {@link \Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface} plugins.
      * - Stores data in storage table.
      * - Sends a copy of data to the queue.
      *

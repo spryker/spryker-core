@@ -35,6 +35,7 @@ class ShipmentTypeStorageBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentTypeFacade(),
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
+            $this->getShipmentTypeStorageExpanderPlugins(),
         );
     }
 
@@ -68,5 +69,13 @@ class ShipmentTypeStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ShipmentTypeStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    public function getShipmentTypeStorageExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER);
     }
 }

@@ -85,8 +85,6 @@ class ShipmentTypeServiceTypeDataImportPluginTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testImportPersistsShipmentTypeServiceTypeRelations(): void
@@ -110,14 +108,12 @@ class ShipmentTypeServiceTypeDataImportPluginTest extends Unit
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
         $this->assertSame(3, $dataImporterReportTransfer->getImportedDataSetCount());
         $this->assertCount(3, $this->tester->getShipmentTypeServiceTypeQuery());
-        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer1->getUuidOrFail(), $serviceTypeTransfer1->getUuidOrFail()));
-        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer2->getUuidOrFail(), $serviceTypeTransfer1->getUuidOrFail()));
-        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer3->getUuidOrFail(), $serviceTypeTransfer2->getUuidOrFail()));
+        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer1->getIdShipmentType(), $serviceTypeTransfer1->getIdServiceType()));
+        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer2->getIdShipmentType(), $serviceTypeTransfer1->getIdServiceType()));
+        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer3->getIdShipmentType(), $serviceTypeTransfer2->getIdServiceType()));
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testImportUpdatesShipmentTypeServiceTypeRelationsWhenDuplicatedShipmentTypeKeyProvided(): void
@@ -139,8 +135,8 @@ class ShipmentTypeServiceTypeDataImportPluginTest extends Unit
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
         $this->assertSame(2, $dataImporterReportTransfer->getImportedDataSetCount());
         $this->assertCount(1, $this->tester->getShipmentTypeServiceTypeQuery());
-        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer->getUuidOrFail(), $serviceTypeTransfer2->getUuidOrFail()));
-        $this->assertNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer->getUuidOrFail(), $serviceTypeTransfer1->getUuidOrFail()));
+        $this->assertNotNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer->getIdShipmentType(), $serviceTypeTransfer2->getIdServiceType()));
+        $this->assertNull($this->tester->findShipmentTypeServiceType($shipmentTypeTransfer->getIdShipmentType(), $serviceTypeTransfer1->getIdServiceType()));
     }
 
     /**
