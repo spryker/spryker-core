@@ -15,10 +15,10 @@
 
         {% block widget_content %}
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-xs-1 col-auto">
                     <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-1 col-auto">
                     {{ form(form, {'method': 'POST'}) }}
                 </div>
             </div>
