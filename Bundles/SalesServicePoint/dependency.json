@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/sales": "Added for future compatibility.",
+        "spryker/service-point": "Added for future compatibility."
+    }
+}

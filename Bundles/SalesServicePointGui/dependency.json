@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/gui": "If you want to use GUI layout templates.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/sales-service-point": "Provices ability to manage service points in OMS."
+    }
+}

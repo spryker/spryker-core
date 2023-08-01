@@ -840,6 +840,8 @@
         "spryker/sales-return-gui-extension": "*",
         "spryker/sales-return-search": "*",
         "spryker/sales-returns-rest-api": "*",
+        "spryker/sales-service-point": "*",
+        "spryker/sales-service-point-gui": "*",
         "spryker/sales-split": "*",
         "spryker/sales-statistics": "*",
         "spryker/scheduler": "*",

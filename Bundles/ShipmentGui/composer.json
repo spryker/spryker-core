@@ -33,6 +33,9 @@
         "spryker/validator": "*",
         "spryker/zed-navigation": "*"
     },
+    "suggest": {
+        "spryker/sales-service-point-gui": "Add the module if you want to display the service point related information."
+    },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"

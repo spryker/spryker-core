@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SalesOrderItemServicePoint" strict="true">
+        <property name="idSalesOrderItemServicePoint" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="salesOrderItemServicePoint" type="SalesOrderItemServicePoint" strict="true"/>
+        <property name="servicePoint" type="ServicePoint" strict="true"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemServicePointCriteria" strict="true">
+        <property name="salesOrderItemServicePointConditions" type="SalesOrderItemServicePointConditions"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemServicePointConditions" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemServicePointCollection" strict="true">
+        <property name="salesOrderItemServicePoints" type="SalesOrderItemServicePoint[]" singular="salesOrderItemServicePoint"/>
+    </transfer>
+
+    <transfer name="ServicePoint" strict="true">
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
+
+</transfers>

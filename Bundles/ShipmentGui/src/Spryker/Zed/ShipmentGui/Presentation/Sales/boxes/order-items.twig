@@ -16,6 +16,9 @@
         <div class="col-xs-12">
             <p>
                 <b>{{ 'Delivery Address' | trans }}:</b>
+                {% include '@SalesServicePointGui/ShipmentGui/Partials/service-point.twig' ignore missing with {
+                    items: shipmentOrderItems.items,
+                } %}
                 {{ shipmentOrderItems.shipment.shippingAddress.salutation }}
                 {{ shipmentOrderItems.shipment.shippingAddress.firstName }},
                 {{ shipmentOrderItems.shipment.shippingAddress.lastName }},
