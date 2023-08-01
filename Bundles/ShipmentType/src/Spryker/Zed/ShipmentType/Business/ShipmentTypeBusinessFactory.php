@@ -12,10 +12,14 @@ use Spryker\Zed\ShipmentType\Business\Creator\ShipmentTypeCreator;
 use Spryker\Zed\ShipmentType\Business\Creator\ShipmentTypeCreatorInterface;
 use Spryker\Zed\ShipmentType\Business\Creator\ShipmentTypeStoreRelationCreator;
 use Spryker\Zed\ShipmentType\Business\Creator\ShipmentTypeStoreRelationCreatorInterface;
+use Spryker\Zed\ShipmentType\Business\Expander\ShipmentMethodCollectionExpander;
+use Spryker\Zed\ShipmentType\Business\Expander\ShipmentMethodCollectionExpanderInterface;
 use Spryker\Zed\ShipmentType\Business\Expander\ShipmentTypeStoreRelationshipExpander;
 use Spryker\Zed\ShipmentType\Business\Expander\ShipmentTypeStoreRelationshipExpanderInterface;
 use Spryker\Zed\ShipmentType\Business\Extractor\StoreDataExtractor;
 use Spryker\Zed\ShipmentType\Business\Extractor\StoreDataExtractorInterface;
+use Spryker\Zed\ShipmentType\Business\Filter\ShipmentGroupFilter;
+use Spryker\Zed\ShipmentType\Business\Filter\ShipmentGroupFilterInterface;
 use Spryker\Zed\ShipmentType\Business\Grouper\ShipmentTypeGrouper;
 use Spryker\Zed\ShipmentType\Business\Grouper\ShipmentTypeGrouperInterface;
 use Spryker\Zed\ShipmentType\Business\Reader\ShipmentTypeReader;
@@ -112,6 +116,17 @@ class ShipmentTypeBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getStoreFacade(),
             $this->createStoreDataExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentType\Business\Expander\ShipmentMethodCollectionExpanderInterface
+     */
+    public function createShipmentMethodCollectionExpander(): ShipmentMethodCollectionExpanderInterface
+    {
+        return new ShipmentMethodCollectionExpander(
+            $this->createShipmentTypeReader(),
+            $this->getRepository(),
         );
     }
 
@@ -240,6 +255,14 @@ class ShipmentTypeBusinessFactory extends AbstractBusinessFactory
     public function createStoreDataExtractor(): StoreDataExtractorInterface
     {
         return new StoreDataExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentType\Business\Filter\ShipmentGroupFilterInterface
+     */
+    public function createShipmentGroupFilter(): ShipmentGroupFilterInterface
+    {
+        return new ShipmentGroupFilter($this->getRepository());
     }
 
     /**

@@ -69,6 +69,7 @@ interface ShipmentFacadeInterface
      * Specification:
      * - Retrieves the list of available shipment methods from database as transfer object collection
      * grouped by shipment hash.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -92,6 +93,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Retrieves a shipment method from database by ID.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      * - Returns NULL if the method does not exist.
      *
      * @api
@@ -112,6 +114,7 @@ interface ShipmentFacadeInterface
      * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin.
      * requirements.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -130,6 +133,7 @@ interface ShipmentFacadeInterface
      * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugins.
      * requirements.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -440,6 +444,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Finds shipment method by the given name.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -452,6 +457,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Finds shipment method by the given key.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *

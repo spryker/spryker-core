@@ -10,4 +10,7 @@
     <transfer name="Expense">
     </transfer>
 
+    <transfer name="ShipmentMethodCollection" strict="true">
+    </transfer>
+
 </transfers>

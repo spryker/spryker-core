@@ -84,6 +84,11 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER = 'PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
@@ -245,6 +250,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDeliveryTimePlugins($container);
         $container = $this->addShipmentGroupsSanitizerPlugins($container);
         $container = $this->addShipmentExpenseExpanderPlugins($container);
+        $container = $this->addShipmentMethodCollectionExpanderPlugins($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addCalculationFacade($container);
 
@@ -288,6 +294,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_SHIPMENT_EXPENSE_EXPANDER, function () {
             return $this->getShipmentExpenseExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentMethodCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER, function () {
+            return $this->getShipmentMethodCollectionExpanderPlugins();
         });
 
         return $container;
@@ -345,6 +365,14 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface>
      */
     protected function getShipmentExpenseExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface>
+     */
+    protected function getShipmentMethodCollectionExpanderPlugins(): array
     {
         return [];
     }

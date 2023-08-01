@@ -70,6 +70,32 @@
         <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
     </transfer>
 
+    <transfer name="ShipmentMethodCollection" strict="true">
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="idShipmentMethod" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="availableShipmentMethods" type="ShipmentMethods"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+    </transfer>
+
     <transfer name="Error">
         <property name="message" type="string"/>
         <property name="entityIdentifier" type="string"/>

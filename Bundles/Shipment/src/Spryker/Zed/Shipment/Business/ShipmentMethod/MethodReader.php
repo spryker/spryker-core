@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
@@ -56,6 +57,11 @@ class MethodReader implements MethodReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface
+     */
+    protected ShipmentMethodExpanderInterface $shipmentMethodExpander;
+
+    /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface> $shipmentMethodFilters
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
@@ -63,6 +69,7 @@ class MethodReader implements MethodReaderInterface
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface $methodPriceReader
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReaderInterface $methodDeliveryTimeReader
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
+     * @param \Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface $shipmentMethodExpander
      */
     public function __construct(
         ShipmentServiceInterface $shipmentService,
@@ -71,7 +78,8 @@ class MethodReader implements MethodReaderInterface
         MethodAvailabilityCheckerInterface $methodAvailabilityChecker,
         MethodPriceReaderInterface $methodPriceReader,
         MethodDeliveryTimeReaderInterface $methodDeliveryTimeReader,
-        ShipmentToStoreInterface $storeFacade
+        ShipmentToStoreInterface $storeFacade,
+        ShipmentMethodExpanderInterface $shipmentMethodExpander
     ) {
         $this->shipmentService = $shipmentService;
         $this->shipmentMethodFilters = $shipmentMethodFilters;
@@ -80,6 +88,7 @@ class MethodReader implements MethodReaderInterface
         $this->methodPriceReader = $methodPriceReader;
         $this->methodDeliveryTimeReader = $methodDeliveryTimeReader;
         $this->storeFacade = $storeFacade;
+        $this->shipmentMethodExpander = $shipmentMethodExpander;
     }
 
     /**
@@ -107,7 +116,9 @@ class MethodReader implements MethodReaderInterface
             return null;
         }
 
-        return $this->transformShipmentMethod($quoteTransfer, $shipmentMethodTransfer, $storeCurrencyPrice);
+        $shipmentMethodTransfer = $this->transformShipmentMethod($quoteTransfer, $shipmentMethodTransfer, $storeCurrencyPrice);
+
+        return $this->shipmentMethodExpander->expandShipmentMethodTransfer($shipmentMethodTransfer);
     }
 
     /**
@@ -147,7 +158,7 @@ class MethodReader implements MethodReaderInterface
         $shipmentMethodsCollectionTransfer = $this->getAvailableMethodsCollection($quoteTransfer, $shipmentGroupCollection);
         $shipmentMethodsCollectionTransfer = $this->applyFilters($shipmentMethodsCollectionTransfer, $shipmentGroupCollection, $quoteTransfer);
 
-        return $shipmentMethodsCollectionTransfer;
+        return $this->shipmentMethodExpander->expandShipmentMethodsCollectionTransfer($shipmentMethodsCollectionTransfer);
     }
 
     /**

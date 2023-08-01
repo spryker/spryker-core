@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ShipmentType\Persistence;
 
+use Orm\Zed\Shipment\Persistence\Base\SpyShipmentMethodQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ShipmentType\Persistence\Propel\Mapper\ShipmentTypeMapper;
+use Spryker\Zed\ShipmentType\ShipmentTypeDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ShipmentType\ShipmentTypeConfig getConfig()
@@ -41,5 +43,13 @@ class ShipmentTypePersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentTypeMapper(): ShipmentTypeMapper
     {
         return new ShipmentTypeMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\Base\SpyShipmentMethodQuery
+     */
+    public function getShipmentMethodPropelQuery(): SpyShipmentMethodQuery
+    {
+        return $this->getProvidedDependency(ShipmentTypeDependencyProvider::PROPEL_QUERY_SHIPMENT_METHOD);
     }
 }

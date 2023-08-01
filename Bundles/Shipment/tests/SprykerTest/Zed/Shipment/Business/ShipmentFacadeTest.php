@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
 use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\SortTransfer;
@@ -33,6 +34,7 @@ use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface;
 
 /**
@@ -336,6 +338,41 @@ class ShipmentFacadeTest extends Unit
 
         // Assert
         $this->assertNull($shipmentMethodsTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAvailableMethodByIdExecutesStackOfShipmentMethodCollectionExpanderPlugins(): void
+    {
+        // Arrange
+        $this->tester->ensureShipmentMethodTableIsEmpty();
+        $this->tester->setDependency(
+            ShipmentDependencyProvider::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER,
+            [$this->getShipmentMethodCollectionExpanderPluginMock()],
+        );
+        $this->tester->setDependency(ShipmentDependencyProvider::PRICE_PLUGINS, [
+            static::PRICE_PLUGIN => $this->getShipmentMethodPricePluginMock(static::DEFAULT_PLUGIN_PRICE),
+        ]);
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], $priceList, [$this->store->getIdStore()]);
+        $this->tester->assignShipmentPricePluginToShipmentMethod(
+            $shipmentMethodTransfer,
+            static::PRICE_PLUGIN,
+        );
+
+        $itemBuilder = (new ItemBuilder())->withShipment([
+            ShipmentTransfer::METHOD => [
+                ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $shipmentMethodTransfer->getIdShipmentMethod(),
+            ],
+        ]);
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::STORE => $this->store->toArray()]))
+            ->withItem($itemBuilder)
+            ->build();
+
+        // Act
+        $this->tester->getFacade()->findAvailableMethodById($shipmentMethodTransfer->getIdShipmentMethodOrFail(), $quoteTransfer);
     }
 
     /**
@@ -698,6 +735,31 @@ class ShipmentFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetAvailableMethodsByShipmentExecutesStackOfShipmentMethodCollectionExpanderPlugins(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            ShipmentDependencyProvider::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER,
+            [$this->getShipmentMethodCollectionExpanderPluginMock()],
+        );
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($this->store)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
+            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], $priceList, [$this->store->getIdStore()]);
+
+        $quoteTransfer = $this->tester->addNewItemIntoQuoteTransfer($quoteTransfer, 'DE', $shipmentMethodTransfer);
+        $quoteTransfer = $this->tester->addNewItemIntoQuoteTransfer($quoteTransfer, 'AT', $shipmentMethodTransfer);
+
+        // Act
+        $this->tester->getFacade()->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
      * @param int $pluginPrice
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface
@@ -844,7 +906,7 @@ class ShipmentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetSalesShipmentCollectionShouldReturnsalesShipmentCollectionPaginatedByPageAndMaxPerPage(): void
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollectionPaginatedByPageAndMaxPerPage(): void
     {
         // Arrange
         $saveOrderTransfer1 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
@@ -863,5 +925,24 @@ class ShipmentFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $salesShipmentCollectionTransfer->getShipments());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface
+     */
+    protected function getShipmentMethodCollectionExpanderPluginMock(): ShipmentMethodCollectionExpanderPluginInterface
+    {
+        $shipmentMethodCollectionExpanderPluginMock = $this
+            ->getMockBuilder(ShipmentMethodCollectionExpanderPluginInterface::class)
+            ->getMock();
+
+        $shipmentMethodCollectionExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturnCallback(function (ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer) {
+                return $shipmentMethodCollectionTransfer;
+            });
+
+        return $shipmentMethodCollectionExpanderPluginMock;
     }
 }

@@ -10,7 +10,9 @@ namespace Spryker\Zed\ShipmentType\Persistence;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCriteriaTransfer;
+use Orm\Zed\ShipmentType\Persistence\Map\SpyShipmentTypeTableMap;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -20,6 +22,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShipmentTypeRepository extends AbstractRepository implements ShipmentTypeRepositoryInterface
 {
+    /**
+     * @uses \Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap::COL_FK_SHIPMENT_TYPE
+     *
+     * @var string
+     */
+    protected const COL_FK_SHIPMENT_TYPE = 'spy_shipment_method.fk_shipment_type';
+
+    /**
+     * @uses \Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD
+     *
+     * @var string
+     */
+    protected const COL_ID_SHIPMENT_METHOD = 'spy_shipment_method.id_shipment_method';
+
     /**
      * @module Store
      *
@@ -66,6 +82,78 @@ class ShipmentTypeRepository extends AbstractRepository implements ShipmentTypeR
         return $this->getFactory()
             ->createShipmentTypeMapper()
             ->mapShipmentTypeStoreEntitiesToStoreRelationTransfersIndexedByIdShipmentStore($shipmentTypeStoreEntities, []);
+    }
+
+    /**
+     * @module Shipment
+     *
+     * @param list<int> $shipmentMethodIds
+     *
+     * @return array<int, list<int>>
+     */
+    public function getShipmentMethodIdsGroupedByIdShipmentType(array $shipmentMethodIds): array
+    {
+        $shipmentMethodQuery = $this->getFactory()->getShipmentMethodPropelQuery()
+            ->filterByIdShipmentMethod_In($shipmentMethodIds)
+            ->select([
+                static::COL_FK_SHIPMENT_TYPE,
+                static::COL_ID_SHIPMENT_METHOD,
+            ]);
+
+        $shipmentMethodIdsGroupedByIdShipmentMethod = [];
+        foreach ($shipmentMethodQuery->find() as $dataItem) {
+            if ($dataItem[static::COL_FK_SHIPMENT_TYPE] === null) {
+                continue;
+            }
+
+            $idShipmentType = (int)$dataItem[static::COL_FK_SHIPMENT_TYPE];
+            $idShipmentMethod = (int)$dataItem[static::COL_ID_SHIPMENT_METHOD];
+            $shipmentMethodIdsGroupedByIdShipmentMethod[$idShipmentType][] = $idShipmentMethod;
+        }
+
+        return $shipmentMethodIdsGroupedByIdShipmentMethod;
+    }
+
+    /**
+     * For backward compatibility, this method also returns shipment method IDs of shipment methods that don't have `fkShipmentType` defined.
+     *
+     * @module Shipment
+     * @module Store
+     *
+     * @param list<string> $shipmentTypeUuids
+     * @param string $storeName
+     *
+     * @return list<int>
+     */
+    public function getShipmentMethodIdsByShipmentTypeConditions(array $shipmentTypeUuids, string $storeName): array
+    {
+        $shipmentTypeUuidsImploded = implode(', ', array_map(function ($uuid) {
+            return '\'' . $uuid . '\'';
+        }, $shipmentTypeUuids));
+
+        $shipmentMethodIds = $this->getFactory()->getShipmentMethodPropelQuery()
+            ->select([
+                static::COL_ID_SHIPMENT_METHOD,
+            ])
+            ->leftJoinShipmentType()
+            ->useShipmentTypeQuery()
+                ->leftJoinShipmentTypeStore()
+                ->useShipmentTypeStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinStore()
+                ->endUse()
+            ->endUse()
+            ->condition('fkShipmentTypeIsNull', sprintf('%s IS NULL', static::COL_FK_SHIPMENT_TYPE))
+            ->condition('shipmentTypeUuidIn', sprintf('%s IN (%s)', SpyShipmentTypeTableMap::COL_UUID, $shipmentTypeUuidsImploded))
+            ->condition('shipmentTypeIsActive', sprintf('%s = ?', SpyShipmentTypeTableMap::COL_IS_ACTIVE), true)
+            ->condition('storeNameEquals', sprintf('%s = ?', SpyStoreTableMap::COL_NAME), $storeName)
+            ->combine(['shipmentTypeUuidIn', 'shipmentTypeIsActive', 'storeNameEquals'], Criteria::LOGICAL_AND, 'shipmentTypeConditions')
+            ->where(['fkShipmentTypeIsNull', 'shipmentTypeConditions'], Criteria::LOGICAL_OR)
+            ->find()
+            ->getData();
+
+        return array_map(function (int|string $idShipmentMethod) {
+            return (int)$idShipmentMethod;
+        }, $shipmentMethodIds);
     }
 
     /**

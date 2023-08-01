@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ShipmentType\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionRequestTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
@@ -69,5 +73,39 @@ class ShipmentTypeFacade extends AbstractFacade implements ShipmentTypeFacadeInt
         return $this->getFactory()
             ->createShipmentTypeUpdater()
             ->updateShipmentTypeCollection($shipmentTypeCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function expandShipmentMethodCollectionWithShipmentType(
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer {
+        return $this->getFactory()
+            ->createShipmentMethodCollectionExpander()
+            ->expandWithShipmentType($shipmentMethodCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
+     */
+    public function filterShipmentGroupMethods(ShipmentGroupTransfer $shipmentGroupTransfer, QuoteTransfer $quoteTransfer): ArrayObject
+    {
+        return $this->getFactory()
+            ->createShipmentGroupFilter()
+            ->filterShipmentGroupMethods($shipmentGroupTransfer, $quoteTransfer);
     }
 }

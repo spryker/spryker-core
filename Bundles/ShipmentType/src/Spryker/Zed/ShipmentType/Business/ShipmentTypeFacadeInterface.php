@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ShipmentType\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionRequestTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
@@ -103,4 +107,39 @@ interface ShipmentTypeFacadeInterface
     public function updateShipmentTypeCollection(
         ShipmentTypeCollectionRequestTransfer $shipmentTypeCollectionRequestTransfer
     ): ShipmentTypeCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ShipmentMethodCollectionTransfer.shipmentMethod.idShipmentMethod` to be set.
+     * - Expands `ShipmentMethodCollectionTransfer.shipmentMethod` with shipment type.
+     * - Does nothing if `ShipmentMethodCollectionTransfer.shipmentMethod` doesn't have shipment type relation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function expandShipmentMethodCollectionWithShipmentType(
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.store.name` transfer property to be set.
+     * - Requires `ShipmentGroupTransfer.availableShipmentMethods.methods.idShipmentMethod` transfer property to be set.
+     * - Expects `ShipmentGroupTransfer.items.shipmentType.uuid` transfer property to be provided.
+     * - Filters out shipment methods that have relation to shipment types which are not active or not available for store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
+     */
+    public function filterShipmentGroupMethods(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ArrayObject;
 }

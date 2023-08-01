@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ShipmentTypeBuilder;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentType;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeStoreQuery;
@@ -30,13 +31,20 @@ use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeStoreQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShipmentType\PHPMD)
  *
  * @method \Spryker\Zed\ShipmentType\Business\ShipmentTypeFacadeInterface getFacade(?string $moduleName = null)
  */
 class ShipmentTypeBusinessTester extends Actor
 {
     use _generated\ShipmentTypeBusinessTesterActions;
+
+    /**
+     * @uses \Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap::COL_FK_SHIPMENT_TYPE
+     *
+     * @var string
+     */
+    protected const COL_FK_SHIPMENT_TYPE = 'FkShipmentCarrier';
 
     /**
      * @return void
@@ -84,6 +92,22 @@ class ShipmentTypeBusinessTester extends Actor
     }
 
     /**
+     * @param int $idShipmentMethod
+     * @param int $idShipmentType
+     *
+     * @return void
+     */
+    public function createShipmentMethodShipmentTypeRelation(int $idShipmentMethod, int $idShipmentType): void
+    {
+        $shipmentMethodEntity = $this->getShipmentMethodQuery()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->findOne();
+
+        $shipmentMethodEntity->setFkShipmentType($idShipmentType);
+        $shipmentMethodEntity->save();
+    }
+
+    /**
      * @return int
      */
     public function getShipmentTypeEntitiesCount(): int
@@ -105,5 +129,13 @@ class ShipmentTypeBusinessTester extends Actor
     protected function getShipmentTypeStoreQuery(): SpyShipmentTypeStoreQuery
     {
         return SpyShipmentTypeStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function getShipmentMethodQuery(): SpyShipmentMethodQuery
+    {
+        return SpyShipmentMethodQuery::create();
     }
 }

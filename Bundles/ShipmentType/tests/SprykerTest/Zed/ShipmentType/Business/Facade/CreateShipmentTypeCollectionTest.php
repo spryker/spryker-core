@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ShipmentType\Business;
+namespace SprykerTest\Zed\ShipmentType\Business\Facade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -25,6 +25,7 @@ use SprykerTest\Zed\ShipmentType\ShipmentTypeBusinessTester;
  * @group Zed
  * @group ShipmentType
  * @group Business
+ * @group Facade
  * @group CreateShipmentTypeCollectionTest
  * Add your own group annotations below this line
  */

@@ -17,4 +17,23 @@ interface ShipmentMethodReaderInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer;
+
+    /**
+     * @param string $shipmentMethodName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
+
+    /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
+     * @return list<\Generated\Shared\Transfer\ShipmentMethodTransfer>
+     */
+    public function getActiveShipmentMethods(): array;
 }

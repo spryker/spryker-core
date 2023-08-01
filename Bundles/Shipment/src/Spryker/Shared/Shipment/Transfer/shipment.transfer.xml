@@ -314,4 +314,8 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="ShipmentMethodCollection" strict="true">
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+    </transfer>
+
 </transfers>

@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeCart\\Business\\Expander\\ShipmentTypeExpander::expandItemsWithShipmentType expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/Expander/ShipmentTypeExpander.php",
+            "snippet": "        $this->expandItemsWithShipmentType($quoteTransfer->getItems());",
+            "selected_text": "$quoteTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeCart\\Business\\Expander\\ShipmentTypeExpander::expandItemsWithShipmentType expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/Expander/ShipmentTypeExpander.php",
+            "snippet": "        $this->expandItemsWithShipmentType($cartChangeTransfer->getItems());",
+            "selected_text": "$cartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": [],
+    "count": 2
+}

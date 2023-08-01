@@ -900,6 +900,7 @@
         "spryker/shipment-gui": "*",
         "spryker/shipment-gui-extension": "*",
         "spryker/shipment-type": "*",
+        "spryker/shipment-type-cart": "*",
         "spryker/shipment-type-data-import": "*",
         "spryker/shipment-type-service-point": "*",
         "spryker/shipment-type-service-point-data-import": "*",

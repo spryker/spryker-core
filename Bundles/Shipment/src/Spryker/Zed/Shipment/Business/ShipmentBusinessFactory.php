@@ -22,6 +22,8 @@ use Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpander;
 use Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpanderInterface;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpander;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface;
+use Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpander;
+use Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Business\Grouper\ItemGrouper;
 use Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface;
 use Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouper;
@@ -57,8 +59,8 @@ use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcher;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentFetcherInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreator;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentGroupCreatorInterface;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander;
-use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpander as ShipmentGroupShipmentMethodExpander;
+use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface as ShipmentGroupShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityChecker;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodDeliveryTimeReader;
@@ -171,6 +173,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentMethodReader(
             $this->getRepository(),
             $this->getCurrencyFacade(),
+            $this->createShipmentMethodExpander(),
         );
     }
 
@@ -187,6 +190,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodPriceReader(),
             $this->createShipmentMethodDeliveryTimeReader(),
             $this->getStoreFacade(),
+            $this->createShipmentMethodExpander(),
         );
     }
 
@@ -439,9 +443,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExpanderInterface
      */
-    public function createShipmentMethodExpander(): ShipmentMethodExpanderInterface
+    public function createShipmentGroupShipmentMethodExpander(): ShipmentGroupShipmentMethodExpanderInterface
     {
-        return new ShipmentMethodExpander(
+        return new ShipmentGroupShipmentMethodExpander(
             $this->createShipmentFetcher(),
             $this->getStoreFacade(),
         );
@@ -467,7 +471,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentSaver(
             $this->createCheckoutMultiShipmentOrderSaver(),
-            $this->createShipmentMethodExpander(),
+            $this->createShipmentGroupShipmentMethodExpander(),
             $this->getShipmentService(),
             $this->createShipmentExpenseCreator(),
         );
@@ -679,5 +683,21 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentTotalCalculator(): ShipmentTotalCalculatorInterface
     {
         return new ShipmentTotalCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface
+     */
+    public function createShipmentMethodExpander(): ShipmentMethodExpanderInterface
+    {
+        return new ShipmentMethodExpander($this->getShipmentMethodCollectionExpanderPlugins());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface>
+     */
+    public function getShipmentMethodCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER);
     }
 }

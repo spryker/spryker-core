@@ -27,4 +27,19 @@ interface ShipmentTypeRepositoryInterface
      * @return array<int, \Generated\Shared\Transfer\StoreRelationTransfer>
      */
     public function getShipmentTypeStoreRelationsIndexedByIdShipmentType(array $shipmentTypeIds): array;
+
+    /**
+     * @param list<int> $shipmentMethodIds
+     *
+     * @return array<int, list<int>>
+     */
+    public function getShipmentMethodIdsGroupedByIdShipmentType(array $shipmentMethodIds): array;
+
+    /**
+     * @param list<string> $shipmentTypeUuids
+     * @param string $storeName
+     *
+     * @return list<int>
+     */
+    public function getShipmentMethodIdsByShipmentTypeConditions(array $shipmentTypeUuids, string $storeName): array;
 }
