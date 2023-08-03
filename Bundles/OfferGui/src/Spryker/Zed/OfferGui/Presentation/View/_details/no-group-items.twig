@@ -1,6 +1,0 @@
-{% for orderItem in items %}
-  <tr>
-      {% embed '@OfferGui/View/_details/order-item.twig' with {orderItem: orderItem, displayTotals: true} %}{% endembed %}
-  </tr>
-  {% embed '@OfferGui/View/_details/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
-{% endfor %}

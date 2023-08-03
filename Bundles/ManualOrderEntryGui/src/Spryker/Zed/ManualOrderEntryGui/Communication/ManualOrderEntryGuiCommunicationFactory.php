@@ -533,6 +533,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface>
      */
     public function getQuoteExpanderPlugins(): array

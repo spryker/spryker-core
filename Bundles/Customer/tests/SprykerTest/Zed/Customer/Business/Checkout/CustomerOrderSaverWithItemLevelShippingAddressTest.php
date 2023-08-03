@@ -64,8 +64,7 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Unit
         $customerTransfer = $this->tester->haveCustomer();
         $quoteTransfer->setIsAddressSavingSkipped(false);
         $quoteTransfer->setCustomer($customerTransfer)
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setIdCustomer($customerTransfer->getIdCustomer());
+            ->setCustomerReference($customerTransfer->getCustomerReference());
 
         // Act
         $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);

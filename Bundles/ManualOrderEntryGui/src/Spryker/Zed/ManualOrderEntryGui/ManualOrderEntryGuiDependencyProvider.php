@@ -110,6 +110,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
@@ -384,6 +386,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -398,6 +402,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface>
      */
     protected function getQuoteExpanderPlugins(): array

@@ -273,6 +273,21 @@ class CreateController extends AbstractController
     {
         $quoteTransfer = new QuoteTransfer();
 
+        $quoteTransfer = $this->executeQuoteExpanderPlugins($quoteTransfer, $request);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer\
+     */
+    protected function executeQuoteExpanderPlugins(QuoteTransfer $quoteTransfer, Request $request): QuoteTransfer
+    {
         foreach ($this->getFactory()->getQuoteExpanderPlugins() as $quoteExpanderPlugin) {
             $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer, $request);
         }
