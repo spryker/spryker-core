@@ -21,6 +21,11 @@ class ServicePointSearchResultFormatterPlugin extends AbstractElasticsearchResul
     protected const NAME = 'ServicePointSearchCollection';
 
     /**
+     * @var string
+     */
+    protected const ITEMS_PER_PAGE = 'from';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -48,6 +53,11 @@ class ServicePointSearchResultFormatterPlugin extends AbstractElasticsearchResul
             );
         }
 
+        $servicePointSearchCollectionTransfer = $this->expandServicePointSearchCollectionTransferWithItemsPerPage(
+            $searchResult,
+            $servicePointSearchCollectionTransfer,
+        );
+
         return $servicePointSearchCollectionTransfer->setNbResults($searchResult->getTotalHits());
     }
 
@@ -59,5 +69,25 @@ class ServicePointSearchResultFormatterPlugin extends AbstractElasticsearchResul
     protected function getMappedServicePointSearchTransfer(array $data): ServicePointSearchTransfer
     {
         return (new ServicePointSearchTransfer())->fromArray($data, true);
+    }
+
+    /**
+     * @param \Elastica\ResultSet $searchResult
+     * @param \Generated\Shared\Transfer\ServicePointSearchCollectionTransfer $servicePointSearchCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointSearchCollectionTransfer
+     */
+    protected function expandServicePointSearchCollectionTransferWithItemsPerPage(
+        ResultSet $searchResult,
+        ServicePointSearchCollectionTransfer $servicePointSearchCollectionTransfer
+    ): ServicePointSearchCollectionTransfer {
+        $query = $searchResult->getQuery();
+        if (!$query->hasParam(static::ITEMS_PER_PAGE)) {
+            return $servicePointSearchCollectionTransfer;
+        }
+
+        return $servicePointSearchCollectionTransfer->setItemsPerPage(
+            (int)$query->getParam(static::ITEMS_PER_PAGE),
+        );
     }
 }

@@ -8,15 +8,13 @@
 namespace SprykerTest\Zed\ServicePointSearch\Plugin\Elasticsearch\Query;
 
 use Codeception\Test\Unit;
-use Elastica\Query;
-use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\ServicePointIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\ServiceTypesServicePointSearchQueryExpanderPlugin;
+use SprykerTest\Client\ServicePointSearch\ServicePointSearchClientTester;
 use TypeError;
 
 /**
@@ -56,12 +54,17 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
     protected const KEY_TERMS = 'terms';
 
     /**
+     * @var \SprykerTest\Client\ServicePointSearch\ServicePointSearchClientTester
+     */
+    protected ServicePointSearchClientTester $tester;
+
+    /**
      * @return void
      */
     public function testExpandQueryShouldNotAddFilterWhenServiceTypesParameterIsNotProvided(): void
     {
         // Arrange
-        $query = $this->createQueryMock($this->createBoolQuery());
+        $query = $this->tester->createQueryMock($this->createBoolQuery());
 
         // Act
         $expandedQuery = $this->createServiceTypesServicePointSearchQueryExpanderPlugin()->expandQuery($query);
@@ -79,7 +82,7 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
     public function testExpandQueryShouldNotAddFilterWhenEmptyServiceTypesParameterIsProvided(): void
     {
         // Arrange
-        $query = $this->createQueryMock($this->createBoolQuery());
+        $query = $this->tester->createQueryMock($this->createBoolQuery());
 
         // Act
         $expandedQuery = $this->createServiceTypesServicePointSearchQueryExpanderPlugin()
@@ -101,7 +104,7 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
         $this->expectException(TypeError::class);
 
         // Arrange
-        $query = $this->createQueryMock($this->createBoolQuery());
+        $query = $this->tester->createQueryMock($this->createBoolQuery());
 
         // Act
         $this->createServiceTypesServicePointSearchQueryExpanderPlugin()
@@ -117,7 +120,7 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
         $this->expectException(InvalidArgumentException::class);
 
         // Arrange
-        $query = $this->createQueryMock($this->createMatchQuery());
+        $query = $this->tester->createQueryMock($this->createMatchQuery());
 
         // Act
         $this->createServiceTypesServicePointSearchQueryExpanderPlugin()
@@ -130,7 +133,7 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
     public function testExpandQueryShouldAddFilterWhenServiceTypesParameterIsProvided(): void
     {
         // Arrange
-        $query = $this->createQueryMock($this->createBoolQuery());
+        $query = $this->tester->createQueryMock($this->createBoolQuery());
 
         // Act
         $expandedQuery = $this->createServiceTypesServicePointSearchQueryExpanderPlugin()
@@ -148,20 +151,6 @@ class ServiceTypesServicePointSearchQueryExpanderPluginTest extends Unit
 
         $this->assertArrayHasKey(ServicePointIndexMap::SERVICE_TYPES, $termsData[static::KEY_TERMS]);
         $this->assertSame([static::TEST_SERVICE_TYPE], $termsData[static::KEY_TERMS][ServicePointIndexMap::SERVICE_TYPES]);
-    }
-
-    /**
-     * @param \Elastica\Query\AbstractQuery $abstractQuery
-     *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createQueryMock(AbstractQuery $abstractQuery): QueryInterface
-    {
-        $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
-
-        $queryMock->method('getSearchQuery')->willReturn(new Query($abstractQuery));
-
-        return $queryMock;
     }
 
     /**

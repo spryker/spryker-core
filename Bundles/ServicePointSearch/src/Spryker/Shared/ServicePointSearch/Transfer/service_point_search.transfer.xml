@@ -3,6 +3,7 @@
 
     <transfer name="ServicePointSearchCollection" strict="true">
         <property name="nbResults" type="int"/>
+        <property name="itemsPerPage" type="int"/>
         <property name="servicePoints" type="ServicePointSearch[]" singular="servicePoint"/>
     </transfer>
 

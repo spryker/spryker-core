@@ -8,6 +8,10 @@
 namespace SprykerTest\Client\ServicePointSearch;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Elastica\Query;
+use Elastica\Query\AbstractQuery;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +30,26 @@ use Codeception\Actor;
 class ServicePointSearchClientTester extends Actor
 {
     use _generated\ServicePointSearchClientTesterActions;
+
+    /**
+     * @param \Elastica\Query\AbstractQuery|null $abstractQuery
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createQueryMock(?AbstractQuery $abstractQuery = null): QueryInterface
+    {
+        return Stub::makeEmpty(QueryInterface::class, [
+            'getSearchQuery' => $this->createSearchQuery($abstractQuery),
+        ]);
+    }
+
+    /**
+     * @param \Elastica\Query\AbstractQuery|null $abstractQuery
+     *
+     * @return \Elastica\Query
+     */
+    public function createSearchQuery(?AbstractQuery $abstractQuery = null): Query
+    {
+        return new Query($abstractQuery);
+    }
 }
