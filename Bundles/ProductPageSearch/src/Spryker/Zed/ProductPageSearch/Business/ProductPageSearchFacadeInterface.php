@@ -233,4 +233,21 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function writeProductConcretePageSearchCollectionByProductEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes product abstract page data by `SpyProductImageSetToProductImage` entity events.
+     * - Extracts product image set IDs from the `$eventEntityTransfers` created by product image set to product image entity events.
+     * - Finds product abstract IDs by product image set IDs.
+     * - Collects product abstract page data.
+     * - Stores data in search table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void;
 }

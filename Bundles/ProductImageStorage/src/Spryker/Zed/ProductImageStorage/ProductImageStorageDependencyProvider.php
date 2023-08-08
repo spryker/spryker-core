@@ -59,6 +59,7 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addProductImageFacade($container);
         $container = $this->addEventBehaviorFacade($container);
 
@@ -73,7 +74,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addProductImageFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }

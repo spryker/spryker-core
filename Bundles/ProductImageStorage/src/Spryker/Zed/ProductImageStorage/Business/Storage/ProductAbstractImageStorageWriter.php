@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage;
+use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface;
@@ -20,42 +21,57 @@ use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInt
 class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWriterInterface
 {
     /**
+     * @uses \Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_IMAGE_SET = 'spy_product_image_set_to_product_image.fk_product_image_set';
+
+    /**
      * @var \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface
      */
-    protected $productImageFacade;
+    protected ProductImageStorageToProductImageInterface $productImageFacade;
 
     /**
      * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface
      */
-    protected $queryContainer;
+    protected ProductImageStorageQueryContainerInterface $queryContainer;
 
     /**
      * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface
      */
-    protected $repository;
+    protected ProductImageStorageRepositoryInterface $repository;
+
+    /**
+     * @var \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface
+     */
+    protected ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
-    protected $isSendingToQueue = true;
+    protected bool $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductImageStorageToProductImageInterface $productImageFacade,
         ProductImageStorageQueryContainerInterface $queryContainer,
         ProductImageStorageRepositoryInterface $repository,
-        $isSendingToQueue
+        ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        bool $isSendingToQueue
     ) {
         $this->productImageFacade = $productImageFacade;
         $this->queryContainer = $queryContainer;
         $this->repository = $repository;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -153,6 +169,23 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         }
 
         $this->storeData($productAbstractLocalizedEntities, $productAbstractImageStorageEntities, $imageSets);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteProductAbstractImageStorageCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void
+    {
+        $productImageSetIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            static::COL_FK_PRODUCT_IMAGE_SET,
+        );
+
+        $productAbstractIds = $this->repository->getProductAbstractIdsByProductImageSetIds($productImageSetIds);
+
+        $this->unpublish($productAbstractIds);
     }
 
     /**

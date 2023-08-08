@@ -23,7 +23,7 @@ class ProductPageSearchConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     * - This constant is used for extracting data from plugin array
+     * - This constant is used for extracting data from plugin array.
      *
      * @api
      *
@@ -79,4 +79,16 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
+
+    /**
+     * Specification
+     * - This event will be used for spy_product_image_set_to_product_image entity creation.
+     *
+     * @uses \Spryker\Zed\ProductImage\Dependency\ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image_set_to_product_image.create';
 }

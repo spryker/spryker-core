@@ -22,4 +22,11 @@ interface ProductAbstractImageStorageWriterInterface
      * @return void
      */
     public function unpublish(array $productAbstractIds);
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteProductAbstractImageStorageCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -126,6 +127,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductPageImageSetCreateSearchListener($eventCollection);
         $this->addProductPageImageSetUpdateSearchListener($eventCollection);
         $this->addProductPageImageSetDeleteSearchListener($eventCollection);
+        $this->addProductPageImageSetProductImageCreateSearchListener($eventCollection);
         $this->addProductPageImageSetProductImageUpdateSearchListener($eventCollection);
         $this->addProductPageImageSetProductImageDeleteSearchListener($eventCollection);
         $this->addProductPageProductImageUpdateSearchListener($eventCollection);
@@ -279,6 +281,16 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductPageImageSetDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ProductPageImageSetSearchListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductPageImageSetProductImageCreateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductPageSearchConfig::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE, new ProductPageImageSetProductImageSearchListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
     }
 
     /**

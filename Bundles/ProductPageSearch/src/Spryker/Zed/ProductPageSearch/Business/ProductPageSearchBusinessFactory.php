@@ -34,6 +34,8 @@ use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductAbstractPageRefreshe
 use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
+use Spryker\Zed\ProductPageSearch\Business\Writer\ProductAbstractPageSearchWriter;
+use Spryker\Zed\ProductPageSearch\Business\Writer\ProductAbstractPageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Business\Writer\ProductConcretePageSearchByProductEventsWriter;
 use Spryker\Zed\ProductPageSearch\Business\Writer\ProductConcretePageSearchByProductEventsWriterInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface;
@@ -96,6 +98,18 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductConcretePageSearchUnpublisher(
             $this->createProductConcretePageSearchReader(),
             $this->createProductConcretePageSearchWriter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Writer\ProductAbstractPageSearchWriterInterface
+     */
+    public function createProductAbstractPageSearchWriter(): ProductAbstractPageSearchWriterInterface
+    {
+        return new ProductAbstractPageSearchWriter(
+            $this->getEventBehaviorFacade(),
+            $this->getRepository(),
+            $this->createProductAbstractPagePublisher(),
         );
     }
 

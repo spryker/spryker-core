@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -71,6 +72,11 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_NODE = 'QUERY_CONTAINER_CATEGORY_NODE';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_PRODUCT_IMAGE_SET = 'PROPEL_QUERY_PRODUCT_IMAGE_SET';
 
     /**
      * @var string
@@ -371,6 +377,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductPropelQuery($container);
         $container = $this->addProductSearchPropelQuery($container);
         $container = $this->addPriceProductPropelQuery($container);
+        $container = $this->addProductImageSetPropelQuery($container);
 
         return $container;
     }
@@ -384,6 +391,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
             return SpyCategoryNodeQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageSetPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, $container->factory(function () {
+            return SpyProductImageSetQuery::create();
         }));
 
         return $container;

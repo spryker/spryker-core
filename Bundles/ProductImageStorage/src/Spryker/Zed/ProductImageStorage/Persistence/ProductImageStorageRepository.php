@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImageStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -121,6 +122,23 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->endUse();
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
+    }
+
+    /**
+     * @module ProductImage
+     *
+     * @param list<int> $productImageSetIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array
+    {
+        return $this->getFactory()
+            ->getProductImageSetQuery()
+            ->filterByIdProductImageSet_In($productImageSetIds)
+            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
     }
 
     /**

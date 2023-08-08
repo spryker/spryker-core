@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
@@ -171,6 +172,23 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         }
 
         return $productConcreteTransfers;
+    }
+
+    /**
+     * @module ProductImage
+     *
+     * @param list<int> $productImageSetIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array
+    {
+        return $this->getFactory()
+            ->getProductImageSetQuery()
+            ->filterByIdProductImageSet_In($productImageSetIds)
+            ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
     }
 
     /**

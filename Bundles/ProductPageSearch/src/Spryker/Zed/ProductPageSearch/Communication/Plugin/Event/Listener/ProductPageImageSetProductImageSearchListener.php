@@ -18,6 +18,14 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 class ProductPageImageSetProductImageSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     * - Publishes product abstract page data by `SpyProductImageSetToProductImage` entity events.
+     * - Extracts product image set IDs from the `$eventEntityTransfers` created by product image set to product image entity events.
+     * - Finds product abstract IDs by product image set IDs.
+     * - Collects product abstract page data.
+     * - Stores data in search table.
+     * - Sends a copy of data to the queue.
+     *
      * @api
      *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
@@ -27,9 +35,6 @@ class ProductPageImageSetProductImageSearchListener extends AbstractProductPageS
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
-
-        $this->publish($productAbstractIds);
+        $this->getFacade()->writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents($eventEntityTransfers);
     }
 }

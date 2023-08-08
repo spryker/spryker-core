@@ -20,6 +20,13 @@ class ProductAbstractImageSetProductImageStorageUnpublishListener extends Abstra
 {
     /**
      * {@inheritDoc}
+     * - Removes and updates product abstract image data by `SpyProductImageSetToProductImage` entity events.
+     * - Extracts product image set IDs from the `$eventEntityTransfers` created by product image set to product image entity events.
+     * - Finds product abstract IDs by product image set IDs.
+     * - Collects product abstract image data.
+     * - Updates product abstract image storage entities with modified image data.
+     * - Finds and deletes product abstract image storage entities without image data.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -30,9 +37,6 @@ class ProductAbstractImageSetProductImageStorageUnpublishListener extends Abstra
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
-
-        $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
+        $this->getFacade()->deleteProductAbstractImageStorageCollectionByProductImageSetToProductImageEvents($eventEntityTransfers);
     }
 }

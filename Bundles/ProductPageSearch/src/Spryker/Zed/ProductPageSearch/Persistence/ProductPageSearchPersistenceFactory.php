@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
@@ -106,6 +107,14 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getCategoryNodeQueryContainer(): SpyCategoryNodeQuery
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_CATEGORY_NODE);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function getProductImageSetQuery(): SpyProductImageSetQuery
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE_SET);
     }
 
     /**

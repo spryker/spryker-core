@@ -70,4 +70,20 @@ class ProductImageStorageFacade extends AbstractFacade implements ProductImageSt
     {
         $this->getFactory()->createProductConcreteImageWriter()->unpublish($productIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteProductAbstractImageStorageCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductAbstractImageWriter()
+            ->deleteProductAbstractImageStorageCollectionByProductImageSetToProductImageEvents($eventEntityTransfers);
+    }
 }

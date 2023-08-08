@@ -34,7 +34,7 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductPageSearch\PHPMD)
  */
 class ProductPageSearchBusinessTester extends Actor
 {

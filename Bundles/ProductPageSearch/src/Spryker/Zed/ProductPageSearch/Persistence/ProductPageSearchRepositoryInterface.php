@@ -85,4 +85,11 @@ interface ProductPageSearchRepositoryInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param list<int> $productImageSetIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array;
 }

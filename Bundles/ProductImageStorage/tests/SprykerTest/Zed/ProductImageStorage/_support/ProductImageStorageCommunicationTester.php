@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\ProductImageStorage;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
+use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
+use Orm\Zed\ProductImageStorage\Persistence\Base\SpyProductAbstractImageStorage;
+use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
 
 /**
@@ -26,7 +29,7 @@ use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductImageStorage\PHPMD)
  */
 class ProductImageStorageCommunicationTester extends Actor
 {
@@ -112,5 +115,40 @@ class ProductImageStorageCommunicationTester extends Actor
         $productConcreteImageStorageEntity->save();
 
         return $productConcreteImageStorageEntity;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer|null
+     */
+    public function findProductAbstractImageStorageTransfer(int $idProductAbstract): ?ProductAbstractImageStorageTransfer
+    {
+        $productAbstractImageStorageEntity = $this->findProductAbstractImageStorage($idProductAbstract);
+
+        if (!$productAbstractImageStorageEntity) {
+            return null;
+        }
+
+        return (new ProductAbstractImageStorageTransfer())->fromArray($productAbstractImageStorageEntity->getData());
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductImageStorage\Persistence\Base\SpyProductAbstractImageStorage|null
+     */
+    protected function findProductAbstractImageStorage(int $idProductAbstract): ?SpyProductAbstractImageStorage
+    {
+        return $this->getProductAbstractImageStorageQuery()
+            ->findOneByFkProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
+     */
+    protected function getProductAbstractImageStorageQuery(): SpyProductAbstractImageStorageQuery
+    {
+        return SpyProductAbstractImageStorageQuery::create();
     }
 }

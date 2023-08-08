@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductImageStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductImageStorage\Business\Storage\ProductAbstractImageStorageWriter;
 use Spryker\Zed\ProductImageStorage\Business\Storage\ProductConcreteImageStorageWriter;
+use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 
 /**
@@ -28,6 +29,7 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
             $this->getRepository(),
+            $this->getEventBehaviorFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -43,6 +45,14 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig()->isSendingToQueue(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): ProductImageStorageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     /**
