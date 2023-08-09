@@ -870,6 +870,8 @@
         "spryker/security-system-user": "*",
         "spryker/sequence-number": "*",
         "spryker/service-point": "*",
+        "spryker/service-point-cart": "*",
+        "spryker/service-point-cart-extension": "*",
         "spryker/service-point-data-import": "*",
         "spryker/service-point-search": "*",
         "spryker/service-point-storage": "*",
