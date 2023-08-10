@@ -5,9 +5,9 @@
     {% block logRotator %}
     <logRotator>
         <daysToKeep>{{ job.payload.logrotate_days }}</daysToKeep>
-        <numToKeep>-1</numToKeep>
+        <numToKeep>{{ job.payload.num_builds_to_keep }}</numToKeep>
         <artifactDaysToKeep>{{ job.payload.logrotate_days }}</artifactDaysToKeep>
-        <artifactNumToKeep>-1</artifactNumToKeep>
+        <artifactNumToKeep>{{ job.payload.num_builds_to_keep }}</artifactNumToKeep>
     </logRotator>
     {% endblock logRotator %}
     <keepDependencies>false</keepDependencies>

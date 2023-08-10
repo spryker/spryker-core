@@ -18,6 +18,11 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     protected const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
     /**
+     * @var int
+     */
+    protected const DEFAULT_AMOUNT_OF_BUILDS_FOR_LOGFILE_ROTATION = 10;
+
+    /**
      * @var string
      */
     protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Business/TemplateGenerator/Template/jenkins-job.default.xml.twig';
@@ -52,6 +57,16 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     public function getAmountOfDaysForLogFileRotation(): int
     {
         return $this->get(SchedulerJenkinsConstants::JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION, static::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getAmountOfBuildsForLogFileRotation(): int
+    {
+        return $this->get(SchedulerJenkinsConstants::JENKINS_DEFAULT_AMOUNT_OF_BUILDS_FOR_LOGFILE_ROTATION, static::DEFAULT_AMOUNT_OF_BUILDS_FOR_LOGFILE_ROTATION);
     }
 
     /**

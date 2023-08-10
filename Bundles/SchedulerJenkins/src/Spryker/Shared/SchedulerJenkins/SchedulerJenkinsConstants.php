@@ -49,4 +49,14 @@ interface SchedulerJenkinsConstants
      * @var string
      */
     public const JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 'SCHEDULER_JENKINS:JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION';
+
+    /**
+     * Specification:
+     * - Defines Jenkins builds to keep.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const JENKINS_DEFAULT_AMOUNT_OF_BUILDS_FOR_LOGFILE_ROTATION = 'SCHEDULER_JENKINS:JENKINS_DEFAULT_AMOUNT_OF_BUILDS_FOR_LOGFILE_ROTATION';
 }
