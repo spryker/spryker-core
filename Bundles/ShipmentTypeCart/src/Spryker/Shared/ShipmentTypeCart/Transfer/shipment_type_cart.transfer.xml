@@ -3,6 +3,7 @@
 
     <transfer name="Shipment">
         <property name="shipmentTypeUuid" type="string" strict="true"/>
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -16,10 +17,45 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
         <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeCollection" strict="true">
+        <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeCriteria" strict="true">
+        <property name="shipmentTypeConditions" type="ShipmentTypeConditions"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

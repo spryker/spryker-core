@@ -24,8 +24,93 @@
             "selected_text": "$cartChangeTransfer->getItems()",
             "error_level": 3,
             "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable $itemTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/StrategyResolver/ShipmentTypeCheckoutValidatorStrategyResolver.php",
+            "snippet": "        if ($itemTransfers->count() === 0 || $this->hasItemWithEmptyShipment($itemTransfers)) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeCart\\Business\\StrategyResolver\\ShipmentTypeCheckoutValidatorStrategyResolver::hasItemWithEmptyShipment expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/StrategyResolver/ShipmentTypeCheckoutValidatorStrategyResolver.php",
+            "snippet": "        if ($itemTransfers->count() === 0 || $this->hasItemWithEmptyShipment($itemTransfers)) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeCart\\Business\\Validator\\Rule\\ShipmentTypeAvailableCheckoutValidationRule::getShipmentTypeTransfersIndexedByShipmentTypeUuid expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/Validator/Rule/ShipmentTypeAvailableCheckoutValidationRule.php",
+            "snippet": "        $indexedShipmentTypeTransfers = $this->getShipmentTypeTransfersIndexedByShipmentTypeUuid($quoteTransfer->getItems());",
+            "selected_text": "$quoteTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeCart\\Business\\Validator\\Rule\\ShipmentTypeAvailableCheckoutValidationRule::extractShipmentTypeUuidsFromShipmentTypeTransfers expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/Validator/Rule/ShipmentTypeAvailableCheckoutValidationRule.php",
+            "snippet": "            $shipmentTypeCollectionTransfer->getShipmentTypes(),",
+            "selected_text": "$shipmentTypeCollectionTransfer->getShipmentTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/Validator/SingleShipmentShipmentTypeCheckoutValidator.php",
+            "snippet": "        if ($shipmentTypeCollectionTransfer->getShipmentTypes()->count() !== 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
         }
     ],
-    "deprecation": [],
-    "count": 2
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 83,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\ShipmentTypeCart\\Business\\Validator\\SingleShipmentShipmentTypeCheckoutValidator is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/ShipmentTypeCartBusinessFactory.php",
+            "snippet": "        return new SingleShipmentShipmentTypeCheckoutValidator(\n            $this->createShipmentTypeReader(),\n            $this->createSalesShipmentTypeValidationErrorCreator(),\n        );",
+            "selected_text": "new SingleShipmentShipmentTypeCheckoutValidator(\n            $this->createShipmentTypeReader(),\n            $this->createSalesShipmentTypeValidationErrorCreator(),\n        )",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ShipmentTypeCart\\Business\\ShipmentTypeCartBusinessFactory::createShipmentTypeCheckoutValidatorStrategyResolver has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeCart/src/Spryker/Zed/ShipmentTypeCart/Business/ShipmentTypeCartFacade.php",
+            "snippet": "            ->createShipmentTypeCheckoutValidatorStrategyResolver()",
+            "selected_text": "createShipmentTypeCheckoutValidatorStrategyResolver",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 9
 }

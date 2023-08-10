@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentTypeCart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentTypeCartFacadeInterface
@@ -41,4 +42,22 @@ interface ShipmentTypeCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuoteItemsWithShipmentType(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.store.name` transfer property to be set.
+     * - Expects `QuoteTransfer.items.shipment.shipmentTypeUuid` transfer property to be provided.
+     * - Expects `QuoteTransfer.items.shipment.method.shipmentType.uuid` transfer property to be provided.
+     * - Expects `QuoteTransfer.items.shipment.method.shipmentType.name` transfer property to be provided.
+     * - Checks if selected shipment type matches selected shipment method's shipment type.
+     * - Checks if selected shipment type is active and available for store provided in `QuoteTransfer.store`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

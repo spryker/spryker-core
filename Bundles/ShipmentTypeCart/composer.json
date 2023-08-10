@@ -7,6 +7,7 @@
         "php": ">=8.0",
         "spryker/cart": "^7.0.0",
         "spryker/cart-extension": "^4.2.0",
+        "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/quote-extension": "^1.2.0",
         "spryker/shipment-type": "^0.1.0",
@@ -14,6 +15,8 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

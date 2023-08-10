@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentTypeCart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -46,5 +47,23 @@ class ShipmentTypeCartFacade extends AbstractFacade implements ShipmentTypeCartF
         return $this->getFactory()
             ->createShipmentTypeExpander()
             ->expandQuoteItemsWithShipmentType($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createShipmentTypeCheckoutValidatorStrategyResolver()
+            ->resolve($quoteTransfer)
+            ->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 }
