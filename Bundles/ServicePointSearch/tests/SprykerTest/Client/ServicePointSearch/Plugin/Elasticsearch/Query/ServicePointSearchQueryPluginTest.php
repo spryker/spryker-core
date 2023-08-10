@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\ServicePointSearch\Plugin\Elasticsearch\Query;
 
 use Codeception\Test\Unit;
+use Elastica\Query\MultiMatch;
+use Generated\Shared\Search\ServicePointIndexMap;
 use Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\ServicePointSearchQueryPlugin;
+use SprykerTest\Client\ServicePointSearch\ServicePointSearchClientTester;
 
 /**
  * Auto-generated group annotations
@@ -25,14 +28,29 @@ use Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query\ServicePointSea
 class ServicePointSearchQueryPluginTest extends Unit
 {
     /**
+     * @var \SprykerTest\Client\ServicePointSearch\ServicePointSearchClientTester $tester
+     */
+    protected ServicePointSearchClientTester $tester;
+
+    /**
+     * @var int
+     */
+    protected const FULL_TEXT_BOOSTED_VALUE = 3.0;
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_STRING = 'searchString';
+
+    /**
      * @return void
      */
-    public function testGetSearchQueryShouldReturnQueryWithFullTextQueryUsingWildcards(): void
+    public function testGetSearchQueryShouldReturnQueryWithFullTextQueryUsingWildcardsAndMultiMatch(): void
     {
         // Arrange
         $servicePointSearchQueryPlugin = new ServicePointSearchQueryPlugin();
-
-        $servicePointSearchQueryPlugin->setSearchString('searchString');
+        $servicePointSearchQueryPlugin->setSearchString(static::SEARCH_STRING);
+        $this->tester->mockConfigMethod('getElasticsearchFullTextBoostedBoostingValue', static::FULL_TEXT_BOOSTED_VALUE);
 
         // Act
         $searchQuery = $servicePointSearchQueryPlugin->getSearchQuery()->toArray();
@@ -41,7 +59,8 @@ class ServicePointSearchQueryPluginTest extends Unit
         $this->assertTerm($searchQuery);
         $this->assertFullTextWildcard($searchQuery);
         $this->assertFullTextBoostedWildcard($searchQuery);
-        $this->assertSame('searchString', $searchQuery['suggest']['text']);
+        $this->assertFullTextMultiMatch($searchQuery);
+        $this->assertSame(static::SEARCH_STRING, $searchQuery['suggest']['text']);
         $this->assertSame('search-result-data', $searchQuery['_source']);
     }
 
@@ -71,7 +90,7 @@ class ServicePointSearchQueryPluginTest extends Unit
     {
         $wildcard = $searchQuery['query']['bool']['must'][1]['bool']['should'][0]['wildcard']['full-text'];
 
-        $this->assertSame('*searchString*', $wildcard['value']);
+        $this->assertSame(sprintf('*%s*', static::SEARCH_STRING), $wildcard['value']);
         $this->assertSame(1.0, (float)$wildcard['boost']);
     }
 
@@ -84,8 +103,24 @@ class ServicePointSearchQueryPluginTest extends Unit
     {
         $wildcard = $searchQuery['query']['bool']['must'][1]['bool']['should'][1]['wildcard']['full-text-boosted'];
 
-        $this->assertSame('*searchString*', $wildcard['value']);
-        $this->assertSame(3.0, (float)$wildcard['boost']);
+        $this->assertSame(sprintf('*%s*', static::SEARCH_STRING), $wildcard['value']);
+        $this->assertSame(static::FULL_TEXT_BOOSTED_VALUE, (float)$wildcard['boost']);
+    }
+
+    /**
+     * @param array $searchQuery
+     *
+     * @return void
+     */
+    protected function assertFullTextMultiMatch(array $searchQuery): void
+    {
+        $multiMatch = $searchQuery['query']['bool']['must'][1]['bool']['should'][2]['multi_match'];
+
+        $this->assertSame(static::SEARCH_STRING, $multiMatch['query']);
+        $this->assertSame(MultiMatch::TYPE_PHRASE_PREFIX, $multiMatch['type']);
+
+        $boostedField = sprintf('%s^%d', ServicePointIndexMap::FULL_TEXT_BOOSTED, static::FULL_TEXT_BOOSTED_VALUE);
+        $this->assertSame([ServicePointIndexMap::FULL_TEXT, $boostedField], $multiMatch['fields']);
     }
 
     /**

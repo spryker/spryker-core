@@ -9,6 +9,7 @@ namespace Spryker\Client\ServicePointSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\MultiMatch;
 use Elastica\Query\Term;
 use Elastica\Query\Wildcard;
 use Elastica\Suggest;
@@ -170,7 +171,8 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
 
         $fullTextQuery = (new BoolQuery())
             ->addShould($this->createFullTextWildcard())
-            ->addShould($this->createFullTextBoostedWildcard());
+            ->addShould($this->createFullTextBoostedWildcard())
+            ->addShould($this->createFulltextSearchQuery());
 
         return $boolQuery->addMust($fullTextQuery);
     }
@@ -196,6 +198,26 @@ class ServicePointSearchQueryPlugin extends AbstractPlugin implements QueryInter
             $this->createWildcardValue(),
             $this->getFactory()->getServicePointSearchConfig()->getElasticsearchFullTextBoostedBoostingValue(),
         );
+    }
+
+    /**
+     * @return \Elastica\Query\MultiMatch
+     */
+    protected function createFulltextSearchQuery(): MultiMatch
+    {
+        $fields = [
+            ServicePointIndexMap::FULL_TEXT,
+            sprintf(
+                '%s^%d',
+                ServicePointIndexMap::FULL_TEXT_BOOSTED,
+                $this->getFactory()->getServicePointSearchConfig()->getElasticsearchFullTextBoostedBoostingValue(),
+            ),
+        ];
+
+        return (new MultiMatch())
+            ->setFields($fields)
+            ->setQuery($this->searchString)
+            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
     }
 
     /**
