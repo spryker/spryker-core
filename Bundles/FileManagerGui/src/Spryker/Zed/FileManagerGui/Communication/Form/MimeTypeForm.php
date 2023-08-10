@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\MimeTypeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -42,6 +43,11 @@ class MimeTypeForm extends AbstractType
      * @var string
      */
     public const FIELD_IS_ALLOWED = 'isAllowed';
+
+    /**
+     * @var string
+     */
+    public const FIELD_EXTENSIONS = 'extensions';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -86,6 +92,24 @@ class MimeTypeForm extends AbstractType
                 'required' => false,
             ],
         );
+
+        $builder->add(
+            static::FIELD_EXTENSIONS,
+            TextType::class,
+            [
+                'required' => false,
+            ],
+        );
+
+        $builder->get(static::FIELD_EXTENSIONS)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($extensions): string {
+                    return implode(', ', $extensions);
+                },
+                function ($extensions): array {
+                    return array_unique(array_filter(array_map('trim', explode(',', $extensions))));
+                },
+            ));
 
         $builder->add(
             static::FIELD_IS_ALLOWED,

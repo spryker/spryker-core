@@ -72,6 +72,11 @@ class FileForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_ALLOWED_EXTENSIONS = 'option_allowed_extensions';
+
+    /**
+     * @var string
+     */
     protected const ERROR_MIME_TYPE_MESSAGE = 'File type is not allowed for uploading';
 
     /**
@@ -113,7 +118,9 @@ class FileForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
-        $resolver->setRequired(static::OPTION_ALLOWED_MIME_TYPES);
+        $resolver->setRequired(
+            $this->getConfig()->isFileExtensionValidationEnabled() ? static::OPTION_ALLOWED_EXTENSIONS : static::OPTION_ALLOWED_MIME_TYPES,
+        );
 
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => FileTransfer::class,
@@ -176,11 +183,7 @@ class FileForm extends AbstractType
         $builder->add(static::FILED_FILE_UPLOAD, FileType::class, [
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
-                new File([
-                    'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
-                    'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
-                    'mimeTypesMessage' => static::ERROR_MIME_TYPE_MESSAGE,
-                ]),
+                new File($this->getFileConstraintConfiguration($options)),
             ],
         ]);
 
@@ -261,5 +264,26 @@ class FileForm extends AbstractType
         $fileUploadTransfer->setSize($uploadedFile->getSize());
 
         return $fileUploadTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
+    protected function getFileConstraintConfiguration(array $options): array
+    {
+        if ($this->getConfig()->isFileExtensionValidationEnabled()) {
+            return [
+                'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
+                'extensions' => $options[static::OPTION_ALLOWED_EXTENSIONS],
+            ];
+        }
+
+        return [
+            'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
+            'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
+            'mimeTypesMessage' => static::ERROR_MIME_TYPE_MESSAGE,
+        ];
     }
 }

@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
+use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
@@ -351,10 +352,14 @@ class FileManagerFacadeTest extends Unit
      */
     public function testSaveMimeType(): void
     {
-        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType());
-        $mimeTypeTransfer->setName('image/jpeg');
-        $mimeTypeTransfer->setComment('test');
-        $mimeTypeTransfer->setIsAllowed(false);
+        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType())
+            ->setName('image/jpeg')
+            ->setComment('test')
+            ->setIsAllowed(false);
+
+        if ($this->hasExtensionsField()) {
+            $mimeTypeTransfer->setExtensions(['png', 'jpg']);
+        }
 
         $mimeTypeResponseTransfer = $this->facade->saveMimeType($mimeTypeTransfer);
 
@@ -448,8 +453,23 @@ class FileManagerFacadeTest extends Unit
             return $mimeTypeTransfer;
         }
 
-        $mimeTypeTransfer->fromArray($mimeTypeEntity->toArray());
+        $mimeTypeData = $mimeTypeEntity->toArray();
+        $mimeTypeData[MimeTypeTransfer::EXTENSIONS] = [];
+        if ($this->hasExtensionsField() && $mimeTypeEntity->getExtensions()) {
+            $mimeTypeData[MimeTypeTransfer::EXTENSIONS] = $this->tester->getLocator()->utilEncoding()->service()->decodeJson($mimeTypeEntity->getExtensions());
+        }
+        $mimeTypeTransfer->fromArray($mimeTypeData);
 
         return $mimeTypeTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    protected function hasExtensionsField(): bool
+    {
+        return property_exists(SpyMimeType::class, 'extensions');
     }
 }

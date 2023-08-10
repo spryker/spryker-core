@@ -23,6 +23,7 @@ use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\MimeTypeSettingsTable;
+use Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -78,6 +79,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new MimeTypeSettingsTable(
             $this->getMimeTypeQuery(),
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -113,6 +115,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return new FileFormDataProvider(
             $this->getLocaleFacade(),
             $this->getFileManagerFacade(),
+            $this->getConfig(),
         );
     }
 
@@ -198,6 +201,14 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             MimeTypeSettingsForm::class,
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): FileManagerGuiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

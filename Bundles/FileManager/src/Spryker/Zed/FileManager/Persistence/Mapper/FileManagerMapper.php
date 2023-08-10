@@ -24,9 +24,23 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface;
 
 class FileManagerMapper implements FileManagerMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface
+     */
+    protected FileManagerToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(FileManagerToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
@@ -198,7 +212,14 @@ class FileManagerMapper implements FileManagerMapperInterface
      */
     public function mapMimeTypeEntityToTransfer(SpyMimeType $mimeType, MimeTypeTransfer $mimeTypeTransfer)
     {
-        return $mimeTypeTransfer->fromArray($mimeType->toArray(), true);
+        $mimeTypeData = $mimeType->toArray();
+        $mimeTypeData[MimeTypeTransfer::EXTENSIONS] = [];
+
+        if ($this->hasExtensionsField() && $mimeType->getExtensions()) {
+            $mimeTypeData[MimeTypeTransfer::EXTENSIONS] = $this->utilEncodingService->decodeJson((string)$mimeType->getExtensions(), true);
+        }
+
+        return $mimeTypeTransfer->fromArray($mimeTypeData, true);
     }
 
     /**
@@ -209,7 +230,11 @@ class FileManagerMapper implements FileManagerMapperInterface
      */
     public function mapMimeTypeTransferToEntity(MimeTypeTransfer $mimeTypeTransfer, SpyMimeType $mimeType)
     {
-        $mimeType->fromArray($mimeTypeTransfer->modifiedToArray());
+        $mimeTypeData = $mimeTypeTransfer->modifiedToArray();
+        if ($mimeTypeTransfer->isPropertyModified(MimeTypeTransfer::EXTENSIONS)) {
+            $mimeTypeData[MimeTypeTransfer::EXTENSIONS] = $this->utilEncodingService->encodeJson($mimeTypeTransfer->getExtensions() ?: []);
+        }
+        $mimeType->fromArray($mimeTypeData);
 
         return $mimeType;
     }
@@ -259,5 +284,15 @@ class FileManagerMapper implements FileManagerMapperInterface
                 $this->mapFileLocalizedAttributesEntityToTransfer($attribute),
             );
         }
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    protected function hasExtensionsField(): bool
+    {
+        return property_exists(SpyMimeType::class, 'extensions');
     }
 }

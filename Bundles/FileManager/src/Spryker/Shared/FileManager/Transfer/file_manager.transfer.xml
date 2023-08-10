@@ -81,6 +81,7 @@
         <property name="idMimeType" type="int"/>
         <property name="name" type="string"/>
         <property name="comment" type="string"/>
+        <property name="extensions" type="string[]" singular="extension" strict="true"/>
         <property name="isAllowed" type="bool"/>
     </transfer>
 

@@ -29,7 +29,7 @@ use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\FileManager\PHPMD)
  */
 class FileManagerBusinessTester extends Actor
 {

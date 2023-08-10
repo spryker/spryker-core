@@ -18,4 +18,9 @@ interface MimeTypeDataSetInterface
      * @var string
      */
     public const KEY_IS_ALLOWED = 'is_allowed';
+
+    /**
+     * @var string
+     */
+    public const KEY_EXTENSIONS = 'extensions';
 }

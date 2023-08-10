@@ -12,6 +12,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeBridge;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridge;
+use Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -46,15 +47,23 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_MIME_TYPE = 'PROPEL_QUERY_MIME_TYPE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addFileManagerFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addQueries($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -143,6 +152,22 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PROPEL_QUERY_MIME_TYPE, $container->factory(function () {
             return SpyMimeTypeQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new FileManagerGuiToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
+        });
 
         return $container;
     }

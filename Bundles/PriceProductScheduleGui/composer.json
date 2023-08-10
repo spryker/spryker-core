@@ -21,7 +21,8 @@
         "spryker/twig": "^3.16.0",
         "spryker/util-csv": "^1.0.0",
         "spryker/util-date-time": "^1.4.0",
-        "spryker/util-text": "^1.2.0"
+        "spryker/util-text": "^1.2.0",
+        "spryker/validator": "^1.2.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

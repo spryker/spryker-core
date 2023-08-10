@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManager;
 
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBridge;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,6 +23,11 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -29,6 +35,36 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addFileSystemService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new FileManagerToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
+        });
 
         return $container;
     }

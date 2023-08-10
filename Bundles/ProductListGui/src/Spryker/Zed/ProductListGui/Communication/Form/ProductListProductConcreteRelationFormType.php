@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
+use Spryker\Shared\Validator\Constraints\File;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -111,12 +112,34 @@ class ProductListProductConcreteRelationFormType extends AbstractType
      */
     protected function addUploadFileField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
+        $builder->add(
+            static::FIELD_FILE_UPLOAD,
+            FileType::class,
+            $this->getFileConstraintConfiguration(),
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getFileConstraintConfiguration(): array
+    {
+        $configuration = [
             'label' => 'Import Product List',
             'required' => false,
             'mapped' => false,
-        ]);
+        ];
 
-        return $this;
+        if ($this->getConfig()->isFileExtensionValidationEnabled()) {
+            $configuration['constraints'] = [
+                new File([
+                    'extensions' => $this->getConfig()->getFileAllowedExtensionsWithMimeTypes(),
+                ]),
+            ];
+        }
+
+        return $configuration;
     }
 }

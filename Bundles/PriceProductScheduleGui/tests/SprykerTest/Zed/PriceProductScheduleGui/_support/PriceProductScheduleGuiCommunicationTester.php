@@ -26,7 +26,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleG
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\FileManagerGui\PHPMD)
  */
 class PriceProductScheduleGuiCommunicationTester extends Actor
 {

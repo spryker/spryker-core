@@ -13,6 +13,8 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface;
+use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\FileManager\Persistence\Mapper\FileManagerMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -76,6 +78,16 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createFileManagerMapper()
     {
-        return new FileManagerMapper();
+        return new FileManagerMapper(
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): FileManagerToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

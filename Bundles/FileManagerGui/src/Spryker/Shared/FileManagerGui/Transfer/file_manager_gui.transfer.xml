@@ -44,6 +44,7 @@
         <property name="idMimeType" type="int"/>
         <property name="isAllowed" type="bool"/>
         <property name="name" type="string"/>
+        <property name="extensions" type="string[]" singular="extension" strict="true"/>
     </transfer>
 
     <transfer name="MimeTypeCollection">

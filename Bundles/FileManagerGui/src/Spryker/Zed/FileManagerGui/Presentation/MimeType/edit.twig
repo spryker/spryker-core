@@ -25,6 +25,11 @@
                 {{ form_row(form.comment) }}
                 {{ form_row(form.isAllowed) }}
 
+                <div class="well">
+                    <p>{{ 'Available extensions for MIME type. Comma separated.' | trans }}</p>
+                </div>
+                {{ form_row(form.extensions) }}
+
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
 
                 {{ form_end(form) }}

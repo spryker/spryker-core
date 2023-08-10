@@ -90,6 +90,21 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
     /**
+     * @var array<string, list<string>>
+     */
+    protected const FILE_ALLOWED_EXTENSIONS_WITH_MIME_TYPES = [
+        'csv' => [
+            'text/csv',
+            'text/plain',
+        ],
+    ];
+
+    /**
+     * @var bool
+     */
+    protected const IS_FILE_EXTENSION_VALIDATION_ENABLED = false;
+
+    /**
      * @api
      *
      * @return array<string>
@@ -238,5 +253,31 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     public function getFileMimeTypes(): array
     {
         return static::FILE_MIME_TYPES;
+    }
+
+    /**
+     * Specification:
+     * - Specifies allowed extensions with their MIME types for the uploaded file.
+     *
+     * @api
+     *
+     * @return array<string, list<string>>
+     */
+    public function getFileAllowedExtensionsWithMimeTypes(): array
+    {
+        return static::FILE_ALLOWED_EXTENSIONS_WITH_MIME_TYPES;
+    }
+
+    /**
+     * Specification:
+     * - Defines whether the extension validation for the uploaded file is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isFileExtensionValidationEnabled(): bool
+    {
+        return static::IS_FILE_EXTENSION_VALIDATION_ENABLED;
     }
 }

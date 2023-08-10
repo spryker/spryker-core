@@ -100,6 +100,7 @@
         <column name="id_mime_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="comment" type="VARCHAR" size="255" required="false"/>
+        <column name="extensions" type="LONGVARCHAR" required="false"/>
         <column name="is_allowed" type="BOOLEAN" required="true"/>
 
         <unique name="spy_mime_type-name">

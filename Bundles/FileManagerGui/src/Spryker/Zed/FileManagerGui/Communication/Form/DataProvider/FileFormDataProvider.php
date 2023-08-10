@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MimeTypeTransfer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
+use Spryker\Zed\FileManagerGui\FileManagerGuiConfig;
 
 class FileFormDataProvider
 {
@@ -27,15 +28,23 @@ class FileFormDataProvider
     protected $fileManagerFacade;
 
     /**
+     * @var \Spryker\Zed\FileManagerGui\FileManagerGuiConfig
+     */
+    protected FileManagerGuiConfig $fileManagerGuiConfig;
+
+    /**
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
+     * @param \Spryker\Zed\FileManagerGui\FileManagerGuiConfig $fileManagerGuiConfig
      */
     public function __construct(
         FileManagerGuiToLocaleFacadeInterface $localeFacade,
-        FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
+        FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade,
+        FileManagerGuiConfig $fileManagerGuiConfig
     ) {
         $this->localeFacade = $localeFacade;
         $this->fileManagerFacade = $fileManagerFacade;
+        $this->fileManagerGuiConfig = $fileManagerGuiConfig;
     }
 
     /**
@@ -64,10 +73,19 @@ class FileFormDataProvider
      */
     public function getOptions()
     {
-        return [
+        $options = [
             FileForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            FileForm::OPTION_ALLOWED_MIME_TYPES => $this->getAllowedMimeTypes(),
         ];
+
+        if ($this->fileManagerGuiConfig->isFileExtensionValidationEnabled()) {
+            $options[FileForm::OPTION_ALLOWED_EXTENSIONS] = $this->getAllowedExtensions();
+
+            return $options;
+        }
+
+        $options[FileForm::OPTION_ALLOWED_MIME_TYPES] = $this->getAllowedMimeTypes();
+
+        return $options;
     }
 
     /**
@@ -77,6 +95,23 @@ class FileFormDataProvider
     {
         return $this->localeFacade
             ->getLocaleCollection();
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    protected function getAllowedExtensions(): array
+    {
+        $mimeTypeCollectionTransfer = $this->fileManagerFacade->findAllowedMimeTypes();
+        $mimeTypesGroupedByExtensions = [];
+
+        foreach ($mimeTypeCollectionTransfer->getItems() as $mimeTypeTransfer) {
+            foreach ($mimeTypeTransfer->getExtensions() as $extension) {
+                $mimeTypesGroupedByExtensions[$extension][] = $mimeTypeTransfer->getNameOrFail();
+            }
+        }
+
+        return $mimeTypesGroupedByExtensions;
     }
 
     /**

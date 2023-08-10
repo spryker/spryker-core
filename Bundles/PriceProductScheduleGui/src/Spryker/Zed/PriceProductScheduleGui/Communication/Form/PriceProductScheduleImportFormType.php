@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
+use Spryker\Shared\Validator\Constraints\File;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 use Symfony\Component\Form\CallbackTransformer;
@@ -15,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile as SymfonyUploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -114,13 +114,10 @@ class PriceProductScheduleImportFormType extends AbstractType
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Select your CSV file',
             'attr' => [
-                'accept' => implode(', ', $this->getConfig()->getFileMimeTypes()),
+                'accept' => $this->getAcceptMimeTypes(),
             ],
             'constraints' => [
-                new File([
-                    'mimeTypes' => $this->getConfig()->getFileMimeTypes(),
-                    'maxSize' => $this->getConfig()->getMaxFileSize(),
-                ]),
+                new File($this->getFileConstraintConfiguration()),
             ],
             'required' => true,
         ]);
@@ -142,6 +139,42 @@ class PriceProductScheduleImportFormType extends AbstractType
             );
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getAcceptMimeTypes(): string
+    {
+        if (!$this->getConfig()->isFileExtensionValidationEnabled()) {
+            return implode(', ', $this->getConfig()->getFileMimeTypes());
+        }
+
+        $acceptMimeTypes = [];
+
+        foreach ($this->getConfig()->getFileAllowedExtensionsWithMimeTypes() as $mimeTypes) {
+            $acceptMimeTypes = array_merge($acceptMimeTypes, $mimeTypes);
+        }
+
+        return implode(', ', $acceptMimeTypes);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getFileConstraintConfiguration(): array
+    {
+        if (!$this->getConfig()->isFileExtensionValidationEnabled()) {
+            return [
+                'mimeTypes' => $this->getConfig()->getFileMimeTypes(),
+                'maxSize' => $this->getConfig()->getMaxFileSize(),
+            ];
+        }
+
+        return [
+            'extensions' => $this->getConfig()->getFileAllowedExtensionsWithMimeTypes(),
+            'maxSize' => $this->getConfig()->getMaxFileSize(),
+        ];
     }
 
     /**

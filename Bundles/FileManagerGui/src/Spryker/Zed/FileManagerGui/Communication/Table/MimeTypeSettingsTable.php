@@ -11,6 +11,7 @@ use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\DeleteMimeTypeForm;
+use Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -23,6 +24,13 @@ class MimeTypeSettingsTable extends AbstractTable
     protected const COL_COMMENT = SpyMimeTypeTableMap::COL_COMMENT;
 
     protected const COL_IS_ALLOWED = SpyMimeTypeTableMap::COL_IS_ALLOWED;
+
+    /**
+     * @uses \Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap::COL_EXTENSIONS
+     *
+     * @var string
+     */
+    protected const COL_EXTENSIONS = 'spy_mime_type.extensions';
 
     /**
      * @var string
@@ -43,6 +51,11 @@ class MimeTypeSettingsTable extends AbstractTable
      * @var string
      */
     protected const TITLE_IS_ALLOWED = 'Is allowed';
+
+    /**
+     * @var string
+     */
+    protected const TITLE_EXTENSIONS = 'Extensions';
 
     /**
      * @var string
@@ -70,11 +83,20 @@ class MimeTypeSettingsTable extends AbstractTable
     protected $mimeTypeQuery;
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery $mimeTypeQuery
+     * @var \Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceInterface
      */
-    public function __construct(SpyMimeTypeQuery $mimeTypeQuery)
-    {
+    protected FileManagerGuiToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery $mimeTypeQuery
+     * @param \Spryker\Zed\FileManagerGui\Dependency\Service\FileManagerGuiToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(
+        SpyMimeTypeQuery $mimeTypeQuery,
+        FileManagerGuiToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->mimeTypeQuery = $mimeTypeQuery;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -88,6 +110,7 @@ class MimeTypeSettingsTable extends AbstractTable
             static::COL_NAME => static::TITLE_MIME_TYPE,
             static::COL_COMMENT => static::TITLE_COMMENT,
             static::COL_IS_ALLOWED => static::TITLE_IS_ALLOWED,
+            static::COL_EXTENSIONS => static::TITLE_EXTENSIONS,
             static::COL_ACTIONS => static::TITLE_ACTIONS,
         ]);
 
@@ -139,6 +162,7 @@ class MimeTypeSettingsTable extends AbstractTable
             static::COL_NAME => $item[static::COL_NAME],
             static::COL_COMMENT => $item[static::COL_COMMENT],
             static::COL_IS_ALLOWED => $this->addCheckbox($item),
+            static::COL_EXTENSIONS => implode(', ', $this->buildExtensions($item)),
             static::COL_ACTIONS => $actions,
         ];
     }
@@ -156,6 +180,20 @@ class MimeTypeSettingsTable extends AbstractTable
             $item[static::COL_ID_MIME_TYPE],
             $item[static::COL_IS_ALLOWED] ? "checked='checked'" : '',
         );
+    }
+
+    /**
+     * @param array<string, mixed> $item
+     *
+     * @return list<string>
+     */
+    protected function buildExtensions(array $item): array
+    {
+        if (empty($item[static::COL_EXTENSIONS])) {
+            return [];
+        }
+
+        return $this->utilEncodingService->decodeJson($item[static::COL_EXTENSIONS], true) ?: [];
     }
 
     /**

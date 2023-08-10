@@ -8,11 +8,11 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints;
 
 use Generated\Shared\Transfer\FileUploadTransfer;
+use Spryker\Shared\Validator\Constraints\FileValidator as ValidatorFileValidator;
 use Spryker\Zed\FileManagerGui\Communication\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\FileValidator as SymfonyFileValidator;
 
-class FileValidator extends SymfonyFileValidator
+class FileValidator extends ValidatorFileValidator
 {
     /**
      * @param \Generated\Shared\Transfer\FileUploadTransfer $value

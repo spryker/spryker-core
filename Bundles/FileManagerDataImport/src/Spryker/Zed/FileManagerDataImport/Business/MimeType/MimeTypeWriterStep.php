@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerDataImport\Business\MimeType;
 
+use Orm\Zed\FileManager\Persistence\Base\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -26,6 +27,21 @@ class MimeTypeWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         $mimeTypeEntity->setIsAllowed($dataSet[MimeTypeDataSetInterface::KEY_IS_ALLOWED]);
+
+        if ($this->hasExtensionsField()) {
+            $mimeTypeEntity->setExtensions($dataSet[MimeTypeDataSetInterface::KEY_EXTENSIONS]);
+        }
+
         $mimeTypeEntity->save();
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    protected function hasExtensionsField(): bool
+    {
+        return property_exists(SpyMimeType::class, 'extensions');
     }
 }

@@ -27,6 +27,6 @@ class FileManagerDataImportFacade extends AbstractFacade implements FileManagerD
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createFileManagerDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getFileManagerDataImport()->import($dataImporterConfigurationTransfer);
     }
 }
