@@ -22,6 +22,8 @@ class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacade::saveSearchHttpConfig()} instead.
+     *
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      * @param string $storeReference
      *
@@ -39,6 +41,8 @@ class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacade::deleteSearchHttpConfig()} instead.
+     *
      * @param string $storeReference
      * @param string $applicationId
      *
@@ -47,5 +51,33 @@ class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterfa
     public function unpublishSearchHttpConfig(string $storeReference, string $applicationId): void
     {
         $this->getFactory()->createConfigDeleter()->delete($storeReference, $applicationId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function saveSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
+    {
+        $this->getFactory()->createConfigWriter()->saveSearchHttpConfig($searchHttpConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
+    {
+        $this->getFactory()->createConfigDeleter()->deleteSearchHttpConfig($searchHttpConfigTransfer);
     }
 }

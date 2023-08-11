@@ -17,6 +17,8 @@ interface SearchHttpFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacadeInterface::saveSearchHttpConfig()} instead.
+     *
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      * @param string $storeReference
      *
@@ -33,10 +35,36 @@ interface SearchHttpFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacadeInterface::deleteSearchHttpConfig()} instead.
+     *
      * @param string $storeReference
      * @param string $applicationId
      *
      * @return void
      */
     public function unpublishSearchHttpConfig(string $storeReference, string $applicationId): void;
+
+    /**
+     * Specification:
+     * - Iterates through all the stores to save the search http config using the data from given `SearchHttpConfig` transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function saveSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void;
+
+    /**
+     * Specification:
+     * - Iterates through all the stores to delete the search http config using the data from given `SearchHttpConfig` transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void;
 }

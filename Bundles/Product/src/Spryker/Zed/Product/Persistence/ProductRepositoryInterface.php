@@ -215,15 +215,15 @@ interface ProductRepositoryInterface
 
     /**
      * @param int $productExportPublishChunkSize
-     * @param int $idStore
      * @param int $lastProductId
+     * @param int|null $idStore Deprecated: Will be removed without replacement.
      *
      * @return array<int>
      */
     public function getAllProductConcreteIdsWithLimit(
         int $productExportPublishChunkSize,
-        int $idStore,
-        int $lastProductId
+        int $lastProductId,
+        ?int $idStore = null
     ): array;
 
     /**

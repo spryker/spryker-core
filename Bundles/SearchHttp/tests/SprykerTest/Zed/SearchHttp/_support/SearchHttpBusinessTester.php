@@ -30,7 +30,7 @@ use Orm\Zed\SearchHttp\Persistence\SpySearchHttpConfigQuery;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\SearchHttp\Business\SearchHttpFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SearchHttp\PHPMD)
  */
 class SearchHttpBusinessTester extends Actor
 {
@@ -90,13 +90,11 @@ class SearchHttpBusinessTester extends Actor
     }
 
     /**
-     * @param string $storeReference
      * @param \Orm\Zed\SearchHttp\Persistence\SpySearchHttpConfig|null $searchHttpConfigEntity
      *
      * @return void
      */
     public function assertSearchHttpConfigRemovedProperly(
-        string $storeReference,
         ?SpySearchHttpConfig $searchHttpConfigEntity = null
     ): void {
         $this->assertNotNull($searchHttpConfigEntity);

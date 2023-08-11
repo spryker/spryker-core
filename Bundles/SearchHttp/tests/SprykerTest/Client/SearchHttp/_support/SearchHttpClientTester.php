@@ -63,11 +63,18 @@ use Spryker\Shared\SearchHttp\SearchHttpConfig;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\SearchHttp\PHPMD)
+ * @method \Spryker\Client\SearchHttp\SearchHttpFactory getFactory()
+ * @method \Spryker\Client\SearchHttp\SearchHttpConfig getModuleConfig()
  */
 class SearchHttpClientTester extends Actor
 {
     use _generated\SearchHttpClientTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'store';
 
     /**
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
@@ -103,9 +110,11 @@ class SearchHttpClientTester extends Actor
             ->method('getCurrentStore')
             ->willReturn(
                 (new StoreTransfer())
-                    ->setName('store')
+                    ->setName(static::STORE_NAME)
                     ->setStoreReference('store-reference'),
             );
+        $storeClient->method('isCurrentStoreDefined')
+            ->willReturn(true);
 
         $this->mockFactoryMethod('getStoreClient', $storeClient);
         $this->setDependency(SearchHttpDependencyProvider::CLIENT_STORE, $storeClient);
@@ -406,6 +415,7 @@ class SearchHttpClientTester extends Actor
                             'page' => $searchQuery->getSearchQuery()->getPagination()->getPage(),
                             'hitsPerPage' => $searchQuery->getSearchQuery()->getPagination()->getItemsPerPage(),
                         ],
+                        'store' => static::STORE_NAME,
                     ],
                 ],
             )

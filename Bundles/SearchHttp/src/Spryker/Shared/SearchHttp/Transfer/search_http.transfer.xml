@@ -27,6 +27,7 @@
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
         <property name="emitter" type="string"/>
+        <property name="actorId" type="string"/>
     </transfer>
 
     <transfer name="Store">

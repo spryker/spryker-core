@@ -824,29 +824,31 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
     /**
      * @param int $productExportPublishChunkSize
-     * @param int $idStore
      * @param int $lastProductId
+     * @param int|null $idStore Deprecated: Will be removed without replacement.
      *
      * @return array<int>
      */
     public function getAllProductConcreteIdsWithLimit(
         int $productExportPublishChunkSize,
-        int $idStore,
-        int $lastProductId
+        int $lastProductId,
+        ?int $idStore = null
     ): array {
-        return $this->getFactory()
-            ->createProductQuery()
+        $productQuery = $this->getFactory()->createProductQuery()
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->where(SpyProductTableMap::COL_ID_PRODUCT . ' > ?', $lastProductId)
-            ->useSpyProductAbstractQuery()
+            ->limit($productExportPublishChunkSize)
+            ->orderBy(SpyProductTableMap::COL_ID_PRODUCT);
+
+        if ($idStore) {
+            $productQuery->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractStoreQuery()
                     ->filterByFkStore($idStore)
                 ->endUse()
-            ->endUse()
-            ->limit($productExportPublishChunkSize)
-            ->orderBy(SpyProductTableMap::COL_ID_PRODUCT)
-            ->find()
-            ->toArray();
+            ->endUse();
+        }
+
+        return $productQuery->find()->toArray();
     }
 
     /**

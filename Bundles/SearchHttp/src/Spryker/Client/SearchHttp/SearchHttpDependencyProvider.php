@@ -19,6 +19,9 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClient
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientBridge;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientBridge;
 
+/**
+ * @method \Spryker\Client\SearchHttp\SearchHttpConfig getConfig()
+ */
 class SearchHttpDependencyProvider extends AbstractDependencyProvider
 {
     /**

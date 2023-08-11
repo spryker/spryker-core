@@ -54,6 +54,9 @@ use Spryker\Client\SearchHttp\Reader\ConfigReaderInterface;
 use Spryker\Client\SearchHttp\Transformer\Factory\FacetValueTransformerFactory;
 use Spryker\Client\SearchHttp\Transformer\Factory\FacetValueTransformerFactoryInterface;
 
+/**
+ * @method \Spryker\Client\SearchHttp\SearchHttpConfig getConfig()
+ */
 class SearchHttpFactory extends AbstractFactory
 {
     /**
@@ -234,6 +237,7 @@ class SearchHttpFactory extends AbstractFactory
     {
         return new QueryApplicabilityChecker(
             $this->createConfigReader(),
+            $this->getStoreClient(),
         );
     }
 
@@ -307,6 +311,7 @@ class SearchHttpFactory extends AbstractFactory
     {
         return new SearchHeaderBuilder(
             $this->getStoreClient(),
+            $this->getConfig(),
         );
     }
 
@@ -315,7 +320,7 @@ class SearchHttpFactory extends AbstractFactory
      */
     public function createSearchQueryBuilder(): SearchQueryBuilderInterface
     {
-        return new SearchQueryBuilder();
+        return new SearchQueryBuilder($this->getStoreClient());
     }
 
     /**

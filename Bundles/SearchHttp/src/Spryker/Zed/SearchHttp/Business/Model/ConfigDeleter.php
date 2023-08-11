@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchHttp\Business\Model;
 
+use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Spryker\Zed\SearchHttp\Dependency\Facade\SearchHttpToStoreFacadeInterface;
 use Spryker\Zed\SearchHttp\Persistence\SearchHttpEntityManagerInterface;
 
@@ -35,6 +36,8 @@ class ConfigDeleter implements ConfigDeleterInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\Model\ConfigDeleter::deleteSearchHttpConfig()} instead.
+     *
      * @param string $storeReference
      * @param string $applicationId
      *
@@ -45,5 +48,22 @@ class ConfigDeleter implements ConfigDeleterInterface
         $storeTransfer = $this->storeFacade->getStoreByStoreReference($storeReference);
 
         $this->searchHttpEntityManager->deleteSearchHttpConfig($storeTransfer, $applicationId);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->searchHttpEntityManager->deleteSearchHttpConfig(
+                $storeTransfer,
+                $searchHttpConfigTransfer->getApplicationIdOrFail(),
+            );
+        }
     }
 }

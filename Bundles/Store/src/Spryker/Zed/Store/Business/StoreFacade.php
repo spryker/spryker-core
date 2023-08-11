@@ -281,6 +281,8 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
 
      * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException
@@ -289,6 +291,10 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      */
     public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer
     {
+        if ($this->isDynamicStoreEnabled()) {
+            return $accessTokenRequestTransfer;
+        }
+
         return $this->getFactory()
             ->createStoreReferenceAccessTokenRequestExpander()
             ->expand($accessTokenRequestTransfer);
@@ -313,6 +319,8 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\MessageAttributesTransfer
@@ -320,6 +328,10 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     public function expandMessageAttributes(
         MessageAttributesTransfer $messageAttributesTransfer
     ): MessageAttributesTransfer {
+        if ($this->isDynamicStoreEnabled()) {
+            return $messageAttributesTransfer;
+        }
+
         return $this->getFactory()
             ->createCurrentStoreReferenceMessageAttributesExpander()
             ->expand($messageAttributesTransfer);

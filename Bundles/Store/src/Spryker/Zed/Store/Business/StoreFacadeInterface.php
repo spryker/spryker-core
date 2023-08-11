@@ -246,11 +246,14 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
+     * - Expands only if dynamic store is disabled.
      * - Finds a store reference for the currently selected store.
      * - Expands `AccessTokenRequest.accessTokenRequestOptions` with found store reference.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
      *
@@ -273,10 +276,13 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
+     * - Expands only if dynamic store is disabled.
      * - When store reference is not provided, expands message attributes with store reference from a store set in the application environment.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
      *

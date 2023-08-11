@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\StoreCollectionTransfer
      */
     public function getStoreCollectionAction(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer

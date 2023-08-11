@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\SearchQueryRangeFacetFilterTransfer;
 use Generated\Shared\Transfer\SearchQueryTransfer;
 use Generated\Shared\Transfer\SearchQueryValueFacetFilterTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
 
 class SearchQueryBuilder implements SearchQueryBuilderInterface
 {
@@ -25,6 +26,19 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
     protected const FACET_TYPE_VALUES = 'values';
 
     /**
+     * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface
+     */
+    protected SearchHttpToStoreClientInterface $storeClient;
+
+    /**
+     * @param \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface $storeClient
+     */
+    public function __construct(SearchHttpToStoreClientInterface $storeClient)
+    {
+        $this->storeClient = $storeClient;
+    }
+
+    /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      *
      * @return array<string, mixed>
@@ -34,11 +48,24 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
         /** @var \Generated\Shared\Transfer\SearchQueryTransfer $searchQueryTransfer */
         $searchQueryTransfer = $searchQuery->getSearchQuery();
 
-        $query = $this->addQueryString([], $searchQueryTransfer);
+        $query = $this->addStoreName([]);
+        $query = $this->addQueryString($query, $searchQueryTransfer);
         $query = $this->addFacets($query, $searchQueryTransfer);
         $query = $this->addSorting($query, $searchQueryTransfer);
 
         return $this->addPagination($query, $searchQueryTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     *
+     * @return array<string, mixed>
+     */
+    protected function addStoreName(array $query): array
+    {
+        $query['store'] = $this->storeClient->getCurrentStore()->getName();
+
+        return $query;
     }
 
     /**

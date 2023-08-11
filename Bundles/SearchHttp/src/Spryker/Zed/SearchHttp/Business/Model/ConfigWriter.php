@@ -36,6 +36,8 @@ class ConfigWriter implements ConfigWriterInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\Model\ConfigWriter::saveSearchHttpConfig()} instead.
+     *
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      * @param string $storeReference
      *
@@ -46,5 +48,19 @@ class ConfigWriter implements ConfigWriterInterface
         $storeTransfer = $this->storeFacade->getStoreByStoreReference($storeReference);
 
         $this->searchHttpEntityManager->saveSearchHttpConfig($searchHttpConfigTransfer, $storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return void
+     */
+    public function saveSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->searchHttpEntityManager->saveSearchHttpConfig($searchHttpConfigTransfer, $storeTransfer);
+        }
     }
 }

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Product\Communication\Plugin\MessageBroker\ProductExportMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()

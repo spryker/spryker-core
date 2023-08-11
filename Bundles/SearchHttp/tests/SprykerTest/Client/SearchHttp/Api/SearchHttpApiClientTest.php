@@ -55,7 +55,9 @@ class SearchHttpApiClientTest extends Unit
         $httpRequest = new Request(
             SearchHttpConfig::SEARCH_HTTP_METHOD,
             'url',
-            static::REQUEST_HEADERS,
+            static::REQUEST_HEADERS + [
+                'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
+            ],
         );
         $responseData = [['responseData']];
 
@@ -84,7 +86,9 @@ class SearchHttpApiClientTest extends Unit
         $httpRequest = new Request(
             SearchHttpConfig::SEARCH_HTTP_METHOD,
             'url',
-            static::REQUEST_HEADERS,
+            static::REQUEST_HEADERS + [
+                'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
+            ],
         );
         $responseData = ['wrong_response'];
 

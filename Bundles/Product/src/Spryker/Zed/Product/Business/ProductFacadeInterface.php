@@ -1051,6 +1051,7 @@ interface ProductFacadeInterface
      * - Requires ProductPublisherConfigTransfer.eventName.
      * - Throws ProductPublisherEventNameMismatchException if ProductPublisherConfigTransfer.eventName contents unsupported event name.
      * - Sends ProductPublisherConfigTransfer.eventName event to the event bus.
+     * - Uses the tenant identifier, if set, as a store reference to be used when sending the message.
      *
      * @api
      *
@@ -1077,6 +1078,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Checks if productExportCriteria.storeReference is modified.
+     * - Filters concrete products by store when provided in criteria.
      * - Triggers Product.product_concrete.export event for concrete products filtered by the criteria.
      *
      * @api

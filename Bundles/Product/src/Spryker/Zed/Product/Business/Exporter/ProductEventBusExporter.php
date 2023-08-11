@@ -68,26 +68,60 @@ class ProductEventBusExporter implements ProductExporterInterface
      */
     public function export(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void
     {
-        try {
-            $idStore = $this->getStoreTransfer($productExportCriteriaTransfer)->getIdStoreOrFail();
-        } catch (StoreReferenceNotFoundException $storeReferenceNotFoundException) {
-            $this->getLogger()->error($storeReferenceNotFoundException->getMessage());
-
-            return;
-        } catch (NullValueException $nullValueException) {
-            $this->getLogger()->error($nullValueException->getMessage());
-
+        if (!$this->isProductExportCriteriaStoreReferenceValid($productExportCriteriaTransfer)) {
             return;
         }
 
-        $productConcreteIdChunks = $this->productConcreteManager
-            ->getAllProductConcreteIdsByChunks($this->productConfig->getProductExportPublishChunkSize(), $idStore);
+        $productConcreteIdChunks = $this->productConcreteManager->getAllProductConcreteIdsByChunks(
+            $this->productConfig->getProductExportPublishChunkSize(),
+            $this->findIdStoreForExporting($productExportCriteriaTransfer),
+        );
 
         foreach ($productConcreteIdChunks as $productConcreteIds) {
             $eventEntityTransfers = $this->createEventTransfers($productConcreteIds);
 
             $this->eventFacade->triggerBulk(ProductEvents::PRODUCT_CONCRETE_EXPORT, $eventEntityTransfers);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
+     *
+     * @return bool
+     */
+    protected function isProductExportCriteriaStoreReferenceValid(ProductExportCriteriaTransfer $productExportCriteriaTransfer): bool
+    {
+        if (!$productExportCriteriaTransfer->isPropertyModified(ProductExportCriteriaTransfer::STORE_REFERENCE)) {
+            return true;
+        }
+
+        try {
+            $this->getStoreTransfer($productExportCriteriaTransfer)->getIdStoreOrFail();
+        } catch (StoreReferenceNotFoundException $storeReferenceNotFoundException) {
+            $this->getLogger()->error($storeReferenceNotFoundException->getMessage());
+
+            return false;
+        } catch (NullValueException $nullValueException) {
+            $this->getLogger()->error($nullValueException->getMessage());
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
+     *
+     * @return int|null
+     */
+    protected function findIdStoreForExporting(ProductExportCriteriaTransfer $productExportCriteriaTransfer): ?int
+    {
+        if (!$productExportCriteriaTransfer->isPropertyModified(ProductExportCriteriaTransfer::STORE_REFERENCE)) {
+            return null;
+        }
+
+        return $this->getStoreTransfer($productExportCriteriaTransfer)->getIdStore();
     }
 
     /**

@@ -83,4 +83,14 @@ class ProductConfig extends AbstractBundleConfig
     {
         return (bool)$this->get(ProductConstants::PUBLISHING_TO_MESSAGE_BROKER_ENABLED, true);
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(ProductConstants::TENANT_IDENTIFIER, '');
+    }
 }

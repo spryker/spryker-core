@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Business\Publisher;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCreatedTransfer;
 use Generated\Shared\Transfer\ProductDeletedTransfer;
 use Generated\Shared\Transfer\ProductExportedTransfer;
@@ -261,7 +262,9 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         array $productsConcrete,
         string $storeReference
     ): TransferInterface {
-        $messageAttributesTransfer = (new MessageAttributesTransfer())->setStoreReference($storeReference);
+        $messageAttributesTransfer = (new MessageAttributesTransfer())
+            ->setStoreReference($storeReference)
+            ->setTenantIdentifier($storeReference);
 
         /** @var \Generated\Shared\Transfer\ProductExportedTransfer|\Generated\Shared\Transfer\ProductCreatedTransfer|\Generated\Shared\Transfer\ProductUpdatedTransfer $publishTransfer */
         $publishTransfer = new $publishTransferClass();
@@ -284,15 +287,35 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         $productConcreteTransfersGrouperByStoreReference = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
-                if (!$storeTransfer->getStoreReference()) {
-                    continue;
-                }
+            $storeReferences = $this->getStoreReferences($productConcreteTransfer);
 
-                $productConcreteTransfersGrouperByStoreReference[$storeTransfer->getStoreReference()][] = $productConcreteTransfer;
+            foreach ($storeReferences as $storeReference) {
+                $productConcreteTransfersGrouperByStoreReference[$storeReference][] = $productConcreteTransfer;
             }
         }
 
         return $productConcreteTransfersGrouperByStoreReference;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return list<string>
+     */
+    protected function getStoreReferences(ProductConcreteTransfer $productConcreteTransfer): array
+    {
+        $storeReferences = [
+            $this->productConfig->getTenantIdentifier(),
+        ];
+
+        foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
+            if (!$storeTransfer->getStoreReference()) {
+                continue;
+            }
+
+            $storeReferences[] = $storeTransfer->getStoreReference();
+        }
+
+        return array_filter(array_unique($storeReferences));
     }
 }

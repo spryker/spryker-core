@@ -177,9 +177,9 @@ interface ProductConcreteManagerInterface
 
     /**
      * @param int $chunkSize
-     * @param int $idStore
+     * @param int|null $idStore Deprecated: Will be removed without replacement.
      *
      * @return \Generator
      */
-    public function getAllProductConcreteIdsByChunks(int $chunkSize, int $idStore): Generator;
+    public function getAllProductConcreteIdsByChunks(int $chunkSize, ?int $idStore = null): Generator;
 }

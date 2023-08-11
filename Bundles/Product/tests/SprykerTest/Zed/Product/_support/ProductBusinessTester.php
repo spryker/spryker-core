@@ -40,8 +40,9 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Product\ProductConfig getModuleConfig()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Product\PHPMD)
  */
 class ProductBusinessTester extends Actor
 {
@@ -397,15 +398,20 @@ class ProductBusinessTester extends Actor
         ProductConcreteTransfer $productConcreteTransfer,
         string $messageType
     ): void {
-        $storeReferences = [];
+        $storeReferences = [
+            $this->getModuleConfig()->getTenantIdentifier(),
+        ];
+
         foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
             if ($storeTransfer->getStoreReference()) {
                 $storeReferences[] = $storeTransfer->getStoreReference();
             }
         }
 
+        $storeReferences = array_unique(array_filter($storeReferences));
+
         $messageBrokerFacade
-            ->expects($this->exactly(2))
+            ->expects($this->exactly(count($storeReferences)))
             ->method('sendMessage')
             ->with($this->callback(function ($message) use ($productConcreteTransfer, $messageType, $storeReferences) {
                 $this->assertInstanceOf($messageType, $message);

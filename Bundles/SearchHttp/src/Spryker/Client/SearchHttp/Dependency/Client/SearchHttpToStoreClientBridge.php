@@ -31,4 +31,12 @@ class SearchHttpToStoreClientBridge implements SearchHttpToStoreClientInterface
     {
         return $this->storeClient->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool
+    {
+        return $this->storeClient->isCurrentStoreDefined();
+    }
 }

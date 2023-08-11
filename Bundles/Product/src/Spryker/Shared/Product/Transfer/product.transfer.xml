@@ -33,6 +33,7 @@
         <property name="metaDescription" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="attributes" type="array" singular="attribute"/>
+        <property name="isSearchable" type="bool"/>
     </transfer>
 
     <transfer name="ProductVariant">
@@ -137,6 +138,7 @@
 
     <transfer name="ProductConcreteCollection">
         <property name="products" type="ProductConcrete[]" singular="product"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="ProductExported">
@@ -185,10 +187,13 @@
     </transfer>
 
     <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
     </transfer>
 
     <transfer name="EventEntity">
         <property name="id" type="int"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 
     <transfer name="MessageResponse">

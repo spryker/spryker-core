@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\ProductExportedTransfer;
 use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
 use Generated\Shared\Transfer\ProductUpdatedTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
@@ -476,6 +477,32 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testProductsSuccessfullyPublishedToMessageBrokerWithTenantIdentifierProvided(): void
+    {
+        // Arrange
+        $tenantIdentifier = 'test-tenant-identifier';
+        $this->tester->setConfig(ProductConstants::TENANT_IDENTIFIER, $tenantIdentifier);
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName(ProductExportedTransfer::class);
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $concreteProduct,
+            ProductExportedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testProductCreatedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
@@ -608,19 +635,51 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProductExportEventsSuccessfullyTriggered(): void
+    public function testProductExportEventsSuccessfullyTriggeredWithFullAcceptanceCriteria(): void
     {
         // Arrange
         $productConcreteTransfer1 = $this->tester->haveFullProduct();
         $productConcreteTransfer2 = $this->tester->haveFullProduct();
 
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
 
         $this->tester->deleteProductFromStore($productConcreteTransfer2, $storeTransfer);
 
         $productExportCriteriaTransfer = (new ProductExportCriteriaTransfer())
             ->setStoreReference($storeTransfer->getStoreReference());
+
+        // Assert
+        $this->eventFacade
+            ->expects($this->atLeastOnce())
+            ->method('triggerBulk')
+            ->with(ProductEvents::PRODUCT_CONCRETE_EXPORT, $this->callback(
+                function ($transfers) use ($productConcreteTransfer2) {
+                    $this->assertNotEmpty($transfers);
+                    $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
+                    $this->assertNotContains($productConcreteTransfer2, $transfers);
+
+                    return true;
+                },
+            ));
+
+        // Act
+        $this->tester->getProductFacade()->triggerProductExportEvents($productExportCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductExportEventsSuccessfullyTriggeredWithEmptyAcceptanceCriteria(): void
+    {
+        // Arrange
+        $productConcreteTransfer1 = $this->tester->haveFullProduct();
+        $productConcreteTransfer2 = $this->tester->haveFullProduct();
+
+        $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
+
+        $this->tester->deleteProductFromStore($productConcreteTransfer2, $storeTransfer);
+
+        $productExportCriteriaTransfer = (new ProductExportCriteriaTransfer());
 
         // Assert
         $this->eventFacade
@@ -667,8 +726,11 @@ class ProductFacadeTest extends Unit
     public function triggerProductExportEventsTriggerFailsDataProvider(): array
     {
         return [
-            'store reference is missing' => [
-                'export criteria' => new ProductExportCriteriaTransfer(),
+            'store reference is null' => [
+                'export criteria' => (new ProductExportCriteriaTransfer())->setStoreReference(null),
+            ],
+            'store reference is empty' => [
+                'export criteria' => (new ProductExportCriteriaTransfer())->setStoreReference(''),
             ],
             'store with given reference doesn\'t exist' => [
                 'export criteria' => (new ProductExportCriteriaTransfer())

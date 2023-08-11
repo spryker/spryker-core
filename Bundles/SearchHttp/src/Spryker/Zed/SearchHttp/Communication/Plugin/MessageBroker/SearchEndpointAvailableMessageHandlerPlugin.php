@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SearchHttp\Communication\Plugin\MessageBroker\SearchEndpointMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\SearchHttp\Business\SearchHttpFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchHttp\Communication\SearchHttpCommunicationFactory getFactory()
  * @method \Spryker\Zed\SearchHttp\SearchHttpConfig getConfig()

@@ -41,13 +41,14 @@ class SearchHttpBusinessHelper extends Module
 
     /**
      * @param array $seed
+     * @param string $storeName
      *
      * @return void
      */
-    public function haveSearchHttpConfig(array $seed): void
+    public function haveSearchHttpConfig(array $seed, string $storeName): void
     {
         $searchHttpConfigEntity = (new SpySearchHttpConfig())
-            ->setStoreName('test_store_name')
+            ->setStoreName($storeName)
             ->setData($this->createSearchHttpConfigCollectionTransfer($seed)->toArray());
 
         $searchHttpConfigEntity->save();

@@ -48,7 +48,7 @@ class CurrentStoreReferenceMessageAttributeProviderPluginTest extends Unit
     public function testProvideMessageAttributesAddsStoreReferenceWhenItExists(): void
     {
         // Arrange
-        $this->mockCurrentStore(static::STORE_NAME, static::STORE_REFERENCE_NAME);
+        $this->mockCurrentStore(false, static::STORE_NAME, static::STORE_REFERENCE_NAME);
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $storeReferenceMessageAttributeProviderPlugin = new CurrentStoreReferenceMessageAttributeProviderPlugin();
@@ -67,7 +67,7 @@ class CurrentStoreReferenceMessageAttributeProviderPluginTest extends Unit
     public function testProvideMessageAttributesDoesNotAddStoreReferenceWhenTenantIdentifierDoesNotExists(): void
     {
         // Arrange
-        $this->mockCurrentStore('aaa', null);
+        $this->mockCurrentStore(false, 'aaa', null);
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $storeReferenceMessageAttributeProviderPlugin = new CurrentStoreReferenceMessageAttributeProviderPlugin();
@@ -81,12 +81,32 @@ class CurrentStoreReferenceMessageAttributeProviderPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testProvideMessageAttributesDoesNotAddStoreReferenceWhenDynamicMultiStoreEnabled(): void
+    {
+        // Arrange
+        $this->mockCurrentStore(true, static::STORE_NAME, static::STORE_REFERENCE_NAME);
+
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $storeReferenceMessageAttributeProviderPlugin = new CurrentStoreReferenceMessageAttributeProviderPlugin();
+        $storeReferenceMessageAttributeProviderPlugin->setFacade($this->tester->getFacade());
+
+        // Act
+        $messageAttributesTransfer = $storeReferenceMessageAttributeProviderPlugin->provideMessageAttributes($messageAttributesTransfer);
+
+        // Assert
+        $this->assertNull($messageAttributesTransfer->getStoreReference());
+    }
+
+    /**
+     * @param bool $isDynamicStoreModeEnabled
      * @param string $storeName
      * @param string|null $storeReference
      *
      * @return void
      */
-    protected function mockCurrentStore(string $storeName, ?string $storeReference): void
+    protected function mockCurrentStore(bool $isDynamicStoreModeEnabled, string $storeName, ?string $storeReference): void
     {
         $storeReaderMock = $this->getMockBuilder(StoreReader::class)
             ->disableOriginalConstructor()
@@ -99,5 +119,6 @@ class CurrentStoreReferenceMessageAttributeProviderPluginTest extends Unit
 
         $this->tester->mockFactoryMethod('createStoreReader', $storeReaderMock);
         $this->tester->mockFactoryMethod('getCurrentStore', static::STORE_NAME);
+        $this->tester->mockFactoryMethod('getIsDynamicStoreModeEnabled', $isDynamicStoreModeEnabled);
     }
 }

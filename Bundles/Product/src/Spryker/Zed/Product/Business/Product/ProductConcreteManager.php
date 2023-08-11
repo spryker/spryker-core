@@ -704,19 +704,19 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
     /**
      * @param int $chunkSize
-     * @param int $idStore
+     * @param int|null $idStore Deprecated: Will be removed without replacement.
      *
      * @return \Generator
      */
-    public function getAllProductConcreteIdsByChunks(int $chunkSize, int $idStore): Generator
+    public function getAllProductConcreteIdsByChunks(int $chunkSize, ?int $idStore = null): Generator
     {
         $lastProductId = 0;
 
         while (true) {
             $productIds = $this->productRepository->getAllProductConcreteIdsWithLimit(
                 $chunkSize,
-                $idStore,
                 $lastProductId,
+                $idStore,
             );
 
             if (!$productIds) {

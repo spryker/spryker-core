@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageAttributeProviderPluginInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()

@@ -34,4 +34,12 @@ class SearchHttpToStoreFacadeBridge implements SearchHttpToStoreFacadeInterface
     {
         return $this->storeFacade->getStoreByStoreReference($storeReference);
     }
+
+    /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array
+    {
+        return $this->storeFacade->getAllStores();
+    }
 }
