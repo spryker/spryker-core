@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantCategory\Business;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -65,5 +66,22 @@ class MerchantCategoryFacade extends AbstractFacade implements MerchantCategoryF
             ->getFactory()
             ->createMerchantCategoryDeleter()
             ->delete($merchantCategoryCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function expandMerchantCollectionWithCategories(
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantCategoryMerchantExpander()
+            ->expand($merchantCollectionTransfer);
     }
 }

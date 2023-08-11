@@ -48,4 +48,27 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
 
         return $stockCollectionTransfer;
     }
+
+    /**
+     * @module Stock
+     *
+     * @param list<int> $merchantIds
+     *
+     * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\StockTransfer>>
+     */
+    public function getStocksGroupedByIdMerchant(array $merchantIds): array
+    {
+        if (!$merchantIds) {
+            return [];
+        }
+
+        $merchantStocksEntities = $this->getFactory()
+            ->createMerchantStockPropelQuery()
+            ->leftJoinWithSpyStock()
+            ->filterByFkMerchant_In($merchantIds)
+            ->find();
+
+        return $this->getFactory()->createMerchantStockMapper()
+            ->mapMerchantStockEntityCollectionToStocksGroupedByIdMerchant($merchantStocksEntities);
+    }
 }

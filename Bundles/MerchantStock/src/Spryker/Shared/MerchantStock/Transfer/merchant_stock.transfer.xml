@@ -9,6 +9,10 @@
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
     <transfer name="Stock">
         <property name="idStock" type="int"/>
         <property name="name" type="string"/>

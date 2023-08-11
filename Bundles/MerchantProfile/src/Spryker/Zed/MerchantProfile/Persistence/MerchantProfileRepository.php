@@ -50,11 +50,11 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer
     {
-        $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
         /** @var \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery $merchantProfileQuery */
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
+            ->leftJoinWithSpyMerchantProfileAddress()
             ->useSpyMerchantProfileAddressQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyCountry()
             ->endUse();
@@ -63,15 +63,9 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         $merchantProfileQuery = $this->buildQueryFromCriteria($merchantProfileQuery, $merchantProfileCriteriaTransfer->getFilter());
         $merchantProfileEntityCollection = $merchantProfileQuery->find();
 
-        foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {
-            $merchantProfileTransfer = $this->getFactory()
-                ->createPropelMerchantProfileMapper()
-                ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
-
-            $merchantProfileCollectionTransfer->addMerchantProfile($merchantProfileTransfer);
-        }
-
-        return $merchantProfileCollectionTransfer;
+        return $this->getFactory()
+            ->createPropelMerchantProfileMapper()
+            ->mapMerchantProfileEntityCollectionToMerchantProfileCollectionTransfer($merchantProfileEntityCollection);
     }
 
     /**

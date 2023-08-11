@@ -12,7 +12,7 @@
         "spryker/event-behavior": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.1.0",
-        "spryker/merchant-extension": "^1.1.0",
+        "spryker/merchant-extension": "^1.2.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/transfer": "^3.25.0"

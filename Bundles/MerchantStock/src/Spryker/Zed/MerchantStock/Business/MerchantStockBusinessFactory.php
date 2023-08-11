@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantStock\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantStock\Business\Expander\MerchantStockMerchantExpander;
+use Spryker\Zed\MerchantStock\Business\Expander\MerchantStockMerchantExpanderInterface;
 use Spryker\Zed\MerchantStock\Business\Writer\MerchantStockWriter;
 use Spryker\Zed\MerchantStock\Business\Writer\MerchantStockWriterInterface;
 use Spryker\Zed\MerchantStock\Dependency\Facade\MerchantStockToStockFacadeInterface;
@@ -28,6 +30,16 @@ class MerchantStockBusinessFactory extends AbstractBusinessFactory
         return new MerchantStockWriter(
             $this->getStockFacade(),
             $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantStock\Business\Expander\MerchantStockMerchantExpanderInterface
+     */
+    public function createMerchantStockMerchantExpander(): MerchantStockMerchantExpanderInterface
+    {
+        return new MerchantStockMerchantExpander(
+            $this->getRepository(),
         );
     }
 

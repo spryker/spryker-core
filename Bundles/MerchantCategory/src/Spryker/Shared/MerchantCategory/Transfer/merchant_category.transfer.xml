@@ -6,6 +6,10 @@
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
     <transfer name="MerchantCategoryCriteria">
         <property name="idMerchant" type="int"/>
         <property name="isCategoryActive" type="bool"/>

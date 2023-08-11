@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant\MerchantProfileMerchantBulkExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()

@@ -47,9 +47,16 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_POST_UPDATE = 'PLUGINS_MERCHANT_POST_UPDATE';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Merchant\MerchantDependencyProvider::PLUGINS_MERCHANT_BULK_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGINS_MERCHANT_EXPANDER = 'PLUGINS_MERCHANT_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_BULK_EXPANDER = 'PLUGINS_MERCHANT_BULK_EXPANDER';
 
     /**
      * @var string
@@ -77,6 +84,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantPostCreatePlugins($container);
         $container = $this->addMerchantPostUpdatePlugins($container);
         $container = $this->addMerchantExpanderPlugins($container);
+        $container = $this->addMerchantBulkExpanderPlugins($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addEventFacade($container);
         $container = $this->addMessageBrokerFacade($container);
@@ -142,6 +150,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Pyz\Zed\Merchant\MerchantDependencyProvider::addMerchantBulkExpanderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -150,6 +160,20 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_MERCHANT_EXPANDER, function () {
             return $this->getMerchantExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantBulkExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_BULK_EXPANDER, function () {
+            return $this->getMerchantBulkExpanderPlugins();
         });
 
         return $container;
@@ -172,9 +196,19 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Merchant\MerchantDependencyProvider::getMerchantBulkExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface>
      */
     protected function getMerchantExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface>
+     */
+    protected function getMerchantBulkExpanderPlugins(): array
     {
         return [];
     }

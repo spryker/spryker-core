@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProfile\Business\Expander\MerchantProfileMerchantExpander;
+use Spryker\Zed\MerchantProfile\Business\Expander\MerchantProfileMerchantExpanderInterface;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantDataOrder\MerchantDataOrderHydrate;
@@ -104,5 +106,15 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function createMerchantDataOrderHydrate(): MerchantDataOrderHydrate
     {
         return new MerchantDataOrderHydrate($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\Expander\MerchantProfileMerchantExpanderInterface
+     */
+    public function createMerchantProfileMerchantExpander(): MerchantProfileMerchantExpanderInterface
+    {
+        return new MerchantProfileMerchantExpander(
+            $this->getRepository(),
+        );
     }
 }

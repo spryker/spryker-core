@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
@@ -114,5 +115,22 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
     public function hydrateOrderMerchants(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()->createMerchantDataOrderHydrate()->hydrateOrderWithMerchantData($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function expandMerchantCollectionWithMerchantProfile(
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantProfileMerchantExpander()
+            ->expand($merchantCollectionTransfer);
     }
 }

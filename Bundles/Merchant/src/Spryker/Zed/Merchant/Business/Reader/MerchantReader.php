@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Merchant\Business\Expander\MerchantExpanderInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
@@ -22,28 +23,28 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantRepository;
 
     /**
-     * @var array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface>
-     */
-    protected $merchantExpanderPlugins;
-
-    /**
      * @var \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
      */
     protected MerchantToStoreFacadeInterface $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\Expander\MerchantExpanderInterface
+     */
+    private MerchantExpanderInterface $merchantExpander;
+
+    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface> $merchantExpanderPlugins
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Merchant\Business\Expander\MerchantExpanderInterface $merchantExpander
      */
     public function __construct(
         MerchantRepositoryInterface $merchantRepository,
-        array $merchantExpanderPlugins,
-        MerchantToStoreFacadeInterface $storeFacade
+        MerchantToStoreFacadeInterface $storeFacade,
+        MerchantExpanderInterface $merchantExpander
     ) {
         $this->merchantRepository = $merchantRepository;
-        $this->merchantExpanderPlugins = $merchantExpanderPlugins;
         $this->storeFacade = $storeFacade;
+        $this->merchantExpander = $merchantExpander;
     }
 
     /**
@@ -91,13 +92,11 @@ class MerchantReader implements MerchantReaderInterface
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfer->setStoreRelation($merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()]);
             $merchantTransfer->setUrlCollection(new ArrayObject($merchantUrlTransfersMap[$merchantTransfer->getIdMerchant()] ?? []));
-
-            $merchantTransfer = $this->executeMerchantExpanderPlugins($merchantTransfer);
             $merchantTransfers->append($merchantTransfer);
         }
         $merchantCollectionTransfer->setMerchants($merchantTransfers);
 
-        return $merchantCollectionTransfer;
+        return $this->merchantExpander->expand($merchantCollectionTransfer);
     }
 
     /**
@@ -118,21 +117,12 @@ class MerchantReader implements MerchantReaderInterface
         $merchantTransfer->setStoreRelation($merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()]);
         $merchantTransfer->setUrlCollection(new ArrayObject($merchantUrlTransfersMap[$merchantTransfer->getIdMerchant()] ?? []));
 
-        return $this->executeMerchantExpanderPlugins($merchantTransfer);
-    }
+        $merchantCollectionTransfer = $this->merchantExpander->expand(
+            (new MerchantCollectionTransfer())
+                ->addMerchants($merchantTransfer),
+        );
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    protected function executeMerchantExpanderPlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        foreach ($this->merchantExpanderPlugins as $merchantExpanderPlugin) {
-            $merchantTransfer = $merchantExpanderPlugin->expand($merchantTransfer);
-        }
-
-        return $merchantTransfer;
+        return $merchantCollectionTransfer->getMerchants()->offsetGet(0);
     }
 
     /**
@@ -142,12 +132,13 @@ class MerchantReader implements MerchantReaderInterface
      */
     protected function getMerchantIds(MerchantCollectionTransfer $merchantCollectionTransfer): array
     {
-        return array_map(function (MerchantTransfer $merchantTransfer): int {
-            /** @var int $idMerchant */
-            $idMerchant = $merchantTransfer->getIdMerchant();
+        $merchantIds = [];
 
-            return $idMerchant;
-        }, $merchantCollectionTransfer->getMerchants()->getArrayCopy());
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantIds[] = (int)$merchantTransfer->getIdMerchant();
+        }
+
+        return $merchantIds;
     }
 
     /**

@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface} instead.
+ *
  * Provides extension capabilities for expanding/modification MerchantTransfer data.
  */
 interface MerchantExpanderPluginInterface

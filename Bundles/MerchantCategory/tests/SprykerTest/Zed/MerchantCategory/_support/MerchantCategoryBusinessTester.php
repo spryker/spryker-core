@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\MerchantCategory;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\MerchantCategoryTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
 
 /**
@@ -23,8 +26,9 @@ use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\MerchantCategory\Business\MerchantCategoryFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MerchantCategory\PHPMD)
  */
 class MerchantCategoryBusinessTester extends Actor
 {
@@ -44,5 +48,43 @@ class MerchantCategoryBusinessTester extends Actor
     protected function cleanUpMerchantCategoryTable(): void
     {
         SpyMerchantCategoryQuery::create()->deleteAll();
+    }
+
+    /**
+     * @param int $categoriesCount
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function haveMerchantWithCategories(int $categoriesCount = 1): MerchantTransfer
+    {
+        $merchantTransfer = $this->haveMerchant();
+
+        for ($i = 0; $i < $categoriesCount; $i++) {
+            $categoryTransfer = $this->createCategory('TEST_CATEGORY_' . microtime());
+            $this->haveMerchantCategory([
+                MerchantCategoryTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+                MerchantCategoryTransfer::FK_CATEGORY => $categoryTransfer->getIdCategory(),
+            ]);
+            $merchantTransfer->addCategory($categoryTransfer);
+        }
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param int $expectedCategoriesCount
+     * @param \Generated\Shared\Transfer\MerchantTransfer $actualMerchantTransfer
+     *
+     * @return void
+     */
+    public function assertMerchantHasCategoriesCount(int $expectedCategoriesCount, MerchantTransfer $actualMerchantTransfer): void
+    {
+        $categories = $actualMerchantTransfer->getCategories()->getArrayCopy();
+
+        $this->assertCount($expectedCategoriesCount, $categories);
+
+        if ($expectedCategoriesCount > 0) {
+            $this->assertContainsOnlyInstancesOf(CategoryTransfer::class, $categories);
+        }
     }
 }

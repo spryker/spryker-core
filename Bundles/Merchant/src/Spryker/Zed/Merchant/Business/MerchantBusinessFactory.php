@@ -10,6 +10,8 @@ namespace Spryker\Zed\Merchant\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreator;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface;
+use Spryker\Zed\Merchant\Business\Expander\MerchantExpander;
+use Spryker\Zed\Merchant\Business\Expander\MerchantExpanderInterface;
 use Spryker\Zed\Merchant\Business\Exporter\MerchantExporter;
 use Spryker\Zed\Merchant\Business\Exporter\MerchantExporterInterface;
 use Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilter;
@@ -82,8 +84,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReader(
             $this->getRepository(),
-            $this->getMerchantExpanderPlugins(),
             $this->getStoreFacade(),
+            $this->createMerchantExpander(),
         );
     }
 
@@ -132,11 +134,21 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantBulkExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface>
      */
     public function getMerchantExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface>
+     */
+    public function getMerchantBulkExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_BULK_EXPANDER);
     }
 
     /**
@@ -170,7 +182,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductMerchantRelationshipStorageFilter(): PriceProductMerchantRelationshipStorageFilterInterface
     {
-        return new PriceProductMerchantRelationshipStorageFilter($this->createMerchantReader());
+        return new PriceProductMerchantRelationshipStorageFilter($this->getRepository());
     }
 
     /**
@@ -211,7 +223,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantExporter(
             $this->getEventFacade(),
             $this->getStoreFacade(),
-            $this->createMerchantReader(),
+            $this->getRepository(),
         );
     }
 
@@ -224,9 +236,20 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Merchant\Business\Expander\MerchantExpanderInterface
+     */
+    public function createMerchantExpander(): MerchantExpanderInterface
+    {
+        return new MerchantExpander(
+            $this->getMerchantExpanderPlugins(),
+            $this->getMerchantBulkExpanderPlugins(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MerchantToStoreFacadeInterface
+    public function getStoreFacade(): MerchantToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_STORE);
     }

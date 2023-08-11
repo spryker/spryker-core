@@ -9,9 +9,13 @@ namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Spryker\Zed\Merchant\MerchantDependencyProvider;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -52,6 +56,45 @@ class GetMerchantDataTest extends Unit
 
         $this->assertEquals($expectedMerchant, $actualMerchantById);
         $this->assertEquals($expectedMerchant, $actualMerchantByEmail);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOneMerchantExecutesExpanderPluginsStack(): void
+    {
+        // Arrange
+        $merchant = $this->tester->haveMerchant();
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
+            ->setIdMerchant($merchant->getIdMerchant());
+        $merchantCollection = (new MerchantCollectionTransfer())
+            ->addMerchants($merchant);
+
+        // Assert
+        $merchantExpanderPluginMock = $this
+            ->getMockBuilder(MerchantExpanderPluginInterface::class)
+            ->getMock();
+
+        $merchantExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand');
+
+        $this->tester->setDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER, [$merchantExpanderPluginMock]);
+
+        $merchantBulkExpanderPluginMock = $this
+            ->getMockBuilder(MerchantBulkExpanderPluginInterface::class)
+            ->getMock();
+
+        $merchantBulkExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturn($merchantCollection);
+
+        $this->tester->setDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_BULK_EXPANDER, [$merchantBulkExpanderPluginMock]);
+
+        // Act
+        $this->tester->getFacade()
+            ->findOne($merchantCriteriaTransfer);
     }
 
     /**

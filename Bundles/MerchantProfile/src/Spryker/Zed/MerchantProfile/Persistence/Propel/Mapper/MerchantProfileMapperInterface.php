@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
+use Propel\Runtime\Collection\Collection;
 
 interface MerchantProfileMapperInterface
 {
@@ -33,4 +35,13 @@ interface MerchantProfileMapperInterface
         MerchantProfileTransfer $merchantProfileTransfer,
         SpyMerchantProfile $spyMerchantProfile
     ): SpyMerchantProfile;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $merchantProfileEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
+     */
+    public function mapMerchantProfileEntityCollectionToMerchantProfileCollectionTransfer(
+        Collection $merchantProfileEntityCollection
+    ): MerchantProfileCollectionTransfer;
 }

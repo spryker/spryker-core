@@ -72,6 +72,8 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Returns collection of merchants by provided criteria.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface} plugin stack.
      * - Pagination, filter and ordering options can be passed to criteria.
      * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
      * - Filter supports ordering by field.
@@ -87,6 +89,9 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves one merchant by provided criteria.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface} plugin stack.
      * - Returns merchant which can filtered by merchant id and email.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
@@ -113,6 +118,7 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves active Merchant entities from the Persistence.
      * - Filters `PriceProductMerchantRelationshipStorage` transfer objects by `Merchant.isActive` transfer property.
      * - Returns array of `PriceProductMerchantRelationshipStorage` transfers without ones that refer to deactivated merchants.
      *
@@ -126,6 +132,7 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves Store related Merchant entities from the Persistence.
      * - Triggers Merchant.export event for Merchants filtered by the criteria.
      *
      * @api
@@ -138,7 +145,9 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves Merchant entities from the DB by the provided IDs.
+     * - Retrieves Merchant entities from the Persistence by the provided IDs.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface} plugin stack.
      * - Requires MerchantPublisherConfigTransfer.merchantIds.
      * - Requires MerchantPublisherConfigTransfer.eventName.
      * - Sends MerchantPublisherConfigTransfer.eventName event to the event bus.

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
@@ -95,4 +96,20 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderMerchants(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantCollectionTransfer.merchants.idMerchant` to be set.
+     * - Retrieves merchant profile data from Persistence by provided `Merchant.idMerchant` from collection.
+     * - Expands each `MerchantTransfer` from `MerchantCollectionTransfer` with related `MerchantProfileTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function expandMerchantCollectionWithMerchantProfile(
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer;
 }

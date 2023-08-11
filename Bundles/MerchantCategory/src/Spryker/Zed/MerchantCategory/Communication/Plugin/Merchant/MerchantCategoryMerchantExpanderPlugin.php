@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantCategory\Communication\Plugin\Merchant\MerchantCategoryMerchantBulkExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantCategory\Business\MerchantCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantCategory\MerchantCategoryConfig getConfig()
  */

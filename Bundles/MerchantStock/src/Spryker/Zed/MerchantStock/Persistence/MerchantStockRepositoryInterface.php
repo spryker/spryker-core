@@ -18,4 +18,11 @@ interface MerchantStockRepositoryInterface
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
     public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer;
+
+    /**
+     * @param list<int> $merchantIds
+     *
+     * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\StockTransfer>>
+     */
+    public function getStocksGroupedByIdMerchant(array $merchantIds): array;
 }

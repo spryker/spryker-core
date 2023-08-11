@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantCategory\Business;
 
 use Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCategoryResponseTransfer;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 
 interface MerchantCategoryFacadeInterface
 {
@@ -49,4 +50,20 @@ interface MerchantCategoryFacadeInterface
      * @return void
      */
     public function delete(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Requires `MerchantCollectionTransfer.merchants.idMerchant` to be set.
+     * - Retrieves merchant category data from Persistence by provided `Merchant.idMerchant` from collection.
+     * - Expands each `MerchantTransfer` from `MerchantCollectionTransfer` with related list of `CategoryTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function expandMerchantCollectionWithCategories(
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantStock\Business;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -39,4 +40,18 @@ interface MerchantStockFacadeInterface
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
     public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantCollectionTransfer.merchants.idMerchant` to be set.
+     * - Retrieves merchant stock data from Persistence by provided `Merchant.idMerchant` from collection.
+     * - Expands each `MerchantTransfer` from `MerchantCollectionTransfer` with related list of `StockTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function expandMerchantCollectionWithStocks(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer;
 }

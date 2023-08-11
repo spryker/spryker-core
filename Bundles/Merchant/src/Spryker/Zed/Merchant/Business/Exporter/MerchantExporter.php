@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\MerchantExportCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
+use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 
 class MerchantExporter implements MerchantExporterInterface
@@ -34,23 +34,23 @@ class MerchantExporter implements MerchantExporterInterface
     protected MerchantToStoreFacadeInterface $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface
+     * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected MerchantReaderInterface $merchantReader;
+    protected MerchantRepositoryInterface $merchantRepository;
 
     /**
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface $merchantReader
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      */
     public function __construct(
         MerchantToEventFacadeInterface $eventFacade,
         MerchantToStoreFacadeInterface $storeFacade,
-        MerchantReaderInterface $merchantReader
+        MerchantRepositoryInterface $merchantRepository
     ) {
         $this->eventFacade = $eventFacade;
         $this->storeFacade = $storeFacade;
-        $this->merchantReader = $merchantReader;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
@@ -69,7 +69,7 @@ class MerchantExporter implements MerchantExporterInterface
         }
 
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setStore($store);
-        $merchantCollectionTransfer = $this->merchantReader->get($merchantCriteriaTransfer);
+        $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaTransfer);
 
         $merchantIds = [];
 

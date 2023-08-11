@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MerchantCategory\PHPMD)
  */
 class MerchantCategoryCommunicationTester extends Actor
 {

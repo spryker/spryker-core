@@ -7,18 +7,20 @@
 
 namespace Spryker\Zed\MerchantStock\Persistence\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantStockMapper
 {
     /**
      * @var \Spryker\Zed\MerchantStock\Persistence\Mapper\StockStoreRelationMapper
      */
-    protected $stockStoreRelationMapper;
+    protected StockStoreRelationMapper $stockStoreRelationMapper;
 
     /**
      * @param \Spryker\Zed\MerchantStock\Persistence\Mapper\StockStoreRelationMapper $stockStoreRelationMapper
@@ -80,5 +82,29 @@ class MerchantStockMapper
             ->setFkMerchant($merchantStockTransfer->getIdMerchant())
             ->setFkStock($merchantStockTransfer->getIdStock())
             ->setIsDefault($merchantStockTransfer->getIsDefault());
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantStock\Persistence\SpyMerchantStock> $merchantStocksEntities
+     *
+     * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\StockTransfer>>
+     */
+    public function mapMerchantStockEntityCollectionToStocksGroupedByIdMerchant(ObjectCollection $merchantStocksEntities): array
+    {
+        $stockTransfersGroupedByIdMerchant = [];
+
+        foreach ($merchantStocksEntities as $merchantStockEntity) {
+            $idMerchant = $merchantStockEntity->getFkMerchant();
+
+            if (!isset($stockTransfersGroupedByIdMerchant[$idMerchant])) {
+                $stockTransfersGroupedByIdMerchant[$idMerchant] = new ArrayObject();
+            }
+
+            $stockTransfersGroupedByIdMerchant[$idMerchant]->append(
+                $this->mapStockEntityToStockTransfer($merchantStockEntity->getSpyStock(), new StockTransfer()),
+            );
+        }
+
+        return $stockTransfersGroupedByIdMerchant;
     }
 }

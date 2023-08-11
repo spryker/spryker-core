@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantStock\Communication\Plugin\Merchant\MerchantStockMerchantBulkExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantStock\Business\MerchantStockFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantStock\MerchantStockConfig getConfig()
  */

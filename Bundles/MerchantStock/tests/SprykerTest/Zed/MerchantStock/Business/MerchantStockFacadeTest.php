@@ -8,9 +8,12 @@
 namespace SprykerTest\Zed\MerchantStock\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStockTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
  * Auto-generated group annotations
@@ -88,5 +91,84 @@ class MerchantStockFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($stockCollectionTransfer->getStocks());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantCollectionWithStocksReturnsMerchantCollectionWithRelatedStocksIfExist(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = new MerchantCollectionTransfer();
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchantWithStocks(2),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchant(),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchantWithStocks(),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchant(),
+        );
+
+        $this->tester->haveMerchant();
+
+        // Act
+        $resultMerchantCollectionTransfer = $this->tester->getFacade()
+            ->expandMerchantCollectionWithStocks($merchantCollectionTransfer);
+
+        // Assert
+        $this->assertCount(4, $resultMerchantCollectionTransfer->getMerchants());
+        $this->tester->assertMerchantHasStocksCount(
+            2,
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(0),
+        );
+        $this->tester->assertMerchantHasStocksCount(
+            0,
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(1),
+        );
+        $this->tester->assertMerchantHasStocksCount(
+            1,
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(2),
+        );
+        $this->tester->assertMerchantHasStocksCount(
+            0,
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(3),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantCollectionWithStocksReturnsEmptyMerchantCollectionIfEmptyMerchantCollectionWasPassed(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = new MerchantCollectionTransfer();
+
+        // Act
+        $resultMerchantCollectionTransfer = $this->tester->getFacade()
+            ->expandMerchantCollectionWithStocks($merchantCollectionTransfer);
+
+        // Assert
+        $this->assertCount(0, $resultMerchantCollectionTransfer->getMerchants());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantCollectionWithStocksThrowsExceptionIfMerchantCollectionMerchantHasNoIdMerchant(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = (new MerchantCollectionTransfer())
+            ->addMerchants(new MerchantTransfer());
+
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->tester->getFacade()
+            ->expandMerchantCollectionWithStocks($merchantCollectionTransfer);
     }
 }

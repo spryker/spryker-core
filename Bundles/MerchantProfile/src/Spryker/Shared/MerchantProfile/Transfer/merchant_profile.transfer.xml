@@ -6,6 +6,10 @@
         <property name="merchantProfile" type="MerchantProfile"/>
     </transfer>
 
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
         <property name="contactPersonRole" type="string"/>

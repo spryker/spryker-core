@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\MerchantProfile\Business\MerchantProfileFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
  * Auto-generated group annotations
@@ -197,5 +200,82 @@ class MerchantProfileFacadeTest extends Unit
 
         // Assert
         $this->assertCount(0, $merchants);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantCollectionWithMerchantProfileReturnsMerchantCollectionWithRelatedMerchantProfileIfExist(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = new MerchantCollectionTransfer();
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchantWithProfile(),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchant(),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchantWithProfile(),
+        );
+        $merchantCollectionTransfer->addMerchants(
+            $this->tester->haveMerchant(),
+        );
+
+        $this->tester->haveMerchant();
+
+        // Act
+        $resultMerchantCollectionTransfer = $this->tester->getFacade()
+            ->expandMerchantCollectionWithMerchantProfile($merchantCollectionTransfer);
+
+        // Assert
+        $this->assertCount(4, $resultMerchantCollectionTransfer->getMerchants());
+        $this->tester->assertMerchantHasExactMerchantProfile(
+            $merchantCollectionTransfer->getMerchants()->offsetGet(0)->getMerchantProfile(),
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(0),
+        );
+        $this->tester->assertMerchantHasNotMerchantProfile(
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(1),
+        );
+        $this->tester->assertMerchantHasExactMerchantProfile(
+            $merchantCollectionTransfer->getMerchants()->offsetGet(2)->getMerchantProfile(),
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(2),
+        );
+        $this->tester->assertMerchantHasNotMerchantProfile(
+            $resultMerchantCollectionTransfer->getMerchants()->offsetGet(3),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantCollectionWithMerchantProfileReturnsEmptyMerchantCollectionIfEmptyMerchantCollectionWasPassed(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = new MerchantCollectionTransfer();
+
+        // Act
+        $resultMerchantCollectionTransfer = $this->tester->getFacade()
+            ->expandMerchantCollectionWithMerchantProfile($merchantCollectionTransfer);
+
+        // Assert
+        $this->assertCount(0, $resultMerchantCollectionTransfer->getMerchants());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMerchantCollectionWithMerchantProfileThrowsExceptionIfMerchantCollectionMerchantHasNoIdMerchant(): void
+    {
+        // Arrange
+        $merchantCollectionTransfer = (new MerchantCollectionTransfer())
+            ->addMerchants(new MerchantTransfer());
+
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->tester->getFacade()
+            ->expandMerchantCollectionWithMerchantProfile($merchantCollectionTransfer);
     }
 }

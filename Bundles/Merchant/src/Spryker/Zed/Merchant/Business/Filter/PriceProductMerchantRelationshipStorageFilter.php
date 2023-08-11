@@ -10,21 +10,21 @@ namespace Spryker\Zed\Merchant\Business\Filter;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface;
+use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerchantRelationshipStorageFilterInterface
 {
     /**
-     * @var \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface
+     * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $merchantReader;
+    protected MerchantRepositoryInterface $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface $merchantReader
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      */
-    public function __construct(MerchantReaderInterface $merchantReader)
+    public function __construct(MerchantRepositoryInterface $merchantRepository)
     {
-        $this->merchantReader = $merchantReader;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
@@ -92,7 +92,7 @@ class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerch
             ->setMerchantIds(array_unique($merchantIds))
             ->setIsActive(true);
 
-        $merchantCollectionTransfer = $this->merchantReader->get($merchantCriteriaTransfer);
+        $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaTransfer);
 
         $activeMerchantIds = [];
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
