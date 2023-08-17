@@ -2,7 +2,7 @@
     "name": "spryker/content-product-data-import",
     "type": "library",
     "description": "ContentProductDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/content": "^2.1.0",

@@ -2,7 +2,7 @@
     "name": "spryker/multi-cart-data-import",
     "type": "library",
     "description": "MultiCartDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/customer": "^7.0.0",

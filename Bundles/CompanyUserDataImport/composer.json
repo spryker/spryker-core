@@ -2,7 +2,7 @@
     "name": "spryker/company-user-data-import",
     "type": "library",
     "description": "CompanyUserDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/company": "^1.0.0",

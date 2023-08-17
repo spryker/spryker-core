@@ -2,7 +2,7 @@
     "name": "spryker/company-supplier-data-import",
     "type": "library",
     "description": "CompanySupplierDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/company": "^1.0.0",

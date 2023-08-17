@@ -2,7 +2,7 @@
     "name": "spryker/merchant-product-data-import",
     "type": "library",
     "description": "MerchantProductDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/data-import": "^1.10.0",

@@ -2,7 +2,7 @@
     "name": "spryker/content-banner-data-import",
     "type": "library",
     "description": "ContentBannerDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/content": "^2.1.0",

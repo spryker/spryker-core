@@ -2,7 +2,7 @@
     "name": "spryker/country-data-import",
     "type": "library",
     "description": "CountryDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/country": "^4.0.0",

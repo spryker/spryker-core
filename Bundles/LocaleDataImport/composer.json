@@ -2,7 +2,7 @@
     "name": "spryker/locale-data-import",
     "type": "library",
     "description": "LocaleDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/data-import": "^1.0.0",

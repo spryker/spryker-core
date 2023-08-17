@@ -2,7 +2,7 @@
     "name": "spryker/quote-request-data-import",
     "type": "library",
     "description": "QuoteRequestDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/company-user": "^2.0.0",
