@@ -245,6 +245,10 @@ components:
                                     type: string
                                     description: The name of the push notification provider.
                                     example: My Push Notification Provider
+                                localeName:
+                                    type: string
+                                    description: Locale name.
+                                    example: en_US
                                 payload:
                                     type: array
                                     items:
@@ -395,6 +399,10 @@ components:
                     type: string
                     description: The name of the push notification subscription.
                     example: My Push Notification Provider
+                localeName:
+                    type: string
+                    description: Locale name.
+                    example: en_US
                 payload:
                     type: array
                     items: {}

@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PushNotification\Business\Filter\PushNotificationSubscriptionFilterInterface;
 use Spryker\Zed\PushNotification\Business\Generator\PushNotificationSubscriptionCheckSumGeneratorInterface;
-use Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscriptionValidatorInterface;
 use Spryker\Zed\PushNotification\Persistence\PushNotificationEntityManagerInterface;
 use Spryker\Zed\PushNotification\PushNotificationConfig;
@@ -30,11 +29,6 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
      * @var \Spryker\Zed\PushNotification\Persistence\PushNotificationEntityManagerInterface
      */
     protected PushNotificationEntityManagerInterface $pushNotificationEntityManager;
-
-    /**
-     * @var \Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface
-     */
-    protected PushNotificationProviderReaderInterface $pushNotificationProviderReader;
 
     /**
      * @var \Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscriptionValidatorInterface
@@ -57,27 +51,32 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     protected PushNotificationSubscriptionCheckSumGeneratorInterface $pushNotificationSubscriptionCheckSumGenerator;
 
     /**
+     * @var list<\Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface>
+     */
+    protected array $pushNotificationSubscriptionExpanders;
+
+    /**
      * @param \Spryker\Zed\PushNotification\Persistence\PushNotificationEntityManagerInterface $pushNotificationEntityManager
-     * @param \Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface $pushNotificationProviderReader
      * @param \Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscriptionValidatorInterface $pushNotificationSubscriptionValidator
      * @param \Spryker\Zed\PushNotification\PushNotificationConfig $pushNotificationConfig
      * @param \Spryker\Zed\PushNotification\Business\Filter\PushNotificationSubscriptionFilterInterface $pushNotificationSubscriptionFilter
      * @param \Spryker\Zed\PushNotification\Business\Generator\PushNotificationSubscriptionCheckSumGeneratorInterface $pushNotificationSubscriptionCheckSumGenerator
+     * @param list<\Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface> $pushNotificationSubscriptionExpanders
      */
     public function __construct(
         PushNotificationEntityManagerInterface $pushNotificationEntityManager,
-        PushNotificationProviderReaderInterface $pushNotificationProviderReader,
         PushNotificationSubscriptionValidatorInterface $pushNotificationSubscriptionValidator,
         PushNotificationConfig $pushNotificationConfig,
         PushNotificationSubscriptionFilterInterface $pushNotificationSubscriptionFilter,
-        PushNotificationSubscriptionCheckSumGeneratorInterface $pushNotificationSubscriptionCheckSumGenerator
+        PushNotificationSubscriptionCheckSumGeneratorInterface $pushNotificationSubscriptionCheckSumGenerator,
+        array $pushNotificationSubscriptionExpanders
     ) {
         $this->pushNotificationEntityManager = $pushNotificationEntityManager;
-        $this->pushNotificationProviderReader = $pushNotificationProviderReader;
         $this->pushNotificationSubscriptionValidator = $pushNotificationSubscriptionValidator;
         $this->pushNotificationConfig = $pushNotificationConfig;
         $this->pushNotificationSubscriptionFilter = $pushNotificationSubscriptionFilter;
         $this->pushNotificationSubscriptionCheckSumGenerator = $pushNotificationSubscriptionCheckSumGenerator;
+        $this->pushNotificationSubscriptionExpanders = $pushNotificationSubscriptionExpanders;
     }
 
     /**
@@ -144,6 +143,8 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
                 $errorCollectionTransfer,
             );
 
+        $validPushNotificationSubscriptionTransfers =
+            $this->expandPushNotificationSubscriptionsWithRelations($validPushNotificationSubscriptionTransfers);
         $persistedPushNotificationSubscriptions = $this->getTransactionHandler()->handleTransaction(
             function () use ($validPushNotificationSubscriptionTransfers): ArrayObject {
                 return $this->executeCreatePushNotificationSubscriptionCollectionTransaction(
@@ -184,9 +185,6 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
         ArrayObject $pushNotificationSubscriptionTransfers
     ): ArrayObject {
         $persistedPushNotificationSubscriptionTransfers = new ArrayObject();
-        $pushNotificationProviderTransfersIndexedByName = $this
-            ->pushNotificationProviderReader
-            ->getPushNotificationProviderTransfersIndexedByName();
         foreach ($pushNotificationSubscriptionTransfers as $pushNotificationSubscriptionTransfer) {
             $pushNotificationSubscriptionTransfer = $this->setPushNotificationSubscriptionExpiredAt(
                 $pushNotificationSubscriptionTransfer,
@@ -196,10 +194,6 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
                 ->pushNotificationEntityManager
                 ->createPushNotificationGroup($pushNotificationSubscriptionTransfer->getGroupOrFail());
             $pushNotificationSubscriptionTransfer->setGroup($pushNotificationGroupTransfer);
-
-            $pushNotificationProviderName = $pushNotificationSubscriptionTransfer->getProviderOrFail()->getNameOrFail();
-            $pushNotificationProviderTransfer = $pushNotificationProviderTransfersIndexedByName[$pushNotificationProviderName];
-            $pushNotificationSubscriptionTransfer->setProvider($pushNotificationProviderTransfer);
 
             $pushNotificationSubscriptionTransfer = $this
                 ->pushNotificationEntityManager
@@ -256,6 +250,20 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
         foreach ($pushNotificationSubscriptionTransfers as $pushNotificationSubscriptionTransfer) {
             $payloadCheckSum = $this->pushNotificationSubscriptionCheckSumGenerator->generatePayloadChecksum($pushNotificationSubscriptionTransfer);
             $pushNotificationSubscriptionTransfer->setPayloadCheckSum($payloadCheckSum);
+        }
+
+        return $pushNotificationSubscriptionTransfers;
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
+     */
+    protected function expandPushNotificationSubscriptionsWithRelations(ArrayObject $pushNotificationSubscriptionTransfers): ArrayObject
+    {
+        foreach ($this->pushNotificationSubscriptionExpanders as $pushNotificationSubscriptionExpander) {
+            $pushNotificationSubscriptionTransfers = $pushNotificationSubscriptionExpander->expand($pushNotificationSubscriptionTransfers);
         }
 
         return $pushNotificationSubscriptionTransfers;

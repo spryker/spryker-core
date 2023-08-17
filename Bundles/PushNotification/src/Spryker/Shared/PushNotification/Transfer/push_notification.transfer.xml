@@ -31,6 +31,7 @@
         <property name="payloadCheckSum" type="string"/>
         <property name="expiredAt" type="string"/>
         <property name="user" type="PushNotificationUser"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="PushNotificationUser" strict="true">
@@ -164,6 +165,14 @@
         <property name="pushNotificationProviderIds" type="int[]" singular="idPushNotificationProvider"/>
     </transfer>
 
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+        <property name="localeNames" type="string[]" singular="localeName"/>
+    </transfer>
+
     <transfer name="Pagination">
         <property name="page" type="int"/>
         <property name="maxPerPage" type="int"/>
@@ -181,6 +190,11 @@
     <transfer name="Sort">
         <property name="field" type="string"/>
         <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>

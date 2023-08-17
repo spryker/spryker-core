@@ -79,7 +79,7 @@ class DeletePushNotificationProviderCollectionTest extends Unit
         $this->assertCount(0, $pushNotificationProviderCollectionResponseTransfer->getErrors());
         $this->assertSame(0, $this->tester->getPushNotificationProviderQuery()->count());
 
-        /** @var \Generated\Shared\Transfer\PushNotificationProviderTransfer $persistedPushNotificationProviderTransfer */
+        /** @var \Generated\Shared\Transfer\PushNotificationProviderTransfer $deletedPushNotificationProviderTransfer */
         $deletedPushNotificationProviderTransfer = $pushNotificationProviderCollectionResponseTransfer->getPushNotificationProviders()->getIterator()->current();
 
         $this->assertEquals($pushNotificationProviderTransfer, $deletedPushNotificationProviderTransfer);

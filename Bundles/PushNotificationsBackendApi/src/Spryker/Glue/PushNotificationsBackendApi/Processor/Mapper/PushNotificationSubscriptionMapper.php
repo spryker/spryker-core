@@ -10,6 +10,7 @@ namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 use Generated\Shared\Transfer\ApiPushNotificationGroupsAttributesTransfer;
 use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
@@ -31,6 +32,11 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
             $pushNotificationSubscriptionTransfer->toArray(),
             true,
         );
+
+        if ($pushNotificationSubscriptionTransfer->getLocale()) {
+            $apiPushNotificationSubscriptionsAttributesTransfer
+                ->setLocaleName($pushNotificationSubscriptionTransfer->getLocaleOrFail()->getLocaleName());
+        }
 
         $pushNotificationProviderName = $pushNotificationSubscriptionTransfer->getProviderOrFail()->getNameOrFail();
         $apiPushNotificationGroupsAttributesTransfer = (new ApiPushNotificationGroupsAttributesTransfer())->fromArray(
@@ -74,6 +80,14 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
             $apiPushNotificationSubscriptionsAttributesTransfer,
             new PushNotificationGroupTransfer(),
         );
+
+        if ($apiPushNotificationSubscriptionsAttributesTransfer->getLocaleName()) {
+            $localeTransfer = $this->mapApiPushNotificationSubscriptionsAttributesTransferToLocaleTransfer(
+                $apiPushNotificationSubscriptionsAttributesTransfer,
+                new LocaleTransfer(),
+            );
+            $pushNotificationSubscriptionTransfer->setLocale($localeTransfer);
+        }
 
         return $pushNotificationSubscriptionTransfer
             ->setProvider($pushNotificationProviderTransfer)
@@ -139,5 +153,18 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
             $apiPushNotificationSubscriptionsAttributesTransfer->getGroupOrFail()->toArray(),
             true,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function mapApiPushNotificationSubscriptionsAttributesTransferToLocaleTransfer(
+        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+        LocaleTransfer $localeTransfer
+    ): LocaleTransfer {
+        return $localeTransfer->setLocaleName($apiPushNotificationSubscriptionsAttributesTransfer->getLocaleName());
     }
 }

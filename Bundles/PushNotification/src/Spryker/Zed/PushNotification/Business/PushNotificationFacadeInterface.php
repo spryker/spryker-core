@@ -91,6 +91,7 @@ interface PushNotificationFacadeInterface
     ): PushNotificationProviderCollectionResponseTransfer;
 
     /**
+     * Specification:
      * - Deletes collection of push notification providers from storage by delete criteria.
      * - Validates push notification provider usage among persisted push notifications.
      * - Validates push notification provider usage among persisted push notification subscriptions.
@@ -112,6 +113,7 @@ interface PushNotificationFacadeInterface
      * Specification:
      * - Requires `PushNotificationSubscriptionCollectionRequestTransfer.pushNotificationSubscriptions.provider.name` to be in Persistence.
      * - Requires `PushNotificationSubscriptionCollectionRequestTransfer.pushNotificationGroup.name` to be in the {@link \Spryker\Zed\PushNotification\PushNotificationConfig::GROUP_NAME_ALLOW_LIST} list if this is not empty, otherwise returns an error.
+     * - Requires `PushNotificationSubscriptionCollectionRequestTransfer.pushNotificationSubscriptions.locale.localeName` to be set if `PushNotificationSubscriptionCollectionRequestTransfer.pushNotificationSubscriptions.locale` is set.
      * - In case `PushNotificationSubscriptionCollectionRequestTransfer.pushNotificationGroup.identifier` is empty user is getting subscribed to all kind of notifications.
      * - Creates `PushNotificationGroup` if it was not found by `PushNotificationSubscription.group.name`.
      * - Executes the stack of {@link \Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSubscriptionValidatorPluginInterface}.
@@ -153,6 +155,7 @@ interface PushNotificationFacadeInterface
      * Specification:
      * - Expects `PushNotificationCollectionRequestTransfer.pushNotifications` to be provided.
      * - Sends push notifications according to provider in a batch mode {@link \Spryker\Zed\PushNotification\PushNotificationConfig::getPushNotificationSendBatchSize()}.
+     * - Executes the stack of {@link \Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationPreSendPluginInterface}.
      * - Executes the stack of {@link \Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSenderPluginInterface}.
      * - Sets `PushNotification.isNotificationSent` to true in a case of successful send.
      * - Returns sent push notifications and validation errors.

@@ -38,6 +38,7 @@
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="fk_push_notification_group" required="true" type="INTEGER"/>
         <column name="fk_push_notification_provider" required="true" type="INTEGER"/>
+        <column name="fk_locale" required="false" default="null" type="INTEGER"/>
         <column name="payload" type="CLOB"/>
         <column name="payload_checksum" type="VARCHAR" size="255"/>
         <column name="expired_at" required="true" type="TIMESTAMP"/>
@@ -50,6 +51,10 @@
 
         <foreign-key name="spy_push_notification_sub-fk_push_notification_provider" foreignTable="spy_push_notification_provider">
             <reference local="fk_push_notification_provider" foreign="id_push_notification_provider"/>
+        </foreign-key>
+
+        <foreign-key name="spy_push_notification_sub-fk_locale" foreignTable="spy_locale">
+            <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
 
         <index name="spy_push_notification_sub-fk_push_notification_group">

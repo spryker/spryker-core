@@ -9,6 +9,7 @@ namespace Spryker\Zed\PushNotification;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PushNotification\Dependency\Facade\PushNotificationToLocaleFacadeBridge;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilEncodingServiceBridge;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilTextServiceBridge;
 
@@ -17,6 +18,11 @@ use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilTextSe
  */
 class PushNotificationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -40,6 +46,11 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @var string
      */
+    public const PLUGINS_PUSH_NOTIFICATION_PRE_SEND = 'PLUGINS_PUSH_NOTIFICATION_PRE_SEND';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_PUSH_NOTIFICATION_SENDER = 'PLUGINS_PUSH_NOTIFICATION_SENDER';
 
     /**
@@ -51,11 +62,14 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addLocaleFacade($container);
+
         $container = $this->addUtilTextService($container);
         $container = $this->addUtilEncodingService($container);
 
         $container = $this->addPushNotificationSubscriptionValidatorPlugins($container);
         $container = $this->addPushNotificationValidatorPlugins($container);
+        $container = $this->addPushNotificationPreSendPlugins($container);
         $container = $this->addPushNotificationSenderPlugins($container);
 
         return $container;
@@ -71,6 +85,22 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new PushNotificationToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
+        });
 
         return $container;
     }
@@ -114,7 +144,7 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addPushNotificationSubscriptionValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUSH_NOTIFICATION_SUBSCRIPTION_VALIDATOR, function (): array {
+        $container->set(static::PLUGINS_PUSH_NOTIFICATION_SUBSCRIPTION_VALIDATOR, function () {
             return $this->getPushNotificationSubscriptionValidatorPlugins();
         });
 
@@ -128,7 +158,7 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addPushNotificationValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUSH_NOTIFICATION_VALIDATOR, function (): array {
+        $container->set(static::PLUGINS_PUSH_NOTIFICATION_VALIDATOR, function () {
             return $this->getPushNotificationValidatorPlugins();
         });
 
@@ -148,9 +178,23 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addPushNotificationPreSendPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PUSH_NOTIFICATION_PRE_SEND, function () {
+            return $this->getPushNotificationPreSendPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPushNotificationSenderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUSH_NOTIFICATION_SENDER, function (): array {
+        $container->set(static::PLUGINS_PUSH_NOTIFICATION_SENDER, function () {
             return $this->getPushNotificationSenderPlugins();
         });
 
@@ -161,6 +205,14 @@ class PushNotificationDependencyProvider extends AbstractBundleDependencyProvide
      * @return list<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSubscriptionValidatorPluginInterface>
      */
     protected function getPushNotificationSubscriptionValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationPreSendPluginInterface>
+     */
+    protected function getPushNotificationPreSendPlugins(): array
     {
         return [];
     }

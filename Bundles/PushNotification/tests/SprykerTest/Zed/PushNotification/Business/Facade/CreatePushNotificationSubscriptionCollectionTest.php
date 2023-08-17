@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\PushNotification\Business\Facade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\PushNotificationSubscriptionBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer;
 use SprykerTest\Zed\PushNotification\PushNotificationBusinessTester;
@@ -41,6 +43,13 @@ class CreatePushNotificationSubscriptionCollectionTest extends Unit
     protected const GLOSSARY_KEY_ERROR_WRONG_GROUP_NAME = 'push_notification.validation.error.wrong_group_name';
 
     /**
+     * @uses \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionLocaleExistsValidatorRule::GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND = 'push_notification.validation.error.locale_not_found';
+
+    /**
      * @var string
      */
     protected const ALLOWED_GROUP_NAME = 'ALLOWED_GROUP_NAME';
@@ -49,6 +58,16 @@ class CreatePushNotificationSubscriptionCollectionTest extends Unit
      * @var string
      */
     protected const DISALLOWED_GROUP_NAME = 'DISALLOWED_GROUP_NAME';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_INVALID = 'en_AT';
 
     /**
      * @var \SprykerTest\Zed\PushNotification\PushNotificationBusinessTester
@@ -209,6 +228,82 @@ class CreatePushNotificationSubscriptionCollectionTest extends Unit
         $this->assertSame(
             0,
             $this->countPersistedPushNotificationSubscriptions($pushNotificationSubscriptionResponseTransfer),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePushNotificationSubscriptionCollectionSuccessWhenValidLocaleProvided(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale([
+            LocaleTransfer::LOCALE_NAME => static::LOCALE_DE,
+        ]);
+        $pushNotificationProviderTransfer = $this->tester->havePushNotificationProvider();
+        $pushNotificationGroupTransfer = $this->tester->havePushNotificationGroup();
+        $pushNotificationSubscriptionTransfer = (new PushNotificationSubscriptionBuilder())
+            ->withProvider($pushNotificationProviderTransfer->toArray())
+            ->withGroup($pushNotificationGroupTransfer->toArray())
+            ->build();
+        $pushNotificationSubscriptionTransfer->setLocale($localeTransfer);
+        $pushNotificationSubscriptionRequestTransfer = (new PushNotificationSubscriptionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addPushNotificationSubscription($pushNotificationSubscriptionTransfer);
+
+        // Act
+        $pushNotificationSubscriptionResponseTransfer = $this->tester->getFacade()
+            ->createPushNotificationSubscriptionCollection($pushNotificationSubscriptionRequestTransfer);
+
+        // Assert
+        $this->assertCount(
+            1,
+            $pushNotificationSubscriptionResponseTransfer->getPushNotificationSubscriptions(),
+        );
+        $this->assertEmpty($pushNotificationSubscriptionResponseTransfer->getErrors());
+        $this->assertSame(
+            static::LOCALE_DE,
+            $pushNotificationSubscriptionResponseTransfer
+                ->getPushNotificationSubscriptions()
+                ->offsetGet(0)
+                ->getLocaleOrFail()->getLocaleName(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePushNotificationSubscriptionCollectionFailsWhenInvalidLocaleProvided(): void
+    {
+        // Arrange
+        $this->tester->haveLocale([
+            LocaleTransfer::LOCALE_NAME => static::LOCALE_DE,
+        ]);
+        $pushNotificationProviderTransfer = $this->tester->havePushNotificationProvider();
+        $pushNotificationGroupTransfer = $this->tester->havePushNotificationGroup();
+        $pushNotificationSubscriptionTransfer = (new PushNotificationSubscriptionBuilder())
+            ->withProvider($pushNotificationProviderTransfer->toArray())
+            ->withGroup($pushNotificationGroupTransfer->toArray())
+            ->build();
+        $pushNotificationSubscriptionTransfer->setLocale(
+            (new LocaleTransfer())->setLocaleName(self::LOCALE_INVALID)
+        );
+        $pushNotificationSubscriptionRequestTransfer = (new PushNotificationSubscriptionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addPushNotificationSubscription($pushNotificationSubscriptionTransfer);
+
+        // Act
+        $pushNotificationSubscriptionResponseTransfer = $this->tester->getFacade()
+            ->createPushNotificationSubscriptionCollection($pushNotificationSubscriptionRequestTransfer);
+
+        // Assert
+        $this->assertCount(
+            1,
+            $pushNotificationSubscriptionResponseTransfer->getErrors(),
+        );
+        $this->assertSame(
+            static::GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND,
+            $pushNotificationSubscriptionResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 

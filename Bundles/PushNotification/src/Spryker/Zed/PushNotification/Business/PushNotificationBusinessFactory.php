@@ -24,10 +24,15 @@ use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationSubscriptionDe
 use Spryker\Zed\PushNotification\Business\Deleter\PushNotificationSubscriptionDeleterInterface;
 use Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpander;
 use Spryker\Zed\PushNotification\Business\Expander\ErrorCollectionExpanderInterface;
+use Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface;
+use Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionLocaleExpander;
+use Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionPushNotificationProviderExpander;
 use Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractor;
 use Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractor;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionLocaleExtractor;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionLocaleExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Filter\PushNotificationFilter;
 use Spryker\Zed\PushNotification\Business\Filter\PushNotificationFilterInterface;
 use Spryker\Zed\PushNotification\Business\Filter\PushNotificationProviderFilter;
@@ -65,11 +70,13 @@ use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvid
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\UuidExistencePushNotificationProviderValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionGroupNameAllowedValidatorRule;
+use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionLocaleExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionProviderExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionUniqueValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionValidatorRuleInterface;
 use Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdderInterface;
+use Spryker\Zed\PushNotification\Dependency\Facade\PushNotificationToLocaleFacadeInterface;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilEncodingServiceInterface;
 use Spryker\Zed\PushNotification\Dependency\Service\PushNotificationToUtilTextServiceInterface;
 use Spryker\Zed\PushNotification\PushNotificationDependencyProvider;
@@ -88,11 +95,11 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new PushNotificationSubscriptionCreator(
             $this->getEntityManager(),
-            $this->createPushNotificationProviderReader(),
             $this->createPushNotificationSubscriptionCreateValidator(),
             $this->getConfig(),
             $this->createPushNotificationSubscriptionFilter(),
             $this->createPushNotificationSubscriptionCheckSumGenerator(),
+            $this->getPushNotificationSubscriptionExpanders(),
         );
     }
 
@@ -140,6 +147,7 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
             $this->createPushNotificationSubscriptionProviderExistsValidatorRule(),
             $this->createPushNotificationSubscriptionGroupNameAllowedValidatorRule(),
             $this->createPushNotificationSubscriptionUniqueValidatorRule(),
+            $this->createPushNotificationSubscriptionLocaleExistsValidatorRule(),
         ];
     }
 
@@ -348,6 +356,7 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     public function createPushNotificationSender(): PushNotificationSenderInterface
     {
         return new PushNotificationSender(
+            $this->getPushNotificationPreSendPlugins(),
             $this->getPushNotificationSenderPlugins(),
             $this->createPushNotificationSubscriptionDeliveryLogExtractor(),
             $this->createPushNotificationSubscriptionDeliveryLogCreator(),
@@ -464,6 +473,26 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionValidatorRuleInterface
+     */
+    public function createPushNotificationSubscriptionLocaleExistsValidatorRule(): PushNotificationSubscriptionValidatorRuleInterface
+    {
+        return new PushNotificationSubscriptionLocaleExistsValidatorRule(
+            $this->getLocaleFacade(),
+            $this->createPushNotificationSubscriptionLocaleExtractor(),
+            $this->createErrorCreator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionLocaleExtractorInterface
+     */
+    public function createPushNotificationSubscriptionLocaleExtractor(): PushNotificationSubscriptionLocaleExtractorInterface
+    {
+        return new PushNotificationSubscriptionLocaleExtractor();
+    }
+
+    /**
      * @return \Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface
      */
     public function createPushNotificationProviderReader(): PushNotificationProviderReaderInterface
@@ -533,6 +562,38 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface
+     */
+    public function createPushNotificationSubscriptionLocaleExpander(): PushNotificationSubscriptionExpanderInterface
+    {
+        return new PushNotificationSubscriptionLocaleExpander(
+            $this->getLocaleFacade(),
+            $this->createPushNotificationSubscriptionLocaleExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface
+     */
+    public function createPushNotificationSubscriptionPushNotificationProviderExpander(): PushNotificationSubscriptionExpanderInterface
+    {
+        return new PushNotificationSubscriptionPushNotificationProviderExpander(
+            $this->createPushNotificationProviderReader(),
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionExpanderInterface>
+     */
+    public function getPushNotificationSubscriptionExpanders(): array
+    {
+        return [
+          $this->createPushNotificationSubscriptionLocaleExpander(),
+          $this->createPushNotificationSubscriptionPushNotificationProviderExpander(),
+        ];
+    }
+
+    /**
      * @return array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSubscriptionValidatorPluginInterface>
      */
     public function getPushNotificationSubscriptionValidatorPlugins(): array
@@ -549,6 +610,16 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(
             PushNotificationDependencyProvider::PLUGINS_PUSH_NOTIFICATION_VALIDATOR,
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationPreSendPluginInterface>
+     */
+    public function getPushNotificationPreSendPlugins(): array
+    {
+        return $this->getProvidedDependency(
+            PushNotificationDependencyProvider::PLUGINS_PUSH_NOTIFICATION_PRE_SEND,
         );
     }
 
@@ -576,5 +647,13 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): PushNotificationToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(PushNotificationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Dependency\Facade\PushNotificationToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): PushNotificationToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(PushNotificationDependencyProvider::FACADE_LOCALE);
     }
 }

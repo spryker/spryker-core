@@ -98,6 +98,11 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
     protected const RESPONSE_CODE_PUSH_NOTIFICATION_PROVIDER_NAME_EXISTS = '5008';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_LOCALE_NOT_FOUND = '5009';
+
+    /**
      * @uses \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionGroupNameAllowedValidatorRule::GLOSSARY_KEY_VALIDATION_WRONG_GROUP_NAME
      *
      * @var string
@@ -110,6 +115,13 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SUBSCRIPTION_ALREADY_EXISTS = 'push_notification.validation.error.push_notification_already_exists';
+
+    /**
+     * @uses \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationSubscription\PushNotificationSubscriptionLocaleExistsValidatorRule::GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND = 'push_notification.validation.error.locale_not_found';
 
     /**
      * @uses \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\PushNotificationSubscriptionExistsPushNotificationProviderValidatorRule::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_PUSH_NOTIFICATION_SUBSCRIPTION_EXISTS
@@ -167,6 +179,10 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
             ],
             static::GLOSSARY_KEY_VALIDATION_SUBSCRIPTION_ALREADY_EXISTS => [
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS,
+                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+            ],
+            static::GLOSSARY_KEY_VALIDATION_LOCALE_NOT_FOUND => [
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_LOCALE_NOT_FOUND,
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
             ],
             static::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_PUSH_NOTIFICATION_SUBSCRIPTION_EXISTS => [

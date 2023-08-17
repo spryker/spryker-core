@@ -5,6 +5,7 @@
         <property name="providerName" type="string"/>
         <property name="group" type="ApiPushNotificationGroupsAttributes"/>
         <property name="payload" type="array" associative="true" singular="payloadItem"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ApiPushNotificationGroupsAttributes" strict="true">
@@ -56,6 +57,11 @@
         <property name="payload" type="array" associative="true" singular="payloadItem"/>
         <property name="user" type="PushNotificationUser"/>
         <property name="uuid" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="GlueError">

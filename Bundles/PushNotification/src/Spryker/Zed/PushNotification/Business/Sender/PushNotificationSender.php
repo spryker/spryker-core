@@ -16,6 +16,11 @@ use Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface
 class PushNotificationSender implements PushNotificationSenderInterface
 {
     /**
+     * @var array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationPreSendPluginInterface>
+     */
+    protected array $pushNotificationPreSendPlugins;
+
+    /**
      * @var array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSenderPluginInterface>
      */
     protected array $pushNotificationSenderPlugins;
@@ -36,15 +41,18 @@ class PushNotificationSender implements PushNotificationSenderInterface
     protected PushNotificationSubscriptionDeliveryLogCreatorInterface $pushNotificationSubscriptionDeliveryLogCreator;
 
     /**
+     * @param array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationPreSendPluginInterface> $pushNotificationPreSendPlugins
      * @param array<\Spryker\Zed\PushNotificationExtension\Dependency\Plugin\PushNotificationSenderPluginInterface> $pushNotificationSenderPlugins
      * @param \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor
      * @param \Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreatorInterface $pushNotificationSubscriptionDeliveryLogCreator
      */
     public function __construct(
+        array $pushNotificationPreSendPlugins,
         array $pushNotificationSenderPlugins,
         PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor,
         PushNotificationSubscriptionDeliveryLogCreatorInterface $pushNotificationSubscriptionDeliveryLogCreator
     ) {
+        $this->pushNotificationPreSendPlugins = $pushNotificationPreSendPlugins;
         $this->pushNotificationSenderPlugins = $pushNotificationSenderPlugins;
         $this->pushNotificationSubscriptionDeliveryLogExtractor = $pushNotificationSubscriptionDeliveryLogExtractor;
         $this->pushNotificationSubscriptionDeliveryLogCreator = $pushNotificationSubscriptionDeliveryLogCreator;
@@ -58,6 +66,10 @@ class PushNotificationSender implements PushNotificationSenderInterface
     public function sendPushNotifications(
         PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
     ): PushNotificationCollectionResponseTransfer {
+        $pushNotificationCollectionRequestTransfer = $this->executePushNotificationPreSendPlugins(
+            $pushNotificationCollectionRequestTransfer,
+        );
+
         $pushNotificationCollectionResponseTransfer = $this->executePushNotificationSenderPlugins(
             $pushNotificationCollectionRequestTransfer,
         );
@@ -150,5 +162,21 @@ class PushNotificationSender implements PushNotificationSenderInterface
         }
 
         return $pushNotificationCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer
+     */
+    protected function executePushNotificationPreSendPlugins(
+        PushNotificationCollectionRequestTransfer $pushNotificationCollectionRequestTransfer
+    ): PushNotificationCollectionRequestTransfer {
+        foreach ($this->pushNotificationPreSendPlugins as $pushNotificationPreSendPlugin) {
+            $pushNotificationCollectionRequestTransfer = $pushNotificationPreSendPlugin
+                ->preSend($pushNotificationCollectionRequestTransfer);
+        }
+
+        return $pushNotificationCollectionRequestTransfer;
     }
 }

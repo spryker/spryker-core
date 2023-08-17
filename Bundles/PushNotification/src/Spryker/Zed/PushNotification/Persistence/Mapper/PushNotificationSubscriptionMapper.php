@@ -49,6 +49,12 @@ class PushNotificationSubscriptionMapper
         $pushNotificationSubscriptionEntity->setFkPushNotificationProvider(
             $pushNotificationSubscriptionTransfer->getProviderOrFail()->getIdPushNotificationProviderOrFail(),
         );
+        if ($pushNotificationSubscriptionTransfer->getLocale()) {
+            $pushNotificationSubscriptionEntity->setFkLocale(
+                $pushNotificationSubscriptionTransfer->getLocaleOrFail()->getIdLocaleOrFail(),
+            );
+        }
+
         $pushNotificationSubscriptionEntity->setPayload(
             $this->utilEncodingService->encodeJson($pushNotificationSubscriptionTransfer->getPayload()),
         );
