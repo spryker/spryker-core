@@ -2,7 +2,7 @@
     "name": "spryker/currency-data-import",
     "type": "library",
     "description": "CurrencyDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/currency": "^4.0.0",

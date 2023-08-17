@@ -2,7 +2,7 @@
     "name": "spryker/company-role-data-import",
     "type": "library",
     "description": "CompanyRoleDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/company": "^1.1.1",

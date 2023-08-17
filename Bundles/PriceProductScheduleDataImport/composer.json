@@ -2,7 +2,7 @@
     "name": "spryker/price-product-schedule-data-import",
     "type": "library",
     "description": "PriceProductScheduleDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/currency": "^3.6.0 || ^4.0.0",

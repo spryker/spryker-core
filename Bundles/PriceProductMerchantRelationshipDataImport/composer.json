@@ -2,7 +2,7 @@
     "name": "spryker/price-product-merchant-relationship-data-import",
     "type": "library",
     "description": "PriceProductMerchantRelationshipDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/currency": "^3.0.0 || ^4.0.0",

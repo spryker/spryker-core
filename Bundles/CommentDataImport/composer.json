@@ -2,7 +2,7 @@
     "name": "spryker/comment-data-import",
     "type": "library",
     "description": "CommentDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/comment": "^1.0.0",

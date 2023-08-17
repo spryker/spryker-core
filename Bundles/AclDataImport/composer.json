@@ -2,7 +2,7 @@
     "name": "spryker/acl-data-import",
     "type": "library",
     "description": "AclDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/acl": "^3.8.0",

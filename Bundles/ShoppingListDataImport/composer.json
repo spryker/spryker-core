@@ -2,7 +2,7 @@
     "name": "spryker/shopping-list-data-import",
     "type": "library",
     "description": "ShoppingListDataImport module",
-    "license": "MIT",
+    "license": "proprietary",
     "require": {
         "php": ">=8.0",
         "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
