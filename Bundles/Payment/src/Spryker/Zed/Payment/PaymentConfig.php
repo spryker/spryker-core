@@ -172,4 +172,14 @@ class PaymentConfig extends AbstractBundleConfig
             ],
         ];
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(PaymentConstants::TENANT_IDENTIFIER, '');
+    }
 }

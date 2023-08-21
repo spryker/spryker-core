@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Merchant\Communication\Plugin\MessageBroker\MerchantMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  * @method \Spryker\Zed\Merchant\Communication\MerchantCommunicationFactory getFactory()
  * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()

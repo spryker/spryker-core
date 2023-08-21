@@ -132,7 +132,8 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves Store related Merchant entities from the Persistence.
+     * - Retrieves Merchant entities from the Persistence.
+     * - Filters Merchants by store if `MerchantExportCriteria.storeReference` is modified.
      * - Triggers Merchant.export event for Merchants filtered by the criteria.
      *
      * @api

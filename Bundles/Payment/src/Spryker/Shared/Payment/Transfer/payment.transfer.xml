@@ -58,7 +58,8 @@
         <property name="requestUrl" type="string"/>
         <property name="postData" type="array" associative="true" singular="postValue"/>
         <property name="authorization" type="string"/>
-        <property name="storeReference" type="string"/>
+        <property name="storeReference" type="string" deprecated="Use {@link \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer::$tenantIdentifier} instead."/>
+        <property name="tenantIdentifier" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">

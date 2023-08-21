@@ -515,7 +515,9 @@ class StoreFacadeTest extends Unit
         $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
 
         // Assert
-        $this->assertFalse($messageValidationResponseTransfer->getIsValid());
+        $this->tester->isDynamicStoreEnabled()
+            ? $this->assertTrue($messageValidationResponseTransfer->getIsValid())
+            : $this->assertFalse($messageValidationResponseTransfer->getIsValid());
     }
 
     /**
@@ -532,7 +534,9 @@ class StoreFacadeTest extends Unit
         $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
 
         // Assert
-        $this->assertFalse($messageValidationResponseTransfer->getIsValid());
+        $this->tester->isDynamicStoreEnabled()
+            ? $this->assertTrue($messageValidationResponseTransfer->getIsValid())
+            : $this->assertFalse($messageValidationResponseTransfer->getIsValid());
     }
 
     /**

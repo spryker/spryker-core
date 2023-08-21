@@ -66,6 +66,8 @@ class AssetDeleter implements AssetDeleterInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\Deleter\AssetDeleter::removeAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
      *
      * @return void
@@ -107,6 +109,59 @@ class AssetDeleter implements AssetDeleterInterface
         $this->assetEntityManager->deleteAssetStores($assetTransfer, [$storeTransfer]);
 
         $assetTransfer->setStores([$storeTransfer->getNameOrFail()]);
+
+        $this->sendEvent($assetTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return void
+     */
+    public function removeAsset(AssetDeletedTransfer $assetDeletedTransfer): void
+    {
+        $messageAttributesTransfer = $assetDeletedTransfer->getMessageAttributesOrFail();
+
+        $assetDeletedTransfer
+            ->requireAssetIdentifier();
+
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid(
+            (string)$assetDeletedTransfer->getAssetIdentifier(),
+        );
+
+        if ($assetTransfer === null && !$this->assetEntityManager->hasIsActiveColumn()) {
+            return;
+        }
+
+        if ($assetTransfer === null) {
+            $assetTransfer = $this->assetMapper->generateAssetTransferFromAssetDeletedTransfer($assetDeletedTransfer);
+            $this->assetEntityManager->saveAsset($assetTransfer);
+
+            return;
+        }
+
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $assetTransfer->setLastMessageTimestamp($messageAttributesTransfer->getTimestampOrFail());
+
+        if (!$this->assetEntityManager->hasIsActiveColumn()) {
+            $this->assetEntityManager->deleteAsset($assetTransfer);
+        } else {
+            $assetTransfer->setIsActive(false);
+            $assetTransfer = $this->assetEntityManager->saveAsset($assetTransfer);
+        }
+
+        $this->assetEntityManager->deleteAssetStores(
+            $assetTransfer,
+            $storeTransfers,
+        );
+
+        $storeTransferNames = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeTransferNames[] = $storeTransfer->getNameOrFail();
+        }
+
+        $assetTransfer->setStores($storeTransferNames);
 
         $this->sendEvent($assetTransfer);
     }

@@ -23,6 +23,7 @@
         <property name="locale" type="Locale"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -38,6 +39,10 @@
         <property name="lastName" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="isCancellable" type="bool"/>
+        <property name="createdAt" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
+        <property name="merchants" type="OrderMerchant[]" singular="merchant" strict="true"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
@@ -108,9 +113,11 @@
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
         <property name="fkSalesOrder" type="int"/>
+        <property name="metadata" type="ItemMetadata"/>
     </transfer>
 
     <transfer name="Locale">
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Message">
@@ -128,6 +135,7 @@
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -255,6 +263,7 @@
 
     <transfer name="AclEntityParentMetadata">
         <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
     </transfer>
 
     <transfer name="AclEntityParentConnectionMetadata">
@@ -266,6 +275,10 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="ItemMetadata">
+        <property name="image" type="string"/>
     </transfer>
 
 </transfers>

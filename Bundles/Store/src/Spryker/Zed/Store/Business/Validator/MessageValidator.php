@@ -28,11 +28,17 @@ class MessageValidator implements MessageValidatorInterface
     protected $storeReader;
 
     /**
+     * @var bool
+     */
+    protected $isDynamicMultiStoreEnabled;
+
+    /**
      * @param \Spryker\Zed\Store\Business\Model\StoreReaderInterface $storeReader
      */
-    public function __construct(StoreReaderInterface $storeReader)
+    public function __construct(StoreReaderInterface $storeReader, bool $isDynamicMultiStoreEnabled)
     {
         $this->storeReader = $storeReader;
+        $this->isDynamicMultiStoreEnabled = $isDynamicMultiStoreEnabled;
     }
 
     /**
@@ -43,6 +49,10 @@ class MessageValidator implements MessageValidatorInterface
     public function validate(TransferInterface $messageTransfer): MessageValidationResponseTransfer
     {
         $messageValidationResponse = new MessageValidationResponseTransfer();
+
+        if ($this->isDynamicMultiStoreEnabled) {
+            return $messageValidationResponse->setIsValid(true);
+        }
 
         if (!method_exists($messageTransfer, 'getMessageAttributes')) {
             $this->getLogger()->error(

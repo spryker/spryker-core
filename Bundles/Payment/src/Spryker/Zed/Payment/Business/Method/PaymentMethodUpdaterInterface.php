@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 interface PaymentMethodUpdaterInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface::update()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
@@ -22,6 +24,15 @@ interface PaymentMethodUpdaterInterface
     public function updatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function update(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface::addPaymentMethod()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
@@ -29,9 +40,25 @@ interface PaymentMethodUpdaterInterface
     public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function addPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface::deletePaymentMethod()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function deletePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer;
 }

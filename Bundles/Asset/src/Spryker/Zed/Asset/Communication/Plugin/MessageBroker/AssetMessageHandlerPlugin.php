@@ -7,33 +7,19 @@
 
 namespace Spryker\Zed\Asset\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\AssetAddedTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
+use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Asset\Communication\Plugin\MessageBroker\AssetMessageHandlerPlugin} instead.
- *
  * @method \Spryker\Zed\Asset\Communication\AssetCommunicationFactory getFactory()
  * @method \Spryker\Zed\Asset\Business\AssetFacadeInterface getFacade()
  * @method \Spryker\Zed\Asset\AssetConfig getConfig()
  */
-class AssetDeletedMessageHandlerPlugin extends AbstractPlugin implements MessageHandlerPluginInterface
+class AssetMessageHandlerPlugin extends AbstractPlugin implements MessageHandlerPluginInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
-     *
-     * @return void
-     */
-    public function onAssetDeleted(AssetDeletedTransfer $assetDeletedTransfer): void
-    {
-        $this->getFacade()->deleteAsset($assetDeletedTransfer);
-    }
-
     /**
      * {@inheritDoc}
      * - Return an array where the key is the class name to be handled and the value is the callable that handles the message.
@@ -44,6 +30,10 @@ class AssetDeletedMessageHandlerPlugin extends AbstractPlugin implements Message
      */
     public function handles(): iterable
     {
-        yield AssetDeletedTransfer::class => [$this, 'onAssetDeleted'];
+        return [
+            AssetAddedTransfer::class => [$this->getFacade(), 'createAsset'],
+            AssetUpdatedTransfer::class => [$this->getFacade(), 'saveAsset'],
+            AssetDeletedTransfer::class => [$this->getFacade(), 'removeAsset'],
+        ];
     }
 }

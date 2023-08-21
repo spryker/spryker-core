@@ -482,47 +482,6 @@ class OmsFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testOrderStatusChangedMessageWhenStoreReferenceAndPluginsAreProvidedThenMessageIsSent(): void
-    {
-        // Arrange
-        $this->tester->setupMessageBroker();
-
-        $this->tester->setStoreReferenceData([
-            'DE' => 'dev-DE',
-            'AT' => 'dev-AT',
-        ]);
-
-        $orderTransfer = $this->tester->getOrderTransferAndSetupSalesFacadeMock();
-
-        // Act
-        $this->sendOrderStatusChangedMessage($orderTransfer);
-
-        // Assert
-        $this->tester->assertMessageWasSent(OrderStatusChangedTransfer::class);
-    }
-
-    /**
-     * @return void
-     */
-    public function testOrderStatusChangedMessageWhenPluginsAreProvidedAndStoreReferenceIsMissingThenMessageIsNotSent(): void
-    {
-        // Arrange
-        $this->tester->setupMessageBroker();
-
-        $this->tester->setStoreReferenceData([]);
-
-        $orderTransfer = $this->tester->getOrderTransferAndSetupSalesFacadeMock();
-
-        // Act
-        $this->sendOrderStatusChangedMessage($orderTransfer);
-
-        // Assert
-        $this->tester->assertMessageWasNotSent(OrderStatusChangedTransfer::class);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void

@@ -177,7 +177,8 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
 
         $paymentAuthorizeRequestTransfer = (new PaymentAuthorizeRequestTransfer())
             ->setRequestUrl($paymentMethodTransfer->getPaymentAuthorizationEndpoint())
-            ->setStoreReference($this->getCurrentStoreReference($quoteTransfer))
+            ->setStoreReference($this->findCurrentStoreReference($quoteTransfer))
+            ->setTenantIdentifier($this->paymentConfig->getTenantIdentifier())
             ->setPostData($postData);
 
         $paymentAuthorizeRequestTransfer = $this->executePaymentAuthorizeRequestExpanderPlugins($paymentAuthorizeRequestTransfer);
@@ -242,15 +243,17 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getCurrentStoreReference(QuoteTransfer $quoteTransfer): string
+    protected function findCurrentStoreReference(QuoteTransfer $quoteTransfer): ?string
     {
         return $this->storeFacade
             ->getStoreByName($quoteTransfer->getStoreOrFail()->getNameOrFail())
-            ->getStoreReferenceOrFail();
+            ->getStoreReference();
     }
 
     /**

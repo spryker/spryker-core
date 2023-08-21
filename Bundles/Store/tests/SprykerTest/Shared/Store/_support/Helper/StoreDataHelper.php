@@ -90,6 +90,14 @@ class StoreDataHelper extends Module
     }
 
     /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
+
+    /**
      * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected function getStoreFacade(): StoreFacadeInterface
@@ -147,13 +155,5 @@ class StoreDataHelper extends Module
     protected function getStorePropelQuery(): SpyStoreQuery
     {
         return SpyStoreQuery::create();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDynamicStoreEnabled(): bool
-    {
-        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

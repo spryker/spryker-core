@@ -20,4 +20,9 @@ interface PaymentConstants
      * @var string
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'PAYMENT:TENANT_IDENTIFIER';
 }

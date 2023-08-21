@@ -60,15 +60,17 @@ class MerchantExporter implements MerchantExporterInterface
      */
     public function export(MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer): void
     {
-        try {
-            $store = $this->getStoreTransfer($merchantExportCriteriaTransfer);
-        } catch (StoreReferenceNotFoundException | NullValueException $exception) {
-            $this->getLogger()->error(sprintf('Failed to getStoreTransfer with message %s', $exception->getMessage()), ['exception' => $exception]);
-
+        if (!$this->isMerchantExportCriteriaStoreReferenceValid($merchantExportCriteriaTransfer)) {
             return;
         }
 
-        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setStore($store);
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer());
+        $storeTransfer = $this->findStoreForExporting($merchantExportCriteriaTransfer);
+
+        if ($storeTransfer) {
+            $merchantCriteriaTransfer->setStore($storeTransfer);
+        }
+
         $merchantCollectionTransfer = $this->merchantRepository->get($merchantCriteriaTransfer);
 
         $merchantIds = [];
@@ -80,6 +82,47 @@ class MerchantExporter implements MerchantExporterInterface
         $eventEntityTransfers = $this->createEventTransfers($merchantIds);
 
         $this->eventFacade->triggerBulk(MerchantEvents::MERCHANT_EXPORTED, $eventEntityTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+     *
+     * @return bool
+     */
+    protected function isMerchantExportCriteriaStoreReferenceValid(
+        MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+    ): bool {
+        if (!$merchantExportCriteriaTransfer->isPropertyModified(MerchantExportCriteriaTransfer::STORE_REFERENCE)) {
+            return true;
+        }
+
+        try {
+            $this->getStoreTransfer($merchantExportCriteriaTransfer);
+        } catch (StoreReferenceNotFoundException | NullValueException $exception) {
+            $this->getLogger()->error(
+                sprintf('Failed to getStoreTransfer with message %s', $exception->getMessage()),
+                ['exception' => $exception],
+            );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    protected function findStoreForExporting(
+        MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
+    ): ?StoreTransfer {
+        if (!$merchantExportCriteriaTransfer->isPropertyModified(MerchantExportCriteriaTransfer::STORE_REFERENCE)) {
+            return null;
+        }
+
+        return $this->getStoreTransfer($merchantExportCriteriaTransfer);
     }
 
     /**

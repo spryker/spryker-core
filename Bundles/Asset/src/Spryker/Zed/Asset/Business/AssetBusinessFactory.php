@@ -31,9 +31,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AssetBusinessFactory extends AbstractBusinessFactory
 {
- /**
-  * @return \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcherInterface
-  */
+    /**
+     * @return \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcherInterface
+     */
     public function createAssetRequestDispatcher(): AssetRequestDispatcherInterface
     {
         return new AssetRequestDispatcher(

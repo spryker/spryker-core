@@ -12,6 +12,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AssetToStoreInterface
 {
     /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
+
+    /**
      * @param string $storeReference
      *
      * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException

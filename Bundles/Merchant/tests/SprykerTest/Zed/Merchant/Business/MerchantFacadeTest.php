@@ -103,6 +103,22 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testTriggerExportMerchantsSuccessfully(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchantWithStore();
+        $merchantExportCriteriaTransfer = (new MerchantExportCriteriaTransfer());
+
+        // Assert
+        $this->tester->assertTriggerMerchantExportEventsSuccessfully($this->eventFacade, $merchantTransfer);
+
+        // Act
+        $this->tester->getFacade()->triggerMerchantExportEvents($merchantExportCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testMerchantCreatedWithStoreTriggersCreatedAndPublishEvents(): void
     {
         // Arrange

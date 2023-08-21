@@ -58,6 +58,8 @@ class AssetUpdater implements AssetUpdaterInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\Updater\AssetUpdater::saveAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
      *
      * @throws \Spryker\Zed\Asset\Business\Exception\InvalidAssetException
@@ -89,6 +91,48 @@ class AssetUpdater implements AssetUpdaterInterface
         $assetTransfer = $this->assetEntityManager->saveAssetWithStores($assetTransfer, [$storeTransfer]);
 
         $assetTransfer->setStores([$storeTransfer->getNameOrFail()]);
+
+        $this->sendEvents($assetTransfer, $previousStateAssetTransfer);
+
+        return $assetTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
+     *
+     * @throws \Spryker\Zed\Asset\Business\Exception\InvalidAssetException
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function saveAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
+    {
+        $assetUpdatedTransfer
+            ->requireAssetView()
+            ->requireAssetIdentifier()
+            ->requireAssetSlot();
+
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid($assetUpdatedTransfer->getAssetIdentifierOrFail());
+        if ($assetTransfer === null) {
+            throw new InvalidAssetException('This asset doesn\'t exist in DB.');
+        }
+
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $previousStateAssetTransfer = clone $assetTransfer;
+        $assetTransfer->setAssetContent($assetUpdatedTransfer->getAssetView())
+            ->setAssetSlot($assetUpdatedTransfer->getAssetSlot())
+            ->setIsActive(true)
+            ->setLastMessageTimestamp($assetUpdatedTransfer->getMessageAttributesOrFail()->getTimestamp());
+
+        $assetTransfer = $this->assetEntityManager
+            ->saveAssetWithStores($assetTransfer, $storeTransfers);
+
+        $storeTransferNames = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeTransferNames[] = $storeTransfer->getNameOrFail();
+        }
+
+        $assetTransfer->setStores($storeTransferNames);
 
         $this->sendEvents($assetTransfer, $previousStateAssetTransfer);
 

@@ -40,4 +40,19 @@ class PaymentMethodKeyGenerator implements PaymentMethodKeyGeneratorInterface
             sprintf('%s %s %s', $paymentProviderName, $paymentMethodName, $storeName),
         );
     }
+
+    /**
+     * @param string $paymentProviderName
+     * @param string $paymentMethodName
+     *
+     * @return string
+     */
+    public function generate(
+        string $paymentProviderName,
+        string $paymentMethodName
+    ): string {
+        return $this->utilTextService->generateSlug(
+            sprintf('%s %s', $paymentProviderName, $paymentMethodName),
+        );
+    }
 }

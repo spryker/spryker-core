@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Service\Payment\PaymentServiceInterface getService(?string $moduleName = NULL)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\Payment\PHPMD)
  */
 class PaymentServiceTester extends Actor
 {

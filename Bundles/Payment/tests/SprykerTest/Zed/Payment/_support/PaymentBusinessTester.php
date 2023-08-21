@@ -32,7 +32,7 @@ use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Payment\PHPMD)
  */
 class PaymentBusinessTester extends Actor
 {
@@ -216,12 +216,14 @@ class PaymentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      * @param string $timestamp
+     * @param bool $addStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function createDisabledPaymentMethodWithTimestampOnDatabase(
         PaymentProviderTransfer $paymentProviderTransfer,
-        string $timestamp
+        string $timestamp,
+        bool $addStore = true
     ): PaymentMethodTransfer {
         return $this->havePaymentMethod([
             PaymentMethodTransfer::IS_HIDDEN => true,
@@ -229,17 +231,20 @@ class PaymentBusinessTester extends Actor
             PaymentMethodTransfer::LAST_MESSAGE_TIMESTAMP => $timestamp,
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => $this->generatePaymentMethodKey(
                 $paymentProviderTransfer->getPaymentProviderKey(),
+                $addStore,
             ),
         ]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param bool $addStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function createDisabledPaymentMethodWithoutTimestampOnDatabase(
-        PaymentProviderTransfer $paymentProviderTransfer
+        PaymentProviderTransfer $paymentProviderTransfer,
+        bool $addStore = true
     ): PaymentMethodTransfer {
         return $this->havePaymentMethod([
             PaymentMethodTransfer::IS_HIDDEN => true,
@@ -247,19 +252,22 @@ class PaymentBusinessTester extends Actor
             PaymentMethodTransfer::LAST_MESSAGE_TIMESTAMP => null,
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => $this->generatePaymentMethodKey(
                 $paymentProviderTransfer->getPaymentProviderKey(),
+                $addStore,
             ),
         ]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
-     * @param string $timestamp
+     * @param string $timestamp *
+     * @param bool $addStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function createEnabledPaymentMethodWithTimestampOnDatabase(
         PaymentProviderTransfer $paymentProviderTransfer,
-        string $timestamp
+        string $timestamp,
+        bool $addStore = true
     ): PaymentMethodTransfer {
         return $this->havePaymentMethod([
             PaymentMethodTransfer::IS_HIDDEN => false,
@@ -267,17 +275,20 @@ class PaymentBusinessTester extends Actor
             PaymentMethodTransfer::LAST_MESSAGE_TIMESTAMP => $timestamp,
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => $this->generatePaymentMethodKey(
                 $paymentProviderTransfer->getPaymentProviderKey(),
+                $addStore,
             ),
         ]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param bool $addStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function createEnabledPaymentMethodWithoutTimestampOnDatabase(
-        PaymentProviderTransfer $paymentProviderTransfer
+        PaymentProviderTransfer $paymentProviderTransfer,
+        bool $addStore = true
     ): PaymentMethodTransfer {
         return $this->havePaymentMethod([
             PaymentMethodTransfer::IS_HIDDEN => false,
@@ -285,21 +296,28 @@ class PaymentBusinessTester extends Actor
             PaymentMethodTransfer::LAST_MESSAGE_TIMESTAMP => null,
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => $this->generatePaymentMethodKey(
                 $paymentProviderTransfer->getPaymentProviderKey(),
+                $addStore,
             ),
         ]);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+     * @param bool $addStore
      *
      * @return void
      */
     public function assertDisabledPaymentMethodWasCreatedWithSoftDeletion(
-        PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+        PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer,
+        bool $addStore = true
     ): void {
-        $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setPaymentMethodKey($this->generatePaymentMethodKey(
-            $messagePaymentMethodDeletedTransfer->getProviderName(),
-        ));
+        $filterPaymentMethodTransfer = (new PaymentMethodTransfer())
+            ->setPaymentMethodKey(
+                $this->generatePaymentMethodKey(
+                    $messagePaymentMethodDeletedTransfer->getProviderName(),
+                    $addStore,
+                ),
+            );
 
         $createdPaymentMethodTransfer = $this->findPaymentMethod($filterPaymentMethodTransfer);
 
@@ -521,17 +539,20 @@ class PaymentBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $existentPaymentMethod
-     * @param string $providerName
+     * @param string $providerName *
+     * @param bool $addStore
      *
      * @return void
      */
     public function assertRightPaymentMethodWasUpdated(
         PaymentMethodTransfer $existentPaymentMethod,
-        string $providerName
+        string $providerName,
+        bool $addStore = true
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setPaymentMethodKey(
             $this->generatePaymentMethodKey(
                 $providerName,
+                $addStore,
             ),
         );
 
@@ -557,13 +578,17 @@ class PaymentBusinessTester extends Actor
 
     /**
      * @param string $paymentProviderKey
+     * @param bool $addStore
      *
      * @return string
      */
-    protected function generatePaymentMethodKey(string $paymentProviderKey): string
+    protected function generatePaymentMethodKey(string $paymentProviderKey, bool $addStore = true): string
     {
-        return strtolower(
-            $paymentProviderKey . '-' . static::PAYMENT_METHOD_NAME . '-' . static::STORE_NAME,
-        );
+        $paymentMethodKey = $paymentProviderKey . '-' . static::PAYMENT_METHOD_NAME;
+        if ($addStore) {
+            $paymentMethodKey .= '-' . static::STORE_NAME;
+        }
+
+        return strtolower($paymentMethodKey);
     }
 }

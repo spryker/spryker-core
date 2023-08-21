@@ -263,10 +263,13 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
+     * - Validates only if dynamic store is disabled, otherwise return `MessageValidationResponse.isValid` === true.
      * - Validates if `storeReference` from the message matches `storeReference` of one the configured stores.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
      *

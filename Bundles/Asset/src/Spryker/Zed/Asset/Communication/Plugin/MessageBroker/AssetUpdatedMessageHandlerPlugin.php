@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Asset\Communication\Plugin\MessageBroker\AssetMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Asset\Communication\AssetCommunicationFactory getFactory()
  * @method \Spryker\Zed\Asset\Business\AssetFacadeInterface getFacade()
  * @method \Spryker\Zed\Asset\AssetConfig getConfig()

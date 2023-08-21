@@ -29,11 +29,31 @@ interface AssetFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacadeInterface::createAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
     public function addAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer;
+
+    /**
+     * Specification:
+     * - Does nothing if the `AssetAddedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
+     * - Creates a new asset entity with new assetStoreEntity relations to every store available.
+     * - Uses incoming transfer to set entity fields.
+     * - Persists the entity to DB.
+     * - Sets ID to the returning transfer.
+     * - Returns asset response with newly created asset transfer inside.
+     * - If an asset with the same UUID is found, the asset is updated instead.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function createAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer;
 
     /**
      * Specification:
@@ -48,11 +68,31 @@ interface AssetFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacadeInterface::saveAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
     public function updateAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer;
+
+    /**
+     * Specification:
+     * - Does nothing if the `AssetUpdatedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
+     * - Finds an asset record by UUID in DB.
+     * - Uses incoming transfer to update entity fields.
+     * - Persists the entity to DB.
+     * - Updates a new relations assetStoreEntity to every store available.
+     * - Returns asset response with updated asset transfer inside.
+     * - If an asset with the same UUID is not found, a new asset is created instead.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function saveAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer;
 
     /**
      * Specification:
@@ -65,11 +105,29 @@ interface AssetFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacadeInterface::removeAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
      *
      * @return void
      */
     public function deleteAsset(AssetDeletedTransfer $assetDeletedTransfer): void;
+
+    /**
+     * Specification:
+     * - Does nothing if the `AssetDeletedTransfer.messageAttributes.timestamp` value is not null and is older than the current `spy_asset.last_message_timestamp`.
+     * - Deletes relation assetStoreEntity to every store available.
+     * - If an asset with the same UUID is found in DB and the `is_active` column exists in `spy_asset` table then the asset is soft deleted.
+     * - If an asset with the same UUID is found in DB and the `is_active` column does not exist in the `spy_asset` table then the asset is deleted.
+     * - If an asset with the same UUID is not found in DB and the `is_active` column exists in `spy_asset` table a new soft deleted asset is created.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return void
+     */
+    public function removeAsset(AssetDeletedTransfer $assetDeletedTransfer): void;
 
     /**
      * Specification:

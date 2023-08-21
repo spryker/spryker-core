@@ -52,7 +52,7 @@ use Spryker\Zed\Store\Communication\Plugin\MessageBroker\StoreReferenceMessageVa
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Oms\PHPMD)
  */
 class OmsBusinessTester extends Actor
 {

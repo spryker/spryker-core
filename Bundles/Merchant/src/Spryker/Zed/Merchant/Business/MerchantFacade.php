@@ -127,7 +127,9 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      */
     public function triggerMerchantExportEvents(MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer): void
     {
-        $this->getFactory()->createMerchantExporter()->export($merchantExportCriteriaTransfer);
+        $this->getFactory()
+            ->createMerchantExporter()
+            ->export($merchantExportCriteriaTransfer);
     }
 
     /**

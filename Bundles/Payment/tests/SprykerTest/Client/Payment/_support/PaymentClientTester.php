@@ -24,7 +24,7 @@ use Codeception\Actor;
  * @method void pause()
  * @method \Spryker\Client\Payment\PaymentClientInterface getClient()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\Payment\PHPMD)
  */
 class PaymentClientTester extends Actor
 {

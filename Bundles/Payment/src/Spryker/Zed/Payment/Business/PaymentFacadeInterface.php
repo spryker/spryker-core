@@ -56,6 +56,7 @@ interface PaymentFacadeInterface
      * - Receives all the necessary information about the foreign payment method.
      * - Terminates payment authorization if the payment method is not found or no `paymentAuthorizationEndpoint` is specified for it.
      * - Uses `PaymentAuthorizeRequestExpanderPluginInterface` plugins stack to expand payment authorization request data.
+     * - Enhances the payment authorization request data by including the tenant identifier value if it is provided.
      * - Sends an HTTP request with all pre-selected quote fields using URL from `PaymentMethod.paymentAuthorizationEndpoint`.
      * - Updates CheckoutResponseTransfer with errors or the redirect URL according to response received.
      *
@@ -86,11 +87,33 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::addPaymentMethod()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Used to support only foreign payment methods.
+     * - Requires `PaymentMethodAdded.labelName` transfer field to be set.
+     * - Requires `PaymentMethodAdded.groupName` transfer field to be set.
+     * - Creates payment provider if respective provider doesn't exist in the database.
+     * - Creates payment method if the payment method with provided key doesn't exist in the database.
+     * - Updates payment method if the payment method with provided key exist in the database.
+     * - Sets payment method `is_hidden` flag to `false`.
+     * - Checks if there's a `PaymentMethodAdded.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Returns `PaymentMethod` transfer filled with payment method data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function addPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
 
     /**
      * Specification:
@@ -105,11 +128,31 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::deletePaymentMethod()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
      *
      * @return void
      */
     public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void;
+
+    /**
+     * Specification:
+     * - Used to support only foreign payment methods.
+     * - Requires `PaymentMethodDeleted.labelName` transfer field to be set.
+     * - Requires `PaymentMethodDeleted.groupName` transfer field to be set.
+     * - Uses the specified data to find a payment method.
+     * - Sets payment method `is_hidden` flag to `true` (if it exists in the database).
+     * - Creates hidden payment method if its provided key doesn't exist in the database.
+     * - Checks if there's a `PaymentMethodDeleted.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     *
+     * @return void
+     */
+    public function deletePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void;
 
     /**
      * Specification:

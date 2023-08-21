@@ -10,6 +10,8 @@ namespace Spryker\Zed\Payment\Business\Generator;
 interface PaymentMethodKeyGeneratorInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface::generate()} instead.
+     *
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      * @param string $storeName
@@ -20,5 +22,16 @@ interface PaymentMethodKeyGeneratorInterface
         string $paymentProviderName,
         string $paymentMethodName,
         string $storeName
+    ): string;
+
+    /**
+     * @param string $paymentProviderName
+     * @param string $paymentMethodName
+     *
+     * @return string
+     */
+    public function generate(
+        string $paymentProviderName,
+        string $paymentMethodName
     ): string;
 }

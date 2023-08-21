@@ -96,6 +96,10 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
             $requestHeaders['X-Store-Reference'] = $paymentAuthorizeRequestTransfer->getStoreReferenceOrFail();
         }
 
+        if ($paymentAuthorizeRequestTransfer->getTenantIdentifier()) {
+            $requestHeaders['X-Tenant-Identifier'] = $paymentAuthorizeRequestTransfer->getTenantIdentifierOrFail();
+        }
+
         return $requestHeaders;
     }
 }

@@ -305,6 +305,8 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
      *
      * @return \Generated\Shared\Transfer\MessageValidationResponseTransfer

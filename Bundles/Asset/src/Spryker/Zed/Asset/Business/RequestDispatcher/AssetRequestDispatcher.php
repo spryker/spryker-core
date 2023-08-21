@@ -66,6 +66,8 @@ class AssetRequestDispatcher implements AssetRequestDispatcherInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcher::dispatchCreateAssetRequest()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
@@ -90,6 +92,32 @@ class AssetRequestDispatcher implements AssetRequestDispatcherInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function dispatchCreateAssetRequest(AssetAddedTransfer $assetAddedTransfer): AssetTransfer
+    {
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid($assetAddedTransfer->getAssetIdentifierOrFail());
+
+        $messageAttributes = $assetAddedTransfer->getMessageAttributesOrFail();
+        $assetAddedTransfer->setMessageAttributes($this->assetTimeStamp->updateMessageAttributesTimestampIfRequired($messageAttributes));
+
+        if ($assetTransfer === null) {
+            return $this->assetCreator->createAsset($assetAddedTransfer);
+        }
+
+        if (!$this->assetTimeStamp->shouldTransferMessageBeProcessed($assetTransfer, $assetAddedTransfer->getMessageAttributesOrFail())) {
+            return $assetTransfer;
+        }
+        $assetUpdatedTransfer = (new AssetUpdatedTransfer())->fromArray($assetAddedTransfer->toArray());
+
+        return $this->assetUpdater->saveAsset($assetUpdatedTransfer);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcher::dispatchCreateAssetRequest()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
@@ -115,6 +143,33 @@ class AssetRequestDispatcher implements AssetRequestDispatcherInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function dispatchSaveAssetRequest(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
+    {
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid($assetUpdatedTransfer->getAssetIdentifierOrFail());
+
+        $messageAttributes = $assetUpdatedTransfer->getMessageAttributesOrFail();
+        $assetUpdatedTransfer->setMessageAttributes($this->assetTimeStamp->updateMessageAttributesTimestampIfRequired($messageAttributes));
+
+        if ($assetTransfer === null) {
+            $assetCreatedTransfer = (new AssetAddedTransfer())->fromArray($assetUpdatedTransfer->toArray());
+
+            return $this->assetCreator->createAsset($assetCreatedTransfer);
+        }
+
+        if (!$this->assetTimeStamp->shouldTransferMessageBeProcessed($assetTransfer, $assetUpdatedTransfer->getMessageAttributesOrFail())) {
+            return $assetTransfer;
+        }
+
+        return $this->assetUpdater->saveAsset($assetUpdatedTransfer);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\RequestDispatcher\AssetRequestDispatcher::dispatchRemoveAssetRequest()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
      *
      * @return void
@@ -131,6 +186,26 @@ class AssetRequestDispatcher implements AssetRequestDispatcherInterface
             || $this->assetTimeStamp->shouldTransferMessageBeProcessed($assetTransfer, $assetDeletedTransfer->getMessageAttributesOrFail())
         ) {
             $this->assetDeleter->deleteAsset($assetDeletedTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return void
+     */
+    public function dispatchRemoveAssetRequest(AssetDeletedTransfer $assetDeletedTransfer): void
+    {
+        $assetTransfer = $this->assetRepository->findAssetByAssetUuid($assetDeletedTransfer->getAssetIdentifierOrFail());
+
+        $messageAttributes = $assetDeletedTransfer->getMessageAttributesOrFail();
+        $assetDeletedTransfer->setMessageAttributes($this->assetTimeStamp->updateMessageAttributesTimestampIfRequired($messageAttributes));
+
+        if (
+            $assetTransfer === null
+            || $this->assetTimeStamp->shouldTransferMessageBeProcessed($assetTransfer, $assetDeletedTransfer->getMessageAttributesOrFail())
+        ) {
+            $this->assetDeleter->removeAsset($assetDeletedTransfer);
         }
     }
 }

@@ -275,6 +275,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     {
         return new MessageValidator(
             $this->createStoreReader(),
+            $this->getIsDynamicStoreModeEnabled(),
         );
     }
 

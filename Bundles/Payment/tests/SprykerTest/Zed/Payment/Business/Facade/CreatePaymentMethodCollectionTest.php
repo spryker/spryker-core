@@ -39,7 +39,7 @@ class CreatePaymentMethodCollectionTest extends Unit
     /**
      * @var int
      */
-    protected const ID_PAYMNET_PROVIDER = 666;
+    protected const ID_PAYMENT_PROVIDER = 666;
 
     /**
      * @var \SprykerTest\Zed\Payment\PaymentBusinessTester
@@ -196,7 +196,7 @@ class CreatePaymentMethodCollectionTest extends Unit
             ->setIsTransactional(false)
             ->addPaymentMethod(
                 (new PaymentMethodBuilder([
-                    PaymentMethodTransfer::ID_PAYMENT_PROVIDER => static::ID_PAYMNET_PROVIDER,
+                    PaymentMethodTransfer::ID_PAYMENT_PROVIDER => static::ID_PAYMENT_PROVIDER,
                 ]))->build(),
             );
 

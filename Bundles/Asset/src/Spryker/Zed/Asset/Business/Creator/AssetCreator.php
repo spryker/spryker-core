@@ -67,6 +67,8 @@ class AssetCreator implements AssetCreatorInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\Creator\AssetCreator::createAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
      *
      * @throws \Spryker\Zed\Asset\Business\Exception\InvalidAssetException
@@ -99,6 +101,52 @@ class AssetCreator implements AssetCreatorInterface
         $assetTransfer = $this->assetEntityManager->saveAssetWithStores($assetTransfer, [$storeTransfer]);
 
         $assetTransfer->setStores([$storeTransfer->getNameOrFail()]);
+
+        $this->sendEvent($assetTransfer);
+
+        return $assetTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
+     *
+     * @throws \Spryker\Zed\Asset\Business\Exception\InvalidAssetException
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function createAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer
+    {
+        $assetAddedTransfer
+            ->requireAssetView()
+            ->requireAssetName()
+            ->requireAssetIdentifier()
+            ->requireAssetSlot();
+
+        $assetTransfer = $this->assetRepository
+            ->findAssetByAssetUuid((string)$assetAddedTransfer->getAssetIdentifier());
+
+        if ($assetTransfer !== null) {
+            throw new InvalidAssetException('This asset already exists in DB.');
+        }
+
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $assetTransfer = $this->assetMapper->mapAssetAddedTransferToAssetTransfer(
+            $assetAddedTransfer,
+            new AssetTransfer(),
+        );
+
+        $assetTransfer = $this->assetEntityManager->saveAssetWithStores(
+            $assetTransfer,
+            $storeTransfers,
+        );
+
+        $storeTransferNames = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeTransferNames[] = $storeTransfer->getNameOrFail();
+        }
+
+        $assetTransfer->setStores($storeTransferNames);
 
         $this->sendEvent($assetTransfer);
 

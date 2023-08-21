@@ -27,13 +27,51 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacade::createAsset()} instead.
+     *
      * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
     public function addAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer
     {
-        return $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetAddedTransferRequest($assetAddedTransfer);
+        return $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchAssetAddedTransferRequest($assetAddedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetAddedTransfer $assetAddedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function createAsset(AssetAddedTransfer $assetAddedTransfer): AssetTransfer
+    {
+        return $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchCreateAssetRequest($assetAddedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacade::saveAsset()} instead.
+     *
+     * @param \Generated\Shared\Transfer\AssetUpdatedTransfer $assetUpdatedTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    public function updateAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
+    {
+        return $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchAssetUpdatedTransferRequest($assetUpdatedTransfer);
     }
 
     /**
@@ -45,9 +83,29 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
-    public function updateAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
+    public function saveAsset(AssetUpdatedTransfer $assetUpdatedTransfer): AssetTransfer
     {
-        return $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetUpdatedTransferRequest($assetUpdatedTransfer);
+        return $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchSaveAssetRequest($assetUpdatedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacade::removeAsset()} instead.
+     *
+     * @param \Generated\Shared\Transfer\AssetDeletedTransfer $assetDeletedTransfer
+     *
+     * @return void
+     */
+    public function deleteAsset(AssetDeletedTransfer $assetDeletedTransfer): void
+    {
+        $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchAssetDeletedTransferRequest($assetDeletedTransfer);
     }
 
     /**
@@ -59,9 +117,11 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      *
      * @return void
      */
-    public function deleteAsset(AssetDeletedTransfer $assetDeletedTransfer): void
+    public function removeAsset(AssetDeletedTransfer $assetDeletedTransfer): void
     {
-        $this->getFactory()->createAssetRequestDispatcher()->dispatchAssetDeletedTransferRequest($assetDeletedTransfer);
+        $this->getFactory()
+            ->createAssetRequestDispatcher()
+            ->dispatchRemoveAssetRequest($assetDeletedTransfer);
     }
 
     /**

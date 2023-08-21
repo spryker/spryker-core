@@ -56,4 +56,14 @@ class AppCatalogGuiConfig extends AbstractBundleConfig
     {
         return $this->get(AppCatalogGuiConstants::OAUTH_GRANT_TYPE, '');
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(AppCatalogGuiConstants::TENANT_IDENTIFIER, '');
+    }
 }

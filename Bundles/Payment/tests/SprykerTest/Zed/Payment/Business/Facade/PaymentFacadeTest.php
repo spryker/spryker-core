@@ -636,6 +636,40 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAddPaymentMethodReturnsSavedPaymentMethodTransferWithCorrectData(): void
+    {
+        // Arrange
+        $paymentMethodAddedTransfer = $this->tester->havePaymentMethodAddedTransfer(
+            [
+                PaymentMethodAddedTransfer::NAME => 'name-1',
+                PaymentMethodAddedTransfer::PROVIDER_NAME => 'provider-name-1',
+                PaymentMethodAddedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => 'redirect-url',
+            ],
+            [],
+        );
+
+        // Act
+        $createdPaymentMethodTransfer = $this->tester->getFacade()
+            ->addPaymentMethod($paymentMethodAddedTransfer);
+
+        $createdPaymentMethodAddedTransfer = $this->tester->mapPaymentMethodTransferToPaymentMethodAddedTransfer(
+            $createdPaymentMethodTransfer,
+            new PaymentMethodAddedTransfer(),
+        );
+
+        // Assert
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentMethod());
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentProvider());
+        $this->assertFalse($createdPaymentMethodTransfer->getIsHidden());
+
+        $this->assertSame($paymentMethodAddedTransfer->getName(), $createdPaymentMethodAddedTransfer->getName());
+        $this->assertSame($paymentMethodAddedTransfer->getProviderName(), $createdPaymentMethodAddedTransfer->getProviderName());
+        $this->assertSame($paymentMethodAddedTransfer->getPaymentAuthorizationEndpoint(), $createdPaymentMethodAddedTransfer->getPaymentAuthorizationEndpoint());
+    }
+
+    /**
+     * @return void
+     */
     public function testDisableForeignPaymentMethodSetsPaymentMethodIsDeletedFlagToTrueWithCorrectData(): void
     {
         // Arrange
@@ -673,6 +707,41 @@ class PaymentFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeletePaymentMethodSetsPaymentMethodIsDeletedFlagToTrueWithCorrectData(): void
+    {
+        // Arrange
+        $paymentMethodAddedTransfer = $this->tester->havePaymentMethodAddedTransfer(
+            [
+                PaymentMethodAddedTransfer::NAME => 'name-2',
+                PaymentMethodAddedTransfer::PROVIDER_NAME => 'provider-name-2',
+                PaymentMethodAddedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => 'redirect-url',
+            ],
+            [],
+        );
+
+        // Act
+        $paymentMethodTransfer = $this->tester->getFacade()
+            ->addPaymentMethod($paymentMethodAddedTransfer);
+
+        $paymentMethodDeletedTransfer = $this->tester->mapPaymentMethodTransferToPaymentMethodDeletedTransfer(
+            $paymentMethodTransfer,
+            (new PaymentMethodDeletedTransfer())
+                ->setMessageAttributes($paymentMethodAddedTransfer->getMessageAttributes()),
+        );
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedTransfer);
+
+        $filterPaymentMethodTransfer = (new PaymentMethodTransfer())
+            ->setIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod());
+        $updatedPaymentMethodTransfer = $this->tester->findPaymentMethod($filterPaymentMethodTransfer);
+
+        // Assert
+        $this->assertSame($paymentMethodTransfer->getIdPaymentMethod(), $updatedPaymentMethodTransfer->getIdPaymentMethod());
+        $this->assertTrue($updatedPaymentMethodTransfer->getIsHidden());
+    }
+
+    /**
      * When the `disableForeignPaymentMethod()` method is called and the Payment Method doesn't exist yet
      * (disable message arrived before add message), it must be created and stored with `is_hidden=true` (soft deletion)
      * so the add message can be handled without adding it after it got removed (Payment method gets updated and stays as soft deleted).
@@ -690,6 +759,28 @@ class PaymentFacadeTest extends Unit
         // Assert
         $this->tester->assertDisabledPaymentMethodWasCreatedWithSoftDeletion(
             $paymentMethodDeletedMessage,
+        );
+    }
+
+    /**
+     * When the `deletePaymentMethod()` method is called and the Payment Method doesn't exist yet
+     * (disable message arrived before add message), it must be created and stored with `is_hidden=true` (soft deletion)
+     * so the add message can be handled without adding it after it got removed (Payment method gets updated and stays as soft deleted).
+     *
+     * @return void
+     */
+    public function testDeletePaymentMethodMessageCreatesPaymentMethodAndMarkItAsDeletedWhenThePaymentMethodDoesNotExistsBeforeTheDeleteMessageArrives(): void
+    {
+        // Arrange
+        $paymentMethodDeletedMessage = $this->tester->havePaymentMethodDeletedTransferWithoutTimestamp();
+
+        // Act
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedMessage);
+
+        // Assert
+        $this->tester->assertDisabledPaymentMethodWasCreatedWithSoftDeletion(
+            $paymentMethodDeletedMessage,
+            false,
         );
     }
 
@@ -715,6 +806,33 @@ class PaymentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->enableForeignPaymentMethod($paymentMethodAddedMessage);
+
+        // Assert
+        $this->tester->assertDisabledPaymentMethodDidNotChange($disabledPaymentMethod);
+    }
+
+    /**
+     * If the `PaymentMethodAddedTransfer` comes from a message when `enableForeignPaymentMethod()` is called
+     * it must compare its timestamp with the last message timestamp stored on the existing payment method record.
+     * If the last message timestamp stored on the existing payment method record is newer the method must not do any change.
+     *
+     * @return void
+     */
+    public function testPaymentMethodAddedMessageShouldNotChangeStateOfPaymentMethodWhenPaymentMethodDeletedMessageWasSentAfterPaymentMethodAddedMessage(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodAddedMessage = $this->tester->havePaymentMethodAddedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+        $disabledPaymentMethod = $this->tester->createDisabledPaymentMethodWithTimestampOnDatabase(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+
+        // Act
+        $this->tester->getFacade()->addPaymentMethod($paymentMethodAddedMessage);
 
         // Assert
         $this->tester->assertDisabledPaymentMethodDidNotChange($disabledPaymentMethod);
@@ -747,6 +865,35 @@ class PaymentFacadeTest extends Unit
     }
 
     /**
+     * If the last message timestamp is null when `addPaymentMethod()` is called it should always
+     * proceed with the change and update the timestamp.
+     *
+     * @return void
+     */
+    public function testAddPaymentMethodShouldChangeDeletedStateOfPaymentMethodWhenPaymentMethodsLastMessageTimestampIsNull(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodAddedMessage = $this->tester->havePaymentMethodAddedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+        $disabledPaymentMethod = $this->tester->createDisabledPaymentMethodWithoutTimestampOnDatabase(
+            $paymentProviderTransfer,
+            false,
+        );
+
+        // Act
+        $this->tester->getFacade()->addPaymentMethod($paymentMethodAddedMessage);
+
+        // Assert
+        $this->tester->assertDisabledPaymentMethodWasEnabledAndTimestampChanged(
+            $disabledPaymentMethod,
+            $paymentMethodAddedMessage,
+        );
+    }
+
+    /**
      * If `PaymentMethodAddedTransfer` doesn't come from a message it likely will not have a timestamp and this can not
      * avoid the process to keep on running and the change must happen, and the timestamp must be updated.
      *
@@ -764,6 +911,32 @@ class PaymentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->enableForeignPaymentMethod($paymentMethodAddedMessage);
+
+        // Assert
+        $this->tester->assertDisabledPaymentMethodWasEnabledAndTimestampWasUpdated(
+            $disabledPaymentMethod,
+        );
+    }
+
+    /**
+     * If `PaymentMethodAddedTransfer` doesn't come from a message it likely will not have a timestamp and this can not
+     * avoid the process to keep on running and the change must happen, and the timestamp must be updated.
+     *
+     * @return void
+     */
+    public function testEnabledForeignPaymentMethodShouldModifyStateOfPaymentMethodWhenPaymentMethodAddedTransferDoNotComeFromAMessageAndItsTimestampIsNull(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodAddedMessage = $this->tester->havePaymentMethodAddedTransferWithoutTimestamp($paymentProviderTransfer);
+        $disabledPaymentMethod = $this->tester->createDisabledPaymentMethodWithTimestampOnDatabase(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+            false,
+        );
+
+        // Act
+        $this->tester->getFacade()->addPaymentMethod($paymentMethodAddedMessage);
 
         // Assert
         $this->tester->assertDisabledPaymentMethodWasEnabledAndTimestampWasUpdated(
@@ -799,6 +972,34 @@ class PaymentFacadeTest extends Unit
     }
 
     /**
+     * If the `PaymentMethodDeletedTransfer` comes from a message when `deletePaymentMethod()` is called
+     * it must compare its timestamp with the last message timestamp stored on the existing payment method record.
+     * If the last message timestamp stored on the existing payment method record is newer the method must not do any change.
+     *
+     * @return void
+     */
+    public function testDeletePaymentMethodShouldNotChangeEnabledStateOfPaymentMethodIfLastMessageTimestampIsOlderThanPaymentMethodDeletedTransferTimestamp(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodDeletedMessage = $this->tester->havePaymentMethodDeletedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+        $enabledPaymentMethod = $this->tester->createEnabledPaymentMethodWithTimestampOnDatabase(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+            false,
+        );
+
+        // Act
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedMessage);
+
+        // Assert
+        $this->tester->assertEnabledPaymentMethodDidNotChange($enabledPaymentMethod);
+    }
+
+    /**
      * If the last message timestamp is null when `disableForeignPaymentMethod()` is called it should always
      * proceed with the change and update the timestamp.
      *
@@ -825,6 +1026,35 @@ class PaymentFacadeTest extends Unit
     }
 
     /**
+     * If the last message timestamp is null when `deletePaymentMethod()` is called it should always
+     * proceed with the change and update the timestamp.
+     *
+     * @return void
+     */
+    public function testDeletePaymentMethodShouldChangeEnabledStateOfPaymentMethodWhenPaymentMethodsLastMessageTimestampIsNull(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodDeletedMessage = $this->tester->havePaymentMethodDeletedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+        $enabledPaymentMethod = $this->tester->createEnabledPaymentMethodWithoutTimestampOnDatabase(
+            $paymentProviderTransfer,
+            false,
+        );
+
+        // Act
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedMessage);
+
+        // Assert
+        $this->tester->assertEnabledPaymentMethodWasDisabledAndTimestampChanged(
+            $enabledPaymentMethod,
+            $paymentMethodDeletedMessage,
+        );
+    }
+
+    /**
      * If `PaymentMethodDeletedTransfer` doesn't come from a message it likely will not have a timestamp and this can not
      * avoid the process to keep up running and the change must happen, and the timestamp must be updated.
      *
@@ -842,6 +1072,33 @@ class PaymentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->disableForeignPaymentMethod($paymentMethodDeletedMessage);
+
+        // Assert
+        $this->tester->assertEnabledPaymentMethodWasDisabledAndTimestampWasUpdated(
+            $enabledPaymentMethod,
+            $paymentMethodDeletedMessage,
+        );
+    }
+
+    /**
+     * If `PaymentMethodDeletedTransfer` doesn't come from a message it likely will not have a timestamp and this can not
+     * avoid the process to keep up running and the change must happen, and the timestamp must be updated.
+     *
+     * @return void
+     */
+    public function testDeletePaymentMethodShouldChangeEnabledStateOfPaymentMethodWhenPaymentMethodDeletedTransferDoNotComeFromAMessageAndItsTimestampIsNull(): void
+    {
+        // Arrange
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodDeletedMessage = $this->tester->havePaymentMethodDeletedTransferWithoutTimestamp($paymentProviderTransfer);
+        $enabledPaymentMethod = $this->tester->createEnabledPaymentMethodWithTimestampOnDatabase(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+            false,
+        );
+
+        // Act
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedMessage);
 
         // Assert
         $this->tester->assertEnabledPaymentMethodWasDisabledAndTimestampWasUpdated(
@@ -883,6 +1140,39 @@ class PaymentFacadeTest extends Unit
 
     /**
      * Tests if a new Payment Method will be created and the Payment Method that already
+     * exists will not be modified when PaymentMethodUpdater::deletePaymentMethod() is called.
+     *
+     * This bug was reported on https://spryker.atlassian.net/browse/PBC-1674.
+     *
+     * @return void
+     */
+    public function testDeletePaymentMethodMustChangeTheRightPaymentMethodWhenThereIsMoreThanOneMethodStored()
+    {
+        // Arrange
+        $existentPaymentMethod = $this->tester->createEnabledPaymentMethodWithoutTimestampOnDatabase(
+            $this->tester->havePaymentProvider(),
+            false,
+        );
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodDeletedMessage = $this->tester->havePaymentMethodDeletedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+
+        // Act
+        $this->tester->getFacade()->deletePaymentMethod($paymentMethodDeletedMessage);
+
+        // Assert
+        $this->tester->assertRightPaymentMethodWasUpdated(
+            $existentPaymentMethod,
+            $paymentMethodDeletedMessage->getProviderName(),
+            false,
+        );
+    }
+
+    /**
+     * Tests if a new Payment Method will be created and the Payment Method that already
      * exists will not be modified when PaymentMethodUpdater::enableForeignPaymentMethod() is called.
      *
      * This bug was reported on https://spryker.atlassian.net/browse/PBC-1674.
@@ -909,6 +1199,39 @@ class PaymentFacadeTest extends Unit
         $this->tester->assertRightPaymentMethodWasUpdated(
             $existentPaymentMethod,
             $paymentMethodAddedMessage->getProviderName(),
+        );
+    }
+
+    /**
+     * Tests if a new Payment Method will be created and the Payment Method that already
+     * exists will not be modified when PaymentMethodUpdater::addPaymentMethod() is called.
+     *
+     * This bug was reported on https://spryker.atlassian.net/browse/PBC-1674.
+     *
+     * @return void
+     */
+    public function testDisableForeignPaymentMethodMustModifyTheRightPaymentMethodWhenThereIsMoreThanOneMethodStored()
+    {
+        // Arrange
+        $existentPaymentMethod = $this->tester->createDisabledPaymentMethodWithoutTimestampOnDatabase(
+            $this->tester->havePaymentProvider(),
+            false,
+        );
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodAddedMessage = $this->tester->havePaymentMethodAddedTransferWithTimestamp(
+            $paymentProviderTransfer,
+            $this->generateNowTimestamp(),
+        );
+
+        // Act
+        $this->tester->getFacade()->addPaymentMethod($paymentMethodAddedMessage);
+
+        // Assert
+        $this->tester->assertRightPaymentMethodWasUpdated(
+            $existentPaymentMethod,
+            $paymentMethodAddedMessage->getProviderName(),
+            false,
         );
     }
 

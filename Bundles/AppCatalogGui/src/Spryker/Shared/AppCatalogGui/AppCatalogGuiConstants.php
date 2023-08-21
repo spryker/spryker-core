@@ -50,4 +50,9 @@ interface AppCatalogGuiConstants
      * @var string
      */
     public const OAUTH_OPTION_AUDIENCE = 'APP_CATALOG_GUI:OAUTH_OPTION_AUDIENCE';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'APP_CATALOG_GUI:TENANT_IDENTIFIER';
 }
