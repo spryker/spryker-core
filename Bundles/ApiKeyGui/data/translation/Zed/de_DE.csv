@@ -1,0 +1,26 @@
+Administration,Verwaltung
+"API Keys","API Keys"
+Name,Name
+ID,ID
+Key,Schlüssel
+Edit,Bearbeiten
+Delete,Löschen
+Create,Erstellen
+Back,Zurück
+Save,Speichern
+"Created by","Erstellt von"
+"Back to API Keys","Zurück zu API-Schlüsseln"
+"Create API Key","API-Schlüssel erstellen"
+"Edit API Key","API-Schlüssel bearbeiten"
+Actions,Aktionen
+"API key `%s` created successfully. Note, it will not be shown again. Please ensure you save it securely for future use.","API-Schlüssel „%s“ erfolgreich erstellt. Beachten Sie, dass es nicht erneut angezeigt wird. Bitte stellen Sie sicher, dass Sie es für die zukünftige Verwendung sicher aufbewahren."
+"API Key with ID `%d` does not exist.","Der API-Schlüssel mit der ID `%d` existiert nicht."
+"The new API key is `%s`. Note, it will not be shown again. Please ensure you save it securely for future use.","Der neue API-Schlüssel ist `%s`. Beachten Sie, dass es nicht erneut angezeigt wird. Bitte stellen Sie sicher, dass Sie es für die zukünftige Verwendung sicher aufbewahren."
+"API key has been successfully removed","Der API-Schlüssel wurde erfolgreich entfernt"
+"API key can not be removed","Der API-Schlüssel kann nicht entfernt werden"
+"Regenerate Key","Schlüssel neu generieren"
+"Delete API Key","API-Schlüssel löschen"
+"API key updated successfully.","API-Schlüssel erfolgreich aktualisiert."
+"API key removal confirmation","Bestätigung zum Entfernen des API-Schlüssels"
+"Are you sure you want to delete this API key?","Sind Sie sicher, dass Sie diesen API-Schlüssel löschen möchten?"
+"No, I want to keep this API key","Nein, Ich möchte diesen API-Schlüssel behalten"

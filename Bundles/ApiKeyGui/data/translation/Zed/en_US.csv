@@ -1,0 +1,26 @@
+Administration,Administration
+"API Keys","API Keys"
+Name,Name
+ID,ID
+Key,Key
+Edit,Edit
+Delete,Delete
+Create,Create
+Back,Back
+Save,Save
+"Created by","Created by"
+"Back to API Keys","Back to API Keys"
+"Create API Key","Create API Key"
+"Edit API Key","Edit API Key"
+Actions,Actions
+"API key `%s` created successfully. Note, it will not be shown again. Please ensure you save it securely for future use.","API key `%s` created successfully. Note, it will not be shown again. Please ensure you save it securely for future use."
+"API Key with ID `%d` does not exist.","API Key with ID `%d` does not exist."
+"The new API key is `%s`. Note, it will not be shown again. Please ensure you save it securely for future use.","The new API key is `%s`. Note, it will not be shown again. Please ensure you save it securely for future use."
+"API key has been successfully removed","API key has been successfully removed"
+"API key can not be removed","API key can not be removed"
+"Regenerate Key","Regenerate Key"
+"Delete API Key","Delete API Key"
+"API key updated successfully.","API key updated successfully."
+"API key removal confirmation","API key removal confirmation"
+"Are you sure you want to delete this API key?","Are you sure you want to delete this API key?"
+"No, I want to keep this API key","No, I want to keep this API key"

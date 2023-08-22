@@ -42,6 +42,8 @@
         "spryker/alternative-products-rest-api": "*",
         "spryker/api": "*",
         "spryker/api-extension": "*",
+        "spryker/api-key": "*",
+        "spryker/api-key-gui": "*",
         "spryker/api-query-builder": "*",
         "spryker/app-catalog-gui": "*",
         "spryker/application": "*",

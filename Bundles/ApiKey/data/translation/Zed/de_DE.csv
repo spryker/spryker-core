@@ -1,0 +1,5 @@
+"The provided key name `%s` is not in valid format. It should only contain letters (a-z) and digits (0-9). Example: `YourExample123`.","Der angegebene Schlüsselname `%s` hat kein gültiges Format. Er sollte nur Buchstaben (a-z) und Ziffern (0-9) enthalten. Beispiel: `IhrBeispiel123`."
+"Entity with ID `%d` was not found in the database.","Entität mit der ID `%d` wurde in der Datenbank nicht gefunden."
+"The key name is not provided.","Der Schlüsselname fehlt."
+"The provided key name `%s` is duplicated. Use another one and try again.","Der angegebene Schlüsselname `%s` ist dupliziert. Verwenden Sie ein anderes und versuchen Sie es erneut."
+"Created at","Hergestellt in"

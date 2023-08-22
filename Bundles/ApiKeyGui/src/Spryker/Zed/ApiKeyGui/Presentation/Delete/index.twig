@@ -1,0 +1,30 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'API key removal confirmation' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'API key removal confirmation' | trans } %}
+        {% block widget_content %}
+            {{ "Are you sure you want to delete this API key?" | trans }}
+            <br><br>
+            <ul class="list-inline m-b-none">
+                <li>
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this API key' | trans }}</a>
+                </li>
+                <li>
+                    {{ form_start(deleteForm) }}
+                        {{ form_widget(deleteForm) }}
+                        <button class="btn btn-danger safe-submit"> {{ 'Delete API Key' | trans }} </button>
+                    {{ form_end(deleteForm) }}
+                </li>
+            </ul>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
