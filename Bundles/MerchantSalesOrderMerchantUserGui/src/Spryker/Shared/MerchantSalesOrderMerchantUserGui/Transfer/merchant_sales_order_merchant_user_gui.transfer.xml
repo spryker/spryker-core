@@ -15,6 +15,7 @@
         <property name="merchantReference" type="string"/>
         <property name="withItems" type="bool"/>
         <property name="withOrder" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrder">

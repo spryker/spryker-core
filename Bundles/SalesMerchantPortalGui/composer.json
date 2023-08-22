@@ -12,7 +12,7 @@
         "spryker/kernel": "^3.52.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-oms": "^1.0.0",
-        "spryker/merchant-sales-order": "^1.0.0",
+        "spryker/merchant-sales-order": "^1.4.0",
         "spryker/merchant-user": "^1.0.0",
         "spryker/money": "^2.0.0",
         "spryker/propel-orm": "^1.0.0",

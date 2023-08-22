@@ -106,7 +106,9 @@ class DetailController extends AbstractController
             'merchantOrder' => $merchantOrderTransfer,
             'groupedMerchantOrderItemsByShipment' => $groupedMerchantOrderItemsByShipment,
             'totalMerchantOrderCount' => $this->getFactory()->getMerchantSalesOrderFacade()->getMerchantOrdersCount(
-                (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
+                (new MerchantOrderCriteriaTransfer())
+                    ->setCustomerReference($salesOrder->getCustomerReference())
+                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             ),
             'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
             'groupedMerchantOrderItems' => $groupedMerchantOrderItems,

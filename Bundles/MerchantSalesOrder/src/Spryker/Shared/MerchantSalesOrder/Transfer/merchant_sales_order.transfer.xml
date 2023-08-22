@@ -166,6 +166,7 @@
 
     <transfer name="AclEntityParentMetadata">
         <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
     </transfer>
 
     <transfer name="AclEntityParentConnectionMetadata">

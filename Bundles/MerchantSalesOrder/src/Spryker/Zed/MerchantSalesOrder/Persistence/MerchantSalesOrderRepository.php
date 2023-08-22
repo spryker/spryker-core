@@ -361,7 +361,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         return $this->applyMerchantOrderFilters(
             $this->getFactory()->createMerchantSalesOrderQuery(),
             $merchantOrderCriteriaTransfer,
-        )->count();
+        )->distinct()->count();
     }
 
     /**
