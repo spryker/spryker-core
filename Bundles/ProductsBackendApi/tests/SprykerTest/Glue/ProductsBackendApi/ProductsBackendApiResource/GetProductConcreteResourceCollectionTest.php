@@ -90,14 +90,14 @@ class GetProductConcreteResourceCollectionTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveFullProduct();
-        $localizedAttribuesTransfer = $productConcreteTransfer->getLocalizedAttributes()->getIterator()->current();
+        $localizedAttributesTransfer = $productConcreteTransfer->getLocalizedAttributes()->getIterator()->current();
 
         $productConcreteConditionsTransfer = (new ProductConcreteConditionsBuilder([
             ProductConcreteConditionsTransfer::SKUS => [
                 $productConcreteTransfer->getSku(),
             ],
             ProductConcreteConditionsTransfer::LOCALE_NAMES => [
-                $localizedAttribuesTransfer->getLocale()->getLocaleName(),
+                $localizedAttributesTransfer->getLocale()->getLocaleName(),
             ],
         ]))->build();
 
@@ -117,10 +117,10 @@ class GetProductConcreteResourceCollectionTest extends Unit
         $this->assertSame($productConcreteTransfer->getSku(), $glueResourceTransfer->getId());
         $this->assertSame(ProductsBackendApiConfig::RESOURCE_CONCRETE_PRODUCTS, $glueResourceTransfer->getType());
 
-        /** @var \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer $apiProductsConcreteAttributesTransfer */
-        $apiProductsConcreteAttributesTransfer = $glueResourceTransfer->getAttributes();
-        $this->assertSame($productConcreteTransfer->getSku(), $apiProductsConcreteAttributesTransfer->getSku());
-        $this->assertCount(1, $apiProductsConcreteAttributesTransfer->getLocalizedAttributes());
+        /** @var \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer $productsConcreteBackendApiAttributesTransfer */
+        $productsConcreteBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+        $this->assertSame($productConcreteTransfer->getSku(), $productsConcreteBackendApiAttributesTransfer->getSku());
+        $this->assertCount(1, $productsConcreteBackendApiAttributesTransfer->getLocalizedAttributes());
     }
 
     /**

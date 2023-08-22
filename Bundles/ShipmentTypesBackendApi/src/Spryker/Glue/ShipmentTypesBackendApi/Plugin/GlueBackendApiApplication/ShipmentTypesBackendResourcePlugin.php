@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ShipmentTypesBackendApi\Plugin\GlueBackendApiApplication;
 
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\ShipmentTypesBackendApi\Controller\ShipmentTypesResourceController;
@@ -53,19 +53,19 @@ class ShipmentTypesBackendResourcePlugin extends AbstractResourcePlugin implemen
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiShipmentTypesAttributesTransfer::class),
+                    ->setAttributes(ShipmentTypesBackendApiAttributesTransfer::class),
             )
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiShipmentTypesAttributesTransfer::class),
+                    ->setAttributes(ShipmentTypesBackendApiAttributesTransfer::class),
             )
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiShipmentTypesAttributesTransfer::class),
+                    ->setAttributes(ShipmentTypesBackendApiAttributesTransfer::class),
             )
             ->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiShipmentTypesAttributesTransfer::class),
+                    ->setAttributes(ShipmentTypesBackendApiAttributesTransfer::class),
             );
     }
 }

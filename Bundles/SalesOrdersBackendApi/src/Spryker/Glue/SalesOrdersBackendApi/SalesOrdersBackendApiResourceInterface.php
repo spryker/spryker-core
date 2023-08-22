@@ -16,7 +16,7 @@ interface SalesOrdersBackendApiResourceInterface
      * Specification:
      * - Retrieves sales order entities collection filtered by criteria.
      * - Maps found sales order entities to order resources.
-     * - Executes {@link \Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\ApiOrdersAttributesMapperPluginInterface} plugins stack.
+     * - Executes {@link \Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\OrdersBackendApiAttributesMapperPluginInterface} plugins stack.
      * - Returns `OrderResourceCollection` filled with found orders.
      *
      * @api

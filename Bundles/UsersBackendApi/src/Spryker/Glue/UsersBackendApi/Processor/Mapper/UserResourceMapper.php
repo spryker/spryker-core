@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApiUsersAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserResourceCollectionTransfer;
+use Generated\Shared\Transfer\UsersBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\UsersRestAttributesTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Glue\UsersBackendApi\UsersBackendApiConfig;
@@ -18,6 +19,27 @@ use Spryker\Glue\UsersBackendApi\UsersBackendApiConfig;
 class UserResourceMapper implements UserResourceMapperInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     * @param \Generated\Shared\Transfer\UserResourceCollectionTransfer $userResourceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
+    public function mapUserCollectionToUsersResourceCollection(
+        UserCollectionTransfer $userCollectionTransfer,
+        UserResourceCollectionTransfer $userResourceCollectionTransfer
+    ): UserResourceCollectionTransfer {
+        foreach ($userCollectionTransfer->getUsers() as $userTransfer) {
+            $userResourceCollectionTransfer->addUserResource(
+                $this->mapUserTransferToUserResource($userTransfer, new GlueResourceTransfer()),
+            );
+        }
+
+        return $userResourceCollectionTransfer;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapper::mapUserCollectionToUsersResourceCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
      * @param \Generated\Shared\Transfer\UserResourceCollectionTransfer $userResourceCollectionTransfer
      *
@@ -52,6 +74,8 @@ class UserResourceMapper implements UserResourceMapperInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapper::mapUserTransferToUserResource()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param \Generated\Shared\Transfer\GlueResourceTransfer $userResourceTransfer
      *
@@ -70,6 +94,24 @@ class UserResourceMapper implements UserResourceMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param \Generated\Shared\Transfer\GlueResourceTransfer $userResourceTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResourceTransfer
+     */
+    protected function mapUserTransferToUserResource(
+        UserTransfer $userTransfer,
+        GlueResourceTransfer $userResourceTransfer
+    ): GlueResourceTransfer {
+        return $userResourceTransfer
+            ->setId($userTransfer->getUuidOrFail())
+            ->setType(UsersBackendApiConfig::RESOURCE_TYPE_USERS)
+            ->setAttributes((new UsersBackendApiAttributesTransfer())->fromArray($userTransfer->toArray(), true));
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param \Generated\Shared\Transfer\ApiUsersAttributesTransfer $apiUsersAttributesTransfer
      *

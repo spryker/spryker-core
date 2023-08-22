@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\CartNotesBackendApi;
 
-use Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesApiOrdersAttributesMapper;
-use Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesApiOrdersAttributesMapperInterface;
+use Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesOrdersBackendApiAttributesMapper;
+use Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesOrdersBackendApiAttributesMapperInterface;
 use Spryker\Glue\Kernel\Backend\AbstractFactory;
 
 class CartNotesBackendApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesApiOrdersAttributesMapperInterface
+     * @return \Spryker\Glue\CartNotesBackendApi\Processor\Mapper\CartNotesOrdersBackendApiAttributesMapperInterface
      */
-    public function createCartNotesApiOrdersAttributesMapper(): CartNotesApiOrdersAttributesMapperInterface
+    public function createCartNotesOrdersBackendApiAttributesMapper(): CartNotesOrdersBackendApiAttributesMapperInterface
     {
-        return new CartNotesApiOrdersAttributesMapper();
+        return new CartNotesOrdersBackendApiAttributesMapper();
     }
 }

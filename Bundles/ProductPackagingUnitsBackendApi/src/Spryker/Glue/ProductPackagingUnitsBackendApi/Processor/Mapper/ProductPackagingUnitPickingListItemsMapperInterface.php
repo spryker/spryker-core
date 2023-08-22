@@ -11,12 +11,12 @@ interface ProductPackagingUnitPickingListItemsMapperInterface
 {
     /**
      * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemTransfers
-     * @param array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $apiPickingListItemsAttributesTransfers
+     * @param array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer> $pickingListItemsBackendApiAttributesTransfers
      *
-     * @return array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer>
+     * @return array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer>
      */
-    public function mapPickingListItemTransfersToApiPickingListItemsAttributesTransfers(
+    public function mapPickingListItemTransfersToPickingListItemsBackendApiAttributesTransfers(
         array $pickingListItemTransfers,
-        array $apiPickingListItemsAttributesTransfers
+        array $pickingListItemsBackendApiAttributesTransfers
     ): array;
 }

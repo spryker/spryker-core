@@ -8,8 +8,8 @@
 namespace Spryker\Glue\PickingListsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use stdClass;
 
 class PickingListRequestMapper implements PickingListRequestMapperInterface
@@ -64,11 +64,11 @@ class PickingListRequestMapper implements PickingListRequestMapperInterface
                 new GlueResourceTransfer(),
             );
 
-            $apiPickingListItemsAttributesTransfer = $this->mapPickingListItemToApiPickingListItemsAttributesTransfer(
+            $pickingListItemsBackendApiAttributesTransfer = $this->mapPickingListItemToPickingListItemsBackendApiAttributesTransfer(
                 $pickingListItem,
-                new ApiPickingListItemsAttributesTransfer(),
+                new PickingListItemsBackendApiAttributesTransfer(),
             );
-            $glueResourceTransfer->setAttributes($apiPickingListItemsAttributesTransfer);
+            $glueResourceTransfer->setAttributes($pickingListItemsBackendApiAttributesTransfer);
 
             $glueResourceTransferCollection->append($glueResourceTransfer);
         }
@@ -99,28 +99,28 @@ class PickingListRequestMapper implements PickingListRequestMapperInterface
 
     /**
      * @param \stdClass $pickingListItem
-     * @param \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer
      */
-    protected function mapPickingListItemToApiPickingListItemsAttributesTransfer(
+    protected function mapPickingListItemToPickingListItemsBackendApiAttributesTransfer(
         stdClass $pickingListItem,
-        ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
-    ): ApiPickingListItemsAttributesTransfer {
+        PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
+    ): PickingListItemsBackendApiAttributesTransfer {
         if (!property_exists($pickingListItem, static::PROPERTY_ATTRIBUTES)) {
-            return $apiPickingListItemsAttributesTransfer;
+            return $pickingListItemsBackendApiAttributesTransfer;
         }
 
         $attributes = $pickingListItem->attributes;
 
         if (property_exists($attributes, static::PROPERTY_NUMBER_OF_PICKED)) {
-            $apiPickingListItemsAttributesTransfer->setNumberOfPicked($attributes->numberOfPicked);
+            $pickingListItemsBackendApiAttributesTransfer->setNumberOfPicked($attributes->numberOfPicked);
         }
 
         if (property_exists($attributes, static::PROPERTY_NUMBER_OF_NOT_PICKED)) {
-            $apiPickingListItemsAttributesTransfer->setNumberOfNotPicked($attributes->numberOfNotPicked);
+            $pickingListItemsBackendApiAttributesTransfer->setNumberOfNotPicked($attributes->numberOfNotPicked);
         }
 
-        return $apiPickingListItemsAttributesTransfer;
+        return $pickingListItemsBackendApiAttributesTransfer;
     }
 }

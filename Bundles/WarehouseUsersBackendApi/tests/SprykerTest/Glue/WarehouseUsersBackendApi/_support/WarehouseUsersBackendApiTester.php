@@ -9,8 +9,8 @@ namespace SprykerTest\Glue\WarehouseUsersBackendApi;
 
 use ArrayObject;
 use Codeception\Actor;
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery;
 
@@ -28,7 +28,7 @@ use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\WarehouseUsersBackendApi\PHPMD)
  */
 class WarehouseUsersBackendApiTester extends Actor
 {
@@ -46,12 +46,12 @@ class WarehouseUsersBackendApiTester extends Actor
     ): void {
         $this->assertSame($warehouseUserAssignmentTransfer->getUuidOrFail(), $warehouseUserAssignmentsResource->getId());
         $this->assertNotNull($warehouseUserAssignmentsResource->getAttributes());
-        $this->assertInstanceOf(ApiWarehouseUserAssignmentsAttributesTransfer::class, $warehouseUserAssignmentsResource->getAttributes());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $warehouseUserAssignmentsResource->getAttributes());
 
-        /** @var \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer */
-        $apiWarehouseUserAssignmentsAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
-        $this->assertSame($warehouseUserAssignmentTransfer->getUserUuidOrFail(), $apiWarehouseUserAssignmentsAttributesTransfer->getUserUuid());
-        $this->assertSame($warehouseUserAssignmentTransfer->getIsActiveOrFail(), $apiWarehouseUserAssignmentsAttributesTransfer->getIsActive());
+        /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer */
+        $warehouseUserAssignmentsBackendApiAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
+        $this->assertSame($warehouseUserAssignmentTransfer->getUserUuidOrFail(), $warehouseUserAssignmentsBackendApiAttributesTransfer->getUserUuid());
+        $this->assertSame($warehouseUserAssignmentTransfer->getIsActiveOrFail(), $warehouseUserAssignmentsBackendApiAttributesTransfer->getIsActive());
         $this->assertNotNull($warehouseUserAssignmentTransfer->getWarehouse());
         $this->assertSame($warehouseUserAssignmentTransfer->getWarehouseOrFail()->getUuidOrFail(), $warehouseUserAssignmentTransfer->getWarehouseOrFail()->getUuid());
     }

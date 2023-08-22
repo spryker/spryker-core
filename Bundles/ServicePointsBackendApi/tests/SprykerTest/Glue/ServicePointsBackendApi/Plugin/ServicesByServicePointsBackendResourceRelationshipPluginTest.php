@@ -9,11 +9,11 @@ namespace SprykerTest\Glue\ServicePointsBackendApi\Plugin;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiServicesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeBridge;
 use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\ServicesByServicePointsBackendResourceRelationshipPlugin;
@@ -68,7 +68,7 @@ class ServicesByServicePointsBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_POINT_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -88,7 +88,7 @@ class ServicesByServicePointsBackendResourceRelationshipPluginTest extends Unit
             ServicePointsBackendApiConfig::RESOURCE_SERVICES,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiServicesAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ServicesBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
 
         $this->assertSame(static::SERVICE_UUID, $glueResourceTransfer->getId());
     }
@@ -106,7 +106,7 @@ class ServicesByServicePointsBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_POINT_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act

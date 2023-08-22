@@ -8,8 +8,8 @@
 namespace SprykerTest\Glue\PickingListsShipmentsBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer;
 use Spryker\Glue\PickingListsShipmentsBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\SalesShipmentsByPickingListsBackendResourceRelationshipPlugin;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerTest\Glue\PickingListsShipmentsBackendResourceRelationship\PickingListsShipmentsBackendResourceRelationshipTester;
@@ -49,8 +49,8 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
         [$pickingListTransfer, $shipmentTransfer] = $this->tester->createPickingListWithItemAndShipment();
 
-        $apiPickingListItemsAttributes = $this->tester->mapPickingListItemsToApiPickingListItemsAttributesTransfers($pickingListTransfer->getPickingListItems());
-        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($apiPickingListItemsAttributes);
+        $pickingListItemsBackendApiAttributesTransfer = $this->tester->mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers($pickingListTransfer->getPickingListItems());
+        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($pickingListItemsBackendApiAttributesTransfer);
 
         // Act
         (new SalesShipmentsByPickingListsBackendResourceRelationshipPlugin())->addRelationships($glueResourceTransfers, new GlueRequestTransfer());
@@ -66,7 +66,7 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer */
         $glueResourceTransfer = $glueRelationshipTransfer->getResources()->getIterator()->current();
         $this->assertSame(static::RESOURCE_SALES_SHIPMENTS, $glueResourceTransfer->getType());
-        $this->assertInstanceOf(ApiSalesShipmentsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(SalesShipmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($shipmentTransfer->getUuid(), $glueResourceTransfer->getId());
     }
 
@@ -79,8 +79,8 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
         [$pickingListTransfer] = $this->tester->createPickingListWithItemAndShipment();
 
-        $apiPickingListItemsAttributes = $this->tester->mapPickingListItemsToApiPickingListItemsAttributesTransfers($pickingListTransfer->getPickingListItems());
-        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($apiPickingListItemsAttributes);
+        $pickingListItemsBackendApiAttributesTransfer = $this->tester->mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers($pickingListTransfer->getPickingListItems());
+        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($pickingListItemsBackendApiAttributesTransfer);
         $glueResourceTransfers[0]->setType('fake-type');
 
         // Act
@@ -100,9 +100,9 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
         [$pickingListTransfer] = $this->tester->createPickingListWithItemAndShipment();
 
-        $apiPickingListItemsAttributes = $this->tester->mapPickingListItemsToApiPickingListItemsAttributesTransfers($pickingListTransfer->getPickingListItems());
-        $apiPickingListItemsAttributes[0]->setOrderItem(null);
-        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($apiPickingListItemsAttributes);
+        $pickingListItemsBackendApiAttributesTransfer = $this->tester->mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers($pickingListTransfer->getPickingListItems());
+        $pickingListItemsBackendApiAttributesTransfer[0]->setOrderItem(null);
+        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($pickingListItemsBackendApiAttributesTransfer);
 
         // Assert
         $this->expectException(NullValueException::class);
@@ -120,9 +120,9 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
         [$pickingListTransfer] = $this->tester->createPickingListWithItemAndShipment();
 
-        $apiPickingListItemsAttributes = $this->tester->mapPickingListItemsToApiPickingListItemsAttributesTransfers($pickingListTransfer->getPickingListItems());
-        $apiPickingListItemsAttributes[0]->getOrderItemOrFail()->setUuid(null);
-        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($apiPickingListItemsAttributes);
+        $pickingListItemsBackendApiAttributesTransfer = $this->tester->mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers($pickingListTransfer->getPickingListItems());
+        $pickingListItemsBackendApiAttributesTransfer[0]->getOrderItemOrFail()->setUuid(null);
+        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($pickingListItemsBackendApiAttributesTransfer);
 
         // Assert
         $this->expectException(NullValueException::class);
@@ -140,9 +140,9 @@ class SalesShipmentsByPickingListsBackendResourceRelationshipPluginTest extends 
         /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
         [$pickingListTransfer] = $this->tester->createPickingListWithItemAndShipment();
 
-        $apiPickingListItemsAttributes = $this->tester->mapPickingListItemsToApiPickingListItemsAttributesTransfers($pickingListTransfer->getPickingListItems());
-        $apiPickingListItemsAttributes[0]->getOrderItemOrFail()->setUuid('fake-uuid');
-        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($apiPickingListItemsAttributes);
+        $pickingListItemsBackendApiAttributesTransfer = $this->tester->mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers($pickingListTransfer->getPickingListItems());
+        $pickingListItemsBackendApiAttributesTransfer[0]->getOrderItemOrFail()->setUuid('fake-uuid');
+        $glueResourceTransfers = $this->tester->addPickingListItemsRelationshipResourceToGlueResourceTransfers($pickingListItemsBackendApiAttributesTransfer);
 
         // Act
         (new SalesShipmentsByPickingListsBackendResourceRelationshipPlugin())->addRelationships($glueResourceTransfers, new GlueRequestTransfer());

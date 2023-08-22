@@ -89,6 +89,26 @@ class ProductOfferShipmentTypeStorageBusinessTester extends Actor
     }
 
     /**
+     * @return list<\Generated\Shared\Transfer\ProductOfferShipmentTypeStorageTransfer>
+     */
+    public function getProductOfferShipmentTypeStorages(): array
+    {
+        $productOfferShipmentTypeStorageTransfers = [];
+        $productOfferShipmentTypeStorageEntities = $this->getProductOfferShipmentTypeStorageQuery()->find();
+
+        if (!$productOfferShipmentTypeStorageEntities) {
+            return $productOfferShipmentTypeStorageTransfers;
+        }
+
+        foreach ($productOfferShipmentTypeStorageEntities as $productOfferShipmentTypeStorageEntity) {
+            $productOfferShipmentTypeStorageTransfers[] = (new ProductOfferShipmentTypeStorageTransfer())
+                ->fromArray($productOfferShipmentTypeStorageEntity->getData(), true);
+        }
+
+        return $productOfferShipmentTypeStorageTransfers;
+    }
+
+    /**
      * @return \Orm\Zed\ProductOfferShipmentTypeStorage\Persistence\SpyProductOfferShipmentTypeStorageQuery
      */
     protected function getProductOfferShipmentTypeStorageQuery(): SpyProductOfferShipmentTypeStorageQuery

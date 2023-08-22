@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\ShipmentsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesShipmentResourceCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Glue\ShipmentsBackendApi\ShipmentsBackendApiConfig;
 
@@ -50,27 +50,27 @@ class SalesShipmentMapper implements SalesShipmentMapperInterface
         ShipmentTransfer $shipmentTransfer,
         GlueResourceTransfer $salesShipmentResourceTransfer
     ): GlueResourceTransfer {
-        $apiSalesShipmentsAttributesTransfer = $this->mapShipmentTransferToApiSalesShipmentAttributesTransfer(
+        $salesShipmentsBackendApiAttributesTransfer = $this->mapShipmentTransferToApiSalesShipmentAttributesTransfer(
             $shipmentTransfer,
-            new ApiSalesShipmentsAttributesTransfer(),
+            new SalesShipmentsBackendApiAttributesTransfer(),
         );
 
         return $salesShipmentResourceTransfer
             ->setType(ShipmentsBackendApiConfig::RESOURCE_SALES_SHIPMENTS)
             ->setId($shipmentTransfer->getUuidOrFail())
-            ->setAttributes($apiSalesShipmentsAttributesTransfer);
+            ->setAttributes($salesShipmentsBackendApiAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param \Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer $apiSalesShipmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer $salesShipmentsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer
+     * @return \Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer
      */
     protected function mapShipmentTransferToApiSalesShipmentAttributesTransfer(
         ShipmentTransfer $shipmentTransfer,
-        ApiSalesShipmentsAttributesTransfer $apiSalesShipmentsAttributesTransfer
-    ): ApiSalesShipmentsAttributesTransfer {
-        return $apiSalesShipmentsAttributesTransfer->fromArray($shipmentTransfer->toArray(), true);
+        SalesShipmentsBackendApiAttributesTransfer $salesShipmentsBackendApiAttributesTransfer
+    ): SalesShipmentsBackendApiAttributesTransfer {
+        return $salesShipmentsBackendApiAttributesTransfer->fromArray($shipmentTransfer->toArray(), true);
     }
 }

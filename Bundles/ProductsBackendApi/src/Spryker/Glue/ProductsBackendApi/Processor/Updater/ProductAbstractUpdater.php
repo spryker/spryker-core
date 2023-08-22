@@ -8,13 +8,13 @@
 namespace Spryker\Glue\ProductsBackendApi\Processor\Updater;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractConditionsTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductFacadeInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapperInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReaderInterface;
@@ -70,13 +70,13 @@ class ProductAbstractUpdater implements ProductAbstractUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateProductAbstract(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         if (
@@ -105,7 +105,7 @@ class ProductAbstractUpdater implements ProductAbstractUpdaterInterface
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = $productAbstractCollection->getProductAbstracts()->offsetGet(0);
 
-        $urlCollectionTransfer = $this->urlUpdater->validateUrlsOnUpdate($productAbstractTransfer->getIdProductAbstractOrFail(), $apiProductsAttributesTransfer->getUrls());
+        $urlCollectionTransfer = $this->urlUpdater->validateUrlsOnUpdate($productAbstractTransfer->getIdProductAbstractOrFail(), $productsBackendApiAttributesTransfer->getUrls());
         if ($urlCollectionTransfer->getUrls()->count()) {
             return (new GlueResponseTransfer())
                 ->setHttpStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -117,14 +117,14 @@ class ProductAbstractUpdater implements ProductAbstractUpdaterInterface
                 );
         }
 
-        $productAbstractTransfer = $this->productAbstractMapper->mapApiProductsAttributesTransferToProductAbstractTransfer($apiProductsAttributesTransfer, $productAbstractTransfer);
+        $productAbstractTransfer = $this->productAbstractMapper->mapProductsBackendApiAttributesTransferToProductAbstractTransfer($productsBackendApiAttributesTransfer, $productAbstractTransfer);
 
-        $productConcreteTransfers = $this->getProductConcreteTransfers($apiProductsAttributesTransfer->getVariants(), $productAbstractTransfer->getSkuOrFail());
+        $productConcreteTransfers = $this->getProductConcreteTransfers($productsBackendApiAttributesTransfer->getVariants(), $productAbstractTransfer->getSkuOrFail());
 
         $idProductAbstract = $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteTransfers);
 
-        $this->urlUpdater->updateUrls($idProductAbstract, $apiProductsAttributesTransfer->getUrls());
-        $this->categoryUpdater->updateCategories($apiProductsAttributesTransfer, $idProductAbstract);
+        $this->urlUpdater->updateUrls($idProductAbstract, $productsBackendApiAttributesTransfer->getUrls());
+        $this->categoryUpdater->updateCategories($productsBackendApiAttributesTransfer, $idProductAbstract);
 
         return $this->productAbstractReader->readProductAbstractCollection(
             (new ProductAbstractCriteriaTransfer())
@@ -136,14 +136,14 @@ class ProductAbstractUpdater implements ProductAbstractUpdaterInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer> $apiProductsProductConcreteAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer> $productConcretesBackendApiAttributesTransfers
      * @param string $productAbstractSku
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    protected function getProductConcreteTransfers(ArrayObject $apiProductsProductConcreteAttributesTransfers, string $productAbstractSku): array
+    protected function getProductConcreteTransfers(ArrayObject $productConcretesBackendApiAttributesTransfers, string $productAbstractSku): array
     {
-        $productConcreteTransfers = $this->productAbstractMapper->mapApiProductsProductConcreteAttributesTransfersToProductConcreteTransfers($apiProductsProductConcreteAttributesTransfers, $productAbstractSku);
+        $productConcreteTransfers = $this->productAbstractMapper->mapProductConcretesBackendApiAttributesTransfersToProductConcreteTransfers($productConcretesBackendApiAttributesTransfers, $productAbstractSku);
 
         $productCriteriaTransfer = new ProductCriteriaTransfer();
         foreach ($productConcreteTransfers as $productConcreteTransfer) {

@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\ProductsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteResourceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Glue\ProductsBackendApi\ProductsBackendApiConfig;
 
@@ -48,27 +48,27 @@ class ProductConcreteResourceMapper implements ProductConcreteResourceMapperInte
         ProductConcreteTransfer $productConcreteTransfer,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
-        $apiProductsProductConcreteAttributesTransfer = $this->mapProductConcreteTransferToApiProductsProductConcreteAttributesTransfer(
+        $productConcretesBackendApiAttributesTransfer = $this->mapProductConcreteTransferToProductConcretesBackendApiAttributesTransfer(
             $productConcreteTransfer,
-            new ApiProductsProductConcreteAttributesTransfer(),
+            new ProductConcretesBackendApiAttributesTransfer(),
         );
 
         return $glueResourceTransfer
             ->setType(ProductsBackendApiConfig::RESOURCE_CONCRETE_PRODUCTS)
             ->setId($productConcreteTransfer->getSkuOrFail())
-            ->setAttributes($apiProductsProductConcreteAttributesTransfer);
+            ->setAttributes($productConcretesBackendApiAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer $apiProductsProductConcreteAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer $productConcretesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer
      */
-    protected function mapProductConcreteTransferToApiProductsProductConcreteAttributesTransfer(
+    protected function mapProductConcreteTransferToProductConcretesBackendApiAttributesTransfer(
         ProductConcreteTransfer $productConcreteTransfer,
-        ApiProductsProductConcreteAttributesTransfer $apiProductsProductConcreteAttributesTransfer
-    ): ApiProductsProductConcreteAttributesTransfer {
-        return $apiProductsProductConcreteAttributesTransfer->fromArray($productConcreteTransfer->toArray(), true);
+        ProductConcretesBackendApiAttributesTransfer $productConcretesBackendApiAttributesTransfer
+    ): ProductConcretesBackendApiAttributesTransfer {
+        return $productConcretesBackendApiAttributesTransfer->fromArray($productConcreteTransfer->toArray(), true);
     }
 }

@@ -8,31 +8,31 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointResourceCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 
 interface ServicePointMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
-     * @param \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer
      */
-    public function mapServicePointTransferToApiServicePointsAttributesTransfer(
+    public function mapServicePointTransferToServicePointsBackendApiAttributesTransfer(
         ServicePointTransfer $servicePointTransfer,
-        ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
-    ): ApiServicePointsAttributesTransfer;
+        ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
+    ): ServicePointsBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointTransfer
      */
-    public function mapApiServicePointsAttributesTransferToServicePointTransfer(
-        ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer,
+    public function mapServicePointsBackendApiAttributesTransferToServicePointTransfer(
+        ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer,
         ServicePointTransfer $servicePointTransfer
     ): ServicePointTransfer;
 

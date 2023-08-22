@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ApiOrderItemsAttributes" strict="true">
+    <transfer name="OrderItemsBackendApiAttributes" strict="true">
         <property name="amount" type="decimal"/>
-        <property name="amountSalesUnit" type="ApiProductMeasurementSalesUnitsAttributes"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnitsBackendApiAttributes"/>
         <property name="uuid" type="string"/>
     </transfer>
 
-    <transfer name="ApiProductMeasurementSalesUnitsAttributes" strict="true">
+    <transfer name="ProductMeasurementSalesUnitsBackendApiAttributes" strict="true">
         <property name="conversion" type="float"/>
         <property name="precision" type="int"/>
-        <property name="productMeasurementUnit" type="ApiProductMeasurementUnitsAttributes"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnitsBackendApiAttributes"/>
     </transfer>
 
-    <transfer name="ApiProductMeasurementUnitsAttributes" strict="true">
+    <transfer name="ProductMeasurementUnitsBackendApiAttributes" strict="true">
         <property name="name" type="string"/>
         <property name="code" type="string"/>
     </transfer>
@@ -22,8 +22,8 @@
         <property name="orderItem" type="Item"/>
     </transfer>
 
-    <transfer name="ApiPickingListItemsAttributes" strict="true">
-        <property name="orderItem" type="ApiOrderItemsAttributes"/>
+    <transfer name="PickingListItemsBackendApiAttributes" strict="true">
+        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
     </transfer>
 
     <transfer name="Item">

@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Creator;
 
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionRequestTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Spryker\Glue\WarehouseUsersBackendApi\Dependency\Facade\WarehouseUsersBackendApiToWarehouseUserFacadeInterface;
 use Spryker\Glue\WarehouseUsersBackendApi\Processor\Mapper\WarehouseUserAssignmentMapperInterface;
@@ -57,27 +57,27 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createWarehouseUserAssignment(
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         if (
             !$this->warehouseUserAssignmentValidator->isCurrentUserAllowedToOperateWithWarehouseUserAssignment(
                 $glueRequestTransfer,
-                $apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail(),
+                $warehouseUserAssignmentsBackendApiAttributesTransfer->getUserUuidOrFail(),
             )
         ) {
             return $this->responseCreator->createWarehouseUserAssignmentNotFoundErrorResponse();
         }
 
         $warehouseUserAssignmentTransfer = $this->warehouseUserAssignmentMapper
-            ->mapApiWarehouseUserAssignmentsAttributesTransferToWarehouseUserAssignmentTransfer(
-                $apiWarehouseUserAssignmentsAttributesTransfer,
+            ->mapWarehouseUserAssignmentsBackendApiAttributesTransferToWarehouseUserAssignmentTransfer(
+                $warehouseUserAssignmentsBackendApiAttributesTransfer,
                 new WarehouseUserAssignmentTransfer(),
             );
 

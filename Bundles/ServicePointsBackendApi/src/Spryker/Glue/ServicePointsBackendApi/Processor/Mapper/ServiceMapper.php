@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiServicesAttributesTransfer;
-use Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
@@ -20,30 +20,30 @@ class ServiceMapper implements ServiceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
-     * @param \Generated\Shared\Transfer\ApiServicesAttributesTransfer $apiServicesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer $servicesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServicesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer
      */
-    public function mapServiceTransferToApiServicesAttributesTransfer(
+    public function mapServiceTransferToServicesBackendApiAttributesTransfer(
         ServiceTransfer $serviceTransfer,
-        ApiServicesAttributesTransfer $apiServicesAttributesTransfer
-    ): ApiServicesAttributesTransfer {
-        return $apiServicesAttributesTransfer->fromArray($serviceTransfer->modifiedToArray(), true);
+        ServicesBackendApiAttributesTransfer $servicesBackendApiAttributesTransfer
+    ): ServicesBackendApiAttributesTransfer {
+        return $servicesBackendApiAttributesTransfer->fromArray($serviceTransfer->modifiedToArray(), true);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      *
      * @return \Generated\Shared\Transfer\ServiceTransfer
      */
-    public function mapApiServicesRequestAttributesTransferToServiceTransfer(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+    public function mapServicesRequestBackendApiAttributesTransferToServiceTransfer(
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         ServiceTransfer $serviceTransfer
     ): ServiceTransfer {
-        $serviceTransfer->fromArray($apiServicesRequestAttributesTransfer->modifiedToArray(), true);
-        $serviceTypeTransfer = (new ServiceTypeTransfer())->setUuid($apiServicesRequestAttributesTransfer->getServiceTypeUuid());
-        $servicePointTransfer = (new ServicePointTransfer())->setUuid($apiServicesRequestAttributesTransfer->getServicePointUuid());
+        $serviceTransfer->fromArray($servicesRequestBackendApiAttributesTransfer->modifiedToArray(), true);
+        $serviceTypeTransfer = (new ServiceTypeTransfer())->setUuid($servicesRequestBackendApiAttributesTransfer->getServiceTypeUuid());
+        $servicePointTransfer = (new ServicePointTransfer())->setUuid($servicesRequestBackendApiAttributesTransfer->getServicePointUuid());
 
         return $serviceTransfer->setServiceType($serviceTypeTransfer)->setServicePoint($servicePointTransfer);
     }
@@ -58,15 +58,15 @@ class ServiceMapper implements ServiceMapperInterface
         ServiceTransfer $serviceTransfer,
         GlueRelationshipTransfer $glueRelationshipTransfer
     ): GlueRelationshipTransfer {
-        $apiServicesAttributesTransfer = $this->mapServiceTransferToApiServicesAttributesTransfer(
+        $servicesBackendApiAttributesTransfer = $this->mapServiceTransferToServicesBackendApiAttributesTransfer(
             $serviceTransfer,
-            new ApiServicesAttributesTransfer(),
+            new ServicesBackendApiAttributesTransfer(),
         );
 
         $glueResourceTransfer = (new GlueResourceTransfer())
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-            ->setId($apiServicesAttributesTransfer->getUuidOrFail())
-            ->setAttributes($apiServicesAttributesTransfer);
+            ->setId($servicesBackendApiAttributesTransfer->getUuidOrFail())
+            ->setAttributes($servicesBackendApiAttributesTransfer);
 
         return $glueRelationshipTransfer->addResource($glueResourceTransfer);
     }

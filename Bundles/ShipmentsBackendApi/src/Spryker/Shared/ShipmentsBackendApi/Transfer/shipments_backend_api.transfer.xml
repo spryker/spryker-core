@@ -15,7 +15,7 @@
         <property name="shipments" type="Shipment[]" singular="shipment"/>
     </transfer>
 
-    <transfer name="ApiSalesShipmentsAttributes" strict="true">
+    <transfer name="SalesShipmentsBackendApiAttributes" strict="true">
         <property name="requestedDeliveryDate" type="string" strict="true"/>
     </transfer>
 

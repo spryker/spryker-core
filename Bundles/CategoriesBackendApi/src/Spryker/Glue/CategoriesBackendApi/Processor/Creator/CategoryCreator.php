@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Processor\Creator;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -57,16 +57,16 @@ class CategoryCreator implements CategoryCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createCategory(
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer,
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        $categoryTransfer = $this->categoryMapper->mapApiCategoryAttributesTransferToCategoryTransfer($apiCategoryAttributesTransfer, new CategoryTransfer());
+        $categoryTransfer = $this->categoryMapper->mapCategoriesBackendApiAttributesTransferToCategoryTransfer($categoriesBackendApiAttributesTransfer, new CategoryTransfer());
         $categoryCollectionRequestTransfer = $this->glueRequestCategoryMapper->mapGlueRequestToCategoryCollectionRequestTransfer($categoryTransfer, $glueRequestTransfer);
         $categoryCollectionResponseTransfer = $this->categoryFacade->createCategoryCollection($categoryCollectionRequestTransfer);
 

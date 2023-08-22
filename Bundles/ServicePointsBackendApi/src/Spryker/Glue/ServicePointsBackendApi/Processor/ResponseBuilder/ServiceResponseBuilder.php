@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServicesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServiceMapperInterface;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
@@ -57,15 +57,15 @@ class ServiceResponseBuilder implements ServiceResponseBuilderInterface
     protected function createServiceResourceTransfer(
         ServiceTransfer $serviceTransfer
     ): GlueResourceTransfer {
-        $apiServicesAttributesTransfer = $this->serviceMapper
-            ->mapServiceTransferToApiServicesAttributesTransfer(
+        $servicesBackendApiAttributesTransfer = $this->serviceMapper
+            ->mapServiceTransferToServicesBackendApiAttributesTransfer(
                 $serviceTransfer,
-                new ApiServicesAttributesTransfer(),
+                new ServicesBackendApiAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($serviceTransfer->getUuidOrFail())
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-            ->setAttributes($apiServicesAttributesTransfer);
+            ->setAttributes($servicesBackendApiAttributesTransfer);
     }
 }

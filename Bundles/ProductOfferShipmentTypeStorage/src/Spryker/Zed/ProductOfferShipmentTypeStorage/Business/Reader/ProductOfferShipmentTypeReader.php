@@ -125,6 +125,10 @@ class ProductOfferShipmentTypeReader implements ProductOfferShipmentTypeReaderIn
                 $productOfferShipmentTypeCriteriaTransfer,
             );
 
+            if ($productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->count() === 0) {
+                break;
+            }
+
             $productOfferIds = $this->productOfferShipmentTypeExtractor->extractProductOfferIdsFromProductOfferShipmentTypeTransfers(
                 $productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes(),
             );
@@ -135,7 +139,7 @@ class ProductOfferShipmentTypeReader implements ProductOfferShipmentTypeReaderIn
             }
 
             $offset += $batchSize;
-        } while ($productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->count() === 0);
+        } while ($productOfferShipmentTypeCollectionTransfer->getProductOfferShipmentTypes()->count() !== 0);
     }
 
     /**

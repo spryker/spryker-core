@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\CategoriesBackendApi\CategoriesBackendApiConfig;
@@ -41,7 +41,7 @@ class CategoriesBackendApiResource extends AbstractResourcePlugin implements Jso
     public function getDeclaredMethods(): GlueResourceMethodCollectionTransfer
     {
         $resourceMethodConfiguration = (new GlueResourceMethodConfigurationTransfer())
-            ->setAttributes(ApiCategoryAttributesTransfer::class);
+            ->setAttributes(CategoriesBackendApiAttributesTransfer::class);
 
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection($resourceMethodConfiguration)

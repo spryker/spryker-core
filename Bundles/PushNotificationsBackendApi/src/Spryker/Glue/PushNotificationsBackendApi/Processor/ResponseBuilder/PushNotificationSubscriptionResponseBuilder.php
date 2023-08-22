@@ -8,9 +8,9 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionMapperInterface;
 use Spryker\Glue\PushNotificationsBackendApi\PushNotificationsBackendApiConfig;
@@ -66,15 +66,15 @@ class PushNotificationSubscriptionResponseBuilder implements PushNotificationSub
     protected function createPushNotificationSubscriptionResourceTransfer(
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): GlueResourceTransfer {
-        $apiPushNotificationSubscriptionsAttributesTransfer = $this->pushNotificationSubscriptionMapper
-            ->mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionsAttributesTransfer(
+        $pushNotificationSubscriptionsBackendApiAttributesTransfer = $this->pushNotificationSubscriptionMapper
+            ->mapPushNotificationSubscriptionTransferToPushNotificationSubscriptionsBackendApiAttributesTransfer(
                 $pushNotificationSubscriptionTransfer,
-                new ApiPushNotificationSubscriptionsAttributesTransfer(),
+                new PushNotificationSubscriptionsBackendApiAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($pushNotificationSubscriptionTransfer->getUuidOrFail())
             ->setType(PushNotificationsBackendApiConfig::RESOURCE_PUSH_NOTIFICATION_SUBSCRIPTIONS)
-            ->setAttributes($apiPushNotificationSubscriptionsAttributesTransfer);
+            ->setAttributes($pushNotificationSubscriptionsBackendApiAttributesTransfer);
     }
 }

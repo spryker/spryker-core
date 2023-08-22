@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 
 /**
@@ -40,7 +40,7 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *                  "ref": "Sort"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request"
      *          }
@@ -75,7 +75,7 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request",
      *              "404": "Not found"
@@ -108,8 +108,8 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -117,19 +117,19 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createWarehouseUserAssignmentCreator()
             ->createWarehouseUserAssignment(
-                $apiWarehouseUserAssignmentsAttributesTransfer,
+                $warehouseUserAssignmentsBackendApiAttributesTransfer,
                 $glueRequestTransfer,
             );
     }
@@ -151,8 +151,8 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request",
      *              "404": "Not Found"
@@ -160,19 +160,19 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function patchAction(
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createWarehouseUserAssignmentUpdater()
             ->updateWarehouseUserAssignment(
-                $apiWarehouseUserAssignmentsAttributesTransfer,
+                $warehouseUserAssignmentsBackendApiAttributesTransfer,
                 $glueRequestTransfer,
             );
     }
@@ -191,7 +191,7 @@ class WarehouseUserAssignmentsResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiWarehouseUserAssignmentsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\WarehouseUserAssignmentsBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request",
      *              "404": "Not Found"

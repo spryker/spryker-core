@@ -755,7 +755,7 @@ components:
                     format: uuid
                     example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
                 attributes:
-                    $ref: '#/components/schemas/ApiServicePointsAttributes'
+                    $ref: '#/components/schemas/ServicePointsBackendApiAttributes'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
         ApiServicePointPostRequestBody:
@@ -827,7 +827,7 @@ components:
                     example:
                         - DE
                         - AT
-        ApiServicePointsAttributes:
+        ServicePointsBackendApiAttributes:
             type: object
             properties:
                 name:
@@ -943,7 +943,7 @@ components:
                     format: uuid
                     example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
                 attributes:
-                    $ref: '#/components/schemas/ApiServicePointAddressesAttributes'
+                    $ref: '#/components/schemas/ServicePointAddressesBackendApiAttributes'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
         ApiServicePointAddressResponse:
@@ -951,7 +951,7 @@ components:
             properties:
                 data:
                     $ref: '#/components/schemas/ApiServicePointAddressResponseData'
-        ApiServicePointAddressesAttributes:
+        ServicePointAddressesBackendApiAttributes:
             type: object
             properties:
                 regionUuid:
@@ -1008,7 +1008,7 @@ components:
                     format: uuid
                     example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
                 attributes:
-                    $ref: '#/components/schemas/ApiServiceTypesAttributes'
+                    $ref: '#/components/schemas/ServiceTypesBackendApiAttributes'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
         ApiServiceResponseData:
@@ -1022,7 +1022,7 @@ components:
                     format: uuid
                     example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
                 attributes:
-                    $ref: '#/components/schemas/ApiServicesAttributes'
+                    $ref: '#/components/schemas/ServicesBackendApiAttributes'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
         ApiServiceTypeRequestBody:
@@ -1068,7 +1068,7 @@ components:
                     type: string
                     example: 'services'
                 attributes:
-                    $ref: '#/components/schemas/ApiServicesRequestAttributes'
+                    $ref: '#/components/schemas/ServicesRequestBackendApiAttributes'
         ApiServicePatchRequestData:
             type: object
             properties:
@@ -1095,7 +1095,7 @@ components:
                 name:
                     type: string
                     example: Collect Service
-        ApiServicesRequestAttributes:
+        ServicesRequestBackendApiAttributes:
             required:
                 - isActive
                 - key
@@ -1119,7 +1119,7 @@ components:
                 isActive:
                     type: boolean
                     example: true
-        ApiServiceTypesAttributes:
+        ServiceTypesBackendApiAttributes:
             type: object
             properties:
                 name:
@@ -1128,7 +1128,7 @@ components:
                 key:
                     type: string
                     example: collect
-        ApiServicesAttributes:
+        ServicesBackendApiAttributes:
             type: object
             properties:
                 isActive:

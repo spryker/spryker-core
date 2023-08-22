@@ -48,10 +48,13 @@
         <property name="uuid" type="string" strict="true"/>
     </transfer>
 
-    <transfer name="ApiUsersAttributes" strict="true">
+    <transfer name="UsersBackendApiAttributes" strict="true">
     </transfer>
 
     <transfer name="UserResourceCollection" strict="true">
         <property name="userResources" type="GlueResource[]" singular="userResource"/>
+    </transfer>
+
+    <transfer name="PickingListsBackendApiAttributes" strict="true">
     </transfer>
 </transfers>

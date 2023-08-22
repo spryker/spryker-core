@@ -7,16 +7,16 @@
 
 namespace Spryker\Glue\CartNotesBackendApi\Processor\Mapper;
 
-interface CartNotesApiOrdersAttributesMapperInterface
+interface CartNotesOrdersBackendApiAttributesMapperInterface
 {
     /**
      * @param list<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
-     * @param list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer> $apiOrdersAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer> $ordersBackendApiAttributesTransfers
      *
-     * @return list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer>
      */
-    public function mapOrderTransfersToApiOrdersAttributesTransfer(
+    public function mapOrderTransfersToOrdersBackendApiAttributesTransfers(
         array $orderTransfers,
-        array $apiOrdersAttributesTransfers
+        array $ordersBackendApiAttributesTransfers
     ): array;
 }

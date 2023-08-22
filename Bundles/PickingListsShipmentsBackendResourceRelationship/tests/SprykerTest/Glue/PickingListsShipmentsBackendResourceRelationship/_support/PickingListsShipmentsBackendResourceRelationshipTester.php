@@ -12,8 +12,8 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PickingListBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -33,7 +33,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PickingListsShipmentsBackendResourceRelationship\PHPMD)
  */
 class PickingListsShipmentsBackendResourceRelationshipTester extends Actor
 {
@@ -75,16 +75,16 @@ class PickingListsShipmentsBackendResourceRelationshipTester extends Actor
 
     /**
      * @param \ArrayObject<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemTransfers
-     * @param list<\Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $pickingListItemsAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer> $pickingListItemsAttributesTransfers
      *
-     * @return list<\Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer>
      */
-    public function mapPickingListItemsToApiPickingListItemsAttributesTransfers(
+    public function mapPickingListItemsToPickingListItemsBackendApiAttributesTransfers(
         ArrayObject $pickingListItemTransfers,
         array $pickingListItemsAttributesTransfers = []
     ): array {
         foreach ($pickingListItemTransfers as $pickingListItemTransfer) {
-            $pickingListItemsAttributesTransfers[] = (new ApiPickingListItemsAttributesTransfer())
+            $pickingListItemsAttributesTransfers[] = (new PickingListItemsBackendApiAttributesTransfer())
                 ->fromArray($pickingListItemTransfer->toArray(), true);
         }
 
@@ -92,7 +92,7 @@ class PickingListsShipmentsBackendResourceRelationshipTester extends Actor
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $pickingListItemsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer> $pickingListItemsAttributesTransfers
      *
      * @return array<\Generated\Shared\Transfer\GlueResourceTransfer>
      */

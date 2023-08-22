@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServicePointResourceCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -20,49 +20,49 @@ class ServicePointMapper implements ServicePointMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
-     * @param \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer
      */
-    public function mapServicePointTransferToApiServicePointsAttributesTransfer(
+    public function mapServicePointTransferToServicePointsBackendApiAttributesTransfer(
         ServicePointTransfer $servicePointTransfer,
-        ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
-    ): ApiServicePointsAttributesTransfer {
-        $apiServicePointsAttributesTransfer->fromArray(
+        ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
+    ): ServicePointsBackendApiAttributesTransfer {
+        $servicePointsBackendApiAttributesTransfer->fromArray(
             $servicePointTransfer->toArray(),
             true,
         );
 
         foreach ($servicePointTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
-            $apiServicePointsAttributesTransfer->addStore($storeTransfer->getNameOrFail());
+            $servicePointsBackendApiAttributesTransfer->addStore($storeTransfer->getNameOrFail());
         }
 
-        return $apiServicePointsAttributesTransfer;
+        return $servicePointsBackendApiAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointTransfer
      */
-    public function mapApiServicePointsAttributesTransferToServicePointTransfer(
-        ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer,
+    public function mapServicePointsBackendApiAttributesTransferToServicePointTransfer(
+        ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer,
         ServicePointTransfer $servicePointTransfer
     ): ServicePointTransfer {
-        $apiServicePointsAttributesData = array_filter(
-            $apiServicePointsAttributesTransfer->modifiedToArray(),
+        $servicePointsBackendApiAttributesData = array_filter(
+            $servicePointsBackendApiAttributesTransfer->modifiedToArray(),
             function ($value) {
                 return $value !== null;
             },
         );
 
-        $servicePointTransfer->fromArray($apiServicePointsAttributesData, true);
+        $servicePointTransfer->fromArray($servicePointsBackendApiAttributesData, true);
 
-        if ($apiServicePointsAttributesTransfer->getStores()) {
+        if ($servicePointsBackendApiAttributesTransfer->getStores()) {
             $servicePointTransfer->setStoreRelation(
                 $this->mapStoreNamesToStoreRelationTransfer(
-                    $apiServicePointsAttributesTransfer->getStores(),
+                    $servicePointsBackendApiAttributesTransfer->getStores(),
                     new StoreRelationTransfer(),
                 ),
             );
@@ -122,15 +122,15 @@ class ServicePointMapper implements ServicePointMapperInterface
         ServicePointTransfer $servicePointTransfer,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
-        $apiServicePointsAttributesTransfer = $this
-            ->mapServicePointTransferToApiServicePointsAttributesTransfer(
+        $servicePointsBackendApiAttributesTransfer = $this
+            ->mapServicePointTransferToServicePointsBackendApiAttributesTransfer(
                 $servicePointTransfer,
-                new ApiServicePointsAttributesTransfer(),
+                new ServicePointsBackendApiAttributesTransfer(),
             );
 
         return $glueResourceTransfer
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
             ->setId($servicePointTransfer->getUuidOrFail())
-            ->setAttributes($apiServicePointsAttributesTransfer);
+            ->setAttributes($servicePointsBackendApiAttributesTransfer);
     }
 }

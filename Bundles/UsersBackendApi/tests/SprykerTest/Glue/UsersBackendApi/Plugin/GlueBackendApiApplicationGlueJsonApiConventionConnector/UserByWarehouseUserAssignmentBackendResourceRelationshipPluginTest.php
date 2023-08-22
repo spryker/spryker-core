@@ -8,9 +8,9 @@
 namespace SprykerTest\Glue\UsersBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Spryker\Glue\UsersBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\UsersBackendApi\UsersBackendApiPluginTester;
 
@@ -58,13 +58,13 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPluginTest extends
     {
         // Arrange
         $userTransfer = $this->tester->haveUser();
-        $apiWarehouseUserAssignmentsAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesTransfer())
+        $warehouseUserAssignmentsBackendApiAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesTransfer())
             ->setUserUuid($userTransfer->getUuid());
 
         $glueResourceTransfers = [
             (new GlueResourceTransfer())
                 ->setType(static::RESOURCE_TYPE_WAREHOUSE_USER_ASSIGNMENTS)
-                ->setAttributes($apiWarehouseUserAssignmentsAttributesTransfer),
+                ->setAttributes($warehouseUserAssignmentsBackendApiAttributesTransfer),
         ];
 
         // Act
@@ -83,10 +83,10 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPluginTest extends
         $this->assertSame($userTransfer->getUuidOrFail(), $usersGlueResourceTransfer->getId());
         $this->assertSame(static::RESOURCE_TYPE_USERS, $usersGlueResourceTransfer->getType());
 
-        $apiUsersAttributesTransfer = $usersGlueResourceTransfer->getAttributes();
-        $this->assertSame($userTransfer->getUsernameOrFail(), $apiUsersAttributesTransfer->getUsername());
-        $this->assertSame($userTransfer->getFirstNameOrFail(), $apiUsersAttributesTransfer->getFirstName());
-        $this->assertSame($userTransfer->getLastNameOrFail(), $apiUsersAttributesTransfer->getLastName());
+        $usersBackendApiAttributesTransfer = $usersGlueResourceTransfer->getAttributes();
+        $this->assertSame($userTransfer->getUsernameOrFail(), $usersBackendApiAttributesTransfer->getUsername());
+        $this->assertSame($userTransfer->getFirstNameOrFail(), $usersBackendApiAttributesTransfer->getFirstName());
+        $this->assertSame($userTransfer->getLastNameOrFail(), $usersBackendApiAttributesTransfer->getLastName());
     }
 
     /**
@@ -96,13 +96,13 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPluginTest extends
     {
         // Arrange
         $userTransfer = $this->tester->haveUser();
-        $apiWarehouseUserAssignmentsAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesTransfer())
+        $warehouseUserAssignmentsBackendApiAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesTransfer())
             ->setUserUuid($userTransfer->getUuid());
 
         $glueResourceTransfers = [
             (new GlueResourceTransfer())
                 ->setType('fake-type')
-                ->setAttributes($apiWarehouseUserAssignmentsAttributesTransfer),
+                ->setAttributes($warehouseUserAssignmentsBackendApiAttributesTransfer),
         ];
 
         // Act
@@ -119,10 +119,10 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPluginTest extends
     public function testAddRelationshipsWillNotAddUsersResourceIfUserIsNotFoundByUuid(): void
     {
         // Arrange
-        $apiWarehouseUserAssignmentsAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesTransfer())
+        $warehouseUserAssignmentsBackendApiAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesTransfer())
             ->setUserUuid(static::FAKE_USER_UUID);
         $glueResourceTransfers = [
-            (new GlueResourceTransfer())->setAttributes($apiWarehouseUserAssignmentsAttributesTransfer),
+            (new GlueResourceTransfer())->setAttributes($warehouseUserAssignmentsBackendApiAttributesTransfer),
         ];
 
         // Act

@@ -7,42 +7,42 @@
 
 namespace Spryker\Glue\ProductPackagingUnitsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductMeasurementUnitsAttributesTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 
 class ProductMeasurementSalesUnitMapper implements ProductMeasurementSalesUnitMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param \Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer $apiProductMeasurementSalesUnitsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer $productMeasurementSalesUnitsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer
      */
-    public function mapProductMeasurementSalesUnitTransferToApiProductMeasurementSalesUnitsAttributesTransfer(
+    public function mapProductMeasurementSalesUnitTransferToProductMeasurementSalesUnitsBackendApiAttributesTransfer(
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        ApiProductMeasurementSalesUnitsAttributesTransfer $apiProductMeasurementSalesUnitsAttributesTransfer
-    ): ApiProductMeasurementSalesUnitsAttributesTransfer {
-        $apiProductMeasurementSalesUnitsAttributesTransfer->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
-        $apiProductMeasurementUnitsAttributesTransfer = $this->mapProductMeasurementUnitTransferToApiProductMeasurementUnitsAttributesTransfer(
+        ProductMeasurementSalesUnitsBackendApiAttributesTransfer $productMeasurementSalesUnitsBackendApiAttributesTransfer
+    ): ProductMeasurementSalesUnitsBackendApiAttributesTransfer {
+        $productMeasurementSalesUnitsBackendApiAttributesTransfer->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
+        $productMeasurementUnitsBackendApiAttributesTransfer = $this->mapProductMeasurementUnitTransferToProductMeasurementUnitsBackendApiAttributesTransfer(
             $productMeasurementSalesUnitTransfer->getProductMeasurementUnitOrFail(),
-            new ApiProductMeasurementUnitsAttributesTransfer(),
+            new ProductMeasurementUnitsBackendApiAttributesTransfer(),
         );
 
-        return $apiProductMeasurementSalesUnitsAttributesTransfer->setProductMeasurementUnit($apiProductMeasurementUnitsAttributesTransfer);
+        return $productMeasurementSalesUnitsBackendApiAttributesTransfer->setProductMeasurementUnit($productMeasurementUnitsBackendApiAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-     * @param \Generated\Shared\Transfer\ApiProductMeasurementUnitsAttributesTransfer $apiProductMeasurementUnitsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitsBackendApiAttributesTransfer $productMeasurementUnitsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductMeasurementUnitsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitsBackendApiAttributesTransfer
      */
-    protected function mapProductMeasurementUnitTransferToApiProductMeasurementUnitsAttributesTransfer(
+    protected function mapProductMeasurementUnitTransferToProductMeasurementUnitsBackendApiAttributesTransfer(
         ProductMeasurementUnitTransfer $productMeasurementUnitTransfer,
-        ApiProductMeasurementUnitsAttributesTransfer $apiProductMeasurementUnitsAttributesTransfer
-    ): ApiProductMeasurementUnitsAttributesTransfer {
-        return $apiProductMeasurementUnitsAttributesTransfer->fromArray($productMeasurementUnitTransfer->toArray(), true);
+        ProductMeasurementUnitsBackendApiAttributesTransfer $productMeasurementUnitsBackendApiAttributesTransfer
+    ): ProductMeasurementUnitsBackendApiAttributesTransfer {
+        return $productMeasurementUnitsBackendApiAttributesTransfer->fromArray($productMeasurementUnitTransfer->toArray(), true);
     }
 }

@@ -245,10 +245,10 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\PickingListItemsBackendApiAttributesMapperPluginInterface>
      */
     public function getApiPickingListItemAttributesMapperPlugins(): array
     {
-        return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER);
+        return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::PLUGINS_PICKING_LIST_ITEMS_BACKEND_API_ATTRIBUTES_MAPPER);
     }
 }

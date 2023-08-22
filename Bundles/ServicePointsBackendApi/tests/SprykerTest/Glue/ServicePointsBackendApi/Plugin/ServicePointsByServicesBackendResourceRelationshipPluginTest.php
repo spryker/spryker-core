@@ -9,13 +9,13 @@ namespace SprykerTest\Glue\ServicePointsBackendApi\Plugin;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
-use Generated\Shared\Transfer\ApiServicesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -80,7 +80,7 @@ class ServicePointsByServicesBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -100,7 +100,7 @@ class ServicePointsByServicesBackendResourceRelationshipPluginTest extends Unit
             ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiServicePointsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ServicePointsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
 
         $this->assertSame(static::SERVICE_POINT_UUID, $glueResourceTransfer->getId());
     }
@@ -128,7 +128,7 @@ class ServicePointsByServicesBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act

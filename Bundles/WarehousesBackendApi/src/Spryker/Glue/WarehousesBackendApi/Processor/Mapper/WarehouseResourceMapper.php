@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\WarehousesBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiWarehousesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\WarehouseResourceCollectionTransfer;
+use Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer;
 use Spryker\Glue\WarehousesBackendApi\WarehousesBackendApiConfig;
 
 class WarehouseResourceMapper implements WarehouseResourceMapperInterface
@@ -45,27 +45,27 @@ class WarehouseResourceMapper implements WarehouseResourceMapperInterface
         StockTransfer $stockTransfer,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
-        $apiWarehousesAttributesTransfer = $this->mapStockTransferToApiWarehouseAttributesTransfer(
+        $warehousesBackendApiAttributesTransfer = $this->mapStockTransferToApiWarehouseAttributesTransfer(
             $stockTransfer,
-            new ApiWarehousesAttributesTransfer(),
+            new WarehousesBackendApiAttributesTransfer(),
         );
 
         return $glueResourceTransfer
             ->setType(WarehousesBackendApiConfig::RESOURCE_WAREHOUSES)
             ->setId($stockTransfer->getUuid())
-            ->setAttributes($apiWarehousesAttributesTransfer);
+            ->setAttributes($warehousesBackendApiAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Generated\Shared\Transfer\ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiWarehousesAttributesTransfer
+     * @return \Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer
      */
     protected function mapStockTransferToApiWarehouseAttributesTransfer(
         StockTransfer $stockTransfer,
-        ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer
-    ): ApiWarehousesAttributesTransfer {
-        return $apiWarehousesAttributesTransfer->fromArray($stockTransfer->toArray(), true);
+        WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer
+    ): WarehousesBackendApiAttributesTransfer {
+        return $warehousesBackendApiAttributesTransfer->fromArray($stockTransfer->toArray(), true);
     }
 }

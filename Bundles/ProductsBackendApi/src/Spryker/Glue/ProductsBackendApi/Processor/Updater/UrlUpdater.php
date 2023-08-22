@@ -40,21 +40,21 @@ class UrlUpdater implements UrlUpdaterInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsUrlsAttributesTransfer> $apiProductsUrlsAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductUrlsBackendApiAttributesTransfer> $productUrlsBackendApiAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\UrlCollectionTransfer
      */
-    public function validateUrlsOnCreate(ArrayObject $apiProductsUrlsAttributesTransfers): UrlCollectionTransfer
+    public function validateUrlsOnCreate(ArrayObject $productUrlsBackendApiAttributesTransfers): UrlCollectionTransfer
     {
         $urlMapping = [];
         $urlConditionsTransfer = new UrlConditionsTransfer();
-        foreach ($apiProductsUrlsAttributesTransfers as $apiProductsUrlsAttributesTransfer) {
-            $localeTransfer = $this->localeFacade->getLocale($apiProductsUrlsAttributesTransfer->getLocaleOrFail());
+        foreach ($productUrlsBackendApiAttributesTransfers as $productUrlsBackendApiAttributesTransfer) {
+            $localeTransfer = $this->localeFacade->getLocale($productUrlsBackendApiAttributesTransfer->getLocaleOrFail());
 
-            $urlMapping[$localeTransfer->getIdLocale()] = $apiProductsUrlsAttributesTransfer;
+            $urlMapping[$localeTransfer->getIdLocale()] = $productUrlsBackendApiAttributesTransfer;
 
             $urlConditionsTransfer->addIdLocale($localeTransfer->getIdLocaleOrFail());
-            $urlConditionsTransfer->addUrl($apiProductsUrlsAttributesTransfer->getUrlOrFail());
+            $urlConditionsTransfer->addUrl($productUrlsBackendApiAttributesTransfer->getUrlOrFail());
         }
         $urlCriteriaTransfer = (new UrlCriteriaTransfer())->setUrlConditions($urlConditionsTransfer);
         $urlCollectionTransfer = $this->urlFacade->getUrlCollection($urlCriteriaTransfer);
@@ -64,22 +64,22 @@ class UrlUpdater implements UrlUpdaterInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsUrlsAttributesTransfer> $apiProductsUrlsAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductUrlsBackendApiAttributesTransfer> $productUrlsBackendApiAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\UrlCollectionTransfer
      */
-    public function validateUrlsOnUpdate(int $idProductAbstract, ArrayObject $apiProductsUrlsAttributesTransfers): UrlCollectionTransfer
+    public function validateUrlsOnUpdate(int $idProductAbstract, ArrayObject $productUrlsBackendApiAttributesTransfers): UrlCollectionTransfer
     {
         $urlMapping = [];
         $urlConditionsTransfer = (new UrlConditionsTransfer())->setResourceProductAbstractIds([$idProductAbstract]);
-        foreach ($apiProductsUrlsAttributesTransfers as $apiProductsUrlsAttributesTransfer) {
-            $localeTransfer = $this->localeFacade->getLocale($apiProductsUrlsAttributesTransfer->getLocaleOrFail());
+        foreach ($productUrlsBackendApiAttributesTransfers as $productUrlsBackendApiAttributesTransfer) {
+            $localeTransfer = $this->localeFacade->getLocale($productUrlsBackendApiAttributesTransfer->getLocaleOrFail());
 
-            $urlMapping[$localeTransfer->getIdLocale()] = $apiProductsUrlsAttributesTransfer;
+            $urlMapping[$localeTransfer->getIdLocale()] = $productUrlsBackendApiAttributesTransfer;
 
             $urlConditionsTransfer->addIdLocale($localeTransfer->getIdLocaleOrFail());
             $urlConditionsTransfer->addNotResourceProductAbstractId($idProductAbstract);
-            $urlConditionsTransfer->addUrl($apiProductsUrlsAttributesTransfer->getUrlOrFail());
+            $urlConditionsTransfer->addUrl($productUrlsBackendApiAttributesTransfer->getUrlOrFail());
         }
         $urlCriteriaTransfer = (new UrlCriteriaTransfer())->setUrlConditions($urlConditionsTransfer);
         $urlCollectionTransfer = $this->urlFacade->getUrlCollection($urlCriteriaTransfer);
@@ -89,16 +89,16 @@ class UrlUpdater implements UrlUpdaterInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsUrlsAttributesTransfer> $apiProductsUrlsAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductUrlsBackendApiAttributesTransfer> $productUrlsBackendApiAttributesTransfers
      *
      * @return void
      */
-    public function createUrls(int $idProductAbstract, ArrayObject $apiProductsUrlsAttributesTransfers): void
+    public function createUrls(int $idProductAbstract, ArrayObject $productUrlsBackendApiAttributesTransfers): void
     {
-        foreach ($apiProductsUrlsAttributesTransfers as $apiProductsUrlsAttributesTransfer) {
-            $localeTransfer = $this->localeFacade->getLocale($apiProductsUrlsAttributesTransfer->getLocaleOrFail());
+        foreach ($productUrlsBackendApiAttributesTransfers as $productUrlsBackendApiAttributesTransfer) {
+            $localeTransfer = $this->localeFacade->getLocale($productUrlsBackendApiAttributesTransfer->getLocaleOrFail());
             $urlTransfer = (new UrlTransfer())
-                ->setUrl($apiProductsUrlsAttributesTransfer->getUrl())
+                ->setUrl($productUrlsBackendApiAttributesTransfer->getUrl())
                 ->setFkResourceProductAbstract($idProductAbstract)
                 ->setFkLocale($localeTransfer->getIdLocale());
 
@@ -108,18 +108,18 @@ class UrlUpdater implements UrlUpdaterInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsUrlsAttributesTransfer> $apiProductsUrlsAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductUrlsBackendApiAttributesTransfer> $productUrlsBackendApiAttributesTransfers
      *
      * @return void
      */
-    public function updateUrls(int $idProductAbstract, ArrayObject $apiProductsUrlsAttributesTransfers): void
+    public function updateUrls(int $idProductAbstract, ArrayObject $productUrlsBackendApiAttributesTransfers): void
     {
         $urlMapping = [];
         $urlConditionsTransfer = (new UrlConditionsTransfer())->setResourceProductAbstractIds([$idProductAbstract]);
-        foreach ($apiProductsUrlsAttributesTransfers as $apiProductsUrlsAttributesTransfer) {
-            $localeTransfer = $this->localeFacade->getLocale($apiProductsUrlsAttributesTransfer->getLocaleOrFail());
+        foreach ($productUrlsBackendApiAttributesTransfers as $productUrlsBackendApiAttributesTransfer) {
+            $localeTransfer = $this->localeFacade->getLocale($productUrlsBackendApiAttributesTransfer->getLocaleOrFail());
 
-            $urlMapping[$localeTransfer->getIdLocale()] = $apiProductsUrlsAttributesTransfer;
+            $urlMapping[$localeTransfer->getIdLocale()] = $productUrlsBackendApiAttributesTransfer;
 
             $urlConditionsTransfer->addIdLocale($localeTransfer->getIdLocaleOrFail());
             $urlConditionsTransfer->addIdResourceProductAbstract($idProductAbstract);
@@ -128,8 +128,8 @@ class UrlUpdater implements UrlUpdaterInterface
         $urlCollectionTransfer = $this->urlFacade->getUrlCollection($urlCriteriaTransfer);
 
         foreach ($urlCollectionTransfer->getUrls() as $persistedUrlTransfer) {
-            $apiProductsUrlsAttributesTransfer = $urlMapping[$persistedUrlTransfer->getFkLocale()];
-            $persistedUrlTransfer->fromArray($apiProductsUrlsAttributesTransfer->modifiedToArray(), true);
+            $productUrlsBackendApiAttributesTransfer = $urlMapping[$persistedUrlTransfer->getFkLocale()];
+            $persistedUrlTransfer->fromArray($productUrlsBackendApiAttributesTransfer->modifiedToArray(), true);
             $this->urlFacade->updateUrl($persistedUrlTransfer);
         }
     }

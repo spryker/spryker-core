@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Creator;
 
-use Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServiceCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServiceMapperInterface;
@@ -58,17 +58,17 @@ class ServiceCreator implements ServiceCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createService(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        $serviceTransfer = $this->serviceMapper->mapApiServicesRequestAttributesTransferToServiceTransfer(
-            $apiServicesRequestAttributesTransfer,
+        $serviceTransfer = $this->serviceMapper->mapServicesRequestBackendApiAttributesTransferToServiceTransfer(
+            $servicesRequestBackendApiAttributesTransfer,
             new ServiceTransfer(),
         );
 

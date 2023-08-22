@@ -66,10 +66,10 @@ class ServicePointAddressCreator implements ServicePointAddressCreatorInterface
      */
     public function createServicePointAddress(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer|null $apiServicePointAddressesAttributesTransfer */
-        $apiServicePointAddressesAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+        /** @var \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer|null $servicePointAddressesBackendApiAttributesTransfer */
+        $servicePointAddressesBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        if (!$apiServicePointAddressesAttributesTransfer) {
+        if (!$servicePointAddressesBackendApiAttributesTransfer) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
@@ -78,8 +78,8 @@ class ServicePointAddressCreator implements ServicePointAddressCreatorInterface
 
         $servicePointUuid = $this->getParentGlueResourceTransfer($glueRequestTransfer)->getIdOrFail();
         $servicePointTransfer = (new ServicePointTransfer())->setUuid($servicePointUuid);
-        $servicePointAddressTransfer = $this->servicePointAddressMapper->mapApiServicePointAddressesAttributesTransferToServicePointAddressTransfer(
-            $apiServicePointAddressesAttributesTransfer,
+        $servicePointAddressTransfer = $this->servicePointAddressMapper->mapServicePointAddressesBackendApiAttributesTransferToServicePointAddressTransfer(
+            $servicePointAddressesBackendApiAttributesTransfer,
             (new ServicePointAddressTransfer())->setServicePoint($servicePointTransfer),
         );
 

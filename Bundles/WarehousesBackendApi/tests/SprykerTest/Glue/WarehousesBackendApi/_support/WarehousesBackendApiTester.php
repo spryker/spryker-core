@@ -24,7 +24,7 @@ use Spryker\Glue\WarehousesBackendApi\WarehousesBackendApiResourceInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\WarehousesBackendApi\PHPMD)
  */
 class WarehousesBackendApiTester extends Actor
 {

@@ -7,12 +7,12 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServiceCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
+use Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServiceMapperInterface;
@@ -61,16 +61,16 @@ class ServiceUpdater implements ServiceUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateService(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        if (!$this->isRequestBodyValid($glueRequestTransfer, $apiServicesRequestAttributesTransfer)) {
+        if (!$this->isRequestBodyValid($glueRequestTransfer, $servicesRequestBackendApiAttributesTransfer)) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
@@ -85,8 +85,8 @@ class ServiceUpdater implements ServiceUpdaterInterface
             );
         }
 
-        $serviceTransfer = $this->serviceMapper->mapApiServicesRequestAttributesTransferToServiceTransfer(
-            $apiServicesRequestAttributesTransfer,
+        $serviceTransfer = $this->serviceMapper->mapServicesRequestBackendApiAttributesTransferToServiceTransfer(
+            $servicesRequestBackendApiAttributesTransfer,
             $serviceTransfer,
         );
 
@@ -109,19 +109,19 @@ class ServiceUpdater implements ServiceUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      *
      * @return bool
      */
     protected function isRequestBodyValid(
         GlueRequestTransfer $glueRequestTransfer,
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
     ): bool {
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
         return $glueResourceTransfer->getId()
             && $glueResourceTransfer->getAttributes()
-            && $apiServicesRequestAttributesTransfer->modifiedToArray();
+            && $servicesRequestBackendApiAttributesTransfer->modifiedToArray();
     }
 
     /**

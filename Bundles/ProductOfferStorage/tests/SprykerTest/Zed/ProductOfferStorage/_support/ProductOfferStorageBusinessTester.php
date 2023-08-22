@@ -30,7 +30,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferStorage\PHPMD)
  */
 class ProductOfferStorageBusinessTester extends Actor
 {

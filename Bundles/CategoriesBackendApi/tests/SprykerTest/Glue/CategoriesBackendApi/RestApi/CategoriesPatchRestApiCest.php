@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Glue\CategoriesBackendApi\RestApi;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
 use Generated\Shared\Transfer\ApiCategoryParentTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CategoriesBackendApi\Plugin\GlueApplication\CategoriesBackendApiResource;
 use SprykerTest\Glue\CategoriesBackendApi\CategoriesBackendApiTester;
@@ -219,7 +219,7 @@ class CategoriesPatchRestApiCest
         $sortOrder = 1;
 
         $requestPayload = [
-            ApiCategoryAttributesTransfer::PARENT => [
+            CategoriesBackendApiAttributesTransfer::PARENT => [
                 ApiCategoryParentTransfer::CATEGORY_KEY => $newParentCategory->getCategoryKeyOrFail(),
                 ApiCategoryParentTransfer::SORT_ORDER => $sortOrder,
             ],

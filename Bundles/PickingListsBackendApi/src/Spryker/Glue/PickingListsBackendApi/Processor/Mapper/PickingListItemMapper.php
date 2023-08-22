@@ -7,27 +7,27 @@
 
 namespace Spryker\Glue\PickingListsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 
 class PickingListItemMapper implements PickingListItemMapperInterface
 {
     /**
-     * @var list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     * @var list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\PickingListItemsBackendApiAttributesMapperPluginInterface>
      */
-    protected array $apiPickingListItemsAttributesMapperPlugins;
+    protected array $pickingListItemsBackendApiAttributesMapperPlugins;
 
     /**
-     * @param list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface> $apiPickingListItemsAttributesMapperPlugins
+     * @param list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\PickingListItemsBackendApiAttributesMapperPluginInterface> $pickingListItemsBackendApiAttributesMapperPlugins
      */
-    public function __construct(array $apiPickingListItemsAttributesMapperPlugins)
+    public function __construct(array $pickingListItemsBackendApiAttributesMapperPlugins)
     {
-        $this->apiPickingListItemsAttributesMapperPlugins = $apiPickingListItemsAttributesMapperPlugins;
+        $this->pickingListItemsBackendApiAttributesMapperPlugins = $pickingListItemsBackendApiAttributesMapperPlugins;
     }
 
     /**
@@ -42,16 +42,16 @@ class PickingListItemMapper implements PickingListItemMapperInterface
     ): PickingListItemTransfer {
         $pickingListItemTransfer->setUuid($glueResourceTransfer->getId());
 
-        /** @var \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer|null $apiPickingListItemsAttributesTransfer */
-        $apiPickingListItemsAttributesTransfer = $glueResourceTransfer->getAttributes();
-        if (!$apiPickingListItemsAttributesTransfer) {
+        /** @var \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer|null $pickingListItemsBackendApiAttributesTransfer */
+        $pickingListItemsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+        if (!$pickingListItemsBackendApiAttributesTransfer) {
             return $pickingListItemTransfer;
         }
 
         $pickingListItemTransfer->setNumberOfPicked(
-            $apiPickingListItemsAttributesTransfer->getNumberOfPicked(),
+            $pickingListItemsBackendApiAttributesTransfer->getNumberOfPicked(),
         )->setNumberOfNotPicked(
-            $apiPickingListItemsAttributesTransfer->getNumberOfNotPicked(),
+            $pickingListItemsBackendApiAttributesTransfer->getNumberOfNotPicked(),
         );
 
         return $pickingListItemTransfer;
@@ -67,24 +67,24 @@ class PickingListItemMapper implements PickingListItemMapperInterface
         array $pickingListItemTransfers,
         GlueRelationshipTransfer $glueRelationshipTransfer
     ): GlueRelationshipTransfer {
-        $apiPickingListItemsAttributesTransfers = [];
+        $pickingListItemsBackendApiAttributesTransfers = [];
         foreach ($pickingListItemTransfers as $pickingListItemTransfer) {
-            $apiPickingListItemsAttributesTransfers[$pickingListItemTransfer->getUuidOrFail()] = $this->mapPickingListItemTransferToApiPickingListItemsAttributesTransfer(
+            $pickingListItemsBackendApiAttributesTransfers[$pickingListItemTransfer->getUuidOrFail()] = $this->mapPickingListItemTransferToPickingListItemsBackendApiAttributesTransfer(
                 $pickingListItemTransfer,
-                new ApiPickingListItemsAttributesTransfer(),
+                new PickingListItemsBackendApiAttributesTransfer(),
             );
         }
 
-        $apiPickingListItemsAttributesTransfers = $this->executeApiPickingListItemsAttributesMapperPlugins(
+        $pickingListItemsBackendApiAttributesTransfers = $this->executePickingListItemsBackendApiAttributesMapperPlugins(
             $pickingListItemTransfers,
-            $apiPickingListItemsAttributesTransfers,
+            $pickingListItemsBackendApiAttributesTransfers,
         );
 
-        foreach ($apiPickingListItemsAttributesTransfers as $uuid => $apiPickingListItemsAttributesTransfer) {
+        foreach ($pickingListItemsBackendApiAttributesTransfers as $uuid => $pickingListItemsBackendApiAttributesTransfer) {
             $glueResourceTransfer = (new GlueResourceTransfer())
                 ->setType(PickingListsBackendApiConfig::RESOURCE_PICKING_LIST_ITEMS)
                 ->setId($uuid)
-                ->setAttributes($apiPickingListItemsAttributesTransfer);
+                ->setAttributes($pickingListItemsBackendApiAttributesTransfer);
 
             $glueRelationshipTransfer->addResource($glueResourceTransfer);
         }
@@ -94,58 +94,58 @@ class PickingListItemMapper implements PickingListItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PickingListItemTransfer $pickingListItemTransfer
-     * @param \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer
      */
-    public function mapPickingListItemTransferToApiPickingListItemsAttributesTransfer(
+    public function mapPickingListItemTransferToPickingListItemsBackendApiAttributesTransfer(
         PickingListItemTransfer $pickingListItemTransfer,
-        ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
-    ): ApiPickingListItemsAttributesTransfer {
-        $apiPickingListItemsAttributesTransfer->fromArray($pickingListItemTransfer->toArray(), true);
+        PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
+    ): PickingListItemsBackendApiAttributesTransfer {
+        $pickingListItemsBackendApiAttributesTransfer->fromArray($pickingListItemTransfer->toArray(), true);
 
         if ($pickingListItemTransfer->getOrderItem()) {
-            $apiOrderItemsAttributesTransfer = $this->mapItemTransferToApiOrderItemsAttributesTransfer(
+            $orderItemsBackendApiAttributesTransfer = $this->mapItemTransferToOrderItemsBackendApiAttributesTransfer(
                 $pickingListItemTransfer->getOrderItemOrFail(),
-                new ApiOrderItemsAttributesTransfer(),
+                new OrderItemsBackendApiAttributesTransfer(),
             );
 
-            $apiPickingListItemsAttributesTransfer->setOrderItem($apiOrderItemsAttributesTransfer);
+            $pickingListItemsBackendApiAttributesTransfer->setOrderItem($orderItemsBackendApiAttributesTransfer);
         }
 
-        return $apiPickingListItemsAttributesTransfer;
+        return $pickingListItemsBackendApiAttributesTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer $apiOrderItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer $orderItemsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer
      */
-    protected function mapItemTransferToApiOrderItemsAttributesTransfer(
+    protected function mapItemTransferToOrderItemsBackendApiAttributesTransfer(
         ItemTransfer $itemTransfer,
-        ApiOrderItemsAttributesTransfer $apiOrderItemsAttributesTransfer
-    ): ApiOrderItemsAttributesTransfer {
-        return $apiOrderItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
+        OrderItemsBackendApiAttributesTransfer $orderItemsBackendApiAttributesTransfer
+    ): OrderItemsBackendApiAttributesTransfer {
+        return $orderItemsBackendApiAttributesTransfer->fromArray($itemTransfer->toArray(), true);
     }
 
     /**
      * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemTransfers
-     * @param array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $apiPickingListItemsAttributesTransfers
+     * @param array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer> $pickingListItemsBackendApiAttributesTransfers
      *
-     * @return array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer>
+     * @return array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer>
      */
-    protected function executeApiPickingListItemsAttributesMapperPlugins(
+    protected function executePickingListItemsBackendApiAttributesMapperPlugins(
         array $pickingListItemTransfers,
-        array $apiPickingListItemsAttributesTransfers
+        array $pickingListItemsBackendApiAttributesTransfers
     ): array {
-        foreach ($this->apiPickingListItemsAttributesMapperPlugins as $apiPickingListItemsAttributesMapperPlugin) {
-            $apiPickingListItemsAttributesTransfers = $apiPickingListItemsAttributesMapperPlugin->mapPickingListItemTransfersToApiPickingListItemsAttributesTransfers(
+        foreach ($this->pickingListItemsBackendApiAttributesMapperPlugins as $pickingListItemsBackendApiAttributesMapperPlugin) {
+            $pickingListItemsBackendApiAttributesTransfers = $pickingListItemsBackendApiAttributesMapperPlugin->mapPickingListItemTransfersToPickingListItemsBackendApiAttributesTransfers(
                 $pickingListItemTransfers,
-                $apiPickingListItemsAttributesTransfers,
+                $pickingListItemsBackendApiAttributesTransfers,
             );
         }
 
-        return $apiPickingListItemsAttributesTransfers;
+        return $pickingListItemsBackendApiAttributesTransfers;
     }
 }

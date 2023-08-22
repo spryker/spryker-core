@@ -67,9 +67,9 @@ class PickingListItemsBackendResourceRelationshipExpander implements PickingList
     ): array {
         $concreteProductSkus = [];
         foreach ($glueResourceTransfers as $glueResourceTransfer) {
-            /** @var \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer */
-            $apiPickingListItemsAttributesTransfer = $glueResourceTransfer->getAttributes();
-            $concreteProductSkus[] = $apiPickingListItemsAttributesTransfer->getOrderItemOrFail()->getSkuOrFail();
+            /** @var \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer */
+            $pickingListItemsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+            $concreteProductSkus[] = $pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail()->getSkuOrFail();
         }
 
         return array_unique($concreteProductSkus);
@@ -86,9 +86,9 @@ class PickingListItemsBackendResourceRelationshipExpander implements PickingList
         array $concreteProductRelationshipTransfersIndexedBySku
     ): void {
         foreach ($glueResourceTransfers as $glueResourceTransfer) {
-            /** @var \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer */
-            $apiPickingListItemsAttributesTransfer = $glueResourceTransfer->getAttributes();
-            $productConcreteSku = $apiPickingListItemsAttributesTransfer->getOrderItemOrFail()->getSkuOrFail();
+            /** @var \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer */
+            $pickingListItemsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+            $productConcreteSku = $pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail()->getSkuOrFail();
 
             $concreteProductRelationshipTransfer = $concreteProductRelationshipTransfersIndexedBySku[$productConcreteSku] ?? null;
 

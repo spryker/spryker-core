@@ -34,7 +34,7 @@ class UserResourceRelationshipReader implements UserResourceRelationshipReaderIn
      */
     public function getUserRelationshipsIndexedByUserUuid(array $userUuids): array
     {
-        $userResourceCollectionTransfer = $this->userResourceReader->getUserResources(
+        $userResourceCollectionTransfer = $this->userResourceReader->getUsersResources(
             $this->createUserCriteriaTransfer($userUuids),
         );
 

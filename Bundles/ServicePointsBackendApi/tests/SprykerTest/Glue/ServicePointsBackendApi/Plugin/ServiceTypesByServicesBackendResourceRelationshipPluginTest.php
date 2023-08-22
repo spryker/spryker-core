@@ -9,13 +9,13 @@ namespace SprykerTest\Glue\ServicePointsBackendApi\Plugin;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiServicesAttributesTransfer;
-use Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServicesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeBridge;
 use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\ServiceTypesByServicesBackendResourceRelationshipPlugin;
@@ -69,7 +69,7 @@ class ServiceTypesByServicesBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -89,7 +89,7 @@ class ServiceTypesByServicesBackendResourceRelationshipPluginTest extends Unit
             ServicePointsBackendApiConfig::RESOURCE_SERVICE_TYPES,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiServiceTypesAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ServiceTypesBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
 
         $this->assertSame(static::SERVICE_TYPE_UUID, $glueResourceTransfer->getId());
     }
@@ -113,7 +113,7 @@ class ServiceTypesByServicesBackendResourceRelationshipPluginTest extends Unit
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICES)
-                ->setAttributes(new ApiServicesAttributesTransfer()),
+                ->setAttributes(new ServicesBackendApiAttributesTransfer()),
         ];
 
         // Act

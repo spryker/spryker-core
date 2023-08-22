@@ -7,12 +7,12 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPushNotificationGroupsAttributesTransfer;
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PushNotificationGroupsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationGroupTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\PushNotificationUserTransfer;
 
@@ -20,70 +20,70 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
 {
     /**
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer
      */
-    public function mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionsAttributesTransfer(
+    public function mapPushNotificationSubscriptionTransferToPushNotificationSubscriptionsBackendApiAttributesTransfer(
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer,
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
-    ): ApiPushNotificationSubscriptionsAttributesTransfer {
-        $apiPushNotificationSubscriptionsAttributesTransfer->fromArray(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
+    ): PushNotificationSubscriptionsBackendApiAttributesTransfer {
+        $pushNotificationSubscriptionsBackendApiAttributesTransfer->fromArray(
             $pushNotificationSubscriptionTransfer->toArray(),
             true,
         );
 
         if ($pushNotificationSubscriptionTransfer->getLocale()) {
-            $apiPushNotificationSubscriptionsAttributesTransfer
+            $pushNotificationSubscriptionsBackendApiAttributesTransfer
                 ->setLocaleName($pushNotificationSubscriptionTransfer->getLocaleOrFail()->getLocaleName());
         }
 
         $pushNotificationProviderName = $pushNotificationSubscriptionTransfer->getProviderOrFail()->getNameOrFail();
-        $apiPushNotificationGroupsAttributesTransfer = (new ApiPushNotificationGroupsAttributesTransfer())->fromArray(
+        $pushNotificationGroupsBackendApiAttributesTransfer = (new PushNotificationGroupsBackendApiAttributesTransfer())->fromArray(
             $pushNotificationSubscriptionTransfer->getGroupOrFail()->toArray(),
             true,
         );
 
-        return $apiPushNotificationSubscriptionsAttributesTransfer
+        return $pushNotificationSubscriptionsBackendApiAttributesTransfer
             ->setProviderName($pushNotificationProviderName)
-            ->setGroup($apiPushNotificationGroupsAttributesTransfer);
+            ->setGroup($pushNotificationGroupsBackendApiAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer
      */
-    public function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+    public function mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationSubscriptionTransfer(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): PushNotificationSubscriptionTransfer {
-        $apiPushNotificationSubscriptionsAttributesData = array_filter(
-            $apiPushNotificationSubscriptionsAttributesTransfer->modifiedToArray(),
+        $pushNotificationSubscriptionsBackendApiAttributesData = array_filter(
+            $pushNotificationSubscriptionsBackendApiAttributesTransfer->modifiedToArray(),
             function ($value) {
                 return $value !== null;
             },
         );
 
         $pushNotificationSubscriptionTransfer = $pushNotificationSubscriptionTransfer->fromArray(
-            $apiPushNotificationSubscriptionsAttributesData,
+            $pushNotificationSubscriptionsBackendApiAttributesData,
             true,
         );
 
-        $pushNotificationProviderTransfer = $this->mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationProviderTransfer(
-            $apiPushNotificationSubscriptionsAttributesTransfer,
+        $pushNotificationProviderTransfer = $this->mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationProviderTransfer(
+            $pushNotificationSubscriptionsBackendApiAttributesTransfer,
             new PushNotificationProviderTransfer(),
         );
 
-        $pushNotificationGroupTransfer = $this->mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationGroupTransfer(
-            $apiPushNotificationSubscriptionsAttributesTransfer,
+        $pushNotificationGroupTransfer = $this->mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationGroupTransfer(
+            $pushNotificationSubscriptionsBackendApiAttributesTransfer,
             new PushNotificationGroupTransfer(),
         );
 
-        if ($apiPushNotificationSubscriptionsAttributesTransfer->getLocaleName()) {
-            $localeTransfer = $this->mapApiPushNotificationSubscriptionsAttributesTransferToLocaleTransfer(
-                $apiPushNotificationSubscriptionsAttributesTransfer,
+        if ($pushNotificationSubscriptionsBackendApiAttributesTransfer->getLocaleName()) {
+            $localeTransfer = $this->mapPushNotificationSubscriptionsBackendApiAttributesTransferToLocaleTransfer(
+                $pushNotificationSubscriptionsBackendApiAttributesTransfer,
                 new LocaleTransfer(),
             );
             $pushNotificationSubscriptionTransfer->setLocale($localeTransfer);
@@ -125,46 +125,46 @@ class PushNotificationSubscriptionMapper implements PushNotificationSubscription
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
      */
-    protected function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationProviderTransfer(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+    protected function mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationProviderTransfer(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         PushNotificationProviderTransfer $pushNotificationProviderTransfer
     ): PushNotificationProviderTransfer {
-        $pushNotificationProviderName = $apiPushNotificationSubscriptionsAttributesTransfer->getProviderNameOrFail();
+        $pushNotificationProviderName = $pushNotificationSubscriptionsBackendApiAttributesTransfer->getProviderNameOrFail();
 
         return $pushNotificationProviderTransfer->setName($pushNotificationProviderName);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationGroupTransfer $pushNotificationGroupTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationGroupTransfer
      */
-    protected function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationGroupTransfer(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+    protected function mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationGroupTransfer(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         PushNotificationGroupTransfer $pushNotificationGroupTransfer
     ): PushNotificationGroupTransfer {
         return $pushNotificationGroupTransfer->fromArray(
-            $apiPushNotificationSubscriptionsAttributesTransfer->getGroupOrFail()->toArray(),
+            $pushNotificationSubscriptionsBackendApiAttributesTransfer->getGroupOrFail()->toArray(),
             true,
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function mapApiPushNotificationSubscriptionsAttributesTransferToLocaleTransfer(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+    protected function mapPushNotificationSubscriptionsBackendApiAttributesTransferToLocaleTransfer(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         LocaleTransfer $localeTransfer
     ): LocaleTransfer {
-        return $localeTransfer->setLocaleName($apiPushNotificationSubscriptionsAttributesTransfer->getLocaleName());
+        return $localeTransfer->setLocaleName($pushNotificationSubscriptionsBackendApiAttributesTransfer->getLocaleName());
     }
 }

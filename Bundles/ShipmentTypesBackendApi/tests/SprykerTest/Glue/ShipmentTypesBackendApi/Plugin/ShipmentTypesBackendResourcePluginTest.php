@@ -8,7 +8,7 @@
 namespace SprykerTest\Glue\ShipmentTypesBackendApi\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Spryker\Glue\ShipmentTypesBackendApi\Plugin\GlueBackendApiApplication\ShipmentTypesBackendResourcePlugin;
 
 /**
@@ -57,7 +57,7 @@ class ShipmentTypesBackendResourcePluginTest extends Unit
         $this->assertNotNull($glueResourceMethodCollectionTransfer->getPatch());
         $this->assertNull($glueResourceMethodCollectionTransfer->getDelete());
 
-        $this->assertSame(ApiShipmentTypesAttributesTransfer::class, $glueResourceMethodCollectionTransfer->getGetOrFail()->getAttributes());
-        $this->assertSame(ApiShipmentTypesAttributesTransfer::class, $glueResourceMethodCollectionTransfer->getGetCollectionOrFail()->getAttributes());
+        $this->assertSame(ShipmentTypesBackendApiAttributesTransfer::class, $glueResourceMethodCollectionTransfer->getGetOrFail()->getAttributes());
+        $this->assertSame(ShipmentTypesBackendApiAttributesTransfer::class, $glueResourceMethodCollectionTransfer->getGetCollectionOrFail()->getAttributes());
     }
 }

@@ -8,12 +8,12 @@
 namespace SprykerTest\Glue\CategoriesBackendApi\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\ApiCategoryAttributesBuilder;
 use Generated\Shared\DataBuilder\ApiCategoryLocalizedAttributeBuilder;
 use Generated\Shared\DataBuilder\ApiCategoryParentBuilder;
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\DataBuilder\CategoriesBackendApiAttributesBuilder;
 use Generated\Shared\Transfer\ApiCategoryLocalizedAttributeTransfer;
 use Generated\Shared\Transfer\ApiCategoryParentTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
@@ -62,11 +62,11 @@ class CategoriesHelper extends Module
     /**
      * @param array $seed
      *
-     * @return \Generated\Shared\Transfer\ApiCategoryAttributesTransfer
+     * @return \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer
      */
-    public function haveApiCategoryAttributesTransfer(array $seed = []): ApiCategoryAttributesTransfer
+    public function haveCategoriesBackendApiAttributesTransfer(array $seed = []): CategoriesBackendApiAttributesTransfer
     {
-        return (new ApiCategoryAttributesBuilder($seed))->build();
+        return (new CategoriesBackendApiAttributesBuilder($seed))->build();
     }
 
     /**

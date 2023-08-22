@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\ProductsBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\ProductCategoryConditionsTransfer;
 use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToCategoryFacadeInterface;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductCategoryFacadeInterface;
 
@@ -40,16 +40,16 @@ class CategoryUpdater implements CategoryUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function createCategoryAssignment(ApiProductsAttributesTransfer $apiProductsAttributesTransfer, int $idProductAbstract): void
+    public function createCategoryAssignment(ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer, int $idProductAbstract): void
     {
         $categoryKeys = [];
-        foreach ($apiProductsAttributesTransfer->getCategories() as $apiProductsCategoryAttributesTransfer) {
-            $categoryKeys[] = $apiProductsCategoryAttributesTransfer->getCategoryKeyOrFail();
+        foreach ($productsBackendApiAttributesTransfer->getCategories() as $productCategoriesBackendApiAttributesTransfer) {
+            $categoryKeys[] = $productCategoriesBackendApiAttributesTransfer->getCategoryKeyOrFail();
         }
         $categoryCollectionTransfer = $this->categoryFacade->getCategoryCollection(
             (new CategoryCriteriaTransfer())
@@ -65,12 +65,12 @@ class CategoryUpdater implements CategoryUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function updateCategories(ApiProductsAttributesTransfer $apiProductsAttributesTransfer, int $idProductAbstract): void
+    public function updateCategories(ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer, int $idProductAbstract): void
     {
         $productCategoryCollectionTransfer = $this->productCategoryFacade->getProductCategoryCollection(
             (new ProductCategoryCriteriaTransfer())
@@ -85,8 +85,8 @@ class CategoryUpdater implements CategoryUpdaterInterface
         }
 
         $categoryKeys = [];
-        foreach ($apiProductsAttributesTransfer->getCategories() as $apiProductsCategoryAttributesTransfer) {
-            $categoryKeys[] = $apiProductsCategoryAttributesTransfer->getCategoryKeyOrFail();
+        foreach ($productsBackendApiAttributesTransfer->getCategories() as $productCategoriesBackendApiAttributesTransfer) {
+            $categoryKeys[] = $productCategoriesBackendApiAttributesTransfer->getCategoryKeyOrFail();
         }
         $categoryCollectionTransfer = $this->categoryFacade->getCategoryCollection(
             (new CategoryCriteriaTransfer())

@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplication;
 
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
@@ -66,15 +66,15 @@ class ServicePointAddressesBackendResourcePlugin extends AbstractResourcePlugin 
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiServicePointAddressesAttributesTransfer::class),
+                    ->setAttributes(ServicePointAddressesBackendApiAttributesTransfer::class),
             )
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiServicePointAddressesAttributesTransfer::class),
+                    ->setAttributes(ServicePointAddressesBackendApiAttributesTransfer::class),
             )
             ->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiServicePointAddressesAttributesTransfer::class),
+                    ->setAttributes(ServicePointAddressesBackendApiAttributesTransfer::class),
             );
     }
 }

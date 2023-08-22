@@ -46,7 +46,7 @@ class ProductOfferShipmentTypeStorageClient extends AbstractClient implements Pr
      */
     public function filterUnavailableProductOfferShipmentTypes(
         ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
-        QuoteTransfer $quoteTransfer,
+        QuoteTransfer $quoteTransfer
     ): ShipmentTypeStorageCollectionTransfer {
         return $this->getFactory()
             ->createShipmentTypeFilter()

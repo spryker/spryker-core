@@ -24,7 +24,7 @@ use Codeception\Actor;
  * @method void pause($vars = [])
  * @method \Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageClientInterface getClient(?string $moduleName = NULL)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ShipmentTypeStorage\PHPMD)
  */
 class ShipmentTypeStorageClientTester extends Actor
 {

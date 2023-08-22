@@ -44,6 +44,6 @@ interface ProductOfferShipmentTypeStorageClientInterface
      */
     public function filterUnavailableProductOfferShipmentTypes(
         ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
-        QuoteTransfer $quoteTransfer,
+        QuoteTransfer $quoteTransfer
     ): ShipmentTypeStorageCollectionTransfer;
 }

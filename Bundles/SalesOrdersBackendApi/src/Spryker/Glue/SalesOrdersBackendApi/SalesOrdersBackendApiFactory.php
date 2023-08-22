@@ -36,7 +36,7 @@ class SalesOrdersBackendApiFactory extends AbstractBackendApiFactory
     public function createSalesOrdersResourceMapper(): SalesOrdersResourceMapperInterface
     {
         return new SalesOrdersResourceMapper(
-            $this->getApiOrdersAttributesMapperPlugins(),
+            $this->getOrdersBackendApiAttributesMapperPlugins(),
         );
     }
 
@@ -49,10 +49,10 @@ class SalesOrdersBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\ApiOrdersAttributesMapperPluginInterface>
+     * @return list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\OrdersBackendApiAttributesMapperPluginInterface>
      */
-    public function getApiOrdersAttributesMapperPlugins(): array
+    public function getOrdersBackendApiAttributesMapperPlugins(): array
     {
-        return $this->getProvidedDependency(SalesOrdersBackendApiDependencyProvider::PLUGINS_API_ORDERS_ATTRIBUTES_MAPPER);
+        return $this->getProvidedDependency(SalesOrdersBackendApiDependencyProvider::PLUGINS_ORDERS_BACKEND_API_ATTRIBUTES_MAPPER);
     }
 }

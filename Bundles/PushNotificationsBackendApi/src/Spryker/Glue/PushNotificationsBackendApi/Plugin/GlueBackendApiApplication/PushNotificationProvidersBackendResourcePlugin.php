@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Plugin\GlueBackendApiApplication;
 
-use Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\PushNotificationsBackendApi\Controller\PushNotificationProvidersResourceController;
@@ -54,27 +54,27 @@ class PushNotificationProvidersBackendResourcePlugin extends AbstractResourcePlu
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getCollectionAction')
-                    ->setAttributes(ApiPushNotificationProvidersAttributesTransfer::class),
+                    ->setAttributes(PushNotificationProvidersBackendApiAttributesTransfer::class),
             )
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getAction')
-                    ->setAttributes(ApiPushNotificationProvidersAttributesTransfer::class),
+                    ->setAttributes(PushNotificationProvidersBackendApiAttributesTransfer::class),
             )
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes(ApiPushNotificationProvidersAttributesTransfer::class),
+                    ->setAttributes(PushNotificationProvidersBackendApiAttributesTransfer::class),
             )
             ->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('patchAction')
-                    ->setAttributes(ApiPushNotificationProvidersAttributesTransfer::class),
+                    ->setAttributes(PushNotificationProvidersBackendApiAttributesTransfer::class),
             )
             ->setDelete(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('deleteAction')
-                    ->setAttributes(ApiPushNotificationProvidersAttributesTransfer::class),
+                    ->setAttributes(PushNotificationProvidersBackendApiAttributesTransfer::class),
             );
     }
 }

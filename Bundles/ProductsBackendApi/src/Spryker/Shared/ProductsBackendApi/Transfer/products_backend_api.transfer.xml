@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ApiProductsAttributes" strict="true">
+    <transfer name="ProductsBackendApiAttributes" strict="true">
         <property name="productAbstractSku" type="string"/>
         <property name="taxSetName" type="string"/>
         <property name="newFrom" type="string"/>
         <property name="newTo" type="string"/>
         <property name="attributes" type="string[]" associative="true" singular="attribute"/>
-        <property name="localizedAttributes" type="ApiProductsLocalizedAttributesAttributes[]" singular="localizedAttribute"/>
-        <property name="urls" type="ApiProductsUrlsAttributes[]" singular="url"/>
-        <property name="imageSets" type="ApiProductsImageSetAttributes[]" singular="imageSet"/>
+        <property name="localizedAttributes" type="ProductLocalizedAttributesBackendApiAttributes[]" singular="localizedAttribute"/>
+        <property name="urls" type="ProductUrlsBackendApiAttributes[]" singular="url"/>
+        <property name="imageSets" type="ProductImageSetBackendApiAttributes[]" singular="imageSet"/>
         <property name="stores" type="string[]" singular="store"/>
-        <property name="categories" type="ApiProductsCategoryAttributes[]" singular="category"/>
-        <property name="variants" type="ApiProductsProductConcreteAttributes[]" singular="variant"/>
+        <property name="categories" type="ProductCategoriesBackendApiAttributes[]" singular="category"/>
+        <property name="variants" type="ProductConcretesBackendApiAttributes[]" singular="variant"/>
     </transfer>
 
-    <transfer name="ApiProductsLocalizedAttributesAttributes" strict="true">
+    <transfer name="ProductLocalizedAttributesBackendApiAttributes" strict="true">
         <property name="locale" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>
@@ -25,23 +25,23 @@
         <property name="attributes" type="array" associative="true" singular="attribute"/>
     </transfer>
 
-    <transfer name="ApiProductsUrlsAttributes" strict="true">
+    <transfer name="ProductUrlsBackendApiAttributes" strict="true">
         <property name="locale" type="string"/>
         <property name="url" type="string"/>
     </transfer>
 
-    <transfer name="ApiProductsImageSetAttributes" strict="true">
+    <transfer name="ProductImageSetBackendApiAttributes" strict="true">
         <property name="locale" type="string"/>
         <property name="name" type="string"/>
-        <property name="images" type="ApiProductsImageSetImageAttributes[]" singular="image"/>
+        <property name="images" type="ProductImageSetImagesBackendApiAttributes[]" singular="image"/>
     </transfer>
 
-    <transfer name="ApiProductsImageSetImageAttributes" strict="true">
+    <transfer name="ProductImageSetImagesBackendApiAttributes" strict="true">
         <property name="externalUrlLarge" type="string"/>
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
-    <transfer name="ApiProductsCategoryAttributes" strict="true">
+    <transfer name="ProductCategoriesBackendApiAttributes" strict="true">
         <property name="name" type="string"/>
         <property name="categoryKey" type="string"/>
         <property name="metaTitle" type="string"/>
@@ -49,15 +49,15 @@
         <property name="metaKeywords" type="string"/>
     </transfer>
 
-    <transfer name="ApiProductsProductConcreteAttributes" strict="true">
+    <transfer name="ProductConcretesBackendApiAttributes" strict="true">
         <property name="sku" type="string"/>
         <property name="isQuantitySplittable" type="bool"/>
         <property name="isActive" type="bool"/>
-        <property name="localizedAttributes" type="ApiProductsProductConcreteLocalizedAttributesAttributes[]" singular="localizedAttribute"/>
-        <property name="imageSets" type="ApiProductsImageSetAttributes[]" singular="imageSet"/>
+        <property name="localizedAttributes" type="ProductConcreteLocalizedAttributesBackendApiAttributes[]" singular="localizedAttribute"/>
+        <property name="imageSets" type="ProductImageSetBackendApiAttributes[]" singular="imageSet"/>
     </transfer>
 
-    <transfer name="ApiProductsProductConcreteLocalizedAttributesAttributes" strict="true">
+    <transfer name="ProductConcreteLocalizedAttributesBackendApiAttributes" strict="true">
         <property name="locale" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>

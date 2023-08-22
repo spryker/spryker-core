@@ -33,7 +33,7 @@ class ServicePointAddressesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointAddressesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicePointAddressesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -66,8 +66,8 @@ class ServicePointAddressesResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointAddressesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointAddressesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicePointAddressesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServicePointAddressesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -100,8 +100,8 @@ class ServicePointAddressesResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointAddressesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicePointAddressesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicePointAddressesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServicePointAddressesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",

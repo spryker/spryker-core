@@ -66,9 +66,9 @@ class PickingListsSalesShipmentsResourceRelationshipExpander implements PickingL
     {
         $orderItemUuids = [];
         foreach ($glueResourceTransfers as $glueResourceTransfer) {
-            /** @var \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $pickingListItemsAttributesTransfer */
-            $pickingListItemsAttributesTransfer = $glueResourceTransfer->getAttributes();
-            $orderItemUuids[] = $pickingListItemsAttributesTransfer->getOrderItemOrFail()->getUuidOrFail();
+            /** @var \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer */
+            $pickingListItemsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+            $orderItemUuids[] = $pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail()->getUuidOrFail();
         }
 
         return $orderItemUuids;
@@ -85,9 +85,9 @@ class PickingListsSalesShipmentsResourceRelationshipExpander implements PickingL
         array $glueRelationshipTransfers
     ): void {
         foreach ($glueResourceTransfers as $glueResourceTransfer) {
-            /** @var \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $pickingListItemsAttributesTransfer */
-            $pickingListItemsAttributesTransfer = $glueResourceTransfer->getAttributes();
-            $orderItemUuid = $pickingListItemsAttributesTransfer->getOrderItemOrFail()->getUuidOrFail();
+            /** @var \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer */
+            $pickingListItemsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributes();
+            $orderItemUuid = $pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail()->getUuidOrFail();
 
             $salesShipmentRelationshipTransfer = $glueRelationshipTransfers[$orderItemUuid] ?? null;
 

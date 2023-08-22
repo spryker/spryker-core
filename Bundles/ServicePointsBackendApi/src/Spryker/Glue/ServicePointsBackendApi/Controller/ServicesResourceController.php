@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 
 /**
@@ -40,7 +40,7 @@ class ServicesResourceController extends AbstractController
      *                  "ref": "Sort"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -76,7 +76,7 @@ class ServicesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",
@@ -110,8 +110,8 @@ class ServicesResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesRequestAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServicesRequestBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -119,18 +119,18 @@ class ServicesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createServiceCreator()
-            ->createService($apiServicesRequestAttributesTransfer, $glueRequestTransfer);
+            ->createService($servicesRequestBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 
     /**
@@ -150,8 +150,8 @@ class ServicesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServicesRequestAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServicesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServicesRequestBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",
@@ -160,17 +160,17 @@ class ServicesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function patchAction(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createServiceUpdater()
-            ->updateService($apiServicesRequestAttributesTransfer, $glueRequestTransfer);
+            ->updateService($servicesRequestBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 }

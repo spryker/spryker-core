@@ -7,12 +7,12 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentConditionsTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCriteriaTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Spryker\Glue\WarehouseUsersBackendApi\Dependency\Facade\WarehouseUsersBackendApiToWarehouseUserFacadeInterface;
 use Spryker\Glue\WarehouseUsersBackendApi\Processor\Creator\ResponseCreatorInterface;
@@ -60,13 +60,13 @@ class WarehouseUserAssignmentUpdater implements WarehouseUserAssignmentUpdaterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateWarehouseUserAssignment(
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         $warehouseUserAssignmentTransfer = $this->findWarehouseUserAssignmentTransfer(
@@ -86,8 +86,8 @@ class WarehouseUserAssignmentUpdater implements WarehouseUserAssignmentUpdaterIn
         }
 
         $warehouseUserAssignmentTransfer = $this->warehouseUserAssignmentMapper
-            ->mapApiWarehouseUserAssignmentsAttributesTransferToWarehouseUserAssignmentTransfer(
-                $apiWarehouseUserAssignmentsAttributesTransfer,
+            ->mapWarehouseUserAssignmentsBackendApiAttributesTransferToWarehouseUserAssignmentTransfer(
+                $warehouseUserAssignmentsBackendApiAttributesTransfer,
                 $warehouseUserAssignmentTransfer,
             );
 

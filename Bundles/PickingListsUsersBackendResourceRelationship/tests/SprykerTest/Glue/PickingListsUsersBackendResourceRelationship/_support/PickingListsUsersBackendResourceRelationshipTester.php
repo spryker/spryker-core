@@ -27,7 +27,7 @@ use Spryker\Zed\PickingList\Business\PickingListFacadeInterface;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PickingListsUsersBackendResourceRelationship\PHPMD)
  */
 class PickingListsUsersBackendResourceRelationshipTester extends Actor
 {

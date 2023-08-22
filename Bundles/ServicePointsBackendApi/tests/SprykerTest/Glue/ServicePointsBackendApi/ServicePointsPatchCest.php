@@ -8,8 +8,8 @@
 namespace SprykerTest\Glue\ServicePointsBackendApi;
 
 use Codeception\Example;
-use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplication\ServicePointsBackendResourcePlugin;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,7 +149,7 @@ class ServicePointsPatchCest
         $I->sendPatch($I->buildServicePointUrl(static::TEST_UUID), [
             'data' => [
                 GlueRequestTransfer::ATTRIBUTES => [
-                    ApiServicePointsAttributesTransfer::KEY => static::TEST_KEY,
+                    ServicePointsBackendApiAttributesTransfer::KEY => static::TEST_KEY,
                 ],
             ],
         ]);
@@ -183,7 +183,7 @@ class ServicePointsPatchCest
         $I->sendPatch($I->buildServicePointUrl($servicePointTransfer->getUuid()), [
             'data' => [
                 GlueRequestTransfer::ATTRIBUTES => [
-                    ApiServicePointsAttributesTransfer::KEY => static::TEST_KEY_2,
+                    ServicePointsBackendApiAttributesTransfer::KEY => static::TEST_KEY_2,
                 ],
             ],
         ]);
@@ -203,41 +203,41 @@ class ServicePointsPatchCest
     {
         return [
             'Should return success when boolean value for is active is provided' => [
-                static::KEY_SERVICE_POINT_PATCH_DATA => [ApiServicePointsAttributesTransfer::IS_ACTIVE => false],
+                static::KEY_SERVICE_POINT_PATCH_DATA => [ServicePointsBackendApiAttributesTransfer::IS_ACTIVE => false],
                 static::KEY_EXPECTED_CODE => Response::HTTP_OK,
                 static::KEY_EXPECTED_SERVICE_POINT_DATA => [
                     'data' => [
                         'type' => static::RESOURCE_SERVICE_POINTS,
-                        'attributes' => [ApiServicePointsAttributesTransfer::IS_ACTIVE => false],
+                        'attributes' => [ServicePointsBackendApiAttributesTransfer::IS_ACTIVE => false],
                     ],
                 ],
             ],
             'Should return success when string value for is active is provided' => [
-                static::KEY_SERVICE_POINT_PATCH_DATA => [ApiServicePointsAttributesTransfer::IS_ACTIVE => 'false'],
+                static::KEY_SERVICE_POINT_PATCH_DATA => [ServicePointsBackendApiAttributesTransfer::IS_ACTIVE => 'false'],
                 static::KEY_EXPECTED_CODE => Response::HTTP_OK,
                 static::KEY_EXPECTED_SERVICE_POINT_DATA => [
                     'data' => [
                         'type' => static::RESOURCE_SERVICE_POINTS,
-                        'attributes' => [ApiServicePointsAttributesTransfer::IS_ACTIVE => false],
+                        'attributes' => [ServicePointsBackendApiAttributesTransfer::IS_ACTIVE => false],
                     ],
                 ],
             ],
             'Should return bad request when empty value for key is provided' => [
-                static::KEY_SERVICE_POINT_PATCH_DATA => [ApiServicePointsAttributesTransfer::KEY => ''],
+                static::KEY_SERVICE_POINT_PATCH_DATA => [ServicePointsBackendApiAttributesTransfer::KEY => ''],
                 static::KEY_EXPECTED_CODE => Response::HTTP_BAD_REQUEST,
                 static::KEY_EXPECTED_SERVICE_POINT_DATA => [
                     'errors' => [[static::KEY_CODE => static::RESPONSE_CODE_SERVICE_POINT_KEY_WRONG_LENGTH]],
                 ],
             ],
             'Should return bad request when empty value for name is provided' => [
-                static::KEY_SERVICE_POINT_PATCH_DATA => [ApiServicePointsAttributesTransfer::NAME => ''],
+                static::KEY_SERVICE_POINT_PATCH_DATA => [ServicePointsBackendApiAttributesTransfer::NAME => ''],
                 static::KEY_EXPECTED_CODE => Response::HTTP_BAD_REQUEST,
                 static::KEY_EXPECTED_SERVICE_POINT_DATA => [
                     'errors' => [[static::KEY_CODE => static::RESPONSE_CODE_SERVICE_POINT_NAME_WRONG_LENGTH]],
                 ],
             ],
             'Should return bad request when wrong store is provided' => [
-                static::KEY_SERVICE_POINT_PATCH_DATA => [ApiServicePointsAttributesTransfer::STORES => [static::TEST_STORE]],
+                static::KEY_SERVICE_POINT_PATCH_DATA => [ServicePointsBackendApiAttributesTransfer::STORES => [static::TEST_STORE]],
                 static::KEY_EXPECTED_CODE => Response::HTTP_BAD_REQUEST,
                 static::KEY_EXPECTED_SERVICE_POINT_DATA => [
                     'errors' => [[static::KEY_CODE => static::RESPONSE_CODE_STORE_DOES_NOT_EXIST]],

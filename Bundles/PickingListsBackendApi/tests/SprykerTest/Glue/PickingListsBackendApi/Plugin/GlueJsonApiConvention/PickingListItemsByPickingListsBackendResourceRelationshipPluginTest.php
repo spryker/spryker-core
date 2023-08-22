@@ -11,12 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PickingListBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
-use Generated\Shared\Transfer\ApiPickingListsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
+use Generated\Shared\Transfer\PickingListsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\PickingListItemsByPickingListsBackendResourceRelationshipPlugin;
@@ -80,7 +80,7 @@ class PickingListItemsByPickingListsBackendResourceRelationshipPluginTest extend
             (new GlueResourceTransfer())
                 ->setId($pickingListTransfer->getUuidOrFail())
                 ->setType(PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS)
-                ->setAttributes(new ApiPickingListsAttributesTransfer()),
+                ->setAttributes(new PickingListsBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -99,7 +99,7 @@ class PickingListItemsByPickingListsBackendResourceRelationshipPluginTest extend
             PickingListsBackendApiConfig::RESOURCE_PICKING_LIST_ITEMS,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiPickingListItemsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(PickingListItemsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
 
         $this->assertSame($pickingListItemTransfer->getUuidOrFail(), $glueResourceTransfer->getId());
     }

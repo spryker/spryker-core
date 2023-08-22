@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication;
 
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
@@ -67,7 +67,7 @@ class PickingListItemsBackendResourcePlugin extends AbstractResourcePlugin imple
             ->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('patchAction')
-                    ->setAttributes(ApiPickingListItemsAttributesTransfer::class),
+                    ->setAttributes(PickingListItemsBackendApiAttributesTransfer::class),
             );
     }
 }

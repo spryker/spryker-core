@@ -30,8 +30,8 @@ class PickingListsUsersBackendResourceRelationshipToUsersBackendApiResourceBridg
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
-    public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
+    public function getUsersResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
     {
-        return $this->usersBackendApiResource->getUserResources($userCriteriaTransfer);
+        return $this->usersBackendApiResource->getUsersResources($userCriteriaTransfer);
     }
 }

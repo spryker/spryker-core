@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\PickingListsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 
 interface PickingListItemMapperInterface
@@ -38,12 +38,12 @@ interface PickingListItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PickingListItemTransfer $pickingListItemTransfer
-     * @param \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer
      */
-    public function mapPickingListItemTransferToApiPickingListItemsAttributesTransfer(
+    public function mapPickingListItemTransferToPickingListItemsBackendApiAttributesTransfer(
         PickingListItemTransfer $pickingListItemTransfer,
-        ApiPickingListItemsAttributesTransfer $apiPickingListItemsAttributesTransfer
-    ): ApiPickingListItemsAttributesTransfer;
+        PickingListItemsBackendApiAttributesTransfer $pickingListItemsBackendApiAttributesTransfer
+    ): PickingListItemsBackendApiAttributesTransfer;
 }

@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractBackendApiController;
 
 /**
@@ -30,24 +30,24 @@ class PushNotificationSubscriptionsResourceController extends AbstractBackendApi
      *              "201": "Expected response to a valid request.",
      *              "400": "Expected response to a bad request."
      *          },
-     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationSubscriptionsAttributesTransfer",
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationSubscriptionsAttributesTransfer"
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationSubscriptionsBackendApiAttributesTransfer",
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationSubscriptionsBackendApiAttributesTransfer"
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createPushNotificationSubscriptionCreator()
             ->createPushNotificationSubscription(
-                $apiPushNotificationSubscriptionsAttributesTransfer,
+                $pushNotificationSubscriptionsBackendApiAttributesTransfer,
                 $glueRequestTransfer,
             );
     }

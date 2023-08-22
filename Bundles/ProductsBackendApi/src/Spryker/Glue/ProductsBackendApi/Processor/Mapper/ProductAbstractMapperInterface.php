@@ -8,30 +8,30 @@
 namespace Spryker\Glue\ProductsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 
 interface ProductAbstractMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function mapApiProductsAttributesTransferToProductAbstractTransfer(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+    public function mapProductsBackendApiAttributesTransferToProductAbstractTransfer(
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer;
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer> $apiProductsProductConcreteAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer> $productConcretesBackendApiAttributesTransfers
      * @param string $productAbstractSku
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function mapApiProductsProductConcreteAttributesTransfersToProductConcreteTransfers(
-        ArrayObject $apiProductsProductConcreteAttributesTransfers,
+    public function mapProductConcretesBackendApiAttributesTransfersToProductConcreteTransfers(
+        ArrayObject $productConcretesBackendApiAttributesTransfers,
         string $productAbstractSku
     ): array;
 }

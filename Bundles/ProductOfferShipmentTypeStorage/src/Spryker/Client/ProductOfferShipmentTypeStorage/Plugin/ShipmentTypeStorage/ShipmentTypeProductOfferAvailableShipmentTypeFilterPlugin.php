@@ -32,7 +32,7 @@ class ShipmentTypeProductOfferAvailableShipmentTypeFilterPlugin extends Abstract
      */
     public function filter(
         ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
-        QuoteTransfer $quoteTransfer,
+        QuoteTransfer $quoteTransfer
     ): ShipmentTypeStorageCollectionTransfer {
         return $this->getClient()->filterUnavailableProductOfferShipmentTypes(
             $shipmentTypeStorageCollectionTransfer,

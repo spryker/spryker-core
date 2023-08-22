@@ -375,8 +375,9 @@ class ProductOfferStorageFacadeTest extends Unit
 
         // Assert
         $this->assertSame($productConcreteProductOffersStorageEntities[0]->getStore(), $storeTransfer->getName());
-        $this->assertCount(2, $productConcreteProductOffersStorageEntities->getData()[0]->getData());
-        $this->assertSame($productConcreteProductOffersStorageEntities->getData()[0]->getData()[0], mb_strtolower($productOfferTransfer->getProductOfferReference()));
-        $this->assertSame($productConcreteProductOffersStorageEntities->getData()[0]->getData()[1], mb_strtolower($productOfferTransfer2->getProductOfferReference()));
+        $productOfferReferences = $productConcreteProductOffersStorageEntities->getData()[0]->getData();
+        $this->assertCount(2, $productOfferReferences);
+        $this->assertContains(mb_strtolower($productOfferTransfer->getProductOfferReference()), $productOfferReferences);
+        $this->assertContains(mb_strtolower($productOfferTransfer2->getProductOfferReference()), $productOfferReferences);
     }
 }

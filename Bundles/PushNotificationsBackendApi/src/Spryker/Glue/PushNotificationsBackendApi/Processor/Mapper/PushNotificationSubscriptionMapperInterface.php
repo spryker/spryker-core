@@ -7,31 +7,31 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 
 interface PushNotificationSubscriptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer
      */
-    public function mapPushNotificationSubscriptionTransferToApiPushNotificationSubscriptionsAttributesTransfer(
+    public function mapPushNotificationSubscriptionTransferToPushNotificationSubscriptionsBackendApiAttributesTransfer(
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer,
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
-    ): ApiPushNotificationSubscriptionsAttributesTransfer;
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
+    ): PushNotificationSubscriptionsBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer
      */
-    public function mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+    public function mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationSubscriptionTransfer(
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer
     ): PushNotificationSubscriptionTransfer;
 

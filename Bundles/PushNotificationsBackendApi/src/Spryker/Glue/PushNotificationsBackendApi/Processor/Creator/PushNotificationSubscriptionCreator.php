@@ -8,12 +8,12 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Creator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer;
+use Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationSubscriptionTransfer;
 use Spryker\Glue\PushNotificationsBackendApi\Dependency\Facade\PushNotificationsBackendApiToPushNotificationFacadeInterface;
 use Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper\PushNotificationSubscriptionMapperInterface;
@@ -62,19 +62,19 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createPushNotificationSubscription(
-        ApiPushNotificationSubscriptionsAttributesTransfer $apiPushNotificationSubscriptionsAttributesTransfer,
+        PushNotificationSubscriptionsBackendApiAttributesTransfer $pushNotificationSubscriptionsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        /** @var \Generated\Shared\Transfer\ApiPushNotificationSubscriptionsAttributesTransfer|null $apiPushNotificationSubscriptionsAttributesTransfer */
-        $apiPushNotificationSubscriptionsAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+        /** @var \Generated\Shared\Transfer\PushNotificationSubscriptionsBackendApiAttributesTransfer|null $pushNotificationSubscriptionsBackendApiAttributesTransfer */
+        $pushNotificationSubscriptionsBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        if (!$apiPushNotificationSubscriptionsAttributesTransfer) {
+        if (!$pushNotificationSubscriptionsBackendApiAttributesTransfer) {
             $errorTransfer = (new ErrorTransfer())->setMessage(PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
 
             return $this->errorResponseBuilder->createErrorResponse(
@@ -84,8 +84,8 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
         }
 
         $pushNotificationSubscriptionTransfer = $this->pushNotificationSubscriptionMapper
-            ->mapApiPushNotificationSubscriptionsAttributesTransferToPushNotificationSubscriptionTransfer(
-                $apiPushNotificationSubscriptionsAttributesTransfer,
+            ->mapPushNotificationSubscriptionsBackendApiAttributesTransferToPushNotificationSubscriptionTransfer(
+                $pushNotificationSubscriptionsBackendApiAttributesTransfer,
                 new PushNotificationSubscriptionTransfer(),
             );
 

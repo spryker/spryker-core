@@ -84,8 +84,8 @@ class PushNotificationProviderUpdater implements PushNotificationProviderUpdater
 
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
-        /** @var \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer */
-        $apiPushNotificationProvidersAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
+        /** @var \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer */
+        $pushNotificationProvidersBackendApiAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
         $pushNotificationProviderTransfer = $this->pushNotificationProviderReader->findPushNotificationProviderByUuid($glueResourceTransfer->getIdOrFail());
 
         if (!$pushNotificationProviderTransfer) {
@@ -95,8 +95,8 @@ class PushNotificationProviderUpdater implements PushNotificationProviderUpdater
             );
         }
 
-        $pushNotificationProviderTransfer = $this->pushNotificationProviderMapper->mapApiPushNotificationProvidersAttributesTransferToPushNotificationProviderTransfer(
-            $apiPushNotificationProvidersAttributesTransfer,
+        $pushNotificationProviderTransfer = $this->pushNotificationProviderMapper->mapPushNotificationProvidersBackendApiAttributesTransferToPushNotificationProviderTransfer(
+            $pushNotificationProvidersBackendApiAttributesTransfer,
             $pushNotificationProviderTransfer,
         );
 

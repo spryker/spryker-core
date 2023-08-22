@@ -67,10 +67,10 @@ class PushNotificationProviderCreator implements PushNotificationProviderCreator
      */
     public function createPushNotificationProvider(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer|null $apiPushNotificationProvidersAttributesTransfer */
-        $apiPushNotificationProvidersAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+        /** @var \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer|null $pushNotificationProvidersBackendApiAttributesTransfer */
+        $pushNotificationProvidersBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        if (!$apiPushNotificationProvidersAttributesTransfer || !$apiPushNotificationProvidersAttributesTransfer->getName()) {
+        if (!$pushNotificationProvidersBackendApiAttributesTransfer || !$pushNotificationProvidersBackendApiAttributesTransfer->getName()) {
             $errorTransfer = (new ErrorTransfer())->setMessage(PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
 
             return $this->errorResponseBuilder->createErrorResponse(
@@ -80,8 +80,8 @@ class PushNotificationProviderCreator implements PushNotificationProviderCreator
         }
 
         $pushNotificationProviderTransfer = $this->pushNotificationProviderMapper
-            ->mapApiPushNotificationProvidersAttributesTransferToPushNotificationProviderTransfer(
-                $apiPushNotificationProvidersAttributesTransfer,
+            ->mapPushNotificationProvidersBackendApiAttributesTransferToPushNotificationProviderTransfer(
+                $pushNotificationProvidersBackendApiAttributesTransfer,
                 new PushNotificationProviderTransfer(),
             );
 

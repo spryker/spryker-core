@@ -24,7 +24,7 @@ class SalesOrdersBackendApiDependencyProvider extends AbstractBundleDependencyPr
     /**
      * @var string
      */
-    public const PLUGINS_API_ORDERS_ATTRIBUTES_MAPPER = 'PLUGINS_API_ORDERS_ATTRIBUTES_MAPPER';
+    public const PLUGINS_ORDERS_BACKEND_API_ATTRIBUTES_MAPPER = 'PLUGINS_ORDERS_BACKEND_API_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
@@ -36,7 +36,7 @@ class SalesOrdersBackendApiDependencyProvider extends AbstractBundleDependencyPr
         $container = parent::provideBackendDependencies($container);
 
         $container = $this->addSalesFacade($container);
-        $container = $this->addApiOrdersAttributesMapperPlugins($container);
+        $container = $this->addOrdersBackendApiAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -62,19 +62,19 @@ class SalesOrdersBackendApiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
      */
-    protected function addApiOrdersAttributesMapperPlugins(Container $container): Container
+    protected function addOrdersBackendApiAttributesMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_API_ORDERS_ATTRIBUTES_MAPPER, function () {
-            return $this->getApiOrdersAttributesMapperPlugins();
+        $container->set(static::PLUGINS_ORDERS_BACKEND_API_ATTRIBUTES_MAPPER, function () {
+            return $this->getOrdersBackendApiAttributesMapperPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\ApiOrdersAttributesMapperPluginInterface>
+     * @return list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\OrdersBackendApiAttributesMapperPluginInterface>
      */
-    protected function getApiOrdersAttributesMapperPlugins(): array
+    protected function getOrdersBackendApiAttributesMapperPlugins(): array
     {
         return [];
     }

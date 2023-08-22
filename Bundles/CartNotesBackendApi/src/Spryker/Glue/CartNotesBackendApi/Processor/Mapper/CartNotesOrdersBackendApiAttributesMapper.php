@@ -7,33 +7,33 @@
 
 namespace Spryker\Glue\CartNotesBackendApi\Processor\Mapper;
 
-class CartNotesApiOrdersAttributesMapper implements CartNotesApiOrdersAttributesMapperInterface
+class CartNotesOrdersBackendApiAttributesMapper implements CartNotesOrdersBackendApiAttributesMapperInterface
 {
     /**
      * @param list<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
-     * @param list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer> $apiOrdersAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer> $ordersBackendApiAttributesTransfers
      *
-     * @return list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer>
      */
-    public function mapOrderTransfersToApiOrdersAttributesTransfer(
+    public function mapOrderTransfersToOrdersBackendApiAttributesTransfers(
         array $orderTransfers,
-        array $apiOrdersAttributesTransfers
+        array $ordersBackendApiAttributesTransfers
     ): array {
         $orderTransfersIndexedByOrderReference = $this->getOrderTransfersIndexedByOrderReference($orderTransfers);
-        foreach ($apiOrdersAttributesTransfers as $apiOrdersAttributesTransfer) {
-            if (!$apiOrdersAttributesTransfer->getOrderReference()) {
+        foreach ($ordersBackendApiAttributesTransfers as $ordersBackendApiAttributesTransfer) {
+            if (!$ordersBackendApiAttributesTransfer->getOrderReference()) {
                 continue;
             }
 
-            $orderTransfer = $orderTransfersIndexedByOrderReference[$apiOrdersAttributesTransfer->getOrderReferenceOrFail()] ?? null;
+            $orderTransfer = $orderTransfersIndexedByOrderReference[$ordersBackendApiAttributesTransfer->getOrderReferenceOrFail()] ?? null;
             if (!$orderTransfer) {
                 continue;
             }
 
-            $apiOrdersAttributesTransfer->setCartNote($orderTransfer->getCartNote());
+            $ordersBackendApiAttributesTransfer->setCartNote($orderTransfer->getCartNote());
         }
 
-        return $apiOrdersAttributesTransfers;
+        return $ordersBackendApiAttributesTransfers;
     }
 
     /**

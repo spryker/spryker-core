@@ -8,13 +8,13 @@
 namespace SprykerTest\Glue\WarehouseUsersBackendApi\Controller;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ApiWarehouseUserAssignmentsAttributesBuilder;
-use Generated\Shared\Transfer\ApiWarehousesAttributesTransfer;
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
+use Generated\Shared\DataBuilder\WarehouseUserAssignmentsBackendApiAttributesBuilder;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestUserTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Spryker\Glue\WarehouseUsersBackendApi\Controller\WarehouseUserAssignmentsResourceController;
 use SprykerTest\Glue\WarehouseUsersBackendApi\WarehouseUsersBackendApiTester;
@@ -429,11 +429,11 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
         // Arrange
         $userTransfer = $this->tester->haveUser();
         $stockTransfer = $this->tester->haveStock();
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->withWarehouse([
-            ApiWarehousesAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
+            WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
         ])->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
@@ -452,7 +452,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
 
         $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
         $this->assertNotNull($glueResourceTransfer->getId());
-        $this->assertInstanceOf(ApiWarehouseUserAssignmentsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
         $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());
         $this->assertSame($stockTransfer->getUuid(), $glueResourceTransfer->getAttributes()->getWarehouse()->getUuid());
@@ -467,11 +467,11 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
         $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $userTransfer = $this->tester->haveUser();
         $stockTransfer = $this->tester->haveStock();
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->withWarehouse([
-            ApiWarehousesAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
+            WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
         ])->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
@@ -503,11 +503,11 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
         $adminUserTransfer = $this->tester->haveUser();
         $userTransfer = $this->tester->haveUser();
         $stockTransfer = $this->tester->haveStock();
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->withWarehouse([
-            ApiWarehousesAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
+            WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
         ])->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
@@ -526,7 +526,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
 
         $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
         $this->assertNotNull($glueResourceTransfer->getId());
-        $this->assertInstanceOf(ApiWarehouseUserAssignmentsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
         $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());
         $this->assertSame($stockTransfer->getUuid(), $glueResourceTransfer->getAttributes()->getWarehouse()->getUuid());
@@ -545,8 +545,8 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
             $stockTransfer,
             [WarehouseUserAssignmentTransfer::IS_ACTIVE => false],
         );
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())
@@ -565,7 +565,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
 
         $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
         $this->assertNotNull($glueResourceTransfer->getId());
-        $this->assertInstanceOf(ApiWarehouseUserAssignmentsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertTrue($glueResourceTransfer->getAttributes()->getIsActive());
         $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
         $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());
@@ -586,8 +586,8 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
             $stockTransfer,
             [WarehouseUserAssignmentTransfer::IS_ACTIVE => false],
         );
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())
@@ -624,8 +624,8 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
             $stockTransfer,
             [WarehouseUserAssignmentTransfer::IS_ACTIVE => false],
         );
-        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new ApiWarehouseUserAssignmentsAttributesBuilder([
-            ApiWarehouseUserAssignmentsAttributesTransfer::IS_ACTIVE => true,
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())
@@ -644,7 +644,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
 
         $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
         $this->assertNotNull($glueResourceTransfer->getId());
-        $this->assertInstanceOf(ApiWarehouseUserAssignmentsAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertTrue($glueResourceTransfer->getAttributes()->getIsActive());
         $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
         $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());

@@ -8,12 +8,12 @@
 namespace Spryker\Glue\ProductsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetConditionsTransfer;
 use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
@@ -54,60 +54,60 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function mapApiProductsAttributesTransferToProductAbstractTransfer(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+    public function mapProductsBackendApiAttributesTransferToProductAbstractTransfer(
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         $productAbstractTransfer = $productAbstractTransfer
-            ->fromArray($apiProductsAttributesTransfer->toArray(), true);
+            ->fromArray($productsBackendApiAttributesTransfer->toArray(), true);
 
-        if ($apiProductsAttributesTransfer->getProductAbstractSku()) {
-            $productAbstractTransfer->setSku($apiProductsAttributesTransfer->getProductAbstractSku());
+        if ($productsBackendApiAttributesTransfer->getProductAbstractSku()) {
+            $productAbstractTransfer->setSku($productsBackendApiAttributesTransfer->getProductAbstractSku());
         }
 
-        $productAbstractTransfer = $this->mapTaxSetId($apiProductsAttributesTransfer, $productAbstractTransfer);
+        $productAbstractTransfer = $this->mapTaxSetId($productsBackendApiAttributesTransfer, $productAbstractTransfer);
 
-        $storeRelationTransfer = $this->mapStoreRelations($apiProductsAttributesTransfer);
+        $storeRelationTransfer = $this->mapStoreRelations($productsBackendApiAttributesTransfer);
         $productAbstractTransfer->setStoreRelation($storeRelationTransfer);
 
-        $localizedAttributesTransfers = $this->mapApiProductsLocalizedAttributesAttributesTransfersToLocalizedAttributesTransfers($apiProductsAttributesTransfer->getLocalizedAttributes());
+        $localizedAttributesTransfers = $this->mapProductLocalizedAttributesBackendApiAttributesTransfersToLocalizedAttributesTransfers($productsBackendApiAttributesTransfer->getLocalizedAttributes());
         $productAbstractTransfer->setLocalizedAttributes($localizedAttributesTransfers);
 
-        $productImageSetTransfers = $this->mapApiProductsImageSetAttributesTransfersToProductImageSetTransfers($apiProductsAttributesTransfer->getImageSets());
+        $productImageSetTransfers = $this->mapProductImageSetBackendApiAttributesTransfersToProductImageSetTransfers($productsBackendApiAttributesTransfer->getImageSets());
         $productAbstractTransfer->setImageSets($productImageSetTransfers);
 
         return $productAbstractTransfer;
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer> $apiProductsProductConcreteAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer> $productConcretesBackendApiAttributesTransfers
      * @param string $productAbstractSku
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function mapApiProductsProductConcreteAttributesTransfersToProductConcreteTransfers(
-        ArrayObject $apiProductsProductConcreteAttributesTransfers,
+    public function mapProductConcretesBackendApiAttributesTransfersToProductConcreteTransfers(
+        ArrayObject $productConcretesBackendApiAttributesTransfers,
         string $productAbstractSku
     ): array {
         $productConcreteTransfers = [];
 
-        foreach ($apiProductsProductConcreteAttributesTransfers as $apiProductsProductConcreteAttributesTransfer) {
+        foreach ($productConcretesBackendApiAttributesTransfers as $productConcretesBackendApiAttributesTransfer) {
             $productConcreteTransfer = (new ProductConcreteTransfer())
-                ->fromArray($apiProductsProductConcreteAttributesTransfer->toArray(), true)
+                ->fromArray($productConcretesBackendApiAttributesTransfer->toArray(), true)
                 ->setAbstractSku($productAbstractSku);
 
-            $localizedAttributesTransfers = $this->mapApiProductsProductConcreteLocalizedAttributesAttributesTransfersToLocalizedAttributesTransfers(
-                $apiProductsProductConcreteAttributesTransfer->getLocalizedAttributes(),
+            $localizedAttributesTransfers = $this->mapProductConcreteLocalizedAttributesBackendApiAttributesTransfersToLocalizedAttributesTransfers(
+                $productConcretesBackendApiAttributesTransfer->getLocalizedAttributes(),
             );
             $productConcreteTransfer->setLocalizedAttributes($localizedAttributesTransfers);
 
-            if ($apiProductsProductConcreteAttributesTransfer->getImageSets()->count()) {
-                $productImageSetsTransfers = $this->mapApiProductsImageSetAttributesTransfersToProductImageSetTransfers($apiProductsProductConcreteAttributesTransfer->getImageSets());
+            if ($productConcretesBackendApiAttributesTransfer->getImageSets()->count()) {
+                $productImageSetsTransfers = $this->mapProductImageSetBackendApiAttributesTransfersToProductImageSetTransfers($productConcretesBackendApiAttributesTransfer->getImageSets());
                 $productConcreteTransfer->setImageSets($productImageSetsTransfers);
             }
 
@@ -118,23 +118,23 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected function mapTaxSetId(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
-        if (!$apiProductsAttributesTransfer->getTaxSetName()) {
+        if (!$productsBackendApiAttributesTransfer->getTaxSetName()) {
             return $productAbstractTransfer;
         }
 
         $taxSetCriteriaTransfer = (new TaxSetCriteriaTransfer())
             ->setTaxSetConditions(
                 (new TaxSetConditionsTransfer())
-                    ->addName($apiProductsAttributesTransfer->getTaxSetName()),
+                    ->addName($productsBackendApiAttributesTransfer->getTaxSetName()),
             );
         $taxSetCollectionTransfer = $this->taxFacade->getTaxSetCollection($taxSetCriteriaTransfer);
 
@@ -146,13 +146,13 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    protected function mapStoreRelations(ApiProductsAttributesTransfer $apiProductsAttributesTransfer): StoreRelationTransfer
+    protected function mapStoreRelations(ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer): StoreRelationTransfer
     {
-        $storeTransfers = $this->storeFacade->getStoreTransfersByStoreNames($apiProductsAttributesTransfer->getStores());
+        $storeTransfers = $this->storeFacade->getStoreTransfersByStoreNames($productsBackendApiAttributesTransfer->getStores());
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setStores(new ArrayObject($storeTransfers));
 
@@ -166,23 +166,24 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer> $apiProductsImageSetAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer> $productImageSetBackendApiAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    protected function mapApiProductsImageSetAttributesTransfersToProductImageSetTransfers(ArrayObject $apiProductsImageSetAttributesTransfers): ArrayObject
-    {
+    protected function mapProductImageSetBackendApiAttributesTransfersToProductImageSetTransfers(
+        ArrayObject $productImageSetBackendApiAttributesTransfers
+    ): ArrayObject {
         $productImageSetsTransfers = [];
-        foreach ($apiProductsImageSetAttributesTransfers as $apiProductsImageSetAttributesTransfer) {
+        foreach ($productImageSetBackendApiAttributesTransfers as $productImageSetBackendApiAttributesTransfer) {
             $productImageSetsTransfer = (new ProductImageSetTransfer())
-                ->setName($apiProductsImageSetAttributesTransfer->getName());
-            if ($apiProductsImageSetAttributesTransfer->getLocale()) {
-                $localeTransfer = $this->localeFacade->getLocale($apiProductsImageSetAttributesTransfer->getLocaleOrFail());
+                ->setName($productImageSetBackendApiAttributesTransfer->getName());
+            if ($productImageSetBackendApiAttributesTransfer->getLocale()) {
+                $localeTransfer = $this->localeFacade->getLocale($productImageSetBackendApiAttributesTransfer->getLocaleOrFail());
                 $productImageSetsTransfer->setLocale($localeTransfer);
             }
-            foreach ($apiProductsImageSetAttributesTransfer->getImages() as $apiProductsImageSetImageAttributesTransfer) {
+            foreach ($productImageSetBackendApiAttributesTransfer->getImages() as $productImageSetImagesBackendApiAttributesTransfer) {
                 $productImageSetsTransfer->addProductImage(
-                    (new ProductImageTransfer())->fromArray($apiProductsImageSetImageAttributesTransfer->toArray(), true),
+                    (new ProductImageTransfer())->fromArray($productImageSetImagesBackendApiAttributesTransfer->toArray(), true),
                 );
             }
             $productImageSetsTransfers[] = $productImageSetsTransfer;
@@ -192,19 +193,19 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsLocalizedAttributesAttributesTransfer> $apiProductsLocalizedAttributesAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLocalizedAttributesBackendApiAttributesTransfer> $productLocalizedAttributesBackendApiAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
-    protected function mapApiProductsLocalizedAttributesAttributesTransfersToLocalizedAttributesTransfers(
-        ArrayObject $apiProductsLocalizedAttributesAttributesTransfers
+    protected function mapProductLocalizedAttributesBackendApiAttributesTransfersToLocalizedAttributesTransfers(
+        ArrayObject $productLocalizedAttributesBackendApiAttributesTransfers
     ): ArrayObject {
         $localizedAttributesTransfers = [];
-        if ($apiProductsLocalizedAttributesAttributesTransfers->count()) {
-            foreach ($apiProductsLocalizedAttributesAttributesTransfers as $apiProductsLocalizedAttributesAttributesTransfer) {
-                $localeTransfer = $this->localeFacade->getLocale($apiProductsLocalizedAttributesAttributesTransfer->getLocaleOrFail());
+        if ($productLocalizedAttributesBackendApiAttributesTransfers->count()) {
+            foreach ($productLocalizedAttributesBackendApiAttributesTransfers as $productLocalizedAttributesBackendApiAttributesTransfer) {
+                $localeTransfer = $this->localeFacade->getLocale($productLocalizedAttributesBackendApiAttributesTransfer->getLocaleOrFail());
                 $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                    ->fromArray($apiProductsLocalizedAttributesAttributesTransfer->toArray(), true)
+                    ->fromArray($productLocalizedAttributesBackendApiAttributesTransfer->toArray(), true)
                     ->setLocale($localeTransfer);
 
                 $localizedAttributesTransfers[] = $localizedAttributesTransfer;
@@ -217,18 +218,18 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ApiProductsProductConcreteLocalizedAttributesAttributesTransfer> $apiProductsProductConcreteLocalizedAttributesAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductConcreteLocalizedAttributesBackendApiAttributesTransfer> $productConcreteLocalizedAttributesBackendApiAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
-    protected function mapApiProductsProductConcreteLocalizedAttributesAttributesTransfersToLocalizedAttributesTransfers(
-        ArrayObject $apiProductsProductConcreteLocalizedAttributesAttributesTransfers
+    protected function mapProductConcreteLocalizedAttributesBackendApiAttributesTransfersToLocalizedAttributesTransfers(
+        ArrayObject $productConcreteLocalizedAttributesBackendApiAttributesTransfers
     ): ArrayObject {
         $localizedAttributesTransfers = [];
 
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-        if ($apiProductsProductConcreteLocalizedAttributesAttributesTransfers->count()) {
-            foreach ($apiProductsProductConcreteLocalizedAttributesAttributesTransfers as $productsProductConcreteLocalizedAttributesAttributesTransfer) {
+        if ($productConcreteLocalizedAttributesBackendApiAttributesTransfers->count()) {
+            foreach ($productConcreteLocalizedAttributesBackendApiAttributesTransfers as $productsProductConcreteLocalizedAttributesAttributesTransfer) {
                 $localizedAttributesTransfers[] = (new LocalizedAttributesTransfer())
                     ->fromArray($productsProductConcreteLocalizedAttributesAttributesTransfer->toArray(), true)
                     ->setLocale($localeTransfers[$productsProductConcreteLocalizedAttributesAttributesTransfer->getLocaleOrFail()]);

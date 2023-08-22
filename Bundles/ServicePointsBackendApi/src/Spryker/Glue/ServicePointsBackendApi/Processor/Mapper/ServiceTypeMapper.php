@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServiceTypeResourceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
@@ -18,38 +18,38 @@ class ServiceTypeMapper implements ServiceTypeMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
-     * @param \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer
      */
-    public function mapServiceTypeTransferToApiServiceTypesAttributesTransfer(
+    public function mapServiceTypeTransferToServiceTypesBackendApiAttributesTransfer(
         ServiceTypeTransfer $serviceTypeTransfer,
-        ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
-    ): ApiServiceTypesAttributesTransfer {
-        return $apiServiceTypesAttributesTransfer->fromArray(
+        ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
+    ): ServiceTypesBackendApiAttributesTransfer {
+        return $serviceTypesBackendApiAttributesTransfer->fromArray(
             $serviceTypeTransfer->toArray(),
             true,
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ServiceTypeTransfer
      */
-    public function mapApiServiceTypesAttributesTransferToServiceTypeTransfer(
-        ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer,
+    public function mapServiceTypesBackendApiAttributesTransferToServiceTypeTransfer(
+        ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer,
         ServiceTypeTransfer $serviceTypeTransfer
     ): ServiceTypeTransfer {
-        $apiServiceTypesAttributesData = array_filter(
-            $apiServiceTypesAttributesTransfer->modifiedToArray(),
+        $serviceTypesBackendApiAttributesData = array_filter(
+            $serviceTypesBackendApiAttributesTransfer->modifiedToArray(),
             function ($value) {
                 return $value !== null;
             },
         );
 
-        return $serviceTypeTransfer->fromArray($apiServiceTypesAttributesData, true);
+        return $serviceTypeTransfer->fromArray($serviceTypesBackendApiAttributesData, true);
     }
 
     /**
@@ -84,15 +84,15 @@ class ServiceTypeMapper implements ServiceTypeMapperInterface
         ServiceTypeTransfer $serviceTypeTransfer,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
-        $apiServiceTypesAttributesTransfer = $this
-            ->mapServiceTypeTransferToApiServiceTypesAttributesTransfer(
+        $serviceTypesBackendApiAttributesTransfer = $this
+            ->mapServiceTypeTransferToServiceTypesBackendApiAttributesTransfer(
                 $serviceTypeTransfer,
-                new ApiServiceTypesAttributesTransfer(),
+                new ServiceTypesBackendApiAttributesTransfer(),
             );
 
         return $glueResourceTransfer
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_TYPES)
             ->setId($serviceTypeTransfer->getUuidOrFail())
-            ->setAttributes($apiServiceTypesAttributesTransfer);
+            ->setAttributes($serviceTypesBackendApiAttributesTransfer);
     }
 }

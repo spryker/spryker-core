@@ -38,8 +38,8 @@ class PickingListItemResourceController extends AbstractBackendApiController
      *              "403": "Unauthorized request.",
      *              "404": "Not found"
      *          },
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiPickingListItemsAttributesTransfer",
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiPickingListsAttributesTransfer"
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\PickingListItemsBackendApiAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\PickingListsBackendApiAttributesTransfer"
      *     }
      * })
      *

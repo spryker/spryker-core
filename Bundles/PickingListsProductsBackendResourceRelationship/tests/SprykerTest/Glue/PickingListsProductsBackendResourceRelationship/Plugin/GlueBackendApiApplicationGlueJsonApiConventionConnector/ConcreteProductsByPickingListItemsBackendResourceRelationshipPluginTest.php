@@ -12,15 +12,15 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PickingListBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PickingListConditionsTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
+use Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Glue\PickingListsProductsBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\ConcreteProductsByPickingListItemsBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\PickingListsProductsBackendResourceRelationship\PickingListsProductsBackendResourceRelationshipTester;
@@ -110,7 +110,7 @@ class ConcreteProductsByPickingListItemsBackendResourceRelationshipPluginTest ex
         $glueResourceTransfer = $glueRelationshipTransfer->getResources()->getIterator()->current();
 
         $this->assertSame(static::RESOURCE_CONCRETE_PRODUCTS, $glueResourceTransfer->getType());
-        $this->assertInstanceOf(ApiProductsProductConcreteAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ProductConcretesBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($productConcreteTransfer->getSku(), $glueResourceTransfer->getId());
     }
 
@@ -184,11 +184,11 @@ class ConcreteProductsByPickingListItemsBackendResourceRelationshipPluginTest ex
      */
     protected function createGlueResourceTransfer(PickingListTransfer $pickingListTransfer): GlueResourceTransfer
     {
-        $apiPickingListItemsAttributesTransfer = (new ApiPickingListItemsAttributesTransfer())
+        $pickingListItemsBackendApiAttributesTransfer = (new PickingListItemsBackendApiAttributesTransfer())
             ->fromArray($pickingListTransfer->getPickingListItems()->getIterator()->current()->toArray(), true);
 
         return (new GlueResourceTransfer())
             ->setType(static::RESOURCE_PICKING_LIST_ITEMS)
-            ->setAttributes($apiPickingListItemsAttributesTransfer);
+            ->setAttributes($pickingListItemsBackendApiAttributesTransfer);
     }
 }

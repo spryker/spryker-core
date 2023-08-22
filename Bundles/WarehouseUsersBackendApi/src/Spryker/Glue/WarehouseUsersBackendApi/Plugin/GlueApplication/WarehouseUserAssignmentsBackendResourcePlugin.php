@@ -9,6 +9,7 @@ namespace Spryker\Glue\WarehouseUsersBackendApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\WarehouseUsersBackendApi\Controller\WarehouseUserAssignmentsResourceController;
@@ -55,19 +56,19 @@ class WarehouseUserAssignmentsBackendResourcePlugin extends AbstractResourcePlug
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
+                    ->setAttributes(WarehouseUserAssignmentsBackendApiAttributesTransfer::class),
             )->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getCollectionAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
+                    ->setAttributes(WarehouseUserAssignmentsBackendApiAttributesTransfer::class),
             )->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
+                    ->setAttributes(WarehouseUserAssignmentsBackendApiAttributesTransfer::class),
             )->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('patchAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer'),
+                    ->setAttributes(WarehouseUserAssignmentsBackendApiAttributesTransfer::class),
             )->setDelete(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('deleteAction'),

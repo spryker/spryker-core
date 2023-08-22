@@ -25,7 +25,7 @@ use Spryker\Glue\ShipmentsBackendApi\ShipmentsBackendApiResourceInterface;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\ShipmentsBackendApi\PHPMD)
  */
 class ShipmentsBackendApiResourceTester extends Actor
 {

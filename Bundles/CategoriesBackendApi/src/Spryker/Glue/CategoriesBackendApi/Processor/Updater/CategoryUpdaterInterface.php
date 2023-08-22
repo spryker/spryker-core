@@ -7,20 +7,20 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 
 interface CategoryUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateCategory(
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer,
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer;
 }

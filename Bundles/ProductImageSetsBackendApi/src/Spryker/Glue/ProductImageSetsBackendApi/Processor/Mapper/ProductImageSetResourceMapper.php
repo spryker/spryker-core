@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\ProductImageSetsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiProductImageSetsAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsImageSetImageAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductImageSetImagesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductImageSetResourceCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Glue\ProductImageSetsBackendApi\ProductImageSetsBackendApiConfig;
 
@@ -46,42 +46,42 @@ class ProductImageSetResourceMapper implements ProductImageSetResourceMapperInte
         array $productImageSetTransfers,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
-        $apiProductImageSetsAttributesTransfer = new ApiProductImageSetsAttributesTransfer();
+        $productImageSetsBackendApiAttributesTransfer = new ProductImageSetsBackendApiAttributesTransfer();
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $apiProductsImageSetAttributesTransfer = (new ApiProductsImageSetAttributesTransfer())
+            $productImageSetBackendApiAttributesTransfer = (new ProductImageSetBackendApiAttributesTransfer())
                 ->fromArray($productImageSetTransfer->toArray(), true)
                 ->setLocale($productImageSetTransfer->getLocaleOrFail()->getLocaleNameOrFail());
 
-            $apiProductsImageSetAttributesTransfer = $this->mapProductImageTransfersToApiProductsImageSetAttributes(
-                $apiProductsImageSetAttributesTransfer,
+            $productImageSetBackendApiAttributesTransfer = $this->mapProductImageTransfersToProductImageSetBackendApiAttributesTransfer(
+                $productImageSetBackendApiAttributesTransfer,
                 $productImageSetTransfer,
             );
 
-            $apiProductImageSetsAttributesTransfer->addImageSets($apiProductsImageSetAttributesTransfer);
+            $productImageSetsBackendApiAttributesTransfer->addImageSets($productImageSetBackendApiAttributesTransfer);
         }
 
         return $glueResourceTransfer
             ->setType(ProductImageSetsBackendApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS)
             ->setId($productImageSetTransfers[0]->getSku())
-            ->setAttributes($apiProductImageSetsAttributesTransfer);
+            ->setAttributes($productImageSetsBackendApiAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer $apiProductsImageSetAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer $productImageSetBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer
      */
-    protected function mapProductImageTransfersToApiProductsImageSetAttributes(
-        ApiProductsImageSetAttributesTransfer $apiProductsImageSetAttributesTransfer,
+    protected function mapProductImageTransfersToProductImageSetBackendApiAttributesTransfer(
+        ProductImageSetBackendApiAttributesTransfer $productImageSetBackendApiAttributesTransfer,
         ProductImageSetTransfer $productImageSetTransfer
-    ): ApiProductsImageSetAttributesTransfer {
+    ): ProductImageSetBackendApiAttributesTransfer {
         foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-            $apiProductsImageSetAttributesTransfer->addImage(
-                (new ApiProductsImageSetImageAttributesTransfer())->fromArray($productImageTransfer->toArray(), true),
+            $productImageSetBackendApiAttributesTransfer->addImage(
+                (new ProductImageSetImagesBackendApiAttributesTransfer())->fromArray($productImageTransfer->toArray(), true),
             );
         }
 
-        return $apiProductsImageSetAttributesTransfer;
+        return $productImageSetBackendApiAttributesTransfer;
     }
 }

@@ -7,44 +7,44 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer;
+use Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
 
 class PushNotificationProviderMapper implements PushNotificationProviderMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
-     * @param \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer
      */
-    public function mapPushNotificationProviderTransferToApiPushNotificationProvidersAttributesTransfer(
+    public function mapPushNotificationProviderTransferToPushNotificationProvidersBackendApiAttributesTransfer(
         PushNotificationProviderTransfer $pushNotificationProviderTransfer,
-        ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
-    ): ApiPushNotificationProvidersAttributesTransfer {
-        return $apiPushNotificationProvidersAttributesTransfer->fromArray(
+        PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
+    ): PushNotificationProvidersBackendApiAttributesTransfer {
+        return $pushNotificationProvidersBackendApiAttributesTransfer->fromArray(
             $pushNotificationProviderTransfer->toArray(),
             true,
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
      */
-    public function mapApiPushNotificationProvidersAttributesTransferToPushNotificationProviderTransfer(
-        ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer,
+    public function mapPushNotificationProvidersBackendApiAttributesTransferToPushNotificationProviderTransfer(
+        PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer,
         PushNotificationProviderTransfer $pushNotificationProviderTransfer
     ): PushNotificationProviderTransfer {
-        $apiServicePointsAttributesData = array_filter(
-            $apiPushNotificationProvidersAttributesTransfer->modifiedToArray(),
+        $servicePointsBackendApiAttributesData = array_filter(
+            $pushNotificationProvidersBackendApiAttributesTransfer->modifiedToArray(),
             function ($value) {
                 return $value !== null;
             },
         );
 
-        return $pushNotificationProviderTransfer->fromArray($apiServicePointsAttributesData, true);
+        return $pushNotificationProviderTransfer->fromArray($servicePointsBackendApiAttributesData, true);
     }
 }

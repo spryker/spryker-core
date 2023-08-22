@@ -120,6 +120,8 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
         $shipmentTypeCollectionTransfer = $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
         if ($shipmentTypeCollectionTransfer->getShipmentTypes()->count() === 0) {
             $this->shipmentTypeStorageEntityManager->deleteShipmentTypeStorageByShipmentTypeIds($shipmentTypeIds);
+
+            return;
         }
         $storeCollectionTransfer = $this->storeFacade->getStoreCollection(new StoreCriteriaTransfer());
 

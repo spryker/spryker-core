@@ -8,8 +8,8 @@
 namespace SprykerTest\Glue\PickingListsWarehousesBackendResourceRelationship;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\ApiPickingListsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\PickingListsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 
@@ -27,7 +27,7 @@ use Generated\Shared\Transfer\StockTransfer;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PickingListsWarehousesBackendResourceRelationship\PHPMD)
  */
 class PickingListsWarehousesBackendResourceRelationshipTester extends Actor
 {
@@ -74,7 +74,7 @@ class PickingListsWarehousesBackendResourceRelationshipTester extends Actor
             ->setId($pickingListTransfer->getUuidOrFail())
             ->setType(static::RESOURCE_PICKING_LISTS)
             ->setAttributes(
-                (new ApiPickingListsAttributesTransfer())->fromArray($pickingListTransfer->toArray(), true),
+                (new PickingListsBackendApiAttributesTransfer())->fromArray($pickingListTransfer->toArray(), true),
             );
     }
 }

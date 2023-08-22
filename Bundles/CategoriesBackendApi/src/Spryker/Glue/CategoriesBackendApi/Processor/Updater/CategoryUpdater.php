@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -67,13 +67,15 @@ class CategoryUpdater implements CategoryUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function updateCategory(ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
-    {
+    public function updateCategory(
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): GlueResponseTransfer {
         $categoryCriteriaTransfer = $this->glueRequestCategoryMapper->mapGlueGetRequestToCategoryCriteriaTransfer($glueRequestTransfer);
         $categoryCollectionTransfer = $this->categoryFacade->getCategoryCollection($categoryCriteriaTransfer);
 
@@ -90,7 +92,7 @@ class CategoryUpdater implements CategoryUpdaterInterface
         /** @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer */
         $categoryTransfer = $categoryCollectionTransfer->getCategories()->offsetGet(0);
 
-        $this->categoryMapper->mapApiCategoryAttributesTransferToCategoryTransfer($apiCategoryAttributesTransfer, $categoryTransfer);
+        $this->categoryMapper->mapCategoriesBackendApiAttributesTransferToCategoryTransfer($categoriesBackendApiAttributesTransfer, $categoryTransfer);
 
         $categoryCollectionRequestTransfer = $this->glueRequestCategoryMapper->mapGlueRequestToCategoryCollectionRequestTransfer($categoryTransfer, $glueRequestTransfer);
 

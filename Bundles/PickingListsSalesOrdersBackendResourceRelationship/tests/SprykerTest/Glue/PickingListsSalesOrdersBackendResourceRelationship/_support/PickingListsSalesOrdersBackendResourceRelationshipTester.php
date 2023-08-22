@@ -13,9 +13,9 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PickingListBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -34,7 +34,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\PickingListsSalesOrdersBackendResourceRelationship\PHPMD)
  */
 class PickingListsSalesOrdersBackendResourceRelationshipTester extends Actor
 {
@@ -127,14 +127,14 @@ class PickingListsSalesOrdersBackendResourceRelationshipTester extends Actor
     {
         $glueResourceTransfers = [];
         foreach ($pickingListTransfer->getPickingListItems() as $pickingListItemTransfer) {
-            $apiPickingListItemsAttributesTransfer = (new ApiPickingListItemsAttributesTransfer())->fromArray(
+            $pickingListItemsBackendApiAttributesTransfer = (new PickingListItemsBackendApiAttributesTransfer())->fromArray(
                 $pickingListItemTransfer->toArray(),
                 true,
             );
 
             $glueResourceTransfers[] = (new GlueResourceTransfer())
                 ->setType(static::RESOURCE_PICKING_LIST_ITEMS)
-                ->setAttributes($apiPickingListItemsAttributesTransfer);
+                ->setAttributes($pickingListItemsBackendApiAttributesTransfer);
         }
 
         return $glueResourceTransfers;

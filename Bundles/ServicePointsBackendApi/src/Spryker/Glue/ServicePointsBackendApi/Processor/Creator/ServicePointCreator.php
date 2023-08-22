@@ -64,18 +64,18 @@ class ServicePointCreator implements ServicePointCreatorInterface
      */
     public function createServicePoint(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer|null $apiServicePointsAttributesTransfer */
-        $apiServicePointsAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+        /** @var \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer|null $servicePointsBackendApiAttributesTransfer */
+        $servicePointsBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        if (!$apiServicePointsAttributesTransfer) {
+        if (!$servicePointsBackendApiAttributesTransfer) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
             );
         }
 
-        $servicePointTransfer = $this->servicePointMapper->mapApiServicePointsAttributesTransferToServicePointTransfer(
-            $apiServicePointsAttributesTransfer,
+        $servicePointTransfer = $this->servicePointMapper->mapServicePointsBackendApiAttributesTransferToServicePointTransfer(
+            $servicePointsBackendApiAttributesTransfer,
             new ServicePointTransfer(),
         );
 

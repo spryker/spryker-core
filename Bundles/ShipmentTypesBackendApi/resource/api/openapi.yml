@@ -110,7 +110,7 @@ components:
             content:
                 application/vnd.api+json:
                     schema:
-                        $ref: '#/components/schemas/ApiShipmentTypesAttributesCollection'
+                        $ref: '#/components/schemas/ShipmentTypesBackendApiAttributesCollection'
         ApiShipmentTypesResponse:
             description: Representation of Shipment Type
             content:
@@ -213,7 +213,7 @@ components:
                 example: application/vnd.api+json
 
     schemas:
-        ApiShipmentTypesAttributesCollection:
+        ShipmentTypesBackendApiAttributesCollection:
             properties:
                 data:
                     type: array
@@ -235,7 +235,7 @@ components:
                     format: uuid
                     example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
                 attributes:
-                    $ref: '#/components/schemas/ApiShipmentTypesAttributes'
+                    $ref: '#/components/schemas/ShipmentTypesBackendApiAttributes'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
         ApiShipmentTypesPostRequest:
@@ -311,7 +311,7 @@ components:
                     example:
                         - DE
                         - AT
-        ApiShipmentTypesAttributes:
+        ShipmentTypesBackendApiAttributes:
             type: object
             properties:
                 name:

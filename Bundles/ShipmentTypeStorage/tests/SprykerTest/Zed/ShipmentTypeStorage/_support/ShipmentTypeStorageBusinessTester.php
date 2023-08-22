@@ -31,7 +31,7 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\ShipmentTypeStorage\Business\ShipmentTypeStorageFacadeInterface getFacade(?string $moduleName = NULL)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShipmentTypeStorage\PHPMD)
  */
 class ShipmentTypeStorageBusinessTester extends Actor
 {

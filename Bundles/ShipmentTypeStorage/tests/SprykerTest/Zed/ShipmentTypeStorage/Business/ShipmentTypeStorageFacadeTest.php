@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\ShipmentTypeStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\ShipmentTypeStorageDependencyProvider;
 use Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface;
 use SprykerTest\Zed\ShipmentTypeStorage\ShipmentTypeStorageBusinessTester;
@@ -429,6 +432,60 @@ class ShipmentTypeStorageFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testWriteShipmentTypeStorageCollectionByShipmentTypeEventsShouldEarlyReturnWhenShipmentTypeCollectionIsEmpty(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => false,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+
+        $shipmentTypeStorageTransfer = $this->tester->createShipmentTypeStorageTransfer($shipmentTypeTransfer);
+        $this->tester->createShipmentTypeStorage($shipmentTypeStorageTransfer, $storeTransfer);
+
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::FACADE_SHIPMENT_TYPE, $this->getShipmentTypeFacadeMock());
+
+        // Assert
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::FACADE_STORE, $this->getStoreFacadeMock());
+
+        // Act
+        $this->tester->getFacade()->writeShipmentTypeStorageCollectionByShipmentTypeEvents([
+            (new EventEntityTransfer())->setId($shipmentTypeTransfer->getIdShipmentTypeOrFail()),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteShipmentTypeStorageCollectionByShipmentTypeStoreEventsShouldEarlyReturnWhenShipmentTypeCollectionIsEmpty(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => false,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+
+        $shipmentTypeStorageTransfer = $this->tester->createShipmentTypeStorageTransfer($shipmentTypeTransfer);
+        $this->tester->createShipmentTypeStorage($shipmentTypeStorageTransfer, $storeTransfer);
+
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::FACADE_SHIPMENT_TYPE, $this->getShipmentTypeFacadeMock());
+
+        $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
+            static::COL_FK_SHIPMENT_TYPE => $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+        ]);
+
+        // Assert
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::FACADE_STORE, $this->getStoreFacadeMock());
+
+        // Act
+        $this->tester->getFacade()->writeShipmentTypeStorageCollectionByShipmentTypeStoreEvents([$eventEntityTransfer]);
+    }
+
+    /**
      * @return \Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getShipmentTypeStorageExpanderPluginMock(): ShipmentTypeStorageExpanderPluginInterface
@@ -445,5 +502,37 @@ class ShipmentTypeStorageFacadeTest extends Unit
             });
 
         return $shipmentTypeStorageExpanderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getShipmentTypeFacadeMock(): ShipmentTypeStorageToShipmentTypeFacadeInterface
+    {
+        $shipmentTypeFacadeMock = $this
+            ->getMockBuilder(ShipmentTypeStorageToShipmentTypeFacadeInterface::class)
+            ->getMock();
+
+        $shipmentTypeFacadeMock
+            ->method('getShipmentTypeCollection')
+            ->willReturn(new ShipmentTypeCollectionTransfer());
+
+        return $shipmentTypeFacadeMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getStoreFacadeMock(): ShipmentTypeStorageToStoreFacadeInterface
+    {
+        $storeFacadeMock = $this
+            ->getMockBuilder(ShipmentTypeStorageToStoreFacadeInterface::class)
+            ->getMock();
+
+        $storeFacadeMock
+            ->expects($this->never())
+            ->method('getStoreCollection');
+
+        return $storeFacadeMock;
     }
 }

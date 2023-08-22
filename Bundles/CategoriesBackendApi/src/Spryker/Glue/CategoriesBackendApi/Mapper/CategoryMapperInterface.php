@@ -7,19 +7,19 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Mapper;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function mapApiCategoryAttributesTransferToCategoryTransfer(
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer,
+    public function mapCategoriesBackendApiAttributesTransferToCategoryTransfer(
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
         CategoryTransfer $categoryTransfer
     ): CategoryTransfer;
 }

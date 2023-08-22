@@ -12,7 +12,11 @@
         <property name="userUuid" type="string"/>
     </transfer>
 
-    <transfer name="ApiWarehouseUserAssignmentsAttributes" strict="true">
+    <transfer name="ApiWarehouseUserAssignmentsAttributes" strict="true" deprecated="Use WarehouseUserAssignmentsBackendApiAttributes instead">
+        <property name="userUuid" type="string"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentsBackendApiAttributes" strict="true">
         <property name="userUuid" type="string"/>
     </transfer>
 
@@ -34,7 +38,13 @@
         <property name="lastName" type="string"/>
     </transfer>
 
-    <transfer name="ApiUsersAttributes" strict="true">
+    <transfer name="ApiUsersAttributes" strict="true" deprecated="Use UsersBackendApiAttributes instead">
+        <property name="username" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="UsersBackendApiAttributes" strict="true">
         <property name="username" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>

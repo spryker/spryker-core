@@ -6,9 +6,9 @@
 >
 
     <transfer name="ShipmentType" strict="true">
-        <property name="name" dataBuilderRule="text(10)"/>
+        <property name="name" dataBuilderRule="lexify('???????????????')"/>
         <property name="isActive" dataBuilderRule="boolean()"/>
-        <property name="key" dataBuilderRule="unique()->text(10)"/>
+        <property name="key" dataBuilderRule="unique()->lexify('???????????????')"/>
     </transfer>
 
 </transfers>

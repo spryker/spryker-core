@@ -8,11 +8,11 @@
 namespace Spryker\Glue\CategoriesBackendApi\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
 use Generated\Shared\Transfer\ApiCategoryImageSetTransfer;
 use Generated\Shared\Transfer\ApiCategoryImageTransfer;
 use Generated\Shared\Transfer\ApiCategoryLocalizedAttributeTransfer;
 use Generated\Shared\Transfer\ApiCategoryParentTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
@@ -137,25 +137,25 @@ class GlueResponseCategoryMapper implements GlueResponseCategoryMapperInterface
         CategoryTransfer $categoryTransfer,
         GlueResponseTransfer $glueResponseTransfer
     ): GlueResponseTransfer {
-        $apiCategoryAttributesTransfer = $this->mapCategoryTransferToApiCategoryAttributesTransfer($categoryTransfer);
+        $categoriesBackendApiAttributesTransfer = $this->mapCategoryTransferToCategoriesBackendApiAttributesTransfer($categoryTransfer);
 
         $apiLocalizedAttributes = $this->mapLocalizedAttributesTransfersToApiCategoryLocalizedAttributes($categoryTransfer->getLocalizedAttributes());
-        $apiCategoryAttributesTransfer->setLocalizedAttributes($apiLocalizedAttributes);
+        $categoriesBackendApiAttributesTransfer->setLocalizedAttributes($apiLocalizedAttributes);
 
-        $this->mapCategoryStoreRelationToApiCategoryAttributesStores($categoryTransfer->getStoreRelationOrFail(), $apiCategoryAttributesTransfer);
+        $this->mapCategoryStoreRelationToCategoriesBackendApiAttributesStores($categoryTransfer->getStoreRelationOrFail(), $categoriesBackendApiAttributesTransfer);
 
         if ($categoryTransfer->getParentCategoryNode()) {
-            $apiCategoryAttributesTransfer->setParent(
+            $categoriesBackendApiAttributesTransfer->setParent(
                 $this->mapCategoryTransferParentNodeToApiCategoryParentTransfer($categoryTransfer),
             );
         }
 
         $apiCategoryImageSetTransfers = $this->mapCategoryImageSetTransfersToApiCategoryImageSetTransfers($categoryTransfer->getImageSets());
-        $apiCategoryAttributesTransfer->setImageSets($apiCategoryImageSetTransfers);
+        $categoriesBackendApiAttributesTransfer->setImageSets($apiCategoryImageSetTransfers);
 
         $resourceTransfer = new GlueResourceTransfer();
-        $resourceTransfer->setAttributes($apiCategoryAttributesTransfer);
-        $resourceTransfer->setId($apiCategoryAttributesTransfer->getCategoryKey());
+        $resourceTransfer->setAttributes($categoriesBackendApiAttributesTransfer);
+        $resourceTransfer->setId($categoriesBackendApiAttributesTransfer->getCategoryKey());
         $resourceTransfer->setType(CategoriesBackendApiConfig::RESOURCE_TYPE_CATEGORIES);
         $glueResponseTransfer->addResource($resourceTransfer);
 
@@ -184,30 +184,30 @@ class GlueResponseCategoryMapper implements GlueResponseCategoryMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      *
      * @return void
      */
-    public function mapCategoryStoreRelationToApiCategoryAttributesStores(
+    public function mapCategoryStoreRelationToCategoriesBackendApiAttributesStores(
         StoreRelationTransfer $storeRelationTransfer,
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
     ): void {
         foreach ($storeRelationTransfer->getStores() as $storeRelation) {
-            $apiCategoryAttributesTransfer->addStore($storeRelation->getNameOrFail());
+            $categoriesBackendApiAttributesTransfer->addStore($storeRelation->getNameOrFail());
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiCategoryAttributesTransfer
+     * @return \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer
      */
-    public function mapCategoryTransferToApiCategoryAttributesTransfer(CategoryTransfer $categoryTransfer): ApiCategoryAttributesTransfer
+    public function mapCategoryTransferToCategoriesBackendApiAttributesTransfer(CategoryTransfer $categoryTransfer): CategoriesBackendApiAttributesTransfer
     {
-        $apiCategoryAttributesTransfer = new ApiCategoryAttributesTransfer();
-        $apiCategoryAttributesTransfer->fromArray($categoryTransfer->toArray(), true);
+        $categoriesBackendApiAttributesTransfer = new CategoriesBackendApiAttributesTransfer();
+        $categoriesBackendApiAttributesTransfer->fromArray($categoryTransfer->toArray(), true);
 
-        return $apiCategoryAttributesTransfer;
+        return $categoriesBackendApiAttributesTransfer;
     }
 
     /**

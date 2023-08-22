@@ -42,6 +42,23 @@ class UserResourceReader implements UserResourceReaderInterface
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
+    public function getUsersResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
+    {
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $this->userResourceMapper->mapUserCollectionToUsersResourceCollection(
+            $userCollectionTransfer,
+            new UserResourceCollectionTransfer(),
+        );
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReader::getUsersResources()} instead.
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
     public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer
     {
         $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);

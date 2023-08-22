@@ -7,32 +7,32 @@
 
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueFilterTransfer;
 use Generated\Shared\Transfer\ShipmentTypeConditionsTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 
 interface ShipmentTypeMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer
      */
-    public function mapShipmentTypeTransferToApiShipmentTypesAttributesTransfer(
+    public function mapShipmentTypeTransferToShipmentTypesBackendApiAttributesTransfer(
         ShipmentTypeTransfer $shipmentTypeTransfer,
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
-    ): ApiShipmentTypesAttributesTransfer;
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
+    ): ShipmentTypesBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTypeTransfer
      */
-    public function mapApiShipmentTypesAttributesTransferToShipmentTypeTransfer(
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer,
+    public function mapShipmentTypesBackendApiAttributesTransferToShipmentTypeTransfer(
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer,
         ShipmentTypeTransfer $shipmentTypeTransfer
     ): ShipmentTypeTransfer;
 

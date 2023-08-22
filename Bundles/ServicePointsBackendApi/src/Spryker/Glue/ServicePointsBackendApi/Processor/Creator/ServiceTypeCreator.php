@@ -64,18 +64,18 @@ class ServiceTypeCreator implements ServiceTypeCreatorInterface
      */
     public function createServiceType(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer|null $apiServiceTypesAttributesTransfer */
-        $apiServiceTypesAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
+        /** @var \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer|null $serviceTypesBackendApiAttributesTransfer */
+        $serviceTypesBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
-        if (!$apiServiceTypesAttributesTransfer) {
+        if (!$serviceTypesBackendApiAttributesTransfer) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
             );
         }
 
-        $serviceTypeTransfer = $this->serviceTypeMapper->mapApiServiceTypesAttributesTransferToServiceTypeTransfer(
-            $apiServiceTypesAttributesTransfer,
+        $serviceTypeTransfer = $this->serviceTypeMapper->mapServiceTypesBackendApiAttributesTransferToServiceTypeTransfer(
+            $serviceTypesBackendApiAttributesTransfer,
             new ServiceTypeTransfer(),
         );
 

@@ -8,11 +8,11 @@
 namespace Spryker\Glue\PickingListsBackendApi\Processor\Creator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiPickingListsAttributesTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\PickingListsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 use Spryker\Glue\PickingListsBackendApi\Processor\Mapper\PickingListMapperInterface;
@@ -137,16 +137,16 @@ class PickingListResponseCreator implements PickingListResponseCreatorInterface
     protected function createPickingListResourceTransfer(
         PickingListTransfer $pickingListTransfer
     ): GlueResourceTransfer {
-        $apiPickingListsAttributesTransfer = $this->pickingListMapper
-            ->mapPickingListTransferToApiPickingListsAttributesTransfer(
+        $pickingListsBackendApiAttributesTransfer = $this->pickingListMapper
+            ->mapPickingListTransferToPickingListsBackendApiAttributesTransfer(
                 $pickingListTransfer,
-                new ApiPickingListsAttributesTransfer(),
+                new PickingListsBackendApiAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($pickingListTransfer->getUuid())
             ->setType(PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS)
-            ->setAttributes($apiPickingListsAttributesTransfer);
+            ->setAttributes($pickingListsBackendApiAttributesTransfer);
     }
 
     /**

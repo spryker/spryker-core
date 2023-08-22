@@ -13,20 +13,20 @@ use Generated\Shared\Transfer\OrderResourceCollectionTransfer;
 interface SalesOrdersResourceMapperInterface
 {
     /**
-     * @param list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer> $apiOrdersAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer> $ordersBackendApiAttributesTransfers
      * @param \Generated\Shared\Transfer\OrderResourceCollectionTransfer $orderResourceCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\OrderResourceCollectionTransfer
      */
-    public function mapApiOrdersAttributesTransfersToOrderResourceCollectionTransfer(
-        array $apiOrdersAttributesTransfers,
+    public function mapOrdersBackendApiAttributesTransfersToOrderResourceCollectionTransfer(
+        array $ordersBackendApiAttributesTransfers,
         OrderResourceCollectionTransfer $orderResourceCollectionTransfer
     ): OrderResourceCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer>
      */
-    public function mapOrderListTransferToApiOrdersAttributesTransfers(OrderListTransfer $orderListTransfer): array;
+    public function mapOrderListTransferToOrdersBackendApiAttributesTransfers(OrderListTransfer $orderListTransfer): array;
 }

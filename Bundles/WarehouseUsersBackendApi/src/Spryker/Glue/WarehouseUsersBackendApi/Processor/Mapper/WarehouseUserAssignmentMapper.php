@@ -7,49 +7,49 @@
 
 namespace Spryker\Glue\WarehouseUsersBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiWarehousesAttributesTransfer;
-use Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 
 class WarehouseUserAssignmentMapper implements WarehouseUserAssignmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer
+     * @return \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer
      */
-    public function mapWarehouseUserAssignmentTransferToApiWarehouseUserAssignmentsAttributesTransfer(
+    public function mapWarehouseUserAssignmentTransferToWarehouseUserAssignmentsBackendApiAttributesTransfer(
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer,
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
-    ): ApiWarehouseUserAssignmentsAttributesTransfer {
-        $apiWarehouseUserAssignmentsAttributesTransfer->fromArray($warehouseUserAssignmentTransfer->toArray(), true);
-        $apiWarehouseUserAssignmentsAttributesTransfer->setWarehouse(
-            $this->mapStockTransferToApiWarehousesAttributesTransfer(
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
+    ): WarehouseUserAssignmentsBackendApiAttributesTransfer {
+        $warehouseUserAssignmentsBackendApiAttributesTransfer->fromArray($warehouseUserAssignmentTransfer->toArray(), true);
+        $warehouseUserAssignmentsBackendApiAttributesTransfer->setWarehouse(
+            $this->mapStockTransferToWarehousesBackendApiAttributesTransfer(
                 $warehouseUserAssignmentTransfer->getWarehouseOrFail(),
-                new ApiWarehousesAttributesTransfer(),
+                new WarehousesBackendApiAttributesTransfer(),
             ),
         );
 
-        return $apiWarehouseUserAssignmentsAttributesTransfer;
+        return $warehouseUserAssignmentsBackendApiAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer
      */
-    public function mapApiWarehouseUserAssignmentsAttributesTransferToWarehouseUserAssignmentTransfer(
-        ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer,
+    public function mapWarehouseUserAssignmentsBackendApiAttributesTransferToWarehouseUserAssignmentTransfer(
+        WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
     ): WarehouseUserAssignmentTransfer {
-        $warehouseUserAssignmentTransfer->fromArray($apiWarehouseUserAssignmentsAttributesTransfer->modifiedToArray(), true);
-        if ($apiWarehouseUserAssignmentsAttributesTransfer->getWarehouse()) {
+        $warehouseUserAssignmentTransfer->fromArray($warehouseUserAssignmentsBackendApiAttributesTransfer->modifiedToArray(), true);
+        if ($warehouseUserAssignmentsBackendApiAttributesTransfer->getWarehouse()) {
             $warehouseUserAssignmentTransfer->setWarehouse(
-                $this->mapApiWarehousesAttributesTransferToStockTransfer(
-                    $apiWarehouseUserAssignmentsAttributesTransfer->getWarehouseOrFail(),
+                $this->mapWarehousesBackendApiAttributesTransferToStockTransfer(
+                    $warehouseUserAssignmentsBackendApiAttributesTransfer->getWarehouseOrFail(),
                     new StockTransfer(),
                 ),
             );
@@ -60,27 +60,27 @@ class WarehouseUserAssignmentMapper implements WarehouseUserAssignmentMapperInte
 
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Generated\Shared\Transfer\ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiWarehousesAttributesTransfer
+     * @return \Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer
      */
-    protected function mapStockTransferToApiWarehousesAttributesTransfer(
+    protected function mapStockTransferToWarehousesBackendApiAttributesTransfer(
         StockTransfer $stockTransfer,
-        ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer
-    ): ApiWarehousesAttributesTransfer {
-        return $apiWarehousesAttributesTransfer->fromArray($stockTransfer->toArray(), true);
+        WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer
+    ): WarehousesBackendApiAttributesTransfer {
+        return $warehousesBackendApiAttributesTransfer->fromArray($stockTransfer->toArray(), true);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer
+     * @param \Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
      * @return \Generated\Shared\Transfer\StockTransfer
      */
-    protected function mapApiWarehousesAttributesTransferToStockTransfer(
-        ApiWarehousesAttributesTransfer $apiWarehousesAttributesTransfer,
+    protected function mapWarehousesBackendApiAttributesTransferToStockTransfer(
+        WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer,
         StockTransfer $stockTransfer
     ): StockTransfer {
-        return $stockTransfer->fromArray($apiWarehousesAttributesTransfer->toArray(), true);
+        return $stockTransfer->fromArray($warehousesBackendApiAttributesTransfer->toArray(), true);
     }
 }

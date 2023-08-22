@@ -7,41 +7,41 @@
 
 namespace Spryker\Glue\SalesOrdersBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiOrdersAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderResourceCollectionTransfer;
+use Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiConfig;
 
 class SalesOrdersResourceMapper implements SalesOrdersResourceMapperInterface
 {
     /**
-     * @var list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\ApiOrdersAttributesMapperPluginInterface>
+     * @var list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\OrdersBackendApiAttributesMapperPluginInterface>
      */
-    protected array $apiOrdersAttributesMapperPlugins;
+    protected array $ordersBackendApiAttributesMapperPlugins;
 
     /**
-     * @param list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\ApiOrdersAttributesMapperPluginInterface> $apiOrdersAttributesMapperPlugins
+     * @param list<\Spryker\Glue\SalesOrdersBackendApiExtension\Dependency\Plugin\OrdersBackendApiAttributesMapperPluginInterface> $ordersBackendApiAttributesMapperPlugins
      */
-    public function __construct(array $apiOrdersAttributesMapperPlugins)
+    public function __construct(array $ordersBackendApiAttributesMapperPlugins)
     {
-        $this->apiOrdersAttributesMapperPlugins = $apiOrdersAttributesMapperPlugins;
+        $this->ordersBackendApiAttributesMapperPlugins = $ordersBackendApiAttributesMapperPlugins;
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer> $apiOrdersAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer> $ordersBackendApiAttributesTransfers
      * @param \Generated\Shared\Transfer\OrderResourceCollectionTransfer $orderResourceCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\OrderResourceCollectionTransfer
      */
-    public function mapApiOrdersAttributesTransfersToOrderResourceCollectionTransfer(
-        array $apiOrdersAttributesTransfers,
+    public function mapOrdersBackendApiAttributesTransfersToOrderResourceCollectionTransfer(
+        array $ordersBackendApiAttributesTransfers,
         OrderResourceCollectionTransfer $orderResourceCollectionTransfer
     ): OrderResourceCollectionTransfer {
-        foreach ($apiOrdersAttributesTransfers as $apiOrdersAttributesTransfer) {
-            $glueResourceTransfer = $this->mapApiOrdersAttributesTransferToGlueResourceTransfer(
-                $apiOrdersAttributesTransfer,
+        foreach ($ordersBackendApiAttributesTransfers as $ordersBackendApiAttributesTransfer) {
+            $glueResourceTransfer = $this->mapOrdersBackendApiAttributesTransferToGlueResourceTransfer(
+                $ordersBackendApiAttributesTransfer,
                 new GlueResourceTransfer(),
             );
 
@@ -54,68 +54,68 @@ class SalesOrdersResourceMapper implements SalesOrdersResourceMapperInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer>
      */
-    public function mapOrderListTransferToApiOrdersAttributesTransfers(OrderListTransfer $orderListTransfer): array
+    public function mapOrderListTransferToOrdersBackendApiAttributesTransfers(OrderListTransfer $orderListTransfer): array
     {
-        $apiOrdersAttributesTransfers = [];
+        $ordersBackendApiAttributesTransfers = [];
         $orderTransfers = $orderListTransfer->getOrders();
         foreach ($orderTransfers as $orderTransfer) {
-            $apiOrdersAttributesTransfers[] = $this->mapOrderTransferToApiOrdersAttributesTransfer(
+            $ordersBackendApiAttributesTransfers[] = $this->mapOrderTransferToOrdersBackendApiAttributesTransfer(
                 $orderTransfer,
-                new ApiOrdersAttributesTransfer(),
+                new OrdersBackendApiAttributesTransfer(),
             );
         }
 
-        return $this->executeApiOrdersAttributesExpanderPlugins($orderTransfers->getArrayCopy(), $apiOrdersAttributesTransfers);
+        return $this->executeOrdersBackendApiAttributesMapperPlugins($orderTransfers->getArrayCopy(), $ordersBackendApiAttributesTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiOrdersAttributesTransfer $apiOrdersAttributesTransfer
+     * @param \Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer $ordersBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResourceTransfer
      */
-    protected function mapApiOrdersAttributesTransferToGlueResourceTransfer(
-        ApiOrdersAttributesTransfer $apiOrdersAttributesTransfer,
+    protected function mapOrdersBackendApiAttributesTransferToGlueResourceTransfer(
+        OrdersBackendApiAttributesTransfer $ordersBackendApiAttributesTransfer,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {
         return $glueResourceTransfer
             ->setType(SalesOrdersBackendApiConfig::RESOURCE_SALES_ORDERS)
-            ->setId($apiOrdersAttributesTransfer->getOrderReferenceOrFail())
-            ->setAttributes($apiOrdersAttributesTransfer);
+            ->setId($ordersBackendApiAttributesTransfer->getOrderReferenceOrFail())
+            ->setAttributes($ordersBackendApiAttributesTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ApiOrdersAttributesTransfer $apiOrdersAttributesTransfer
+     * @param \Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer $ordersBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiOrdersAttributesTransfer
+     * @return \Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer
      */
-    protected function mapOrderTransferToApiOrdersAttributesTransfer(
+    protected function mapOrderTransferToOrdersBackendApiAttributesTransfer(
         OrderTransfer $orderTransfer,
-        ApiOrdersAttributesTransfer $apiOrdersAttributesTransfer
-    ): ApiOrdersAttributesTransfer {
-        return $apiOrdersAttributesTransfer->fromArray($orderTransfer->toArray(), true);
+        OrdersBackendApiAttributesTransfer $ordersBackendApiAttributesTransfer
+    ): OrdersBackendApiAttributesTransfer {
+        return $ordersBackendApiAttributesTransfer->fromArray($orderTransfer->toArray(), true);
     }
 
     /**
      * @param list<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
-     * @param list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer> $apiOrdersAttributesTransfers
+     * @param list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer> $ordersBackendApiAttributesTransfers
      *
-     * @return list<\Generated\Shared\Transfer\ApiOrdersAttributesTransfer>
+     * @return list<\Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer>
      */
-    protected function executeApiOrdersAttributesExpanderPlugins(
+    protected function executeOrdersBackendApiAttributesMapperPlugins(
         array $orderTransfers,
-        array $apiOrdersAttributesTransfers
+        array $ordersBackendApiAttributesTransfers
     ): array {
-        foreach ($this->apiOrdersAttributesMapperPlugins as $apiOrdersAttributesMapperPlugin) {
-            $apiOrdersAttributesTransfers = $apiOrdersAttributesMapperPlugin->mapOrderTransfersToApiOrdersAttributesTransfer(
+        foreach ($this->ordersBackendApiAttributesMapperPlugins as $ordersBackendApiAttributesMapperPlugin) {
+            $ordersBackendApiAttributesTransfers = $ordersBackendApiAttributesMapperPlugin->mapOrderTransfersToOrdersBackendApiAttributesTransfers(
                 $orderTransfers,
-                $apiOrdersAttributesTransfers,
+                $ordersBackendApiAttributesTransfers,
             );
         }
 
-        return $apiOrdersAttributesTransfers;
+        return $ordersBackendApiAttributesTransfers;
     }
 }

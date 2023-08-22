@@ -24,7 +24,7 @@ use Spryker\Glue\ProductImageSetsBackendApi\ProductImageSetsBackendApiResourceIn
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\ProductImageSetsBackendApi\PHPMD)
  */
 class ProductImageSetsBackendApiTester extends Actor
 {

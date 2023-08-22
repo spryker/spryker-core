@@ -8,11 +8,11 @@
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Glue\ShipmentTypesBackendApi\Processor\Mapper\ShipmentTypeMapperInterface;
 use Spryker\Glue\ShipmentTypesBackendApi\Processor\Translator\ShipmentTypeTranslatorInterface;
@@ -99,15 +99,15 @@ class ShipmentTypeResponseBuilder implements ShipmentTypeResponseBuilderInterfac
      */
     protected function createShipmentTypeResourceTransfer(ShipmentTypeTransfer $shipmentTypeTransfer): GlueResourceTransfer
     {
-        $apiShipmentTypesAttributesTransfer = $this->shipmentTypeMapper->mapShipmentTypeTransferToApiShipmentTypesAttributesTransfer(
+        $shipmentTypesBackendApiAttributesTransfer = $this->shipmentTypeMapper->mapShipmentTypeTransferToShipmentTypesBackendApiAttributesTransfer(
             $shipmentTypeTransfer,
-            new ApiShipmentTypesAttributesTransfer(),
+            new ShipmentTypesBackendApiAttributesTransfer(),
         );
 
         return (new GlueResourceTransfer())
             ->setId($shipmentTypeTransfer->getUuidOrFail())
             ->setType(ShipmentTypesBackendApiConfig::RESOURCE_SHIPMENT_TYPES)
-            ->setAttributes($apiShipmentTypesAttributesTransfer);
+            ->setAttributes($shipmentTypesBackendApiAttributesTransfer);
     }
 
     /**

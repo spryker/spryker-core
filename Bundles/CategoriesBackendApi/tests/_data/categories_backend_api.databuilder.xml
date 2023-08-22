@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
-    <transfer name="ApiCategoryAttributes" strict="true">
+    <transfer name="CategoriesBackendApiAttributes" strict="true">
         <property name="categoryKey" dataBuilderRule="uuid()"/>
         <property name="isActive" dataBuilderRule="boolean(100)"/>
         <property name="isInMenu" dataBuilderRule="boolean(100)"/>

@@ -39,7 +39,7 @@ class PushNotificationProvidersResourceController extends AbstractBackendApiCont
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
      *          "responses": {
      *              "200": "OK",
      *              "400": "Bad Request",
@@ -73,8 +73,8 @@ class PushNotificationProvidersResourceController extends AbstractBackendApiCont
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
-     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
      *          "responses": {
      *              "201": "Created",
      *              "400": "Bad Request",
@@ -114,7 +114,7 @@ class PushNotificationProvidersResourceController extends AbstractBackendApiCont
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
      *          "responses": {
      *              "200": "OK",
      *              "400": "Bad Request",
@@ -151,8 +151,8 @@ class PushNotificationProvidersResourceController extends AbstractBackendApiCont
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",
@@ -186,8 +186,8 @@ class PushNotificationProvidersResourceController extends AbstractBackendApiCont
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
-     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\ApiPushNotificationProvidersAttributesTransfer",
+     *          "responseAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "\\Generated\\Shared\\Transfer\\PushNotificationProvidersBackendApiAttributesTransfer",
      *          "responses": {
      *              "204": "No Content",
      *              "400": "Bad Request",

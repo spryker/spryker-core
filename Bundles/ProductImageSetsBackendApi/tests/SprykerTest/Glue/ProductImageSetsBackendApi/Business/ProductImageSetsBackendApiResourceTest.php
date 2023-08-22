@@ -9,9 +9,9 @@ namespace SprykerTest\Glue\ProductImageSetsBackendApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
-use Generated\Shared\Transfer\ApiProductImageSetsAttributesTransfer;
 use Generated\Shared\Transfer\ProductImageSetConditionsTransfer;
 use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
+use Generated\Shared\Transfer\ProductImageSetsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use SprykerTest\Glue\ProductImageSetsBackendApi\ProductImageSetsBackendApiTester;
 
@@ -151,18 +151,18 @@ class ProductImageSetsBackendApiResourceTest extends Unit
         // Assert
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $concreteProductImageSetResource */
         $concreteProductImageSetResource = $productImageSetResourceCollectionTransfer->getProductImageSetResources()->getIterator()->current();
-        $apiProductImageSetsAttributesTransfer = (new ApiProductImageSetsAttributesTransfer())
+        $productImageSetsBackendApiAttributesTransfer = (new ProductImageSetsBackendApiAttributesTransfer())
             ->fromArray($concreteProductImageSetResource->getAttributes()->toArray(), true);
 
-        /** @var \Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer $apiProductsImageSetAttributesTransfer */
-        $apiProductsImageSetAttributesTransfer = $apiProductImageSetsAttributesTransfer->getImageSets()->getIterator()->current();
+        /** @var \Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer $productImageSetBackendApiAttributesTransfer */
+        $productImageSetBackendApiAttributesTransfer = $productImageSetsBackendApiAttributesTransfer->getImageSets()->getIterator()->current();
 
-        $this->assertSame('fake-name', $apiProductsImageSetAttributesTransfer->getName());
-        $this->assertCount(2, $apiProductsImageSetAttributesTransfer->getImages());
-        $this->assertNotEmpty($apiProductsImageSetAttributesTransfer->getImages()->offsetGet(0)->getExternalUrlLarge());
-        $this->assertNotEmpty($apiProductsImageSetAttributesTransfer->getImages()->offsetGet(0)->getExternalUrlSmall());
-        $this->assertNotEmpty($apiProductsImageSetAttributesTransfer->getImages()->offsetGet(1)->getExternalUrlLarge());
-        $this->assertNotEmpty($apiProductsImageSetAttributesTransfer->getImages()->offsetGet(1)->getExternalUrlSmall());
+        $this->assertSame('fake-name', $productImageSetBackendApiAttributesTransfer->getName());
+        $this->assertCount(2, $productImageSetBackendApiAttributesTransfer->getImages());
+        $this->assertNotEmpty($productImageSetBackendApiAttributesTransfer->getImages()->offsetGet(0)->getExternalUrlLarge());
+        $this->assertNotEmpty($productImageSetBackendApiAttributesTransfer->getImages()->offsetGet(0)->getExternalUrlSmall());
+        $this->assertNotEmpty($productImageSetBackendApiAttributesTransfer->getImages()->offsetGet(1)->getExternalUrlLarge());
+        $this->assertNotEmpty($productImageSetBackendApiAttributesTransfer->getImages()->offsetGet(1)->getExternalUrlSmall());
     }
 
     /**
@@ -192,9 +192,9 @@ class ProductImageSetsBackendApiResourceTest extends Unit
 
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $concreteProductImageSetResource */
         $concreteProductImageSetResource = $productImageSetResourceCollectionTransfer->getProductImageSetResources()->getIterator()->current();
-        $apiProductImageSetsAttributesTransfer = (new ApiProductImageSetsAttributesTransfer())
+        $productImageSetsBackendApiAttributesTransfer = (new ProductImageSetsBackendApiAttributesTransfer())
             ->fromArray($concreteProductImageSetResource->getAttributes()->toArray(), true);
 
-        $this->assertCount(2, $apiProductImageSetsAttributesTransfer->getImageSets());
+        $this->assertCount(2, $productImageSetsBackendApiAttributesTransfer->getImageSets());
     }
 }

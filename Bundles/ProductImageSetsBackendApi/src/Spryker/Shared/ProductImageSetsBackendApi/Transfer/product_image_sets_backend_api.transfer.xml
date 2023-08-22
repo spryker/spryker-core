@@ -5,17 +5,17 @@
         <property name="productImageSetResources" type="GlueResource[]" singular="productImageSetResource"/>
     </transfer>
 
-    <transfer name="ApiProductImageSetsAttributes" strict="true">
-        <property name="imageSets" type="ApiProductsImageSetAttributes[]" singular="imageSets"/>
+    <transfer name="ProductImageSetsBackendApiAttributes" strict="true">
+        <property name="imageSets" type="ProductImageSetBackendApiAttributes[]" singular="imageSets"/>
     </transfer>
 
-    <transfer name="ApiProductsImageSetAttributes" strict="true">
+    <transfer name="ProductImageSetBackendApiAttributes" strict="true">
         <property name="name" type="string"/>
-        <property name="images" type="ApiProductsImageSetImageAttributes[]" singular="image"/>
+        <property name="images" type="ProductImageSetImagesBackendApiAttributes[]" singular="image"/>
         <property name="locale" type="string"/>
     </transfer>
 
-    <transfer name="ApiProductsImageSetImageAttributes" strict="true">
+    <transfer name="ProductImageSetImagesBackendApiAttributes" strict="true">
         <property name="externalUrlLarge" type="string"/>
         <property name="externalUrlSmall" type="string"/>
     </transfer>

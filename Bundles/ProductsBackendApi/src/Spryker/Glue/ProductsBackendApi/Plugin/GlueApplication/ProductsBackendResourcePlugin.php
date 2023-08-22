@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ProductsBackendApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\ProductsBackendApi\Controller\ProductsResourceController;
@@ -53,19 +53,19 @@ class ProductsBackendResourcePlugin extends AbstractResourcePlugin implements Js
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiProductsAttributesTransfer::class),
+                    ->setAttributes(ProductsBackendApiAttributesTransfer::class),
             )
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiProductsAttributesTransfer::class),
+                    ->setAttributes(ProductsBackendApiAttributesTransfer::class),
             )
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiProductsAttributesTransfer::class),
+                    ->setAttributes(ProductsBackendApiAttributesTransfer::class),
             )
             ->setPatch(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAttributes(ApiProductsAttributesTransfer::class),
+                    ->setAttributes(ProductsBackendApiAttributesTransfer::class),
             );
     }
 }

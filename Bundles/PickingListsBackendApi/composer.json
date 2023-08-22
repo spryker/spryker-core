@@ -13,7 +13,7 @@
         "spryker/kernel": "^3.66.0",
         "spryker/oauth-warehouse": "^0.1.0",
         "spryker/picking-list": "^0.3.0",
-        "spryker/picking-lists-backend-api-extension": "^0.1.0",
+        "spryker/picking-lists-backend-api-extension": "^0.2.0",
         "spryker/stock": "^8.8.0",
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.27.0",

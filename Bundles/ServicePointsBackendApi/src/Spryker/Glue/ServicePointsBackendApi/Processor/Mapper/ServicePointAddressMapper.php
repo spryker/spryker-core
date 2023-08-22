@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
@@ -19,50 +19,50 @@ class ServicePointAddressMapper implements ServicePointAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
-     * @param \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer
      */
-    public function mapServicePointAddressTransferToApiServicePointAddressesAttributesTransfer(
+    public function mapServicePointAddressTransferToServicePointAddressesBackendApiAttributesTransfer(
         ServicePointAddressTransfer $servicePointAddressTransfer,
-        ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
-    ): ApiServicePointAddressesAttributesTransfer {
-        $apiServicePointAddressesAttributesTransfer->fromArray($servicePointAddressTransfer->modifiedToArray(), true);
-        $apiServicePointAddressesAttributesTransfer->setCountryIso2Code($servicePointAddressTransfer->getCountryOrFail()->getIso2CodeOrFail());
+        ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
+    ): ServicePointAddressesBackendApiAttributesTransfer {
+        $servicePointAddressesBackendApiAttributesTransfer->fromArray($servicePointAddressTransfer->modifiedToArray(), true);
+        $servicePointAddressesBackendApiAttributesTransfer->setCountryIso2Code($servicePointAddressTransfer->getCountryOrFail()->getIso2CodeOrFail());
 
         if ($servicePointAddressTransfer->getRegion()) {
-            $apiServicePointAddressesAttributesTransfer->setRegionUuid($servicePointAddressTransfer->getRegionOrFail()->getUuidOrFail());
+            $servicePointAddressesBackendApiAttributesTransfer->setRegionUuid($servicePointAddressTransfer->getRegionOrFail()->getUuidOrFail());
         }
 
-        return $apiServicePointAddressesAttributesTransfer;
+        return $servicePointAddressesBackendApiAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
      */
-    public function mapApiServicePointAddressesAttributesTransferToServicePointAddressTransfer(
-        ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer,
+    public function mapServicePointAddressesBackendApiAttributesTransferToServicePointAddressTransfer(
+        ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer,
         ServicePointAddressTransfer $servicePointAddressTransfer
     ): ServicePointAddressTransfer {
-        $servicePointAddressTransfer->fromArray($apiServicePointAddressesAttributesTransfer->modifiedToArray(), true);
+        $servicePointAddressTransfer->fromArray($servicePointAddressesBackendApiAttributesTransfer->modifiedToArray(), true);
 
-        if ($apiServicePointAddressesAttributesTransfer->isPropertyModified(ApiServicePointAddressesAttributesTransfer::COUNTRY_ISO2_CODE)) {
+        if ($servicePointAddressesBackendApiAttributesTransfer->isPropertyModified(ServicePointAddressesBackendApiAttributesTransfer::COUNTRY_ISO2_CODE)) {
             if (!$servicePointAddressTransfer->getCountry()) {
                 $servicePointAddressTransfer->setCountry(new CountryTransfer());
             }
 
-            $servicePointAddressTransfer->getCountryOrFail()->setIso2Code($apiServicePointAddressesAttributesTransfer->getCountryIso2Code());
+            $servicePointAddressTransfer->getCountryOrFail()->setIso2Code($servicePointAddressesBackendApiAttributesTransfer->getCountryIso2Code());
         }
 
-        if ($apiServicePointAddressesAttributesTransfer->isPropertyModified(ApiServicePointAddressesAttributesTransfer::REGION_UUID)) {
+        if ($servicePointAddressesBackendApiAttributesTransfer->isPropertyModified(ServicePointAddressesBackendApiAttributesTransfer::REGION_UUID)) {
             $regionTransfer = null;
 
-            if ($apiServicePointAddressesAttributesTransfer->getRegionUuid() !== null) {
+            if ($servicePointAddressesBackendApiAttributesTransfer->getRegionUuid() !== null) {
                 $regionTransfer = $servicePointAddressTransfer->getRegion() ?: new RegionTransfer();
-                $regionTransfer->setUuid($apiServicePointAddressesAttributesTransfer->getRegionUuidOrFail());
+                $regionTransfer->setUuid($servicePointAddressesBackendApiAttributesTransfer->getRegionUuidOrFail());
             }
 
             $servicePointAddressTransfer->setRegion($regionTransfer);
@@ -81,15 +81,15 @@ class ServicePointAddressMapper implements ServicePointAddressMapperInterface
         ServicePointAddressTransfer $servicePointAddressTransfer,
         GlueRelationshipTransfer $glueRelationshipTransfer
     ): GlueRelationshipTransfer {
-        $apiServicePointAddressesAttributesTransfer = $this->mapServicePointAddressTransferToApiServicePointAddressesAttributesTransfer(
+        $servicePointAddressesBackendApiAttributesTransfer = $this->mapServicePointAddressTransferToServicePointAddressesBackendApiAttributesTransfer(
             $servicePointAddressTransfer,
-            new ApiServicePointAddressesAttributesTransfer(),
+            new ServicePointAddressesBackendApiAttributesTransfer(),
         );
 
         $glueResourceTransfer = (new GlueResourceTransfer())
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINT_ADDRESSES)
-            ->setId($apiServicePointAddressesAttributesTransfer->getUuidOrFail())
-            ->setAttributes($apiServicePointAddressesAttributesTransfer);
+            ->setId($servicePointAddressesBackendApiAttributesTransfer->getUuidOrFail())
+            ->setAttributes($servicePointAddressesBackendApiAttributesTransfer);
 
         return $glueRelationshipTransfer->addResource($glueResourceTransfer);
     }

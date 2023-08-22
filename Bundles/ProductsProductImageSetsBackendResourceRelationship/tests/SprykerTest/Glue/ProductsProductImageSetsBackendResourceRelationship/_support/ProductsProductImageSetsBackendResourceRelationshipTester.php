@@ -8,8 +8,8 @@
 namespace SprykerTest\Glue\ProductsProductImageSetsBackendResourceRelationship;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\ApiProductConcretesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 /**
@@ -26,7 +26,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\ProductsProductImageSetsBackendResourceRelationship\PHPMD)
  */
 class ProductsProductImageSetsBackendResourceRelationshipTester extends Actor
 {
@@ -51,7 +51,7 @@ class ProductsProductImageSetsBackendResourceRelationshipTester extends Actor
             ->setId($productConcreteTransfer->getSku())
             ->setType(static::RESOURCE_CONCRETE_PRODUCTS)
             ->setAttributes(
-                (new ApiProductConcretesAttributesTransfer())->fromArray($productConcreteTransfer->toArray(), true),
+                (new ProductConcretesBackendApiAttributesTransfer())->fromArray($productConcreteTransfer->toArray(), true),
             );
     }
 }

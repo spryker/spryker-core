@@ -7,30 +7,30 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer;
+use Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderTransfer;
 
 interface PushNotificationProviderMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
-     * @param \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer
+     * @return \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer
      */
-    public function mapPushNotificationProviderTransferToApiPushNotificationProvidersAttributesTransfer(
+    public function mapPushNotificationProviderTransferToPushNotificationProvidersBackendApiAttributesTransfer(
         PushNotificationProviderTransfer $pushNotificationProviderTransfer,
-        ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
-    ): ApiPushNotificationProvidersAttributesTransfer;
+        PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
+    ): PushNotificationProvidersBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer
+     * @param \Generated\Shared\Transfer\PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
      */
-    public function mapApiPushNotificationProvidersAttributesTransferToPushNotificationProviderTransfer(
-        ApiPushNotificationProvidersAttributesTransfer $apiPushNotificationProvidersAttributesTransfer,
+    public function mapPushNotificationProvidersBackendApiAttributesTransferToPushNotificationProviderTransfer(
+        PushNotificationProvidersBackendApiAttributesTransfer $pushNotificationProvidersBackendApiAttributesTransfer,
         PushNotificationProviderTransfer $pushNotificationProviderTransfer
     ): PushNotificationProviderTransfer;
 }

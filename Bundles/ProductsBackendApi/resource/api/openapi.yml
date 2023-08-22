@@ -22,7 +22,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                                    $ref: '#/components/schemas/ProductsBackendApiAttributesResponse'
                 '400':
                     description: Bad request
                     content:
@@ -45,14 +45,14 @@ paths:
                 content:
                     application/vnd.api+json:
                         schema:
-                            $ref: '#/components/schemas/ApiProductsAttributesRequest'
+                            $ref: '#/components/schemas/ProductsBackendApiAttributesRequest'
             responses:
                 '201':
                     description: Product created.
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                                $ref: '#/components/schemas/ProductsBackendApiAttributesResponse'
                 '409':
                     description: Conflict.
                     content:
@@ -78,7 +78,7 @@ paths:
                     content:
                         application/vnd.api+json:
                             schema:
-                                $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                                $ref: '#/components/schemas/ProductsBackendApiAttributesResponse'
                 '400':
                     description: Bad request.
                     content:
@@ -110,7 +110,7 @@ paths:
                 content:
                     application/vnd.api+json:
                         schema:
-                            $ref: '#/components/schemas/ApiProductsAttributesPatchRequest'
+                            $ref: '#/components/schemas/ProductsBackendApiAttributesPatchRequest'
             responses:
                 '200':
                     description: Product updated.
@@ -175,24 +175,24 @@ components:
                 type: string
                 example: application/vnd.api+json
     schemas:
-        ApiProductsAttributesResponse:
+        ProductsBackendApiAttributesResponse:
             type: object
             properties:
                 data:
-                    $ref: '#/components/schemas/ApiProductsAttributesData'
+                    $ref: '#/components/schemas/ProductsBackendApiAttributesData'
                 links:
                     $ref: '#/components/schemas/ApiLinks'
-        ApiProductsAttributesRequest:
+        ProductsBackendApiAttributesRequest:
             type: object
             properties:
                 data:
-                    $ref: '#/components/schemas/ApiProductsAttributesRequestData'
-        ApiProductsAttributesPatchRequest:
+                    $ref: '#/components/schemas/ProductsBackendApiAttributesRequestData'
+        ProductsBackendApiAttributesPatchRequest:
             type: object
             properties:
                 data:
-                    $ref: '#/components/schemas/ApiProductsAttributesPatchRequestData'
-        ApiProductsAttributesData:
+                    $ref: '#/components/schemas/ProductsBackendApiAttributesPatchRequestData'
+        ProductsBackendApiAttributesData:
             type: object
             properties:
                 type:
@@ -202,8 +202,8 @@ components:
                     type: string
                     example: '011'
                 attributes:
-                    $ref: '#/components/schemas/ApiProductsAttributes'
-        ApiProductsAttributesRequestData:
+                    $ref: '#/components/schemas/ProductsBackendApiAttributes'
+        ProductsBackendApiAttributesRequestData:
             type: object
             properties:
                 type:
@@ -213,8 +213,8 @@ components:
                     type: string
                     example: '011'
                 attributes:
-                    $ref: '#/components/schemas/ApiProductsAttributesRequestAttributes'
-        ApiProductsAttributesPatchRequestData:
+                    $ref: '#/components/schemas/ProductsBackendApiAttributesRequestAttributes'
+        ProductsBackendApiAttributesPatchRequestData:
             type: object
             properties:
                 type:
@@ -224,8 +224,8 @@ components:
                     type: string
                     example: '011'
                 attributes:
-                    $ref: '#/components/schemas/ApiProductsAttributesPatchRequestAttributes'
-        ApiProductsAttributes:
+                    $ref: '#/components/schemas/ProductsBackendApiAttributesPatchRequestAttributes'
+        ProductsBackendApiAttributes:
             type: object
             properties:
                 productAbstractSku:
@@ -282,7 +282,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/ApiProductConcretes'
-        ApiProductsAttributesRequestAttributes:
+        ProductsBackendApiAttributesRequestAttributes:
             type: object
             required:
                 - productAbstractSku
@@ -343,7 +343,7 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/ApiProductConcretes'
-        ApiProductsAttributesPatchRequestAttributes:
+        ProductsBackendApiAttributesPatchRequestAttributes:
             type: object
             required:
                 - urls

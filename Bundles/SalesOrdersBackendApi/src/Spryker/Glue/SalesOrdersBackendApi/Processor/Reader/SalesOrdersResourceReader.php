@@ -45,9 +45,9 @@ class SalesOrdersResourceReader implements SalesOrdersResourceReaderInterface
     {
         $orderListTransfer = $this->salesFacade->searchOrders($orderListTransfer);
 
-        $apiOrdersAttributesTransfers = $this->salesOrdersResourceMapper->mapOrderListTransferToApiOrdersAttributesTransfers($orderListTransfer);
-        $orderResourceCollectionTransfer = $this->salesOrdersResourceMapper->mapApiOrdersAttributesTransfersToOrderResourceCollectionTransfer(
-            $apiOrdersAttributesTransfers,
+        $ordersBackendApiAttributesTransfers = $this->salesOrdersResourceMapper->mapOrderListTransferToOrdersBackendApiAttributesTransfers($orderListTransfer);
+        $orderResourceCollectionTransfer = $this->salesOrdersResourceMapper->mapOrdersBackendApiAttributesTransfersToOrderResourceCollectionTransfer(
+            $ordersBackendApiAttributesTransfers,
             new OrderResourceCollectionTransfer(),
         );
 

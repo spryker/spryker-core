@@ -7,19 +7,19 @@
 
 namespace Spryker\Glue\ProductPackagingUnitsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 interface ProductMeasurementSalesUnitMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param \Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer $apiProductMeasurementSalesUnitsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer $productMeasurementSalesUnitsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer
      */
-    public function mapProductMeasurementSalesUnitTransferToApiProductMeasurementSalesUnitsAttributesTransfer(
+    public function mapProductMeasurementSalesUnitTransferToProductMeasurementSalesUnitsBackendApiAttributesTransfer(
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        ApiProductMeasurementSalesUnitsAttributesTransfer $apiProductMeasurementSalesUnitsAttributesTransfer
-    ): ApiProductMeasurementSalesUnitsAttributesTransfer;
+        ProductMeasurementSalesUnitsBackendApiAttributesTransfer $productMeasurementSalesUnitsBackendApiAttributesTransfer
+    ): ProductMeasurementSalesUnitsBackendApiAttributesTransfer;
 }

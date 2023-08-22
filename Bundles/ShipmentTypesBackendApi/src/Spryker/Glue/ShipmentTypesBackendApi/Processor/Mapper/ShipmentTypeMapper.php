@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueFilterTransfer;
 use Generated\Shared\Transfer\ShipmentTypeConditionsTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -20,44 +20,44 @@ class ShipmentTypeMapper implements ShipmentTypeMapperInterface
      * @var array<string, string>
      */
     protected const SHIPMENT_TYPES_ATTRIBUTES_SHIPMENT_TYPE_CONDITIONS_FIELD_MAP = [
-        ApiShipmentTypesAttributesTransfer::KEY => ShipmentTypeConditionsTransfer::KEYS,
-        ApiShipmentTypesAttributesTransfer::NAME => ShipmentTypeConditionsTransfer::NAMES,
-        ApiShipmentTypesAttributesTransfer::STORES => ShipmentTypeConditionsTransfer::STORE_NAMES,
+        ShipmentTypesBackendApiAttributesTransfer::KEY => ShipmentTypeConditionsTransfer::KEYS,
+        ShipmentTypesBackendApiAttributesTransfer::NAME => ShipmentTypeConditionsTransfer::NAMES,
+        ShipmentTypesBackendApiAttributesTransfer::STORES => ShipmentTypeConditionsTransfer::STORE_NAMES,
     ];
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer
      */
-    public function mapShipmentTypeTransferToApiShipmentTypesAttributesTransfer(
+    public function mapShipmentTypeTransferToShipmentTypesBackendApiAttributesTransfer(
         ShipmentTypeTransfer $shipmentTypeTransfer,
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
-    ): ApiShipmentTypesAttributesTransfer {
-        $apiShipmentTypesAttributesTransfer->fromArray($shipmentTypeTransfer->toArray(), true);
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
+    ): ShipmentTypesBackendApiAttributesTransfer {
+        $shipmentTypesBackendApiAttributesTransfer->fromArray($shipmentTypeTransfer->toArray(), true);
         foreach ($shipmentTypeTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
-            $apiShipmentTypesAttributesTransfer->addStore($storeTransfer->getNameOrFail());
+            $shipmentTypesBackendApiAttributesTransfer->addStore($storeTransfer->getNameOrFail());
         }
 
-        return $apiShipmentTypesAttributesTransfer;
+        return $shipmentTypesBackendApiAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTypeTransfer
      */
-    public function mapApiShipmentTypesAttributesTransferToShipmentTypeTransfer(
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer,
+    public function mapShipmentTypesBackendApiAttributesTransferToShipmentTypeTransfer(
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer,
         ShipmentTypeTransfer $shipmentTypeTransfer
     ): ShipmentTypeTransfer {
-        $shipmentTypeTransfer->fromArray($apiShipmentTypesAttributesTransfer->modifiedToArray(), true);
+        $shipmentTypeTransfer->fromArray($shipmentTypesBackendApiAttributesTransfer->modifiedToArray(), true);
 
-        if ($apiShipmentTypesAttributesTransfer->getStores() !== []) {
+        if ($shipmentTypesBackendApiAttributesTransfer->getStores() !== []) {
             $storeRelationTransfer = $this->mapStoreNamesToStoreRelationTransfer(
-                $apiShipmentTypesAttributesTransfer->getStores(),
+                $shipmentTypesBackendApiAttributesTransfer->getStores(),
                 new StoreRelationTransfer(),
             );
 
@@ -77,7 +77,7 @@ class ShipmentTypeMapper implements ShipmentTypeMapperInterface
         GlueFilterTransfer $glueFilterTransfer,
         ShipmentTypeConditionsTransfer $shipmentTypeConditionsTransfer
     ): ShipmentTypeConditionsTransfer {
-        if ($glueFilterTransfer->getFieldOrFail() === ApiShipmentTypesAttributesTransfer::IS_ACTIVE) {
+        if ($glueFilterTransfer->getFieldOrFail() === ShipmentTypesBackendApiAttributesTransfer::IS_ACTIVE) {
             return $shipmentTypeConditionsTransfer->setIsActive(
                 $this->getBoolValue($glueFilterTransfer),
             );

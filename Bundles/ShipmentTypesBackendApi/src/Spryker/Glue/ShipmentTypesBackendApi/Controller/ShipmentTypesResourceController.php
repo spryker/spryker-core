@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ShipmentTypesBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 
 /**
@@ -40,7 +40,7 @@ class ShipmentTypesResourceController extends AbstractController
      *                  "ref": "Sort"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request"
      *          }
@@ -75,7 +75,7 @@ class ShipmentTypesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request",
      *              "404": "Not Found"
@@ -108,8 +108,8 @@ class ShipmentTypesResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -117,18 +117,18 @@ class ShipmentTypesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer,
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createShipmentTypeCreator()
-            ->createShipmentType($apiShipmentTypesAttributesTransfer, $glueRequestTransfer);
+            ->createShipmentType($shipmentTypesBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 
     /**
@@ -148,8 +148,8 @@ class ShipmentTypesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiShipmentTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ShipmentTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",
@@ -158,17 +158,17 @@ class ShipmentTypesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function patchAction(
-        ApiShipmentTypesAttributesTransfer $apiShipmentTypesAttributesTransfer,
+        ShipmentTypesBackendApiAttributesTransfer $shipmentTypesBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         return $this->getFactory()
             ->createShipmentTypeUpdater()
-            ->updateShipmentType($apiShipmentTypesAttributesTransfer, $glueRequestTransfer);
+            ->updateShipmentType($shipmentTypesBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 }

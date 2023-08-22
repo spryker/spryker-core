@@ -53,7 +53,7 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
     /**
      * @var string
      */
-    public const PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER';
+    public const PLUGINS_PICKING_LIST_ITEMS_BACKEND_API_ATTRIBUTES_MAPPER = 'PLUGINS_PICKING_LIST_ITEMS_BACKEND_API_ATTRIBUTES_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
@@ -68,7 +68,7 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addStockFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addApiPickingListItemsAttributesMapperPlugins($container);
+        $container = $this->addPickingListItemsBackendApiAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -158,19 +158,19 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
      */
-    protected function addApiPickingListItemsAttributesMapperPlugins(Container $container): Container
+    protected function addPickingListItemsBackendApiAttributesMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER, function () {
-            return $this->getApiPickingListItemsAttributesMapperPlugins();
+        $container->set(static::PLUGINS_PICKING_LIST_ITEMS_BACKEND_API_ATTRIBUTES_MAPPER, function () {
+            return $this->getPickingListItemsBackendApiAttributesMapperPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\PickingListItemsBackendApiAttributesMapperPluginInterface>
      */
-    protected function getApiPickingListItemsAttributesMapperPlugins(): array
+    protected function getPickingListItemsBackendApiAttributesMapperPlugins(): array
     {
         return [];
     }

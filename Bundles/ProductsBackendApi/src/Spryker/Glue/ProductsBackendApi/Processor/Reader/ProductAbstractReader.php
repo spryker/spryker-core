@@ -8,14 +8,6 @@
 namespace Spryker\Glue\ProductsBackendApi\Processor\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsCategoryAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsImageSetAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsImageSetImageAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsLocalizedAttributesAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsProductConcreteLocalizedAttributesAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductsUrlsAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
@@ -24,10 +16,18 @@ use Generated\Shared\Transfer\ProductAbstractConditionsTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductCategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductCategoryConditionsTransfer;
 use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteLocalizedAttributesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageSetBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductImageSetImagesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductLocalizedAttributesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlsBackendApiAttributesTransfer;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToLocaleFacadeInterface;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductCategoryFacadeInterface;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductFacadeInterface;
@@ -146,16 +146,16 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
                 );
         }
 
-        $apiProductsAttributesTransfers = [];
+        $productsBackendApiAttributesTransfers = [];
         foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstractTransfer) {
-            $apiProductsAttributesTransfer = (new ApiProductsAttributesTransfer())
+            $productsBackendApiAttributesTransfer = (new ProductsBackendApiAttributesTransfer())
                 ->fromArray($productAbstractTransfer->toArray(true, true), true)
                 ->setProductAbstractSku($productAbstractTransfer->getSku())
                 ->setAttributes($this->utilEncodingService->decodeJson($productAbstractTransfer->getAttributes(), true) ?? []);
 
             if ($productAbstractTransfer->getStoreRelation()) {
                 foreach ($productAbstractTransfer->getStoreRelation()->getStores() as $storeTransfer) {
-                    $apiProductsAttributesTransfer->addStore($storeTransfer->getNameOrFail());
+                    $productsBackendApiAttributesTransfer->addStore($storeTransfer->getNameOrFail());
                 }
             }
 
@@ -168,61 +168,61 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
             );
 
             foreach ($productCategoryCollectionTransfer->getProductCategories() as $productCategoryTransfer) {
-                $apiProductsAttributesTransfer->addCategory(
-                    (new ApiProductsCategoryAttributesTransfer())
+                $productsBackendApiAttributesTransfer->addCategory(
+                    (new ProductCategoriesBackendApiAttributesTransfer())
                         ->fromArray($productCategoryTransfer->getCategoryOrFail()->toArray(), true),
                 );
             }
 
             foreach ($productAbstractCollectionTransfer->getProductTaxSets() as $productAbstractTaxSetCollectionTransfer) {
                 if ($productAbstractTaxSetCollectionTransfer->getProductAbstractSku() === $productAbstractTransfer->getSku()) {
-                    $apiProductsAttributesTransfer->setTaxSetName($productAbstractTaxSetCollectionTransfer->getTaxSetOrFail()->getNameOrFail());
+                    $productsBackendApiAttributesTransfer->setTaxSetName($productAbstractTaxSetCollectionTransfer->getTaxSetOrFail()->getNameOrFail());
                 }
             }
 
-            $apiProductsAttributesTransfer = $this->mapLocalizedAttributes(
-                $apiProductsAttributesTransfer,
+            $productsBackendApiAttributesTransfer = $this->mapLocalizedAttributes(
+                $productsBackendApiAttributesTransfer,
                 $productAbstractTransfer,
             );
 
             $productImageSetTransfers = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstractOrFail());
             foreach ($productImageSetTransfers as $productImageSetTransfer) {
-                $apiProductsImageSetAttributesTransfer = (new ApiProductsImageSetAttributesTransfer())
+                $productImageSetBackendApiAttributesTransfer = (new ProductImageSetBackendApiAttributesTransfer())
                     ->setName($productImageSetTransfer->getName());
                 if ($productImageSetTransfer->getLocale()) {
-                    $apiProductsImageSetAttributesTransfer->setLocale($productImageSetTransfer->getLocaleOrFail()->getLocaleNameOrFail());
+                    $productImageSetBackendApiAttributesTransfer->setLocale($productImageSetTransfer->getLocaleOrFail()->getLocaleNameOrFail());
                 }
 
                 foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                    $apiProductsImageSetAttributesTransfer->addImage(
-                        (new ApiProductsImageSetImageAttributesTransfer())->fromArray($productImageTransfer->toArray(), true),
+                    $productImageSetBackendApiAttributesTransfer->addImage(
+                        (new ProductImageSetImagesBackendApiAttributesTransfer())->fromArray($productImageTransfer->toArray(), true),
                     );
                 }
 
-                $apiProductsAttributesTransfer->addImageSet($apiProductsImageSetAttributesTransfer);
+                $productsBackendApiAttributesTransfer->addImageSet($productImageSetBackendApiAttributesTransfer);
             }
 
             foreach ($productAbstractCollectionTransfer->getProductConcretes() as $productAbstractConcreteCollectionTransfer) {
                 if ($productAbstractConcreteCollectionTransfer->getProductAbstractSku() === $productAbstractTransfer->getSku()) {
                     foreach ($productAbstractConcreteCollectionTransfer->getProductConcretes() as $productConcreteTransfer) {
-                        $apiProductsAttributesTransfer->addVariant(
-                            $this->mapVariant($productConcreteTransfer, (new ApiProductsProductConcreteAttributesTransfer())),
+                        $productsBackendApiAttributesTransfer->addVariant(
+                            $this->mapVariant($productConcreteTransfer, (new ProductConcretesBackendApiAttributesTransfer())),
                         );
                     }
                 }
             }
 
-            $apiProductsAttributesTransfers[$productAbstractTransfer->getIdProductAbstract()] = $apiProductsAttributesTransfer;
+            $productsBackendApiAttributesTransfers[$productAbstractTransfer->getIdProductAbstract()] = $productsBackendApiAttributesTransfer;
         }
 
-        $apiProductsAttributesTransfers = $this->mapUrls($apiProductsAttributesTransfers);
+        $productsBackendApiAttributesTransfers = $this->mapUrls($productsBackendApiAttributesTransfers);
 
         $glueResponseTransfer = new GlueResponseTransfer();
-        foreach ($apiProductsAttributesTransfers as $apiProductsAttributesTransfer) {
+        foreach ($productsBackendApiAttributesTransfers as $productsBackendApiAttributesTransfer) {
             $glueResourceTransfer = (new GlueResourceTransfer())
-                ->setId($apiProductsAttributesTransfer->getProductAbstractSkuOrFail())
+                ->setId($productsBackendApiAttributesTransfer->getProductAbstractSkuOrFail())
                 ->setType(ProductsBackendApiConfig::RESOURCE_PRODUCT_ABSTRACT)
-                ->setAttributes($apiProductsAttributesTransfer);
+                ->setAttributes($productsBackendApiAttributesTransfer);
 
             $glueResponseTransfer->addResource($glueResourceTransfer);
         }
@@ -233,70 +233,70 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductsAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer
      */
     public function mapLocalizedAttributes(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         ProductAbstractTransfer $productAbstractTransfer
-    ): ApiProductsAttributesTransfer {
-        $apiProductsLocalizedAttributesAttributesTransfers = [];
+    ): ProductsBackendApiAttributesTransfer {
+        $productLocalizedAttributesBackendApiAttributesTransfers = [];
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
-            $apiProductsLocalizedAttributesAttributesTransfers[] = (new ApiProductsLocalizedAttributesAttributesTransfer())
+            $productLocalizedAttributesBackendApiAttributesTransfers[] = (new ProductLocalizedAttributesBackendApiAttributesTransfer())
                 ->fromArray($localizedAttributeTransfer->toArray(), true)
                 ->setLocale($localizedAttributeTransfer->getLocaleOrFail()->getLocaleNameOrFail());
         }
 
-        return $apiProductsAttributesTransfer->setLocalizedAttributes(new ArrayObject($apiProductsLocalizedAttributesAttributesTransfers));
+        return $productsBackendApiAttributesTransfer->setLocalizedAttributes(new ArrayObject($productLocalizedAttributesBackendApiAttributesTransfers));
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer $apiProductsProductConcreteAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer $productConcretesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiProductsProductConcreteAttributesTransfer
+     * @return \Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer
      */
     protected function mapVariant(
         ProductConcreteTransfer $productConcreteTransfer,
-        ApiProductsProductConcreteAttributesTransfer $apiProductsProductConcreteAttributesTransfer
-    ): ApiProductsProductConcreteAttributesTransfer {
-        $apiProductsProductConcreteAttributesTransfer
+        ProductConcretesBackendApiAttributesTransfer $productConcretesBackendApiAttributesTransfer
+    ): ProductConcretesBackendApiAttributesTransfer {
+        $productConcretesBackendApiAttributesTransfer
             ->fromArray($productConcreteTransfer->toArray(true, true), true);
 
-        $apiProductsProductConcreteLocalizedAttributesAttributesTransfers = [];
+        $productConcreteLocalizedAttributesBackendApiAttributesTransfers = [];
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
-            $apiProductsProductConcreteLocalizedAttributesAttributesTransfers[] = (new ApiProductsProductConcreteLocalizedAttributesAttributesTransfer())
+            $productConcreteLocalizedAttributesBackendApiAttributesTransfers[] = (new ProductConcreteLocalizedAttributesBackendApiAttributesTransfer())
                 ->fromArray($localizedAttributeTransfer->toArray(), true)
                 ->setLocale($localizedAttributeTransfer->getLocaleOrFail()->getLocaleNameOrFail());
         }
-        $apiProductsProductConcreteAttributesTransfer->setLocalizedAttributes(new ArrayObject($apiProductsProductConcreteLocalizedAttributesAttributesTransfers));
+        $productConcretesBackendApiAttributesTransfer->setLocalizedAttributes(new ArrayObject($productConcreteLocalizedAttributesBackendApiAttributesTransfers));
 
         $productImageSetTransfers = $this->productImageFacade->getProductImagesSetCollectionByProductId($productConcreteTransfer->getIdProductConcreteOrFail());
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $apiProductsImageSetAttributesTransfer = (new ApiProductsImageSetAttributesTransfer())
+            $productImageSetBackendApiAttributesTransfer = (new ProductImageSetBackendApiAttributesTransfer())
                 ->fromArray($productImageSetTransfer->toArray(), true)
                 ->setLocale($productImageSetTransfer->getLocaleOrFail()->getLocaleNameOrFail());
             foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                $apiProductsImageSetAttributesTransfer->addImage(
-                    (new ApiProductsImageSetImageAttributesTransfer())
+                $productImageSetBackendApiAttributesTransfer->addImage(
+                    (new ProductImageSetImagesBackendApiAttributesTransfer())
                         ->fromArray($productImageTransfer->toArray(), true),
                 );
             }
 
-            $apiProductsProductConcreteAttributesTransfer->addImageSet($apiProductsImageSetAttributesTransfer);
+            $productConcretesBackendApiAttributesTransfer->addImageSet($productImageSetBackendApiAttributesTransfer);
         }
 
-        return $apiProductsProductConcreteAttributesTransfer;
+        return $productConcretesBackendApiAttributesTransfer;
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ApiProductsAttributesTransfer> $apiProductsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer> $productsBackendApiAttributesTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ApiProductsAttributesTransfer>
+     * @return array<\Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer>
      */
-    public function mapUrls(array $apiProductsAttributesTransfers): array
+    public function mapUrls(array $productsBackendApiAttributesTransfers): array
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         $indexedLocaleTransfers = [];
@@ -306,17 +306,17 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
 
         $urlTransfers = $this->productFacade->getProductUrls(
             (new ProductUrlCriteriaFilterTransfer())
-                ->setProductAbstractIds(array_keys($apiProductsAttributesTransfers)),
+                ->setProductAbstractIds(array_keys($productsBackendApiAttributesTransfers)),
         );
 
         foreach ($urlTransfers as $urlTransfer) {
-            $apiProductsAttributesTransfers[$urlTransfer->getFkResourceProductAbstractOrFail()]->addUrl(
-                (new ApiProductsUrlsAttributesTransfer())
+            $productsBackendApiAttributesTransfers[$urlTransfer->getFkResourceProductAbstractOrFail()]->addUrl(
+                (new ProductUrlsBackendApiAttributesTransfer())
                     ->fromArray($urlTransfer->toArray(), true)
                     ->setLocale($indexedLocaleTransfers[$urlTransfer->getFkLocale()]->getLocaleName() ?? null),
             );
         }
 
-        return $apiProductsAttributesTransfers;
+        return $productsBackendApiAttributesTransfers;
     }
 }

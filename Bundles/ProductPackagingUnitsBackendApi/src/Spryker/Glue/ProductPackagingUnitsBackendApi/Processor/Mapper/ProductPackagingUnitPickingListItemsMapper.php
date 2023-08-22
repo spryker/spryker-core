@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ProductPackagingUnitsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\ApiProductMeasurementSalesUnitsAttributesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitsBackendApiAttributesTransfer;
 
 class ProductPackagingUnitPickingListItemsMapper implements ProductPackagingUnitPickingListItemsMapperInterface
 {
@@ -28,30 +28,30 @@ class ProductPackagingUnitPickingListItemsMapper implements ProductPackagingUnit
 
     /**
      * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemTransfers
-     * @param array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $apiPickingListItemsAttributesTransfers
+     * @param array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer> $pickingListItemsBackendApiAttributesTransfers
      *
-     * @return array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer>
+     * @return array<string, \Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer>
      */
-    public function mapPickingListItemTransfersToApiPickingListItemsAttributesTransfers(
+    public function mapPickingListItemTransfersToPickingListItemsBackendApiAttributesTransfers(
         array $pickingListItemTransfers,
-        array $apiPickingListItemsAttributesTransfers
+        array $pickingListItemsBackendApiAttributesTransfers
     ): array {
         $pickingListItemTransfersIndexedByOrderItemUuid = $this->getPickingListItemTransfersIndexedByOrderItemUuid($pickingListItemTransfers);
-        foreach ($apiPickingListItemsAttributesTransfers as $apiPickingListItemsAttributesTransfer) {
-            $pickingListItemTransfer = $pickingListItemTransfersIndexedByOrderItemUuid[$apiPickingListItemsAttributesTransfer->getOrderItemOrFail()->getUuidOrFail()] ?? null;
+        foreach ($pickingListItemsBackendApiAttributesTransfers as $pickingListItemsBackendApiAttributesTransfer) {
+            $pickingListItemTransfer = $pickingListItemTransfersIndexedByOrderItemUuid[$pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail()->getUuidOrFail()] ?? null;
             if (!$pickingListItemTransfer) {
                 continue;
             }
 
-            $apiOrderItemsAttributesTransfer = $this->mapItemTransferToApiOrderItemsAttributesTransfer(
+            $orderItemsBackendApiAttributesTransfer = $this->mapItemTransferToOrderItemsBackendApiAttributesTransfer(
                 $pickingListItemTransfer->getOrderItemOrFail(),
-                $apiPickingListItemsAttributesTransfer->getOrderItemOrFail(),
+                $pickingListItemsBackendApiAttributesTransfer->getOrderItemOrFail(),
             );
 
-            $apiPickingListItemsAttributesTransfer->setOrderItem($apiOrderItemsAttributesTransfer);
+            $pickingListItemsBackendApiAttributesTransfer->setOrderItem($orderItemsBackendApiAttributesTransfer);
         }
 
-        return $apiPickingListItemsAttributesTransfers;
+        return $pickingListItemsBackendApiAttributesTransfers;
     }
 
     /**
@@ -71,25 +71,25 @@ class ProductPackagingUnitPickingListItemsMapper implements ProductPackagingUnit
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer $apiOrderItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer $orderItemsBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiOrderItemsAttributesTransfer
+     * @return \Generated\Shared\Transfer\OrderItemsBackendApiAttributesTransfer
      */
-    protected function mapItemTransferToApiOrderItemsAttributesTransfer(
+    protected function mapItemTransferToOrderItemsBackendApiAttributesTransfer(
         ItemTransfer $itemTransfer,
-        ApiOrderItemsAttributesTransfer $apiOrderItemsAttributesTransfer
-    ): ApiOrderItemsAttributesTransfer {
+        OrderItemsBackendApiAttributesTransfer $orderItemsBackendApiAttributesTransfer
+    ): OrderItemsBackendApiAttributesTransfer {
         if (!$itemTransfer->getAmountSalesUnit() || !$itemTransfer->getAmount()) {
-            return $apiOrderItemsAttributesTransfer;
+            return $orderItemsBackendApiAttributesTransfer;
         }
 
-        $apiProductMeasurementSalesUnitsAttributesTransfer = $this->productMeasurementSalesUnitMapper->mapProductMeasurementSalesUnitTransferToApiProductMeasurementSalesUnitsAttributesTransfer(
+        $productMeasurementSalesUnitsBackendApiAttributesTransfer = $this->productMeasurementSalesUnitMapper->mapProductMeasurementSalesUnitTransferToProductMeasurementSalesUnitsBackendApiAttributesTransfer(
             $itemTransfer->getAmountSalesUnit(),
-            new ApiProductMeasurementSalesUnitsAttributesTransfer(),
+            new ProductMeasurementSalesUnitsBackendApiAttributesTransfer(),
         );
 
-        return $apiOrderItemsAttributesTransfer
+        return $orderItemsBackendApiAttributesTransfer
             ->setAmount($itemTransfer->getAmount())
-            ->setAmountSalesUnit($apiProductMeasurementSalesUnitsAttributesTransfer);
+            ->setAmountSalesUnit($productMeasurementSalesUnitsBackendApiAttributesTransfer);
     }
 }

@@ -8,10 +8,10 @@
 namespace SprykerTest\Glue\ShipmentsBackendApi\Resource;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer;
 use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
 use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\SalesShipmentResourceCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -148,10 +148,10 @@ class GetSalesShipmentsResourceCollectionTest extends Unit
         $salesShipmentResourceTransfer = $salesShipmentsResourceCollectionTransfer->getSalesShipmentResources()->getIterator()->current();
         $this->assertSame($this->salesShipmentEntity->getUuid(), $salesShipmentResourceTransfer->getId());
         $this->assertSame(static::RESOURCE_SALES_SHIPMENTS, $salesShipmentResourceTransfer->getType());
-        $this->assertInstanceOf(ApiSalesShipmentsAttributesTransfer::class, $salesShipmentResourceTransfer->getAttributes());
+        $this->assertInstanceOf(SalesShipmentsBackendApiAttributesTransfer::class, $salesShipmentResourceTransfer->getAttributes());
 
-        /** @var \Generated\Shared\Transfer\ApiSalesShipmentsAttributesTransfer $apiSalesShipmentsAttributesTransfer */
-        $apiSalesShipmentsAttributesTransfer = $salesShipmentResourceTransfer->getAttributesOrFail();
-        $this->assertSame($this->salesShipmentEntity->getRequestedDeliveryDate(), $apiSalesShipmentsAttributesTransfer->getRequestedDeliveryDate());
+        /** @var \Generated\Shared\Transfer\SalesShipmentsBackendApiAttributesTransfer $salesShipmentsBackendApiAttributesTransfer */
+        $salesShipmentsBackendApiAttributesTransfer = $salesShipmentResourceTransfer->getAttributesOrFail();
+        $this->assertSame($this->salesShipmentEntity->getRequestedDeliveryDate(), $salesShipmentsBackendApiAttributesTransfer->getRequestedDeliveryDate());
     }
 }

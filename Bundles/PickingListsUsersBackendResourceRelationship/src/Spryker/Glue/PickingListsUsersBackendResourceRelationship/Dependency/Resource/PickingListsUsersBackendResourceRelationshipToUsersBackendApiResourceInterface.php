@@ -17,5 +17,5 @@ interface PickingListsUsersBackendResourceRelationshipToUsersBackendApiResourceI
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
-    public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer;
+    public function getUsersResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer;
 }

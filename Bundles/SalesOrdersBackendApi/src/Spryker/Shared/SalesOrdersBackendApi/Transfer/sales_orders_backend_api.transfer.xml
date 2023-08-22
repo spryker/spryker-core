@@ -12,7 +12,7 @@
         <property name="attributes" type="AbstractAttributes"/>
     </transfer>
 
-    <transfer name="ApiOrdersAttributes" strict="true">
+    <transfer name="OrdersBackendApiAttributes" strict="true">
         <property name="orderReference" type="string"/>
     </transfer>
 

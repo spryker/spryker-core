@@ -17,6 +17,15 @@ interface UserResourceReaderInterface
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
+    public function getUsersResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer;
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReaderInterface::getUsersResources()} instead.
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
     public function getUserResources(UserCriteriaTransfer $userCriteriaTransfer): UserResourceCollectionTransfer;
 
     /**

@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Glue\CategoriesBackendApi;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
 use Generated\Shared\Transfer\ApiCategoryParentTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use SprykerTest\Glue\Testify\Tester\ApiEndToEndTester;
 
 /**
@@ -25,7 +25,7 @@ use SprykerTest\Glue\Testify\Tester\ApiEndToEndTester;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\CategoriesBackendApi\PHPMD)
  */
 class CategoriesBackendApiTester extends ApiEndToEndTester
 {
@@ -106,7 +106,7 @@ class CategoriesBackendApiTester extends ApiEndToEndTester
     public function seeResponseJsonHasCategoryParent(string $parentCategoryKey, int $sortOrder): void
     {
         $this->seeResponseJsonPathContains([
-            ApiCategoryAttributesTransfer::PARENT => [
+            CategoriesBackendApiAttributesTransfer::PARENT => [
                 ApiCategoryParentTransfer::CATEGORY_KEY => $parentCategoryKey,
                 ApiCategoryParentTransfer::SORT_ORDER => $sortOrder,
             ],

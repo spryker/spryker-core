@@ -24,7 +24,7 @@ use Spryker\Glue\UsersBackendApi\UsersBackendApiResourceInterface;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\UsersBackendApi\PHPMD)
  */
 class UsersBackendApiResourceTester extends Actor
 {

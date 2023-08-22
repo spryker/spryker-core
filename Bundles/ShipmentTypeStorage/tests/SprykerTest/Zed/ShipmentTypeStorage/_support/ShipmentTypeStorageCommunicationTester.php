@@ -24,7 +24,7 @@ use Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeQuery;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShipmentTypeStorage\PHPMD)
  */
 class ShipmentTypeStorageCommunicationTester extends Actor
 {

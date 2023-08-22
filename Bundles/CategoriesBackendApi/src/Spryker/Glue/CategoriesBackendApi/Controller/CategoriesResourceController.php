@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CategoriesBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
@@ -23,7 +23,7 @@ class CategoriesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve category by categoryKey."
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
@@ -49,7 +49,7 @@ class CategoriesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieve category collection."
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
@@ -75,8 +75,8 @@ class CategoriesResourceController extends AbstractController
      *          "summary": [
      *              "Update category."
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
@@ -85,16 +85,18 @@ class CategoriesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function patchAction(ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
-    {
+    public function patchAction(
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): GlueResponseTransfer {
         return $this->getFactory()
             ->createCategoryUpdater()
-            ->updateCategory($apiCategoryAttributesTransfer, $glueRequestTransfer);
+            ->updateCategory($categoriesBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 
     /**
@@ -103,8 +105,8 @@ class CategoriesResourceController extends AbstractController
      *          "summary": [
      *              "Delete category by categoryKey."
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
@@ -129,8 +131,8 @@ class CategoriesResourceController extends AbstractController
      *          "summary": [
      *              "Create category."
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiCategoryAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\CategoriesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request.",
      *              "403": "Unauthorized request.",
@@ -139,15 +141,17 @@ class CategoriesResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function postAction(ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
-    {
+    public function postAction(
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): GlueResponseTransfer {
         return $this->getFactory()
             ->createCategoryCreator()
-            ->createCategory($apiCategoryAttributesTransfer, $glueRequestTransfer);
+            ->createCategory($categoriesBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 }

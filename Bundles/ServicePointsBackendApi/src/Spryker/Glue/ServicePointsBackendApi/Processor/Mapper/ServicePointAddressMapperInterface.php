@@ -7,31 +7,31 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRelationshipTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
 
 interface ServicePointAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
-     * @param \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer
      */
-    public function mapServicePointAddressTransferToApiServicePointAddressesAttributesTransfer(
+    public function mapServicePointAddressTransferToServicePointAddressesBackendApiAttributesTransfer(
         ServicePointAddressTransfer $servicePointAddressTransfer,
-        ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
-    ): ApiServicePointAddressesAttributesTransfer;
+        ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
+    ): ServicePointAddressesBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
      */
-    public function mapApiServicePointAddressesAttributesTransferToServicePointAddressTransfer(
-        ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer,
+    public function mapServicePointAddressesBackendApiAttributesTransferToServicePointAddressTransfer(
+        ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer,
         ServicePointAddressTransfer $servicePointAddressTransfer
     ): ServicePointAddressTransfer;
 

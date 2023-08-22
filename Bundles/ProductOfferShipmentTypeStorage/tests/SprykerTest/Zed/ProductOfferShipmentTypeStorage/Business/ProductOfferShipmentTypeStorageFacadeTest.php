@@ -321,6 +321,28 @@ class ProductOfferShipmentTypeStorageFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testWriteCollectionByShipmentTypeEventsShouldAvoidEndlessLoopWhenProductOfferShipmentTypeCollectionIsEmpty(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+
+        $eventEntityTransfer = (new EventEntityTransfer())->setId($shipmentTypeTransfer->getIdShipmentTypeOrFail());
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByShipmentTypeEvents([$eventEntityTransfer]);
+
+        // Assert
+        $productOfferShipmentTypeStorageTransfers = $this->tester->getProductOfferShipmentTypeStorages();
+        $this->assertEmpty($productOfferShipmentTypeStorageTransfers);
+    }
+
+    /**
+     * @return void
+     */
     public function testWriteCollectionByShipmentTypeStoreEventsPersistsStorageData(): void
     {
         // Arrange
@@ -360,6 +382,30 @@ class ProductOfferShipmentTypeStorageFacadeTest extends Unit
             $shipmentTypeTransfer1,
             $shipmentTypeTransfer2,
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByShipmentTypeStoreEventsShouldAvoidEndlessLoopWhenProductOfferShipmentTypeCollectionIsEmpty(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+
+        $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
+            static::COL_FK_SHIPMENT_TYPE => $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByShipmentTypeStoreEvents([$eventEntityTransfer]);
+
+        // Assert
+        $productOfferShipmentTypeStorageTransfers = $this->tester->getProductOfferShipmentTypeStorages();
+        $this->assertEmpty($productOfferShipmentTypeStorageTransfers);
     }
 
     /**

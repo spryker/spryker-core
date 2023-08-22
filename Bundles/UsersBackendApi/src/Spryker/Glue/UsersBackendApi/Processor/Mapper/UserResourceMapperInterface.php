@@ -20,6 +20,19 @@ interface UserResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
      */
+    public function mapUserCollectionToUsersResourceCollection(
+        UserCollectionTransfer $userCollectionTransfer,
+        UserResourceCollectionTransfer $userResourceCollectionTransfer
+    ): UserResourceCollectionTransfer;
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapperInterface::mapUserCollectionToUsersResourceCollection()} instead.
+     *
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     * @param \Generated\Shared\Transfer\UserResourceCollectionTransfer $userResourceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserResourceCollectionTransfer
+     */
     public function mapUserCollectionToUserResourceCollection(
         UserCollectionTransfer $userCollectionTransfer,
         UserResourceCollectionTransfer $userResourceCollectionTransfer

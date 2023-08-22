@@ -8,8 +8,8 @@
 namespace SprykerTest\Glue\PickingListsWarehousesBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiWarehousesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer;
 use Spryker\Glue\PickingListsWarehousesBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\WarehousesByPickingListsBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\PickingListsWarehousesBackendResourceRelationship\PickingListsWarehousesBackendResourceRelationshipTester;
 
@@ -137,10 +137,10 @@ class WarehousesByPickingListsBackendResourceRelationshipPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer */
         $glueResourceTransfer = $glueRelationshipTransfer->getResources()->getIterator()->current();
 
-        $apiWarehousesAttributesTransfer = (new ApiWarehousesAttributesTransfer())
+        $warehousesBackendApiAttributesTransfer = (new WarehousesBackendApiAttributesTransfer())
             ->fromArray($glueResourceTransfer->getAttributes()->toArray(), true);
 
-        $this->assertSame($pickingListTransfer->getWarehouse()->getName(), $apiWarehousesAttributesTransfer->getName());
+        $this->assertSame($pickingListTransfer->getWarehouse()->getName(), $warehousesBackendApiAttributesTransfer->getName());
     }
 
     /**

@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\ProductsBackendApi\Controller;
 
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
@@ -26,7 +26,7 @@ class ProductsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
      *          "responses": {
      *              "404": "Not Found",
      *              "400": "Conflict",
@@ -53,7 +53,7 @@ class ProductsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
      *          "responses": {
      *              "404": "Not Found",
      *              "400": "Conflict",
@@ -80,8 +80,8 @@ class ProductsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
      *          "responses": {
      *              "404": "Not Found",
      *              "400": "Conflict",
@@ -90,16 +90,16 @@ class ProductsResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function postAction(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        return $this->getFactory()->createProductAbstractCreator()->createProductAbstract($apiProductsAttributesTransfer, $glueRequestTransfer);
+        return $this->getFactory()->createProductAbstractCreator()->createProductAbstract($productsBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 
     /**
@@ -111,8 +111,8 @@ class ProductsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiProductsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ProductsBackendApiAttributesTransfer",
      *          "responses": {
      *              "404": "Not Found",
      *              "400": "Conflict",
@@ -121,15 +121,15 @@ class ProductsResourceController extends AbstractController
      *     }
      * })
      *
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function patchAction(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        return $this->getFactory()->createProductAbstractUpdater()->updateProductAbstract($apiProductsAttributesTransfer, $glueRequestTransfer);
+        return $this->getFactory()->createProductAbstractUpdater()->updateProductAbstract($productsBackendApiAttributesTransfer, $glueRequestTransfer);
     }
 }

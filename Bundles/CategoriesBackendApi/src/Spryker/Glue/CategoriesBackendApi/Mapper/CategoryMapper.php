@@ -8,9 +8,9 @@
 namespace Spryker\Glue\CategoriesBackendApi\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiCategoryAttributesTransfer;
 use Generated\Shared\Transfer\ApiCategoryImageTransfer;
 use Generated\Shared\Transfer\ApiCategoryParentTransfer;
+use Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
@@ -56,37 +56,37 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function mapApiCategoryAttributesTransferToCategoryTransfer(
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer,
+    public function mapCategoriesBackendApiAttributesTransferToCategoryTransfer(
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
         CategoryTransfer $categoryTransfer
     ): CategoryTransfer {
         $categoryLocalizedAttributes = $categoryTransfer->getLocalizedAttributes();
-        $categoryTransfer->fromArray($apiCategoryAttributesTransfer->modifiedToArray(), true);
+        $categoryTransfer->fromArray($categoriesBackendApiAttributesTransfer->modifiedToArray(), true);
 
         $categoryTransfer->setLocalizedAttributes(
             $this->mapApiCategoryLocalizedAttributesTransfersToCategoryLocalizedAttributesTransfers(
-                $apiCategoryAttributesTransfer,
+                $categoriesBackendApiAttributesTransfer,
                 $categoryLocalizedAttributes,
             ),
         );
 
         $categoryTransfer->setImageSets(
-            $this->mapApiCategoryImageSetsToCategoryImageSets($apiCategoryAttributesTransfer->getImageSets(), new ArrayObject()),
+            $this->mapApiCategoryImageSetsToCategoryImageSets($categoriesBackendApiAttributesTransfer->getImageSets(), new ArrayObject()),
         );
 
         $categoryTransfer->setStoreRelation(
-            $this->mapStoreNamesToStoreRelationTransfer($apiCategoryAttributesTransfer->getStores()),
+            $this->mapStoreNamesToStoreRelationTransfer($categoriesBackendApiAttributesTransfer->getStores()),
         );
 
-        if ($apiCategoryAttributesTransfer->getParent()) {
+        if ($categoriesBackendApiAttributesTransfer->getParent()) {
             $categoryTransfer->setCategoryNode(
                 $this->mapApiCategoryParentTransferToNodeTransfer(
-                    $apiCategoryAttributesTransfer->getParentOrFail(),
+                    $categoriesBackendApiAttributesTransfer->getParentOrFail(),
                     $categoryTransfer,
                     $categoryTransfer->getCategoryNode() ?? new NodeTransfer(),
                 ),
@@ -97,13 +97,13 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer
+     * @param \Generated\Shared\Transfer\CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>
      */
     protected function mapApiCategoryLocalizedAttributesTransfersToCategoryLocalizedAttributesTransfers(
-        ApiCategoryAttributesTransfer $apiCategoryAttributesTransfer,
+        CategoriesBackendApiAttributesTransfer $categoriesBackendApiAttributesTransfer,
         ArrayObject $categoryLocalizedAttributesTransfers
     ): ArrayObject {
         $localeTransfersMap = $this->localeFacade->getLocaleCollection();
@@ -115,7 +115,7 @@ class CategoryMapper implements CategoryMapperInterface
             $localeNameToCategoryLocalizedAttributesTransferMap[$localeName] = $categoryLocalizedAttributesTransfer;
         }
 
-        foreach ($apiCategoryAttributesTransfer->getLocalizedAttributes() as $apiLocalizedAttributeTransfer) {
+        foreach ($categoriesBackendApiAttributesTransfer->getLocalizedAttributes() as $apiLocalizedAttributeTransfer) {
             $localeName = $apiLocalizedAttributeTransfer->getLocaleOrFail();
             if (!array_key_exists($localeName, $localeTransfersMap)) {
                 continue;
@@ -145,13 +145,13 @@ class CategoryMapper implements CategoryMapperInterface
     protected function mapApiCategoryImageSetsToCategoryImageSets(ArrayObject $apiCategoryImageSets, ArrayObject $categoryImageSets): Arrayobject
     {
         $localeTransfersMap = $this->localeFacade->getLocaleCollection();
-        foreach ($apiCategoryImageSets as $apiCategoryAttributesImageSetTransfer) {
-            $imageSetTransfer = (new CategoryImageSetTransfer())->fromArray($apiCategoryAttributesImageSetTransfer->toArray(), true);
+        foreach ($apiCategoryImageSets as $apiCategoryImageSetTransfer) {
+            $imageSetTransfer = (new CategoryImageSetTransfer())->fromArray($apiCategoryImageSetTransfer->toArray(), true);
 
-            $localeTransfer = $localeTransfersMap[$apiCategoryAttributesImageSetTransfer->getLocaleOrFail()];
+            $localeTransfer = $localeTransfersMap[$apiCategoryImageSetTransfer->getLocaleOrFail()];
             $imageSetTransfer->setLocale($localeTransfer);
 
-            foreach ($apiCategoryAttributesImageSetTransfer->getImages() as $apiCategoryImageTransfer) {
+            foreach ($apiCategoryImageSetTransfer->getImages() as $apiCategoryImageTransfer) {
                 $imageSetTransfer->addCategoryImage($this->mapApiCategoryImageTransferToCategoryImageTransfer($apiCategoryImageTransfer));
             }
 

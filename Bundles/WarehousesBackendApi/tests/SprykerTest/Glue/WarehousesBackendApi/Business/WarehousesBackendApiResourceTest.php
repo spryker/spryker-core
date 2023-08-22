@@ -8,9 +8,9 @@
 namespace SprykerTest\Glue\WarehousesBackendApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiWarehousesAttributesTransfer;
 use Generated\Shared\Transfer\StockConditionsTransfer;
 use Generated\Shared\Transfer\StockCriteriaTransfer;
+use Generated\Shared\Transfer\WarehousesBackendApiAttributesTransfer;
 use SprykerTest\Glue\WarehousesBackendApi\WarehousesBackendApiTester;
 
 /**
@@ -116,9 +116,9 @@ class WarehousesBackendApiResourceTest extends Unit
         // Assert
         /** @var \Generated\Shared\Transfer\GlueResourceTransfer $warehouseResource */
         $warehouseResource = $warehouseResourceCollectionTransfer->getWarehouseResources()->getIterator()->current();
-        $apiWarehousesAttributesTransfer = (new ApiWarehousesAttributesTransfer())
+        $warehousesBackendApiAttributesTransfer = (new WarehousesBackendApiAttributesTransfer())
             ->fromArray($warehouseResource->getAttributes()->toArray(), true);
 
-        $this->assertSame($stockTransfer->getName(), $apiWarehousesAttributesTransfer->getName());
+        $this->assertSame($stockTransfer->getName(), $warehousesBackendApiAttributesTransfer->getName());
     }
 }

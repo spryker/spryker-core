@@ -76,9 +76,9 @@ class ServiceTypeUpdater implements ServiceTypeUpdaterInterface
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
         /**
-         * @var \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
+         * @var \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
          */
-        $apiServiceTypesAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
+        $serviceTypesBackendApiAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
         $serviceTypeTransfer = $this->findServiceType($glueResourceTransfer->getIdOrFail());
         if (!$serviceTypeTransfer) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
@@ -87,8 +87,8 @@ class ServiceTypeUpdater implements ServiceTypeUpdaterInterface
             );
         }
 
-        $serviceTypeTransfer = $this->serviceTypeMapper->mapApiServiceTypesAttributesTransferToServiceTypeTransfer(
-            $apiServiceTypesAttributesTransfer,
+        $serviceTypeTransfer = $this->serviceTypeMapper->mapServiceTypesBackendApiAttributesTransferToServiceTypeTransfer(
+            $serviceTypesBackendApiAttributesTransfer,
             $serviceTypeTransfer,
         );
 

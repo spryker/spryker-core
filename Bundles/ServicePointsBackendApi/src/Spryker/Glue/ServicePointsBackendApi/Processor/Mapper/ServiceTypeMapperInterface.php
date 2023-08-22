@@ -8,31 +8,31 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTypeResourceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServiceTypeTransfer;
 
 interface ServiceTypeMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
-     * @param \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer
+     * @return \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer
      */
-    public function mapServiceTypeTransferToApiServiceTypesAttributesTransfer(
+    public function mapServiceTypeTransferToServiceTypesBackendApiAttributesTransfer(
         ServiceTypeTransfer $serviceTypeTransfer,
-        ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
-    ): ApiServiceTypesAttributesTransfer;
+        ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
+    ): ServiceTypesBackendApiAttributesTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ServiceTypeTransfer
      */
-    public function mapApiServiceTypesAttributesTransferToServiceTypeTransfer(
-        ApiServiceTypesAttributesTransfer $apiServiceTypesAttributesTransfer,
+    public function mapServiceTypesBackendApiAttributesTransferToServiceTypeTransfer(
+        ServiceTypesBackendApiAttributesTransfer $serviceTypesBackendApiAttributesTransfer,
         ServiceTypeTransfer $serviceTypeTransfer
     ): ServiceTypeTransfer;
 

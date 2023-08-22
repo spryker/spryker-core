@@ -9,13 +9,13 @@ namespace SprykerTest\Glue\ServicePointsBackendApi\Plugin;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
-use Generated\Shared\Transfer\ApiServicePointsAttributesTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeBridge;
 use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\ServicePointAddressesByServicePointsBackendResourceRelationshipPlugin;
@@ -78,7 +78,7 @@ class ServicePointAddressesByServicePointsBackendResourceRelationshipPluginTest 
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_POINT_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
-                ->setAttributes(new ApiServicePointsAttributesTransfer()),
+                ->setAttributes(new ServicePointsBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -98,7 +98,7 @@ class ServicePointAddressesByServicePointsBackendResourceRelationshipPluginTest 
             ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINT_ADDRESSES,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiServicePointAddressesAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(ServicePointAddressesBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
 
         $this->assertSame(static::SERVICE_POINT_ADDRESS_UUID, $glueResourceTransfer->getId());
     }
@@ -116,7 +116,7 @@ class ServicePointAddressesByServicePointsBackendResourceRelationshipPluginTest 
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_POINT_UUID)
                 ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS)
-                ->setAttributes(new ApiServicePointsAttributesTransfer()),
+                ->setAttributes(new ServicePointsBackendApiAttributesTransfer()),
         ];
 
         // Act
@@ -145,7 +145,7 @@ class ServicePointAddressesByServicePointsBackendResourceRelationshipPluginTest 
             (new GlueResourceTransfer())
                 ->setId(static::SERVICE_POINT_UUID)
                 ->setType(static::GLUE_RESOURCE_NOT_EXISTING)
-                ->setAttributes(new ApiServicePointsAttributesTransfer()),
+                ->setAttributes(new ServicePointsBackendApiAttributesTransfer()),
         ];
 
         // Act

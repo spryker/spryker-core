@@ -77,9 +77,9 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
         /**
-         * @var \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
+         * @var \Generated\Shared\Transfer\ServicePointsBackendApiAttributesTransfer $servicePointsBackendApiAttributesTransfer
          */
-        $apiServicePointsAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
+        $servicePointsBackendApiAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
 
         $servicePointTransfer = $this->findServicePoint($glueResourceTransfer->getIdOrFail());
 
@@ -91,8 +91,8 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
                 );
         }
 
-        $servicePointTransfer = $this->servicePointMapper->mapApiServicePointsAttributesTransferToServicePointTransfer(
-            $apiServicePointsAttributesTransfer,
+        $servicePointTransfer = $this->servicePointMapper->mapServicePointsBackendApiAttributesTransferToServicePointTransfer(
+            $servicePointsBackendApiAttributesTransfer,
             $servicePointTransfer,
         );
 

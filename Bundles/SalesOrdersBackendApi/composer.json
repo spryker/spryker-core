@@ -7,7 +7,7 @@
         "php": ">=8.0",
         "spryker/kernel": "^3.66.0",
         "spryker/sales": "^11.40.0",
-        "spryker/sales-orders-backend-api-extension": "^0.1.0",
+        "spryker/sales-orders-backend-api-extension": "^0.2.0",
         "spryker/transfer": "^3.31.0"
     },
     "require-dev": {

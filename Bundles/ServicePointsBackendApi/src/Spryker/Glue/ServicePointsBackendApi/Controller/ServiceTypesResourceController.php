@@ -39,7 +39,7 @@ class ServiceTypesResourceController extends AbstractController
      *                  "ref": "Sort"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -75,7 +75,7 @@ class ServiceTypesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",
@@ -109,8 +109,8 @@ class ServiceTypesResourceController extends AbstractController
      *                  "ref": "ContentType"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request"
@@ -146,8 +146,8 @@ class ServiceTypesResourceController extends AbstractController
      *                  "ref": "Fields"
      *              }
      *          ],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
-     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiServiceTypesAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ServiceTypesBackendApiAttributesTransfer",
      *          "responses": {
      *              "400": "Bad Request",
      *              "403": "Unauthorized request",

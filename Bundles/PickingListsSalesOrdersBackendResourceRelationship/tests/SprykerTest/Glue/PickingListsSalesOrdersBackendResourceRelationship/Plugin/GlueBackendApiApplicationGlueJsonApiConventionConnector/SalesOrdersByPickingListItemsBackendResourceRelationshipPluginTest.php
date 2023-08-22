@@ -8,9 +8,9 @@
 namespace SprykerTest\Glue\PickingListsSalesOrdersBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ApiOrdersAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\OrdersBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Spryker\Glue\PickingListsSalesOrdersBackendResourceRelationship\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\SalesOrdersByPickingListItemsBackendResourceRelationshipPlugin;
 use SprykerTest\Glue\PickingListsSalesOrdersBackendResourceRelationship\PickingListsSalesOrdersBackendResourceRelationshipTester;
@@ -110,7 +110,7 @@ class SalesOrdersByPickingListItemsBackendResourceRelationshipPluginTest extends
             static::RESOURCE_SALES_ORDERS,
             $glueResourceTransfer->getType(),
         );
-        $this->assertInstanceOf(ApiOrdersAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertInstanceOf(OrdersBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
         $this->assertSame($expectedResourceId, $glueResourceTransfer->getId());
     }
 }

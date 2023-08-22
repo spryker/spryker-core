@@ -36,7 +36,7 @@ class ShipmentTypeFilter implements ShipmentTypeFilterInterface
      */
     public function filterUnavailableProductOfferShipmentTypes(
         ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
-        QuoteTransfer $quoteTransfer,
+        QuoteTransfer $quoteTransfer
     ): ShipmentTypeStorageCollectionTransfer {
         $productOfferStorageTransfers = $this->getProductOfferStoragesGroupedBySku($quoteTransfer);
         $shipmentTypeStorageTransfers = $this->getShipmentTypeStoragesIndexedByKey($shipmentTypeStorageCollectionTransfer);
@@ -58,7 +58,7 @@ class ShipmentTypeFilter implements ShipmentTypeFilterInterface
      */
     protected function filterOutShipmentTypes(
         array $shipmentTypeStorageTransfers,
-        array $productOfferStorageTransfers,
+        array $productOfferStorageTransfers
     ): array {
         $filteredShipmentTypeStorages = [];
 
@@ -83,7 +83,7 @@ class ShipmentTypeFilter implements ShipmentTypeFilterInterface
      * @return array<string, \Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
      */
     protected function getShipmentTypeStoragesIndexedByKey(
-        ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer,
+        ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer
     ): array {
         $indexedShipmentTypeStorages = [];
         foreach ($shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages() as $shipmentTypeStorageTransfer) {
@@ -142,7 +142,7 @@ class ShipmentTypeFilter implements ShipmentTypeFilterInterface
     protected function filterShipmentTypeStorages(
         array $productOfferStorageTransfers,
         array $shipmentTypeStorageTransfers,
-        array $filteredShipmentTypeStorages,
+        array $filteredShipmentTypeStorages
     ): array {
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
             /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorages */

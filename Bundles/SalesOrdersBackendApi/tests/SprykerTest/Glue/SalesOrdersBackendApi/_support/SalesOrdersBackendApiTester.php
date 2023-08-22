@@ -27,7 +27,7 @@ use Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface;
  * @method void pause()
  * @method \Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\SalesOrdersBackendApi\PHPMD)
  */
 class SalesOrdersBackendApiTester extends Actor
 {

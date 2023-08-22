@@ -32,7 +32,7 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\ServicePointsBackendApi\PHPMD)
  */
 class ServicePointsBackendApiTester extends Actor
 {

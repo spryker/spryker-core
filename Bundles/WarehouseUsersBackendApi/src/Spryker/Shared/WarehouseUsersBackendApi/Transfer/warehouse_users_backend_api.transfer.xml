@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ApiWarehouseUserAssignmentsAttributes" strict="true">
+    <transfer name="WarehouseUserAssignmentsBackendApiAttributes" strict="true">
         <property name="userUuid" type="string"/>
-        <property name="warehouse" type="ApiWarehousesAttributes"/>
+        <property name="warehouse" type="WarehousesBackendApiAttributes"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
-    <transfer name="ApiWarehousesAttributes" strict="true">
+    <transfer name="WarehousesBackendApiAttributes" strict="true">
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="isActive" type="bool"/>

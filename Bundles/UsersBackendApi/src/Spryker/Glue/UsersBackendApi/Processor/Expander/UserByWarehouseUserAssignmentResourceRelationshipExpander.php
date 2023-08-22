@@ -81,10 +81,10 @@ class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserB
     {
         $userUuids = [];
         foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
-            /** @var \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer */
-            $apiWarehouseUserAssignmentsAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
-            if (!in_array($apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail(), $userUuids)) {
-                $userUuids[] = $apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail();
+            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer */
+            $warehouseUserAssignmentsBackendApiAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
+            if (!in_array($warehouseUserAssignmentsBackendApiAttributesTransfer->getUserUuidOrFail(), $userUuids)) {
+                $userUuids[] = $warehouseUserAssignmentsBackendApiAttributesTransfer->getUserUuidOrFail();
             }
         }
 
@@ -102,9 +102,9 @@ class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserB
         array $userGlueRelationshipTransfersIndexedByUserUuid
     ): void {
         foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
-            /** @var \Generated\Shared\Transfer\ApiWarehouseUserAssignmentsAttributesTransfer $apiWarehouseUserAssignmentsAttributesTransfer */
-            $apiWarehouseUserAssignmentsAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
-            $userGlueRelationshipTransfer = $userGlueRelationshipTransfersIndexedByUserUuid[$apiWarehouseUserAssignmentsAttributesTransfer->getUserUuidOrFail()] ?? null;
+            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer */
+            $warehouseUserAssignmentsBackendApiAttributesTransfer = $warehouseUserAssignmentsResource->getAttributesOrFail();
+            $userGlueRelationshipTransfer = $userGlueRelationshipTransfersIndexedByUserUuid[$warehouseUserAssignmentsBackendApiAttributesTransfer->getUserUuidOrFail()] ?? null;
 
             if (!$userGlueRelationshipTransfer) {
                 continue;

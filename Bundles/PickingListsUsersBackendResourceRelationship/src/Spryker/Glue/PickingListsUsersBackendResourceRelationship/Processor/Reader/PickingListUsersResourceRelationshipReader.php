@@ -111,7 +111,7 @@ class PickingListUsersResourceRelationshipReader implements PickingListUsersReso
         $userCriteriaTransfer = (new UserCriteriaTransfer())
             ->setUserConditions($userConditionsTransfer);
 
-        $userResourceCollectionTransfer = $this->usersBackendApiResource->getUserResources($userCriteriaTransfer);
+        $userResourceCollectionTransfer = $this->usersBackendApiResource->getUsersResources($userCriteriaTransfer);
 
         $indexedUserResources = [];
         foreach ($userResourceCollectionTransfer->getUserResources() as $userResource) {

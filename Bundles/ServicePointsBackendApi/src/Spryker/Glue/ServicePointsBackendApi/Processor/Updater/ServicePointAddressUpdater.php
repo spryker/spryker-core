@@ -7,13 +7,13 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointAddressConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
@@ -69,9 +69,9 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
      */
     public function updateServicePointAddress(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        $apiServicePointAddressesAttributesTransfer = (new ApiServicePointAddressesAttributesTransfer())->fromArray($glueRequestTransfer->getAttributes(), true);
+        $servicePointAddressesBackendApiAttributesTransfer = (new ServicePointAddressesBackendApiAttributesTransfer())->fromArray($glueRequestTransfer->getAttributes(), true);
 
-        if (!$this->isRequestBodyValid($glueRequestTransfer, $apiServicePointAddressesAttributesTransfer)) {
+        if (!$this->isRequestBodyValid($glueRequestTransfer, $servicePointAddressesBackendApiAttributesTransfer)) {
             return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
@@ -90,8 +90,8 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
             );
         }
 
-        $servicePointAddressTransfer = $this->servicePointAddressMapper->mapApiServicePointAddressesAttributesTransferToServicePointAddressTransfer(
-            $apiServicePointAddressesAttributesTransfer,
+        $servicePointAddressTransfer = $this->servicePointAddressMapper->mapServicePointAddressesBackendApiAttributesTransferToServicePointAddressTransfer(
+            $servicePointAddressesBackendApiAttributesTransfer,
             $servicePointAddressTransfer->setServicePoint((new ServicePointTransfer())->setUuid($servicePointUuid)),
         );
 
@@ -114,19 +114,19 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
      *
      * @return bool
      */
     protected function isRequestBodyValid(
         GlueRequestTransfer $glueRequestTransfer,
-        ApiServicePointAddressesAttributesTransfer $apiServicePointAddressesAttributesTransfer
+        ServicePointAddressesBackendApiAttributesTransfer $servicePointAddressesBackendApiAttributesTransfer
     ): bool {
         $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
         return $glueResourceTransfer->getId()
             && $glueResourceTransfer->getAttributes()
-            && $apiServicePointAddressesAttributesTransfer->modifiedToArray();
+            && $servicePointAddressesBackendApiAttributesTransfer->modifiedToArray();
     }
 
     /**

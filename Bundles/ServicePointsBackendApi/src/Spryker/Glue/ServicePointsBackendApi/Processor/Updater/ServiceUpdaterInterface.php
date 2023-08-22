@@ -7,20 +7,20 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\Updater;
 
-use Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer;
 
 interface ServiceUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function updateService(
-        ApiServicesRequestAttributesTransfer $apiServicesRequestAttributesTransfer,
+        ServicesRequestBackendApiAttributesTransfer $servicesRequestBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer;
 }

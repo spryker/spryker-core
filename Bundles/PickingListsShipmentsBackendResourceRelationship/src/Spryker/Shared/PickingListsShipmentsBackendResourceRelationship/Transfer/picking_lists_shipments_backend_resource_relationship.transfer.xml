@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ApiShipmentsAttributes" strict="true">
+    <transfer name="ShipmentsBackendApiAttributes" strict="true">
         <property name="requestedDeliveryDate" type="string" strict="true"/>
     </transfer>
 
@@ -21,8 +21,8 @@
         <property name="resources" type="GlueResource[]" singular="resource"/>
     </transfer>
 
-    <transfer name="ApiPickingListItemsAttributes" strict="true">
-        <property name="orderItem" type="ApiOrderItemsAttributes"/>
+    <transfer name="PickingListItemsBackendApiAttributes" strict="true">
+        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
     </transfer>
 
     <transfer name="SalesShipmentCriteria" strict="true">
@@ -41,7 +41,7 @@
     <transfer name="GlueRequest">
     </transfer>
 
-    <transfer name="ApiOrderItemsAttributes" strict="true">
+    <transfer name="OrderItemsBackendApiAttributes" strict="true">
         <property name="uuid" type="string"/>
     </transfer>
 

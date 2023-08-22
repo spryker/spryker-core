@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ServicePointAddressesBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointAddressMapperInterface;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
@@ -57,15 +57,15 @@ class ServicePointAddressResponseBuilder implements ServicePointAddressResponseB
     protected function createServicePointAddressResourceTransfer(
         ServicePointAddressTransfer $servicePointAddressTransfer
     ): GlueResourceTransfer {
-        $apiServicePointAddressesAttributesTransfer = $this->servicePointAddressMapper
-            ->mapServicePointAddressTransferToApiServicePointAddressesAttributesTransfer(
+        $servicePointAddressesBackendApiAttributesTransfer = $this->servicePointAddressMapper
+            ->mapServicePointAddressTransferToServicePointAddressesBackendApiAttributesTransfer(
                 $servicePointAddressTransfer,
-                new ApiServicePointAddressesAttributesTransfer(),
+                new ServicePointAddressesBackendApiAttributesTransfer(),
             );
 
         return (new GlueResourceTransfer())
             ->setId($servicePointAddressTransfer->getUuidOrFail())
             ->setType(ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINT_ADDRESSES)
-            ->setAttributes($apiServicePointAddressesAttributesTransfer);
+            ->setAttributes($servicePointAddressesBackendApiAttributesTransfer);
     }
 }

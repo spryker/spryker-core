@@ -7,13 +7,13 @@
 
 namespace Spryker\Glue\ProductsBackendApi\Processor\Creator;
 
-use Generated\Shared\Transfer\ApiProductsAttributesTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractConditionsTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer;
 use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductFacadeInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapperInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReaderInterface;
@@ -78,18 +78,18 @@ class ProductAbstractCreator implements ProductAbstractCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ApiProductsAttributesTransfer $apiProductsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createProductAbstract(
-        ApiProductsAttributesTransfer $apiProductsAttributesTransfer,
+        ProductsBackendApiAttributesTransfer $productsBackendApiAttributesTransfer,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
         if (
-            $apiProductsAttributesTransfer->getProductAbstractSku()
-            && $this->productFacade->hasProductAbstract($apiProductsAttributesTransfer->getProductAbstractSku())
+            $productsBackendApiAttributesTransfer->getProductAbstractSku()
+            && $this->productFacade->hasProductAbstract($productsBackendApiAttributesTransfer->getProductAbstractSku())
         ) {
             return (new GlueResponseTransfer())
                 ->setHttpStatus(Response::HTTP_CONFLICT)
@@ -101,7 +101,7 @@ class ProductAbstractCreator implements ProductAbstractCreatorInterface
                 );
         }
 
-        $urlCollectionTransfer = $this->urlUpdater->validateUrlsOnCreate($apiProductsAttributesTransfer->getUrls());
+        $urlCollectionTransfer = $this->urlUpdater->validateUrlsOnCreate($productsBackendApiAttributesTransfer->getUrls());
         if ($urlCollectionTransfer->getUrls()->count()) {
             return (new GlueResponseTransfer())
                 ->setHttpStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -114,16 +114,16 @@ class ProductAbstractCreator implements ProductAbstractCreatorInterface
         }
 
         $productAbstractTransfer = $this->productAbstractMapper
-            ->mapApiProductsAttributesTransferToProductAbstractTransfer($apiProductsAttributesTransfer, new ProductAbstractTransfer());
+            ->mapProductsBackendApiAttributesTransferToProductAbstractTransfer($productsBackendApiAttributesTransfer, new ProductAbstractTransfer());
         $productConcreteTransfers = $this->productAbstractMapper
-            ->mapApiProductsProductConcreteAttributesTransfersToProductConcreteTransfers($apiProductsAttributesTransfer->getVariants(), $apiProductsAttributesTransfer->getProductAbstractSkuOrFail());
+            ->mapProductConcretesBackendApiAttributesTransfersToProductConcreteTransfers($productsBackendApiAttributesTransfer->getVariants(), $productsBackendApiAttributesTransfer->getProductAbstractSkuOrFail());
 
         $productAbstractTransfer->setApprovalStatus(static::STATUS_APPROVED);
 
         $idProductAbstract = $this->productFacade->addProduct($productAbstractTransfer, $productConcreteTransfers);
 
-        $this->urlUpdater->createUrls($idProductAbstract, $apiProductsAttributesTransfer->getUrls());
-        $this->categoryUpdater->createCategoryAssignment($apiProductsAttributesTransfer, $idProductAbstract);
+        $this->urlUpdater->createUrls($idProductAbstract, $productsBackendApiAttributesTransfer->getUrls());
+        $this->categoryUpdater->createCategoryAssignment($productsBackendApiAttributesTransfer, $idProductAbstract);
 
         return $this->productAbstractReader->readProductAbstractCollection(
             (new ProductAbstractCriteriaTransfer())

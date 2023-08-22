@@ -199,7 +199,7 @@ components:
                     type: string
                     example: 'categories'
                 attributes:
-                    $ref: '#/components/schemas/ApiCategoryAttributes'
+                    $ref: '#/components/schemas/CategoriesBackendApiAttributes'
 
         ApiCategoryResponseData:
             type: object
@@ -210,9 +210,9 @@ components:
                 id:
                     type: string
                 attributes:
-                    $ref: '#/components/schemas/ApiCategoryAttributes'
+                    $ref: '#/components/schemas/CategoriesBackendApiAttributes'
 
-        ApiCategoryAttributes:
+        CategoriesBackendApiAttributes:
             type: object
             required:
                 - categoryKey
