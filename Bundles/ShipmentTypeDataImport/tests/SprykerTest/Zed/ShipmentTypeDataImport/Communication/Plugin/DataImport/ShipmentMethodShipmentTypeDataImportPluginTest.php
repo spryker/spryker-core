@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Zed\ShipmentType\Communication\Plugin\DataImport;
+namespace SprykerTest\Zed\ShipmentTypeDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
