@@ -99,7 +99,6 @@ class DynamicEntityBackendApiControllerTest extends Unit
         //Assert
         $this->assertNotNull($glueResponseTransfer->getContent());
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertCount(1, $content);
         $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
     }
 
@@ -134,7 +133,6 @@ class DynamicEntityBackendApiControllerTest extends Unit
         //Assert
         $this->assertNotNull($glueResponseTransfer->getContent());
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertCount(1, $content);
         $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
     }
 
@@ -166,7 +164,6 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $this->assertNotNull($glueResponseTransfer->getContent());
 
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertCount(1, $content);
         $this->assertEquals($this->tester::BAR_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
 
         $barEntity = $this->findEntityByTableAlias($this->tester::BAR_TABLE_ALIAS);

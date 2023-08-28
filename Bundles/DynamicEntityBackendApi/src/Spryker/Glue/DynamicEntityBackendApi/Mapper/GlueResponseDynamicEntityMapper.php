@@ -7,9 +7,11 @@
 
 namespace Spryker\Glue\DynamicEntityBackendApi\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
+use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface;
@@ -151,11 +153,13 @@ class GlueResponseDynamicEntityMapper
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer|null $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function mapDynamicEntityCollectionTransferToGlueResponseTransfer(
-        DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
+        DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer,
+        ?GlueRequestTransfer $glueRequestTransfer = null
     ): GlueResponseTransfer {
         $glueResponseTransfer = $this->createGlueResponseTransfer();
 
@@ -171,12 +175,7 @@ class GlueResponseDynamicEntityMapper
             return $glueResponseTransfer;
         }
 
-        $fieldsCollection = [];
-
-        foreach ($dynamicEntityCollectionTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $fieldsCollection[] = $dynamicEntityTransfer->getFields();
-        }
-
+        $fieldsCollection = $this->mapDynamicEntitiesToFieldsCollection($dynamicEntityCollectionTransfer->getDynamicEntities(), $glueRequestTransfer);
         $glueResponseTransfer->setContent($this->serviceUtilEncoding->encodeJson($fieldsCollection));
         $glueResponseTransfer->setPagination($dynamicEntityCollectionTransfer->getPagination());
 
@@ -185,11 +184,13 @@ class GlueResponseDynamicEntityMapper
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer|null $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function mapDynamicEntityCollectionResponseTransferToGlueResponseTransfer(
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        ?GlueRequestTransfer $glueRequestTransfer = null
     ): GlueResponseTransfer {
         $glueResponseTransfer = $this->createGlueResponseTransfer();
 
@@ -205,12 +206,7 @@ class GlueResponseDynamicEntityMapper
             return $glueResponseTransfer;
         }
 
-        $fieldsCollection = [];
-
-        foreach ($dynamicEntityCollectionResponseTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $fieldsCollection[] = $dynamicEntityTransfer->getFields();
-        }
-
+        $fieldsCollection = $this->mapDynamicEntitiesToFieldsCollection($dynamicEntityCollectionResponseTransfer->getDynamicEntities(), $glueRequestTransfer);
         $glueResponseTransfer->setContent($this->serviceUtilEncoding->encodeJson($fieldsCollection));
 
         return $glueResponseTransfer;
@@ -321,5 +317,28 @@ class GlueResponseDynamicEntityMapper
             ],
 
         ];
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityTransfer> $dynamicEntities
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer|null $glueRequestTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function mapDynamicEntitiesToFieldsCollection(
+        ArrayObject $dynamicEntities,
+        ?GlueRequestTransfer $glueRequestTransfer
+    ): array {
+        if ($glueRequestTransfer !== null && $glueRequestTransfer->getResourceOrFail()->getId() !== null) {
+            return $dynamicEntities->offsetGet(0) ? $dynamicEntities->offsetGet(0)->getFields() : [];
+        }
+
+        $fieldsCollection = [];
+
+        foreach ($dynamicEntities as $dynamicEntityTransfer) {
+            $fieldsCollection[] = $dynamicEntityTransfer->getFields();
+        }
+
+        return $fieldsCollection;
     }
 }
