@@ -137,6 +137,7 @@
 
     <transfer name="SearchContext">
         <property name="sourceIdentifier" type="string"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="HealthCheckServiceResponse">
