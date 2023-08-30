@@ -61,6 +61,16 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @var string
      */
+    protected const BAR_TABLE_NAME = 'spy_bar';
+
+    /**
+     * @var string
+     */
+    protected const BAR_TABLE_ALIAS = 'bar';
+
+    /**
+     * @var string
+     */
     protected const FOO_CONDITION = 'FOO_CONDITION';
 
     /**
@@ -72,6 +82,11 @@ class DynamicEntityFacadeTest extends Unit
      * @var \Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface
      */
     protected $dynamicEntityFacade;
+
+    /**
+     * @var \SprykerTest\Zed\DynamicEntity\DynamicEntityBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -339,6 +354,99 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[count($dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()) - 1];
         $this->assertTrue($dynamicEntityConfigurationTransfer->getIsActive());
         $this->assertEquals(static::FOO_TABLE_ALIAS_1, $dynamicEntityConfigurationTransfer->getTableAlias());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDynamicEntityConfigurationCollectionWillReturnCollectionWithoutErrors(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();
+        $requestDynamicEntityConfigurationTransfer = $dynamicEntityConfigurationCollectionRequestTransfer->getDynamicEntityConfigurations()[0];
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->createDynamicEntityConfigurationCollection($dynamicEntityConfigurationCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertCount(1, $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations());
+        $responseDynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[0];
+        $this->assertNotNull($responseDynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration());
+        $this->assertTrue($responseDynamicEntityConfigurationTransfer->getIsActive());
+        $this->assertEquals($requestDynamicEntityConfigurationTransfer->getTableAlias(), $responseDynamicEntityConfigurationTransfer->getTableAlias());
+        $this->assertEquals($requestDynamicEntityConfigurationTransfer->getTableName(), $responseDynamicEntityConfigurationTransfer->getTableName());
+        $this->assertEquals($requestDynamicEntityConfigurationTransfer->getDynamicEntityDefinition(), $responseDynamicEntityConfigurationTransfer->getDynamicEntityDefinition());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDynamicEntityConfigurationCollectionWillReturnCollectionWithoutErrorsAndAssertDatabaseEntity(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();
+        $requestDynamicEntityConfigurationTransfer = $dynamicEntityConfigurationCollectionRequestTransfer->getDynamicEntityConfigurations()[0];
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->createDynamicEntityConfigurationCollection($dynamicEntityConfigurationCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertCount(1, $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations());
+        $responseDynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[0];
+        $entity = $this->tester->findDynamicEntityConfigurationById($responseDynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration());
+        $this->assertNotNull($entity);
+        $this->assertTrue($entity->getIsActive());
+        $this->assertEquals($requestDynamicEntityConfigurationTransfer->getTableAlias(), $entity->getTableAlias());
+        $this->assertEquals($requestDynamicEntityConfigurationTransfer->getTableName(), $entity->getTableName());
+        $this->assertEquals($this->tester->getExpectedDefinition(), $entity->getDefinition());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDynamicEntityConfigurationCollectionWillReturnCollectionWithCorrectTransferWithoutErrors(): void
+    {
+        // Arrange
+        $id = $this->tester->createEntity('spy_table_for_update', 'table-for-update');
+        $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer(static::BAR_TABLE_NAME, static::BAR_TABLE_ALIAS, $id);
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityConfigurationCollection($dynamicEntityConfigurationCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertCount(1, $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations());
+        $responseDynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[0];
+        $this->assertEquals($id, $responseDynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration());
+        $this->assertTrue($responseDynamicEntityConfigurationTransfer->getIsActive());
+        $this->assertEquals(static::BAR_TABLE_NAME, $responseDynamicEntityConfigurationTransfer->getTableName());
+        $this->assertEquals(static::BAR_TABLE_ALIAS, $responseDynamicEntityConfigurationTransfer->getTableAlias());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDynamicEntityConfigurationCollectionWillReturnCollectionWithCorrectTransferWithoutErrorsAndAssertDatabaseEntity(): void
+    {
+        // Arrange
+        $id = $this->tester->createEntity('spy_table_for_update', 'table-for-update');
+        $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer(static::BAR_TABLE_NAME, static::BAR_TABLE_ALIAS, $id);
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityConfigurationCollection($dynamicEntityConfigurationCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertCount(1, $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations());
+        $responseDynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[0];
+        $entity = $this->tester->findDynamicEntityConfigurationById($responseDynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration());
+        $this->assertNotNull($entity);
+        $this->assertTrue($entity->getIsActive());
+        $this->assertEquals(static::BAR_TABLE_NAME, $entity->getTableName());
+        $this->assertEquals(static::BAR_TABLE_ALIAS, $entity->getTableAlias());
+        $this->assertEquals($this->tester->getExpectedDefinition(), $entity->getDefinition());
     }
 
     /**

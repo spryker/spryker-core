@@ -4,4 +4,6 @@
     <transfer name="ApiApplicationSchemaContext">
     </transfer>
 
+    <transfer name="DocumentationInvalidationVoterRequest">
+    </transfer>
 </transfers>

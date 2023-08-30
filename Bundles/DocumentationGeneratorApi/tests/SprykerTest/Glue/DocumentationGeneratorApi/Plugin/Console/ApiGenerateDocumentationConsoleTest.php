@@ -25,6 +25,16 @@ use Spryker\Glue\DocumentationGeneratorOpenApi\Plugin\DocumentationGeneratorApi\
 class ApiGenerateDocumentationConsoleTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const INVALIDATED_AFTER_INTERVAL_OPTION = '--invalidated-after-interval';
+
+    /**
+     * @var string
+     */
+    protected const INVALIDATED_AFTER_INTERVAL = '5min';
+
+    /**
      * @var \SprykerTest\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiTester
      */
     protected $tester;
@@ -44,6 +54,31 @@ class ApiGenerateDocumentationConsoleTest extends Unit
 
         $arguments = [
             'command' => $command->getName(),
+        ];
+
+        //Act
+        $commandTester->execute($arguments);
+
+        //Assert
+        $this->assertSame(ApiGenerateDocumentationConsole::CODE_SUCCESS, $commandTester->getStatusCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteWithInvalidatedIntervalWillReturnSuccessful(): void
+    {
+        //Arrange
+        $this->tester->setDependency(
+            DocumentationGeneratorApiDependencyProvider::PLUGIN_CONTENT_GENERATOR_STRATEGY,
+            new DocumentationGeneratorOpenApiContentGeneratorStrategyPlugin(),
+        );
+        $command = new ApiGenerateDocumentationConsole();
+        $commandTester = $this->tester->getConsoleTester($command);
+
+        $arguments = [
+            'command' => $command->getName(),
+            static::INVALIDATED_AFTER_INTERVAL_OPTION => static::INVALIDATED_AFTER_INTERVAL,
         ];
 
         //Act

@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}{{ 'Data Exchange API Configuration' | trans }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/dynamic-entity-gui/configuration-create', 'Create Data Exchange API Configuration' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Data Exchange API Configuration' | trans } %}
+
+        {% block widget_content %}
+            {{ dynamicDataConfigurationTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

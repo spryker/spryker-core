@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -86,6 +87,48 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $this->endTransaction($dynamicEntityCollectionResponseTransfer);
 
         return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfiguration(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityConfigurationTransfer {
+        $dynamicEntityMapper = $this->getFactory()->createDynamicEntityMapper();
+
+        $dynamicEntityConfigurationEntity = $dynamicEntityMapper->mapDynamicEntityConfigurationTransferToEntity($dynamicEntityConfigurationTransfer, new SpyDynamicEntityConfiguration());
+
+        $dynamicEntityConfigurationEntity->save();
+
+        return $dynamicEntityMapper->mapDynamicEntityConfigurationToTransfer($dynamicEntityConfigurationEntity, new DynamicEntityConfigurationTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function updateDynamicEntityConfiguration(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityConfigurationTransfer {
+        $dynamicEntityConfigurationEntity = $this->getFactory()
+            ->createDynamicEntityConfigurationQuery()
+            ->filterByIdDynamicEntityConfiguration($dynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration())
+            ->findOne();
+
+        if (!$dynamicEntityConfigurationEntity) {
+            return $dynamicEntityConfigurationTransfer;
+        }
+
+        $dynamicEntityMapper = $this->getFactory()->createDynamicEntityMapper();
+        $dynamicEntityConfigurationEntity = $dynamicEntityMapper->mapDynamicEntityConfigurationTransferToEntity($dynamicEntityConfigurationTransfer, $dynamicEntityConfigurationEntity);
+
+        $dynamicEntityConfigurationEntity->save();
+
+        return $dynamicEntityMapper->mapDynamicEntityConfigurationToTransfer($dynamicEntityConfigurationEntity, new DynamicEntityConfigurationTransfer());
     }
 
     /**
@@ -277,13 +320,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
-     * @throw \Exception
-     *
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */

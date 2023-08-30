@@ -7,4 +7,8 @@
         <property name="host" type="string"/>
     </transfer>
 
+    <transfer name="DocumentationInvalidationVoterRequest">
+        <property name="interval" type="string"/>
+    </transfer>
+
 </transfers>

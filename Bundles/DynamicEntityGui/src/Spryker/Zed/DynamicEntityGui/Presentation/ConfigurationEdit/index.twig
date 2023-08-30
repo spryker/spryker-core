@@ -1,0 +1,96 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit Data Exchange API Configuration' | trans %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/dynamic-entity-gui/configuration-list'), 'Back to Data Exchange API Configuration' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.table_name) }}
+                {{ form_row(form.table_alias) }}
+                {{ form_row(form.is_active) }}
+                {{ form_row(form.identifier) }}
+
+                {% block form_errors %}
+                    {% if errors is defined %}
+                    {% if errors|length > 0 %}
+                        <div class="alert alert-danger">
+                            <ul class="list-unstyled">
+                                {%- for error in errors -%}
+                                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message | trans }}</li>
+                                {%- endfor -%}
+                            </ul>
+                        </div>
+                    {% endif %}{% endif %}
+                {% endblock %}
+
+                <div class="de-edit-table-errors">
+                    {{ form_errors(form.field_definitions) }}
+                </div>
+
+
+                <table class="table table-bordered de-edit-table">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Enabled' | trans }}</th>
+                            <th class="de-edit-table-th-widht-200">{{ 'Name' | trans }}</th>
+                            <th class="de-edit-table-th-widht-200">{{ 'Visible Name' | trans }}</th>
+                            <th>{{ 'Type' | trans }}</th>
+                            <th>{{ 'Creatable' | trans }}</th>
+                            <th>{{ 'Editable' | trans }}</th>
+                            <th>{{ 'Required' | trans }}</th>
+                            <th>{{ 'Min' | trans }}</th>
+                            <th>{{ 'Max' | trans }}</th>
+                            <th>{{ 'Min Length' | trans }}</th>
+                            <th>{{ 'Max Length' | trans }}</th>
+                            <th>{{ 'Scale' | trans }}</th>
+                            <th>{{ 'Precision' | trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for rowForm in form.field_definitions %}
+                        <tr>
+                            <td>{{ form_row(rowForm.is_enabled) }}</td>
+                            <td>{{ form_row(rowForm.field_name) }}</td>
+                            <td>{{ form_row(rowForm.field_visible_name) }}</td>
+                            <td>{{ form_row(rowForm.type) }}</td>
+                            <td>{{ form_row(rowForm.is_creatable) }}</td>
+                            <td>{{ form_row(rowForm.is_editable) }}</td>
+                            <td>{{ form_row(rowForm.is_required) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.min) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.max) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.min_length) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.max_length) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.scale) }}</td>
+                            <td class="de-edit-table-no-padding">{{ form_row(rowForm.precision) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <button type="submit" class="btn btn-create safe-submit">{{ 'Save' | trans }}</button>
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-dynamic-entity-gui-main.css') }}">
+{% endblock %}

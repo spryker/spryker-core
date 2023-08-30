@@ -41,4 +41,15 @@ interface DynamicEntityRepositoryInterface
     public function getDynamicEntityConfigurationCollection(
         DynamicEntityConfigurationCriteriaTransfer $dynamicEntityConfigurationCriteriaTransfer
     ): DynamicEntityConfigurationCollectionTransfer;
+
+    /**
+     * @param array<int, string> $tableNames
+     * @param array<int, string> $tableAliases
+     *
+     * @return array<string, mixed>
+     */
+    public function findDynamicEntityConfigurationByTableAliasesOrTableNames(
+        array $tableNames = [],
+        array $tableAliases = []
+    ): array;
 }

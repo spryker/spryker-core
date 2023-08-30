@@ -11,6 +11,8 @@ use Spryker\Glue\DocumentationGeneratorApi\Dependency\External\DocumentationGene
 use Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface;
 use Spryker\Glue\DocumentationGeneratorApi\Generator\DocumentationGenerator;
 use Spryker\Glue\DocumentationGeneratorApi\Generator\DocumentationGeneratorInterface;
+use Spryker\Glue\DocumentationGeneratorApi\InvalidationVerifier\InvalidationVerifier;
+use Spryker\Glue\DocumentationGeneratorApi\InvalidationVerifier\InvalidationVerifierInterface;
 use Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGeneratorStrategyPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
@@ -72,5 +74,23 @@ class DocumentationGeneratorApiFactory extends AbstractFactory
     public function getContentGeneratorStrategyPlugin(): ContentGeneratorStrategyPluginInterface
     {
         return $this->getProvidedDependency(DocumentationGeneratorApiDependencyProvider::PLUGIN_CONTENT_GENERATOR_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Glue\DocumentationGeneratorApi\InvalidationVerifier\InvalidationVerifierInterface
+     */
+    public function createInvalidationVerifier(): InvalidationVerifierInterface
+    {
+        return new InvalidationVerifier(
+            $this->getInvalidationVoterPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\DocumentationInvalidationVoterPluginInterface>
+     */
+    public function getInvalidationVoterPlugins(): array
+    {
+        return $this->getProvidedDependency(DocumentationGeneratorApiDependencyProvider::PLUGINS_INVALIDATION_VOTER);
     }
 }

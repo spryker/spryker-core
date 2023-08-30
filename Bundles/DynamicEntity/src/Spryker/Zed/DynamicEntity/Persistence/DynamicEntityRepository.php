@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -116,6 +117,23 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
     }
 
     /**
+     * @param array<int, string> $tableNames
+     * @param array<int, string> $tableAliases
+     *
+     * @return array<string, mixed>
+     */
+    public function findDynamicEntityConfigurationByTableAliasesOrTableNames(array $tableNames = [], array $tableAliases = []): array
+    {
+        return $this->getFactory()
+            ->createDynamicEntityConfigurationQuery()
+            ->filterByTableAlias_In($tableAliases)
+            ->_or()
+            ->filterByTableName_In($tableNames)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
      *
@@ -125,8 +143,75 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
         SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery,
         DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
     ): SpyDynamicEntityConfigurationQuery {
+        $dynamicEntityConfigurationsQuery = $this->addCreatedAtFilter($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationConditionsTransfer);
+        $dynamicEntityConfigurationsQuery = $this->addUpdatedAtFilter($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationConditionsTransfer);
+
         if ($dynamicEntityConfigurationConditionsTransfer->getIsActive() === true) {
             $dynamicEntityConfigurationsQuery->filterByIsActive(true);
+        }
+
+        if ($dynamicEntityConfigurationConditionsTransfer->getTableName() !== null) {
+            $dynamicEntityConfigurationsQuery->filterByTableName($dynamicEntityConfigurationConditionsTransfer->getTableName());
+        }
+
+        return $dynamicEntityConfigurationsQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery
+     */
+    protected function addCreatedAtFilter(
+        SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery,
+        DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+    ): SpyDynamicEntityConfigurationQuery {
+        $criteriaRangeFilterTransfer = $dynamicEntityConfigurationConditionsTransfer->getFilterCreatedAt();
+
+        if (!$criteriaRangeFilterTransfer) {
+            return $dynamicEntityConfigurationsQuery;
+        }
+
+        if ($criteriaRangeFilterTransfer->getFrom()) {
+            $dynamicEntityConfigurationsQuery->filterByCreatedAt($criteriaRangeFilterTransfer->getFrom(), Criteria::GREATER_EQUAL);
+        }
+
+        if ($criteriaRangeFilterTransfer->getTo()) {
+            $dynamicEntityConfigurationsQuery->filterByCreatedAt(
+                $criteriaRangeFilterTransfer->getTo(),
+                Criteria::LESS_THAN,
+            );
+        }
+
+        return $dynamicEntityConfigurationsQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery
+     */
+    protected function addUpdatedAtFilter(
+        SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery,
+        DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+    ): SpyDynamicEntityConfigurationQuery {
+        $criteriaRangeFilterTransfer = $dynamicEntityConfigurationConditionsTransfer->getFilterUpdatedAt();
+
+        if (!$criteriaRangeFilterTransfer) {
+            return $dynamicEntityConfigurationsQuery;
+        }
+
+        if ($criteriaRangeFilterTransfer->getFrom()) {
+            $dynamicEntityConfigurationsQuery->filterByUpdatedAt($criteriaRangeFilterTransfer->getFrom(), Criteria::GREATER_EQUAL);
+        }
+
+        if ($criteriaRangeFilterTransfer->getTo()) {
+            $dynamicEntityConfigurationsQuery->filterByUpdatedAt(
+                $criteriaRangeFilterTransfer->getTo(),
+                Criteria::LESS_THAN,
+            );
         }
 
         return $dynamicEntityConfigurationsQuery;

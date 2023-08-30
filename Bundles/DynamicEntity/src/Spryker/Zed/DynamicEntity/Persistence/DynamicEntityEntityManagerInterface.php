@@ -34,4 +34,22 @@ interface DynamicEntityEntityManagerInterface
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): DynamicEntityCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfiguration(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityConfigurationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function updateDynamicEntityConfiguration(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityConfigurationTransfer;
 }

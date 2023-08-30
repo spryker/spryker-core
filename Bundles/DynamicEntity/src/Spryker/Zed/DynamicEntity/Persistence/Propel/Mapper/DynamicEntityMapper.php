@@ -27,6 +27,11 @@ class DynamicEntityMapper
     /**
      * @var string
      */
+    protected const FIELD_DEFINITIONS = 'fieldDefinitions';
+
+    /**
+     * @var string
+     */
     protected const IDENTIFIER = 'identifier';
 
     /**
@@ -64,6 +69,35 @@ class DynamicEntityMapper
         );
 
         return $dynamicEntityConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration
+     */
+    public function mapDynamicEntityConfigurationTransferToEntity(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
+    ): SpyDynamicEntityConfiguration {
+        $dynamicEntityConfigurationEntity->fromArray($dynamicEntityConfigurationTransfer->toArray());
+
+        $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
+        $definitions = $dynamicEntityDefinitionTransfer->toArray(true, true);
+        $modifiedDefinitions = $dynamicEntityDefinitionTransfer->modifiedToArray(true, true);
+        $definitionForEntity = [
+            static::IDENTIFIER => $definitions[static::IDENTIFIER],
+            static::FIELDS => $modifiedDefinitions[static::FIELD_DEFINITIONS] ?? [],
+        ];
+
+        $dynamicEntityConfigurationEntity->setDefinition(
+            json_encode(
+                $definitionForEntity,
+            ) ?: '',
+        );
+
+        return $dynamicEntityConfigurationEntity;
     }
 
     /**

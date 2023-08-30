@@ -46,6 +46,11 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
     public const PLUGIN_CONTENT_GENERATOR_STRATEGY = 'PLUGIN_CONTENT_GENERATOR_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_INVALIDATION_VOTER = 'PLUGINS_INVALIDATION_VOTER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -58,6 +63,7 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addFilesystem($container);
         $container = $this->addSchemaFormatterPlugins($container);
         $container = $this->addContentGeneratorStrategyPlugin($container);
+        $container = $this->addInvalidationVoterPlugins($container);
 
         return $container;
     }
@@ -153,6 +159,28 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::PLUGIN_CONTENT_GENERATOR_STRATEGY, function () {
             return $this->getContentGeneratorStrategyPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\DocumentationInvalidationVoterPluginInterface>
+     */
+    protected function getInvalidationVoterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addInvalidationVoterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_INVALIDATION_VOTER, function () {
+            return $this->getInvalidationVoterPlugins();
         });
 
         return $container;

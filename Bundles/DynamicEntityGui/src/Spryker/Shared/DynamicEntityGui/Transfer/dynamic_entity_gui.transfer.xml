@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DynamicEntityConfigurationCollection" strict="true">
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfigurationCriteria" strict="true">
+        <property name="dynamicEntityConfigurationConditions" type="DynamicEntityConfigurationConditions"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfiguration" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="dynamicEntityDefinition" type="DynamicEntityDefinition"/>
+        <property name="tableAlias" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfigurationConditions" strict="true">
+        <property name="tableName" type="string"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfigurationCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="DynamicEntityDefinition" strict="true">
+        <property name="identifier" type="string"/>
+        <property name="fieldDefinitions" type="DynamicEntityFieldDefinition[]" singular="fieldDefinition"/>
+    </transfer>
+
+    <transfer name="DynamicEntityFieldValidation" strict="true">
+    </transfer>
+
+    <transfer name="DynamicEntityFieldDefinition" strict="true">
+        <property name="validation" type="DynamicEntityFieldValidation"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfigurationCollectionRequest" strict="true">
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+</transfers>

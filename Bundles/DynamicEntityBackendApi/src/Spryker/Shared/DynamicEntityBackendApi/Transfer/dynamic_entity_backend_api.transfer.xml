@@ -76,8 +76,15 @@
         <property name="dynamicEntityConfigurationConditions" type="DynamicEntityConfigurationConditions"/>
     </transfer>
 
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
     <transfer name="DynamicEntityConfigurationConditions" strict="true">
         <property name="isActive" type="bool"/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
     </transfer>
 
     <transfer name="GlueResource">
@@ -128,6 +135,10 @@
         <property name="minLength" type="int"/>
         <property name="maxLength" type="int"/>
         <property name="precision" type="int"/>
+    </transfer>
+
+    <transfer name="DocumentationInvalidationVoterRequest">
+        <property name="interval" type="string"/>
     </transfer>
 
 </transfers>

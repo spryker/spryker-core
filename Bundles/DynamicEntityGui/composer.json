@@ -1,0 +1,42 @@
+{
+    "name": "spryker/dynamic-entity-gui",
+    "type": "library",
+    "description": "DynamicEntityGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker/doctrine-inflector": "^1.0.0",
+        "spryker/dynamic-entity": "^0.1.1",
+        "spryker/gui": "^3.38.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/util-text": "^1.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

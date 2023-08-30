@@ -10,6 +10,8 @@ namespace Spryker\Zed\DynamicEntity\Business;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
@@ -76,4 +78,42 @@ interface DynamicEntityFacadeInterface
     public function getDynamicEntityConfigurationCollection(
         DynamicEntityConfigurationCriteriaTransfer $dynamicEntityConfigurationCriteriaTransfer
     ): DynamicEntityConfigurationCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns a list of tables that should not be used for dynamic entity configuration.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getDisallowedTables(): array;
+
+    /**
+     * Specification:
+     * - Creates a collection of entity configurations based on the provided data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransfer
+     */
+    public function createDynamicEntityConfigurationCollection(
+        DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+    ): DynamicEntityConfigurationCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates a collection of entity configurations based on the provided data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionResponseTransfer
+     */
+    public function updateDynamicEntityConfigurationCollection(
+        DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
+    ): DynamicEntityConfigurationCollectionResponseTransfer;
 }

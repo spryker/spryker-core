@@ -1,0 +1,20 @@
+.de-edit-table {
+    text-align: center;
+}
+
+.de-edit-table-th-widht-200 {
+    width: 200px;
+}
+.de-edit-table-no-padding {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    input {
+        padding-left: 2px;
+        padding-right: 3px;
+    }
+}
+.de-edit-table-errors {
+    li {
+        color: #f2392e !important;
+    }
+}

@@ -1,0 +1,28 @@
+"Edit Data Exchange API Configuration","Bearbeiten Sie die Data Exchange API-Konfiguration"
+"Back to Data Exchange API Configuration","Zurück zur Data Exchange API-Konfiguration"
+"Create Data Exchange API Configuration","Erstellen Sie eine Data Exchange API-Konfiguration"
+ID,ID
+Actions,Aktionen
+"Table name",Tabellenname
+"Resource name",Ressourcenname
+"Is enabled",Aktiviert
+Identifier,Kennung
+Status,Status
+Inactive,Inaktiv
+Active,Aktiv
+Enabled,Ermöglicht
+Name,Name
+"Visible Name","Sichtbarer Name"
+Type,Typ
+Creatable,Kreierbar
+Editable,Bearbeitbar
+Required,Erforderlich
+Min,Mindest
+Max,Max
+"Min Length","Minimale Länge"
+"Max Length","Maximale Länge"
+Scale,Skala
+Precision,Präzision
+Edit,Bearbeiten
+Create,Erstellen
+

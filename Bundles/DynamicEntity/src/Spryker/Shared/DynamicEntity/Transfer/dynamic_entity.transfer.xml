@@ -34,11 +34,20 @@
         <property name="dynamicEntityConfigurationConditions" type="DynamicEntityConfigurationConditions"/>
     </transfer>
 
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
     <transfer name="DynamicEntityConfigurationConditions" strict="true">
         <property name="isActive" type="bool"/>
+        <property name="tableName" type="string"/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
     </transfer>
 
     <transfer name="DynamicEntityConfiguration" strict="true">
+        <property name="idDynamicEntityConfiguration" type="int"/>
         <property name="tableAlias" type="string"/>
         <property name="tableName" type="string"/>
         <property name="isActive" type="bool"/>
@@ -91,9 +100,21 @@
         <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
     <transfer name="Pagination">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="DynamicEntityConfigurationCollectionRequest" strict="true">
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+    </transfer>
+
+    <transfer name="DynamicEntityConfigurationCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+    </transfer>
 </transfers>

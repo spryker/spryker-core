@@ -29,6 +29,8 @@ use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPostMethodBuilder
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPutMethodBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\DynamicApiPathMethodFormatter;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\DynamicApiPathMethodFormatterInterface;
+use Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoter;
+use Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoterInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Logger\DynamicEntityBackendApiLogger;
 use Spryker\Glue\DynamicEntityBackendApi\Logger\DynamicEntityBackendApiLoggerInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Mapper\GlueRequestDynamicEntityMapper;
@@ -265,5 +267,15 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     public function createPathPatchMethodBuilder(): PathMethodBuilderInterface
     {
         return new PathPatchMethodBuilder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoterInterface
+     */
+    public function createInvalidationVoter(): InvalidationVoterInterface
+    {
+        return new InvalidationVoter(
+            $this->getDynamicEntityFacade(),
+        );
     }
 }

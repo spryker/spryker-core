@@ -31,6 +31,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface getRepository()
  * @method \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\DynamicEntity\DynamicEntityConfig getConfig()
  */
 class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
 {

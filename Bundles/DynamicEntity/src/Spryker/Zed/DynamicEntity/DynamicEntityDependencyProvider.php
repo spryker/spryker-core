@@ -12,6 +12,9 @@ use Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionAdapt
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DynamicEntity\DynamicEntityConfig getConfig()
+ */
 class DynamicEntityDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
