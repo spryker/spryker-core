@@ -109,7 +109,7 @@ class WriteServicePointStorageCollectionByServiceEventsTest extends Unit
         $this->assertSame($serviceTransfer->getIdService(), $serviceData[static::KEY_ID_SERVICE]);
         $this->assertSame($serviceTransfer->getUuid(), $serviceData[static::KEY_UUID]);
         $this->assertSame($serviceTransfer->getKey(), $serviceData[static::KEY_KEY]);
-        $this->assertSame($serviceTransfer->getServiceType()->getKey(), $serviceData[static::KEY_SERVICE_TYPE]);
+        $this->assertSame($serviceTransfer->getServiceType()->getUuid(), $serviceData[static::KEY_SERVICE_TYPE][static::KEY_UUID]);
     }
 
     /**

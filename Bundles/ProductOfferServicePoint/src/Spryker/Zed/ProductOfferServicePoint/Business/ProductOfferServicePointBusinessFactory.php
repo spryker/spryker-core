@@ -28,6 +28,8 @@ use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapp
 use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapperInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReader;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferServiceReader;
+use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferServiceReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReader;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Saver\ProductOfferServiceSaver;
@@ -163,6 +165,17 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
         return new ServiceReader(
             $this->getServicePointFacade(),
             $this->createProductOfferServiceMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferServiceReaderInterface
+     */
+    public function createProductOfferServiceReader(): ProductOfferServiceReaderInterface
+    {
+        return new ProductOfferServiceReader(
+            $this->getRepository(),
+            $this->createProductOfferServiceExpander(),
         );
     }
 

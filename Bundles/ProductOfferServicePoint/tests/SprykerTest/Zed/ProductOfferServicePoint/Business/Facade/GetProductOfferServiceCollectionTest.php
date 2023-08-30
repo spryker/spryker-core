@@ -207,6 +207,46 @@ class GetProductOfferServiceCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testShouldReturnProductOfferServiceCollectionWithServicePointRelations(): void
+    {
+        // Arrange
+        $serviceTransfer = $this->tester->haveService();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+
+        $productOfferServiceTransfer = $this->tester->haveProductOfferService([
+            ProductOfferServiceTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
+            ProductOfferServiceTransfer::ID_SERVICE => $serviceTransfer->getIdServiceOrFail(),
+        ]);
+
+        $idProductOfferService = $this->tester->findIdProductOfferService($productOfferServiceTransfer);
+
+        $productOfferServiceConditionsTransfer = (new ProductOfferServiceConditionsTransfer())
+            ->addIdProductOfferService($idProductOfferService)
+            ->setWithServicePointRelations(true);
+
+        $productOfferServiceCriteriaTransfer = (new ProductOfferServiceCriteriaTransfer())
+            ->setProductOfferServiceConditions($productOfferServiceConditionsTransfer);
+
+        // Act
+        $productOfferServiceCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferServiceCollectionTransfer->getProductOfferServices());
+        /** @var \Generated\Shared\Transfer\ProductOfferServicesTransfer $productOfferServicesTransfer */
+        $productOfferServicesTransfer = $productOfferServiceCollectionTransfer->getProductOfferServices()->getIterator()->current();
+
+        foreach ($productOfferServicesTransfer->getServices() as $serviceTransfer) {
+            $this->assertNotNull($serviceTransfer->getServicePoint());
+            $this->assertNotNull($serviceTransfer->getServicePoint()->getUuid());
+            $this->assertNotNull($serviceTransfer->getServicePoint()->getIdServicePoint());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testShouldReturnProductOfferServiceCollectionGroupedByIdProductOffer(): void
     {
         // Arrange

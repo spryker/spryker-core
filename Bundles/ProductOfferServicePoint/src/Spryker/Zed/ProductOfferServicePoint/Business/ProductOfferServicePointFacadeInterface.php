@@ -64,6 +64,7 @@ interface ProductOfferServicePointFacadeInterface
      * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.productOfferIds` to filter by product offer IDs.
      * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.serviceIds` to filter by service IDs.
      * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.groupByIdProductOffer` to group by product offer IDs.
+     * - Uses `ProductOfferServiceCriteriaTransfer.productOfferServiceConditions.withServicePointRelations` to load service point relations.
      * - Uses `ProductOfferServiceCriteriaTransfer.sort.field` to set the 'order by' field.
      * - Uses `ProductOfferServiceCriteriaTransfer.sort.isAscending` to set ascending/descending order.
      * - Uses `ProductOfferServiceCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.

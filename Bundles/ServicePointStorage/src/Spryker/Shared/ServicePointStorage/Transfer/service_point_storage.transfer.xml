@@ -27,7 +27,11 @@
         <property name="idService" type="int"/>
         <property name="uuid" type="string"/>
         <property name="key" type="string"/>
-        <property name="serviceType" type="string"/>
+        <property name="serviceType" type="ServiceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CountryStorage" strict="true">

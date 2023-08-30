@@ -159,6 +159,12 @@ class ProductOfferServicePointStorageClientTest extends Unit
         /** @var \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer */
         $productOfferStorageTransfer = $productOfferStorageCollectionTransfer->getProductOffers()->getIterator()->current();
         $this->assertCount(2, $productOfferStorageTransfer->getServices());
+
+        foreach ($productOfferStorageTransfer->getServices() as $serviceStorageTransfer) {
+            $this->assertNotNull($serviceStorageTransfer->getServicePoint());
+            $this->assertCount(0, $serviceStorageTransfer->getServicePoint()->getServices());
+            $this->assertSame(static::SERVICE_POINT_UUID, $serviceStorageTransfer->getServicePoint()->getUuid());
+        }
     }
 
     /**

@@ -28,6 +28,7 @@
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
         <property name="serviceIds" type="int[]" singular="idService"/>
         <property name="groupByIdProductOffer" type="bool"/>
+        <property name="withServicePointRelations" type="bool"/>
     </transfer>
 
     <transfer name="IterableProductOfferServicesCriteria" strict="true">

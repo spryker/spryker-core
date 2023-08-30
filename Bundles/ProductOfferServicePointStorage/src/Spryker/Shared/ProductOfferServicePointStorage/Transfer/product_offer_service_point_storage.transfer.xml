@@ -10,8 +10,13 @@
         <property name="productOfferServices" type="ProductOfferServiceStorage[]" singular="productOfferService"/>
     </transfer>
 
+    <transfer name="ServiceStorageCollection" strict="true">
+        <property name="services" type="ServiceStorage[]" singular="service"/>
+    </transfer>
+
     <transfer name="ServiceStorage" strict="true">
         <property name="uuid" type="string"/>
+        <property name="servicePoint" type="ServicePointStorage"/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
@@ -38,6 +43,7 @@
 
     <transfer name="ServicePointStorage" strict="true">
         <property name="services" type="ServiceStorage[]" singular="service"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Pagination">

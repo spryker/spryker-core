@@ -13,7 +13,7 @@
         "spryker/product-offer-storage-extension": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/service-point": "^0.4.2",
-        "spryker/service-point-storage": "^0.2.0",
+        "spryker/service-point-storage": "^0.3.0",
         "spryker/storage": "^3.0.0",
         "spryker/store": "^1.1.0",
         "spryker/synchronization": "^1.9.0",

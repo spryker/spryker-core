@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServicesTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
@@ -47,6 +48,32 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
         $this->productOfferServiceExtractor = $productOfferServiceExtractor;
         $this->productOfferReader = $productOfferReader;
         $this->serviceReader = $serviceReader;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer
+     */
+    public function expandProductOfferServiceCollectionWithServicePoints(
+        ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+    ): ProductOfferServiceCollectionTransfer {
+        $serviceIds = $this->productOfferServiceExtractor->extractServiceIdsFromProductOfferServiceCollectionTransfer($productOfferServiceCollectionTransfer);
+        $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByServiceConditions(
+            (new ServiceConditionsTransfer())
+                ->setServiceIds($serviceIds)
+                ->setWithServicePointRelations(true),
+        );
+        $serviceTransfersIndexedByIdService = $this->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
+
+        foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
+            $this->expandProductOfferServicesTransferWithServicePoints(
+                $productOfferServicesTransfer,
+                $serviceTransfersIndexedByIdService,
+            );
+        }
+
+        return $productOfferServiceCollectionTransfer;
     }
 
     /**
@@ -109,6 +136,25 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
         }
 
         return $productOfferServiceCollectionTransfer->setProductOfferServices(new ArrayObject($productOfferServicesTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServicesTransfer $productOfferServicesTransfer
+     * @param array<int, \Generated\Shared\Transfer\ServiceTransfer> $serviceTransfersIndexedByIdService
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServicesTransfer
+     */
+    protected function expandProductOfferServicesTransferWithServicePoints(
+        ProductOfferServicesTransfer $productOfferServicesTransfer,
+        array $serviceTransfersIndexedByIdService
+    ): ProductOfferServicesTransfer {
+        foreach ($productOfferServicesTransfer->getServices() as $serviceTransfer) {
+            $serviceTransfer->setServicePoint(
+                $serviceTransfersIndexedByIdService[$serviceTransfer->getIdServiceOrFail()]->getServicePointOrFail(),
+            );
+        }
+
+        return $productOfferServicesTransfer;
     }
 
     /**

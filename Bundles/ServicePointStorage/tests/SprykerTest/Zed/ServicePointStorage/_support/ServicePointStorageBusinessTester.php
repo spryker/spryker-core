@@ -33,7 +33,7 @@ use Orm\Zed\ServicePointStorage\Persistence\SpyServicePointStorageQuery;
  * @method void pause()
  * @method \Spryker\Zed\ServicePointStorage\Business\ServicePointStorageFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ServicePointStorage\PHPMD)
  */
 class ServicePointStorageBusinessTester extends Actor
 {

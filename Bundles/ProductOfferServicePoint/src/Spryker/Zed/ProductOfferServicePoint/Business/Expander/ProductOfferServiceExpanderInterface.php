@@ -14,6 +14,15 @@ interface ProductOfferServiceExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer
+     */
+    public function expandProductOfferServiceCollectionWithServicePoints(
+        ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
+    ): ProductOfferServiceCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer $productOfferServiceCollectionTransfer
      * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer

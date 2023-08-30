@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferServicePoint\Business\Reader;
 
 use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServiceConditionsTransfer;
 
 interface ServiceReaderInterface
 {
@@ -25,6 +26,13 @@ interface ServiceReaderInterface
      * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
      */
     public function getServiceCollectionByServiceIds(array $serviceIds): ServiceCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceConditionsTransfer $serviceConditionsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function getServiceCollectionByServiceConditions(ServiceConditionsTransfer $serviceConditionsTransfer): ServiceCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer

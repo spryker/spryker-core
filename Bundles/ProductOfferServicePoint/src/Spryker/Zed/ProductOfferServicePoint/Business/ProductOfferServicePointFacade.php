@@ -67,7 +67,9 @@ class ProductOfferServicePointFacade extends AbstractFacade implements ProductOf
     public function getProductOfferServiceCollection(
         ProductOfferServiceCriteriaTransfer $productOfferServiceCriteriaTransfer
     ): ProductOfferServiceCollectionTransfer {
-        return $this->getRepository()->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
+        return $this->getFactory()
+            ->createProductOfferServiceReader()
+            ->getProductOfferServiceCollection($productOfferServiceCriteriaTransfer);
     }
 
     /**

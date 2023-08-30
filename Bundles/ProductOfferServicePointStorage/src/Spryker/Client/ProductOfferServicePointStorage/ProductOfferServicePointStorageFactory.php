@@ -19,6 +19,8 @@ use Spryker\Client\ProductOfferServicePointStorage\Extractor\ProductOfferService
 use Spryker\Client\ProductOfferServicePointStorage\Extractor\ProductOfferServiceStorageExtractorInterface;
 use Spryker\Client\ProductOfferServicePointStorage\Extractor\ProductOfferStorageExtractor;
 use Spryker\Client\ProductOfferServicePointStorage\Extractor\ProductOfferStorageExtractorInterface;
+use Spryker\Client\ProductOfferServicePointStorage\Extractor\ServicePointStorageExtractor;
+use Spryker\Client\ProductOfferServicePointStorage\Extractor\ServicePointStorageExtractorInterface;
 use Spryker\Client\ProductOfferServicePointStorage\Generator\ProductOfferServiceStorageKeyGenerator;
 use Spryker\Client\ProductOfferServicePointStorage\Generator\ProductOfferServiceStorageKeyGeneratorInterface;
 use Spryker\Client\ProductOfferServicePointStorage\Mapper\ProductOfferServiceStorageMapper;
@@ -40,7 +42,16 @@ class ProductOfferServicePointStorageFactory extends AbstractFactory
             $this->createProductOfferServiceStorageReader(),
             $this->createProductOfferServiceStorageExtractor(),
             $this->createServicePointStorageReader(),
+            $this->createServicePointStorageExtractor(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOfferServicePointStorage\Extractor\ServicePointStorageExtractorInterface
+     */
+    public function createServicePointStorageExtractor(): ServicePointStorageExtractorInterface
+    {
+        return new ServicePointStorageExtractor();
     }
 
     /**

@@ -55,7 +55,7 @@ class ProductOfferServicePublisherTriggerPluginTest extends Unit
     /**
      * @dataProvider getProductOfferServicePublisherGetDataProvider
      *
-     * @param list<array<string, mixed>> $productOfferServicesData
+     * @param list<array<string, mixed>> $productOffersData
      * @param int $offset
      * @param int $limit
      * @param int $expectedCount

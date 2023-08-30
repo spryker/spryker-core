@@ -68,6 +68,18 @@ class ServiceReader implements ServiceReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ServiceConditionsTransfer $serviceConditionsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceCollectionTransfer
+     */
+    public function getServiceCollectionByServiceConditions(ServiceConditionsTransfer $serviceConditionsTransfer): ServiceCollectionTransfer
+    {
+        $serviceCriteriaTransfer = (new ServiceCriteriaTransfer())->setServiceConditions($serviceConditionsTransfer);
+
+        return $this->servicePointFacade->getServiceCollection($serviceCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer $iterableProductOfferServicesCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ServiceCollectionTransfer

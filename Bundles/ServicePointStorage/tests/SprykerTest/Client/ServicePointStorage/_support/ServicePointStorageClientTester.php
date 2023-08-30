@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Client\ServicePointStorage\ServicePointStorageClientInterface getClient()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ServicePointStorage\PHPMD)
  */
 class ServicePointStorageClientTester extends Actor
 {

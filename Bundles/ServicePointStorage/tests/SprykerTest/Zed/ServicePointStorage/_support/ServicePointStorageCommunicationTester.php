@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\ServicePointTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ServicePointStorage\PHPMD)
  */
 class ServicePointStorageCommunicationTester extends Actor
 {
