@@ -18,6 +18,11 @@ class FileManagerGuiConfig extends AbstractBundleConfig
     protected const IS_FILE_EXTENSION_VALIDATION_ENABLED = false;
 
     /**
+     * @var bool
+     */
+    protected const IS_EMPTY_TYPES_VALIDATION_ENABLED = false;
+
+    /**
      * @api
      *
      * @return string
@@ -38,5 +43,19 @@ class FileManagerGuiConfig extends AbstractBundleConfig
     public function isFileExtensionValidationEnabled(): bool
     {
         return static::IS_FILE_EXTENSION_VALIDATION_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Defines whether the validation for the empty file types is enabled.
+     * - If enabled, the array of empty file types will be considered as - no file type is allowed.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isEmptyTypesValidationEnabled(): bool
+    {
+        return static::IS_EMPTY_TYPES_VALIDATION_ENABLED;
     }
 }

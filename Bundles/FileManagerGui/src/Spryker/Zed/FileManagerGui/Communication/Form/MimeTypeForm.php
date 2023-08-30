@@ -69,11 +69,32 @@ class MimeTypeForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            static::FIELD_ID_MIME_TYPE,
-            HiddenType::class,
-        );
+        $this->addIdMimeTypeField($builder)
+            ->addNameField($builder)
+            ->addCommentField($builder)
+            ->addExtensionsField($builder)
+            ->addIsAllowedField($builder);
+    }
 
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdMimeTypeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_MIME_TYPE, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder)
+    {
         $builder->add(
             static::FIELD_NAME,
             TextType::class,
@@ -85,6 +106,16 @@ class MimeTypeForm extends AbstractType
             ],
         );
 
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCommentField(FormBuilderInterface $builder)
+    {
         $builder->add(
             static::FIELD_COMMENT,
             TextareaType::class,
@@ -93,13 +124,28 @@ class MimeTypeForm extends AbstractType
             ],
         );
 
-        $builder->add(
-            static::FIELD_EXTENSIONS,
-            TextType::class,
-            [
-                'required' => false,
-            ],
-        );
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addExtensionsField(FormBuilderInterface $builder)
+    {
+        $fieldOptions = [
+            'required' => false,
+        ];
+
+        if ($this->getConfig()->isFileExtensionValidationEnabled()) {
+            $fieldOptions = [
+                'constraints' => new NotBlank(),
+                'required' => true,
+            ];
+        }
+
+        $builder->add(static::FIELD_EXTENSIONS, TextType::class, $fieldOptions);
 
         $builder->get(static::FIELD_EXTENSIONS)
             ->addModelTransformer(new CallbackTransformer(
@@ -111,6 +157,16 @@ class MimeTypeForm extends AbstractType
                 },
             ));
 
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsAllowedField(FormBuilderInterface $builder)
+    {
         $builder->add(
             static::FIELD_IS_ALLOWED,
             CheckboxType::class,
@@ -118,5 +174,7 @@ class MimeTypeForm extends AbstractType
                 'required' => false,
             ],
         );
+
+        return $this;
     }
 }

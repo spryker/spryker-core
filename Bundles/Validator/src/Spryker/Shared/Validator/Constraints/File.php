@@ -35,6 +35,16 @@ class File extends SymfonyFile
     public string $extensionsMessage = 'The extension of the file is invalid ({{ extension }}). Allowed extensions are {{ extensions }}.';
 
     /**
+     * @var bool
+     */
+    public bool $isEmptyTypesValidationEnabled = false;
+
+    /**
+     * @var string
+     */
+    public string $emptyTypesMessage = 'There are no MIME types or extensions configured.';
+
+    /**
      * @param array<mixed>|null $options
      * @param string|int|null $maxSize
      * @param bool|null $binaryFormat
@@ -56,6 +66,8 @@ class File extends SymfonyFile
      * @param mixed|null $payload
      * @param array<mixed>|string|null $extensions
      * @param string|null $extensionsMessage
+     * @param bool|null $isEmptyTypesValidationEnabled
+     * @param string|null $emptyTypesMessage
      */
     public function __construct(
         ?array $options = null,
@@ -78,7 +90,9 @@ class File extends SymfonyFile
         ?array $groups = null,
         mixed $payload = null,
         array|string|null $extensions = null,
-        ?string $extensionsMessage = null
+        ?string $extensionsMessage = null,
+        ?bool $isEmptyTypesValidationEnabled = null,
+        ?string $emptyTypesMessage = null
     ) {
         parent::__construct(
             $options,
@@ -104,5 +118,7 @@ class File extends SymfonyFile
 
         $this->extensions = $extensions ?? $this->extensions;
         $this->extensionsMessage = $extensionsMessage ?? $this->extensionsMessage;
+        $this->isEmptyTypesValidationEnabled = $isEmptyTypesValidationEnabled ?? $this->isEmptyTypesValidationEnabled;
+        $this->emptyTypesMessage = $emptyTypesMessage ?? $this->emptyTypesMessage;
     }
 }

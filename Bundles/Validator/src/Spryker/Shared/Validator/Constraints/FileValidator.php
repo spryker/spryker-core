@@ -31,6 +31,12 @@ class FileValidator extends SymfonyFileValidator
         $basename = $value instanceof UploadedFile ? $value->getClientOriginalName() : basename($path);
         $mimeTypes = (array)$constraint->mimeTypes;
 
+        if ($constraint->isEmptyTypesValidationEnabled && !$mimeTypes && !$constraint->extensions) {
+            $this->context->buildViolation($constraint->emptyTypesMessage)->addViolation();
+
+            return;
+        }
+
         if ($constraint->extensions && !$this->hasContextViolationByCode(File::INVALID_EXTENSION_ERROR)) {
             $mimeTypes = $this->validateExtensions($constraint, $basename, $path);
         }

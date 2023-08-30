@@ -95,6 +95,11 @@ class FileForm extends AbstractType
     protected const ERROR_FILE_NAME_MISSED_ADD_MESSAGE = 'Specify a file name or use real one';
 
     /**
+     * @var string
+     */
+    protected const ERROR_EMPTY_TYPE_MESSAGE = 'There are no MIME types or extensions configured.';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -273,15 +278,19 @@ class FileForm extends AbstractType
      */
     protected function getFileConstraintConfiguration(array $options): array
     {
+        $fileConstraintConfiguration = [
+            'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
+            'isEmptyTypesValidationEnabled' => $this->getConfig()->isEmptyTypesValidationEnabled(),
+            'emptyTypesMessage' => static::ERROR_EMPTY_TYPE_MESSAGE,
+        ];
+
         if ($this->getConfig()->isFileExtensionValidationEnabled()) {
-            return [
-                'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
+            return $fileConstraintConfiguration + [
                 'extensions' => $options[static::OPTION_ALLOWED_EXTENSIONS],
             ];
         }
 
-        return [
-            'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
+        return $fileConstraintConfiguration + [
             'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
             'mimeTypesMessage' => static::ERROR_MIME_TYPE_MESSAGE,
         ];

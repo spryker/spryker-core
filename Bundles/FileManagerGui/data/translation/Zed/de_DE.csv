@@ -46,3 +46,4 @@ Save,Speichern
 "Overview of File Tree","Übersicht der Dateistruktur"
 "You cannot remove the only version of the file.","Sie können nicht die einzige Version der Datei entfernen."
 "Available extensions for MIME type. Comma separated.","Verfügbare Erweiterungen für den MIME-Typ. Komma getrennt."
+"There are no MIME types or extensions configured.","Es sind keine MIME-Typen oder Dateiendungen konfiguriert."
