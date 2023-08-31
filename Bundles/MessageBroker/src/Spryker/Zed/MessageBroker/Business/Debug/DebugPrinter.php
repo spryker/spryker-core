@@ -96,7 +96,6 @@ class DebugPrinter implements DebugPrinterInterface
     protected function printDebugForConfiguration(OutputInterface $output): void
     {
         $messageToChannelMap = $this->getMessageToChannelMap();
-        $channelToTransportMap = $this->getChannelToTransportMap();
         $messagesToHandlerMap = $this->getMessagesToHandlerMap();
 
         foreach ($messageToChannelMap as $messageClassName => $channelName) {
@@ -108,7 +107,7 @@ class DebugPrinter implements DebugPrinterInterface
             $table->addRow([
                 $channelName,
                 $messageClassName,
-                $channelToTransportMap[$channelName] ?? 'Not configured',
+                $this->getTransportForChannel($channelName) ?: 'Not configured',
                 $handlersForMessage,
             ]);
 
@@ -242,11 +241,16 @@ class DebugPrinter implements DebugPrinterInterface
     {
         $channelToTransportMap = $this->getChannelToTransportMap();
 
+        $transport = null;
         if (isset($channelToTransportMap[$channelName])) {
+            if (is_array($channelToTransportMap[$channelName])) {
+                return implode(', ', array_unique($channelToTransportMap[$channelName]));
+            }
+
             return $channelToTransportMap[$channelName];
         }
 
-        return null;
+        return $transport;
     }
 
     /**
@@ -289,6 +293,14 @@ class DebugPrinter implements DebugPrinterInterface
         if (is_string($channelToTransportMap)) {
             $channelToTransportMap = $this->configFormatter->format($channelToTransportMap);
         }
+
+        $channelToReceiverTransportMap = $this->config->getChannelToReceiverTransportMap();
+        $channelToSenderTransportMap = $this->config->getChannelToSenderTransportMap();
+        $channelToTransportMap = array_merge_recursive(
+            $channelToTransportMap,
+            $channelToReceiverTransportMap,
+            $channelToSenderTransportMap,
+        );
 
         return $channelToTransportMap;
     }

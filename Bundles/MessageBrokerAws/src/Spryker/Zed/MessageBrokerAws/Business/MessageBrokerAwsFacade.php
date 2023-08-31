@@ -20,6 +20,8 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacade::sendMessageToHttpChannel()} instead.
+     *
      * @param \Symfony\Component\Messenger\Envelope $envelope
      *
      * @return \Symfony\Component\Messenger\Envelope
@@ -34,19 +36,81 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      *
      * @api
      *
-     * @param string $channelName
+     * @param \Symfony\Component\Messenger\Envelope $envelope
      *
-     * @return array<\Symfony\Component\Messenger\Envelope>
+     * @throws \Spryker\Zed\MessageBrokerAws\Business\Exception\MessageValidationFailedException
+     *
+     * @return \Symfony\Component\Messenger\Envelope
      */
-    public function getSqs(string $channelName): iterable
+    public function sendMessageToHttpChannel(Envelope $envelope): Envelope
     {
-        return $this->getFactory()->createReceiver()->get($channelName);
+        return $this->getFactory()->createHttpChannelSenderClient()->send($envelope);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacade::getMessagesFromHttpChannel()} instead.
+     *
+     * @param string $channelName
+     *
+     * @return array<\Symfony\Component\Messenger\Envelope>
+     */
+    public function getSqs(string $channelName): iterable
+    {
+        return $this->getFactory()->createSqsReceiverClient()->get($channelName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $channelName
+     *
+     * @return array<\Symfony\Component\Messenger\Envelope>
+     */
+    public function getMessagesFromHttpChannel(string $channelName): iterable
+    {
+        return $this->getFactory()->createHttpChannelReceiverClient()->get($channelName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Messenger\Envelope $envelope
+     *
+     * @return void
+     */
+    public function ackMessageFromHttpChannel(Envelope $envelope): void
+    {
+        $this->getFactory()->createHttpChannelReceiverClient()->ack($envelope);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Messenger\Envelope $envelope
+     *
+     * @return void
+     */
+    public function rejectMessageFromHttpChannel(Envelope $envelope): void
+    {
+        $this->getFactory()->createHttpChannelReceiverClient()->reject($envelope);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacade::ackMessageFromHttpChannel()} instead.
      *
      * @param \Symfony\Component\Messenger\Envelope $envelope
      *
@@ -62,6 +126,8 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacade::rejectMessageFromHttpChannel()} instead.
+     *
      * @param \Symfony\Component\Messenger\Envelope $envelope
      *
      * @return void
@@ -76,6 +142,8 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return void
      */
     public function createQueues(): void
@@ -88,6 +156,8 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return void
      */
     public function createTopics(): void
@@ -99,6 +169,8 @@ class MessageBrokerAwsFacade extends AbstractFacade implements MessageBrokerAwsF
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return void
      */

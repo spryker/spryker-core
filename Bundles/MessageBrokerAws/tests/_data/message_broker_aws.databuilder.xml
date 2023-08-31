@@ -8,6 +8,7 @@
     <transfer name="MessageAttributes">
         <property name="emitter" dataBuilderRule="lexify('??????????')"/>
         <property name="transferName" dataBuilderRule="lexify('??????????')"/>
+        <property name="metadata" dataBuilderRule="MessageMetadata"/>
     </transfer>
 
     <transfer name="MessageBrokerTestMessage">
@@ -15,4 +16,7 @@
         <property name="empty" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
+    <transfer name="MessageMetadata">
+        <property name="messageId" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
 </transfers>

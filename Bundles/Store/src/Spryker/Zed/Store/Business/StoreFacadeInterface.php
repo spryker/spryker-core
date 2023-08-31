@@ -236,6 +236,8 @@ interface StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $storeReference
      *
      * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException

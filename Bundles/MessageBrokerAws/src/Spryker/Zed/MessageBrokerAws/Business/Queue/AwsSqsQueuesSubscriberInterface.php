@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MessageBrokerAws\Business\Queue;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface AwsSqsQueuesSubscriberInterface
 {
     /**

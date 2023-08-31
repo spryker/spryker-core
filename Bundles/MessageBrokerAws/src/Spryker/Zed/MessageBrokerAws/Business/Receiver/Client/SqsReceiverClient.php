@@ -18,6 +18,9 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\HttpChannelReceiverClient} instead.
+ */
 class SqsReceiverClient implements ReceiverClientInterface
 {
     use LoggerTrait;

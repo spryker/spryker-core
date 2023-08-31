@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business;
 
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 
@@ -62,4 +63,32 @@ interface OauthClientFacadeInterface
     public function expandPaymentAuthorizeRequest(
         PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
     ): PaymentAuthorizeRequestTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves an access token from an access token provider with OAuth credentials.
+     * - Updates the `HttpRequestTransfer.authorization` property with the received access token.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HttpRequestTransfer
+     */
+    public function expandHttpChannelMessageReceiverRequest(HttpRequestTransfer $httpRequestTransfer): HttpRequestTransfer;
+
+    /**
+     * Specification:
+     * - Locates a tenant identifier if it has been provided.
+     * - Expands `AccessTokenRequest.accessTokenRequestOptions` by including the located tenant identifier.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequestWithTenantIdentifier(
+        AccessTokenRequestTransfer $accessTokenRequestTransfer
+    ): AccessTokenRequestTransfer;
 }

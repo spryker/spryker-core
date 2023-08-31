@@ -15,22 +15,49 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MessageBrokerAwsConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SQS_TRANSPORT = 'sqs';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SNS_TRANSPORT = 'sns';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @var string
+     */
+    public const HTTP_TRANSPORT = 'http';
+
+    /**
+     * @var string
+     */
+    public const HTTP_CHANNEL_TRANSPORT = 'http-channel';
+
+    /**
+     * @uses \Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp::class
+     *
+     * @var string
+     */
+    public const HTTP_CHANNEL_STAMP_CLASS = 'Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     protected const SQS_AWS_API_VERSION = '2012-11-05';
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array<string, mixed>|string
      */
@@ -52,6 +79,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string, mixed>|string
      */
     public function getSqsSenderConfig()
@@ -71,6 +100,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array<string, mixed>|string
      */
@@ -92,6 +123,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string, mixed>|string
      */
     public function getSqsReceiverConfig()
@@ -111,6 +144,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return bool
      */
@@ -192,6 +227,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<int, string>
      */
     public function getSqsQueuesNames(): array
@@ -201,6 +238,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -212,6 +251,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function getSnsTopicNames(): array
@@ -221,6 +262,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -232,6 +275,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getSqsAwsAccessSecret(): string
@@ -241,6 +286,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -252,6 +299,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getSqsAwsRegion(): string
@@ -261,6 +310,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -272,6 +323,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function getStandardHttpHeaders(): array
@@ -282,7 +335,8 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     }
 
     /**
-     * Get default configuration for message data filters
+     * Specification:
+     * - Get default configuration for message data filters
      *
      * @api
      *
@@ -303,5 +357,54 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
         );
 
         return $config;
+    }
+
+    /**
+     * Specification:
+     * - Specifies the base URL for the HTTP channel sender.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getHttpChannelSenderBaseUrl(): string
+    {
+        return $this->get(MessageBrokerAwsConstants::HTTP_CHANNEL_SENDER_BASE_URL, '');
+    }
+
+    /**
+     * Specification:
+     * - Specifies the base URL for the HTTP channel receiver.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getHttpChannelReceiverBaseUrl(): string
+    {
+        return $this->get(MessageBrokerAwsConstants::HTTP_CHANNEL_RECEIVER_BASE_URL, '');
+    }
+
+    /**
+     * Specification:
+     * - Sets a limit for message consumption.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMessageConsumeLimit(): int
+    {
+        return 100;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getConsumerId(): string
+    {
+        return $this->get(MessageBrokerAwsConstants::CONSUMER_ID, '');
     }
 }

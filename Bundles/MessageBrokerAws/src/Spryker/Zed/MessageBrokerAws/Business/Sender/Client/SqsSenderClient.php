@@ -16,6 +16,9 @@ use Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\Connection;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\HttpChannelSenderClient} instead.
+ */
 class SqsSenderClient implements SenderClientInterface
 {
     /**

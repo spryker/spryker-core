@@ -12,6 +12,8 @@ use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInte
 use Symfony\Component\Messenger\Envelope;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig getConfig()
  * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacadeInterface getFacade()
  */

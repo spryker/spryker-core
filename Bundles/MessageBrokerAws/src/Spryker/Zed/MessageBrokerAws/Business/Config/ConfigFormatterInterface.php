@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MessageBrokerAws\Business\Config;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ConfigFormatterInterface
 {
     /**

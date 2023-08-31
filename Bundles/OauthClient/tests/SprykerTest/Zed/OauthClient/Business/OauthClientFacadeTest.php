@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\AccessTokenErrorTransfer;
 use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Orm\Zed\OauthClient\Persistence\SpyOauthClientAccessTokenCacheQuery;
+use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Zed\OauthClient\Business\Exception\AccessTokenProviderNotFoundException;
 use Spryker\Zed\OauthClient\Business\Provider\OauthAccessTokenProviderInterface;
 
@@ -394,6 +396,33 @@ class OauthClientFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandHttpRequestReturnsExpandedTransferWhenRequestIsCorrect(): void
+    {
+        // Arrange
+        $this->tester->haveDummyOauthAccessTokenProviderDependency(
+            $this->tester->haveAccessTokenResponseTransfer(
+                [
+                    AccessTokenResponseTransfer::IS_SUCCESSFUL => true,
+                    AccessTokenResponseTransfer::ACCESS_TOKEN => static::TEST_TOKEN_FROM_PROVIDER,
+                    AccessTokenResponseTransfer::EXPIRES_AT => $this->expiresAt,
+                ],
+            ),
+            true,
+        );
+
+        // Act
+        $httpRequestTransfer = $this->tester->getFacade()->expandHttpChannelMessageReceiverRequest(new HttpRequestTransfer());
+
+        // Assert
+        $this->assertSame(
+            sprintf('Bearer %s', static::TEST_TOKEN_FROM_PROVIDER),
+            $httpRequestTransfer->getHeaders()['Authorization'],
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testAccessTokenRequestOptionsExpandedWithCurrentStoreStoreReference(): void
     {
         // Arrange
@@ -426,5 +455,41 @@ class OauthClientFacadeTest extends Unit
 
         // Act
         $expandedMessageAttributes = $this->tester->getFacade()->expandMessageAttributes($mesageAttributes);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandAccessTokenRequestWithTenantIdentifierSuccessfullyEndsWhenTenantIdentifierExists(): void
+    {
+        // Arrange
+        $tenantIdentifier = 'dev-DE';
+        $this->tester->setConfig(OauthClientConstants::TENANT_IDENTIFIER, $tenantIdentifier);
+
+        // Act
+        $accessTokenRequestTransfer = $this->tester->getFacade()
+            ->expandAccessTokenRequestWithTenantIdentifier(new AccessTokenRequestTransfer());
+
+        // Assert
+        $accessTokenRequestOptionsTransfer = $accessTokenRequestTransfer->getAccessTokenRequestOptions();
+        $this->assertNotNull($accessTokenRequestOptionsTransfer);
+        $this->assertSame($tenantIdentifier, $accessTokenRequestOptionsTransfer->getTenantIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenRequestWithTenantIdentifierDoesNothingWhenTenantIdentifierIsEmpty(): void
+    {
+        // Arrange
+        $this->tester->setConfig(OauthClientConstants::TENANT_IDENTIFIER, '');
+        $accessTokenRequestTransfer = new AccessTokenRequestTransfer();
+
+        // Act
+        $expandedAccessTokenRequestTransfer = $this->tester->getFacade()
+            ->expandAccessTokenRequestWithTenantIdentifier($accessTokenRequestTransfer);
+
+        // Assert
+        $this->assertSame($accessTokenRequestTransfer, $expandedAccessTokenRequestTransfer);
     }
 }

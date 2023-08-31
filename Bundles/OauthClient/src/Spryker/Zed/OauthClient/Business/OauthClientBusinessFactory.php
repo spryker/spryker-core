@@ -10,6 +10,8 @@ namespace Spryker\Zed\OauthClient\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OauthClient\Business\Cache\AccessTokenCacheInterface;
 use Spryker\Zed\OauthClient\Business\Cache\AccessTokenDatabaseCache;
+use Spryker\Zed\OauthClient\Business\Expander\AccessTokenRequestExpander;
+use Spryker\Zed\OauthClient\Business\Expander\AccessTokenRequestExpanderInterface;
 use Spryker\Zed\OauthClient\Business\Expander\RequestAuthorizationDataExpander;
 use Spryker\Zed\OauthClient\Business\Expander\RequestAuthorizationDataExpanderInterface;
 use Spryker\Zed\OauthClient\Business\Provider\OauthAccessTokenProvider;
@@ -45,6 +47,14 @@ class OauthClientBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthClient\Business\Expander\AccessTokenRequestExpanderInterface
+     */
+    public function createAccessTokenRequestExpander(): AccessTokenRequestExpanderInterface
+    {
+        return new AccessTokenRequestExpander($this->getConfig());
     }
 
     /**

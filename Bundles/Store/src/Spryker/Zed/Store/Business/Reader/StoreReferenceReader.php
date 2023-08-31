@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 use Spryker\Zed\Store\StoreConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class StoreReferenceReader implements StoreReferenceReaderInterface
 {
     /**

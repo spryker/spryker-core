@@ -18,6 +18,8 @@ interface MessageBrokerConstants
     public const MESSAGE_TO_CHANNEL_MAP = 'MESSAGE_BROKER:MESSAGE_TO_CHANNEL_MAP';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\MessageBroker\MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP} instead.
+     *
      * @var string
      */
     public const CHANNEL_TO_TRANSPORT_MAP = 'MESSAGE_BROKER:SENDER_CHANNEL_TO_CLIENT_MAP';
@@ -31,4 +33,19 @@ interface MessageBrokerConstants
      * @var string
      */
     public const IS_ENABLED = 'MESSAGE_BROKER:IS_ENABLED';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'MESSAGE_BROKER:TENANT_IDENTIFIER';
+
+    /**
+     * @var string
+     */
+    public const CHANNEL_TO_RECEIVER_TRANSPORT_MAP = 'MESSAGE_BROKER:CHANNEL_TO_RECEIVER_TRANSPORT_MAP';
+
+    /**
+     * @var string
+     */
+    public const CHANNEL_TO_SENDER_TRANSPORT_MAP = 'MESSAGE_BROKER:CHANNEL_TO_SENDER_TRANSPORT_MAP';
 }

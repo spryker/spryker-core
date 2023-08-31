@@ -17,6 +17,8 @@ interface StoreConstants
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const STORE_NAME_REFERENCE_MAP = 'STORE:STORE_NAME_REFERENCE_MAP';

@@ -9,6 +9,9 @@ namespace Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Locator;
 
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ReceiverClientLocatorInterface
 {
     /**

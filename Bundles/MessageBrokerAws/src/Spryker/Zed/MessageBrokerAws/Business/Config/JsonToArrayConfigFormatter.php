@@ -12,6 +12,9 @@ use Spryker\Zed\MessageBrokerAws\Business\Exception\ConfigInvalidException;
 use Spryker\Zed\MessageBrokerAws\Dependency\Facade\MessageBrokerAwsToStoreFacadeInterface;
 use Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class JsonToArrayConfigFormatter implements ConfigFormatterInterface
 {
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Zed\Store\Business\Expander;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface CurrentStoreReferenceMessageAttributesExpanderInterface
 {
     /**

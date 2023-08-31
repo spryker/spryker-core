@@ -11,6 +11,9 @@ use Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ReceiverClientLocator implements ReceiverClientLocatorInterface
 {
     /**

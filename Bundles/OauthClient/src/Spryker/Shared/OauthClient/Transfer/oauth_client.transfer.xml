@@ -17,6 +17,7 @@
     <transfer name="AccessTokenRequestOptions">
         <property name="audience" type="string"/>
         <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
     </transfer>
 
     <transfer name="AccessTokenResponse" strict="true">
@@ -29,6 +30,10 @@
     <transfer name="AccessTokenError" strict="true">
         <property name="error" type="string"/>
         <property name="errorDescription" type="string"/>
+    </transfer>
+
+    <transfer name="HttpRequest">
+        <property name="headers" type="array" singular="header" associative="true"/>
     </transfer>
 
     <transfer name="MessageAttributes">

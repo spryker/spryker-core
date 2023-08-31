@@ -111,6 +111,7 @@ class MessagePublisher implements MessagePublisherInterface
         $transferName = $this->getTransferNameFromClass($messageTransfer);
         $messageAttributes->setTransferName($transferName);
         $messageAttributes->setEvent($transferName);
+        $messageAttributes->setName($transferName);
 
         $messageAttributes = $this->messageAttributeProvider->provideMessageAttributes($messageAttributes);
         $messageTransfer->setMessageAttributes($messageAttributes);

@@ -250,6 +250,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface
      */
     public function createStoreReferenceReader(): StoreReferenceReaderInterface
@@ -258,6 +260,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestExpanderInterface
      */
     public function createStoreReferenceAccessTokenRequestExpander(): CurrentStoreReferenceAccessTokenRequestExpanderInterface
@@ -280,6 +284,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpanderInterface
      */
     public function createCurrentStoreReferenceMessageAttributesExpander(): CurrentStoreReferenceMessageAttributesExpanderInterface

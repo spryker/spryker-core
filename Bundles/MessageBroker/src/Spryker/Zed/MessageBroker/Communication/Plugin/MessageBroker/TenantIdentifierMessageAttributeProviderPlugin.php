@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageAttributeProviderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TenantActorMessageAttributeProviderPlugin} instead.
+ *
  * @method \Spryker\Zed\MessageBroker\MessageBrokerConfig getConfig()
  * @method \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface getFacade()
  */

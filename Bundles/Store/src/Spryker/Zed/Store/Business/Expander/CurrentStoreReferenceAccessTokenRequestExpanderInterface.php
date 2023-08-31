@@ -9,6 +9,9 @@ namespace Spryker\Zed\Store\Business\Expander;
 
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface CurrentStoreReferenceAccessTokenRequestExpanderInterface
 {
     /**

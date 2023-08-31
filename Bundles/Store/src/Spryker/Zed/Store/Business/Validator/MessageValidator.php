@@ -34,6 +34,7 @@ class MessageValidator implements MessageValidatorInterface
 
     /**
      * @param \Spryker\Zed\Store\Business\Model\StoreReaderInterface $storeReader
+     * @param bool $isDynamicMultiStoreEnabled
      */
     public function __construct(StoreReaderInterface $storeReader, bool $isDynamicMultiStoreEnabled)
     {

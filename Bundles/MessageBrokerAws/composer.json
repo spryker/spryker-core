@@ -12,6 +12,7 @@
         "spryker/guzzle": "^2.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
+        "spryker/message-broker-aws-extension": "^1.0.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/store": "^1.1.0",
         "spryker/symfony": "^3.7.0",
@@ -20,7 +21,10 @@
         "symfony/amazon-sqs-messenger": "^5.1.0 || ^6.0.0"
     },
     "require-dev": {
+        "psr/http-message": "*",
         "spryker/code-sniffer": "*",
+        "spryker/message-broker": "*",
+        "spryker/propel": "*",
         "spryker/ramsey-uuid": "*",
         "spryker/testify": "*"
     },

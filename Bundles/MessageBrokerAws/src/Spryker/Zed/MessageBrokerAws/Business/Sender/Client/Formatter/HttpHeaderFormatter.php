@@ -13,9 +13,11 @@ use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 class HttpHeaderFormatter implements HttpHeaderFormatterInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
-    protected const HEADER_NAME_PREFIX = 'X-';
+    protected const HEADER_NAME_PREFIX = '';
 
     /**
      * @var \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig

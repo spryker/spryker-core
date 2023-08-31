@@ -71,4 +71,9 @@ interface OauthClientConstants
      * @var string
      */
     public const OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE = 'OAUTH_CLIENT:OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'OAUTH_CLIENT:TENANT_IDENTIFIER';
 }

@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="HttpRequest">
+        <property name="body" type="string"/>
+        <property name="requestUri" type="string"/>
+        <property name="headers" type="array" singular="header" associative="true"/>
+    </transfer>
+
     <transfer name="MessageBrokerTestMessage">
         <property name="key" type="string"/>
         <property name="empty" type="string"/>
@@ -24,14 +30,23 @@
         <property name="empty" type="string"/>
     </transfer>
 
+    <transfer name="MessageMetadata">
+        <property name="messageId" type="string"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MessageAttributes">
         <property name="emitter" type="string"/>
-        <property name="publisher" type="Publisher" deprecated="Use emitter property instead."/>
+        <property name="publisher" type="Publisher" deprecated="Use {@link \Generated\Shared\Transfer\MessageAttributesTransfer::$actorId} instead."/>
         <property name="transferName" type="string"/>
+        <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
+        <property name="metadata" type="MessageMetadata"/>
+        <property name="actorId" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Publisher" deprecated="Will be removed in next major.">

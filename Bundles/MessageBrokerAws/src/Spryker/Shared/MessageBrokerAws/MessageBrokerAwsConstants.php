@@ -15,44 +15,44 @@ interface MessageBrokerAwsConstants
     /**
      * @var string
      */
-    public const SNS_SENDER_CONFIG = 'MESSAGE_BROKER:AWS_SNS_SENDER_CONFIG';
+    public const SNS_SENDER_CONFIG = 'MESSAGE_BROKER_AWS:AWS_SNS_SENDER_CONFIG';
 
     /**
      * @var string
      */
-    public const SQS_SENDER_CONFIG = 'MESSAGE_BROKER:AWS_SQS_SENDER_CONFIG';
+    public const SQS_SENDER_CONFIG = 'MESSAGE_BROKER_AWS:AWS_SQS_SENDER_CONFIG';
 
     /**
      * @var string
      */
-    public const HTTP_SENDER_CONFIG = 'MESSAGE_BROKER:HTTP_SENDER_CONFIG';
+    public const HTTP_SENDER_CONFIG = 'MESSAGE_BROKER_AWS:HTTP_SENDER_CONFIG';
 
     /**
      * @var string
      */
-    public const SQS_RECEIVER_CONFIG = 'MESSAGE_BROKER:AWS_SQS_RECEIVER_CONFIG';
+    public const SQS_RECEIVER_CONFIG = 'MESSAGE_BROKER_AWS:AWS_SQS_RECEIVER_CONFIG';
 
     /**
      * @var string
      */
-    public const CHANNEL_TO_SENDER_TRANSPORT_MAP = 'MESSAGE_BROKER:CHANNEL_TO_SENDER_TRANSPORT_MAP';
+    public const CHANNEL_TO_SENDER_TRANSPORT_MAP = 'MESSAGE_BROKER_AWS:CHANNEL_TO_SENDER_TRANSPORT_MAP';
 
     /**
      * @var string
      */
-    public const CHANNEL_TO_RECEIVER_TRANSPORT_MAP = 'MESSAGE_BROKER:CHANNEL_TO_RECEIVER_TRANSPORT_MAP';
+    public const CHANNEL_TO_RECEIVER_TRANSPORT_MAP = 'MESSAGE_BROKER_AWS:CHANNEL_TO_RECEIVER_TRANSPORT_MAP';
 
     /**
      * @uses \Spryker\Shared\MessageBroker\MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP
      *
      * @var string
      */
-    public const MESSAGE_TO_CHANNEL_MAP = 'MESSAGE_BROKER:MESSAGE_TO_CHANNEL_MAP';
+    public const MESSAGE_TO_CHANNEL_MAP = 'MESSAGE_BROKER_AWS:MESSAGE_TO_CHANNEL_MAP';
 
     /**
      * @var string
      */
-    public const DEBUG_ENABLED = 'MESSAGE_BROKER:DEBUG_ENABLED';
+    public const DEBUG_ENABLED = 'MESSAGE_BROKER_AWS:DEBUG_ENABLED';
 
     /**
      * Specification:
@@ -139,4 +139,31 @@ interface MessageBrokerAwsConstants
      * @var string
      */
     public const SQS_AWS_REGION = 'MESSAGE_BROKER_AWS:SQS_AWS_REGION';
+
+    /**
+     * Specification:
+     * - Specifies the base URL for the HTTP channel sender.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const HTTP_CHANNEL_SENDER_BASE_URL = 'MESSAGE_BROKER_AWS:HTTP_CHANNEL_SENDER_BASE_URL';
+
+    /**
+     * Specification:
+     * - Specifies the base URL for the HTTP channel receiver.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const HTTP_CHANNEL_RECEIVER_BASE_URL = 'MESSAGE_BROKER_AWS:HTTP_CHANNEL_RECEIVER_BASE_URL';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const CONSUMER_ID = 'MESSAGE_BROKER_AWS:CONSUMER_ID';
 }

@@ -17,10 +17,12 @@ interface MessageBrokerFacadeInterface
     /**
      * Specification:
      * - Adds message attributes to the transfer object.
-     * - Wraps message in a Symfony Envelope and sends it through the configured transport for this message.
+     * - Wraps message in a Symfony Envelope and adds a channel timestamp.
+     * - Throws `MissingMessageSenderException` if no message sender is found for the current message channel.
+     * - Sends the message through the configured transport for this message.
      * - Writes Logger::INFO level log in case of successful envelope message sending.
      * - Writes Logger::ERROR level log in case of any error during envelope message sending.
-     * - Will not send message if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`
+     * - Will not send message if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`.
      *
      * @api
      *

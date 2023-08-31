@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business\Expander;
 
 use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 use Spryker\Zed\OauthClient\Business\Exception\AccessTokenNotFoundException;
@@ -17,6 +18,11 @@ use Spryker\Zed\OauthClient\OauthClientConfig;
 
 class RequestAuthorizationDataExpander implements RequestAuthorizationDataExpanderInterface
 {
+    /**
+     * @var string
+     */
+    protected const HEADER_AUTHORIZATION = 'Authorization';
+
     /**
      * @var \Spryker\Zed\OauthClient\Business\Provider\OauthAccessTokenProviderInterface
      */
@@ -88,6 +94,29 @@ class RequestAuthorizationDataExpander implements RequestAuthorizationDataExpand
         $messageAttributesTransfer->setAuthorization($this->getAuthorizationValue($accessTokenRequestTransfer));
 
         return $messageAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HttpRequestTransfer
+     */
+    public function expandHttpChannelMessageReceiverRequest(HttpRequestTransfer $httpRequestTransfer): HttpRequestTransfer
+    {
+        $accessTokenRequestOptionsTransfer = (new AccessTokenRequestOptionsTransfer())
+            ->setAudience($this->oauthClientConfig->getOauthOptionAudienceForMessageBroker());
+
+        $accessTokenRequestTransfer = (new AccessTokenRequestTransfer())
+            ->setGrantType($this->oauthClientConfig->getOauthGrantTypeForMessageBroker())
+            ->setProviderName($this->oauthClientConfig->getOauthProviderNameForMessageBroker())
+            ->setAccessTokenRequestOptions($accessTokenRequestOptionsTransfer);
+
+        $httpRequestTransfer->addHeader(
+            static::HEADER_AUTHORIZATION,
+            $this->getAuthorizationValue($accessTokenRequestTransfer),
+        );
+
+        return $httpRequestTransfer;
     }
 
     /**

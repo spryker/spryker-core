@@ -476,6 +476,7 @@
         "spryker/message-broker": "*",
         "spryker/message-broker-aws": "*",
         "spryker/message-broker-extension": "*",
+        "spryker/message-broker-aws-extension": "*",
         "spryker/messenger": "*",
         "spryker/messenger-extension": "*",
         "spryker/module-finder": "*",

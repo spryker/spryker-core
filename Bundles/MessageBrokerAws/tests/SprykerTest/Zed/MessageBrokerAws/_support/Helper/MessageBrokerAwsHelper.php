@@ -14,6 +14,8 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Generated\Shared\DataBuilder\MessageAttributesBuilder;
+use Generated\Shared\DataBuilder\MessageBrokerTestMessageBuilder;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -55,6 +57,28 @@ class MessageBrokerAwsHelper extends Module
         putenv('SPRYKER_MESSAGE_BROKER_SNS_SENDER_CONFIG');
         putenv('SPRYKER_MESSAGE_BROKER_SQS_SENDER_CONFIG');
         putenv('SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG');
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function createMessageAttributesTransfer(array $seed = []): MessageAttributesTransfer
+    {
+        return (new MessageAttributesBuilder($seed))
+            ->withMetadata()
+            ->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer
+     */
+    public function createMessageBrokerTestMessageTransfer(array $seed = []): MessageBrokerTestMessageTransfer
+    {
+        return (new MessageBrokerTestMessageBuilder($seed))->build();
     }
 
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Zed\MessageBrokerAws\Business\Receiver;
 
 use Symfony\Component\Messenger\Envelope;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ReceiverInterface
 {
     /**

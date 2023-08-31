@@ -9,6 +9,7 @@ namespace Spryker\Zed\MessageBrokerAws\Business;
 
 use Aws\Sns\SnsClient;
 use Aws\Sqs\SqsClient;
+use GuzzleHttp\ClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Config\JsonToArrayConfigFormatter;
@@ -21,14 +22,17 @@ use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreator;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreatorInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesSubscriber;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesSubscriberInterface;
+use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\HttpChannelReceiverClient;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Locator\ReceiverClientLocator;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Locator\ReceiverClientLocatorInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\SqsReceiverClient;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Receiver;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\ReceiverInterface;
+use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\CustomHttpHeaderFormatter;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\HttpHeaderFormatter;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\HttpHeaderFormatterInterface;
+use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\HttpChannelSenderClient;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\HttpSenderClient;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Locator\SenderClientLocator;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Locator\SenderClientLocatorInterface;
@@ -42,6 +46,7 @@ use Spryker\Zed\MessageBrokerAws\Business\Sns\AwsSnsTopicCreator;
 use Spryker\Zed\MessageBrokerAws\Business\Sns\AwsSnsTopicCreatorInterface;
 use Spryker\Zed\MessageBrokerAws\Dependency\Facade\MessageBrokerAwsToStoreFacadeInterface;
 use Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface;
+use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsDependencyProvider;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -55,6 +60,8 @@ use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\SenderInterface
      */
     public function createSender(): SenderInterface
@@ -67,6 +74,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Locator\SenderClientLocatorInterface
      */
     public function createSenderClientLocator(): SenderClientLocatorInterface
@@ -79,18 +88,22 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string, \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\SenderClientInterface>
      */
     public function getSenderClients(): array
     {
         return [
-            'sns' => $this->createSnsSenderClient(),
-            'sqs' => $this->createSqsSenderClient(),
-            'http' => $this->createHttpSenderClient(),
+            MessageBrokerAwsConfig::SNS_TRANSPORT => $this->createSnsSenderClient(),
+            MessageBrokerAwsConfig::SQS_TRANSPORT => $this->createSqsSenderClient(),
+            MessageBrokerAwsConfig::HTTP_TRANSPORT => $this->createHttpSenderClient(),
         ];
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory::createHttpChannelSenderClient()} instead.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\SenderClientInterface
      */
     public function createSnsSenderClient(): SenderClientInterface
@@ -103,6 +116,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory::createHttpChannelSenderClient()} instead.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\SenderClientInterface
      */
     public function createSqsSenderClient(): SenderClientInterface
@@ -115,6 +130,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory::createHttpChannelSenderClient()} instead.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\SenderClientInterface
      */
     public function createHttpSenderClient(): SenderClientInterface
@@ -123,11 +140,26 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createSerializer(),
             $this->createConfigFormatter(),
-            $this->createHttpHeaderFormatter(),
+            $this->createCustomHttpHeaderFormatter(),
         );
     }
 
     /**
+     * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\SenderClientInterface
+     */
+    public function createHttpChannelSenderClient(): SenderClientInterface
+    {
+        return new HttpChannelSenderClient(
+            $this->getConfig(),
+            $this->createSerializer(),
+            $this->createHttpHeaderFormatter(),
+            $this->getHttpClient(),
+        );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Receiver\ReceiverInterface
      */
     public function createReceiver(): ReceiverInterface
@@ -139,6 +171,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Locator\ReceiverClientLocatorInterface
      */
     public function createReceiverClientLocator(): ReceiverClientLocatorInterface
@@ -151,16 +185,34 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string, \Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface>
      */
     public function getReceiverClients(): array
     {
         return [
-            'sqs' => $this->createSqsReceiverClient(),
+            MessageBrokerAwsConfig::SQS_TRANSPORT => $this->createSqsReceiverClient(),
         ];
     }
 
     /**
+     * @return \Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface
+     */
+    public function createHttpChannelReceiverClient(): ReceiverClientInterface
+    {
+        return new HttpChannelReceiverClient(
+            $this->getConfig(),
+            $this->createSerializer(),
+            $this->getHttpChannelMessageReceiverRequestExpanderPlugins(),
+            $this->getHttpClient(),
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory::createHttpChannelReceiverClient()} instead.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\ReceiverClientInterface
      */
     public function createSqsReceiverClient(): ReceiverClientInterface
@@ -241,6 +293,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface
      */
     public function createConfigFormatter(): ConfigFormatterInterface
@@ -252,6 +306,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreatorInterface
      */
     public function createAwsSqsQueuesCreator(): AwsSqsQueuesCreatorInterface
@@ -263,6 +319,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Sns\AwsSnsTopicCreatorInterface
      */
     public function createAwsSnsTopicCreator(): AwsSnsTopicCreatorInterface
@@ -274,6 +332,8 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesSubscriberInterface
      */
     public function createAwsSqsQueueSubscriber(): AwsSqsQueuesSubscriberInterface
@@ -285,6 +345,24 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \GuzzleHttp\ClientInterface
+     */
+    public function getHttpClient(): ClientInterface
+    {
+        return $this->getProvidedDependency(MessageBrokerAwsDependencyProvider::CLIENT_HTTP);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MessageBrokerAwsExtension\Dependency\Plugin\HttpChannelMessageReceiverRequestExpanderPluginInterface>
+     */
+    public function getHttpChannelMessageReceiverRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MessageBrokerAwsDependencyProvider::PLUGINS_HTTP_CHANNEL_MESSAGE_RECEIVER_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Aws\Sqs\SqsClient
      */
     public function getAwsSqsClient(): SqsClient
@@ -309,6 +387,18 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory::createHttpHeaderFormatter()} instead.
+     *
+     * @return \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\HttpHeaderFormatterInterface
+     */
+    public function createCustomHttpHeaderFormatter(): HttpHeaderFormatterInterface
+    {
+        return new CustomHttpHeaderFormatter($this->getConfig());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\MessageBrokerAws\Dependency\Facade\MessageBrokerAwsToStoreFacadeInterface
      */
     public function getStoreFacade(): MessageBrokerAwsToStoreFacadeInterface

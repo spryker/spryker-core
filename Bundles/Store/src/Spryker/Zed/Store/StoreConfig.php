@@ -47,6 +47,8 @@ class StoreConfig extends AbstractBundleConfig
      *     "STORE_NAME_A": "STORE_REFERENCE_A"
      * ]
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string, string>
      */
     public function getStoreNameReferenceMap(): array

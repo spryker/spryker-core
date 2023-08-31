@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MessageBrokerAws\Business\Serializer;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageMetadataTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\MessageBrokerAws\Business\Exception\EnvelopDecodingFailedException;
 use Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface;
@@ -74,7 +75,6 @@ class TransferSerializer implements SerializerInterface
      * @param array<string, mixed> $encodedEnvelope
      *
      * @throws \Spryker\Zed\MessageBrokerAws\Business\Exception\EnvelopDecodingFailedException
-     * @throws \Symfony\Component\Messenger\Exception\MessageDecodingFailedException
      *
      * @return \Symfony\Component\Messenger\Envelope
      */
@@ -88,21 +88,12 @@ class TransferSerializer implements SerializerInterface
             throw new EnvelopDecodingFailedException('Encoded envelope should have some "headers".');
         }
 
-        if (empty($encodedEnvelope['headers']['transferName'])) {
-            throw new EnvelopDecodingFailedException('Encoded envelope does not have a "transferName" header. The "transferName" is referring to a Transfer class that is used to unserialize the message data.');
+        if (isset($encodedEnvelope['messageId']) && !$encodedEnvelope['messageId']) {
+            throw new EnvelopDecodingFailedException('Encoded envelope should have a "messageId".');
         }
 
-        $messageAttributesTransfer = new MessageAttributesTransfer();
-        $messageAttributesTransfer->fromArray($encodedEnvelope['headers'], true)
-            ->setPublisher(null)
-            ->setEmitter($encodedEnvelope['headers'][static::HEADER_KEY_PUBLISHER] ?? null);
-
-        // TODO check with security manager if this could be an issue.
-        $messageTransferClassName = sprintf('\\Generated\\Shared\\Transfer\\%sTransfer', $messageAttributesTransfer->getTransferNameOrFail());
-
-        if (!class_exists($messageTransferClassName)) {
-            throw new MessageDecodingFailedException(sprintf('Could not find the "%s" transfer object to unserialize the data.', $messageTransferClassName));
-        }
+        $messageAttributesTransfer = $this->mapEncodedEnvelopeToMessageAttributesTransfer($encodedEnvelope);
+        $messageTransferClassName = $this->getMessageTransferClassName($encodedEnvelope, $messageAttributesTransfer);
 
         try {
             /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer */
@@ -168,6 +159,65 @@ class TransferSerializer implements SerializerInterface
             'bodyRaw' => $messageData,
             'headers' => $headers,
         ];
+    }
+
+    /**
+     * @param array<string, mixed> $encodedEnvelope
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    protected function mapEncodedEnvelopeToMessageAttributesTransfer(
+        array $encodedEnvelope
+    ): MessageAttributesTransfer {
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $messageAttributesTransfer->fromArray($encodedEnvelope['headers'], true)
+            ->setPublisher(null)
+            ->setEmitter($encodedEnvelope['headers'][static::HEADER_KEY_PUBLISHER] ?? null);
+
+        if (isset($encodedEnvelope['messageId'])) {
+            $messageAttributesTransfer->setMetadata(
+                (new MessageMetadataTransfer())->setMessageId($encodedEnvelope['messageId']),
+            );
+        }
+
+        // It is needed for BC in scenarios where StoreReference is empty but still utilized in certain contexts.
+        if (empty($messageAttributesTransfer->getStoreReference())) {
+            $messageAttributesTransfer->setStoreReference($messageAttributesTransfer->getTenantIdentifier());
+        }
+
+        return $messageAttributesTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $encodedEnvelope
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @throws \Spryker\Zed\MessageBrokerAws\Business\Exception\EnvelopDecodingFailedException
+     * @throws \Symfony\Component\Messenger\Exception\MessageDecodingFailedException
+     *
+     * @return string
+     */
+    protected function getMessageTransferClassName(
+        array $encodedEnvelope,
+        MessageAttributesTransfer $messageAttributesTransfer
+    ): string {
+        if (empty($encodedEnvelope['headers']['transferName']) && empty($encodedEnvelope['headers']['name'])) {
+            throw new EnvelopDecodingFailedException('Encoded envelope does not have a "transferName" or "name" header. The "transferName" or "name" is referring to a Transfer class that is used to unserialize the message data.');
+        }
+
+        $messageTransferClassName = '';
+        if ($messageAttributesTransfer->getTransferName()) {
+            $messageTransferClassName = sprintf('\\Generated\\Shared\\Transfer\\%sTransfer', $messageAttributesTransfer->getTransferName());
+        }
+        if (!$messageTransferClassName) {
+            $messageTransferClassName = sprintf('\\Generated\\Shared\\Transfer\\%sTransfer', $messageAttributesTransfer->getName());
+        }
+
+        if (!class_exists($messageTransferClassName)) {
+            throw new MessageDecodingFailedException(sprintf('Could not find the "%s" transfer object to unserialize the data.', $messageTransferClassName));
+        }
+
+        return $messageTransferClassName;
     }
 
     /**

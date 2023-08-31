@@ -10,6 +10,9 @@ namespace Spryker\Client\Store\Plugin\Expander;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Store\StoreConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class StoreStoreReferenceExpander implements StoreExpanderInterface
 {
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business;
 
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -66,5 +67,38 @@ class OauthClientFacade extends AbstractFacade implements OauthClientFacadeInter
         return $this->getFactory()
             ->createRequestAuthorizationDataExpander()
             ->expandPaymentAuthorizeRequest($paymentAuthorizeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HttpRequestTransfer
+     */
+    public function expandHttpChannelMessageReceiverRequest(HttpRequestTransfer $httpRequestTransfer): HttpRequestTransfer
+    {
+        return $this->getFactory()
+            ->createRequestAuthorizationDataExpander()
+            ->expandHttpChannelMessageReceiverRequest($httpRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequestWithTenantIdentifier(
+        AccessTokenRequestTransfer $accessTokenRequestTransfer
+    ): AccessTokenRequestTransfer {
+        return $this->getFactory()
+            ->createAccessTokenRequestExpander()
+            ->expandAccessTokenRequestWithTenantIdentifier($accessTokenRequestTransfer);
     }
 }

@@ -34,10 +34,16 @@ class IndexController extends AbstractController
      */
     protected function getTenantIdentifier(): string
     {
+        $tenantIdentifier = $this->getFactory()->getConfig()->getTenantIdentifier();
+
+        if ($tenantIdentifier) {
+            return $tenantIdentifier;
+        }
+
         $storeFacade = $this->getFactory()->getStoreFacade();
 
         if (!$storeFacade->isCurrentStoreDefined()) {
-            return $this->getFactory()->getConfig()->getTenantIdentifier() ?: '';
+            return '';
         }
 
         $storeTransfer = $storeFacade->getCurrentStore();

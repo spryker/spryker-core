@@ -13,7 +13,7 @@
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" deprecated="Will be empty after dynamic store enablement"/>
         <property name="countries" type="array" singular="country"/>
         <property name="timezone" type="string" deprecated="Will be empty after dynamic store enablement"/>
-        <property name="storeReference" type="string"/>
+        <property name="storeReference" type="string" deprecated="Will be removed without replacement."/>
     </transfer>
 
     <transfer name="StoreResponse">

@@ -19,6 +19,9 @@ use Symfony\Component\Messenger\Exception\TransportException;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Throwable;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\HttpChannelSenderClient} instead.
+ */
 class SnsSenderClient implements SenderClientInterface
 {
     /**

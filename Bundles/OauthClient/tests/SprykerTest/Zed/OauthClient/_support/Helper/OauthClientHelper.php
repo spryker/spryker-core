@@ -9,18 +9,23 @@ declare(strict_types=1);
 
 namespace SprykerTest\Zed\OauthClient\Helper;
 
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\AccessTokenRequestBuilder;
 use Generated\Shared\DataBuilder\AccessTokenResponseBuilder;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
 use Orm\Zed\OauthClient\Persistence\SpyOauthClientAccessTokenCache;
 use Orm\Zed\OauthClient\Persistence\SpyOauthClientAccessTokenCacheQuery;
+use Spryker\Zed\OauthClient\OauthClientDependencyProvider;
+use Spryker\Zed\OauthDummy\Communication\Plugin\OauthClient\DummyOauthAccessTokenProviderPlugin;
 use SprykerTest\Shared\Testify\Helper\AbstractHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 
 class OauthClientHelper extends AbstractHelper
 {
     use DataCleanupHelperTrait;
+    use DependencyHelperTrait;
 
     /**
      * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer|null $accessTokenRequestTransfer
@@ -55,6 +60,27 @@ class OauthClientHelper extends AbstractHelper
         });
 
         return $spyOauthClientAccessTokenCacheEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AccessTokenResponseTransfer $accessTokenResponseTransfer
+     * @param bool $isApplicable
+     *
+     * @return void
+     */
+    public function haveDummyOauthAccessTokenProviderDependency(
+        AccessTokenResponseTransfer $accessTokenResponseTransfer,
+        bool $isApplicable
+    ): void {
+        $dummyOauthPlugin = Stub::make(DummyOauthAccessTokenProviderPlugin::class, [
+            'isApplicable' => $isApplicable,
+            'getAccessToken' => $accessTokenResponseTransfer,
+        ]);
+
+        $this->getDependencyHelper()->setDependency(
+            OauthClientDependencyProvider::PLUGINS_OAUTH_ACCESS_TOKEN_PROVIDER,
+            [$dummyOauthPlugin],
+        );
     }
 
     /**

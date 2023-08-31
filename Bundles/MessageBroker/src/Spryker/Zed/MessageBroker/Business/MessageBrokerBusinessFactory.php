@@ -21,10 +21,14 @@ use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLogger;
 use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProvider;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
+use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProvider;
+use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface;
 use Spryker\Zed\MessageBroker\Business\MessageHandler\MessageHandlerLocator;
 use Spryker\Zed\MessageBroker\Business\MessageSender\MessageSenderLocator;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStack;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStackInterface;
+use Spryker\Zed\MessageBroker\Business\Middleware\AddChannelNameStampMiddleware;
+use Spryker\Zed\MessageBroker\Business\Middleware\LogHandleMessageExceptionMiddleware;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisher;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisherInterface;
 use Spryker\Zed\MessageBroker\Business\Worker\Worker;
@@ -106,10 +110,38 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
      */
     public function getMiddlewares(): array
     {
-        return array_merge($this->getMiddlewarePlugins(), [
-            $this->createSendMessageMiddleware(),
-            $this->createHandleMessageMiddleware(),
-        ]);
+        return array_merge(
+            [
+                $this->createLogHandleMessageExceptionMiddleware(),
+            ],
+            $this->getMiddlewarePlugins(),
+            [
+                $this->createAddChannelNameStampMiddleware(),
+                $this->createSendMessageMiddleware(),
+                $this->createHandleMessageMiddleware(),
+            ],
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Middleware\MiddlewareInterface
+     */
+    public function createAddChannelNameStampMiddleware(): MiddlewareInterface
+    {
+        return new AddChannelNameStampMiddleware(
+            $this->createMessageChannelProvider(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface
+     */
+    public function createMessageChannelProvider(): MessageChannelProviderInterface
+    {
+        return new MessageChannelProvider(
+            $this->getConfig(),
+            $this->createConfigFormatter(),
+        );
     }
 
     /**
@@ -123,6 +155,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Symfony\Component\Messenger\Middleware\MiddlewareInterface
+     */
+    public function createLogHandleMessageExceptionMiddleware(): MiddlewareInterface
+    {
+        return new LogHandleMessageExceptionMiddleware();
+    }
+
+    /**
      * @return \Symfony\Component\Messenger\Transport\Sender\SendersLocatorInterface
      */
     public function createMessageSenderLocator(): SendersLocatorInterface
@@ -131,6 +171,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createConfigFormatter(),
             $this->getMessageSenderPlugins(),
+            $this->createMessageChannelProvider(),
         );
     }
 

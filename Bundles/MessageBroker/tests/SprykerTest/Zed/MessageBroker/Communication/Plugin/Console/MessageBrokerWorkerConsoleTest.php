@@ -55,9 +55,11 @@ class MessageBrokerWorkerConsoleTest extends Unit
      */
     public function testMessageCanBeConsumed(): void
     {
-        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
-
         $inMemoryMessageTransportMock = $this->tester->getInMemoryMessageTransportPlugin();
+
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, $inMemoryMessageTransportMock->getTransportName());
+
         $this->tester->setMessageSenderPlugins([$inMemoryMessageTransportMock]);
         $this->tester->setMessageReceiverPlugins([$inMemoryMessageTransportMock]);
 

@@ -33,7 +33,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     protected const MESSAGE_BROKER_CALL_ERROR_CODE_NAME = 'Message Broker call sendMessage Error';
 
     /**
-     * This configuration defines success code for message broker call.
+     * Specification:
+     * - This configuration defines success code for message broker call.
      *
      * @api
      *
@@ -45,7 +46,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration defines success code name for message broker call.
+     * Specification:
+     * - This configuration defines success code name for message broker call.
      *
      * @api
      *
@@ -57,7 +59,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration defines error code for message broker call.
+     * Specification:
+     * - This configuration defines error code for message broker call.
      *
      * @api
      *
@@ -69,7 +72,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration defines error code name for message broker call.
+     * Specification:
+     * - This configuration defines error code name for message broker call.
      *
      * @api
      *
@@ -81,7 +85,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration can to be done via environment variable.
+     * Specification:
+     * - This configuration can to be done via environment variable.
      *
      * @api
      *
@@ -103,9 +108,12 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration can be done via environment variables.
+     * Specification:
+     * - This configuration can be done via environment variables.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::getChannelToSenderTransportMap()} instead.
      *
      * @return array<string, string>|string
      */
@@ -125,7 +133,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration enables loggin for worker.
+     * Specification:
+     * - This configuration enables loggin for worker.
      *
      * @api
      *
@@ -137,7 +146,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This configuration defines log file path.
+     * Specification:
+     * - This configuration defines log file path.
      *
      * @api
      *
@@ -149,7 +159,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * Defines attributes which should not be logged.
+     * Specification:
+     * - Defines attributes which should not be logged.
      *
      * @api
      *
@@ -161,7 +172,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * Gets default channels for worker.
+     * Specification:
+     * - Gets default channels for worker.
      *
      * @api
      *
@@ -173,7 +185,8 @@ class MessageBrokerConfig extends AbstractBundleConfig
     }
 
     /**
-     * Global on/off toggle for sending and receiving messages through the MessageBroker
+     * Specification:
+     * - Global on/off toggle for sending and receiving messages through the MessageBroker.
      *
      * @api
      *
@@ -182,5 +195,41 @@ class MessageBrokerConfig extends AbstractBundleConfig
     public function isEnabled(): bool
     {
         return $this->get(MessageBrokerConstants::IS_ENABLED, true);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(MessageBrokerConstants::TENANT_IDENTIFIER, '');
+    }
+
+    /**
+     * Specification:
+     * - Gets list of sender channels with mapping to their transports.
+     *
+     * @api
+     *
+     * @return array<string, mixed>
+     */
+    public function getChannelToSenderTransportMap(): array
+    {
+        return $this->get(MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP, []);
+    }
+
+    /**
+     * Specification:
+     * - Gets list of receiver channels with mapping to their transports.
+     *
+     * @api
+     *
+     * @return array<string, mixed>
+     */
+    public function getChannelToReceiverTransportMap(): array
+    {
+        return $this->get(MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP, []);
     }
 }

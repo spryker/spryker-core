@@ -91,4 +91,14 @@ class OauthClientConfig extends AbstractBundleConfig
     {
         return $this->get(OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE, '');
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(OauthClientConstants::TENANT_IDENTIFIER, '');
+    }
 }

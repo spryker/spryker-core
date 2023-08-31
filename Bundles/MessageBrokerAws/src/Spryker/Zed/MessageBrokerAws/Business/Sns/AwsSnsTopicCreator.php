@@ -10,6 +10,9 @@ namespace Spryker\Zed\MessageBrokerAws\Business\Sns;
 use Aws\Sns\SnsClient;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AwsSnsTopicCreator implements AwsSnsTopicCreatorInterface
 {
     /**

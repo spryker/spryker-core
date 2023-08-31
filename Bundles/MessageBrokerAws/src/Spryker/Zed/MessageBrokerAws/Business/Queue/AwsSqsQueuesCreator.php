@@ -10,6 +10,9 @@ namespace Spryker\Zed\MessageBrokerAws\Business\Queue;
 use Aws\Sqs\SqsClient;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AwsSqsQueuesCreator implements AwsSqsQueuesCreatorInterface
 {
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Zed\MessageBrokerAws\Business\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ConfigDecodingFailedException extends Exception
 {
 }

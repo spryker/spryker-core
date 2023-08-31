@@ -31,7 +31,7 @@ use Spryker\Zed\OauthClientExtension\Dependency\Plugin\OauthAccessTokenProviderP
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\OauthClient\PHPMD)
  *
  * @method \Spryker\Zed\OauthClient\Business\OauthClientFacadeInterface getFacade()
  */

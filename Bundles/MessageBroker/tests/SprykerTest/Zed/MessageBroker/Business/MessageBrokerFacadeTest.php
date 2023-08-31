@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
+use Spryker\Zed\MessageBroker\Business\Exception\MissingMessageSenderException;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\CorrelationIdMessageAttributeProviderPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
@@ -38,6 +39,11 @@ class MessageBrokerFacadeTest extends Unit
     public const CHANNEL_NAME = 'channel';
 
     /**
+     * @var string
+     */
+    public const TRANSPORT = 'transport';
+
+    /**
      * @var \SprykerTest\Zed\MessageBroker\MessageBrokerBusinessTester
      */
     protected $tester;
@@ -54,12 +60,31 @@ class MessageBrokerFacadeTest extends Unit
     {
         // Arrange
         $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, static::TRANSPORT);
 
         $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
         $messageBrokerTestMessageTransfer->setKey('value');
 
         // Expect
         $this->expectException(NoHandlerForMessageException::class);
+
+        // Act
+        $this->tester->getFacade()->sendMessage($messageBrokerTestMessageTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendMessageWithoutConfiguredSenderThrowsAnException(): void
+    {
+        // Arrange
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+
+        $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
+        $messageBrokerTestMessageTransfer->setKey('value');
+
+        // Expect
+        $this->expectException(MissingMessageSenderException::class);
 
         // Act
         $this->tester->getFacade()->sendMessage($messageBrokerTestMessageTransfer);
@@ -89,10 +114,13 @@ class MessageBrokerFacadeTest extends Unit
     public function testSendMessageAddsMessageAttributesToMessage(): void
     {
         // Arrange
-        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $inMemoryMessageTransportPlugin = $this->tester->getInMemoryMessageTransportPlugin();
 
-        $this->tester->setMessageSenderPlugins([$this->tester->getInMemoryMessageTransportPlugin()]);
-        $this->tester->setMessageReceiverPlugins([$this->tester->getInMemoryMessageTransportPlugin()]);
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, $inMemoryMessageTransportPlugin->getTransportName());
+
+        $this->tester->setMessageSenderPlugins([$inMemoryMessageTransportPlugin]);
+        $this->tester->setMessageReceiverPlugins([$inMemoryMessageTransportPlugin]);
 
         $this->tester->setMessageHandlerPlugins([new SomethingHappenedMessageHandlerPlugin()]);
         $this->tester->setMessageDecoratorPlugins([

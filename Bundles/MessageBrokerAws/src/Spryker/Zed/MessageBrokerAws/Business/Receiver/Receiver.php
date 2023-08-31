@@ -12,6 +12,9 @@ use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Stamp\ChannelNameStamp
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Symfony\Component\Messenger\Envelope;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class Receiver implements ReceiverInterface
 {
     /**

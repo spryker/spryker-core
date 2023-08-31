@@ -8,12 +8,8 @@
 namespace SprykerTest\Zed\MessageBrokerAws;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\MessageAttributesBuilder;
-use Generated\Shared\DataBuilder\MessageBrokerTestMessageBuilder;
 use Generated\Shared\DataBuilder\MessageBrokerTestMessageWithArrayBuilder;
 use Generated\Shared\DataBuilder\MessageBrokerTestMessageWithNestedArrayBuilder;
-use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageWithArrayTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageWithNestedArrayTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -32,7 +28,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MessageBrokerAws\PHPMD)
  *
  * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacadeInterface getFacade()
  * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory getFactory(?string $moduleName = NULL)()
@@ -50,26 +46,6 @@ class MessageBrokerAwsBusinessTester extends Actor
      * @var string
      */
     protected const MESSAGE_ATTRIBUTES_KEY = 'message_attributes';
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
-     */
-    public function createMessageAttributesTransfer(array $seed = []): MessageAttributesTransfer
-    {
-        return (new MessageAttributesBuilder($seed))->build();
-    }
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer
-     */
-    public function createMessageBrokerTestMessageTransfer(array $seed = []): MessageBrokerTestMessageTransfer
-    {
-        return (new MessageBrokerTestMessageBuilder($seed))->build();
-    }
 
     /**
      * @param array $seed
@@ -101,10 +77,15 @@ class MessageBrokerAwsBusinessTester extends Actor
     public function createPayload(AbstractTransfer $transfer): array
     {
         $storeReference = '';
+        $messageId = '';
         if (method_exists($transfer, 'getMessageAttributes')) {
             /** @var \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributes */
             $messageAttributes = $transfer->getMessageAttributes();
             $storeReference = $messageAttributes->getStoreReference();
+
+            if ($messageAttributes->getMetadata()) {
+                $messageId = $messageAttributes->getMetadata()->getMessageId();
+            }
         }
 
         $filteredTransferData = $this->unsetMessageAttributesRecursive($transfer->toArray());
@@ -116,6 +97,7 @@ class MessageBrokerAwsBusinessTester extends Actor
                 'publisher' => static::PUBLISHER,
                 'storeReference' => $storeReference,
             ],
+            'messageId' => $messageId,
         ];
     }
 

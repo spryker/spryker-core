@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Spryker\Zed\Store\Business\Model\StoreReaderInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class CurrentStoreReferenceAccessTokenRequestExpander implements CurrentStoreReferenceAccessTokenRequestExpanderInterface
 {
     /**

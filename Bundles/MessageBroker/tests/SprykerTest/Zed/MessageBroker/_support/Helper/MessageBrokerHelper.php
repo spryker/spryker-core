@@ -281,6 +281,10 @@ class MessageBrokerHelper extends Module
     public function setChannelToTransportMap(string $channelName, string $clientName): void
     {
         putenv(sprintf('SPRYKER_CHANNEL_TO_TRANSPORT_MAP={"%s": "%s"}', $channelName, $clientName));
+
+        $this->setConfig(MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP, [
+            $channelName => $clientName,
+        ]);
     }
 
     /**

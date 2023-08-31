@@ -73,14 +73,14 @@ class TransferSerializerTest extends Unit
     /**
      * @return void
      */
-    public function testDecodeThrowsExceptionWhenHeaderDoesNotHaveATransferName(): void
+    public function testDecodeThrowsExceptionWhenHeaderDoesNotHaveATransferNameAndName(): void
     {
         // Arrange
         $transferSerializer = $this->tester->getFactory()->createSerializer();
 
         // Expect
         $this->expectException(MessageDecodingFailedException::class);
-        $this->expectExceptionMessage('Encoded envelope does not have a "transferName" header. The "transferName" is referring to a Transfer class that is used to unserialize the message data.');
+        $this->expectExceptionMessage('Encoded envelope does not have a "transferName" or "name" header. The "transferName" or "name" is referring to a Transfer class that is used to unserialize the message data.');
 
         // Act
         $transferSerializer->decode(['body' => 'CatFace', 'headers' => ['foo']]);

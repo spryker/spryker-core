@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/message-broker-aws-extension": "^1.0.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/oauth-client-extension": "^1.0.0",
         "spryker/payment-extension": "^1.1.0",
@@ -13,12 +14,14 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/oauth-dummy": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\OauthClient\\Helper\\": "tests/SprykerTest/Zed/OauthClient/_support/Helper/"
         }
     },
     "autoload-dev": {

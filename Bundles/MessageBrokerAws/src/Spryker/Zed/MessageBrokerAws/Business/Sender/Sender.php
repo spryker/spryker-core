@@ -12,6 +12,9 @@ use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Locator\SenderClientLoca
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Symfony\Component\Messenger\Envelope;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class Sender implements SenderInterface
 {
     /**

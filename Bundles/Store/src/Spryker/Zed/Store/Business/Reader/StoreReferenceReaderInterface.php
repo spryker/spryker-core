@@ -9,6 +9,9 @@ namespace Spryker\Zed\Store\Business\Reader;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface StoreReferenceReaderInterface
 {
     /**

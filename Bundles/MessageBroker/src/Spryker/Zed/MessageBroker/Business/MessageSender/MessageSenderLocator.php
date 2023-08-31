@@ -8,9 +8,12 @@
 namespace Spryker\Zed\MessageBroker\Business\MessageSender;
 
 use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
-use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
+use Spryker\Zed\MessageBroker\Business\Exception\MissingMessageSenderException;
+use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface;
+use Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp;
 use Spryker\Zed\MessageBroker\MessageBrokerConfig;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginAcceptClientInterface;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Sender\SendersLocatorInterface;
 
@@ -32,15 +35,26 @@ class MessageSenderLocator implements SendersLocatorInterface
     protected array $messageSenderPlugins = [];
 
     /**
+     * @var \Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface
+     */
+    protected MessageChannelProviderInterface $messageChannelProvider;
+
+    /**
      * @param \Spryker\Zed\MessageBroker\MessageBrokerConfig $config
      * @param \Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface $configFormatter
      * @param array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface> $messageSenderPlugins
+     * @param \Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProviderInterface $messageChannelProvider
      */
-    public function __construct(MessageBrokerConfig $config, ConfigFormatterInterface $configFormatter, array $messageSenderPlugins)
-    {
+    public function __construct(
+        MessageBrokerConfig $config,
+        ConfigFormatterInterface $configFormatter,
+        array $messageSenderPlugins,
+        MessageChannelProviderInterface $messageChannelProvider
+    ) {
         $this->config = $config;
         $this->configFormatter = $configFormatter;
         $this->messageSenderPlugins = $messageSenderPlugins;
+        $this->messageChannelProvider = $messageChannelProvider;
     }
 
     /**
@@ -56,16 +70,27 @@ class MessageSenderLocator implements SendersLocatorInterface
     /**
      * @param \Symfony\Component\Messenger\Envelope $envelope
      *
+     * @throws \Spryker\Zed\MessageBroker\Business\Exception\MissingMessageSenderException
+     *
      * @return array<string, \Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface>
      */
     protected function getMessageSenderPlugins(Envelope $envelope): iterable
     {
-        $clientName = $this->getSenderClientNameForMessage($envelope);
+        $clientNames = $this->getSenderClientNamesForMessage($envelope);
+
+        if (!$clientNames) {
+            /** @var \Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp $channelNameStamp */
+            $channelNameStamp = $envelope->last(ChannelNameStamp::class);
+
+            throw new MissingMessageSenderException(sprintf(
+                'Message sender for channel "%s" is missing',
+                $channelNameStamp->getChannelName(),
+            ));
+        }
 
         $clientMessageSenderPlugins = [];
-
         foreach ($this->messageSenderPlugins as $messageSenderPlugin) {
-            if ($clientName === null || $clientName === $messageSenderPlugin->getTransportName() || ($messageSenderPlugin instanceof MessageSenderPluginAcceptClientInterface && $messageSenderPlugin->acceptClient($clientName))) {
+            if ($this->isMessageSenderPluginAllowed($messageSenderPlugin, $clientNames)) {
                 $clientMessageSenderPlugins[$messageSenderPlugin->getTransportName()] = $messageSenderPlugin;
             }
         }
@@ -74,13 +99,35 @@ class MessageSenderLocator implements SendersLocatorInterface
     }
 
     /**
+     * @param \Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface $messageSenderPlugin
+     * @param iterable<int, string> $clientNames
+     *
+     * @return bool
+     */
+    protected function isMessageSenderPluginAllowed(
+        MessageSenderPluginInterface $messageSenderPlugin,
+        iterable $clientNames
+    ): bool {
+        foreach ($clientNames as $clientName) {
+            if (
+                $clientName === $messageSenderPlugin->getTransportName()
+                || ($messageSenderPlugin instanceof MessageSenderPluginAcceptClientInterface && $messageSenderPlugin->acceptClient($clientName))
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Symfony\Component\Messenger\Envelope $envelope
      *
-     * @return string|null
+     * @return array<int, string>
      */
-    protected function getSenderClientNameForMessage(Envelope $envelope): ?string
+    protected function getSenderClientNamesForMessage(Envelope $envelope): iterable
     {
-        $channel = $this->getChannelForMessageClass($envelope);
+        $channel = $this->messageChannelProvider->getChannelForMessage($envelope);
 
         $channelToSenderClientMap = $this->config->getChannelToTransportMap();
 
@@ -88,37 +135,17 @@ class MessageSenderLocator implements SendersLocatorInterface
             $channelToSenderClientMap = $this->configFormatter->format($channelToSenderClientMap);
         }
 
+        $channelToSenderTransportMap = $this->config->getChannelToSenderTransportMap();
+        $channelToSenderClientMap = array_merge_recursive($channelToSenderClientMap, $channelToSenderTransportMap);
+
         if (isset($channelToSenderClientMap[$channel])) {
-            return $channelToSenderClientMap[$channel];
+            if (is_array($channelToSenderClientMap[$channel])) {
+                return $channelToSenderClientMap[$channel];
+            }
+
+            return [$channelToSenderClientMap[$channel]];
         }
 
-        return null;
-    }
-
-    /**
-     * @param \Symfony\Component\Messenger\Envelope $envelope
-     *
-     * @throws \Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException
-     *
-     * @return string
-     */
-    protected function getChannelForMessageClass(Envelope $envelope): string
-    {
-        $messageToChannelMap = $this->config->getMessageToChannelMap();
-
-        if (is_string($messageToChannelMap)) {
-            $messageToChannelMap = $this->configFormatter->format($messageToChannelMap);
-        }
-
-        $messageClass = get_class($envelope->getMessage());
-
-        if (isset($messageToChannelMap[$messageClass])) {
-            return $messageToChannelMap[$messageClass];
-        }
-
-        throw new CouldNotMapMessageToChannelNameException(sprintf(
-            'Could not map "%s" message class to a channel',
-            $messageClass,
-        ));
+        return [];
     }
 }

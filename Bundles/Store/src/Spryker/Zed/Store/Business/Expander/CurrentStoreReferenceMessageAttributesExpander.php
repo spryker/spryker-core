@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Business\Model\StoreReaderInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class CurrentStoreReferenceMessageAttributesExpander implements CurrentStoreReferenceMessageAttributesExpanderInterface
 {
     /**

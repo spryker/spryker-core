@@ -60,7 +60,7 @@ class MessagePublisherTest extends Unit
     /**
      * @return void
      */
-    public function testPublishMessageWritesSuccessLogInCaseOfSuccessfullMessageSending(): void
+    public function testPublishMessageWritesSuccessLogInCaseOfSuccessfulMessageSending(): void
     {
         // Arrange
         $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
@@ -97,7 +97,7 @@ class MessagePublisherTest extends Unit
     /**
      * @return void
      */
-    public function testPublishMessageWritesErrorLogInCaseOfNotSuccessfullMessageSending(): void
+    public function testPublishMessageWritesErrorLogInCaseOfNotSuccessfulMessageSending(): void
     {
         // Arrange
         $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
@@ -176,6 +176,7 @@ class MessagePublisherTest extends Unit
         $messageAttributesLogData = $messageAttributesTransfer->toArrayRecursiveCamelCased();
         $messageAttributesLogData['transferName'] = $transferName;
         $messageAttributesLogData['event'] = $transferName;
+        $messageAttributesLogData['name'] = $transferName;
 
         return $messageAttributesLogData;
     }

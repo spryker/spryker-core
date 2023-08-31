@@ -85,6 +85,12 @@ class InMemoryMessageBrokerHelper extends Module
     {
         putenv(sprintf('SPRYKER_MESSAGE_TO_CHANNEL_MAP={"%s": "%s"}', str_replace('\\', '\\\\', $messageClassName), $channelName));
         putenv(sprintf('SPRYKER_CHANNEL_TO_TRANSPORT_MAP={"%s": "in-memory"}', $channelName));
+        $this->setConfig(MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP, [
+            $messageClassName => $channelName,
+        ]);
+        $this->setConfig(MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP, [
+            $messageClassName => $channelName,
+        ]);
     }
 
     /**
