@@ -359,6 +359,77 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCreateDynamicEntityCollectionCreatesTheRecordAndReturnsValidReponseTransfer(): void
+    {
+        //Arrange
+        $resourceName = 'resource-1';
+        $tableName = 'spy_resource_1';
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'table_alias' => $resourceName,
+                    'table_name' => $tableName,
+                    'definition' => '{}',
+                ]),
+        );
+
+        //Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->createDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        //Assert
+        $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+
+        $spyDynamicEntityConfiguratioEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableName($tableName)
+            ->find()
+            ->getData();
+        $this->assertEquals($resourceName, $spyDynamicEntityConfiguratioEntity[0]->getTableAlias());
+        $this->assertIsNumeric($dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['id_dynamic_entity_configuration']);
+        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getTableAlias(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_alias']);
+        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
+        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getDefinition(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['definition']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDynamicEntityCollectionUpdatesTheRecordAndReturnsCorrectResponseTransfer(): void
+    {
+        //Arrange
+        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
+            ->find()
+            ->getData()[0];
+
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'table_name' => static::FOO_TABLE_NAME,
+                ]),
+        );
+
+        //Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        //Assert
+        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
+            ->find()
+            ->getData()[0];
+        $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertNotEquals($fooEntity->getTableName(), $updatedFooEntity->getTableName());
+        $this->assertEquals(static::FOO_TABLE_NAME, $updatedFooEntity->getTableName());
+        $this->assertEquals($updatedFooEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
+        $this->assertEquals($updatedFooEntity->getTableAlias(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_alias']);
+        $this->assertEquals($updatedFooEntity->getDefinition(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['definition']);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateDynamicEntityConfigurationCollectionWillReturnCollectionWithoutErrors(): void
     {
         // Arrange

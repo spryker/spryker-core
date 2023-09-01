@@ -357,6 +357,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             throw $exception;
         }
 
+        $dynamicEntityTransfer = $this->buildDynamicEntityFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
         $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
 
         $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
@@ -475,6 +476,34 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $dynamicEntityTransfer->setFields(array_merge(
             $dynamicEntityTransfer->getFields(),
             [$identifier => $activeRecord->getByName($identifier)],
+        ));
+
+        return $dynamicEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
+     */
+    protected function buildDynamicEntityFields(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        ActiveRecordInterface $activeRecord
+    ): DynamicEntityTransfer {
+        $entityFields = [];
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            $fieldName = $fieldDefinitionTransfer->getFieldNameOrFail();
+            $fieldVisibleName = $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
+            $fieldValue = $activeRecord->getByName($fieldName);
+            $entityFields[$fieldVisibleName] = $fieldValue;
+        }
+
+        $dynamicEntityTransfer->setFields(array_merge(
+            $dynamicEntityTransfer->getFields(),
+            $entityFields,
         ));
 
         return $dynamicEntityTransfer;
