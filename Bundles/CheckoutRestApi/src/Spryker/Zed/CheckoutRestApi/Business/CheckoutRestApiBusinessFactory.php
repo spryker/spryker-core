@@ -44,6 +44,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
             $this->createCheckoutExpander(),
+            $this->getConfig(),
             $this->getQuoteMapperPlugins(),
         );
     }

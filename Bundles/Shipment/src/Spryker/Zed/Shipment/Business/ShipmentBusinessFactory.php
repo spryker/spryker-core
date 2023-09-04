@@ -621,6 +621,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createExpenseSanitizer(),
             $this->createShipmentMapper(),
             $this->getCalculationFacade(),
+            $this->getConfig(),
             $this->getShipmentGroupsSanitizerPlugins(),
         );
     }

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface;
+use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
@@ -34,6 +35,11 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutExpander;
 
     /**
+     * @var \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig
+     */
+    protected CheckoutRestApiConfig $checkoutRestApiConfig;
+
+    /**
      * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface>
      */
     protected $quoteMapperPlugins;
@@ -42,17 +48,20 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface $checkoutValidator
      * @param \Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface $checkoutExpander
-     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface> $quoteMapperPlugins
+     * @param \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig $checkoutRestApiConfig
+     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
      */
     public function __construct(
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
         CheckoutValidatorInterface $checkoutValidator,
         CheckoutExpanderInterface $checkoutExpander,
+        CheckoutRestApiConfig $checkoutRestApiConfig,
         array $quoteMapperPlugins
     ) {
         $this->calculationFacade = $calculationFacade;
         $this->checkoutValidator = $checkoutValidator;
         $this->checkoutExpander = $checkoutExpander;
+        $this->checkoutRestApiConfig = $checkoutRestApiConfig;
         $this->quoteMapperPlugins = $quoteMapperPlugins;
     }
 
@@ -97,7 +106,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
 
-        return $this->calculationFacade->recalculateQuote($quoteTransfer);
+        return $this->calculationFacade->recalculateQuote($quoteTransfer, $this->checkoutRestApiConfig->shouldExecuteQuotePostRecalculationPlugins());
     }
 
     /**

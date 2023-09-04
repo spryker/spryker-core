@@ -23,4 +23,18 @@ class ShipmentConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()::SHIPMENT_EXPENSE_TYPE;
     }
+
+    /**
+     * Specification:
+     * - If set to `true` a stack of {@link \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface} will be executed after quote recalculation.
+     * - Impacts {@link \Spryker\Zed\Shipment\Business\ShipmentFacade::expandQuoteWithShipmentGroups()} method.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function shouldExecuteQuotePostRecalculationPlugins(): bool
+    {
+        return true;
+    }
 }

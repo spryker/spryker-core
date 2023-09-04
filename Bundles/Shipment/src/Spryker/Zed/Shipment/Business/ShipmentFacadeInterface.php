@@ -381,6 +381,7 @@ interface ShipmentFacadeInterface
      * - Expands quote items with shipments.
      * - Expands quote expenses with shipment expenses.
      * - Executes CalculationFacadeInterface::recalculateQuote() method.
+     * - Uses {@link \Spryker\Zed\Shipment\ShipmentConfig::shouldExecuteQuotePostRecalculationPlugins()} method to determine if quote post recalculate plugins should be executed.
      *
      * @api
      *
