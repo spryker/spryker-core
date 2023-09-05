@@ -17,8 +17,10 @@ use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
+use Spryker\Zed\DynamicEntity\Business\DynamicEntityBusinessFactory;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacade;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface;
+use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
 /**
  * Auto-generated group annotations
@@ -354,6 +356,42 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityConfigurationTransfer = $dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()[count($dynamicEntityCollectionResponseTransfer->getDynamicEntityConfigurations()) - 1];
         $this->assertTrue($dynamicEntityConfigurationTransfer->getIsActive());
         $this->assertEquals(static::FOO_TABLE_ALIAS_1, $dynamicEntityConfigurationTransfer->getTableAlias());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstallNotFails(): void
+    {
+        // Arrange
+        $configMock = $this->getMockBuilder(
+            DynamicEntityConfig::class,
+        )->getMock();
+
+        $configMock
+            ->method('getInstallerConfigurationDataFilePath')
+            ->willReturn(sprintf('%sconfiguration.json', codecept_data_dir()));
+
+        $factory = new DynamicEntityBusinessFactory();
+        $factory->setConfig($configMock);
+        $this->dynamicEntityFacade->setFactory($factory);
+
+        // Act
+        $this->dynamicEntityFacade->install();
+
+        // Assert
+        $this->assertCount(
+            1,
+            SpyDynamicEntityConfigurationQuery::create()
+                ->filterByTableAlias('test')
+                ->find(),
+        );
+        $this->assertCount(
+            0,
+            SpyDynamicEntityConfigurationQuery::create()
+                ->filterByTableAlias('tests')
+                ->find(),
+        );
     }
 
     /**

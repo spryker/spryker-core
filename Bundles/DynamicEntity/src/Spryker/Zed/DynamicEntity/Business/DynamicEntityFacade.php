@@ -88,6 +88,20 @@ class DynamicEntityFacade extends AbstractFacade implements DynamicEntityFacadeI
      *
      * @api
      *
+     * @return void
+     */
+    public function install(): void
+    {
+        $this->getFactory()
+            ->createDynamicEntityInstaller()
+            ->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return array<string>
      */
     public function getDisallowedTables(): array

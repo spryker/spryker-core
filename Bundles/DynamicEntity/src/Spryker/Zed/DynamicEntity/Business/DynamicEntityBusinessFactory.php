@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
+use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
@@ -153,6 +156,19 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface
+     */
+    public function createDynamicEntityInstaller(): DynamicEntityInstallerInterface
+    {
+        return new DynamicEntityInstaller(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createDynamicEntityMapper(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface
      */
     public function createDynamicEntityConfigurationCreator(): DynamicEntityConfigurationCreatorInterface
@@ -237,6 +253,14 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
         return new UniqueTableNameAliasValidatorRule(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper
+     */
+    public function createDynamicEntityMapper(): DynamicEntityMapper
+    {
+        return new DynamicEntityMapper();
     }
 
     /**

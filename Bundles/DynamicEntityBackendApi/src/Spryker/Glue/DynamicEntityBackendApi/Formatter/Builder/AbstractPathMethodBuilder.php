@@ -92,6 +92,21 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     protected const MISSING_FIELD_DEFINITIONS_EXCEPTION_MESSAGE = 'No fields defined for dynamic entity.';
 
     /**
+     * @var string
+     */
+    protected const FLOAT = 'float';
+
+    /**
+     * @var string
+     */
+    protected const NUMBER = 'number';
+
+    /**
+     * @var string
+     */
+    protected const FORMAT = 'format';
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return array<mixed>
@@ -159,7 +174,8 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
      */
     protected function buildFieldType(DynamicEntityFieldDefinitionTransfer $dynamicEntityFieldDefinitionTransfer): array
     {
-        $filedType = [static::KEY_TYPE => $dynamicEntityFieldDefinitionTransfer->getTypeOrFail()];
+        $type = $dynamicEntityFieldDefinitionTransfer->getTypeOrFail();
+        $filedType = $this->buildKeyType($type);
 
         $dynamicEntityFieldValidationTransfer = $dynamicEntityFieldDefinitionTransfer->getValidation();
 
@@ -189,6 +205,22 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         }
 
         return $filedType;
+    }
+
+    /**
+     * @param string $fieldType
+     *
+     * @return array<string, mixed>
+     */
+    protected function buildKeyType(string $fieldType): array
+    {
+        $keyType = [static::KEY_TYPE => $fieldType === static::FLOAT ? static::NUMBER : $fieldType];
+
+        if ($fieldType === static::FLOAT) {
+            $keyType[static::FORMAT] = static::FLOAT;
+        }
+
+        return $keyType;
     }
 
     /**

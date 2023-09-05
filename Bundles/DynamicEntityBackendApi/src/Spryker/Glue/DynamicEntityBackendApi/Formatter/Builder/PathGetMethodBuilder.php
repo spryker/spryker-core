@@ -182,7 +182,7 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
         $properties = [];
         foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $field) {
             $propertyKey = sprintf('%s.%s', $resourceName, $field->getFieldVisibleNameOrFail());
-            $properties[$propertyKey] = [static::KEY_TYPE => $field->getTypeOrFail()];
+            $properties[$propertyKey] = $this->buildKeyType($field->getTypeOrFail());
         }
 
         return [

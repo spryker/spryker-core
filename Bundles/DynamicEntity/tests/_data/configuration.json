@@ -1,0 +1,76 @@
+[
+    {
+        "tableName": "spy_test",
+        "tableAlias": "test",
+        "isActive": true,
+        "definition": {
+            "identifier": "id_test",
+            "fields": [
+                {
+                    "fieldName": "id_test",
+                    "fieldVisibleName": "id_test",
+                    "isCreatable": false,
+                    "isEditable": false,
+                    "type": "integer",
+                    "validation": { "isRequired": false }
+                },
+                {
+                    "fieldName": "fk_tax_set",
+                    "fieldVisibleName": "fk_tax_set",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "int",
+                    "validation": { "isRequired": true }
+                },
+                {
+                    "fieldName": "approval_status",
+                    "fieldVisibleName": "approval_status",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": false }
+                },
+                {
+                    "fieldName": "attributes",
+                    "fieldVisibleName": "attributes",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": true }
+                },
+                {
+                    "fieldName": "new_from",
+                    "fieldVisibleName": "new_from",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": false }
+                },
+                {
+                    "fieldName": "new_to",
+                    "fieldVisibleName": "new_to",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": false }
+                },
+                {
+                    "fieldName": "sku",
+                    "fieldVisibleName": "sku",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": true }
+                },
+                {
+                    "fieldName": "color_code",
+                    "fieldVisibleName": "color_code",
+                    "isCreatable": true,
+                    "isEditable": true,
+                    "type": "string",
+                    "validation": { "isRequired": false }
+                }
+            ]
+        }
+    }
+]

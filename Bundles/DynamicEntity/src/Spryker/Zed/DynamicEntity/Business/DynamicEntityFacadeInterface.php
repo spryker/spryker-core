@@ -81,6 +81,16 @@ interface DynamicEntityFacadeInterface
 
     /**
      * Specification:
+     *  - Installs Dynamic Entity data.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function install(): void;
+
+    /**
+     * Specification:
      * - Returns a list of tables that should not be used for dynamic entity configuration.
      *
      * @api
