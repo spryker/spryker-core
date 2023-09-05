@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferServicePointAvailabilityRequestItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Client/ClickAndCollectExample/Calculator/ProductOfferServicePointAvailabilityCalculator.php",
+            "snippet": "        $productOfferServicePointAvailabilityRequestItemTransfers = $productOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferServicePointAvailabilityResponseItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Client/ClickAndCollectExample/Calculator/ProductOfferServicePointAvailabilityCalculator.php",
+            "snippet": "            $productOfferServicePointAvailabilityCollectionTransfer->getProductOfferServicePointAvailabilityResponseItems()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferServicePointAvailabilityRequestItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Client/ClickAndCollectExample/Plugin/ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin.php",
+            "snippet": "            $productOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems()->count();",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [],
+    "count": 3
+}

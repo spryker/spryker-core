@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator;
+
+use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer;
+use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface;
+
+class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServicePointAvailabilityCalculatorInterface
+{
+    /**
+     * @var \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface
+     */
+    protected ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader;
+
+    /**
+     * @var \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface
+     */
+    protected ProductOfferServicePointAvailabilityCalculatorStrategyInterface $defaultProductOfferServicePointAvailabilityCalculatorStrategy;
+
+    /**
+     * @var list<\Spryker\Client\ProductOfferServicePointAvailabilityCalculatorExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface>
+     */
+    protected array $productOfferServicePointAvailabilityCalculatorStrategyPlugins;
+
+    /**
+     * @param \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader
+     * @param \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface $defaultProductOfferServicePointAvailabilityCalculatorStrategy
+     * @param list<\Spryker\Client\ProductOfferServicePointAvailabilityCalculatorExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface> $productOfferServicePointAvailabilityCalculatorStrategyPlugins
+     */
+    public function __construct(
+        ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader,
+        ProductOfferServicePointAvailabilityCalculatorStrategyInterface $defaultProductOfferServicePointAvailabilityCalculatorStrategy,
+        array $productOfferServicePointAvailabilityCalculatorStrategyPlugins
+    ) {
+        $this->productOfferServicePointAvailabilityReader = $productOfferServicePointAvailabilityReader;
+        $this->defaultProductOfferServicePointAvailabilityCalculatorStrategy = $defaultProductOfferServicePointAvailabilityCalculatorStrategy;
+        $this->productOfferServicePointAvailabilityCalculatorStrategyPlugins = $productOfferServicePointAvailabilityCalculatorStrategyPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer $productOfferServicePointAvailabilityCriteriaTransfer
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>>
+     */
+    public function calculateProductOfferServicePointAvailabilities(
+        ProductOfferServicePointAvailabilityCriteriaTransfer $productOfferServicePointAvailabilityCriteriaTransfer
+    ): array {
+        $productOfferServicePointAvailabilityConditionsTransfer = $productOfferServicePointAvailabilityCriteriaTransfer->getProductOfferServicePointAvailabilityConditionsOrFail();
+        $productOfferServicePointAvailabilityConditionsTransfer->requireProductOfferServicePointAvailabilityRequestItems();
+
+        $productOfferServicePointAvailabilityCollectionTransfer = $this->productOfferServicePointAvailabilityReader
+            ->getProductOfferServicePointAvailabilities($productOfferServicePointAvailabilityCriteriaTransfer);
+
+        $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->calculateProductOfferServicePointAvailabilitiesByStrategy(
+            $productOfferServicePointAvailabilityCollectionTransfer,
+            $productOfferServicePointAvailabilityConditionsTransfer,
+        );
+
+        if (count($productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid) < count($productOfferServicePointAvailabilityConditionsTransfer->getServicePointUuids())) {
+            $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->addMissingServicePointUuidsToProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+                $productOfferServicePointAvailabilityConditionsTransfer->getServicePointUuids(),
+            );
+        }
+
+        return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer $productOfferServicePointAvailabilityCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer $productOfferServicePointAvailabilityConditionsTransfer
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>>
+     */
+    protected function calculateProductOfferServicePointAvailabilitiesByStrategy(
+        ProductOfferServicePointAvailabilityCollectionTransfer $productOfferServicePointAvailabilityCollectionTransfer,
+        ProductOfferServicePointAvailabilityConditionsTransfer $productOfferServicePointAvailabilityConditionsTransfer
+    ): array {
+        $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->executeProductOfferServicePointAvailabilityCalculatorStrategyPlugins(
+            $productOfferServicePointAvailabilityCollectionTransfer,
+            $productOfferServicePointAvailabilityConditionsTransfer,
+        );
+
+        if ($productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid) {
+            return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
+        }
+
+        return $this->defaultProductOfferServicePointAvailabilityCalculatorStrategy->calculateProductOfferServicePointAvailabilities(
+            $productOfferServicePointAvailabilityCollectionTransfer,
+            $productOfferServicePointAvailabilityConditionsTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer $productOfferServicePointAvailabilityCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer $productOfferServicePointAvailabilityConditionsTransfer
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>>
+     */
+    protected function executeProductOfferServicePointAvailabilityCalculatorStrategyPlugins(
+        ProductOfferServicePointAvailabilityCollectionTransfer $productOfferServicePointAvailabilityCollectionTransfer,
+        ProductOfferServicePointAvailabilityConditionsTransfer $productOfferServicePointAvailabilityConditionsTransfer
+    ): array {
+        foreach ($this->productOfferServicePointAvailabilityCalculatorStrategyPlugins as $productOfferServicePointAvailabilityCalculatorStrategyPlugin) {
+            $isApplicable = $productOfferServicePointAvailabilityCalculatorStrategyPlugin->isApplicable(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+
+            if (!$isApplicable) {
+                continue;
+            }
+
+            return $productOfferServicePointAvailabilityCalculatorStrategyPlugin->calculateProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+        }
+
+        return [];
+    }
+
+    /**
+     * @param array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>> $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid
+     * @param list<string> $servicePointUuids
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>>
+     */
+    protected function addMissingServicePointUuidsToProductOfferServicePointAvailabilities(
+        array $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+        array $servicePointUuids
+    ): array {
+        foreach ($servicePointUuids as $servicePointUuid) {
+            if (!isset($productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid])) {
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid] = [];
+            }
+        }
+
+        return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
+    }
+}

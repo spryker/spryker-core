@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductOfferServicePointAvailabilityCriteria" strict="true">
+        <property name="productOfferServicePointAvailabilityConditions" type="ProductOfferServicePointAvailabilityConditions"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityConditions" strict="true">
+        <property name="productOfferServicePointAvailabilityRequestItems" type="ProductOfferServicePointAvailabilityRequestItem[]" singular="productOfferServicePointAvailabilityRequestItem"/>
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityCollection" strict="true">
+        <property name="productOfferServicePointAvailabilityResponseItems" type="ProductOfferServicePointAvailabilityResponseItem[]" singular="productOfferServicePointAvailabilityResponseItem"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityRequestItem" strict="true">
+        <property name="productOfferReference" type="string"/>
+        <property name="productConcreteSku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">
+        <property name="productOfferReference" type="string"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="isAvailable" type="bool"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="servicePointUuid" type="string"/>
+        <property name="productConcreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>
