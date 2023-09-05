@@ -11,12 +11,14 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ServicePointStorage\Dependency\Client\ServicePointStorageToStorageClientInterface;
 use Spryker\Client\ServicePointStorage\Dependency\Service\ServicePointStorageToSynchronizationServiceInterface;
 use Spryker\Client\ServicePointStorage\Dependency\Service\ServicePointStorageToUtilEncodingServiceInterface;
-use Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGenerator;
-use Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGeneratorInterface;
+use Spryker\Client\ServicePointStorage\Generator\StorageKeyGenerator;
+use Spryker\Client\ServicePointStorage\Generator\StorageKeyGeneratorInterface;
 use Spryker\Client\ServicePointStorage\Mapper\ServicePointStorageMapper;
 use Spryker\Client\ServicePointStorage\Mapper\ServicePointStorageMapperInterface;
 use Spryker\Client\ServicePointStorage\Reader\ServicePointStorageReader;
 use Spryker\Client\ServicePointStorage\Reader\ServicePointStorageReaderInterface;
+use Spryker\Client\ServicePointStorage\Reader\ServiceTypeStorageReader;
+use Spryker\Client\ServicePointStorage\Reader\ServiceTypeStorageReaderInterface;
 
 class ServicePointStorageFactory extends AbstractFactory
 {
@@ -27,18 +29,31 @@ class ServicePointStorageFactory extends AbstractFactory
     {
         return new ServicePointStorageReader(
             $this->getStorageClient(),
-            $this->createServicePointStorageKeyGenerator(),
+            $this->createStorageKeyGenerator(),
             $this->getUtilEncodingService(),
             $this->createServicePointStorageMapper(),
         );
     }
 
     /**
-     * @return \Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGeneratorInterface
+     * @return \Spryker\Client\ServicePointStorage\Reader\ServiceTypeStorageReaderInterface
      */
-    public function createServicePointStorageKeyGenerator(): ServicePointStorageKeyGeneratorInterface
+    public function createServiceTypeStorageReader(): ServiceTypeStorageReaderInterface
     {
-        return new ServicePointStorageKeyGenerator(
+        return new ServiceTypeStorageReader(
+            $this->getStorageClient(),
+            $this->createStorageKeyGenerator(),
+            $this->getUtilEncodingService(),
+            $this->createServicePointStorageMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ServicePointStorage\Generator\StorageKeyGeneratorInterface
+     */
+    public function createStorageKeyGenerator(): StorageKeyGeneratorInterface
+    {
+        return new StorageKeyGenerator(
             $this->getSynchronizationService(),
         );
     }

@@ -35,6 +35,7 @@ class ShipmentTypeStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getUtilEncodingService(),
             $this->createShipmentTypeStorageKeyScanner(),
+            $this->getShipmentTypeStorageExpanderPlugins(),
         );
     }
 
@@ -93,10 +94,18 @@ class ShipmentTypeStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface>
+     * @return list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface>
      */
     public function getAvailableShipmentTypeFilterPlugins(): array
     {
         return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER);
+    }
+
+    /**
+     * @return list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    public function getShipmentTypeStorageExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER);
     }
 }

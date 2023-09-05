@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\ServicePointStorage;
+namespace SprykerTest\Client\ServicePointStorage\Client;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ServicePointStorageConditionsTransfer;
@@ -15,6 +15,7 @@ use Spryker\Client\ServicePointStorage\Dependency\Client\ServicePointStorageToSt
 use Spryker\Client\ServicePointStorage\ServicePointStorageDependencyProvider;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
+use SprykerTest\Client\ServicePointStorage\ServicePointStorageClientTester;
 
 /**
  * Auto-generated group annotations
@@ -22,10 +23,11 @@ use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
  * @group SprykerTest
  * @group Client
  * @group ServicePointStorage
- * @group ServicePointStorageClientTest
+ * @group Client
+ * @group GetServicePointStorageCollectionTest
  * Add your own group annotations below this line
  */
-class ServicePointStorageClientTest extends Unit
+class GetServicePointStorageCollectionTest extends Unit
 {
     /**
      * @var string
@@ -43,7 +45,7 @@ class ServicePointStorageClientTest extends Unit
     protected const TEST_UUID = 'test_uuid';
 
     /**
-     * @uses \Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGenerator::MAPPING_TYPE_UUID
+     * @uses \Spryker\Client\ServicePointStorage\Generator\StorageKeyGenerator::MAPPING_TYPE_UUID
      *
      * @var string
      */
@@ -64,7 +66,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldThrowAnExceptionWhenNoConditionsProvided(): void
+    public function testShouldThrowAnExceptionWhenNoConditionsProvided(): void
     {
         // Assert
         $this->expectException(NullValueException::class);
@@ -76,7 +78,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldThrowAnExceptionWhenConditionWithServicePointIdsDoesNotHaveStore(): void
+    public function testShouldThrowAnExceptionWhenConditionWithServicePointIdsDoesNotHaveStore(): void
     {
         // Arrange
         $servicePointStorageCriteriaTransfer = (new ServicePointStorageCriteriaTransfer())->setServicePointStorageConditions(
@@ -93,7 +95,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldThrowAnExceptionWhenConditionWithUuidsDoesNotHaveStore(): void
+    public function testShouldThrowAnExceptionWhenConditionWithUuidsDoesNotHaveStore(): void
     {
         // Arrange
         $servicePointStorageCriteriaTransfer = (new ServicePointStorageCriteriaTransfer())->setServicePointStorageConditions(
@@ -110,7 +112,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldReturnEmptyCollectionWhenConditionsAreNotProvided(): void
+    public function testShouldReturnEmptyCollectionWhenConditionsAreNotProvided(): void
     {
         // Arrange
         $servicePointStorageCriteriaTransfer = (new ServicePointStorageCriteriaTransfer())->setServicePointStorageConditions(
@@ -128,7 +130,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldFilterByServicePointIdsWhenConditionIsProvided(): void
+    public function testShouldFilterByServicePointIdsWhenConditionIsProvided(): void
     {
         // Arrange
         $storageClientMock = $this->createStorageClientMock();
@@ -158,7 +160,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldFilterByUuidsMappingWhenConditionIsProvided(): void
+    public function testShouldFilterByUuidsMappingWhenConditionIsProvided(): void
     {
         // Arrange
         $storageClientMock = $this->createStorageClientMock();
@@ -188,7 +190,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldReturnEmptyCollectionWhenNoDataByServicePointIdsIsFound(): void
+    public function testShouldReturnEmptyCollectionWhenNoDataByServicePointIdsIsFound(): void
     {
         // Arrange
         $storageClientMock = $this->createStorageClientMock();
@@ -212,7 +214,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldReturnCollectionWhenFilerByServicePointIds(): void
+    public function testShouldReturnCollectionWhenFilterByServicePointIds(): void
     {
         // Arrange
         $servicePointIdKey = sprintf(
@@ -247,7 +249,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldReturnEmptyCollectionWhenNoDataByUuidsIsFound(): void
+    public function testShouldReturnEmptyCollectionWhenNoDataByUuidsIsFound(): void
     {
         // Arrange
         $storageClientMock = $this->createStorageClientMock();
@@ -280,7 +282,7 @@ class ServicePointStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetServicePointStorageCollectionShouldReturnCollectionWhenFilerByUuids(): void
+    public function testShouldReturnCollectionWhenFilterByUuids(): void
     {
         // Arrange
         $uuidKey = sprintf(

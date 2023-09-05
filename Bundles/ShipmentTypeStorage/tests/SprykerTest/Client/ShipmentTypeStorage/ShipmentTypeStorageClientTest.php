@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface;
 use Spryker\Client\ShipmentTypeStorage\ShipmentTypeStorageDependencyProvider;
 use Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface;
+use Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
@@ -375,6 +376,42 @@ class ShipmentTypeStorageClientTest extends Unit
     }
 
     /**
+     * @dataProvider getShipmentTypeStorageCollectionExecutesShipmentTypeStorageExpanderPluginsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer $shipmentTypeStorageConditionsTransfer
+     *
+     * @return void
+     */
+    public function testGetShipmentTypeStorageCollectionExecutesShipmentTypeStorageExpanderPlugins(
+        ShipmentTypeStorageConditionsTransfer $shipmentTypeStorageConditionsTransfer
+    ): void {
+        // Assert
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER, [
+            $this->getShipmentTypeStorageExpanderPluginMock(),
+        ]);
+
+        // Arrange
+        $storageClientMock = $this->createStorageClientMock();
+        $storageClientMock->method('getMulti')->willReturn([
+            'fake_storage_key_1' => [
+                static::KEY_ID => static::TEST_ID_SHIPMENT_TYPE,
+                ShipmentTypeStorageTransfer::ID_SHIPMENT_TYPE => static::TEST_ID_SHIPMENT_TYPE,
+            ],
+        ]);
+        $storageClientMock->method('scanKeys')->willReturn(
+            (new StorageScanResultTransfer())->setKeys(['fake_storage_key_1']),
+        );
+        $this->tester->setDependency(ShipmentTypeStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
+
+        $shipmentTypeStorageCriteriaTransfer = (new ShipmentTypeStorageCriteriaTransfer())->setShipmentTypeStorageConditions(
+            $shipmentTypeStorageConditionsTransfer,
+        );
+
+        // Act
+        $this->tester->getClient()->getShipmentTypeStorageCollection($shipmentTypeStorageCriteriaTransfer);
+    }
+
+    /**
      * @return void
      */
     public function testGetAvailableShipmentTypesThrowsExceptionWithoutProvidedStore(): void
@@ -416,6 +453,23 @@ class ShipmentTypeStorageClientTest extends Unit
     }
 
     /**
+     * @return array<string, list<\Generated\Shared\Transfer\ShipmentTypeStorageConditionsTransfer>>
+     */
+    public function getShipmentTypeStorageCollectionExecutesShipmentTypeStorageExpanderPluginsDataProvider(): array
+    {
+        return [
+            'By store name' => [(new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE)],
+            'By Uuids' => [(new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE)
+                ->addUuid(static::TEST_UUID)],
+            'By shipment type Ids' => [(new ShipmentTypeStorageConditionsTransfer())
+                ->setStoreName(static::STORE_NAME_DE)
+                ->addIdShipmentType(static::TEST_ID_SHIPMENT_TYPE)],
+        ];
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface
      */
     protected function createStorageClientMock(): ShipmentTypeStorageToStorageClientInterface
@@ -435,5 +489,19 @@ class ShipmentTypeStorageClientTest extends Unit
             ->willReturn((new ShipmentTypeStorageCollectionTransfer()));
 
         return $availableShipmentTypeFilterPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getShipmentTypeStorageExpanderPluginMock(): ShipmentTypeStorageExpanderPluginInterface
+    {
+        $shipmentTypeStorageExpanderPluginMock = $this->getMockBuilder(ShipmentTypeStorageExpanderPluginInterface::class)->getMock();
+        $shipmentTypeStorageExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturn(new ShipmentTypeStorageCollectionTransfer());
+
+        return $shipmentTypeStorageExpanderPluginMock;
     }
 }

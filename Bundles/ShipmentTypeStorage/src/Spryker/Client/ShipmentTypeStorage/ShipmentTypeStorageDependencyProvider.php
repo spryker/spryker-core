@@ -39,6 +39,11 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER = 'PLUGINS_AVAILABLE_SHIPMENT_TYPE_FILTER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER = 'PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -50,6 +55,7 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addAvailableShipmentTypeFilterPlugins($container);
+        $container = $this->addShipmentTypeStorageExpanderPlugins($container);
 
         return $container;
     }
@@ -117,9 +123,31 @@ class ShipmentTypeStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface>
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addShipmentTypeStorageExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPMENT_TYPE_STORAGE_EXPANDER, function () {
+            return $this->getShipmentTypeStorageExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface>
      */
     protected function getAvailableShipmentTypeFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    protected function getShipmentTypeStorageExpanderPlugins(): array
     {
         return [];
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ServicePointStorage\Persistence;
 
 use Orm\Zed\ServicePointStorage\Persistence\SpyServicePointStorageQuery;
+use Orm\Zed\ServicePointStorage\Persistence\SpyServiceTypeStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ServicePointStorage\Persistence\Propel\Mapper\ServicePointStorageMapper;
 
@@ -24,6 +25,14 @@ class ServicePointStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getServicePointStorageQuery(): SpyServicePointStorageQuery
     {
         return SpyServicePointStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePointStorage\Persistence\SpyServiceTypeStorageQuery
+     */
+    public function getServiceTypeStorageQuery(): SpyServiceTypeStorageQuery
+    {
+        return SpyServiceTypeStorageQuery::create();
     }
 
     /**

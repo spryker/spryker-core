@@ -9,6 +9,8 @@ namespace Spryker\Client\ServicePointStorage;
 
 use Generated\Shared\Transfer\ServicePointStorageCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer;
 
 interface ServicePointStorageClientInterface
 {
@@ -18,7 +20,7 @@ interface ServicePointStorageClientInterface
      * - Requires `ServicePointStorageCriteriaTransfer.servicePointStorageConditions.storeName` to be set.
      * - Retrieves service point storage data filtered by criteria from Storage.
      * - Uses `ServicePointStorageCriteriaTransfer.servicePointStorageConditions.servicePointIds` to filter by service point IDs.
-     * - Uses `ServicePointStorageCriteriaTransfer.servicePointStorageConditions.uuids` to filter by service point uuids.
+     * - Uses `ServicePointStorageCriteriaTransfer.servicePointStorageConditions.uuids` to filter by service point UUIDs.
      * - Can filter either by `servicePointIds` or `uuids` at the same time.
      * - Returns `ServicePointStorageCollectionTransfer` filled with found service points.
      *
@@ -31,4 +33,23 @@ interface ServicePointStorageClientInterface
     public function getServicePointStorageCollection(
         ServicePointStorageCriteriaTransfer $servicePointStorageCriteriaTransfer
     ): ServicePointStorageCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServiceTypeStorageCriteriaTransfer.serviceTypeStorageConditions` to be set.
+     * - Retrieves service type storage data filtered by criteria from Storage.
+     * - Uses `ServiceTypeStorageCriteriaTransfer.serviceTypeStorageConditions.serviceTypeIds` to filter by service type IDs.
+     * - Uses `ServiceTypeStorageCriteriaTransfer.serviceTypeStorageConditions.uuids` to filter by service type UUIDs.
+     * - Can filter either by service type IDs or UUIDs at the same time.
+     * - Returns `ServiceTypeStorageCollectionTransfer` filled with found service types.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer
+     */
+    public function getServiceTypeStorageCollection(
+        ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+    ): ServiceTypeStorageCollectionTransfer;
 }

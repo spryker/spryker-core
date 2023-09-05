@@ -21,4 +21,23 @@
         <behavior name="timestampable"/>
     </table>
 
+    <table name="spy_service_type_storage" identifierQuoting="true">
+        <column name="id_service_type_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_service_type" type="INTEGER" required="true"/>
+
+        <index name="spy_service_type_storage-fk_service_type">
+            <index-column name="fk_service_type"/>
+        </index>
+
+        <id-method-parameter value="spy_service_type_storage_pk_seq"/>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="service_type"/>
+            <parameter name="key_suffix_column" value="fk_service_type"/>
+            <parameter name="queue_group" value="sync.storage.service_point"/>
+            <parameter name="mappings" value="uuid:id_service_type"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+
 </database>

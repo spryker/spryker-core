@@ -26,12 +26,16 @@ use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointAddressMapper
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointAddressMapperInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointMapper;
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointMapperInterface;
+use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServiceTypeMapper;
+use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServiceTypeMapperInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointAddressReader;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointAddressReaderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointReader;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointReaderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointStorageReader;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointStorageReaderInterface;
+use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReader;
+use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReaderInterface;
 
 /**
  * @method \Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiConfig getConfig()
@@ -70,6 +74,17 @@ class ServicePointsRestApiFactory extends AbstractStorefrontApiFactory
         return new ServicePointStorageReader(
             $this->getServicePointStorageClient(),
             $this->getStoreClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReaderInterface
+     */
+    public function createServiceTypeResourceReader(): ServiceTypeResourceReaderInterface
+    {
+        return new ServiceTypeResourceReader(
+            $this->createServiceTypeMapper(),
+            $this->getServicePointStorageClient(),
         );
     }
 
@@ -144,6 +159,14 @@ class ServicePointsRestApiFactory extends AbstractStorefrontApiFactory
     public function createServicePointAddressMapper(): ServicePointAddressMapperInterface
     {
         return new ServicePointAddressMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServiceTypeMapperInterface
+     */
+    public function createServiceTypeMapper(): ServiceTypeMapperInterface
+    {
+        return new ServiceTypeMapper();
     }
 
     /**

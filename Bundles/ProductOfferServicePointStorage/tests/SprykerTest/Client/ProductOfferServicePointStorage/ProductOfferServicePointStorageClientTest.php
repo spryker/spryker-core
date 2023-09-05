@@ -40,7 +40,7 @@ class ProductOfferServicePointStorageClientTest extends Unit
     protected const SERVICE_POINT_STORAGE_KEY_ID = 'id';
 
     /**
-     * @uses \Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGenerator::MAPPING_TYPE_UUID
+     * @uses \Spryker\Client\ServicePointStorage\Generator\StorageKeyGenerator::MAPPING_TYPE_UUID
      *
      * @var string
      */

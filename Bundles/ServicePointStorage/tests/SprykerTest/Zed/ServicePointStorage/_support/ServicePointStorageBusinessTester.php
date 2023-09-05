@@ -14,9 +14,12 @@ use Generated\Shared\Transfer\RegionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Orm\Zed\ServicePointStorage\Persistence\SpyServicePointStorageQuery;
+use Orm\Zed\ServicePointStorage\Persistence\SpyServiceTypeStorageQuery;
 
 /**
  * Inherited Methods
@@ -107,6 +110,21 @@ class ServicePointStorageBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     *
+     * @return void
+     */
+    public function saveServiceTypeStorage(ServiceTypeTransfer $serviceTypeTransfer): void
+    {
+        $serviceTypeStorageEntity = $this->getServiceTypeStorageQuery()
+            ->filterByFkServiceType($serviceTypeTransfer->getIdServiceType())
+            ->findOneOrCreate();
+
+        $serviceTypeStorageEntity->setData($serviceTypeTransfer->toArray());
+        $serviceTypeStorageEntity->save();
+    }
+
+    /**
      * @param int $idServicePoint
      *
      * @return list<\Orm\Zed\ServicePointStorage\Persistence\Base\SpyServicePointStorage>
@@ -120,6 +138,19 @@ class ServicePointStorageBusinessTester extends Actor
     }
 
     /**
+     * @param list<int> $serviceTypeIds
+     *
+     * @return list<\Orm\Zed\ServicePointStorage\Persistence\Base\SpyServiceTypeStorage>
+     */
+    public function getServiceTypeStorageEntitiesByServiceTypeIds(array $serviceTypeIds): array
+    {
+        return $this->getServiceTypeStorageQuery()
+            ->filterByFkServiceType_In($serviceTypeIds)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @return void
      */
     public function ensureServicePointStorageDatabaseTableIsEmpty(): void
@@ -128,10 +159,42 @@ class ServicePointStorageBusinessTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function ensureServiceTypeStorageDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getServiceTypeStorageQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureServiceTypeTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getServiceTypeQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    protected function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\ServicePointStorage\Persistence\SpyServicePointStorageQuery
      */
     protected function getServicePointStorageQuery(): SpyServicePointStorageQuery
     {
         return SpyServicePointStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePointStorage\Persistence\SpyServiceTypeStorageQuery
+     */
+    protected function getServiceTypeStorageQuery(): SpyServiceTypeStorageQuery
+    {
+        return SpyServiceTypeStorageQuery::create();
     }
 }

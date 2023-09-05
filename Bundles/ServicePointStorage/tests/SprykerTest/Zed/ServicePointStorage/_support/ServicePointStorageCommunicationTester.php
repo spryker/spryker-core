@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ServicePointStorage;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 
 /**
  * @method void wantToTest($text)
@@ -39,5 +40,21 @@ class ServicePointStorageCommunicationTester extends Actor
             ->build();
 
         return $this->haveServicePoint($servicePointTransfer->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureServiceTypeTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getServiceTypeQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    protected function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
     }
 }

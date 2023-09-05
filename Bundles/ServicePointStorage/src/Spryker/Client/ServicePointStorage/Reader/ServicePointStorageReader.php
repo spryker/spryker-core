@@ -13,8 +13,9 @@ use Generated\Shared\Transfer\ServicePointStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
 use Spryker\Client\ServicePointStorage\Dependency\Client\ServicePointStorageToStorageClientInterface;
 use Spryker\Client\ServicePointStorage\Dependency\Service\ServicePointStorageToUtilEncodingServiceInterface;
-use Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGeneratorInterface;
+use Spryker\Client\ServicePointStorage\Generator\StorageKeyGeneratorInterface;
 use Spryker\Client\ServicePointStorage\Mapper\ServicePointStorageMapperInterface;
+use Spryker\Shared\ServicePointStorage\ServicePointStorageConfig;
 
 class ServicePointStorageReader implements ServicePointStorageReaderInterface
 {
@@ -29,9 +30,9 @@ class ServicePointStorageReader implements ServicePointStorageReaderInterface
     protected ServicePointStorageToStorageClientInterface $storageClient;
 
     /**
-     * @var \Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGeneratorInterface
+     * @var \Spryker\Client\ServicePointStorage\Generator\StorageKeyGeneratorInterface
      */
-    protected ServicePointStorageKeyGeneratorInterface $servicePointStorageKeyGenerator;
+    protected StorageKeyGeneratorInterface $storageKeyGenerator;
 
     /**
      * @var \Spryker\Client\ServicePointStorage\Dependency\Service\ServicePointStorageToUtilEncodingServiceInterface
@@ -45,18 +46,18 @@ class ServicePointStorageReader implements ServicePointStorageReaderInterface
 
     /**
      * @param \Spryker\Client\ServicePointStorage\Dependency\Client\ServicePointStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Client\ServicePointStorage\Generator\ServicePointStorageKeyGeneratorInterface $servicePointStorageKeyGenerator
+     * @param \Spryker\Client\ServicePointStorage\Generator\StorageKeyGeneratorInterface $storageKeyGenerator
      * @param \Spryker\Client\ServicePointStorage\Dependency\Service\ServicePointStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\ServicePointStorage\Mapper\ServicePointStorageMapperInterface $servicePointStorageMapper
      */
     public function __construct(
         ServicePointStorageToStorageClientInterface $storageClient,
-        ServicePointStorageKeyGeneratorInterface $servicePointStorageKeyGenerator,
+        StorageKeyGeneratorInterface $storageKeyGenerator,
         ServicePointStorageToUtilEncodingServiceInterface $utilEncodingService,
         ServicePointStorageMapperInterface $servicePointStorageMapper
     ) {
         $this->storageClient = $storageClient;
-        $this->servicePointStorageKeyGenerator = $servicePointStorageKeyGenerator;
+        $this->storageKeyGenerator = $storageKeyGenerator;
         $this->utilEncodingService = $utilEncodingService;
         $this->servicePointStorageMapper = $servicePointStorageMapper;
     }
@@ -91,8 +92,9 @@ class ServicePointStorageReader implements ServicePointStorageReaderInterface
     ): ServicePointStorageCollectionTransfer {
         $servicePointStorageCollectionTransfer = new ServicePointStorageCollectionTransfer();
 
-        $storageKeys = $this->servicePointStorageKeyGenerator->generateServicePointIdKeys(
+        $storageKeys = $this->storageKeyGenerator->generateIdKeys(
             $servicePointStorageConditionsTransfer->getServicePointIds(),
+            ServicePointStorageConfig::SERVICE_POINT_RESOURCE_NAME,
             $servicePointStorageConditionsTransfer->getStoreNameOrFail(),
         );
         if (!$storageKeys) {
@@ -131,8 +133,9 @@ class ServicePointStorageReader implements ServicePointStorageReaderInterface
     ): ServicePointStorageCollectionTransfer {
         $servicePointStorageCollectionTransfer = new ServicePointStorageCollectionTransfer();
 
-        $storageKeys = $this->servicePointStorageKeyGenerator->generateUuidKeys(
+        $storageKeys = $this->storageKeyGenerator->generateUuidKeys(
             $servicePointStorageConditionsTransfer->getUuids(),
+            ServicePointStorageConfig::SERVICE_POINT_RESOURCE_NAME,
             $servicePointStorageConditionsTransfer->getStoreNameOrFail(),
         );
 

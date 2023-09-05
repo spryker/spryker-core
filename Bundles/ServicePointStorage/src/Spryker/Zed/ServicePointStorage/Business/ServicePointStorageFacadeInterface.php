@@ -67,6 +67,20 @@ interface ServicePointStorageFacadeInterface
 
     /**
      * Specification:
+     * - Extracts service type IDs from the `$eventEntityTransfers` created by service type entity events.
+     * - Stores data in storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServiceTypeStorageCollectionByServiceTypeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
      * - Retrieves a collection of service point storage transfers according to provided offset, limit and IDs.
      *
      * @api
@@ -78,4 +92,18 @@ interface ServicePointStorageFacadeInterface
      * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getServicePointStorageSynchronizationDataTransfers(int $offset, int $limit, array $servicePointIds = []): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of service type storage transfers according to provided offset, limit and IDs.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param list<int> $serviceTypeIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getServiceTypeStorageSynchronizationDataTransfers(int $offset, int $limit, array $serviceTypeIds = []): array;
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\ServicePointStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 
 class ServicePointStorageToServicePointFacadeBridge implements ServicePointStorageToServicePointFacadeInterface
 {
@@ -33,5 +35,16 @@ class ServicePointStorageToServicePointFacadeBridge implements ServicePointStora
     public function getServicePointCollection(ServicePointCriteriaTransfer $servicePointCriteriaTransfer): ServicePointCollectionTransfer
     {
         return $this->servicePointFacade->getServicePointCollection($servicePointCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionTransfer
+     */
+    public function getServiceTypeCollection(
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): ServiceTypeCollectionTransfer {
+        return $this->servicePointFacade->getServiceTypeCollection($serviceTypeCriteriaTransfer);
     }
 }

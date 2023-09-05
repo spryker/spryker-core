@@ -40,6 +40,30 @@ class ServicePointStorageRepository extends AbstractRepository implements Servic
     /**
      * @param int $offset
      * @param int $limit
+     * @param list<int> $serviceTypeIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getServiceTypeStorageSynchronizationDataTransfers(
+        int $offset,
+        int $limit,
+        array $serviceTypeIds = []
+    ): array {
+        $serviceTypeStorageQuery = $this->getFactory()->getServiceTypeStorageQuery();
+
+        if ($serviceTypeIds) {
+            $serviceTypeStorageQuery->filterByFkServiceType_In($serviceTypeIds);
+        }
+
+        /** @var list<\Generated\Shared\Transfer\SynchronizationDataTransfer> */
+        return $this->buildQueryFromCriteria($serviceTypeStorageQuery, $this->createFilterTransfer($offset, $limit))
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\FilterTransfer
      */

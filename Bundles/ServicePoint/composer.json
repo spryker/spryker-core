@@ -19,7 +19,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\ServicePoint\\Helper\\": "tests/SprykerTest/Shared/ServicePoint/Helper/"
         }
     },
     "autoload-dev": {

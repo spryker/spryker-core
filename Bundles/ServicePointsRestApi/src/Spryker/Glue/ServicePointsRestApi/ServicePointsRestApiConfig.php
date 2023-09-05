@@ -28,6 +28,13 @@ class ServicePointsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_SERVICE_POINT_ADDRESSES = 'service-point-addresses';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESOURCE_SERVICE_TYPES = 'service-types';
+
+    /**
      * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ExistenceByUuidServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND
      *
      * @api

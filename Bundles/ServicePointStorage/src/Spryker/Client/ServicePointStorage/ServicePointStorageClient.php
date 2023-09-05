@@ -9,6 +9,8 @@ namespace Spryker\Client\ServicePointStorage;
 
 use Generated\Shared\Transfer\ServicePointStorageCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -31,5 +33,22 @@ class ServicePointStorageClient extends AbstractClient implements ServicePointSt
         return $this->getFactory()
             ->createServicePointStorageReader()
             ->getServicePointStorageCollection($servicePointStorageCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer
+     */
+    public function getServiceTypeStorageCollection(
+        ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+    ): ServiceTypeStorageCollectionTransfer {
+        return $this->getFactory()
+            ->createServiceTypeStorageReader()
+            ->getServiceTypeStorageCollection($serviceTypeStorageCriteriaTransfer);
     }
 }

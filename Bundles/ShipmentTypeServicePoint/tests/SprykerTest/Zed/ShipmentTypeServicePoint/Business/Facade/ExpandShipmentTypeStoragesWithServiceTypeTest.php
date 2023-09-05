@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ShipmentTypeServicePoint\Facade\Business;
+namespace SprykerTest\Zed\ShipmentTypeServicePoint\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
@@ -23,8 +23,8 @@ use SprykerTest\Zed\ShipmentTypeServicePoint\ShipmentTypeServicePointBusinessTes
  * @group SprykerTest
  * @group Zed
  * @group ShipmentTypeServicePoint
- * @group Facade
  * @group Business
+ * @group Facade
  * @group ExpandShipmentTypeStoragesWithServiceTypeTest
  * Add your own group annotations below this line
  */
@@ -68,7 +68,11 @@ class ExpandShipmentTypeStoragesWithServiceTypeTest extends Unit
 
         // Assert
         $this->assertNull($shipmentTypeStorageTransfers[0]->getServiceType());
-        $this->assertSame($serviceTypeTransfer->getKeyOrFail(), $shipmentTypeStorageTransfers[1]->getServiceType());
+        $this->assertNotNull($shipmentTypeStorageTransfers[1]->getServiceType());
+        $this->assertSame(
+            $serviceTypeTransfer->getUuidOrFail(),
+            $shipmentTypeStorageTransfers[1]->getServiceTypeOrFail()->getUuid(),
+        );
     }
 
     /**
@@ -175,7 +179,7 @@ class ExpandShipmentTypeStoragesWithServiceTypeTest extends Unit
     protected function createShipmentTypeWithServiceType(ServiceTypeTransfer $serviceTypeTransfer): ShipmentTypeTransfer
     {
         $shipmentTypeTransfer = $this->tester->haveShipmentType();
-        $this->tester->createShipmentTypeServiceType($shipmentTypeTransfer, $serviceTypeTransfer);
+        $this->tester->haveShipmentTypeServiceTypeRelation($shipmentTypeTransfer, $serviceTypeTransfer);
 
         return $shipmentTypeTransfer;
     }

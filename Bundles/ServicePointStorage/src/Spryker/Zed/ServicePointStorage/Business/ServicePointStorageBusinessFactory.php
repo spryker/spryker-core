@@ -12,6 +12,8 @@ use Spryker\Zed\ServicePointStorage\Business\Mapper\ServicePointStorageMapper;
 use Spryker\Zed\ServicePointStorage\Business\Mapper\ServicePointStorageMapperInterface;
 use Spryker\Zed\ServicePointStorage\Business\Writer\ServicePointStorageWriter;
 use Spryker\Zed\ServicePointStorage\Business\Writer\ServicePointStorageWriterInterface;
+use Spryker\Zed\ServicePointStorage\Business\Writer\ServiceTypeStorageWriter;
+use Spryker\Zed\ServicePointStorage\Business\Writer\ServiceTypeStorageWriterInterface;
 use Spryker\Zed\ServicePointStorage\Dependency\Facade\ServicePointStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ServicePointStorage\Dependency\Facade\ServicePointStorageToServicePointFacadeInterface;
 use Spryker\Zed\ServicePointStorage\Dependency\Facade\ServicePointStorageToStoreFacadeInterface;
@@ -33,6 +35,19 @@ class ServicePointStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getServicePointFacade(),
             $this->getStoreFacade(),
+            $this->getEntityManager(),
+            $this->createServicePointStorageMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePointStorage\Business\Writer\ServiceTypeStorageWriterInterface
+     */
+    public function createServiceTypeStorageWriter(): ServiceTypeStorageWriterInterface
+    {
+        return new ServiceTypeStorageWriter(
+            $this->getEventBehaviorFacade(),
+            $this->getServicePointFacade(),
             $this->getEntityManager(),
             $this->createServicePointStorageMapper(),
         );

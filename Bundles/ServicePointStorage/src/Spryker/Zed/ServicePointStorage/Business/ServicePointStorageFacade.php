@@ -85,6 +85,22 @@ class ServicePointStorageFacade extends AbstractFacade implements ServicePointSt
      *
      * @api
      *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeServiceTypeStorageCollectionByServiceTypeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createServiceTypeStorageWriter()
+            ->writeServiceTypeStorageCollectionByServiceTypeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $offset
      * @param int $limit
      * @param list<int> $servicePointIds
@@ -95,5 +111,22 @@ class ServicePointStorageFacade extends AbstractFacade implements ServicePointSt
     {
         return $this->getRepository()
             ->getServicePointStorageSynchronizationDataTransfers($offset, $limit, $servicePointIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param list<int> $serviceTypeIds
+     *
+     * @return list<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getServiceTypeStorageSynchronizationDataTransfers(int $offset, int $limit, array $serviceTypeIds = []): array
+    {
+        return $this->getRepository()
+            ->getServiceTypeStorageSynchronizationDataTransfers($offset, $limit, $serviceTypeIds);
     }
 }

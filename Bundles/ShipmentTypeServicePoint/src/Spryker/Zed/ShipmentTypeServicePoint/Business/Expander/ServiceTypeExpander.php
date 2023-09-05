@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentTypeServicePoint\Business\Expander;
 
 use Generated\Shared\Transfer\ServiceTypeConditionsTransfer;
 use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
 use Spryker\Zed\ShipmentTypeServicePoint\Dependency\Facade\ShipmentTypeServicePointToServicePointFacadeInterface;
 use Spryker\Zed\ShipmentTypeServicePoint\Persistence\ShipmentTypeServicePointRepositoryInterface;
 
@@ -120,7 +121,9 @@ class ServiceTypeExpander implements ServiceTypeExpanderInterface
                 continue;
             }
 
-            $shipmentTypeStorageTransfer->setServiceType($serviceTypeTransfer->getKeyOrFail());
+            $shipmentTypeStorageTransfer->setServiceType(
+                (new ServiceTypeStorageTransfer())->setUuid($serviceTypeTransfer->getUuidOrFail()),
+            );
         }
 
         return $shipmentTypeStorageTransfers;

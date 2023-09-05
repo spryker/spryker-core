@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ServicePointStorage\Persistence;
 
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -55,5 +56,38 @@ class ServicePointStorageEntityManager extends AbstractEntityManager implements 
         }
 
         $servicePointQuery->find()->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageTransfer $serviceTypeStorageTransfer
+     *
+     * @return void
+     */
+    public function saveServiceTypeStorage(ServiceTypeStorageTransfer $serviceTypeStorageTransfer): void
+    {
+        $serviceTypeStorageEntity = $this->getFactory()
+            ->getServiceTypeStorageQuery()
+            ->filterByFkServiceType($serviceTypeStorageTransfer->getIdServiceTypeOrFail())
+            ->findOneOrCreate();
+
+        $serviceTypeStorageEntity = $this->getFactory()
+            ->createServicePointStorageMapper()
+            ->mapServiceTypeStorageTransferToServiceTypeStorageEntity($serviceTypeStorageTransfer, $serviceTypeStorageEntity);
+
+        $serviceTypeStorageEntity->save();
+    }
+
+    /**
+     * @param list<int> $serviceTypeIds
+     *
+     * @return void
+     */
+    public function deleteServiceTypeStorageByServiceTypeIds(array $serviceTypeIds): void
+    {
+        $this->getFactory()
+            ->getServiceTypeStorageQuery()
+            ->filterByFkServiceType_In($serviceTypeIds)
+            ->find()
+            ->delete();
     }
 }

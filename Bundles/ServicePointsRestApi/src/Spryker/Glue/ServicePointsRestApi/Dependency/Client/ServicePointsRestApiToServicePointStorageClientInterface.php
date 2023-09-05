@@ -9,6 +9,8 @@ namespace Spryker\Glue\ServicePointsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ServicePointStorageCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer;
 
 interface ServicePointsRestApiToServicePointStorageClientInterface
 {
@@ -20,4 +22,13 @@ interface ServicePointsRestApiToServicePointStorageClientInterface
     public function getServicePointStorageCollection(
         ServicePointStorageCriteriaTransfer $servicePointStorageCriteriaTransfer
     ): ServicePointStorageCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer
+     */
+    public function getServiceTypeStorageCollection(
+        ServiceTypeStorageCriteriaTransfer $serviceTypeStorageCriteriaTransfer
+    ): ServiceTypeStorageCollectionTransfer;
 }

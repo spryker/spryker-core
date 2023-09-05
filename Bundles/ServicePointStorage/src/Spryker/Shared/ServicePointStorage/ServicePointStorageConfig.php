@@ -13,13 +13,23 @@ class ServicePointStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Defines resource name, that will be used for key generation.
+     * - Defines service point resource name, that will be used for key generation.
      *
      * @api
      *
      * @var string
      */
     public const SERVICE_POINT_RESOURCE_NAME = 'service_point';
+
+    /**
+     * Specification:
+     * - Defines service type resource name, that will be used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SERVICE_TYPE_RESOURCE_NAME = 'service_type';
 
     /**
      * Specification:
@@ -110,6 +120,36 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_SERVICE_UPDATE = 'Entity.spy_service.update';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_service_type` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_TYPE_CREATE = 'Entity.spy_service_type.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_service_type` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SERVICE_TYPE_UPDATE = 'Entity.spy_service_type.update';
+
+    /**
+     * Specification:
+     * - This event will be used for `ServiceType` publish.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SERVICE_TYPE_PUBLISH = 'ServiceType.service_type.publish';
 
     /**
      * Specification:

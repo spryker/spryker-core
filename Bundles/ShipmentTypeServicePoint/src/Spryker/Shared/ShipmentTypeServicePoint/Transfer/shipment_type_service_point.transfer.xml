@@ -3,11 +3,7 @@
 
     <transfer name="ShipmentTypeStorage" strict="true">
         <property name="idShipmentType" type="int"/>
-        <property name="serviceType" type="string"/>
-    </transfer>
-
-    <transfer name="ShipmentType" strict="true">
-        <property name="serviceType" type="string"/>
+        <property name="serviceType" type="ServiceTypeStorage"/>
     </transfer>
 
     <transfer name="ServiceTypeCriteria" strict="true">
@@ -25,6 +21,27 @@
     <transfer name="ServiceType" strict="true">
         <property name="key" type="string"/>
         <property name="idServiceType" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCollection" strict="true">
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCollection" strict="true">
+        <property name="serviceTypeStorages" type="ServiceTypeStorage[]" singular="serviceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCriteria" strict="true">
+        <property name="serviceTypeStorageConditions" type="ServiceTypeStorageConditions"/>
     </transfer>
 
 </transfers>

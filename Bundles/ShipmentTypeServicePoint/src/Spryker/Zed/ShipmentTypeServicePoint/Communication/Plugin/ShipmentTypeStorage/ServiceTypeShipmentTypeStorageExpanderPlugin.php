@@ -21,7 +21,7 @@ class ServiceTypeShipmentTypeStorageExpanderPlugin extends AbstractPlugin implem
      * - Requires `ShipmentTypeStorageTransfer.idShipmentType` to be set.
      * - Retrieves service type IDs from Persistence by provided shipment type IDs.
      * - Retrieves service types.
-     * - Maps related `ServiceType.key` to `ShipmentTypeStorageTransfer.serviceType`.
+     * - Maps related `ServiceType.uuid` to `ShipmentTypeStorageTransfer.serviceType.uuid`.
      * - Returns expanded list of `ShipmentTypeStorageTransfer` objects with service type.
      *
      * @api

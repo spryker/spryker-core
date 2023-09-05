@@ -40,6 +40,19 @@ class ServicePointStorageMapper implements ServicePointStorageMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageTransfer $serviceTypeStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeStorageTransfer
+     */
+    public function mapServiceTypeTransferToServiceTypeStorageTransfer(
+        ServiceTypeTransfer $serviceTypeTransfer,
+        ServiceTypeStorageTransfer $serviceTypeStorageTransfer
+    ): ServiceTypeStorageTransfer {
+        return $serviceTypeStorageTransfer->fromArray($serviceTypeTransfer->toArray(), true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ServiceTransfer $serviceTransfer
      * @param \Generated\Shared\Transfer\ServiceStorageTransfer $serviceStorageTransfer
      *
@@ -54,18 +67,5 @@ class ServicePointStorageMapper implements ServicePointStorageMapperInterface
                 $serviceTransfer->getServiceTypeOrFail(),
                 new ServiceTypeStorageTransfer(),
             ));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
-     * @param \Generated\Shared\Transfer\ServiceTypeStorageTransfer $serviceTypeStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ServiceTypeStorageTransfer
-     */
-    protected function mapServiceTypeTransferToServiceTypeStorageTransfer(
-        ServiceTypeTransfer $serviceTypeTransfer,
-        ServiceTypeStorageTransfer $serviceTypeStorageTransfer
-    ): ServiceTypeStorageTransfer {
-        return $serviceTypeStorageTransfer->fromArray($serviceTypeTransfer->toArray(), true);
     }
 }

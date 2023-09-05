@@ -8,17 +8,29 @@
 namespace Spryker\Client\ServicePointStorage\Mapper;
 
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
+use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
 
 interface ServicePointStorageMapperInterface
 {
     /**
      * @param array<string, mixed> $servicePointStorageData
-     * @param \Generated\Shared\Transfer\ServicePointStorageTransfer $servicePointStorageCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ServicePointStorageTransfer $servicePointStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointStorageTransfer
      */
     public function mapServicePointStorageDataToServicePointStorageTransfer(
         array $servicePointStorageData,
-        ServicePointStorageTransfer $servicePointStorageCriteriaTransfer
+        ServicePointStorageTransfer $servicePointStorageTransfer
     ): ServicePointStorageTransfer;
+
+    /**
+     * @param array<string, mixed> $serviceTypeStorageData
+     * @param \Generated\Shared\Transfer\ServiceTypeStorageTransfer $serviceTypeStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeStorageTransfer
+     */
+    public function mapServiceTypeStorageDataToServiceTypeStorageTransfer(
+        array $serviceTypeStorageData,
+        ServiceTypeStorageTransfer $serviceTypeStorageTransfer
+    ): ServiceTypeStorageTransfer;
 }

@@ -26,3 +26,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
+                - \SprykerTest\Shared\ShipmentTypeServicePoint\Helper\ShipmentTypeServicePointHelper

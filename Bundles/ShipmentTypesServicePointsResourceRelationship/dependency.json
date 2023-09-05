@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/shipment-types-rest-api": "Added for future compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

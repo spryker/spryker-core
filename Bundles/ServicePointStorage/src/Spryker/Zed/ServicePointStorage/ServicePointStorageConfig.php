@@ -26,6 +26,16 @@ class ServicePointStorageConfig extends AbstractBundleConfig
      *
      * @return string|null
      */
+    public function getServiceTypeStorageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
     public function getEventQueueName(): ?string
     {
         return null;

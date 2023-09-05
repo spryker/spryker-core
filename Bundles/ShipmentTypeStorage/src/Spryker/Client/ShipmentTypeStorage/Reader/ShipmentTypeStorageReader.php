@@ -44,21 +44,29 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
     protected ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner;
 
     /**
+     * @var list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
+     */
+    protected array $shipmentTypeStorageExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\ShipmentTypeStorage\Generator\ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Client\ShipmentTypeStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ShipmentTypeStorage\Dependency\Service\ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\ShipmentTypeStorage\Scanner\ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner
+     * @param list<\Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface> $shipmentTypeStorageExpanderPlugins
      */
     public function __construct(
         ShipmentTypeStorageKeyGeneratorInterface $shipmentTypeStorageKeyGenerator,
         ShipmentTypeStorageToStorageClientInterface $storageClient,
         ShipmentTypeStorageToUtilEncodingServiceInterface $utilEncodingService,
-        ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner
+        ShipmentTypeStorageKeyScannerInterface $shipmentTypeStorageKeyScanner,
+        array $shipmentTypeStorageExpanderPlugins
     ) {
         $this->shipmentTypeStorageKeyGenerator = $shipmentTypeStorageKeyGenerator;
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->shipmentTypeStorageKeyScanner = $shipmentTypeStorageKeyScanner;
+        $this->shipmentTypeStorageExpanderPlugins = $shipmentTypeStorageExpanderPlugins;
     }
 
     /**
@@ -69,8 +77,23 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
     public function getShipmentTypeStorageCollection(
         ShipmentTypeStorageCriteriaTransfer $shipmentTypeStorageCriteriaTransfer
     ): ShipmentTypeStorageCollectionTransfer {
-        $shipmentTypeStorageConditionsTransfer = $shipmentTypeStorageCriteriaTransfer->getShipmentTypeStorageConditionsOrFail();
+        $shipmentTypeStorageCollectionTransfer = $this->getShipmentTypeStorageCollectionByCriteria($shipmentTypeStorageCriteriaTransfer);
+        if ($shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages()->count() === 0) {
+            return $shipmentTypeStorageCollectionTransfer;
+        }
 
+        return $this->executeShipmentTypeStorageExpanderPlugins($shipmentTypeStorageCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTypeStorageCriteriaTransfer $shipmentTypeStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    protected function getShipmentTypeStorageCollectionByCriteria(
+        ShipmentTypeStorageCriteriaTransfer $shipmentTypeStorageCriteriaTransfer
+    ): ShipmentTypeStorageCollectionTransfer {
+        $shipmentTypeStorageConditionsTransfer = $shipmentTypeStorageCriteriaTransfer->getShipmentTypeStorageConditionsOrFail();
         if (
             !$shipmentTypeStorageConditionsTransfer->getShipmentTypeIds()
             && !$shipmentTypeStorageConditionsTransfer->getUuids()
@@ -194,5 +217,20 @@ class ShipmentTypeStorageReader implements ShipmentTypeStorageReaderInterface
         }
 
         return $shipmentTypeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer
+     */
+    protected function executeShipmentTypeStorageExpanderPlugins(
+        ShipmentTypeStorageCollectionTransfer $shipmentTypeStorageCollectionTransfer
+    ): ShipmentTypeStorageCollectionTransfer {
+        foreach ($this->shipmentTypeStorageExpanderPlugins as $shipmentTypeStorageExpanderPlugin) {
+            $shipmentTypeStorageCollectionTransfer = $shipmentTypeStorageExpanderPlugin->expand($shipmentTypeStorageCollectionTransfer);
+        }
+
+        return $shipmentTypeStorageCollectionTransfer;
     }
 }

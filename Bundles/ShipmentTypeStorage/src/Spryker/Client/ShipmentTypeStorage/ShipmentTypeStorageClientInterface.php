@@ -23,6 +23,7 @@ interface ShipmentTypeStorageClientInterface
      * - Uses `ShipmentTypeStorageCriteriaTransfer.shipmentTypeStorageConditions.uuids` to filter by shipment type uuids.
      * - Can filter either by `shipmentTypeIds` or `uuids` at the same time.
      * - If no filters were provided, will return all available shipment types for the store.
+     * - Executes a stack of {@link \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface} plugins.
      * - Returns `ShipmentTypeStorageCollectionTransfer` filled with found shipment types.
      *
      * @api
@@ -39,6 +40,7 @@ interface ShipmentTypeStorageClientInterface
      * Specification:
      * - Requires `QuoteTransfer.store.name` to be set.
      * - Retrieves all available shipment type storage data filtered by store name.
+     * - Executes a stack of {@link \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface} plugins.
      * - Executes stack of {@link \Spryker\Client\ShipmentTypeStorageExtension\Dependency\Plugin\AvailableShipmentTypeFilterPluginInterface} plugins.
      * - Returns `ShipmentTypeCollectionTransfer` filled with available shipment types for provided quote.
      *

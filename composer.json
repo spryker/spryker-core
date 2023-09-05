@@ -920,6 +920,7 @@
         "spryker/shipment-type-storage-extension": "*",
         "spryker/shipment-types-backend-api": "*",
         "spryker/shipment-types-rest-api": "*",
+        "spryker/shipment-types-service-points-resource-relationship": "*",
         "spryker/shipments-backend-api": "*",
         "spryker/shipments-rest-api": "*",
         "spryker/shipments-rest-api-extension": "*",

@@ -7,8 +7,9 @@
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/service-point": "^0.4.0",
+        "spryker/service-point-storage": "^0.4.0",
         "spryker/shipment-type": "^0.1.0",
-        "spryker/shipment-type-storage-extension": "^0.1.0",
+        "spryker/shipment-type-storage-extension": "^0.1.1",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
@@ -18,7 +19,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\ShipmentTypeServicePoint\\Helper\\": "tests/SprykerTest/Shared/ShipmentTypeServicePoint/Helper/"
         }
     },
     "autoload-dev": {

@@ -67,4 +67,43 @@
         <property name="iso2Code" type="string"/>
     </transfer>
 
+    <transfer name="ServiceTypeResourceCriteria" strict="true">
+        <property name="serviceTypeResourceConditions" type="ServiceTypeResourceConditions"/>
+    </transfer>
+
+    <transfer name="ServiceTypeResourceConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServiceTypeResourceCollection">
+        <property name="serviceTypeResources" type="GlueResource[]" singular="serviceTypeResource"/>
+    </transfer>
+
+    <transfer name="RestServiceTypesAttributes" strict="true">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="id" type="string"/>
+        <property name="type" type="string"/>
+        <property name="attributes" type="AbstractAttributes"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCriteria" strict="true">
+        <property name="serviceTypeStorageConditions" type="ServiceTypeStorageConditions"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCollection" strict="true">
+        <property name="serviceTypeStorages" type="ServiceTypeStorage[]" singular="serviceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
 </transfers>
