@@ -43,6 +43,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     /**
      * @var string
      */
+    protected const IDENTIFIER_PLACEHOLDER = '%identifier%';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST = 'dynamic_entity.validation.entity_does_not_exist';
 
     /**
@@ -249,10 +254,18 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 $dynamicEntityCollectionRequestTransfer->getIsCreatable() === true &&
                 !$this->isAllowCreateWithSetupIdentifier($activeRecord, $dynamicEntityConfigurationTransfer)
             ) {
+                $identifier = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail();
                 $this->addErrorToResponseTransfer(
                     $dynamicEntityCollectionResponseTransfer,
                     static::GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE,
                     $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
+                    [
+                        static::IDENTIFIER_PLACEHOLDER => sprintf(
+                            '%s: %s',
+                            $this->getIdentifierVisibleName($identifier, $dynamicEntityConfigurationTransfer),
+                            $activeRecord->getByName($identifier),
+                        ),
+                    ],
                 );
 
                 continue;
@@ -529,5 +542,22 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         }
 
         return $this->getFactory()->getConnection()->commit();
+    }
+
+    /**
+     * @param string $identifier
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getIdentifierVisibleName(string $identifier, DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($fieldDefinitionTransfer->getFieldNameOrFail() === $identifier) {
+                return $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $identifier;
     }
 }
