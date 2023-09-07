@@ -21,6 +21,13 @@ use Symfony\Component\Security\Http\SecurityEvents;
 class SaveSessionUserListener implements EventSubscriberInterface
 {
     /**
+     * @uses \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig::ROLE_SYSTEM_USER
+     *
+     * @var string
+     */
+    protected const ROLE_SYSTEM_USER = 'ROLE_SYSTEM_USER';
+
+    /**
      * @var \Spryker\Zed\SessionUserValidationExtension\Dependency\Plugin\SessionUserSaverPluginInterface
      */
     protected $sessionUserSaverPlugin;
@@ -57,6 +64,10 @@ class SaveSessionUserListener implements EventSubscriberInterface
         $user = $event->getAuthenticationToken()->getUser();
 
         if (!$user instanceof UserInterface) {
+            return;
+        }
+
+        if (in_array(static::ROLE_SYSTEM_USER, $user->getRoles()) === true) {
             return;
         }
 

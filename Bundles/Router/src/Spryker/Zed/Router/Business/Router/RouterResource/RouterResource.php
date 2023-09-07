@@ -22,9 +22,6 @@ use Spryker\Zed\Router\RouterConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\Router\Business\Router\RouterResource\BackofficeRouterResource} instead.
- */
 class RouterResource implements ResourceInterface
 {
     /**

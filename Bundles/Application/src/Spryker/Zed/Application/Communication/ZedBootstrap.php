@@ -23,9 +23,6 @@ use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\Application\Communication\Bootstrap\ZedBootstrap} instead.
- */
 class ZedBootstrap
 {
     use BundleDependencyProviderResolverAwareTrait;

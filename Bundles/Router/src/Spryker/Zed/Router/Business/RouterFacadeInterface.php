@@ -141,8 +141,6 @@ interface RouterFacadeInterface
      *
      * @internal
      *
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::getBackofficeRouter()} instead.
-     *
      * Specification:
      * - Returns Router which handles Zed routes.
      *
@@ -154,8 +152,6 @@ interface RouterFacadeInterface
      * @api
      *
      * @internal
-     *
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::getBackofficeChainRouter()} instead.
      *
      * Specification:
      * - Returns a ChainRouter which is added to the Application.
@@ -179,10 +175,6 @@ interface RouterFacadeInterface
 
     /**
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::warmUpBackofficeRouterCache()} instead.
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::warmUpBackendGatewayRouterCache()} instead.
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::warmUpMerchantPortalRouterCache()} instead.
      *
      * Specification:
      * - Builds the cache for the Router.

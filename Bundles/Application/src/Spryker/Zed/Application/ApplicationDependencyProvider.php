@@ -51,8 +51,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
-     *
      * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
@@ -185,8 +183,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addBackofficeApplicationPlugins()} instead.
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -201,8 +197,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getBackofficeApplicationPlugins()} instead.
-     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array

@@ -155,8 +155,6 @@ class RouterConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Router\RouterConfig::getBackofficeRouterConfiguration()} instead.
-     *
      * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
@@ -193,8 +191,6 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\RouterConfig::getBackofficeCachePathIfCacheEnabled()} instead.
-     *
      * @return string|null
      */
     protected function getCachePathIfCacheEnabled(): ?string

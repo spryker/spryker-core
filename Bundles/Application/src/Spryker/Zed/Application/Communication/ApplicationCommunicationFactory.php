@@ -30,8 +30,6 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     use LoggerTrait;
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory::createBackofficeApplication()} instead.
-     *
      * @return \Spryker\Shared\Application\ApplicationInterface
      */
     public function createApplication(): ApplicationInterface
@@ -72,8 +70,6 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory::getBackofficeApplicationPlugins()} instead.
-     *
      * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array

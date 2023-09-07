@@ -233,8 +233,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeChainRouter()} instead.
-     *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     public function createRouter(): ChainRouter
@@ -243,8 +241,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::getBackofficeRouterPlugins()} instead.
-     *
      * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     public function getRouterPlugins(): array
@@ -253,8 +249,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeRouter()} instead.
-     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function createZedRouter(): RouterInterface
@@ -268,8 +262,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::getBackofficeRouterEnhancerPlugins()} instead.
-     *
      * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     public function getRouterEnhancerPlugins(): array
@@ -291,8 +283,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeCacheWarmer()} instead.
-     *
      * @return \Spryker\Shared\Router\Cache\CacheInterface
      */
     public function createCache(): CacheInterface
@@ -301,8 +291,6 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterBusinessFactory::createBackofficeRouterResource()} instead.
-     *
      * @return \Spryker\Zed\Router\Business\RouterResource\ResourceInterface
      */
     public function createResource(): ResourceInterface
