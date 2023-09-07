@@ -47,7 +47,7 @@ interface MessageBrokerAwsConstants
      *
      * @var string
      */
-    public const MESSAGE_TO_CHANNEL_MAP = 'MESSAGE_BROKER_AWS:MESSAGE_TO_CHANNEL_MAP';
+    public const MESSAGE_TO_CHANNEL_MAP = 'MESSAGE_BROKER:MESSAGE_TO_CHANNEL_MAP';
 
     /**
      * @var string
