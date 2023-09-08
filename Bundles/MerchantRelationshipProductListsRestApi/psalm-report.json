@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListsRestApi/src/Spryker/Glue/MerchantRelationshipProductListsRestApi/Expander/CustomerExpander.php",
+            "snippet": "     * @param \\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface $restRequest",
+            "selected_text": "\\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListsRestApi/src/Spryker/Glue/MerchantRelationshipProductListsRestApi/Expander/CustomerExpanderInterface.php",
+            "snippet": "     * @param \\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface $restRequest",
+            "selected_text": "\\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListsRestApi/src/Spryker/Glue/MerchantRelationshipProductListsRestApi/Plugin/CustomersRestApi/ProductListCustomerExpanderPlugin.php",
+            "snippet": "     * @param \\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface $restRequest",
+            "selected_text": "\\Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ],
+    "count": 3
+}
