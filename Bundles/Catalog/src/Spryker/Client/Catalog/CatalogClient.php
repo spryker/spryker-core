@@ -71,11 +71,11 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getSuggestionQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery($searchQuery, $this->getFactory()->getSuggestionQueryExpanderPlugins($searchQuery), $requestParameters);
 
         $resultFormatters = $this
             ->getFactory()
-            ->getSuggestionResultFormatters();
+            ->getSuggestionResultFormatters($searchQuery);
 
         return $this
             ->getFactory()
@@ -135,9 +135,18 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->getFactory()
             ->createCatalogSearchQuery($searchString);
         $searchQuery = $searchClient
-            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchCounterQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchCountQueryExpanderPlugins($searchQuery), $requestParameters);
+        $searchResult = $searchClient->search($searchQuery, [], $requestParameters);
 
-        return $searchClient->search($searchQuery, [], $requestParameters)->getTotalHits();
+        foreach ($this->getFactory()->getSearchResultCountPlugins() as $searchResultCountPlugin) {
+            $totalCount = $searchResultCountPlugin->findTotalCount($searchResult);
+
+            if ($totalCount !== null) {
+                return $totalCount;
+            }
+        }
+
+        return $searchResult->getTotalHits();
     }
 
     /**
@@ -151,8 +160,24 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
-        return $this->getFactory()
-            ->createProductConcreteReader()
-            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
+        $searchQuery = $this->getFactory()->createProductConcreteCatalogSearchQuery((string)$productConcreteCriteriaFilterTransfer->getSearchString());
+        $requestParameters = $productConcreteCriteriaFilterTransfer->getRequestParams();
+        $requestParameters[$this->getFactory()->getConfig()->getItemsPerPageParameterName()] = $productConcreteCriteriaFilterTransfer->getLimit();
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery(
+                $searchQuery,
+                $this->getFactory()->getProductConcreteCatalogSearchQueryExpanderPlugins($searchQuery),
+                $requestParameters,
+            );
+        $resultFormatters = $this
+            ->getFactory()
+            ->getProductConcreteCatalogSearchResultFormatters($searchQuery);
+
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 }

@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
  * @method \Spryker\Zed\Search\Business\SearchFacade getFacade() ()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Search\PHPMD)
  */
 class SearchBusinessTester extends Actor
 {

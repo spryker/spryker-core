@@ -8,8 +8,9 @@
         "spryker/catalog-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
-        "spryker/search-extension": "^1.0.0",
-        "spryker/symfony": "^3.0.0"
+        "spryker/search-extension": "^1.3.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

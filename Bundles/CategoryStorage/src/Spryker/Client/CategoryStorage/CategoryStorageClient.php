@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer;
 use Generated\Shared\Transfer\SearchHttpResponseTransfer;
+use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -124,5 +125,21 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
         return $this->getFactory()
             ->createCategoryTreeSearchHttpFormatter()
             ->format($searchResult);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $suggestionsSearchHttpResponseTransfer
+     *
+     * @return array<int, mixed>
+     */
+    public function formatSuggestionsSearchHttpCategory(SuggestionsSearchHttpResponseTransfer $suggestionsSearchHttpResponseTransfer): array
+    {
+        return $this->getFactory()
+            ->createCategorySuggestionsSearchHttpFormatter()
+            ->format($suggestionsSearchHttpResponseTransfer);
     }
 }

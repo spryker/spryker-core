@@ -14,15 +14,16 @@ abstract class AbstractDependentPluginResolver
     /**
      * @param object $mainPlugin
      * @param array<string, array<object>> $dependentPlugins
+     * @param array<object> $defaultPlugins
      *
      * @return array<object>
      */
-    public function resolveByType(object $mainPlugin, array $dependentPlugins): array
+    public function resolveByType(object $mainPlugin, array $dependentPlugins, array $defaultPlugins): array
     {
-        if ($mainPlugin instanceof SearchTypeIdentifierInterface && !empty($dependentPlugins[$mainPlugin->getSearchType()])) {
-            return $dependentPlugins[$mainPlugin->getSearchType()];
+        if ($mainPlugin instanceof SearchTypeIdentifierInterface) {
+            return $dependentPlugins[$mainPlugin->getSearchType()] ?? [];
         }
 
-        return [];
+        return $defaultPlugins;
     }
 }

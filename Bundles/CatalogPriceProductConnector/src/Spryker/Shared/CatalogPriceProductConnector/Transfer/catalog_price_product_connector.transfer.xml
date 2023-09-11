@@ -32,4 +32,7 @@
     <transfer name="SearchHttpResponse">
     </transfer>
 
+    <transfer name="SuggestionsSearchHttpResponse" strict="true">
+    </transfer>
+
 </transfers>

@@ -36,7 +36,7 @@ use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
  * @method void pause()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CategoryStorage\PHPMD)
  */
 class CategoryStorageBusinessTester extends Actor
 {

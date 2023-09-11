@@ -20,6 +20,13 @@
         <property name="facets" dataBuilderRule="=[]"/>
     </transfer>
 
+    <transfer name="SuggestionsSearchHttpResponse" strict="true">
+        <property name="completions" dataBuilderRule="=[]"/>
+        <property name="matches" dataBuilderRule="=[]"/>
+        <property name="matchedItems" dataBuilderRule="=[]"/>
+        <property name="categories" dataBuilderRule="=[]"/>
+    </transfer>
+
     <transfer name="SearchHttpResponsePagination">
         <property name="numFound" dataBuilderRule="randomNumber(3)"/>
         <property name="currentPage" dataBuilderRule="randomNumber(3)"/>

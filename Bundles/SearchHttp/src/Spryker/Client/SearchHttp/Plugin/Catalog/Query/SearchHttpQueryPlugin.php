@@ -2,12 +2,13 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp\Plugin\Catalog\Query;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SearchQueryTransfer;
 use Spryker\Client\CatalogExtension\Dependency\Plugin\QueryApplicabilityCheckerInterface;
 use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
@@ -33,11 +34,13 @@ class SearchHttpQueryPlugin extends AbstractPlugin implements SearchContextAware
     protected SearchContextTransfer $searchContextTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
      */
-    public function __construct(SearchContextTransfer $searchContextTransfer)
+    public function __construct(?SearchContextTransfer $searchContextTransfer = null)
     {
-        $this->searchContextTransfer = $searchContextTransfer;
+        $this->searchContextTransfer = $searchContextTransfer ?? (new SearchContextTransfer())
+            ->setSourceIdentifier(SearchHttpConfig::SOURCE_IDENTIFIER_PRODUCT)
+            ->setSearchHttpContext(new SearchHttpSearchContextTransfer());
 
         $this->searchQueryTransfer = (new SearchQueryTransfer())
             ->setLocale($this->getFactory()->getLocaleClient()->getCurrentLocale());

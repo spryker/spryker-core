@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp\Plugin\Search;
@@ -10,10 +10,12 @@ namespace Spryker\Client\SearchHttp\Plugin\Search;
 use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
+use Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
+use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**
  * @method \Spryker\Client\SearchHttp\SearchHttpClientInterface getClient()
@@ -53,6 +55,13 @@ class SearchHttpSearchAdapterPlugin extends AbstractPlugin implements SearchAdap
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
+        if (
+            $searchQuery instanceof SearchTypeIdentifierInterface &&
+            in_array($searchQuery->getSearchType(), [SearchHttpConfig::TYPE_SUGGESTION_SEARCH_HTTP, SearchHttpConfig::TYPE_PRODUCT_CONCRETE_SEARCH_HTTP])
+        ) {
+            return $this->getClient()->suggestSearch($searchQuery, $resultFormatters, $requestParameters);
+        }
+
         return $this->getClient()->search($searchQuery, $resultFormatters, $requestParameters);
     }
 

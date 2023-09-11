@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp\Api\Builder;
@@ -24,11 +24,6 @@ class SearchHeaderBuilder implements SearchHeaderBuilderInterface
      * @var string
      */
     protected const HEADER_TENANT_IDENTIFIER = 'X-Tenant-Identifier';
-
-    /**
-     * @var string
-     */
-    protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
 
     /**
      * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface
@@ -59,10 +54,17 @@ class SearchHeaderBuilder implements SearchHeaderBuilderInterface
      */
     public function build(QueryInterface $searchQuery): array
     {
-        return [
-            static::HEADER_STORE_REFERENCE => $this->storeClient->getCurrentStore()->getStoreReference(),
+        $headers = [
+            'User-Agent' => sprintf('Spryker/%s', APPLICATION),
+            'Accept-Language' => $searchQuery->getSearchQuery()->getLocaleOrFail(),
+            static::HEADER_STORE_REFERENCE => $this->storeClient->getCurrentStore()->getStoreReferenceOrFail(),
             static::HEADER_TENANT_IDENTIFIER => $this->searchHttpConfig->getTenantIdentifier(),
-            static::HEADER_ACCEPT_LANGUAGE => $searchQuery->getSearchQuery()->getLocaleOrFail(),
         ];
+
+        if (isset($_COOKIE['XDEBUG_SESSION'])) {
+            $headers['Cookie'] = 'XDEBUG_SESSION=' . $_COOKIE['XDEBUG_SESSION'];
+        }
+
+        return $headers;
     }
 }

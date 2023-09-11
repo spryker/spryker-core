@@ -38,6 +38,16 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS = 'PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
+    public const CATALOG_SUGGESTION_QUERY_PLUGIN_VARIANTS = 'CATALOG_SUGGESTION_QUERY_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
 
     /**
@@ -48,12 +58,32 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS = 'PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
+    public const SUGGESTION_QUERY_EXPANDER_PLUGIN_VARIANTS = 'SUGGESTION_QUERY_EXPANDER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
 
     /**
      * @var string
      */
     public const CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS = 'CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
+    public const SUGGESTION_RESULT_FORMATTER_PLUGIN_VARIANTS = 'SUGGESTION_RESULT_FORMATTER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS = 'PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS';
 
     /**
      * @var string
@@ -93,6 +123,11 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const CATALOG_SEARCH_COUNT_QUERY_EXPANDER_PLUGIN_VARIANTS = 'CATALOG_SEARCH_COUNT_QUERY_EXPANDER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY';
 
     /**
@@ -104,6 +139,11 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SEARCH_RESULT_COUNT = 'PLUGINS_SEARCH_RESULT_COUNT';
 
     /**
      * @var string
@@ -122,21 +162,29 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSearchClient($container);
         $container = $this->addCatalogSearchQueryPlugin($container);
         $container = $this->addCatalogSearchQueryPluginVariants($container);
+        $container = $this->addSuggestionQueryPluginVariants($container);
         $container = $this->addCatalogSearchQueryExpanderPlugins($container);
         $container = $this->addCatalogSearchQueryExpanderPluginVariants($container);
         $container = $this->addCatalogSearchResultFormatterPlugins($container);
         $container = $this->addCatalogSearchResultFormatterPluginVariants($container);
         $container = $this->addSuggestionQueryPlugin($container);
         $container = $this->addSuggestionQueryExpanderPlugins($container);
+        $container = $this->addSuggestionQueryExpanderPluginVariants($container);
         $container = $this->addSuggestionResultFormatterPlugins($container);
+        $container = $this->addSuggestionResultFormatterPluginVariants($container);
         $container = $this->addFacetConfigTransferBuilderPlugins($container);
         $container = $this->addFacetConfigTransferBuilderPluginVariants($container);
         $container = $this->addSortConfigTransferBuilderPlugins($container);
         $container = $this->addCatalogSearchCountQueryExpanderPlugins($container);
         $container = $this->addProductConcreteCatalogSearchResultFormatterPlugins($container);
+        $container = $this->addProductConcreteCatalogSearchResultFormatterPluginVariants($container);
         $container = $this->addProductConcreteCatalogSearchQueryPlugin($container);
+        $container = $this->addProductConcreteCatalogSearchQueryPluginVariants($container);
         $container = $this->addProductConcreteCatalogSearchQueryExpanderPlugins($container);
+        $container = $this->addProductConcreteCatalogSearchQueryExpanderPluginVariants($container);
+        $container = $this->addCatalogSearchCountQueryExpanderPluginVariants($container);
         $container = $this->addPaginationConfigBuilderPlugin($container);
+        $container = $this->addSearchResultCountPlugins($container);
 
         return $container;
     }
@@ -209,6 +257,68 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCatalogSearchCountQueryExpanderPluginVariants(Container $container)
+    {
+        $container->set(static::CATALOG_SEARCH_COUNT_QUERY_EXPANDER_PLUGIN_VARIANTS, function () {
+            return $this->createCatalogSearchCountQueryExpanderPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createCatalogSearchCountQueryExpanderPluginVariants()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSuggestionQueryExpanderPluginVariants(Container $container): Container
+    {
+        $container->set(static::SUGGESTION_QUERY_EXPANDER_PLUGIN_VARIANTS, function () {
+            return $this->createSuggestionQueryExpanderPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SUGGESTION_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createSuggestionQueryExpanderPluginVariants(): array
+    {
+        return [];
     }
 
     /**
@@ -464,6 +574,37 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSuggestionResultFormatterPluginVariants(Container $container): Container
+    {
+        $container->set(static::SUGGESTION_RESULT_FORMATTER_PLUGIN_VARIANTS, function () {
+            return $this->createSuggestionResultFormatterPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>>
+     */
+    protected function createSuggestionResultFormatterPluginVariants(): array
+    {
+        return [];
+    }
+
+    /**
      * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
@@ -471,6 +612,30 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     protected function createSuggestionQueryPlugin()
     {
         return new SuggestionQueryPlugin();
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSuggestionQueryPluginVariants(Container $container): Container
+    {
+        $container->set(static::CATALOG_SUGGESTION_QUERY_PLUGIN_VARIANTS, function () {
+            return $this->createSuggestionQueryPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryInterface>
+     */
+    protected function createSuggestionQueryPluginVariants(): array
+    {
+        return [];
     }
 
     /**
@@ -541,6 +706,30 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchQueryPluginVariants(Container $container): Container
+    {
+        $container->set(static::PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS, function () {
+            return $this->createProductConcreteCatalogSearchQueryPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryInterface>
+     */
+    protected function createProductConcreteCatalogSearchQueryPluginVariants(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function getProductConcreteCatalogSearchResultFormatterPlugins(): array
@@ -549,9 +738,95 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchResultFormatterPluginVariants(Container $container): Container
+    {
+        $container->set(static::PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS, function () {
+            return $this->createProductConcreteCatalogSearchResultFormatterPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>>
+     */
+    protected function createProductConcreteCatalogSearchResultFormatterPluginVariants(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function getProductConcreteCatalogSearchQueryExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteCatalogSearchQueryExpanderPluginVariants(Container $container): Container
+    {
+        $container->set(static::PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS, function () {
+            return $this->createProductConcreteCatalogSearchQueryExpanderPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_PRODUCT_CONCRETE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createProductConcreteCatalogSearchQueryExpanderPluginVariants(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSearchResultCountPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SEARCH_RESULT_COUNT, function () {
+            return $this->getSearchResultCountPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @api
+     *
+     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchResultCountPluginInterface>
+     */
+    protected function getSearchResultCountPlugins(): array
     {
         return [];
     }

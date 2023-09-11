@@ -40,6 +40,13 @@
         <property name="docCount" type="int"/>
     </transfer>
 
+    <transfer name="CategorySearchResult" strict="true">
+        <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
     <transfer name="UrlStorage">
         <property name="fkResourceCategorynode" type="int"/>
     </transfer>
@@ -145,6 +152,10 @@
 
     <transfer name="SearchHttpResponse">
         <property name="facets" type="array" singular="facet"/>
+    </transfer>
+
+    <transfer name="SuggestionsSearchHttpResponse" strict="true">
+        <property name="categories" type="array" singular="category"/>
     </transfer>
 
 </transfers>

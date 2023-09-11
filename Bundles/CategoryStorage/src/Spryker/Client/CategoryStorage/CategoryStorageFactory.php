@@ -13,6 +13,8 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStoreClien
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Client\CategoryStorage\Expander\ProductCategoryStorageExpander;
 use Spryker\Client\CategoryStorage\Expander\ProductCategoryStorageExpanderInterface;
+use Spryker\Client\CategoryStorage\Formatter\CategorySuggestionsSearchHttpFormatter;
+use Spryker\Client\CategoryStorage\Formatter\CategorySuggestionsSearchHttpFormatterInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeSearchHttpFormatter;
@@ -133,6 +135,19 @@ class CategoryStorageFactory extends AbstractFactory
     public function createCategoryTreeSearchHttpFormatter(): CategoryTreeSearchHttpFormatterInterface
     {
         return new CategoryTreeSearchHttpFormatter(
+            $this->createCategoryTreeStorageReader(),
+            $this->createCategoryNodeStorageMapper(),
+            $this->getLocaleClient(),
+            $this->getStoreClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Formatter\CategorySuggestionsSearchHttpFormatterInterface
+     */
+    public function createCategorySuggestionsSearchHttpFormatter(): CategorySuggestionsSearchHttpFormatterInterface
+    {
+        return new CategorySuggestionsSearchHttpFormatter(
             $this->createCategoryTreeStorageReader(),
             $this->createCategoryNodeStorageMapper(),
             $this->getLocaleClient(),

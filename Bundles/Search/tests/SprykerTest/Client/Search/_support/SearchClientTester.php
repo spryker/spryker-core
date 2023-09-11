@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Client\Search\SearchClientInterface getClient()
  * @method \Spryker\Client\Search\SearchFactory getFactory()
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\Search\PHPMD)
  */
 class SearchClientTester extends Actor
 {

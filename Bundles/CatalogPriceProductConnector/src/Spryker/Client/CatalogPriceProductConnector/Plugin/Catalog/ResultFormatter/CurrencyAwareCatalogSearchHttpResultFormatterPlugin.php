@@ -9,16 +9,23 @@ namespace Spryker\Client\CatalogPriceProductConnector\Plugin\Catalog\ResultForma
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\SearchHttpResponseTransfer;
+use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductClientInterface;
 use Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductStorageClientInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\GroupedResultFormatterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
  */
-class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface
+class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface, GroupedResultFormatterPluginInterface
 {
+    /**
+     * @var string
+     */
+    protected const GROUP_NAME = 'suggestionByType';
+
     /**
      * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface
      */
@@ -43,7 +50,7 @@ class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer $searchResult
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer|\Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $searchResult
      * @param array<string, mixed> $requestParameters
      *
      * @return array<int, mixed>
@@ -58,6 +65,26 @@ class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->productResultFormatterPlugin->getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroupName(): string
+    {
+        return static::GROUP_NAME;
+    }
+
+    /**
      * @return bool
      */
     protected function isPriceProductDimensionEnabled(): bool
@@ -68,11 +95,11 @@ class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin
     /**
      * Fallback method to work with PriceProduct module without price dimensions support.
      *
-     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer $searchResult
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer|\Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $searchResult
      *
      * @return array<int, mixed>
      */
-    protected function formatSearchResultWithoutPriceDimensions(SearchHttpResponseTransfer $searchResult): array
+    protected function formatSearchResultWithoutPriceDimensions(SearchHttpResponseTransfer|SuggestionsSearchHttpResponseTransfer $searchResult): array
     {
         $priceProductClient = $this->getFactory()->getPriceProductClient();
 
@@ -91,11 +118,11 @@ class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer $searchResult
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer|\Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $searchResult
      *
      * @return array<int, mixed>
      */
-    protected function formatSearchResultWithPriceDimensions(SearchHttpResponseTransfer $searchResult): array
+    protected function formatSearchResultWithPriceDimensions(SearchHttpResponseTransfer|SuggestionsSearchHttpResponseTransfer $searchResult): array
     {
         $products = $this->productResultFormatterPlugin->formatResult($searchResult);
 
@@ -165,13 +192,5 @@ class CurrencyAwareCatalogSearchHttpResultFormatterPlugin extends AbstractPlugin
         }
 
         return $priceMap;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->productResultFormatterPlugin->getName();
     }
 }

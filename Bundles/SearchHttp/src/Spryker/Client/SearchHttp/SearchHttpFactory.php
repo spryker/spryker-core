@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp;
@@ -16,6 +16,8 @@ use Spryker\Client\SearchHttp\Api\Builder\SearchHeaderBuilder;
 use Spryker\Client\SearchHttp\Api\Builder\SearchHeaderBuilderInterface;
 use Spryker\Client\SearchHttp\Api\Builder\SearchQueryBuilder;
 use Spryker\Client\SearchHttp\Api\Builder\SearchQueryBuilderInterface;
+use Spryker\Client\SearchHttp\Api\Decoder\SearchResponseDecoder;
+use Spryker\Client\SearchHttp\Api\Decoder\SearchResponseDecoderInterface;
 use Spryker\Client\SearchHttp\Api\Formatter\SearchResponseFormatter;
 use Spryker\Client\SearchHttp\Api\Formatter\SearchResponseFormatterInterface;
 use Spryker\Client\SearchHttp\Api\Mapper\SearchHttpResponseTransferMapper;
@@ -39,12 +41,17 @@ use Spryker\Client\SearchHttp\Config\SearchConfigBuilderInterface;
 use Spryker\Client\SearchHttp\Config\SearchConfigInterface;
 use Spryker\Client\SearchHttp\Config\SortConfig;
 use Spryker\Client\SearchHttp\Config\SortConfigInterface;
+use Spryker\Client\SearchHttp\CountProvider\SearchResultCountProvider;
+use Spryker\Client\SearchHttp\CountProvider\SearchResultCountProviderInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCategoryStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToLocaleClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
+use Spryker\Client\SearchHttp\Formatter\ProductConcreteCatalogSearchHttpResultFormatter;
+use Spryker\Client\SearchHttp\Formatter\ProductConcreteCatalogSearchHttpResultFormatterInterface;
 use Spryker\Client\SearchHttp\Mapper\ConfigMapper;
 use Spryker\Client\SearchHttp\Mapper\ConfigMapperInterface;
 use Spryker\Client\SearchHttp\Mapper\ResultProductMapper;
@@ -69,6 +76,22 @@ class SearchHttpFactory extends AbstractFactory
             $this->createConfigKeyBuilder(),
             $this->createConfigMapper(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\Formatter\ProductConcreteCatalogSearchHttpResultFormatterInterface
+     */
+    public function createProductConcreteCatalogSearchHttpResultFormatter(): ProductConcreteCatalogSearchHttpResultFormatterInterface
+    {
+        return new ProductConcreteCatalogSearchHttpResultFormatter();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\CountProvider\SearchResultCountProviderInterface
+     */
+    public function createSearchResultCountProvider(): SearchResultCountProviderInterface
+    {
+        return new SearchResultCountProvider();
     }
 
     /**
@@ -262,6 +285,7 @@ class SearchHttpFactory extends AbstractFactory
         return new SearchHttpApiClient(
             $this->createConfigReader(),
             $this->createRequestSender(),
+            $this->createSearchResponseDecoder(),
             $this->createHttpResponseFormatter(),
         );
     }
@@ -279,11 +303,22 @@ class SearchHttpFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\SearchHttp\Api\Decoder\SearchResponseDecoderInterface
+     */
+    public function createSearchResponseDecoder(): SearchResponseDecoderInterface
+    {
+        return new SearchResponseDecoder(
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
      * @return \Spryker\Client\SearchHttp\Api\Formatter\SearchResponseFormatterInterface
      */
     public function createHttpResponseFormatter(): SearchResponseFormatterInterface
     {
         return new SearchResponseFormatter(
+            $this->getConfig(),
             $this->createSearchHttpResponseTransferMapper(),
         );
     }
@@ -337,5 +372,13 @@ class SearchHttpFactory extends AbstractFactory
     public function createFacetConfigBuilder(): FacetConfigBuilderInterface
     {
         return new FacetConfigBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): SearchHttpToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(SearchHttpDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

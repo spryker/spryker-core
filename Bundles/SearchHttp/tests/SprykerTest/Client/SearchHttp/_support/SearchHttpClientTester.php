@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 declare(strict_types=1);
@@ -21,6 +21,7 @@ use Generated\Shared\DataBuilder\SearchQueryPaginationBuilder;
 use Generated\Shared\DataBuilder\SearchQueryRangeFacetFilterBuilder;
 use Generated\Shared\DataBuilder\SearchQuerySortingBuilder;
 use Generated\Shared\DataBuilder\SearchQueryValueFacetFilterBuilder;
+use Generated\Shared\DataBuilder\SuggestionsSearchHttpResponseBuilder;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -28,6 +29,7 @@ use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -44,6 +46,7 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 use Spryker\Client\SearchHttp\Mapper\ResultProductMapper;
 use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
 use Spryker\Client\SearchHttp\SearchHttpDependencyProvider;
@@ -66,6 +69,7 @@ use Spryker\Shared\SearchHttp\SearchHttpConfig;
  * @SuppressWarnings(\SprykerTest\Client\SearchHttp\PHPMD)
  * @method \Spryker\Client\SearchHttp\SearchHttpFactory getFactory()
  * @method \Spryker\Client\SearchHttp\SearchHttpConfig getModuleConfig()
+ * @method \Spryker\Client\SearchHttp\SearchHttpClientInterface getClient()
  */
 class SearchHttpClientTester extends Actor
 {
@@ -164,6 +168,20 @@ class SearchHttpClientTester extends Actor
 
         $this->mockFactoryMethod('getStorageClient', $storageClient);
         $this->setDependency(SearchHttpDependencyProvider::CLIENT_STORE, $storageClient);
+    }
+
+    /**
+     * @return void
+     */
+    public function mockUtilEncodingServiceDependency(): void
+    {
+        $utilEncodingService = Stub::makeEmpty(SearchHttpToUtilEncodingServiceInterface::class);
+        $utilEncodingService->method('decodeJson')->willReturnCallback(function ($jsonValue) {
+            return json_decode($jsonValue, true);
+        });
+
+        $this->mockFactoryMethod('getUtilEncodingService', $utilEncodingService);
+        $this->setDependency(SearchHttpDependencyProvider::SERVICE_UTIL_ENCODING, $utilEncodingService);
     }
 
     /**
@@ -345,7 +363,7 @@ class SearchHttpClientTester extends Actor
                                 ],
                             ],
                         ],
-                        'labels' => ['product-label-1', 'product-label-2'],
+                        'label' => ['product-label-1', 'product-label-2'],
                         'merchant_name' => ['product-merchant-1', 'product-merchant-2'],
                         'merchant_reference' => ['merchant-reference-1', 'merchant-reference-2'],
                         'keywords' => 'keyword-1,keyword-2',
@@ -368,6 +386,61 @@ class SearchHttpClientTester extends Actor
                     ],
                 ],
             );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer
+     */
+    public function createSuggestionsSearchHttpResponse(): SuggestionsSearchHttpResponseTransfer
+    {
+        return (new SuggestionsSearchHttpResponseBuilder())
+            ->build()
+            ->setMatches([
+                'name' => ['suggestion-product-sku'],
+                'abstract_name' => ['suggestion-product-sku'],
+                'category' => ['category-1'],
+            ])
+            ->setMatchedItems(
+                [
+                    [
+                        'sku' => 'suggestion-product-sku',
+                        'product_abstract_sku' => 'suggestion-product-abstract-sku',
+                        'name' => 'suggestion-product-name',
+                        'abstract_name' => 'suggestion-product-abstract-name',
+                        'description' => 'suggestion-product-description',
+                        'images' => [
+                            'default' => [
+                                0 => [
+                                    'small' => 'product-image-1',
+                                    'large' => 'product-image-2',
+                                ],
+                            ],
+                        ],
+                        'label' => ['product-label-1', 'product-label-2'],
+                        'merchant_name' => ['product-merchant-1', 'product-merchant-2'],
+                        'merchant_reference' => ['merchant-reference-1', 'merchant-reference-2'],
+                        'keywords' => 'keyword-1,keyword-2',
+                        'url' => '/product-url',
+                        'rating' => 3,
+                        'categories' => ['category-1', 'category-2'],
+                        'attributes' => [
+                            [
+                                'name' => 'attribute-name-1',
+                                'value' => 'attribute-value-1',
+                            ],
+                        ],
+                        'prices' => [
+                            [
+                                'currency' => 'EUR',
+                                'price_gross' => 10,
+                                'price_net' => 9,
+                            ],
+                        ],
+                    ],
+                ],
+            )
+            ->setCompletions(['suggestion-product-sku'])
+            ->setCategories(['category-1']);
     }
 
     /**

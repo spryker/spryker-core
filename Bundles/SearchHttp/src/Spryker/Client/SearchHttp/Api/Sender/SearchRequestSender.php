@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp\Api\Sender;
@@ -62,6 +62,28 @@ class SearchRequestSender implements RequestSenderInterface
         $httpRequest = new Request(
             SearchHttpConfig::SEARCH_HTTP_METHOD,
             $searchHttpConfigTransfer->getUrlOrFail(),
+            $this->headerBuilder->build($searchQuery),
+        );
+
+        return $this->httpClient->send(
+            $httpRequest,
+            [
+                'query' => $this->queryBuilder->build($searchQuery),
+            ],
+        );
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): ResponseInterface
+    {
+        $httpRequest = new Request(
+            SearchHttpConfig::SEARCH_HTTP_METHOD,
+            $searchHttpConfigTransfer->getSuggestionUrlOrFail(),
             $this->headerBuilder->build($searchQuery),
         );
 

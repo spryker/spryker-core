@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Client\SearchHttp\Api;
@@ -51,11 +51,13 @@ class SearchHttpApiClientTest extends Unit
         $searchQuery = $this->tester->extendWithTestData($searchQuery);
         $this->tester->mockStoreClientDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
+        $this->tester->mockUtilEncodingServiceDependency();
 
         $httpRequest = new Request(
             SearchHttpConfig::SEARCH_HTTP_METHOD,
             'url',
             static::REQUEST_HEADERS + [
+                'User-Agent' => sprintf('Spryker/%s', APPLICATION),
                 'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
             ],
         );
@@ -69,7 +71,7 @@ class SearchHttpApiClientTest extends Unit
         $response = $searchApiClient->search($searchQuery);
 
         // Assert
-        $this->assertEquals($responseData[0], $response);
+        $this->assertEquals($responseData, $response);
     }
 
     /**
@@ -82,6 +84,7 @@ class SearchHttpApiClientTest extends Unit
         $searchQuery = $this->tester->extendWithTestData($searchQuery);
         $this->tester->mockStoreClientDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
+        $this->tester->mockUtilEncodingServiceDependency();
 
         $httpRequest = new Request(
             SearchHttpConfig::SEARCH_HTTP_METHOD,

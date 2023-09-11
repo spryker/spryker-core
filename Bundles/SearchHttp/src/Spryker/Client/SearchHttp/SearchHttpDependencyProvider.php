@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp;
@@ -18,6 +18,8 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClient
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientBridge;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientBridge;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceBridge;
+use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 
 /**
  * @method \Spryker\Client\SearchHttp\SearchHttpConfig getConfig()
@@ -75,6 +77,11 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -91,6 +98,7 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductStorageClient($container);
         $container = $this->addFacetConfigTransferBuilders($container);
         $container = $this->addSortConfigTransferBuilders($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -254,6 +262,22 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS, function (): array {
             return $this->getSortConfigTransferBuilders();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): SearchHttpToUtilEncodingServiceInterface {
+            return new SearchHttpToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
         });
 
         return $container;

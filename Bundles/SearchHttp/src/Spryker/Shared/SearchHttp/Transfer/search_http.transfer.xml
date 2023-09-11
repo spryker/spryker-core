@@ -8,6 +8,7 @@
     <transfer name="SearchHttpConfig">
         <property name="applicationId" type="string"/>
         <property name="url" type="string"/>
+        <property name="suggestionUrl" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SearchHttpConfigCriteria">
@@ -18,6 +19,7 @@
     <transfer name="SearchEndpointAvailable">
         <property name="messageAttributes" type="MessageAttributes"/>
         <property name="url" type="string"/>
+        <property name="suggestionUrl" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SearchEndpointRemoved" strict="true">
@@ -76,6 +78,13 @@
         <property name="items" type="array" singular="item"/>
         <property name="pagination" type="SearchHttpResponsePagination"/>
         <property name="facets" type="array" singular="facet"/>
+    </transfer>
+
+    <transfer name="SuggestionsSearchHttpResponse" strict="true">
+        <property name="completions" type="string[]" singular="completion"/>
+        <property name="matches" type="array" associative="true" singular="match"/>
+        <property name="matchedItems" type="array" singular="matchedItem"/>
+        <property name="categories" type="array" singular="category"/>
     </transfer>
 
     <transfer name="SearchHttpResponsePagination">
@@ -181,6 +190,10 @@
     </transfer>
 
     <transfer name="SearchDocument">
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="abstractSku" type="int"/>
     </transfer>
 
 </transfers>

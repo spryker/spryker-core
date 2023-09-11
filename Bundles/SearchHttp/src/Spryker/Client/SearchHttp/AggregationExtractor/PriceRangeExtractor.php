@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\SearchHttp\AggregationExtractor;
@@ -69,10 +69,10 @@ class PriceRangeExtractor extends RangeExtractor
         );
 
         $rangeResultTransfer
-            ->setMin($aggregations[static::KEY_FROM])
-            ->setMax($aggregations[static::KEY_TO])
-            ->setActiveMin($activeRange[static::KEY_FROM])
-            ->setActiveMax($activeRange[static::KEY_TO]);
+            ->setMin((int)$aggregations[static::KEY_FROM])
+            ->setMax((int)$aggregations[static::KEY_TO])
+            ->setActiveMin((int)$activeRange[static::KEY_FROM])
+            ->setActiveMax((int)$activeRange[static::KEY_TO]);
 
         return $rangeResultTransfer;
     }

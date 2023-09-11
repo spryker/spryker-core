@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer;
 use Generated\Shared\Transfer\SearchHttpResponseTransfer;
+use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 
 interface CategoryStorageClientInterface
 {
@@ -105,4 +106,19 @@ interface CategoryStorageClientInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     public function formatSearchHttpCategoryTree(SearchHttpResponseTransfer $searchResult): ArrayObject;
+
+    /**
+     * Specification:
+     * - Returns categories.
+     * - Retrieves category tree from storage by locale name and store name.
+     * - Recursively filters each category node in the category tree with category name taken from the categories in $suggestionsSearchHttpResponseTransfer.
+     * - Compatible only with SuggestionsSearchHttpResponseTransfer and used for SearchHttp module search results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $suggestionsSearchHttpResponseTransfer
+     *
+     * @return array<int, mixed>
+     */
+    public function formatSuggestionsSearchHttpCategory(SuggestionsSearchHttpResponseTransfer $suggestionsSearchHttpResponseTransfer): array;
 }

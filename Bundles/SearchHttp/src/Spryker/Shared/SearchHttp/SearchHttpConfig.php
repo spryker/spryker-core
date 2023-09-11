@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\SearchHttp;
@@ -23,6 +23,16 @@ class SearchHttpConfig extends AbstractSharedConfig
      * @var string
      */
     public const TYPE_SEARCH_HTTP = 'TYPE_SEARCH_HTTP';
+
+    /**
+     * @var string
+     */
+    public const TYPE_SUGGESTION_SEARCH_HTTP = 'TYPE_SUGGESTION_SEARCH_HTTP';
+
+    /**
+     * @var string
+     */
+    public const TYPE_PRODUCT_CONCRETE_SEARCH_HTTP = 'TYPE_PRODUCT_CONCRETE_SEARCH_HTTP';
 
     /**
      * @var string

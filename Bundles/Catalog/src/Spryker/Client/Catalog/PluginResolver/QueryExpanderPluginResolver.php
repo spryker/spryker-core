@@ -23,13 +23,9 @@ class QueryExpanderPluginResolver extends AbstractDependentPluginResolver implem
         array $queryExpanderPluginVariants,
         array $defaultQueryExpanderPlugins
     ): array {
-        /** @phpstan-var array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $applicableQueryExpanderPlugins */
-        $applicableQueryExpanderPlugins = $this->resolveByType($query, $queryExpanderPluginVariants);
+        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $queryExpanderPlugins */
+        $queryExpanderPlugins = $this->resolveByType($query, $queryExpanderPluginVariants, $defaultQueryExpanderPlugins);
 
-        if ($applicableQueryExpanderPlugins) {
-            return $applicableQueryExpanderPlugins;
-        }
-
-        return $defaultQueryExpanderPlugins;
+        return $queryExpanderPlugins;
     }
 }

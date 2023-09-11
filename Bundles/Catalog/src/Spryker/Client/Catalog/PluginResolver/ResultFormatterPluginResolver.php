@@ -23,13 +23,9 @@ class ResultFormatterPluginResolver extends AbstractDependentPluginResolver impl
         array $resultFormatterPluginVariants,
         array $defaultResultFormatterPlugins
     ): array {
-        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $applicableResultFormatterPlugins */
-        $applicableResultFormatterPlugins = $this->resolveByType($query, $resultFormatterPluginVariants);
+        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $queryExpanderPlugins */
+        $queryExpanderPlugins = $this->resolveByType($query, $resultFormatterPluginVariants, $defaultResultFormatterPlugins);
 
-        if ($applicableResultFormatterPlugins) {
-            return $applicableResultFormatterPlugins;
-        }
-
-        return $defaultResultFormatterPlugins;
+        return $queryExpanderPlugins;
     }
 }

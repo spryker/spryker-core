@@ -32,8 +32,10 @@ class SearchDelegator implements SearchDelegatorInterface
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface> $searchAdapterPlugins
      * @param \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface $searchContextExpander
      */
-    public function __construct(array $searchAdapterPlugins, SearchContextExpanderInterface $searchContextExpander)
-    {
+    public function __construct(
+        array $searchAdapterPlugins,
+        SearchContextExpanderInterface $searchContextExpander
+    ) {
         $this->searchAdapterPlugins = $this->getSearchAdapterPluginsIndexedByName($searchAdapterPlugins);
         $this->searchContextExpander = $searchContextExpander;
     }
@@ -58,7 +60,7 @@ class SearchDelegator implements SearchDelegatorInterface
     /**
      * @deprecated Will be replaced with inline usage when SearchContextAwareQueryInterface is merged into QueryInterface.
      *
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\CatalogExtension\Dependency\Plugin\SearchTypeIdentifierInterface $searchQuery
      *
      * @throws \Exception
      *

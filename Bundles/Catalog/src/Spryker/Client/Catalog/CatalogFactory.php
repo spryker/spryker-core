@@ -14,8 +14,6 @@ use Spryker\Client\Catalog\PluginResolver\QueryPluginResolver;
 use Spryker\Client\Catalog\PluginResolver\QueryPluginResolverInterface;
 use Spryker\Client\Catalog\PluginResolver\ResultFormatterPluginResolver;
 use Spryker\Client\Catalog\PluginResolver\ResultFormatterPluginResolverInterface;
-use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReader;
-use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
@@ -48,9 +46,25 @@ class CatalogFactory extends AbstractFactory
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
+    public function createProductConcreteCatalogSearchQuery($searchString): QueryInterface
+    {
+        $searchQuery = $this->getProductConcreteCatalogSearchQueryPlugin();
+
+        if ($searchQuery instanceof SearchStringSetterInterface) {
+            $searchQuery->setSearchString($searchString);
+        }
+
+        return $searchQuery;
+    }
+
+    /**
+     * @param string $searchString
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
     public function createSuggestSearchQuery($searchString)
     {
-        $searchQuery = $this->getSuggestionQueryPlugin();
+        $searchQuery = $this->getSuggestionSearchQueryPlugin();
 
         if ($searchQuery instanceof SearchStringSetterInterface) {
             $searchQuery->setSearchString($searchString);
@@ -65,20 +79,6 @@ class CatalogFactory extends AbstractFactory
     public function createCatalogViewModePersistence()
     {
         return new CatalogViewModePersistence();
-    }
-
-    /**
-     * @return \Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface
-     */
-    public function createProductConcreteReader(): ProductConcreteReaderInterface
-    {
-        return new ProductConcreteReader(
-            $this->getConfig(),
-            $this->getSearchClient(),
-            $this->getProductConcretePageSearchQueryPlugin(),
-            $this->getProductConcretePageSearchQueryExpanderPlugins(),
-            $this->getProductConcretePageSearchResultFormatterPlugins(),
-        );
     }
 
     /**
@@ -121,6 +121,30 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     */
+    public function getSuggestionSearchQueryPlugin(): QueryInterface
+    {
+        return $this->createQueryPluginResolver()
+            ->resolve(
+                $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SUGGESTION_QUERY_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_PLUGIN),
+            );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     */
+    public function getProductConcreteCatalogSearchQueryPlugin()
+    {
+        return $this->createQueryPluginResolver()
+            ->resolve(
+                $this->getProvidedDependency(CatalogDependencyProvider::PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY),
+            );
+    }
+
+    /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
      *
      * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
@@ -132,6 +156,51 @@ class CatalogFactory extends AbstractFactory
                 $queryPlugin,
                 $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS),
                 $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS),
+            );
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
+     *
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     */
+    public function getCatalogSearchCountQueryExpanderPlugins(ExtensionQueryInterface $queryPlugin): array
+    {
+        return $this->createQueryExpanderPluginResolver()
+            ->resolve(
+                $queryPlugin,
+                $this->getProvidedDependency(CatalogDependencyProvider::CATALOG_SEARCH_COUNT_QUERY_EXPANDER_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER),
+            );
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
+     *
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     */
+    public function getSuggestionQueryExpanderPlugins(ExtensionQueryInterface $queryPlugin): array
+    {
+        return $this->createQueryExpanderPluginResolver()
+            ->resolve(
+                $queryPlugin,
+                $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_EXPANDER_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_EXPANDER_PLUGINS),
+            );
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
+     *
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
+     */
+    public function getProductConcreteCatalogSearchQueryExpanderPlugins(ExtensionQueryInterface $queryPlugin): array
+    {
+        return $this->createQueryExpanderPluginResolver()
+            ->resolve(
+                $queryPlugin,
+                $this->getProvidedDependency(CatalogDependencyProvider::PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER),
             );
     }
 
@@ -151,27 +220,41 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
+     *
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     */
+    public function getSuggestionResultFormatters(ExtensionQueryInterface $queryPlugin): array
+    {
+        return $this->createResultFormatterPluginResolver()
+            ->resolve(
+                $queryPlugin,
+                $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS),
+            );
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryPlugin
+     *
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     */
+    public function getProductConcreteCatalogSearchResultFormatters(ExtensionQueryInterface $queryPlugin): array
+    {
+        return $this->createResultFormatterPluginResolver()
+            ->resolve(
+                $queryPlugin,
+                $this->getProvidedDependency(CatalogDependencyProvider::PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS),
+                $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER),
+            );
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getSuggestionQueryPlugin()
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_PLUGIN);
-    }
-
-    /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
-     */
-    public function getSuggestionQueryExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_QUERY_EXPANDER_PLUGINS);
-    }
-
-    /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
-     */
-    public function getSuggestionResultFormatters()
-    {
-        return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS);
     }
 
     /**
@@ -236,6 +319,14 @@ class CatalogFactory extends AbstractFactory
     public function getProductConcretePageSearchQueryExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchResultCountPluginInterface>
+     */
+    public function getSearchResultCountPlugins(): array
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_SEARCH_RESULT_COUNT);
     }
 
     /**
