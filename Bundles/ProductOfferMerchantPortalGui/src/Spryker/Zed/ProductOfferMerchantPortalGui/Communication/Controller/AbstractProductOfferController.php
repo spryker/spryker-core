@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferFormViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -162,5 +164,22 @@ class AbstractProductOfferController extends AbstractController
         }
 
         return array_merge($responseData, $zedUiFormResponseBuilder->createResponse()->toArray());
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $formView
+     * @param \Generated\Shared\Transfer\ProductOfferFormViewCollectionTransfer $productOfferFormViewCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferFormViewCollectionTransfer
+     */
+    protected function executeProductOfferFormViewExpanderPlugins(
+        FormView $formView,
+        ProductOfferFormViewCollectionTransfer $productOfferFormViewCollectionTransfer
+    ): ProductOfferFormViewCollectionTransfer {
+        foreach ($this->getFactory()->getProductOfferFormViewExpanderPlugins() as $productOfferFormViewExpanderPlugin) {
+            $productOfferFormViewCollectionTransfer = $productOfferFormViewExpanderPlugin->expand($formView, $productOfferFormViewCollectionTransfer);
+        }
+
+        return $productOfferFormViewCollectionTransfer;
     }
 }

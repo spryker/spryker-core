@@ -40,6 +40,8 @@ interface ServicePointFacadeInterface
      * - Uses `ServicePointCriteriaTransfer.sort.isAscending` to set ascending/descending order.
      * - Uses `ServicePointCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
      * - Uses `ServicePointCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Uses `ServicePointCriteriaTransfer.servicePointSearchConditions.key` to search by service point key.
+     * - Uses `ServicePointCriteriaTransfer.servicePointSearchConditions.name` to search by service point name.
      * - Returns `ServicePointCollectionTransfer` filled with found service points.
      *
      * @api

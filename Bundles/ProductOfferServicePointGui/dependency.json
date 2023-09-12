@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/gui": "Provides GUI templates.",
+        "spryker/product-offer-service-point": "Defined for forward-compatibility reasons.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

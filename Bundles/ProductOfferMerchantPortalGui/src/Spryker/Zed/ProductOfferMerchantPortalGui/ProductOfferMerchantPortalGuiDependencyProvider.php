@@ -175,6 +175,16 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PLUGINS_PRODUCT_TABLE_EXPANDER = 'PLUGINS_PRODUCT_TABLE_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_OFFER_FORM_EXPANDER = 'PLUGINS_PRODUCT_OFFER_FORM_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_OFFER_FORM_VIEW_EXPANDER = 'PLUGINS_PRODUCT_OFFER_FORM_VIEW_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -203,6 +213,8 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceProductVolumeService($container);
         $container = $this->addProductTableExpanderPlugins($container);
+        $container = $this->addProductOfferFormExpanderPlugins($container);
+        $container = $this->addProductOfferFormViewExpanderPlugins($container);
 
         return $container;
     }
@@ -619,9 +631,53 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OFFER_FORM_EXPANDER, function () {
+            return $this->getProductOfferFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFormViewExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OFFER_FORM_VIEW_EXPANDER, function () {
+            return $this->getProductOfferFormViewExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
      */
     protected function getProductTableExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductOfferFormExpanderPluginInterface>
+     */
+    protected function getProductOfferFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductOfferFormViewExpanderPluginInterface>
+     */
+    protected function getProductOfferFormViewExpanderPlugins(): array
     {
         return [];
     }

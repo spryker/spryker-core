@@ -57,6 +57,7 @@
 
     <transfer name="ServicePointCriteria" strict="true">
         <property name="servicePointConditions" type="ServicePointConditions"/>
+        <property name="servicePointSearchConditions" type="ServicePointSearchConditions"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -69,6 +70,11 @@
         <property name="withAddressRelation" type="bool"/>
         <property name="withServiceRelations" type="bool"/>
         <property name="isUuidsConditionInversed" type="bool"/>
+    </transfer>
+
+    <transfer name="ServicePointSearchConditions" strict="true">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ServicePointAddressCriteria" strict="true">
@@ -221,6 +227,19 @@
         <property name="names" type="string[]" singular="name"/>
         <property name="keys" type="string[]" singular="key"/>
         <property name="isUuidsConditionInversed" type="bool"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
 </transfers>

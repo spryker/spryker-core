@@ -1,0 +1,12 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block services %}
+    <web-spy-card
+        cloak
+        spy-title="{{ form.children.services.vars.label | trans }}"
+        class="mp-edit-offer__card"
+    >
+        {{ form_row(form.children.idServicePoint) }}
+        {{ form_row(form.children.services, { row_attr: { 'no-spaces': 'true' } }) }}
+    </web-spy-card>
+{% endblock %}

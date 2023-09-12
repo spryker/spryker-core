@@ -171,6 +171,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
             }
 
             $serviceTransfer->setServicePoint($serviceTransfersIndexedByServiceUuid[$serviceTransfer->getUuidOrFail()]->getServicePointOrFail());
+            $serviceTransfer->setIdService($serviceTransfersIndexedByServiceUuid[$serviceTransfer->getUuidOrFail()]->getIdServiceOrFail());
         }
 
         return $productOfferTransfer;

@@ -25,7 +25,7 @@
         "spryker/product": "^6.0.0",
         "spryker/product-image": "^3.3.0",
         "spryker/product-offer": "^1.0.0",
-        "spryker/product-offer-merchant-portal-gui-extension": "^1.0.0",
+        "spryker/product-offer-merchant-portal-gui-extension": "^1.1.0",
         "spryker/product-offer-stock": "^1.0.0",
         "spryker/product-offer-validity": "^1.0.0",
         "spryker/product-validity": "^1.0.0",

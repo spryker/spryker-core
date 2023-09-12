@@ -451,7 +451,7 @@ class GetServiceCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testShouldReturnServiceCollectionWithServicePointUuidAndServiceTypeRelation(): void
+    public function testShouldReturnServiceCollectionWithServicePointAndServiceTypeRelations(): void
     {
         // Arrange
         $serviceTransfer = $this->serviceTransfers[0];
@@ -471,10 +471,7 @@ class GetServiceCollectionTest extends Unit
 
         $this->assertSame($serviceTransfer->getServiceType()->toArray(), $resultServiceTransfer->getServiceType()->toArray());
 
-        $this->assertSame($serviceTransfer->getServicePoint()->getUuid(), $resultServiceTransfer->getServicePoint()->getUuid());
-        $this->assertNull($resultServiceTransfer->getServicePoint()->getIdServicePoint());
-        $this->assertNull($resultServiceTransfer->getServicePoint()->getKey());
-        $this->assertNull($resultServiceTransfer->getServicePoint()->getName());
+        $this->assertSame($serviceTransfer->getServicePoint()->toArray(), $resultServiceTransfer->getServicePoint()->toArray());
     }
 
     /**

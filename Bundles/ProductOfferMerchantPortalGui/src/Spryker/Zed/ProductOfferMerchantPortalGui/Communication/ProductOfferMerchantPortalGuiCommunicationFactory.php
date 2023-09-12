@@ -740,4 +740,20 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_TABLE_EXPANDER);
     }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductOfferFormExpanderPluginInterface>
+     */
+    public function getProductOfferFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_FORM_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductOfferFormViewExpanderPluginInterface>
+     */
+    public function getProductOfferFormViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_FORM_VIEW_EXPANDER);
+    }
 }

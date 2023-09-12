@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ServicePointBuilder;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointSearchConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
 use Generated\Shared\Transfer\SortTransfer;
@@ -527,6 +528,98 @@ class GetServicePointCollectionTest extends Unit
         $resultSecondServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->offsetGet(1);
         $this->assertSame($secondServicePointTransfer->getIdServicePoint(), $resultSecondServicePointTransfer->getIdServicePoint());
         $this->assertCount(0, $resultSecondServicePointTransfer->getServices());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchesServicePointsByKey(): void
+    {
+        // Arrange
+        $this->tester->haveServicePoint([ServicePointTransfer::KEY => 'abc']);
+        $this->tester->haveServicePoint([ServicePointTransfer::KEY => 'bcd']);
+        $this->tester->haveServicePoint([ServicePointTransfer::KEY => 'cde']);
+
+        $servicePointSearchConditionsTransfer = (new ServicePointSearchConditionsTransfer())->setKey('bc');
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointSearchConditions($servicePointSearchConditionsTransfer);
+
+        // Act
+        $servicePointTransfers = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
+
+        // Assert
+        $this->assertCount(2, $servicePointTransfers);
+        $expectedServicePointKeys = ['abc', 'bcd'];
+        foreach ($servicePointTransfers as $servicePointTransfer) {
+            $this->assertContains($servicePointTransfer->getKey(), $expectedServicePointKeys);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchesServicePointsByName(): void
+    {
+        // Arrange
+        $this->tester->haveServicePoint([ServicePointTransfer::NAME => 'abc']);
+        $this->tester->haveServicePoint([ServicePointTransfer::NAME => 'bcd']);
+        $this->tester->haveServicePoint([ServicePointTransfer::NAME => 'cde']);
+
+        $servicePointSearchConditionsTransfer = (new ServicePointSearchConditionsTransfer())->setName('bc');
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointSearchConditions($servicePointSearchConditionsTransfer);
+
+        // Act
+        $servicePointTransfers = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
+
+        // Assert
+        $this->assertCount(2, $servicePointTransfers);
+        $expectedServicePointNames = ['abc', 'bcd'];
+        foreach ($servicePointTransfers as $servicePointTransfer) {
+            $this->assertContains($servicePointTransfer->getName(), $expectedServicePointNames);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchesServicePointsByKeyAndName(): void
+    {
+        // Arrange
+        $this->tester->haveServicePoint([
+            ServicePointTransfer::KEY => 'abc',
+            ServicePointTransfer::NAME => 'cde',
+        ]);
+        $this->tester->haveServicePoint([
+            ServicePointTransfer::KEY => 'def',
+            ServicePointTransfer::NAME => 'def',
+        ]);
+        $this->tester->haveServicePoint([
+            ServicePointTransfer::KEY => 'cde',
+            ServicePointTransfer::NAME => 'abc',
+        ]);
+
+        $servicePointSearchConditionsTransfer = (new ServicePointSearchConditionsTransfer())
+            ->setName('bc')
+            ->setKey('bc');
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointSearchConditions($servicePointSearchConditionsTransfer);
+
+        // Act
+        $servicePointTransfers = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
+
+        // Assert
+        $this->assertCount(2, $servicePointTransfers);
+        $expectedServicePointKeys = ['abc', 'cde'];
+        foreach ($servicePointTransfers as $servicePointTransfer) {
+            $this->assertContains($servicePointTransfer->getKey(), $expectedServicePointKeys);
+        }
     }
 
     /**

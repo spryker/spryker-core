@@ -1,0 +1,16 @@
+{# @var service \Generated\Shared\Transfer\ServiceTransfer #}
+{# @var service.serviceType \Generated\Shared\Transfer\ServiceTypeTransfer #}
+{# @var service.servicePoint \Generated\Shared\Transfer\ServicePointTransfer #}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Services' | trans } %}
+    {% block widget_content %}
+        <div class="row form-group">
+            {% for service in services %}
+                {% if service.servicePoint is defined and service.serviceType is defined %}
+                    <div class="col-xs-10">
+                        {{ service.servicePoint.key }} - {{ service.servicePoint.name }} - {{ service.serviceType.name }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}

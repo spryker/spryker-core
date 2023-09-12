@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferFormViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -180,9 +181,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
             ->getConfiguration($idProductOffer, $initialData);
 
+        $formView = $productOfferForm->createView();
+        $productOfferFormViewCollectionTransfer = $this->executeProductOfferFormViewExpanderPlugins(
+            $formView,
+            new ProductOfferFormViewCollectionTransfer(),
+        );
+
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
-                'form' => $productOfferForm->createView(),
+                'form' => $formView,
                 'product' => $productConcreteTransfer,
                 'productAbstract' => $productAbstractTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
@@ -195,6 +202,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
                     static::APPROVAL_STATUS_DENIED => 'red',
                     static::APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE => 'yellow',
                 ],
+                'productOfferFormViews' => $productOfferFormViewCollectionTransfer->getProductOfferFormViews(),
             ])->getContent(),
         ];
 

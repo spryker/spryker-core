@@ -42,6 +42,7 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
         $servicePointQuery = $this->getFactory()->getServicePointQuery();
 
         $servicePointQuery = $this->applyServicePointFilters($servicePointQuery, $servicePointCriteriaTransfer);
+        $servicePointQuery = $this->applyServicePointSearch($servicePointQuery, $servicePointCriteriaTransfer);
 
         /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
         $sortTransfers = $servicePointCriteriaTransfer->getSortCollection();
@@ -309,6 +310,37 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 $servicePointConditionsTransfer->getUuids(),
                 $servicePointConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
             );
+        }
+
+        return $servicePointQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery $servicePointQuery
+     * @param \Generated\Shared\Transfer\ServicePointCriteriaTransfer $servicePointCriteriaTransfer
+     *
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
+     */
+    protected function applyServicePointSearch(
+        SpyServicePointQuery $servicePointQuery,
+        ServicePointCriteriaTransfer $servicePointCriteriaTransfer
+    ): SpyServicePointQuery {
+        $servicePointSearchConditionsTransfer = $servicePointCriteriaTransfer->getServicePointSearchConditions();
+
+        if (!$servicePointSearchConditionsTransfer) {
+            return $servicePointQuery;
+        }
+
+        if ($servicePointSearchConditionsTransfer->getName() !== null) {
+            $servicePointQuery
+                ->_or()
+                ->filterByName_Like(sprintf('%%%s%%', $servicePointSearchConditionsTransfer->getName()));
+        }
+
+        if ($servicePointSearchConditionsTransfer->getKey() !== null) {
+            $servicePointQuery
+                ->_or()
+                ->filterByKey_Like(sprintf('%%%s%%', $servicePointSearchConditionsTransfer->getKey()));
         }
 
         return $servicePointQuery;

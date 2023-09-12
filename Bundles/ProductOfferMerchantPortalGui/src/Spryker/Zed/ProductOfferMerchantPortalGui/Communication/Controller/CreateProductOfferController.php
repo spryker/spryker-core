@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferFormViewCollectionTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -141,14 +142,21 @@ class CreateProductOfferController extends AbstractProductOfferController
 
         $isPriceProductOffersValid = count($initialData['errors']) === 0;
 
+        $formView = $productOfferForm->createView();
+        $productOfferFormViewCollectionTransfer = $this->executeProductOfferFormViewExpanderPlugins(
+            $formView,
+            new ProductOfferFormViewCollectionTransfer(),
+        );
+
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
-                'form' => $productOfferForm->createView(),
+                'form' => $formView,
                 'product' => $productConcreteTransfer,
                 'productAbstract' => $productAbstractTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
+                'productOfferFormViews' => $productOfferFormViewCollectionTransfer->getProductOfferFormViews(),
             ])->getContent(),
         ];
 

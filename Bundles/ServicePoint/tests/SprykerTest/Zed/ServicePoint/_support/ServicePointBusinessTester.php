@@ -40,7 +40,7 @@ use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\ServicePoint\Business\ServicePointFacadeInterface getFacade(?string $moduleName = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ServicePoint\PHPMD)
  */
 class ServicePointBusinessTester extends Actor
 {

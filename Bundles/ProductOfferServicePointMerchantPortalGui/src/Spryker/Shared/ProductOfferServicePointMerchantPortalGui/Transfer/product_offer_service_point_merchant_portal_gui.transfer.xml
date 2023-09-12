@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ServicePointCriteria" strict="true">
+        <property name="servicePointSearchConditions" type="ServicePointSearchConditions"/>
+        <property name="servicePointConditions" type="ServicePointConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointSearchConditions" strict="true">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointConditions" strict="true">
+        <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
+    </transfer>
+
+    <transfer name="ServicePointCollection" strict="true">
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+    </transfer>
+
+    <transfer name="ServicePoint" strict="true">
+        <property name="idServicePoint" type="int"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ServiceCriteria" strict="true">
+        <property name="serviceConditions" type="ServiceConditions"/>
+    </transfer>
+
+    <transfer name="ServiceConditions" strict="true">
+        <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
+    </transfer>
+
+    <transfer name="ServiceCollection" strict="true">
+        <property name="services" type="Service[]" singular="service"/>
+    </transfer>
+
+    <transfer name="Service" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="key" type="string"/>
+        <property name="serviceType" type="ServiceType"/>
+        <property name="servicePoint" type="ServicePoint"/>
+    </transfer>
+
+    <transfer name="ServiceType" strict="true">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferFormViewCollection" strict="true">
+        <property name="productOfferFormViews" type="ProductOfferFormView[]" singular="productOfferFormView"/>
+    </transfer>
+
+    <transfer name="ProductOfferFormView" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="services" type="Service[]" singular="service" strict="true"/>
+    </transfer>
+
+</transfers>

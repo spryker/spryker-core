@@ -396,4 +396,12 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferFormViewCollection" strict="true">
+        <property name="productOfferFormViews" type="ProductOfferFormView[]" singular="productOfferFormView"/>
+    </transfer>
+
+    <transfer name="ProductOfferFormView" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
+
 </transfers>

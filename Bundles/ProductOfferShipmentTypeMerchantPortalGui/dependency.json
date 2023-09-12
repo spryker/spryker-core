@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/product-offer-shipment-type": "Defined for forward-compatibility reasons.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/zed-ui": "Zed Ui provides layout templates and frontend infrastructure."
+    }
+}

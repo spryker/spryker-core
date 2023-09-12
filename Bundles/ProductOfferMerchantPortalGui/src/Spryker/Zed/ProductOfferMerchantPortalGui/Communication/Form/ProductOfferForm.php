@@ -159,6 +159,8 @@ class ProductOfferForm extends AbstractType
             ->addProductOfferStockSubform($builder)
             ->addPrices($builder, $options)
             ->addProductOfferValiditySubform($builder);
+
+        $this->executeProductOfferFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -309,5 +311,20 @@ class ProductOfferForm extends AbstractType
             ->addModelTransformer($priceProductOfferTransformer);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @param array<string, mixed> $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface<mixed>
+     */
+    protected function executeProductOfferFormExpanderPlugins(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        foreach ($this->getFactory()->getProductOfferFormExpanderPlugins() as $productOfferFormExpanderPlugin) {
+            $builder = $productOfferFormExpanderPlugin->expand($builder, $options);
+        }
+
+        return $builder;
     }
 }

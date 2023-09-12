@@ -46,9 +46,13 @@
         "@spryker/data-transformer.object-map": "^1.0.0",
         "@spryker/data-transformer.pluck": "^1.0.0",
         "@spryker/datasource": "^1.0.0",
+        "@spryker/datasource.dependable": "^0.1.0",
         "@spryker/datasource.http": "^1.0.0",
         "@spryker/datasource.inline": "^1.0.0",
         "@spryker/datasource.inline.table": "^1.0.0",
+        "@spryker/datasource.trigger": "^0.1.0",
+        "@spryker/datasource.trigger.change": "^0.1.0",
+        "@spryker/datasource.trigger.input": "^0.1.0",
         "@spryker/date-picker": "^1.0.2",
         "@spryker/drawer": "^1.0.0",
         "@spryker/dropdown": "^1.0.1",
@@ -61,7 +65,7 @@
         "@spryker/input.password": "^1.0.0",
         "@spryker/interception": "^1.0.0",
         "@spryker/layout": "^1.0.1",
-        "@spryker/locale": "^1.0.1",
+        "@spryker/locale": "^1.0.2",
         "@spryker/logo": "^1.0.0",
         "@spryker/modal": "^1.0.1",
         "@spryker/navigation": "^1.0.1",
@@ -69,7 +73,7 @@
         "@spryker/pagination": "^1.0.1",
         "@spryker/persistence": "^1.0.0",
         "@spryker/popover": "^1.0.1",
-        "@spryker/select": "^1.0.1",
+        "@spryker/select": "^1.1.0",
         "@spryker/sidebar": "^1.0.1",
         "@spryker/spinner": "^1.0.1",
         "@spryker/styles": "^1.0.1",
@@ -84,7 +88,7 @@
         "@spryker/user-menu": "^1.0.0",
         "@spryker/utils": "^1.0.0",
         "@spryker/utils.date.adapter.date-fns": "^1.0.0",
-        "@spryker/web-components": "^1.0.0"
+        "@spryker/web-components": "^1.0.1"
     },
     "devDependencies": {
         "@orchestrator/ngx-testing": "~3.0.0"

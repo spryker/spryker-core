@@ -22,11 +22,18 @@ class ServiceMapper
     protected ServiceTypeMapper $serviceTypeMapper;
 
     /**
-     * @param \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper $serviceTypeMapper
+     * @var \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper
      */
-    public function __construct(ServiceTypeMapper $serviceTypeMapper)
+    protected ServicePointMapper $servicePointMapper;
+
+    /**
+     * @param \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper $serviceTypeMapper
+     * @param \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper $servicePointMapper
+     */
+    public function __construct(ServiceTypeMapper $serviceTypeMapper, ServicePointMapper $servicePointMapper)
     {
         $this->serviceTypeMapper = $serviceTypeMapper;
+        $this->servicePointMapper = $servicePointMapper;
     }
 
     /**
@@ -57,9 +64,10 @@ class ServiceMapper
         SpyService $serviceEntity,
         ServiceTransfer $serviceTransfer
     ): ServiceTransfer {
-        $serviceTransfer->setServicePoint(
-            (new ServicePointTransfer())->setUuid($serviceEntity->getServicePoint()->getUuid()),
-        );
+        $serviceTransfer->setServicePoint($this->servicePointMapper->mapServicePointEntityToServicePointTransfer(
+            $serviceEntity->getServicePoint(),
+            new ServicePointTransfer(),
+        ));
 
         $serviceTypeTransfer = $this->serviceTypeMapper->mapServiceTypeEntityToServiceTypeTransfer(
             $serviceEntity->getServiceType(),

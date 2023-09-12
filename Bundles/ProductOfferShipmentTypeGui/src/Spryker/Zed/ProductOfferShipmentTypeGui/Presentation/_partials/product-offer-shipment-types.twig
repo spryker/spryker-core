@@ -1,0 +1,12 @@
+{# @var shipmentType \Generated\Shared\Transfer\ShipmentTypeTransfer #}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Shipment Types' | trans } %}
+    {% block widget_content %}
+        <div class="row form-group">
+            {% for shipmentType in shipmentTypes %}
+                <div class="col-xs-10">
+                    {{ shipmentType.key }} - {{ shipmentType.name }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}
