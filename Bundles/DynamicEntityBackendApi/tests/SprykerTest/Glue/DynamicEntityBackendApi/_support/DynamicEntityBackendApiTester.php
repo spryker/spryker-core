@@ -99,6 +99,11 @@ class DynamicEntityBackendApiTester extends Actor
     /**
      * @var string
      */
+    protected const REQUESTED_FORMAT = 'application/json';
+
+    /**
+     * @var string
+     */
     protected const FOO_IP = '0.0.0.0';
 
     /**
@@ -146,6 +151,7 @@ class DynamicEntityBackendApiTester extends Actor
         $glueRequestTransfer = new GlueRequestTransfer();
         $glueRequestTransfer->setPath($this->getPath($tableAlias));
         $glueRequestTransfer->setResource(new GlueResourceTransfer());
+        $glueRequestTransfer->setRequestedFormat(static::REQUESTED_FORMAT);
         $glueRequestTransfer->setMeta([
             static::X_REAL_IP_HEADER => [static::FOO_IP],
         ]);

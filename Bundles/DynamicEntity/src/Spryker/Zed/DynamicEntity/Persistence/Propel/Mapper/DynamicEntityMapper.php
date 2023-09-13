@@ -113,10 +113,15 @@ class DynamicEntityMapper
         DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
     ): DynamicEntityCollectionTransfer {
         $indexedFieldDefinitions = $this->indexDynamicEntityFieldDefinitionsByTableFieldName($dynamicEntityDefinitionTransfer);
+        $identifierVisibleName = $this->getIdentifierVisibleName($dynamicEntityDefinitionTransfer->getIdentifierOrFail(), $dynamicEntityDefinitionTransfer);
 
         foreach ($entityRecordsData as $entityRecord) {
             $dynamicEntityFields = $this->mapRecordFieldsToDynamicEntityFieldsArray($entityRecord, $indexedFieldDefinitions);
-            $dynamicEntityTransfer = (new DynamicEntityTransfer())->setFields($dynamicEntityFields);
+
+            $dynamicEntityTransfer = (new DynamicEntityTransfer())
+                ->setFields($dynamicEntityFields)
+                ->setIdentifier($dynamicEntityFields[$identifierVisibleName]);
+
             $dynamicEntityCollectionTransfer->addDynamicEntity($dynamicEntityTransfer);
         }
 
@@ -266,5 +271,22 @@ class DynamicEntityMapper
     protected function castTypes(string $type, mixed $value): mixed
     {
         return $type === static::TYPE_INTEGER ? (int)$value : $value;
+    }
+
+    /**
+     * @param string $identifier
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     *
+     * @return string
+     */
+    protected function getIdentifierVisibleName(string $identifier, DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer): string
+    {
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($fieldDefinitionTransfer->getFieldNameOrFail() === $identifier) {
+                return $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $identifier;
     }
 }

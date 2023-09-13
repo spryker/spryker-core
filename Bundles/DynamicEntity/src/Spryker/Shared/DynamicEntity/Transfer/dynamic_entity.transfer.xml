@@ -23,6 +23,7 @@
     </transfer>
 
     <transfer name="DynamicEntity" strict="true">
+        <property name="identifier" type="string"/>
         <property name="fields" type="array" singular="field"/>
     </transfer>
 

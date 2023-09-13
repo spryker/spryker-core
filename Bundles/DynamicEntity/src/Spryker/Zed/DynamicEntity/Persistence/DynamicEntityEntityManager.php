@@ -486,10 +486,12 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         ActiveRecordInterface $activeRecord
     ): DynamicEntityTransfer {
         $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+        $identifierValue = $activeRecord->getByName($identifier);
         $dynamicEntityTransfer->setFields(array_merge(
             $dynamicEntityTransfer->getFields(),
-            [$identifier => $activeRecord->getByName($identifier)],
+            [$identifier => $identifierValue],
         ));
+        $dynamicEntityTransfer->setIdentifier($identifierValue);
 
         return $dynamicEntityTransfer;
     }

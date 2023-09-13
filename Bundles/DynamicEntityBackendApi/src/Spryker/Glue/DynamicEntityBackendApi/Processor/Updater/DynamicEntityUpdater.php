@@ -81,6 +81,10 @@ class DynamicEntityUpdater implements DynamicEntityUpdaterInterface
             throw $e;
         }
 
-        return $this->responseMapper->mapDynamicEntityCollectionResponseTransferToGlueResponseTransfer($dynamicEntityCollectionResponseTransfer, $glueRequestTransfer);
+        return $this->responseMapper->mapDynamicEntityCollectionResponseTransferToGlueResponseTransfer(
+            $dynamicEntityCollectionResponseTransfer,
+            $dynamicEntityCollectionRequestTransfer,
+            $glueRequestTransfer,
+        );
     }
 }

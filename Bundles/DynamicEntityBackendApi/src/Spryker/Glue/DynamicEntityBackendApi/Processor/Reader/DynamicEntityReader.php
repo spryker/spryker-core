@@ -79,7 +79,11 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             throw $e;
         }
 
-        return $this->responseMapper->mapDynamicEntityCollectionTransferToGlueResponseTransfer($dynamicEntityCollectionTransfer);
+        return $this->responseMapper->mapDynamicEntityCollectionTransferToGlueResponseTransfer(
+            $dynamicEntityCollectionTransfer,
+            $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+            $glueRequestTransfer,
+        );
     }
 
     /**
@@ -110,7 +114,11 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             return $this->responseMapper->mapErrorToResponseTransfer(DynamicEntityBackendApiConfig::GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST, new GlueResponseTransfer());
         }
 
-        return $this->responseMapper->mapDynamicEntityCollectionTransferToGlueResponseTransfer($dynamicEntityCollectionTransfer, $glueRequestTransfer);
+        return $this->responseMapper->mapDynamicEntityCollectionTransferToGlueResponseTransfer(
+            $dynamicEntityCollectionTransfer,
+            $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+            $glueRequestTransfer,
+        );
     }
 
     /**

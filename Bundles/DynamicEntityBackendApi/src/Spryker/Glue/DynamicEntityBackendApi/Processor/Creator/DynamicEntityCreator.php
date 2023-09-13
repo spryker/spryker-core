@@ -81,6 +81,9 @@ class DynamicEntityCreator implements DynamicEntityCreatorInterface
             throw $e;
         }
 
-        return $this->responseMapper->mapDynamicEntityCollectionResponseTransferToGlueResponseTransfer($dynamicEntityCollectionResponseTransfer);
+        return $this->responseMapper->mapDynamicEntityCollectionResponseTransferToGlueResponseTransfer(
+            $dynamicEntityCollectionResponseTransfer,
+            $dynamicEntityCollectionRequestTransfer,
+        );
     }
 }

@@ -31,9 +31,11 @@
         <property name="filters" type="GlueFilter[]" singular="filter"/>
         <property name="attributes" type="array" singular="attribute"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="requestedFormat" type="string"/>
     </transfer>
 
     <transfer name="DynamicEntity" strict="true">
+        <property name="identifier" type="string"/>
         <property name="fields" type="array" singular="field"/>
     </transfer>
 
@@ -59,6 +61,7 @@
         <property name="httpStatus" type="int"/>
         <property name="errors" type="GlueError[]" singular="error"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="resources" type="GlueResource[]" singular="resource"/>
     </transfer>
 
     <transfer name="DynamicEntityCollectionResponse" strict="true">
@@ -90,6 +93,8 @@
     <transfer name="GlueResource">
         <property name="method" type="string"/>
         <property name="id" type="string"/>
+        <property name="type" type="string"/>
+        <property name="attributes" type="AbstractAttributes"/>
     </transfer>
 
     <transfer name="GlueFilter">
