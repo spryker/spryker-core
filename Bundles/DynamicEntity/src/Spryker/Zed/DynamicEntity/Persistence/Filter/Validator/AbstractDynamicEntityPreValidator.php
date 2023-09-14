@@ -52,7 +52,10 @@ abstract class AbstractDynamicEntityPreValidator
         callable $filterCallback
     ): ?ErrorTransfer {
         $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
-        $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+        $identifier = $this->getIdentifierVisibleName(
+            $dynamicEntityDefinitionTransfer->getIdentifierOrFail(),
+            $dynamicEntityConfigurationTransfer,
+        );
 
         foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
             if ($this->isFieldNonModifiable($fieldDefinitionTransfer, $dynamicEntityTransfer->getFields(), $filterCallback, $identifier) === true) {
@@ -64,5 +67,22 @@ abstract class AbstractDynamicEntityPreValidator
         }
 
         return null;
+    }
+
+    /**
+     * @param string $identifier
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getIdentifierVisibleName(string $identifier, DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($fieldDefinitionTransfer->getFieldNameOrFail() === $identifier) {
+                return $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $identifier;
     }
 }

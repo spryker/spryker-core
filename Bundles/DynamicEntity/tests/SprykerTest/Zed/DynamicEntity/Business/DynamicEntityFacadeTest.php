@@ -43,6 +43,16 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @var string
      */
+    protected const ERROR_PROVIDED_FIELD_IS_INVALID = 'dynamic_entity.validation.provided_field_is_invalid';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED = 'dynamic_entity.validation.modification_of_immutable_field_prohibited';
+
+    /**
+     * @var string
+     */
     protected const TABLE_NAME = 'spy_dynamic_entity_configuration';
 
     /**
@@ -78,7 +88,7 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const FOO_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"id_dynamic_entity_configuration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
+    protected const FOO_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"id_dynamic_entity_configuration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isEditable":false,"isCreatable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
 
     /**
      * @var \Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface
@@ -163,7 +173,7 @@ class DynamicEntityFacadeTest extends Unit
                 ->setFields([
                     'table_alias' => static::FOO_TABLE_ALIAS_2,
                     'table_name' => static::FOO_TABLE_NAME,
-                    'is_active' => 1,
+                    'is_active' => true,
                     'definition' => static::FOO_DEFINITION,
                 ]),
         );
@@ -222,7 +232,7 @@ class DynamicEntityFacadeTest extends Unit
                 ->setFields([
                     'table_alias' => static::FOO_TABLE_ALIAS_1,
                     'table_name' => true,
-                    'is_active' => 1,
+                    'is_active' => true,
                     'definition' => static::FOO_DEFINITION,
                 ]),
         );
@@ -234,6 +244,34 @@ class DynamicEntityFacadeTest extends Unit
         $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
         $this->assertEquals(
             static::ERROR_INVALID_DATA_TYPE,
+            $dynamicEntityCollectionResponseTransfer->getErrors()[0]->getMessage(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDynamicEntityCollectionReturnErrorIfInvalidFieldNameIsProvided(): void
+    {
+        //Arrange
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'table_alias' => static::FOO_TABLE_ALIAS_1,
+                    'table_name' => true,
+                    'is_active' => true,
+                    'definition_foo' => static::FOO_DEFINITION,
+                ]),
+        );
+
+        //Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->createDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        //Assert
+        $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::ERROR_PROVIDED_FIELD_IS_INVALID,
             $dynamicEntityCollectionResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
@@ -305,6 +343,37 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateDynamicEntityCollectionReturnsErrorIfInvalidFieldNameIsProvided(): void
+    {
+        //Arrange
+        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
+            ->find()
+            ->getData()[0];
+
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'table_name_foo' => static::FOO_TABLE_NAME,
+                ]),
+        );
+
+        //Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        //Assert
+        $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::ERROR_PROVIDED_FIELD_IS_INVALID,
+            $dynamicEntityCollectionResponseTransfer->getErrors()[0]->getMessage(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateDynamicEntityCollectionDoesNotUpdateIfFieldIsNotEditable(): void
     {
         //Arrange
@@ -318,7 +387,7 @@ class DynamicEntityFacadeTest extends Unit
             (new DynamicEntityTransfer())
                 ->setFields([
                     'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
-                    'isActive' => false,
+                    'is_active' => false,
                 ]),
         );
 
@@ -331,7 +400,11 @@ class DynamicEntityFacadeTest extends Unit
             ->find()
             ->getData()[0];
 
-        $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED,
+            $dynamicEntityCollectionResponseTransfer->getErrors()[0]->getMessage(),
+        );
         $this->assertTrue($updatedFooEntity->getIsActive());
         $this->assertEquals($fooEntity->getIsActive(), $updatedFooEntity->getIsActive());
     }

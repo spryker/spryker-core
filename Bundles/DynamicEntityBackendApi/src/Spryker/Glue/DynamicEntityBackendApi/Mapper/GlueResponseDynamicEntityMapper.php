@@ -53,6 +53,11 @@ class GlueResponseDynamicEntityMapper
     /**
      * @var string
      */
+    protected const GLOSSARY_KEY_PROVIDED_FIELD_IS_INVALID = 'dynamic_entity.validation.provided_field_is_invalid';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE = 'dynamic_entity.validation.entity_not_found_or_identifier_is_not_creatable';
 
     /**
@@ -114,6 +119,11 @@ class GlueResponseDynamicEntityMapper
      * @var int
      */
     protected const RESPONSE_CODE_MISSING_IDENTIFIER = 1310;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_PROVIDED_FIELD_IS_INVALID = 1311;
 
     /**
      * @var string
@@ -348,6 +358,10 @@ class GlueResponseDynamicEntityMapper
             static::GLOSSARY_KEY_REQUIRED_FIELD_IS_MISSING => [
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_REQUIRED_FIELD_IS_MISSING,
+            ],
+            static::GLOSSARY_KEY_PROVIDED_FIELD_IS_INVALID => [
+                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_PROVIDED_FIELD_IS_INVALID,
             ],
             static::GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE => [
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,

@@ -220,8 +220,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             );
         }
 
+        $identifierFieldVisibleName = $this->getIdentifierVisibleName(
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail(),
+            $dynamicEntityConfigurationTransfer,
+        );
+
         foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $dynamicEntityConditionsTransfer = $this->addIdentifierToDynamicEntityConditionsTransfer($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(), $dynamicEntityTransfer);
+            $dynamicEntityConditionsTransfer = $this->addIdentifierToDynamicEntityConditionsTransfer($dynamicEntityTransfer, $identifierFieldVisibleName);
 
             if ($dynamicEntityConditionsTransfer === null) {
                 $this->addErrorToResponseTransfer(
@@ -254,7 +259,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 $dynamicEntityCollectionRequestTransfer->getIsCreatable() === true &&
                 !$this->isAllowCreateWithSetupIdentifier($activeRecord, $dynamicEntityConfigurationTransfer)
             ) {
-                $identifier = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail();
                 $this->addErrorToResponseTransfer(
                     $dynamicEntityCollectionResponseTransfer,
                     static::GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE,
@@ -262,8 +266,8 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                     [
                         static::IDENTIFIER_PLACEHOLDER => sprintf(
                             '%s: %s',
-                            $this->getIdentifierVisibleName($identifier, $dynamicEntityConfigurationTransfer),
-                            $activeRecord->getByName($identifier),
+                            $identifierFieldVisibleName,
+                            $activeRecord->getByName($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail()),
                         ),
                     ],
                 );
@@ -428,24 +432,24 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param string $identifierFieldVisibleName
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConditionsTransfer|null
      */
     protected function addIdentifierToDynamicEntityConditionsTransfer(
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
-        DynamicEntityTransfer $dynamicEntityTransfer
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        string $identifierFieldVisibleName
     ): ?DynamicEntityConditionsTransfer {
-        if (!isset($dynamicEntityTransfer->getFields()[static::IDENTIFIER]) && !isset($dynamicEntityTransfer->getFields()[$dynamicEntityDefinitionTransfer->getIdentifier()])) {
+        if (!isset($dynamicEntityTransfer->getFields()[static::IDENTIFIER]) && !isset($dynamicEntityTransfer->getFields()[$identifierFieldVisibleName])) {
             return null;
         }
 
         $dynamicEntityConditionsTransfer = new DynamicEntityConditionsTransfer();
         $dynamicEntityConditionsTransfer->addFieldCondition(
             (new DynamicEntityFieldConditionTransfer())
-                ->setName($dynamicEntityDefinitionTransfer->getIdentifier())
-                ->setValue($dynamicEntityTransfer->getFields()[static::IDENTIFIER] ?? $dynamicEntityTransfer->getFields()[$dynamicEntityDefinitionTransfer->getIdentifier()]),
+                ->setName($identifierFieldVisibleName)
+                ->setValue($dynamicEntityTransfer->getFields()[static::IDENTIFIER] ?? $dynamicEntityTransfer->getFields()[$identifierFieldVisibleName]),
         );
 
         return $dynamicEntityConditionsTransfer;

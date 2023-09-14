@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
-use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
-use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
@@ -20,6 +20,7 @@ use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValid
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequestFieldValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequiredFieldValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\BooleanFieldTypeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\DecimalFieldTypeValidator;
@@ -94,6 +95,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function getDynamicEntityValidators(): array
     {
         return [
+            $this->createRequestFieldValidator(),
             $this->createRequiredFieldValidator(),
             $this->createIntegerFieldTypeValidator(),
             $this->createStringFieldTypeValidator(),
@@ -108,6 +110,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function getDynamicEntityUpdateValidators(): array
     {
         return [
+            $this->createRequestFieldValidator(),
             $this->createIntegerFieldTypeValidator(),
             $this->createStringFieldTypeValidator(),
             $this->createBooleanFieldTypeValidator(),
@@ -121,6 +124,14 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createRequiredFieldValidator(): DynamicEntityValidatorInterface
     {
         return new RequiredFieldValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    public function createRequestFieldValidator(): DynamicEntityValidatorInterface
+    {
+        return new RequestFieldValidator();
     }
 
     /**
