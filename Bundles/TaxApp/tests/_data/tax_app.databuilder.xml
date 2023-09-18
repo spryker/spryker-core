@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="TaxAppConfig" strict="true">
+        <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
+        <property name="apiUrl" dataBuilderRule="lexify('??????????')"/>
+        <property name="vendorCode" dataBuilderRule="lexify('??????????')"/>
+        <property name="storeReference" dataBuilderRule="=de-DE"/>
+    </transfer>
+
+    <transfer name="TaxAppConfigCriteria" strict="true">
+    </transfer>
+
+    <transfer name="TaxAppConfigConditions" strict="true">
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" dataBuilderRule="Item[]"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" dataBuilderRule="Item[]"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="taxMetadata" dataBuilderRule="ItemTaxMetadata" strict="true"/>
+    </transfer>
+
+    <transfer name="TaxAppSale">
+        <property name="transactionId" dataBuilderRule="lexify('??????????')"/>
+        <property name="items" dataBuilderRule="TaxAppItem[]"/>
+        <property name="shipments" dataBuilderRule="TaxAppShipment[]"/>
+        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
+    <transfer name="TaxAppItem">
+        <property name="id" dataBuilderRule="lexify('??????????')"/>
+        <property name="priceAmount" dataBuilderRule="lexify('??????????')"/>
+        <property name="discountAmount" dataBuilderRule="lexify('??????????')"/>
+        <property name="quantity" dataBuilderRule="lexify('??????????')"/>
+        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+        <property name="shippingAddress" dataBuilderRule="TaxAppAddress"/>
+        <property name="billingAddress" dataBuilderRule="TaxAppAddress"/>
+        <property name="sellerAddress" dataBuilderRule="TaxAppAddress"/>
+        <property name="warehouseAddress" dataBuilderRule="TaxAppAddress"/>
+    </transfer>
+
+    <transfer name="TaxAppShipment" strict="true">
+        <property name="id" dataBuilderRule="lexify('??????????')"/>
+        <property name="priceAmount" dataBuilderRule="lexify('??????????')"/>
+        <property name="discountAmount" dataBuilderRule="lexify('??????????')"/>
+        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
+    <transfer name="TaxAppAddress">
+        <property name="address1" dataBuilderRule="lexify('??????????')"/>
+        <property name="address2" dataBuilderRule="lexify('??????????')"/>
+        <property name="city" dataBuilderRule="lexify('??????????')"/>
+        <property name="state" dataBuilderRule="lexify('??????????')"/>
+        <property name="country" dataBuilderRule="lexify('??????????')"/>
+        <property name="zipCode" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
+    <transfer name="TaxCalculationRequest" strict="true">
+        <property name="sale" dataBuilderRule="TaxAppSale"/>
+    </transfer>
+
+</transfers>

@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapper;
 use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReader;
 use Spryker\Zed\ProductOfferStock\Business\Reader\ProductOfferStockReaderInterface;
+use Spryker\Zed\ProductOfferStock\ProductOfferStockDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferStock\ProductOfferStockConfig getConfig()
@@ -27,7 +28,11 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferStockReader(): ProductOfferStockReaderInterface
     {
-        return new ProductOfferStockReader($this->getRepository(), $this->createProductOfferStockResultMapper());
+        return new ProductOfferStockReader(
+            $this->getRepository(),
+            $this->createProductOfferStockResultMapper(),
+            $this->getStockTransferProductOfferStockExpanderPlugins(),
+        );
     }
 
     /**
@@ -44,5 +49,15 @@ class ProductOfferStockBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferStockResultMapper(): ProductOfferStockResultMapperInterface
     {
         return new ProductOfferStockResultMapper();
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\ProductOfferStockExtension\Dependency\Plugin\StockTransferProductOfferStockExpanderPluginInterface>
+     */
+    public function getStockTransferProductOfferStockExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(
+            ProductOfferStockDependencyProvider::PLUGINS_STOCK_TRANSFER_PRODUCT_OFFER_STOCK_EXPANDER,
+        );
     }
 }

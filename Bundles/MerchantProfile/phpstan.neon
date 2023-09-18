@@ -2,3 +2,6 @@ parameters:
     level: 8
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Method .+MerchantProfileFacade::expandQuoteItemsWithMerchantProfileAddress\(\) should return .+CalculableObjectTransfer but returns .+CalculableObjectTransfer|.+OrderTransfer.#'
+        - '#Method .+MerchantProfileFacade::expandOrderItemsWithMerchantProfileAddress\(\) should return .+OrderTransfer but returns .+CalculableObjectTransfer|.+OrderTransfer.#'

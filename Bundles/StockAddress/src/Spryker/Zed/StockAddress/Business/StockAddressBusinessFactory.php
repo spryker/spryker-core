@@ -14,6 +14,8 @@ use Spryker\Zed\StockAddress\Business\Deleter\StockAddressDeleter;
 use Spryker\Zed\StockAddress\Business\Deleter\StockAddressDeleterInterface;
 use Spryker\Zed\StockAddress\Business\Expander\StockCollectionExpander;
 use Spryker\Zed\StockAddress\Business\Expander\StockCollectionExpanderInterface;
+use Spryker\Zed\StockAddress\Business\Expander\StockExpander;
+use Spryker\Zed\StockAddress\Business\Expander\StockExpanderInterface;
 use Spryker\Zed\StockAddress\Business\Updater\StockAddressUpdater;
 use Spryker\Zed\StockAddress\Business\Updater\StockAddressUpdaterInterface;
 
@@ -30,6 +32,14 @@ class StockAddressBusinessFactory extends AbstractBusinessFactory
     public function createStockCollectionExpander(): StockCollectionExpanderInterface
     {
         return new StockCollectionExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\StockAddress\Business\Expander\StockExpanderInterface
+     */
+    public function createStockExpander(): StockExpanderInterface
+    {
+        return new StockExpander($this->getRepository());
     }
 
     /**

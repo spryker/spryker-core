@@ -27,6 +27,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="store" type="Store"/>
         <property name="isStockActive" type="bool" strict="true"/>
+        <property name="orderByLargestStock" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="ProductOfferStockResult">
@@ -58,6 +59,42 @@
     </transfer>
 
     <transfer name="ProductOffer">
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantStockAddresses" type="MerchantStockAddress[]" singular="merchantStockAddress"/>
+        <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantStockAddress">
+        <property name="quantityToShip" type="decimal"/>
+        <property name="stockAddress" type="StockAddress"/>
+    </transfer>
+
+    <transfer name="StockAddress">
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStock">
+        <property name="stock" type="Stock"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="quantity" type="decimal"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="address" type="StockAddress"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

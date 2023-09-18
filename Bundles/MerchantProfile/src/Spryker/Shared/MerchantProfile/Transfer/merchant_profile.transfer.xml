@@ -38,6 +38,7 @@
     <transfer name="Order">
         <property name="merchants" type="OrderMerchant[]" singular="merchant" strict="true"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="OrderMerchant" strict="true">
@@ -88,6 +89,7 @@
         <property name="idMerchantProfileAddress" type="int"/>
         <property name="fkCountry" type="int"/>
         <property name="countryName" type="string"/>
+        <property name="iso2Code" type="string"/>
         <property name="address1" type="string"/>
         <property name="address2" type="string"/>
         <property name="address3" type="string"/>
@@ -134,6 +136,7 @@
     <transfer name="Item">
         <property name="merchantReference" type="string"/>
         <property name="sku" type="string"/>
+        <property name="merchantProfileAddress" type="MerchantProfileAddress"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -162,6 +165,9 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
     </transfer>
 
 </transfers>

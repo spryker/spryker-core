@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
@@ -96,6 +97,30 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderMerchants(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expand CalculableObjectTransfer.Items with Address from MerchantProfile.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function expandQuoteItemsWithMerchantProfileAddress(CalculableObjectTransfer $quoteTransfer): CalculableObjectTransfer;
+
+    /**
+     * Specification:
+     * - Expand OrderTransfer.Items with the first Address found in MerchantProfile.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderItemsWithMerchantProfileAddress(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:

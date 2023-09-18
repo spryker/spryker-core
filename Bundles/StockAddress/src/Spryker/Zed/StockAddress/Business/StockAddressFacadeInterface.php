@@ -28,6 +28,19 @@ interface StockAddressFacadeInterface
 
     /**
      * Specification:
+     * - Expands `StockTransfer.address` with `StockAddressTransfer`.
+     * - If `StockTransfer.idStock` is not set the transfer is not expanded.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function expandStockTransferWithStockAddress(StockTransfer $stockTransfer): StockTransfer;
+
+    /**
+     * Specification:
      * - Creates stock address if `StockTransfer.address` is provided.
      * - Requires `StockAddressTransfer.country.idCountry`, `StockAddressTransfer.address1`, `StockAddressTransfer.city`
      *   and `StockAddressTransfer.zipCode` to be set if `StockTransfer.address` is provided.

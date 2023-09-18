@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -22,6 +23,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class MerchantProfileRepository extends AbstractRepository implements MerchantProfileRepositoryInterface
 {
+    /**
+     * @var string
+     */
+    protected const COL_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
@@ -41,6 +47,35 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         return $this->getFactory()
             ->createPropelMerchantProfileMapper()
             ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
+    }
+
+    /**
+     * @param array $merchantReferences
+     *
+     * @return array
+     */
+    public function findMerchantProfileAddressesCollectionIndexedByMerchantReference(array $merchantReferences): array
+    {
+        $merchantProfileQueryAddress = $this->getFactory()
+            ->createMerchantProfileAddressQuery()
+            ->useSpyMerchantProfileQuery()
+                ->useSpyMerchantQuery()
+                    ->withColumn(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, static::COL_MERCHANT_REFERENCE)
+                    ->filterByMerchantReference(
+                        $merchantReferences,
+                        PropelCriteria::IN,
+                    )
+                ->endUse()
+            ->endUse();
+
+        $merchantProfileAddressEntityCollection = $merchantProfileQueryAddress->find();
+
+        return $this->getFactory()
+            ->createMerchantProfileAddressMapper()
+            ->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfersIndexedByMerchantReference(
+                $merchantProfileAddressEntityCollection,
+                [],
+            );
     }
 
     /**

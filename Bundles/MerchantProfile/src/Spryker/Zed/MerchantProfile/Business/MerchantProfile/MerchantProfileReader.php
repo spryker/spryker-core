@@ -46,4 +46,14 @@ class MerchantProfileReader implements MerchantProfileReaderInterface
     {
         return $this->merchantProfileRepository->get($merchantProfileCriteriaTransfer);
     }
+
+    /**
+     * @param array $merchantReferences
+     *
+     * @return array
+     */
+    public function findMerchantProfileAddressesCollectionIndexedByMerchantReference(array $merchantReferences): array
+    {
+        return $this->merchantProfileRepository->findMerchantProfileAddressesCollectionIndexedByMerchantReference($merchantReferences);
+    }
 }

@@ -15,6 +15,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterface
 {
     /**
+     * @var string
+     */
+    protected const COL_MERCHANT_REFERENCE = 'merchant_reference';
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      *
@@ -54,6 +59,29 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $merchantProfileAddressEntities
+     * @param array $merchantProfileAddressTransfers
+     *
+     * @return array
+     */
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfersIndexedByMerchantReference(
+        ObjectCollection $merchantProfileAddressEntities,
+        array $merchantProfileAddressTransfers
+    ): array {
+        /** @var \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity */
+        foreach ($merchantProfileAddressEntities as $merchantProfileAddressEntity) {
+            $merchantReference = $merchantProfileAddressEntity->getVirtualColumn(static::COL_MERCHANT_REFERENCE);
+
+            $merchantProfileAddressTransfers[$merchantReference][] = $this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
+                $merchantProfileAddressEntity,
+                new MerchantProfileAddressTransfer(),
+            );
+        }
+
+        return $merchantProfileAddressTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
      *
@@ -70,6 +98,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
 
         if ($merchantProfileAddressEntity->getSpyCountry() !== null) {
             $merchantProfileAddressTransfer->setCountryName($merchantProfileAddressEntity->getSpyCountry()->getName());
+            $merchantProfileAddressTransfer->setIso2Code($merchantProfileAddressEntity->getSpyCountry()->getIso2Code());
         }
 
         return $merchantProfileAddressTransfer;

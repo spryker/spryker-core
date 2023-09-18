@@ -30,4 +30,11 @@ interface ProductOfferStockReaderInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>|null
+     */
+    public function findProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ArrayObject;
 }

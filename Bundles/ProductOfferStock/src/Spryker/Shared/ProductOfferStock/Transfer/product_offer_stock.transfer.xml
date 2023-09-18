@@ -5,6 +5,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="store" type="Store"/>
         <property name="isStockActive" type="bool" strict="true"/>
+        <property name="orderByLargestStock" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="ProductOfferStock">

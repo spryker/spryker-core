@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\ProductOfferStock;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepository;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
@@ -55,5 +60,27 @@ class ProductOfferStockBusinessTester extends Actor
     public function getProductOfferStockRepository(): ProductOfferStockRepositoryInterface
     {
         return new ProductOfferStockRepository();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     */
+    public function haveProductOfferStockWithProductOfferAndStoreAttached(
+        ProductOfferTransfer $productOfferTransfer,
+        StoreTransfer $storeTransfer
+    ): ProductOfferStockTransfer {
+        return $this->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
     }
 }

@@ -26,4 +26,11 @@ interface MerchantProfileRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
     public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer;
+
+    /**
+     * @param array $merchantReferences
+     *
+     * @return array
+     */
+    public function findMerchantProfileAddressesCollectionIndexedByMerchantReference(array $merchantReferences): array;
 }

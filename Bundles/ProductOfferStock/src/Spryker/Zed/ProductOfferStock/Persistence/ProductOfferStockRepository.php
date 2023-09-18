@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -102,6 +103,12 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
                 ->useStockQuery()
                     ->filterByIsActive($productOfferStockRequestTransfer->getIsStockActiveOrFail())
                 ->endUse();
+        }
+
+        if ($productOfferStockRequestTransfer->getOrderByLargestStock() === true) {
+            $productOfferStockQuery
+                ->orderByIsNeverOutOfStock(Criteria::DESC)
+                ->orderByQuantity(Criteria::DESC);
         }
 
         return $productOfferStockQuery;

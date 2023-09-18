@@ -53,6 +53,22 @@ interface ProductOfferStockFacadeInterface
 
     /**
      * Specification:
+     * - Requires `ProductOfferStockRequestTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferStockRequestTransfer.store.name` to be set.
+     * - Uses `ProductOfferStockRequestTransfer.isStockActive` to filter stocks by active status.
+     * - Retrieves `ProductOfferStock` from database by provided `ProductOfferStockRequest.productOfferReference`.
+     * - Returns null if any `ProductOfferStock` is found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>|null
+     */
+    public function findProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ArrayObject;
+
+    /**
+     * Specification:
      * - Persists new Product Offer Stock entity to database.
      *
      * @api

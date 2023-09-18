@@ -21,6 +21,8 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileA
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileQuote\MerchantProfileItemExpander;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileQuote\MerchantProfileItemExpanderInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfile\MerchantProfileDependencyProvider;
@@ -116,5 +118,13 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileMerchantExpander(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfileQuote\MerchantProfileItemExpanderInterface
+     */
+    public function createMerchantProfileItemExpander(): MerchantProfileItemExpanderInterface
+    {
+        return new MerchantProfileItemExpander($this->createMerchantProfileReader());
     }
 }

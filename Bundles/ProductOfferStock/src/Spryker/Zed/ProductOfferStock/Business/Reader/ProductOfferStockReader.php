@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferStock\Business\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException;
 use Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
@@ -27,15 +28,23 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     protected $productOfferStockResultMapper;
 
     /**
+     * @var array<\Spryker\Zed\ProductOfferStockExtension\Dependency\Plugin\StockTransferProductOfferStockExpanderPluginInterface>
+     */
+    protected $stockTransferProductOfferStockExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface $productOfferStockRepository
      * @param \Spryker\Zed\ProductOfferStock\Business\Mapper\ProductOfferStockResultMapperInterface $productOfferStockResultMapper
+     * @param array<\Spryker\Zed\ProductOfferStockExtension\Dependency\Plugin\StockTransferProductOfferStockExpanderPluginInterface> $stockTransferProductOfferStockExpanderPlugins
      */
     public function __construct(
         ProductOfferStockRepositoryInterface $productOfferStockRepository,
-        ProductOfferStockResultMapperInterface $productOfferStockResultMapper
+        ProductOfferStockResultMapperInterface $productOfferStockResultMapper,
+        array $stockTransferProductOfferStockExpanderPlugins
     ) {
         $this->productOfferStockRepository = $productOfferStockRepository;
         $this->productOfferStockResultMapper = $productOfferStockResultMapper;
+        $this->stockTransferProductOfferStockExpanderPlugins = $stockTransferProductOfferStockExpanderPlugins;
     }
 
     /**
@@ -86,5 +95,44 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
         }
 
         return $productOfferStockTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>|null
+     */
+    public function findProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ArrayObject
+    {
+        $productOfferStockRequestTransfer->requireProductOfferReference()
+            ->requireStore()
+            ->getStoreOrFail()
+            ->requireName();
+
+        $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
+
+        if (!$productOfferStockTransfers->count()) {
+            return null;
+        }
+
+        foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
+            $this->executeStockTransferExpanderPlugins($productOfferStockTransfer->getStockOrFail());
+        }
+
+        return $productOfferStockTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    protected function executeStockTransferExpanderPlugins(StockTransfer $stockTransfer): StockTransfer
+    {
+        foreach ($this->stockTransferProductOfferStockExpanderPlugins as $expanderPlugin) {
+            $stockTransfer = $expanderPlugin->expand($stockTransfer);
+        }
+
+        return $stockTransfer;
     }
 }

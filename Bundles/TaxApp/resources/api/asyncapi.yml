@@ -1,0 +1,201 @@
+asyncapi: 2.6.0
+info:
+    title: 'TaxApp AsyncAPI definition.'
+    version: 0.0.1
+channels:
+    tax-commands:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/ConfigureTaxApp'
+                    - $ref: '#/components/messages/DeleteTaxApp'
+    payment-tax-invoice-commands:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/SubmitPaymentTaxInvoice'
+components:
+    messages:
+        ConfigureTaxApp:
+            x-spryker:
+                module: TaxApp
+            name: ConfigureTaxApp
+            title: Configure Tax App Command
+            summary: This message is received when a Tax app is connected to a client application or a Tax app configuration has been updated. This message contains a Tax app API URL that can be used in the module to submit tax calculation requests.
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/TaxAppConfiguration'
+
+        DeleteTaxApp:
+            x-spryker:
+                module: TaxApp
+            name: DeleteTaxApp
+            title: Delete Tax App Command
+            summary: This message is received when a Tax app disconnects from the client application. Tax calculation requests sent from the tenant application after this message is received will not be processed.
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/TaxAppConfigCriteria'
+
+        SubmitPaymentTaxInvoice:
+            name: SubmitPaymentTaxInvoice
+            x-spryker:
+                module: TaxApp
+            summary: 'Submit payment tax invoice.'
+            payload:
+                $ref: '#/components/schemas/SubmitPaymentTaxInvoice'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+    schemas:
+        TaxAppConfiguration:
+            type: object
+            properties:
+                apiUrl:
+                    type: string
+                    description: The URI of the tax calculation endpoint.
+                vendorCode:
+                    type: string
+                    description: The vendor code to identify the tax Vendor.
+            required:
+                - apiUrl
+                - vendorCode
+        TaxAppConfigCriteria:
+            type: object
+            properties:
+                vendorCode:
+                    type: string
+                    description: The vendor code to identify the tax Vendor.
+            required:
+                - vendorCode
+        SubmitPaymentTaxInvoice:
+            type: object
+            properties:
+                sale:
+                    $ref: '#/components/schemas/Sale'
+            required:
+                - sale
+
+        Sale:
+            properties:
+                transactionId:
+                    type: string
+                documentNumber:
+                    type: string
+                documentDate:
+                    type: string
+                    description: 'Date of operation. Expected format: "Y-m-d"'
+                taxMetadata:
+                    type: object
+                    additionalProperties: true
+                    description: 'Additional sale-level tax metadata.'
+                    example:
+                        customer:
+                            customerCode:
+                                classCode: 'customerClassCode'
+                                value: 'customerCode'
+                        seller:
+                            company: 'companyCode'
+                taxTotal:
+                    type: number
+                    description: Total calculated tax. Only populated in response.
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Item'
+                shipments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Shipment'
+            required:
+                - transactionId
+                - documentNumber
+                - documentDate
+                - items
+                - shipments
+
+        Item:
+            properties:
+                id:
+                    type: string
+                priceAmount:
+                    type: number
+                discountAmount:
+                    type: number
+                quantity:
+                    type: number
+                taxTotal:
+                    type: number
+                    description: Total calculated tax for given item. Only populated in response.
+                shippingAddress:
+                    $ref: '#/components/schemas/Address'
+                billingAddress:
+                    $ref: '#/components/schemas/Address'
+                sellerAddress:
+                    $ref: '#/components/schemas/Address'
+                warehouseAddress:
+                    $ref: '#/components/schemas/Address'
+                taxMetadata:
+                    type: object
+                    additionalProperties: true
+                    description: 'Additional item-level tax metadata.'
+                    example:
+                        customer:
+                            customerCode:
+                                classCode: 'customerClassCode'
+                                value: 'customerCode'
+                        seller:
+                            company: 'companyCode'
+                        product:
+                            productClass: 'productClass'
+            required:
+                - id
+                - priceAmount
+                - discountAmount
+                - quantity
+                - shippingAddress
+
+        Shipment:
+            properties:
+                id:
+                    type: string
+                priceAmount:
+                    type: number
+                discountAmount:
+                    type: number
+                taxTotal:
+                    type: number
+                    description: Total calculated tax for given shipment. Only populated in response.
+                shippingAddress:
+                    $ref: '#/components/schemas/Address'
+                billingAddress:
+                    $ref: '#/components/schemas/Address'
+            required:
+                - id
+                - priceAmount
+                - discountAmount
+                - shippingAddress
+
+        Address:
+            properties:
+                address1:
+                    type: string
+                address2:
+                    type: string
+                city:
+                    type: string
+                state:
+                    type: string
+                country:
+                    type: string
+                zipCode:
+                    type: string
+            required:
+                - address1
+                - address2
+                - city
+                - zipCode
+                - country
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

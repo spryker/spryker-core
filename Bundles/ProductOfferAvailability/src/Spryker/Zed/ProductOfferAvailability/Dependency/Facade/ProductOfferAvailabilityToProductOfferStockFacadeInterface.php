@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 
@@ -18,4 +19,11 @@ interface ProductOfferAvailabilityToProductOfferStockFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
     public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>|null
+     */
+    public function findProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ArrayObject;
 }

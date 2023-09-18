@@ -353,4 +353,56 @@ class StockAddressFacadeTest extends Unit
 
         return $stockPostUpdatePluginMock;
     }
+
+    /**
+     * @return void
+     */
+    public function testExpandStockWillExpandStockTransferWithStockAddressTransfer(): void
+    {
+        // Arrange
+        $countryTransfer = $this->tester->haveCountry();
+        $stockTransfer = $this->tester->haveStock();
+        $stockAddressTransfer = $this->tester->haveStockAddress([
+            StockAddressTransfer::ID_STOCK => $stockTransfer->getIdStockOrFail(),
+            StockAddressTransfer::COUNTRY => $countryTransfer->toArray(),
+        ]);
+
+        // Act
+        $stockTransfer = $this->getStockAddressFacade()->expandStockTransferWithStockAddress($stockTransfer);
+
+        // Assert
+        $this->assertNotNull($stockTransfer->getAddress());
+        $this->assertEqualsCanonicalizing($stockAddressTransfer->toArray(), $stockTransfer->getAddress()->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testStockTransferProductOfferStockExpanderWillNotExpandIfIdStockNotProvided(): void
+    {
+        // Arrange
+        $stockTransfer = $this->tester->haveStock();
+        $stockTransfer->setIdStock(null);
+
+        // Act
+        $stockTransfer = $this->getStockAddressFacade()->expandStockTransferWithStockAddress($stockTransfer);
+
+        // Assert
+        $this->assertNull($stockTransfer->getAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testStockTransferProductOfferStockExpanderWillNotExpandIfNoStockAddressIsFound(): void
+    {
+        // Arrange
+        $stockTransfer = $this->tester->haveStock();
+
+        // Act
+        $stockTransfer = $this->getStockAddressFacade()->expandStockTransferWithStockAddress($stockTransfer);
+
+        // Assert
+        $this->assertNull($stockTransfer->getAddress());
+    }
 }

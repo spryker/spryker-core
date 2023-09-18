@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException;
+use Spryker\Zed\ProductOfferStock\ProductOfferStockDependencyProvider;
+use Spryker\Zed\ProductOfferStockExtension\Dependency\Plugin\StockTransferProductOfferStockExpanderPluginInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
@@ -236,7 +238,7 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOfferStocksReturnsNullIfProductOfferNotExists(): void
+    public function testGetProductOfferStocksThrowsExceptionIfProductOfferNotExists(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
@@ -250,6 +252,66 @@ class ProductOfferStockFacadeTest extends Unit
         // Act
         $productOfferStockTransfers = $this->tester->getFacade()
             ->getProductOfferStocks($productOfferStockRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductOfferStocksReturnsCorrectAmountOfStocks(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $stocksAmount = 5;
+        for ($i = 1; $i <= $stocksAmount; $i++) {
+            $this->tester->haveProductOfferStock([
+                ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+                ProductOfferStockTransfer::STOCK => [
+                    StockTransfer::STORE_RELATION => [
+                        StoreRelationTransfer::ID_STORES => [
+                            $storeTransfer->getIdStore(),
+                        ],
+                    ],
+                ],
+            ]);
+        }
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setStore($storeTransfer);
+
+        // Act
+        $productOfferStockTransfers = $this->tester->getFacade()
+            ->findProductOfferStocks($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertSame(
+            $stocksAmount,
+            $productOfferStockTransfers->count(),
+            'Expects that correct amount of stocks is returned.',
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductOfferStocksReturnsNullIfProductOfferNotExists(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference('not-existing-product-offer-reference')
+            ->setStore($storeTransfer);
+
+        // Act
+        $productOfferStockTransfers = $this->tester->getFacade()
+            ->findProductOfferStocks($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertNull(
+            $productOfferStockTransfers,
+            'Expects that null is returned if product offer not exists.',
+        );
     }
 
     /**
@@ -327,5 +389,32 @@ class ProductOfferStockFacadeTest extends Unit
         $this->assertEquals($productOfferStockTransfers->offsetGet(0)->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
         $this->assertEquals($productOfferStockTransfers->offsetGet(0)->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
         $this->assertEquals($productOfferStockTransfers->offsetGet(0)->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testStockTransferIsExpandedWithStockAddressWhenStockEntityToStockMapperIsCalled(): void
+    {
+        // Arrange
+        $stockTransferProductOfferStockExpanderPluginMock = $this->createMock(StockTransferProductOfferStockExpanderPluginInterface::class);
+
+        $this->tester->setDependency(ProductOfferStockDependencyProvider::PLUGINS_STOCK_TRANSFER_PRODUCT_OFFER_STOCK_EXPANDER, [
+            $stockTransferProductOfferStockExpanderPluginMock,
+        ]);
+
+        $storeTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStockWithProductOfferAndStoreAttached($productOfferTransfer, $storeTransfer);
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setStore($storeTransfer);
+
+        // Expects
+        $stockTransferProductOfferStockExpanderPluginMock->expects($this->once())->method('expand');
+
+        // Act
+        $this->tester->getFacade()->findProductOfferStocks($productOfferStockRequestTransfer);
     }
 }

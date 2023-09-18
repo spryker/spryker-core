@@ -59,6 +59,22 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>|null
+     */
+    public function findProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ArrayObject
+    {
+        return $this->getFactory()
+            ->createProductOfferStockReader()
+            ->findProductOfferStocks($productOfferStockRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer

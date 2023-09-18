@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferAvailability\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferAvailability\Business\Availability\ProductOfferAvailabilityProvider;
 use Spryker\Zed\ProductOfferAvailability\Business\Availability\ProductOfferAvailabilityProviderInterface;
+use Spryker\Zed\ProductOfferAvailability\Business\Expander\ItemExpander;
+use Spryker\Zed\ProductOfferAvailability\Business\Expander\ItemExpanderInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
@@ -53,6 +55,17 @@ class ProductOfferAvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getProductOfferStockFacade(),
             $this->getProductOfferFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferAvailability\Business\Expander\ItemExpanderInterface
+     */
+    public function createItemExpander(): ItemExpanderInterface
+    {
+        return new ItemExpander(
+            $this->getOmsFacade(),
+            $this->getProductOfferStockFacade(),
         );
     }
 }

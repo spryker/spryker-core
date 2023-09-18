@@ -46,4 +46,15 @@ interface MerchantProfileAddressMapperInterface
         SpyMerchantProfileAddress $merchantProfileAddressEntity,
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer
     ): MerchantProfileAddressTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $merchantProfileAddressEntities
+     * @param array $merchantProfileAddressTransfers
+     *
+     * @return array
+     */
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfersIndexedByMerchantReference(
+        ObjectCollection $merchantProfileAddressEntities,
+        array $merchantProfileAddressTransfers
+    ): array;
 }

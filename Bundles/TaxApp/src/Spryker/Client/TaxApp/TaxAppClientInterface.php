@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\TaxApp;
+
+use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
+use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
+
+interface TaxAppClientInterface
+{
+    /**
+     * Specification:
+     * - Sends a request to a foreign Tax Calculation service.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer $taxCalculationRequest
+     * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxCalculationResponseTransfer
+     */
+    public function requestTaxQuotation(
+        TaxCalculationRequestTransfer $taxCalculationRequest,
+        TaxAppConfigTransfer $taxAppConfigTransfer,
+        StoreTransfer $storeTransfer
+    ): TaxCalculationResponseTransfer;
+}

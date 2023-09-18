@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferAvailability\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -31,5 +33,38 @@ class ProductOfferAvailabilityFacade extends AbstractFacade implements ProductOf
         return $this->getFactory()
             ->createProductOfferAvailabilityProvider()
             ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderItemsWithMerchantStockAddressSplitByStockAvailability(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createItemExpander()
+            ->expandOrderItemsWithMerchantStockAddressSplitByStockAvailability($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function expandCalculableObjectItemsWithMerchantStockAddressSplitByStockAvailability(
+        CalculableObjectTransfer $quoteTransfer
+    ): CalculableObjectTransfer {
+        return $this->getFactory()
+            ->createItemExpander()
+            ->expandCalculableObjectItemsWithMerchantStockAddressSplitByStockAvailability($quoteTransfer);
     }
 }
