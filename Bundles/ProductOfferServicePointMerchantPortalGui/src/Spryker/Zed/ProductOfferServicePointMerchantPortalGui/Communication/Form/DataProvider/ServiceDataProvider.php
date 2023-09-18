@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Communication\Form\DataProvider;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointSearchConditionsTransfer;
 use Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Dependency\Facade\ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface;
+use Spryker\Zed\ProductOfferServicePointMerchantPortalGui\ProductOfferServicePointMerchantPortalGuiConfig;
 
 class ServiceDataProvider implements ServiceDataProviderInterface
 {
@@ -29,11 +31,20 @@ class ServiceDataProvider implements ServiceDataProviderInterface
     protected ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface $servicePointFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Dependency\Facade\ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface $servicePointFacade
+     * @var \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\ProductOfferServicePointMerchantPortalGuiConfig
      */
-    public function __construct(ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface $servicePointFacade)
-    {
+    protected ProductOfferServicePointMerchantPortalGuiConfig $productOfferServicePointMerchantPortalGuiConfig;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\Dependency\Facade\ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface $servicePointFacade
+     * @param \Spryker\Zed\ProductOfferServicePointMerchantPortalGui\ProductOfferServicePointMerchantPortalGuiConfig $productOfferServicePointMerchantPortalGuiConfig
+     */
+    public function __construct(
+        ProductOfferServicePointMerchantPortalGuiToServicePointFacadeInterface $servicePointFacade,
+        ProductOfferServicePointMerchantPortalGuiConfig $productOfferServicePointMerchantPortalGuiConfig
+    ) {
         $this->servicePointFacade = $servicePointFacade;
+        $this->productOfferServicePointMerchantPortalGuiConfig = $productOfferServicePointMerchantPortalGuiConfig;
     }
 
     /**
@@ -46,6 +57,14 @@ class ServiceDataProvider implements ServiceDataProviderInterface
         $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())->setServicePointSearchConditions(
             (new ServicePointSearchConditionsTransfer())->setName($searchTerm)->setKey($searchTerm),
         );
+
+        $servicePointChoicesLimit = $this->productOfferServicePointMerchantPortalGuiConfig->getServicePointChoicesLimit();
+
+        if ($servicePointChoicesLimit) {
+            $servicePointCriteriaTransfer->setPagination(
+                (new PaginationTransfer())->setOffset(0)->setLimit($servicePointChoicesLimit),
+            );
+        }
 
         $servicePointCollectionTransfer = $this->servicePointFacade->getServicePointCollection($servicePointCriteriaTransfer);
 

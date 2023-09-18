@@ -11,4 +11,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferServicePointMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - Defines max amount of choices displayed for service point select field.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getServicePointChoicesLimit(): ?int
+    {
+        return null;
+    }
 }

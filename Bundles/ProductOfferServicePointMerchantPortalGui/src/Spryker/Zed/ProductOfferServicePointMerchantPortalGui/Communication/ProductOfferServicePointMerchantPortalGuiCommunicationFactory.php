@@ -68,7 +68,10 @@ class ProductOfferServicePointMerchantPortalGuiCommunicationFactory extends Abst
      */
     public function createServiceDataProvider(): ServiceDataProviderInterface
     {
-        return new ServiceDataProvider($this->getServicePointFacade());
+        return new ServiceDataProvider(
+            $this->getServicePointFacade(),
+            $this->getConfig(),
+        );
     }
 
     /**

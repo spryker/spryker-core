@@ -4,6 +4,7 @@
     <transfer name="ServicePointCriteria" strict="true">
         <property name="servicePointSearchConditions" type="ServicePointSearchConditions"/>
         <property name="servicePointConditions" type="ServicePointConditions"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ServicePointSearchConditions" strict="true">
@@ -65,6 +66,11 @@
 
     <transfer name="ProductOffer">
         <property name="services" type="Service[]" singular="service" strict="true"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>
