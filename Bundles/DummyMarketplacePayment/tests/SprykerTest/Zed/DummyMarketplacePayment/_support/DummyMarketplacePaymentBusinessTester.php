@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method void pause()
  * @method \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\DummyMarketplacePayment\PHPMD)
  */
 class DummyMarketplacePaymentBusinessTester extends Actor
 {

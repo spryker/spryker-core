@@ -14,6 +14,8 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -32,6 +34,13 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
      * @var string
      */
     protected const PAYMENT_METHOD = 'invoice';
+
+    /**
+     * @uses \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm::PAYMENT_METHOD_INVOICE
+     *
+     * @var string
+     */
+    protected const PAYMENT_SELECTION = 'paymentSelection';
 
     /**
      * @return string
@@ -85,7 +94,8 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addDateOfBirth($builder);
+        $this->addDateOfBirth($builder)
+            ->resetDataForUnselectedForm($builder);
     }
 
     /**
@@ -114,6 +124,31 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                 ],
             ],
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function resetDataForUnselectedForm(FormBuilderInterface $builder)
+    {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            if ($event->getForm()->getParent() === null) {
+                return;
+            }
+
+            if (!$event->getForm()->getParent()->has(static::PAYMENT_SELECTION)) {
+                return;
+            }
+
+            $paymentSelection = $event->getForm()->getParent()->get(static::PAYMENT_SELECTION)->getData();
+            if ($paymentSelection !== $this->getPropertyPath()) {
+                $event->setData([]);
+            }
+        });
 
         return $this;
     }
