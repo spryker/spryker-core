@@ -10,8 +10,6 @@ namespace Spryker\Zed\DynamicEntity\Persistence;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Propel\Runtime\Map\DatabaseMap;
 use Propel\Runtime\Propel;
-use Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface;
-use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilder;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilderInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFieldCreationFilter;
@@ -99,14 +97,6 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createDynamicEntityFieldUpdatePreValidator(): DynamicEntityPreValidatorInterface
     {
         return new DynamicEntityFieldUpdatePreValidator();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface
-     */
-    public function getConnection(): DynamicEntityToConnectionInterface
-    {
-        return $this->getProvidedDependency(DynamicEntityDependencyProvider::CONNECTION);
     }
 
     /**

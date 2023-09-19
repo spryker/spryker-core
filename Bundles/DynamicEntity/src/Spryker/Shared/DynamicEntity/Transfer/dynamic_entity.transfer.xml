@@ -110,6 +110,15 @@
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="DynamicEntityPostEditRequest" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="rawDynamicEntities" type="RawDynamicEntity[]" singular="rawDynamicEntity"/>
+    </transfer>
+
+    <transfer name="RawDynamicEntity" strict="true">
+        <property name="fields" type="array" singular="field"/>
+    </transfer>
+
     <transfer name="DynamicEntityConfigurationCollectionRequest" strict="true">
         <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
     </transfer>
@@ -117,5 +126,9 @@
     <transfer name="DynamicEntityConfigurationCollectionResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
         <property name="dynamicEntityConfigurations" type="DynamicEntityConfiguration[]" singular="dynamicEntityConfiguration"/>
+    </transfer>
+
+    <transfer name="DynamicEntityPostEditResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 </transfers>

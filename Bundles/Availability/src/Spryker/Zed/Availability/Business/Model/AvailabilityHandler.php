@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -16,6 +18,7 @@ use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
@@ -32,6 +35,16 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @var string
      */
     protected const PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this ID: %d';
+
+    /**
+     * @var string
+     */
+    protected const TABLE_NAME = 'spy_stock_product';
+
+    /**
+     * @var string
+     */
+    protected const FK_PRODUCT = 'fk_product';
 
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
@@ -64,12 +77,18 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     */
+    protected AvailabilityToProductFacadeInterface $productFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManager
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculator
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
@@ -77,7 +96,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         ProductAvailabilityCalculatorInterface $availabilityCalculator,
         AvailabilityToTouchFacadeInterface $touchFacade,
         AvailabilityToStockFacadeInterface $stockFacade,
-        AvailabilityToEventFacadeInterface $eventFacade
+        AvailabilityToEventFacadeInterface $eventFacade,
+        AvailabilityToProductFacadeInterface $productFacade
     ) {
         $this->availabilityCalculator = $availabilityCalculator;
         $this->availabilityRepository = $availabilityRepository;
@@ -85,6 +105,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->touchFacade = $touchFacade;
         $this->stockFacade = $stockFacade;
         $this->eventFacade = $eventFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -243,6 +264,28 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    public function updateAvailabilityByDynamicEntityRequest(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer {
+        if ($dynamicEntityPostEditRequestTransfer->getTableNameOrFail() !== static::TABLE_NAME) {
+            return $this->createDynamicEntityPostEditResponseTransfer();
+        }
+
+        foreach ($dynamicEntityPostEditRequestTransfer->getRawDynamicEntities() as $rawDynamicEntity) {
+            $productConcreteTransfer = $this->productFacade->findProductConcreteById($rawDynamicEntity->getFields()[static::FK_PRODUCT]);
+            if ($productConcreteTransfer !== null) {
+                $this->updateAvailability($productConcreteTransfer->getSkuOrFail());
+            }
+        }
+
+        return $this->createDynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
      * @param string $concreteSku
      *
      * @return void
@@ -329,5 +372,13 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             AvailabilityEvents::AVAILABILITY_NOTIFICATION,
             $availabilityNotificationDataTransfer,
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    protected function createDynamicEntityPostEditResponseTransfer(): DynamicEntityPostEditResponseTransfer
+    {
+        return new DynamicEntityPostEditResponseTransfer();
     }
 }

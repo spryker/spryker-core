@@ -103,6 +103,7 @@
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int"/>
         <property name="stores" type="Store[]" singular="stores"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="CartItemQuantity">
@@ -141,6 +142,22 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="DynamicEntityPostEditRequest" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="rawDynamicEntities" type="RawDynamicEntity[]" singular="rawDynamicEntity"/>
+    </transfer>
+
+    <transfer name="RawDynamicEntity" strict="true">
+        <property name="fields" type="array" singular="field"/>
+    </transfer>
+
+    <transfer name="DynamicEntityPostEditResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
     </transfer>
 
 </transfers>

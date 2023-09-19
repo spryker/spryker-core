@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Availability;
 
 use Codeception\Actor;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 
 /**
  * @method void wantToTest($text)
@@ -22,9 +24,25 @@ use Codeception\Actor;
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Availability\PHPMD)
  */
 class AvailabilityBusinessTester extends Actor
 {
     use _generated\AvailabilityBusinessTesterActions;
+
+    /**
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
+     */
+    public function getAvailabilityQuery(): SpyAvailabilityQuery
+    {
+        return SpyAvailabilityQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function getAvailabilityAbstractQuery(): SpyAvailabilityAbstractQuery
+    {
+        return SpyAvailabilityAbstractQuery::create();
+    }
 }

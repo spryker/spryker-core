@@ -320,6 +320,7 @@
         "spryker/dummy-payment": "*",
         "spryker/dynamic-entity": "*",
         "spryker/dynamic-entity-backend-api": "*",
+        "spryker/dynamic-entity-extension": "*",
         "spryker/dynamic-entity-gui": "*",
         "spryker/egulias": "*",
         "spryker/elastica": "*",

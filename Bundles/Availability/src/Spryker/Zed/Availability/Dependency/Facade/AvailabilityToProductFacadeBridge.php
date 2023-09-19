@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class AvailabilityToProductFacadeBridge implements AvailabilityToProductFacadeInterface
 {
     /**
@@ -40,5 +42,15 @@ class AvailabilityToProductFacadeBridge implements AvailabilityToProductFacadeIn
     public function hasProductConcrete($sku)
     {
         return $this->productFacade->hasProductConcrete($sku);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer
+    {
+        return $this->productFacade->findProductConcreteById($idProduct);
     }
 }

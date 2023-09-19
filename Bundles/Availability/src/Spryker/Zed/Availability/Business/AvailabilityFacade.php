@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
@@ -381,5 +383,22 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createAvailabilityWishlistItemExpander()
             ->expandWishlistItemWithSellable($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    public function updateAvailabilityByDynamicEntityRequest(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer {
+        return $this->getFactory()
+            ->createAvailabilityHandler()
+            ->updateAvailabilityByDynamicEntityRequest($dynamicEntityPostEditRequestTransfer);
     }
 }

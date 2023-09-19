@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -69,4 +71,13 @@ interface AvailabilityHandlerInterface
         string $abstractSku,
         StoreTransfer $storeTransfer
     ): ProductAbstractAvailabilityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    public function updateAvailabilityByDynamicEntityRequest(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer;
 }

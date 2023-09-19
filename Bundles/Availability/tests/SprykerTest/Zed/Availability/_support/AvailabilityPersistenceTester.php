@@ -31,7 +31,7 @@ use Spryker\DecimalObject\Decimal;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Availability\PHPMD)
  */
 class AvailabilityPersistenceTester extends Actor
 {

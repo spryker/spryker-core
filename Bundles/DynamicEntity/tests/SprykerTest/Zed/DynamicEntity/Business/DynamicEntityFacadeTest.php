@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
@@ -21,6 +22,9 @@ use Spryker\Zed\DynamicEntity\Business\DynamicEntityBusinessFactory;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacade;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
+use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
+use Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface;
+use Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostUpdatePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -279,6 +283,41 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCreateDynamicEntityConfigurationCollectionExecutesDynamicEntityPostCreatePlugins(): void
+    {
+        // Arrange
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'table_alias' => static::FOO_TABLE_ALIAS_2,
+                    'table_name' => static::FOO_TABLE_NAME,
+                    'is_active' => true,
+                    'definition' => static::FOO_DEFINITION,
+                ]),
+        );
+
+        $dynamicEntityPostCreatePluginMock = $this
+            ->getMockBuilder(DynamicEntityPostCreatePluginInterface::class)
+            ->getMock();
+
+        $dynamicEntityPostCreatePluginMock
+            ->expects($this->once())
+            ->method('postCreate')
+            ->willReturn(new DynamicEntityPostEditResponseTransfer());
+
+        $this->tester->setDependency(
+            DynamicEntityDependencyProvider::PLUGINS_DYNAMIC_ENTITY_POST_CREATE,
+            [$dynamicEntityPostCreatePluginMock],
+        );
+
+        // Act
+        $this->dynamicEntityFacade->createDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateDynamicEntityCollectionUpdatesTheRecord(): void
     {
         //Arrange
@@ -407,6 +446,44 @@ class DynamicEntityFacadeTest extends Unit
         );
         $this->assertTrue($updatedFooEntity->getIsActive());
         $this->assertEquals($fooEntity->getIsActive(), $updatedFooEntity->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDynamicEntityConfigurationCollectionExecutesDynamicEntityPostUpdatePlugins(): void
+    {
+        // Arrange
+        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
+            ->find()
+            ->getData()[0];
+
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'table_name' => static::FOO_TABLE_NAME,
+                ]),
+        );
+
+        $dynamicEntityPostUpdatePluginMock = $this
+            ->getMockBuilder(DynamicEntityPostUpdatePluginInterface::class)
+            ->getMock();
+
+        $dynamicEntityPostUpdatePluginMock
+            ->expects($this->once())
+            ->method('postUpdate')
+            ->willReturn(new DynamicEntityPostEditResponseTransfer());
+
+        $this->tester->setDependency(
+            DynamicEntityDependencyProvider::PLUGINS_DYNAMIC_ENTITY_POST_UPDATE,
+            [$dynamicEntityPostUpdatePluginMock],
+        );
+
+        // Act
+        $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
     }
 
     /**

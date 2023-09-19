@@ -25,7 +25,7 @@ use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\Availability\PHPMD)
  */
 class AvailabilityClientTester extends Actor
 {

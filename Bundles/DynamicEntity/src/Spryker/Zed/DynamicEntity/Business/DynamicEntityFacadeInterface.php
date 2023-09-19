@@ -38,6 +38,7 @@ interface DynamicEntityFacadeInterface
      * - Saves a collection of entities based on the provided data.
      * - Filters passed data based on entity definition in `spy_dynamic_entity_configuration.definition`.
      * - Validates data types based on entity definition in `spy_dynamic_entity_configuration.definition`.
+     * - Executes {@link \Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface} plugin stack.
      *
      * @api
      *
@@ -54,6 +55,7 @@ interface DynamicEntityFacadeInterface
      * - Updates a collection of entities based on the provided data.
      * - Filters passed data based on entity definition in `spy_dynamic_entity_configuration.definition`.
      * - Validates data types based on entity definition in `spy_dynamic_entity_configuration.definition`.
+     * - Executes {@link \Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostUpdatePluginInterface} plugin stack.
      *
      * @api
      *

@@ -16,6 +16,7 @@ use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
@@ -160,6 +161,7 @@ class AvailabilityHandlerTest extends Unit
             $touchFacade,
             $availabilityToStockFacade,
             $availabilityToEventFacade,
+            $this->getProductFacadeMock(),
         );
     }
 
@@ -214,6 +216,15 @@ class AvailabilityHandlerTest extends Unit
     protected function createAvailabilityToEventFacade(): AvailabilityToEventFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     */
+    protected function getProductFacadeMock(): AvailabilityToProductFacadeInterface
+    {
+        return $this->getMockBuilder(AvailabilityToProductFacadeInterface::class)
             ->getMock();
     }
 

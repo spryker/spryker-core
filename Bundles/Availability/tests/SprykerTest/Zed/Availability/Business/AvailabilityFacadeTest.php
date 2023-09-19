@@ -10,11 +10,13 @@ namespace SprykerTest\Zed\Availability\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RawDynamicEntityTransfer;
 use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -78,6 +80,21 @@ class AvailabilityFacadeTest extends Unit
      * @var string
      */
     protected const COL_QUANTITY = 'quantity';
+
+    /**
+     * @var string
+     */
+    protected const STOCK_PRODUCT_TABLE_NAME = 'spy_stock_product';
+
+    /**
+     * @var string
+     */
+    protected const TEST_TABLE_NAME = 'spy_test';
+
+    /**
+     * @var string
+     */
+    protected const FK_PRODUCT = 'fk_product';
 
     /**
      * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
@@ -325,11 +342,11 @@ class AvailabilityFacadeTest extends Unit
         $this->getAvailabilityFacade()->updateAvailability(static::CONCRETE_SKU);
 
         // Assert
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
+        $availabilityEntity = $this->tester->getAvailabilityQuery()->findOneBySku(static::CONCRETE_SKU);
         $this->assertNotNull($availabilityEntity);
         $this->assertSame(50, (new Decimal($availabilityEntity->getQuantity()))->toInt());
 
-        $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku(static::ABSTRACT_SKU);
+        $availabilityAbstractEntity = $this->tester->getAvailabilityAbstractQuery()->findOneByAbstractSku(static::ABSTRACT_SKU);
         $this->assertNotNull($availabilityAbstractEntity);
         $this->assertSame(50, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
     }
@@ -353,7 +370,7 @@ class AvailabilityFacadeTest extends Unit
         $this->getAvailabilityFacade()->updateAvailability(static::CONCRETE_SKU);
 
         // Assert
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
+        $availabilityEntity = $this->tester->getAvailabilityQuery()->findOneBySku(static::CONCRETE_SKU);
         $this->assertSame(50, (new Decimal($availabilityEntity->getQuantity()))->toInt());
     }
 
@@ -375,10 +392,10 @@ class AvailabilityFacadeTest extends Unit
         $this->getAvailabilityFacade()->updateAvailability($productTransfer->getSku());
 
         // Assert
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku($productTransfer->getSku());
+        $availabilityEntity = $this->tester->getAvailabilityQuery()->findOneBySku($productTransfer->getSku());
         $this->assertNotNull($availabilityEntity);
         $this->assertSame(0, (new Decimal($availabilityEntity->getQuantity()))->toInt());
-        $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku($productTransfer->getAbstractSku());
+        $availabilityAbstractEntity = $this->tester->getAvailabilityAbstractQuery()->findOneByAbstractSku($productTransfer->getAbstractSku());
         $this->assertNotNull($availabilityAbstractEntity);
         $this->assertSame(0, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
     }
@@ -854,6 +871,78 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($wishlsitItemTransfer->getIsSellable());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAvailabilityByDynamicEntityRequestDoesNotUpdateAvailabilityForWrongTableName(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $stockProductEntity = $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 5],
+            $storeTransfer,
+        );
+
+        $stockProductEntity->setQuantity(50);
+        $stockProductEntity->save();
+
+        $dynamicEntityPostEditRequestTransfer = new DynamicEntityPostEditRequestTransfer();
+        $dynamicEntityPostEditRequestTransfer->setTableName(static::TEST_TABLE_NAME);
+        $dynamicEntityPostEditRequestTransfer->addRawDynamicEntity(
+            (new RawDynamicEntityTransfer())->setFields([static::FK_PRODUCT => $stockProductEntity->getFkProduct()]),
+        );
+
+        // Act
+        $this->getAvailabilityFacade()->updateAvailabilityByDynamicEntityRequest($dynamicEntityPostEditRequestTransfer);
+
+        // Assert
+        $availabilityEntity = $this->tester->getAvailabilityQuery()->findOneBySku(static::CONCRETE_SKU);
+        $this->assertNotNull($availabilityEntity);
+        $this->assertSame(5, (new Decimal($availabilityEntity->getQuantity()))->toInt());
+
+        $availabilityAbstractEntity = $this->tester->getAvailabilityAbstractQuery()->findOneByAbstractSku(static::ABSTRACT_SKU);
+        $this->assertNotNull($availabilityAbstractEntity);
+        $this->assertSame(5, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAvailabilityByDynamicEntityRequestUpdatesAvailabilityForValidTableName(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $stockProductEntity = $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 5],
+            $storeTransfer,
+        );
+
+        $stockProductEntity->setQuantity(50);
+        $stockProductEntity->save();
+
+        $dynamicEntityPostEditRequestTransfer = new DynamicEntityPostEditRequestTransfer();
+        $dynamicEntityPostEditRequestTransfer->setTableName(static::STOCK_PRODUCT_TABLE_NAME);
+        $dynamicEntityPostEditRequestTransfer->addRawDynamicEntity(
+            (new RawDynamicEntityTransfer())->setFields([static::FK_PRODUCT => $stockProductEntity->getFkProduct()]),
+        );
+
+        // Act
+        $this->getAvailabilityFacade()->updateAvailabilityByDynamicEntityRequest($dynamicEntityPostEditRequestTransfer);
+
+        // Assert
+        $availabilityEntity = $this->tester->getAvailabilityQuery()->findOneBySku(static::CONCRETE_SKU);
+        $this->assertNotNull($availabilityEntity);
+        $this->assertSame(50, (new Decimal($availabilityEntity->getQuantity()))->toInt());
+
+        $availabilityAbstractEntity = $this->tester->getAvailabilityAbstractQuery()->findOneByAbstractSku(static::ABSTRACT_SKU);
+        $this->assertNotNull($availabilityAbstractEntity);
+        $this->assertSame(50, (new Decimal($availabilityAbstractEntity->getQuantity()))->toInt());
     }
 
     /**

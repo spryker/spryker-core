@@ -14,28 +14,6 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 interface DynamicEntityEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    public function createDynamicEntityCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityCollectionResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    public function updateDynamicEntityCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityCollectionResponseTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
@@ -52,4 +30,30 @@ interface DynamicEntityEntityManagerInterface
     public function updateDynamicEntityConfiguration(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): DynamicEntityConfigurationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function createDynamicEntityCollection(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function updateDynamicEntityCollection(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityCollectionResponseTransfer;
 }

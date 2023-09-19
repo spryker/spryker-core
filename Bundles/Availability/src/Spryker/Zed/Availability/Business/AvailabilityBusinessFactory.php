@@ -78,6 +78,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getStockFacade(),
             $this->getEventFacade(),
+            $this->getProductFacade(),
         );
     }
 

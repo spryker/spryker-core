@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
@@ -333,4 +335,21 @@ interface AvailabilityFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function expandWishlistItemWithSellable(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * Specification:
+     * - Requires `DynamicEntityPostEditRequest.tableName` to be set.
+     * - Checks if `DynamicEntityPostEditRequest.tableName` is set to `spy_stock_product`.
+     * - Requires `RawDynamicEntity.fields` to be set for each element in `DynamicEntityPostEditRequest.rawDynamicEntities`.
+     * - Checks if `spy_stock_product` is updated and updates availability.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    public function updateAvailabilityByDynamicEntityRequest(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer;
 }

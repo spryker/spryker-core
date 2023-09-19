@@ -37,6 +37,8 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Definition\RequiredFields
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\ValidatorRuleInterface;
 use Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriter;
 use Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface;
+use Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface;
+use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -66,6 +68,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createDynamicEntityValidator(),
             $this->createDynamicEntityUpdateValidator(),
+            $this->getDynamicEntityPostCreatePlugins(),
+            $this->getDynamicEntityPostUpdatePlugins(),
+            $this->getConnection(),
         );
     }
 
@@ -164,6 +169,22 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createDecimalFeildTypeValidator(): DynamicEntityValidatorInterface
     {
         return new DecimalFieldTypeValidator();
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface>
+     */
+    public function getDynamicEntityPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(DynamicEntityDependencyProvider::PLUGINS_DYNAMIC_ENTITY_POST_CREATE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostUpdatePluginInterface>
+     */
+    public function getDynamicEntityPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(DynamicEntityDependencyProvider::PLUGINS_DYNAMIC_ENTITY_POST_UPDATE);
     }
 
     /**
@@ -312,5 +333,13 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createResourceNameValidatorRule(): ValidatorRuleInterface
     {
         return new ResourceNameValidatorRule();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface
+     */
+    public function getConnection(): DynamicEntityToConnectionInterface
+    {
+        return $this->getProvidedDependency(DynamicEntityDependencyProvider::CONNECTION);
     }
 }

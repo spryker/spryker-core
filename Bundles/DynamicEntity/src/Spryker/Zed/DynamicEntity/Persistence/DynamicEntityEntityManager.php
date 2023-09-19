@@ -61,40 +61,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE = 'dynamic_entity.validation.entity_not_found_or_identifier_is_not_creatable';
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    public function createDynamicEntityCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityCollectionResponseTransfer {
-        $this->startTransaction();
-        $dynamicEntityCollectionResponseTransfer = $this->executeDynamicEntityCollectionCreating($dynamicEntityCollectionRequestTransfer, $dynamicEntityConfigurationTransfer);
-        $this->endTransaction($dynamicEntityCollectionResponseTransfer);
-
-        return $dynamicEntityCollectionResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    public function updateDynamicEntityCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityCollectionResponseTransfer {
-        $this->startTransaction();
-        $dynamicEntityCollectionResponseTransfer = $this->executeDynamicEntityCollectionUpdating($dynamicEntityCollectionRequestTransfer, $dynamicEntityConfigurationTransfer);
-        $this->endTransaction($dynamicEntityCollectionResponseTransfer);
-
-        return $dynamicEntityCollectionResponseTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
@@ -144,7 +110,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
-    protected function executeDynamicEntityCollectionCreating(
+    public function createDynamicEntityCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): DynamicEntityCollectionResponseTransfer {
@@ -202,7 +168,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
-    protected function executeDynamicEntityCollectionUpdating(
+    public function updateDynamicEntityCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): DynamicEntityCollectionResponseTransfer {
@@ -526,28 +492,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         ));
 
         return $dynamicEntityTransfer;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function startTransaction(): bool
-    {
-        return $this->getFactory()->getConnection()->beginTransaction();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     *
-     * @return bool
-     */
-    protected function endTransaction(DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer): bool
-    {
-        if (count($dynamicEntityCollectionResponseTransfer->getErrors()) > 0) {
-            return $this->getFactory()->getConnection()->rollBack();
-        }
-
-        return $this->getFactory()->getConnection()->commit();
     }
 
     /**
