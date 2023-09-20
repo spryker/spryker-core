@@ -601,55 +601,45 @@ class FlysystemServiceTest extends Unit
      */
     protected function directoryCleanup(): void
     {
-        $file = $this->getLocalDocumentFile();
-        if (is_file($file)) {
-            unlink($file);
+        foreach ($this->getFileListForCleanup() as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
         }
 
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
-        if (is_file($file)) {
-            unlink($file);
+        foreach ($this->getDirectoryListForCleanup() as $dir) {
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
         }
+    }
 
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
+    /**
+     * @return list<string>
+     */
+    protected function getFileListForCleanup(): array
+    {
+        return [
+            $this->getLocalDocumentFile(),
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT,
+            $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE,
+            $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT,
+        ];
+    }
 
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-        $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
-        if (is_file($file)) {
-            unlink($file);
-        }
-
-        $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-        $dir = $this->testDataFileSystemRootDirectory . 'images/';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-        $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
-        if (is_file($file)) {
-            unlink($file);
-        }
+    /**
+     * @return list<string>
+     */
+    protected function getDirectoryListForCleanup(): array
+    {
+        return [
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT,
+            $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE,
+            $this->testDataFileSystemRootDirectory . 'images/',
+        ];
     }
 
     /**

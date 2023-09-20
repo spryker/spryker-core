@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\DiscountPromotion\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class FilterDiscountPromotionItemsTest extends Unit
     /**
      * @var \SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester
      */
-    protected $tester;
+    protected DiscountPromotionBusinessTester $tester;
 
     /**
      * @return void

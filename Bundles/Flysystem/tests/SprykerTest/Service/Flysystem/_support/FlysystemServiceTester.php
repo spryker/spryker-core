@@ -25,7 +25,7 @@ use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\Flysystem\PHPMD)
  *
  * @method \Spryker\Service\Flysystem\FlysystemService getService()
  */

@@ -257,7 +257,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->delete($fileSystemDeleteTransfer);
 
-        $this->assertFileDoesNotExist($this->getDocumentFIleName());
+        $this->assertFileDoesNotExist($this->getDocumentFileName());
     }
 
     /**
@@ -336,7 +336,7 @@ class FileSystemServiceTest extends Unit
         $fileSystemQueryTransfer = $this->createDocumentQueryTransfer();
         $this->createDocumentFile();
 
-        $file = $this->getDocumentFIleName();
+        $file = $this->getDocumentFileName();
         $sizeExpected = filesize($file);
 
         $size = $this->fileSystemService->getSize($fileSystemQueryTransfer);
@@ -477,7 +477,7 @@ class FileSystemServiceTest extends Unit
             fclose($stream);
         }
 
-        $file = $this->getDocumentFIleName();
+        $file = $this->getDocumentFileName();
         $content = file_get_contents($file);
 
         $this->assertFileExists($file);
@@ -539,7 +539,7 @@ class FileSystemServiceTest extends Unit
             mkdir($dir, 0777, true);
         }
 
-        $file = $this->getDocumentFIleName();
+        $file = $this->getDocumentFileName();
 
         $h = fopen($file, 'w');
         fwrite($h, $content ?: static::FILE_CONTENT);
@@ -574,7 +574,7 @@ class FileSystemServiceTest extends Unit
      */
     protected function getDocumentFileContent()
     {
-        $file = $this->getDocumentFIleName();
+        $file = $this->getDocumentFileName();
         if (!is_file($file)) {
             return false;
         }
@@ -587,55 +587,45 @@ class FileSystemServiceTest extends Unit
      */
     protected function directoryCleanup(): void
     {
-        $file = $this->getDocumentFIleName();
-        if (is_file($file)) {
-            unlink($file);
+        foreach ($this->getFileListForCleanup() as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
         }
 
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
-        if (is_file($file)) {
-            unlink($file);
+        foreach ($this->getDirectoryListForCleanup() as $dir) {
+            if (is_dir($dir)) {
+                rmdir($dir);
+            }
         }
+    }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
+    /**
+     * @return list<string>
+     */
+    protected function getFileListForCleanup(): array
+    {
+        return [
+            $this->getDocumentFileName(),
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT,
+            $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE,
+            $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT,
+        ];
+    }
 
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT;
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-            $file = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE . static::FILE_PRODUCT_IMAGE;
-        if (is_file($file)) {
-            unlink($file);
-        }
-
-            $dir = $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE;
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-            $dir = $this->testDataFileSystemRootDirectory . 'images/';
-        if (is_dir($dir)) {
-            rmdir($dir);
-        }
-
-            $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
-        if (is_file($file)) {
-            unlink($file);
-        }
+    /**
+     * @return list<string>
+     */
+    protected function getDirectoryListForCleanup(): array
+    {
+        return [
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'bar',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo',
+            $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT,
+            $this->testDataFileSystemRootDirectory . static::PATH_PRODUCT_IMAGE,
+            $this->testDataFileSystemRootDirectory . 'images/',
+        ];
     }
 
     /**
@@ -690,7 +680,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return string
      */
-    protected function getDocumentFIleName(): string
+    protected function getDocumentFileName(): string
     {
         return $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
     }

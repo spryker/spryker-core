@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\DiscountPromotion;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
+use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepository;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 /**
@@ -28,11 +31,26 @@ use Spryker\Zed\Stock\Business\StockFacadeInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\DiscountPromotion\PHPMD)
  */
 class DiscountPromotionBusinessTester extends Actor
 {
     use _generated\DiscountPromotionBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    public const TEST_ABSTRACT_SKU = 'sku-123';
+
+    /**
+     * @var string
+     */
+    public const TEST_ABSTRACT_SKU_2 = 'sku-130';
 
     /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
@@ -110,5 +128,40 @@ class DiscountPromotionBusinessTester extends Actor
         return (new QuoteBuilder($quoteOverride))
             ->build()
             ->setStore($storeTransfer);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAbstractSkusFieldExists(): bool
+    {
+        return (new DiscountPromotionRepository())->isAbstractSkusFieldExists();
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     * @param int|null $stockQuantity
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function createDiscountPromotionWithProductStock(array $seed = [], ?int $stockQuantity = null): DiscountPromotionTransfer
+    {
+        $seed += [
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->haveDiscount()->getIdDiscount(),
+            DiscountPromotionTransfer::ABSTRACT_SKU => static::TEST_ABSTRACT_SKU,
+            DiscountPromotionTransfer::ABSTRACT_SKUS => [static::TEST_ABSTRACT_SKU],
+        ];
+
+        $discountPromotionTransfer = $this->haveDiscountPromotion($seed);
+
+        if ($stockQuantity === null) {
+            $stockQuantity = $discountPromotionTransfer->getQuantity();
+        }
+
+        foreach ($seed[DiscountPromotionTransfer::ABSTRACT_SKUS] as $abstractSku) {
+            $this->haveProductWithStock([ProductAbstractTransfer::SKU => $abstractSku], [], $stockQuantity);
+        }
+
+        return $discountPromotionTransfer;
     }
 }
