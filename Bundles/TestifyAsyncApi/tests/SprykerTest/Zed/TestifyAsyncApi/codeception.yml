@@ -1,0 +1,23 @@
+namespace: SprykerTest\Zed\TestifyAsyncApi
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/Spryker/Zed/AsyncApi/*.php'] }
+
+suites:
+    Business:
+        path: Business
+        actor: TestifyAsyncApiBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: 'no needed for tests'
+                      selfTest: true

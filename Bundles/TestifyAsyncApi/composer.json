@@ -8,6 +8,7 @@
         "spryker-sdk/async-api": "^0.3.0",
         "spryker/kernel": "^3.30.0",
         "spryker/message-broker": "^1.8.0",
+        "spryker/symfony": "^3.0.0",
         "spryker/testify": "^3.0.0"
     },
     "require-dev": {
@@ -18,11 +19,16 @@
             "Spryker\\": "src/Spryker/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {

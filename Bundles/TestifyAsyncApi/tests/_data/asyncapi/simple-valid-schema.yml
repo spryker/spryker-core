@@ -1,0 +1,31 @@
+asyncapi: 2.6.0
+info:
+    title: 'Vertex AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    foo-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/TestifyAsyncApiFoo'
+components:
+    messages:
+        TestifyAsyncApiFoo:
+            name: TestifyAsyncApiFoo
+            payload:
+                $ref: '#/components/schemas/Foo'
+    schemas:
+        Foo:
+            type: object
+            properties:
+                foo:
+                    $ref: '#/components/schemas/FooSchema'
+            required:
+                - foo
+
+        FooSchema:
+            properties:
+                bar:
+                    type: string
+            required:
+                - bar

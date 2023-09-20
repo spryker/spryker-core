@@ -21,6 +21,7 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper;
 use SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Throwable;
 
 class AsyncApiHelper extends Module
@@ -51,6 +52,7 @@ class AsyncApiHelper extends Module
      */
     protected array $config = [
         'organization' => 'SprykerTest',
+        'selfTest' => 'false', # Needs to be set to `true` when testing this Helper, inside the test you can call `setAsyncApi` which will then be loaded for the tests
         self::MESSAGE_HANDLER_PLUGINS => [],
     ];
 
@@ -86,29 +88,46 @@ class AsyncApiHelper extends Module
      */
     public function _before(TestInterface $test): void
     {
+        // When we test this Helper we want to load a specific schema file from within the test. This will skip loading of the default schema file.
+        if ($this->config['selfTest'] === true) {
+            return;
+        }
+
         $this->getConfigHelper()->setConfig(MessageBrokerConstants::IS_ENABLED, true);
 
         if (!$this->isInitialized) {
-            $this->initAsyncApiTests();
+            $path = codecept_absolute_path('../../../../' . $this->config[static::ASYNC_API_FILE_PATH]);
+
+            $this->initAsyncApiTests($path);
         }
 
         parent::_before($test);
     }
 
     /**
+     * @param string $asyncApiSchemaFilePath
+     *
+     * @return void
+     */
+    public function setAsyncApi(string $asyncApiSchemaFilePath): void
+    {
+        $this->initAsyncApiTests($asyncApiSchemaFilePath);
+    }
+
+    /**
+     * @param string $pathToAsyncApiSchemaFile
+     *
      * @throws \Exception
      *
      * @return void
      */
-    protected function initAsyncApiTests(): void
+    protected function initAsyncApiTests(string $pathToAsyncApiSchemaFile): void
     {
-        $path = codecept_absolute_path('../../../../' . $this->config[static::ASYNC_API_FILE_PATH]);
-
-        if (!is_file($path)) {
-            throw new Exception(sprintf('Tried to load your defined AsyncAPI schema file "%s" but was not able to  find it.', $path));
+        if (!is_file($pathToAsyncApiSchemaFile)) {
+            throw new Exception(sprintf('Tried to load your defined AsyncAPI schema file "%s" but was not able to  find it.', $pathToAsyncApiSchemaFile));
         }
 
-        $asyncApiFilePath = realpath($path);
+        $asyncApiFilePath = realpath($pathToAsyncApiSchemaFile);
 
         $asyncApi = (new AsyncApiLoader())->load((string)$asyncApiFilePath);
 
@@ -302,7 +321,7 @@ class AsyncApiHelper extends Module
             $fields = $messageTransfer->modifiedToArray(true, true);
             $requiredFields = $this->getRequiredAttributesForMessage($asyncApiMessage);
 
-            $diff = array_diff_key($requiredFields, $fields);
+            $diff = $this->diffRequiredFields($fields, $requiredFields);
 
             $this->assertCount(0, $diff, sprintf('The message "%s" does not contain all required fields "%s". The following fields are missing "%s".', $messageNameToTest, implode(', ', $requiredFields), implode(', ', $diff)));
         } catch (Throwable $e) {
@@ -317,6 +336,29 @@ class AsyncApiHelper extends Module
     }
 
     /**
+     * @param array<string> $fields
+     * @param array<string> $requiredFields
+     *
+     * @return array<string>
+     */
+    protected function diffRequiredFields(array $fields, array $requiredFields): array
+    {
+        $propertyAccessor = new PropertyAccessor();
+
+        $missingProperties = [];
+
+        foreach ($requiredFields as $requiredField) {
+            $propertyPath = sprintf('[%s]', implode('][', explode('.', $requiredField)));
+
+            if (!$propertyAccessor->isReadable($fields, $propertyPath) || !$propertyAccessor->getValue($fields, $propertyPath)) {
+                $missingProperties[] = $requiredField;
+            }
+        }
+
+        return $missingProperties;
+    }
+
+    /**
      * Assert that a passed handler is able to handle the expected message. This covers the MessageHandlerPluginInterface::handles()
      * method which would be uncovered when passed from the test itself.
      *
@@ -328,7 +370,7 @@ class AsyncApiHelper extends Module
     protected function assertHandlerCanHandle(array $handler, AbstractTransfer $messageTransfer): void
     {
         /** @var \Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface $handlerClass */
-        $handlerClass = array_key_first($handler);
+        $handlerClass = array_shift($handler);
         $handleableMessages = [];
 
         foreach ($handlerClass->handles() as $messageName => $handler) {
