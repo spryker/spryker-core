@@ -159,12 +159,15 @@
     </transfer>
 
     <transfer name="PickingListCollection" strict="true">
+        <property name="pickingLists" type="PickingList[]" singular="pickingList"/>
     </transfer>
 
     <transfer name="PickingListItem" strict="true">
+        <property name="orderItem" type="Item"/>
     </transfer>
 
     <transfer name="PickingList" strict="true">
+        <property name="pickingListItems" type="PickingListItem[]" singular="pickingListItem"/>
     </transfer>
 
 </transfers>

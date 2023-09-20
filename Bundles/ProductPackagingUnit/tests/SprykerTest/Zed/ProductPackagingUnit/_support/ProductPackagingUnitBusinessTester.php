@@ -44,7 +44,7 @@ use Spryker\DecimalObject\Decimal;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductPackagingUnit\PHPMD)
  */
 class ProductPackagingUnitBusinessTester extends Actor
 {
@@ -218,7 +218,7 @@ class ProductPackagingUnitBusinessTester extends Actor
      */
     public function createQuoteTransfer(): QuoteTransfer
     {
-        return (new QuoteTransfer());
+        return new QuoteTransfer();
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -24,13 +25,23 @@ use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Customer\PHPMD)
  *
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
 class CustomerBusinessTester extends Actor
 {
     use _generated\CustomerBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const TESTER_EMAIL = 'tester@spryker.com';
+
+    /**
+     * @var string
+     */
+    public const TESTER_PASSWORD = '$2tester';
 
     /**
      * @param string $hash
@@ -44,6 +55,30 @@ class CustomerBusinessTester extends Actor
         $passwordEncoder = $this->getPasswordEncoder();
 
         $this->assertTrue($passwordEncoder->isPasswordValid($hash, $rawPassword, $salt), 'Passwords are not equal.');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function createTestCustomerTransfer(): CustomerTransfer
+    {
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail(static::TESTER_EMAIL);
+        $customerTransfer->setPassword(static::TESTER_PASSWORD);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function createTestCustomer(): CustomerTransfer
+    {
+        $customerTransfer = $this->createTestCustomerTransfer();
+        $customerResponseTransfer = $this->getFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+
+        return $customerTransfer;
     }
 
     /**

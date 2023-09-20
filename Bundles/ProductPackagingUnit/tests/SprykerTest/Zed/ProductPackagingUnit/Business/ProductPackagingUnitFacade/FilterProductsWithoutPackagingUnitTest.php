@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +39,7 @@ class FilterProductsWithoutPackagingUnitTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
-    protected $tester;
+    protected ProductPackagingUnitBusinessTester $tester;
 
     /**
      * @return void

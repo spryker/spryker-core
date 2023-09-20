@@ -1,6 +1,7 @@
 build:
     environment:
         php: '8.0'
+        node: '14.0'
 
     nodes:
         analysis:

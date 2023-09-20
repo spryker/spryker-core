@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension\AmountSalesUnitOrderItemExpanderPreSavePlugin;
 use Spryker\Zed\Sales\SalesDependencyProvider;
+use SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -37,7 +38,7 @@ class ExpandOrderItemsWithAmountSalesUnitTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
-    protected $tester;
+    protected ProductPackagingUnitBusinessTester $tester;
 
     /**
      * @return void

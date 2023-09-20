@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\PriceProduct\PHPMD)
  */
 class PriceProductTester extends Actor
 {
