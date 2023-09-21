@@ -1,0 +1,21 @@
+product-offer-service-point-availabilities:
+    post:
+        servicePointUuids:
+            - NotBlank
+        serviceTypeUuid:
+            - NotBlank
+        productOfferServicePointAvailabilityRequestItems:
+            - All:
+                  constraints:
+                      - Collection:
+                            fields:
+                                productConcreteSku:
+                                    - NotBlank
+                                productOfferReference:
+                                    - NotBlank
+                                quantity:
+                                    - NotBlank
+                                    - Type:
+                                          type: numeric
+                                    - GreaterThan:
+                                          value: 0

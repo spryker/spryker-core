@@ -132,7 +132,11 @@ class ServicePointHelper extends Module
      */
     public function haveService(array $seed = []): ServiceTransfer
     {
-        $serviceTypeTransfer = $this->haveServiceType($seed[ServiceTransfer::SERVICE_TYPE] ?? []);
+        $serviceTypeSeed = $seed[ServiceTransfer::SERVICE_TYPE] ?? [];
+        $serviceTypeTransfer = (new ServiceTypeTransfer())->fromArray($serviceTypeSeed);
+        if (!$serviceTypeTransfer->getIdServiceType()) {
+            $serviceTypeTransfer = $this->haveServiceType($serviceTypeSeed);
+        }
 
         $servicePointSeed = $seed[ServiceTransfer::SERVICE_POINT] ?? [];
         $servicePointTransfer = (new ServicePointTransfer())->fromArray($servicePointSeed);

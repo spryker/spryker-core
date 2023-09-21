@@ -1,0 +1,38 @@
+{
+    "name": "spryker/shipment-type-product-offer-service-point-availabilities-rest-api",
+    "type": "library",
+    "description": "ShipmentTypeProductOfferServicePointAvailabilitiesRestApi module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker/product-offer-service-point-availabilities-rest-api": "^0.1.0",
+        "spryker/product-offer-service-point-availability-calculator": "^0.1.0",
+        "spryker/shipment-type": "^0.1.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

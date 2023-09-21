@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ServicePointsRestApi;
 
-use Spryker\Glue\Kernel\AbstractStorefrontApiFactory;
+use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToServicePointSearchClientInterface;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToServicePointStorageClientInterface;
@@ -40,7 +40,7 @@ use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReader
 /**
  * @method \Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiConfig getConfig()
  */
-class ServicePointsRestApiFactory extends AbstractStorefrontApiFactory
+class ServicePointsRestApiFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointReaderInterface
