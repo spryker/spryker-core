@@ -18,6 +18,7 @@
 
     <transfer name="DynamicEntityConfigurationConditions" strict="true">
         <property name="tableName" type="string"/>
+        <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationCollectionResponse" strict="true">
@@ -44,6 +45,10 @@
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
         <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
     </transfer>
 
 </transfers>

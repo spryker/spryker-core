@@ -12,6 +12,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DynamicEntityGuiConfig extends AbstractBundleConfig
 {
     /**
+     * @var int
+     */
+    protected const UPDATE_TIME_MINUTES = 1;
+
+    /**
+     * @var string
+     */
+    protected const DOWNLOAD_FILE_NAME = 'schema.yml';
+
+    /**
+     * @var string
+     */
+    protected const BACKEND_API_SCHEMA_PATH = APPLICATION_SOURCE_DIR . '/Generated/GlueBackend/Specification/spryker_backend_api.schema.yml';
+
+    /**
      * @var string
      */
     protected const TABLE_PREFIX_SPY = 'spy_';
@@ -59,5 +74,44 @@ class DynamicEntityGuiConfig extends AbstractBundleConfig
             static::TABLE_PREFIX_SPY,
             static::TABLE_PREFIX_PYZ,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the path to the backend API schema file.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackendApiSchemaPath(): string
+    {
+        return static::BACKEND_API_SCHEMA_PATH;
+    }
+
+    /**
+     * Specification:
+     * - Returns the name to the API schema file for download.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDownloadFileName(): string
+    {
+        return static::DOWNLOAD_FILE_NAME;
+    }
+
+    /**
+     * Specification:
+     * - Returns minutes for a regenerating schema.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getUpdateTime(): int
+    {
+        return static::UPDATE_TIME_MINUTES;
     }
 }

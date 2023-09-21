@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\DocumentationGeneratorApi\PHPMD)
  */
 class DocumentationGeneratorApiTester extends Actor
 {

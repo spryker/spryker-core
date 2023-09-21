@@ -10,6 +10,8 @@ namespace Spryker\Zed\DynamicEntityGui\Communication;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Propel\Runtime\Map\DatabaseMap;
 use Propel\Runtime\Propel;
+use Spryker\Zed\DynamicEntityGui\Communication\Checker\OpenApiSchemaChecker;
+use Spryker\Zed\DynamicEntityGui\Communication\Checker\OpenApiSchemaCheckerInterface;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\CreateDynamicDataConfigurationForm;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\DataProvider\CreateDynamicDataConfigurationFormDataProvider;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\DataProvider\UpdateDynamicDataConfigurationFormDataProvider;
@@ -135,5 +137,16 @@ class DynamicEntityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getInflector(): DynamicEntityGuiToInflectorInterface
     {
         return $this->getProvidedDependency(DynamicEntityGuiDependencyProvider::INFLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntityGui\Communication\Checker\OpenApiSchemaCheckerInterface
+     */
+    public function createOpenApiSchemaChecker(): OpenApiSchemaCheckerInterface
+    {
+        return new OpenApiSchemaChecker(
+            $this->getConfig(),
+            $this->getDynamicEntityFacade(),
+        );
     }
 }

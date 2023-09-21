@@ -4,9 +4,18 @@
 
 {% block action %}
     {{ createActionButton('/dynamic-entity-gui/configuration-create', 'Create Data Exchange API Configuration' | trans) }}
+    {{ createActionButton('/dynamic-entity-gui/documentation/download', 'Download API Specification' | trans, viewActionButtonOptions) }}
 {% endblock %}
 
 {% block content %}
+    {% if isSchemaFileActual == false %}
+        <div class="alert alert-info">
+            <i class="alert__icon fa fas fa-cogs" aria-hidden="true"></i>
+            <div class="alert__text">
+                {{ 'Documentation generation is in progress, please refresh the page in %s minute(s).' | format(updateTimeInMinutes) | trans }}
+            </div>
+        </div>
+    {% endif %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Data Exchange API Configuration' | trans } %}
 

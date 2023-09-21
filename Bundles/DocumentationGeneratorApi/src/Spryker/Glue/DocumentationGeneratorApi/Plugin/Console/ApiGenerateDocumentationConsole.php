@@ -33,7 +33,6 @@ class ApiGenerateDocumentationConsole extends Console
      */
     protected const OPTION_INVALIDATED_AFTER_INTERVAL_DESCRIPTION = 'The interval verifies if the dynamic entity configuration has been invalidated. Example: 1day, 1hour, 1minute, 1second.';
 
-
     /**
      * @var string
      */
@@ -76,7 +75,7 @@ class ApiGenerateDocumentationConsole extends Console
         if ($invalidateAfterInterval && is_string($invalidateAfterInterval)) {
             $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval($invalidateAfterInterval);
 
-            $isInvalidated = $this->getFactory()->createInvalidationVerifier()->isInvalidated($documentationInvalidationVoterRequestTransfer);
+            $isInvalidated = $this->getFactory()->createInvalidationVerifier()->isInvalidated($documentationInvalidationVoterRequestTransfer, $application);
 
             if (!$isInvalidated) {
                 $output->writeln(static::SKIP_MESSAGE);

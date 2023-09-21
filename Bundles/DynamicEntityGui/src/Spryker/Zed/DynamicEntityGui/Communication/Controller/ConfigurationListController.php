@@ -21,9 +21,13 @@ class ConfigurationListController extends AbstractController
     public function indexAction(): array
     {
         $dynamicDataConfigurationTable = $this->getFactory()->createDynamicDataConfigurationTable();
+        $isSchemaFileActual = $this->getFactory()->createOpenApiSchemaChecker()->isSchemaFileActual();
 
         return $this->viewResponse([
             'dynamicDataConfigurationTable' => $dynamicDataConfigurationTable->render(),
+            'isSchemaFileActual' => $isSchemaFileActual,
+            'viewActionButtonOptions' => $isSchemaFileActual ? [] : ['class' => 'disabled'],
+            'updateTimeInMinutes' => $this->getFactory()->getConfig()->getUpdateTime(),
         ]);
     }
 

@@ -83,6 +83,8 @@ class DocumentationGeneratorApiFactory extends AbstractFactory
     {
         return new InvalidationVerifier(
             $this->getInvalidationVoterPlugins(),
+            $this->getApiApplicationProviderPlugins(),
+            $this->getConfig(),
         );
     }
 

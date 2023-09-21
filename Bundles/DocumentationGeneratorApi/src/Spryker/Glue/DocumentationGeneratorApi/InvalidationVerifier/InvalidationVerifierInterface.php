@@ -13,8 +13,12 @@ interface InvalidationVerifierInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer
+     * @param mixed $application
      *
      * @return bool
      */
-    public function isInvalidated(DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer): bool;
+    public function isInvalidated(
+        DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer,
+        mixed $application
+    ): bool;
 }
