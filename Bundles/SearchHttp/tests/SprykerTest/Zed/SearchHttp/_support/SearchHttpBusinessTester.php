@@ -87,6 +87,11 @@ class SearchHttpBusinessTester extends Actor
             $searchHttpConfigTransfer->getUrl(),
             $searchHttpConfigEntity->getData()['search_http_configs'][0]['url'],
         );
+        $this->assertNotNull($searchHttpConfigEntity->getData()['search_http_configs'][0]['suggestion_url']);
+        $this->assertEquals(
+            $searchHttpConfigTransfer->getSuggestionUrl(),
+            $searchHttpConfigEntity->getData()['search_http_configs'][0]['suggestion_url'],
+        );
     }
 
     /**

@@ -8,6 +8,7 @@
     <transfer name="SearchHttpConfig">
         <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
         <property name="url" dataBuilderRule="lexify('??????????')"/>
+        <property name="suggestionUrl" dataBuilderRule="lexify('??????????')" strict="true"/>
     </transfer>
 
     <transfer name="SearchHttpConfigCollection">
