@@ -157,7 +157,7 @@ class ContentFileListViewTable extends AbstractTable
         $idFile = $fileEntity->getIdFile();
 
         return [
-            static::COL_ID_FILE => $this->formatInt($idFile),
+            static::COL_ID_FILE => $idFile,
             static::COL_FILE_NAME => $fileEntity->getFileName(),
             static::COL_ACTIONS => $this->getAddButtonField($idFile),
         ];
