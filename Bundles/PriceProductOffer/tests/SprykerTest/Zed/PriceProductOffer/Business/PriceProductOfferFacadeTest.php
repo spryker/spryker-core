@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
@@ -456,6 +457,68 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productOfferPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferPricesForMultipleProductOfferReferencesShouldReturnCorrectResult(): void
+    {
+        // Arrange
+        $priceProduct1Transfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProduct2Transfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->addProductOfferReference($priceProduct1Transfer->getPriceDimensionOrFail()->getProductOfferReferenceOrFail())
+            ->addProductOfferReference($priceProduct2Transfer->getPriceDimensionOrFail()->getProductOfferReferenceOrFail());
+        $priceProductOfferCriteriaTransfer->setProductOfferCriteria($productOfferCriteriaTransfer);
+        $expectedProductOfferIds = [
+            $priceProduct1Transfer->getPriceDimensionOrFail()->getIdProductOfferOrFail(),
+            $priceProduct2Transfer->getPriceDimensionOrFail()->getIdProductOfferOrFail(),
+        ];
+
+        // Act
+        $priceProductTransfers = $this->tester
+            ->getFacade()
+            ->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+        $productOfferIds = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $productOfferIds[] = $priceProductTransfer->getPriceDimensionOrFail()->getIdProductOfferOrFail();
+        }
+
+        // Assert
+        $this->assertCount(2, $priceProductTransfers);
+        $this->assertSame($expectedProductOfferIds, $productOfferIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferPricesForProductOfferReferenceShouldReturnCorrectResult(): void
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setProductOfferReference($priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReferenceOrFail());
+        $priceProductOfferCriteriaTransfer->setProductOfferCriteria($productOfferCriteriaTransfer);
+
+        // Act
+        $priceProductTransfers = $this->tester
+            ->getFacade()
+            ->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $priceProductTransfers);
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $foundPriceProductTransfer */
+        $foundPriceProductTransfer = $priceProductTransfers->getIterator()->current();
+        $this->assertSame(
+            $priceProductTransfer->getPriceDimensionOrFail()->getIdProductOfferOrFail(),
+            $foundPriceProductTransfer->getPriceDimensionOrFail()->getIdProductOfferOrFail(),
+        );
     }
 
     /**

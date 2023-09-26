@@ -25,7 +25,7 @@ use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
  * @method void pause()
  * @method \Spryker\Zed\PriceProductOffer\Business\PriceProductOfferFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\PriceProductOffer\PHPMD)
  */
 class PriceProductOfferBusinessTester extends Actor
 {

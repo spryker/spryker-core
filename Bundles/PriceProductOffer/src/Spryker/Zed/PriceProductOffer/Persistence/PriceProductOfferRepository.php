@@ -114,11 +114,11 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
             $productOfferCriteriaTransfer = $priceProductOfferCriteriaTransfer->getProductOfferCriteria();
 
             if ($productOfferCriteriaTransfer->getProductOfferReferences()) {
-                $priceProductOfferQuery->filterBy(
-                    SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-                    $productOfferCriteriaTransfer->getProductOfferReferences(),
-                    Criteria::IN,
-                );
+                $priceProductOfferQuery->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference_In(
+                        $productOfferCriteriaTransfer->getProductOfferReferences(),
+                    )
+                    ->endUse();
             }
 
             if ($productOfferCriteriaTransfer->getProductOfferReference()) {
