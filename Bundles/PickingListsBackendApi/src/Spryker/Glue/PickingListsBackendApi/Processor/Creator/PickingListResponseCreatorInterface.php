@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\GlueResponseTransfer;
 interface PickingListResponseCreatorInterface
 {
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
@@ -22,7 +22,7 @@ interface PickingListResponseCreatorInterface
     ): GlueResponseTransfer;
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      * @param string|null $localeName
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer

@@ -26,11 +26,6 @@ class PushNotificationSender implements PushNotificationSenderInterface
     protected array $pushNotificationSenderPlugins;
 
     /**
-     * @var \Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface
-     */
-    protected PushNotificationRepositoryInterface $pushNotificationRepository;
-
-    /**
      * @var \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface
      */
     protected PushNotificationSubscriptionDeliveryLogExtractorInterface $pushNotificationSubscriptionDeliveryLogExtractor;

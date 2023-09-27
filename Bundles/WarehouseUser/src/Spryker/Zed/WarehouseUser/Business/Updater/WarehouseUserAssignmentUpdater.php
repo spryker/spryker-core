@@ -66,12 +66,12 @@ class WarehouseUserAssignmentUpdater implements WarehouseUserAssignmentUpdaterIn
     public function updateWarehouseUserAssignmentCollection(
         WarehouseUserAssignmentCollectionRequestTransfer $warehouseUserAssignmentCollectionRequestTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers */
         $warehouseUserAssignmentTransfers = $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments();
         $warehouseUserAssignmentCollectionResponseTransfer = $this->warehouseUserAssignmentValidator
             ->validateCollection($warehouseUserAssignmentTransfers);
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
 
         if ($warehouseUserAssignmentCollectionRequestTransfer->getIsTransactional() && $errorTransferCollection->count()) {
@@ -121,7 +121,7 @@ class WarehouseUserAssignmentUpdater implements WarehouseUserAssignmentUpdaterIn
     protected function splitWarehouseUserAssignmentTransfersByValidity(
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): array {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
 
         $warehouseUserAssignmentIdsWithErrors = $this->getErroredWarehouseUserAssignmentsIdentifiers($errorTransferCollection);
@@ -145,7 +145,7 @@ class WarehouseUserAssignmentUpdater implements WarehouseUserAssignmentUpdaterIn
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return list<string>
      */

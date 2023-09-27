@@ -30,7 +30,7 @@ use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery;
  * @method void pause()
  * @method \Spryker\Zed\WarehouseUser\Business\WarehouseUserFacadeInterface getFacade(?string $moduleName = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\WarehouseUser\PHPMD)
  */
 class WarehouseUserBusinessTester extends Actor
 {

@@ -13,8 +13,6 @@ use Spryker\Glue\PickingListsBackendApi\Dependency\Client\PickingListsBackendApi
 use Spryker\Glue\PickingListsBackendApi\Dependency\Client\PickingListsBackendApiToGlossaryStorageClientInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeBridge;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface;
-use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToStockFacadeBridge;
-use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToStockFacadeInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToWarehouseUserFacadeBridge;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToWarehouseUserFacadeInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Service\PickingListsBackendApiToUtilEncodingServiceBridge;
@@ -34,11 +32,6 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_WAREHOUSE_USER = 'FACADE_WAREHOUSE_USER';
-
-    /**
-     * @var string
-     */
-    public const FACADE_STOCK = 'FACADE_STOCK';
 
     /**
      * @var string
@@ -65,7 +58,6 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideBackendDependencies($container);
         $container = $this->addPickingListFacade($container);
         $container = $this->addWarehouseUserFacade($container);
-        $container = $this->addStockFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addPickingListItemsBackendApiAttributesMapperPlugins($container);
@@ -99,22 +91,6 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_WAREHOUSE_USER, function (Container $container): PickingListsBackendApiToWarehouseUserFacadeInterface {
             return new PickingListsBackendApiToWarehouseUserFacadeBridge(
                 $container->getLocator()->warehouseUser()->facade(),
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Backend\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Backend\Container
-     */
-    protected function addStockFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STOCK, function (Container $container): PickingListsBackendApiToStockFacadeInterface {
-            return new PickingListsBackendApiToStockFacadeBridge(
-                $container->getLocator()->stock()->facade(),
             );
         });
 

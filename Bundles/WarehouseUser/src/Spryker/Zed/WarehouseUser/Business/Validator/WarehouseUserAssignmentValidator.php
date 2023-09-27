@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer;
 class WarehouseUserAssignmentValidator implements WarehouseUserAssignmentValidatorInterface
 {
     /**
-     * @var array<\Spryker\Zed\WarehouseUser\Business\Validator\Rules\WarehouseUserAssignmentValidatorRuleInterface>
+     * @var list<\Spryker\Zed\WarehouseUser\Business\Validator\Rules\WarehouseUserAssignmentValidatorRuleInterface>
      */
     protected array $warehouseUserAssignmentValidatorRules = [];
 
     /**
-     * @param array<\Spryker\Zed\WarehouseUser\Business\Validator\Rules\WarehouseUserAssignmentValidatorRuleInterface> $warehouseUserAssignmentValidatorRules
+     * @param list<\Spryker\Zed\WarehouseUser\Business\Validator\Rules\WarehouseUserAssignmentValidatorRuleInterface> $warehouseUserAssignmentValidatorRules
      */
     public function __construct(array $warehouseUserAssignmentValidatorRules)
     {
@@ -26,7 +26,7 @@ class WarehouseUserAssignmentValidator implements WarehouseUserAssignmentValidat
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
      */

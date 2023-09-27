@@ -16,9 +16,9 @@ interface PickingListRequestMapperInterface
      * @deprecated Should be removed after infrastructure implementation.
      *
      * @param \stdClass $requestBody
-     * @param \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer>
      */
     public function mapRequestBodyToGlueResourceTransferCollection(
         stdClass $requestBody,

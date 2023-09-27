@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Updater;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
@@ -76,9 +74,9 @@ class PushNotificationProviderUpdater implements PushNotificationProviderUpdater
     public function updatePushNotificationProvider(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         if (!$this->isRequestedEntityValid($glueRequestTransfer)) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
@@ -89,9 +87,9 @@ class PushNotificationProviderUpdater implements PushNotificationProviderUpdater
         $pushNotificationProviderTransfer = $this->pushNotificationProviderReader->findPushNotificationProviderByUuid($glueResourceTransfer->getIdOrFail());
 
         if (!$pushNotificationProviderTransfer) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
@@ -129,24 +127,6 @@ class PushNotificationProviderUpdater implements PushNotificationProviderUpdater
         return $glueResourceTransfer->getId()
             && $glueResourceTransfer->getAttributes()
             && array_filter($glueResourceTransfer->getAttributesOrFail()->modifiedToArray());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function createErrorResponse(
-        GlueRequestTransfer $glueRequestTransfer,
-        string $errorMessage
-    ): GlueResponseTransfer {
-        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
-            $glueRequestTransfer->getLocale(),
-        );
     }
 
     /**

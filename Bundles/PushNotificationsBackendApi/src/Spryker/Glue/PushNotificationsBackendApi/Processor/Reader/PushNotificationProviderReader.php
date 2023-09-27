@@ -8,7 +8,6 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderConditionsTransfer;
@@ -93,10 +92,8 @@ class PushNotificationProviderReader implements PushNotificationProviderReaderIn
             );
         }
 
-        $errorTransfer = (new ErrorTransfer())->setMessage(PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
+        return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
+            PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND,
             $glueRequestTransfer->getLocale(),
         );
     }

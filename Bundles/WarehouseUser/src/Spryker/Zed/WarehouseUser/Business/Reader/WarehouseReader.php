@@ -29,7 +29,7 @@ class WarehouseReader implements WarehouseReaderInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
@@ -45,7 +45,7 @@ class WarehouseReader implements WarehouseReaderInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\StockCriteriaTransfer
      */

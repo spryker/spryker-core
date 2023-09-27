@@ -84,12 +84,12 @@ class ProductPackagingUnitPickingListItemsMapper implements ProductPackagingUnit
         }
 
         $productMeasurementSalesUnitsBackendApiAttributesTransfer = $this->productMeasurementSalesUnitMapper->mapProductMeasurementSalesUnitTransferToProductMeasurementSalesUnitsBackendApiAttributesTransfer(
-            $itemTransfer->getAmountSalesUnit(),
+            $itemTransfer->getAmountSalesUnitOrFail(),
             new ProductMeasurementSalesUnitsBackendApiAttributesTransfer(),
         );
 
         return $orderItemsBackendApiAttributesTransfer
-            ->setAmount($itemTransfer->getAmount())
+            ->setAmount($itemTransfer->getAmountOrFail())
             ->setAmountSalesUnit($productMeasurementSalesUnitsBackendApiAttributesTransfer);
     }
 }

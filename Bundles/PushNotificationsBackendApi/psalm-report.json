@@ -1,66 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\ErrorTransfer&static> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationProviderCreator.php",
-            "snippet": "                new ArrayObject([$errorTransfer]),",
-            "selected_text": "new ArrayObject([$errorTransfer])",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\ErrorTransfer&static> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationSubscriptionCreator.php",
-            "snippet": "                new ArrayObject([$errorTransfer]),",
-            "selected_text": "new ArrayObject([$errorTransfer])",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 162,
-            "line_to": 162,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\ErrorTransfer&static> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Deleter/PushNotificationProviderDeleter.php",
-            "snippet": "            new ArrayObject([$errorTransfer]),",
-            "selected_text": "new ArrayObject([$errorTransfer])",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\ErrorTransfer&static> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Reader/PushNotificationProviderReader.php",
-            "snippet": "            new ArrayObject([$errorTransfer]),",
-            "selected_text": "new ArrayObject([$errorTransfer])",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 162,
-            "line_to": 162,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but ArrayObject<0, Generated\\Shared\\Transfer\\ErrorTransfer&static> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Updater/PushNotificationProviderUpdater.php",
-            "snippet": "            new ArrayObject([$errorTransfer]),",
-            "selected_text": "new ArrayObject([$errorTransfer])",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -76,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationProviderCreator.php",
@@ -88,10 +27,10 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationProviderCreator.php",
             "snippet": "                $errorTransfers,",
             "selected_text": "$errorTransfers",
@@ -100,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
+            "line_from": 114,
+            "line_to": 114,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\PushNotificationProviderResponseBuilderInterface::createPushNotificationProviderResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationProviderCreator.php",
@@ -112,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 116,
+            "line_to": 116,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationSubscriptionCreator.php",
@@ -124,10 +63,10 @@
         },
         {
             "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
+            "line_from": 118,
+            "line_to": 118,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationSubscriptionCreator.php",
             "snippet": "                $errorTransfers,",
             "selected_text": "$errorTransfers",
@@ -136,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\PushNotificationSubscriptionResponseBuilderInterface::createPushNotificationSubscriptionResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\PushNotificationSubscriptionTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationSubscriptionTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Creator/PushNotificationSubscriptionCreator.php",
@@ -148,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 87,
+            "line_to": 87,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Deleter/PushNotificationProviderDeleter.php",
@@ -160,10 +99,10 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 89,
+            "line_to": 89,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Deleter/PushNotificationProviderDeleter.php",
             "snippet": "                $errorTransfers,",
             "selected_text": "$errorTransfers",
@@ -172,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 95,
+            "line_to": 95,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\PushNotificationProviderResponseBuilderInterface::createPushNotificationProviderResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Deleter/PushNotificationProviderDeleter.php",
@@ -181,18 +120,6 @@
             "selected_text": "$pushNotificationProviderCollectionResponseTransfer->getPushNotificationProviders()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> variable $pushNotificationProviderTransfers",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Deleter/PushNotificationProviderDeleter.php",
-            "snippet": "        return $pushNotificationProviderTransfers->getIterator()->current();",
-            "selected_text": "getIterator",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -232,8 +159,20 @@
         },
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> variable $pushNotificationProviderTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Reader/PushNotificationProviderReader.php",
+            "snippet": "        return $pushNotificationProviderTransfers->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GlueErrorTransfer> variable $glueErrorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/ResponseBuilder/ErrorResponseBuilder.php",
@@ -244,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 131,
+            "line_to": 131,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GlueErrorTransfer> variable $glueErrorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/ResponseBuilder/ErrorResponseBuilder.php",
@@ -280,8 +219,8 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable $errorTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Updater/PushNotificationProviderUpdater.php",
@@ -292,10 +231,10 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\ErrorResponseBuilderInterface::createErrorResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Updater/PushNotificationProviderUpdater.php",
             "snippet": "                $errorTransfers,",
             "selected_text": "$errorTransfers",
@@ -304,8 +243,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 114,
+            "line_to": 114,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Glue\\PushNotificationsBackendApi\\Processor\\ResponseBuilder\\PushNotificationProviderResponseBuilderInterface::createPushNotificationProviderResponse expects ArrayObject<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Updater/PushNotificationProviderUpdater.php",
@@ -313,20 +252,8 @@
             "selected_text": "$pushNotificationProviderCollectionResponseTransfer->getPushNotificationProviders()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PushNotificationProviderTransfer> variable $pushNotificationProviderTransfers",
-            "file_name": "vendor/spryker/spryker/Bundles/PushNotificationsBackendApi/src/Spryker/Glue/PushNotificationsBackendApi/Processor/Updater/PushNotificationProviderUpdater.php",
-            "snippet": "        return $pushNotificationProviderTransfers->getIterator()->current();",
-            "selected_text": "getIterator",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [],
-    "count": 27
+    "count": 22
 }

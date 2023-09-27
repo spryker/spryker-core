@@ -119,7 +119,7 @@ class PickingListItemUpdater implements PickingListItemUpdaterInterface
                 $this->createPickingListCollectionRequestTransfer($pickingListTransfer),
             );
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $pickingListCollectionResponseTransfer->getErrors();
         if ($errorTransferCollection->count() !== 0) {
             return $this->pickingListResponseCreator
@@ -129,7 +129,7 @@ class PickingListItemUpdater implements PickingListItemUpdaterInterface
                 );
         }
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection */
         $pickingListTransferCollection = $pickingListCollectionResponseTransfer->getPickingLists();
 
         return $this->pickingListResponseCreator
@@ -143,7 +143,7 @@ class PickingListItemUpdater implements PickingListItemUpdaterInterface
      */
     protected function getParentGlueResourceTransfer(GlueRequestTransfer $glueRequestTransfer): GlueResourceTransfer
     {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer> $parentResourceCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer|null> $parentResourceCollection */
         $parentResourceCollection = $glueRequestTransfer->getParentResources();
 
         return $parentResourceCollection->getIterator()->current() ?? new GlueResourceTransfer();

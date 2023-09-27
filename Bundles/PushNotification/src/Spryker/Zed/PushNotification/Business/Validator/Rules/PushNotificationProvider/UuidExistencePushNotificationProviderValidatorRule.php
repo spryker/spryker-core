@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderConditionsTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCriteriaTransfer;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface;
@@ -34,15 +35,23 @@ class UuidExistencePushNotificationProviderValidatorRule implements PushNotifica
     protected ErrorAdderInterface $errorAdder;
 
     /**
+     * @var \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface
+     */
+    protected PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor;
+
+    /**
      * @param \Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface $pushNotificationRepository
      * @param \Spryker\Zed\PushNotification\Business\Validator\Util\ErrorAdderInterface $errorAdder
+     * @param \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor
      */
     public function __construct(
         PushNotificationRepositoryInterface $pushNotificationRepository,
-        ErrorAdderInterface $errorAdder
+        ErrorAdderInterface $errorAdder,
+        PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor
     ) {
         $this->pushNotificationRepository = $pushNotificationRepository;
         $this->errorAdder = $errorAdder;
+        $this->pushNotificationProviderExtractor = $pushNotificationProviderExtractor;
     }
 
     /**
@@ -53,7 +62,9 @@ class UuidExistencePushNotificationProviderValidatorRule implements PushNotifica
     public function validate(ArrayObject $pushNotificationProviderTransfers): ErrorCollectionTransfer
     {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
-        $pushNotificationProviderUuids = $this->extractPushNotificationProviderUuids($pushNotificationProviderTransfers);
+        $pushNotificationProviderUuids = $this->pushNotificationProviderExtractor->extractPushNotificationProviderUuids(
+            $pushNotificationProviderTransfers,
+        );
         $existingPushNotificationProvidersIndexedByUuid = $this->getExistingPushNotificationProvidersIndexedByUuid($pushNotificationProviderUuids);
 
         if ($pushNotificationProviderTransfers->count() === count($existingPushNotificationProvidersIndexedByUuid)) {
@@ -117,21 +128,5 @@ class UuidExistencePushNotificationProviderValidatorRule implements PushNotifica
             ->setPushNotificationProviderConditions($pushNotificationProviderConditionsTransfer);
 
         return $this->pushNotificationRepository->getPushNotificationProviderCollection($pushNotificationProviderCriteriaTransfer);
-    }
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
-     *
-     * @return list<string>
-     */
-    protected function extractPushNotificationProviderUuids(ArrayObject $pushNotificationProviderTransfers): array
-    {
-        $pushNotificationProviderUuids = [];
-
-        foreach ($pushNotificationProviderTransfers as $pushNotificationProviderTransfer) {
-            $pushNotificationProviderUuids[] = $pushNotificationProviderTransfer->getUuidOrFail();
-        }
-
-        return $pushNotificationProviderUuids;
     }
 }

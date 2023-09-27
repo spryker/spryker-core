@@ -8,7 +8,7 @@
 namespace Spryker\Zed\WarehouseUserGui\Communication\Table;
 
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
-use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AssignedWarehouseTable extends AbstractWarehouseTable
@@ -44,9 +44,9 @@ class AssignedWarehouseTable extends AbstractWarehouseTable
     }
 
     /**
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function prepareQuery(): SpyStockQuery
+    protected function prepareQuery(): ModelCriteria
     {
         return $this->stockQuery
             ->joinSpyWarehouseUserAssignment()

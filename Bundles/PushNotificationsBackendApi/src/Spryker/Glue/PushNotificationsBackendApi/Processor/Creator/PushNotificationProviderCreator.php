@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Creator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCollectionRequestTransfer;
@@ -71,10 +69,8 @@ class PushNotificationProviderCreator implements PushNotificationProviderCreator
         $pushNotificationProvidersBackendApiAttributesTransfer = $glueRequestTransfer->getResourceOrFail()->getAttributes();
 
         if (!$pushNotificationProvidersBackendApiAttributesTransfer || !$pushNotificationProvidersBackendApiAttributesTransfer->getName()) {
-            $errorTransfer = (new ErrorTransfer())->setMessage(PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
-
-            return $this->errorResponseBuilder->createErrorResponse(
-                new ArrayObject([$errorTransfer]),
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
+                PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
                 $glueRequestTransfer->getLocale(),
             );
         }

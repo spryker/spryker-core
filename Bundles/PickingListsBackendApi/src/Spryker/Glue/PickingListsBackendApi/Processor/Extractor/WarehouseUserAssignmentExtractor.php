@@ -14,7 +14,7 @@ class WarehouseUserAssignmentExtractor implements WarehouseUserAssignmentExtract
     /**
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionTransfer $warehouseUserAssignmentCollectionTransfer
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function extractWarehouseUuids(WarehouseUserAssignmentCollectionTransfer $warehouseUserAssignmentCollectionTransfer): array
     {

@@ -28,19 +28,6 @@ class PushNotificationGroupMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PushNotificationGroupTransfer $pushNotificationGroupTransfer
-     * @param \Orm\Zed\PushNotification\Persistence\SpyPushNotificationGroup $pushNotificationGroupEntity
-     *
-     * @return \Orm\Zed\PushNotification\Persistence\SpyPushNotificationGroup
-     */
-    public function mapPushNotificationGroupTransferToPushNotificationGroupEntity(
-        PushNotificationGroupTransfer $pushNotificationGroupTransfer,
-        SpyPushNotificationGroup $pushNotificationGroupEntity
-    ): SpyPushNotificationGroup {
-        return $pushNotificationGroupEntity->fromArray($pushNotificationGroupTransfer->toArray());
-    }
-
-    /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PushNotification\Persistence\SpyPushNotificationGroup> $pushNotificationGroupEntities
      * @param \Generated\Shared\Transfer\PushNotificationGroupCollectionTransfer $pushNotificationGroupCollectionTransfer
      *

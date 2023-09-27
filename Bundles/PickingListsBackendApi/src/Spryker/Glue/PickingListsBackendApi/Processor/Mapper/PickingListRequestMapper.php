@@ -46,9 +46,9 @@ class PickingListRequestMapper implements PickingListRequestMapperInterface
 
     /**
      * @param \stdClass $requestBody
-     * @param \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer>
      */
     public function mapRequestBodyToGlueResourceTransferCollection(
         stdClass $requestBody,
@@ -59,7 +59,7 @@ class PickingListRequestMapper implements PickingListRequestMapperInterface
         }
 
         foreach ($requestBody->data as $pickingListItem) {
-            $glueResourceTransfer = $this->mapPickingListItemtoGlueResourceTransfer(
+            $glueResourceTransfer = $this->mapPickingListItemToGlueResourceTransfer(
                 $pickingListItem,
                 new GlueResourceTransfer(),
             );
@@ -82,7 +82,7 @@ class PickingListRequestMapper implements PickingListRequestMapperInterface
      *
      * @return \Generated\Shared\Transfer\GlueResourceTransfer
      */
-    protected function mapPickingListItemtoGlueResourceTransfer(
+    protected function mapPickingListItemToGlueResourceTransfer(
         stdClass $pickingListItem,
         GlueResourceTransfer $glueResourceTransfer
     ): GlueResourceTransfer {

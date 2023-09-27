@@ -175,6 +175,7 @@
         <property name="pagination" type="Pagination"/>
         <property name="sortings" type="Sort[]" singular="sorting"/>
         <property name="resource" type="GlueResource"/>
+        <property name="locale" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractCollection">
@@ -209,6 +210,7 @@
         <property name="id" type="string"/>
         <property name="type" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
     </transfer>
 
     <transfer name="UrlConditions" strict="true">
@@ -283,8 +285,24 @@
     </transfer>
 
     <transfer name="ProductConcreteCriteria" strict="true">
+        <property name="productConcreteConditions" type="ProductConcreteConditions"/>
     </transfer>
 
     <transfer name="GlueRelationship">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
     </transfer>
+
+    <transfer name="ProductConcreteConditions" strict="true">
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="localeNames" type="string[]" singular="localeName"/>
+    </transfer>
+
+    <transfer name="PickingListItemsBackendApiAttributes" strict="true">
+        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
+    </transfer>
+
+    <transfer name="OrderItemsBackendApiAttributes" strict="true">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

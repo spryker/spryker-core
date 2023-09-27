@@ -8,6 +8,8 @@
 namespace Spryker\Zed\WarehouseAllocation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\WarehouseAllocation\Communication\Mapper\OrderMapper;
+use Spryker\Zed\WarehouseAllocation\Communication\Mapper\OrderMapperInterface;
 
 /**
  * @method \Spryker\Zed\WarehouseAllocation\Business\WarehouseAllocationFacadeInterface getFacade()
@@ -17,4 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class WarehouseAllocationCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\WarehouseAllocation\Communication\Mapper\OrderMapperInterface
+     */
+    public function createOrderMapper(): OrderMapperInterface
+    {
+        return new OrderMapper();
+    }
 }

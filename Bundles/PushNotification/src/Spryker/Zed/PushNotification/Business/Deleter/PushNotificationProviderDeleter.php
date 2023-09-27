@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PushNotificationProviderCollectionTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderConditionsTransfer;
 use Generated\Shared\Transfer\PushNotificationProviderCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Filter\PushNotificationProviderFilterInterface;
 use Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface;
@@ -44,21 +45,29 @@ class PushNotificationProviderDeleter implements PushNotificationProviderDeleter
     protected PushNotificationProviderReaderInterface $pushNotificationProviderReader;
 
     /**
+     * @var \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface
+     */
+    protected PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor;
+
+    /**
      * @param \Spryker\Zed\PushNotification\Persistence\PushNotificationEntityManagerInterface $pushNotificationEntityManager
      * @param \Spryker\Zed\PushNotification\Business\Validator\PushNotificationProviderValidatorInterface $pushNotificationProviderValidator
      * @param \Spryker\Zed\PushNotification\Business\Filter\PushNotificationProviderFilterInterface $pushNotificationProviderFilter
      * @param \Spryker\Zed\PushNotification\Business\Reader\PushNotificationProviderReaderInterface $pushNotificationProviderReader
+     * @param \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor
      */
     public function __construct(
         PushNotificationEntityManagerInterface $pushNotificationEntityManager,
         PushNotificationProviderValidatorInterface $pushNotificationProviderValidator,
         PushNotificationProviderFilterInterface $pushNotificationProviderFilter,
-        PushNotificationProviderReaderInterface $pushNotificationProviderReader
+        PushNotificationProviderReaderInterface $pushNotificationProviderReader,
+        PushNotificationProviderExtractorInterface $pushNotificationProviderExtractor
     ) {
         $this->pushNotificationEntityManager = $pushNotificationEntityManager;
         $this->pushNotificationProviderValidator = $pushNotificationProviderValidator;
         $this->pushNotificationProviderFilter = $pushNotificationProviderFilter;
         $this->pushNotificationProviderReader = $pushNotificationProviderReader;
+        $this->pushNotificationProviderExtractor = $pushNotificationProviderExtractor;
     }
 
     /**
@@ -114,27 +123,13 @@ class PushNotificationProviderDeleter implements PushNotificationProviderDeleter
     protected function executeDeletePushNotificationProviderCollectionTransaction(
         ArrayObject $pushNotificationProviderTransfers
     ): ArrayObject {
-        $pushNotificationProviderUuids = $this->extractPushNotificationProviderUuids($pushNotificationProviderTransfers);
+        $pushNotificationProviderUuids = $this->pushNotificationProviderExtractor->extractPushNotificationProviderUuids(
+            $pushNotificationProviderTransfers,
+        );
 
         $this->pushNotificationEntityManager->deletePushNotificationProviders($pushNotificationProviderUuids);
 
         return $pushNotificationProviderTransfers;
-    }
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationProviderTransfer> $pushNotificationProviderTransfers
-     *
-     * @return list<string>
-     */
-    protected function extractPushNotificationProviderUuids(ArrayObject $pushNotificationProviderTransfers): array
-    {
-        $pushNotificationProviderUuids = [];
-
-        foreach ($pushNotificationProviderTransfers as $pushNotificationProviderTransfer) {
-            $pushNotificationProviderUuids[] = $pushNotificationProviderTransfer->getUuidOrFail();
-        }
-
-        return $pushNotificationProviderUuids;
     }
 
     /**

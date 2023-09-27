@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\Deleter;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -76,9 +74,9 @@ class PushNotificationProviderDeleter implements PushNotificationProviderDeleter
     public function deletePushNotificationProvider(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         if (!$this->isRequestedEntityValid($glueRequestTransfer)) {
-            return $this->createErrorResponse(
-                $glueRequestTransfer,
+            return $this->errorResponseBuilder->createErrorResponseFromErrorMessage(
                 PushNotificationsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
+                $glueRequestTransfer->getLocale(),
             );
         }
 
@@ -106,24 +104,6 @@ class PushNotificationProviderDeleter implements PushNotificationProviderDeleter
     protected function isRequestedEntityValid(GlueRequestTransfer $glueRequestTransfer): bool
     {
         return (bool)$glueRequestTransfer->getResourceOrFail()->getId();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param string $errorMessage
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function createErrorResponse(
-        GlueRequestTransfer $glueRequestTransfer,
-        string $errorMessage
-    ): GlueResponseTransfer {
-        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
-
-        return $this->errorResponseBuilder->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
-            $glueRequestTransfer->getLocale(),
-        );
     }
 
     /**

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_sales_order_address">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_address"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_address_history">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_address_history.fk_sales_order_address"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order.order_reference.store"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_totals">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_totals.fk_sales_order"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_item">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_item"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_note">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_note.fk_sales_order"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_comment">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_comment.fk_sales_order"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_expense">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_expense.fk_sales_order"/>
+        </behavior>
+    </table>
+
+    <table name="spy_sales_order_item_metadata">
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_item_metadata.fk_sales_order_item"/>
+        </behavior>
+    </table>
+
+</database>

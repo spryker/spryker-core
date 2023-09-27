@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\StockCollectionTransfer;
 interface WarehouseReaderInterface
 {
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */

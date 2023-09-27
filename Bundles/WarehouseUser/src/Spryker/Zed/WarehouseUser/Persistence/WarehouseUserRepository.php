@@ -42,7 +42,7 @@ class WarehouseUserRepository extends AbstractRepository implements WarehouseUse
             $warehouseUserAssignmentCriteriaTransfer->getWarehouseUserAssignmentConditions(),
         );
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\SortTransfer> $sortTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransferCollection */
         $sortTransferCollection = $warehouseUserAssignmentCriteriaTransfer->getSortCollection();
 
         $warehouseUserAssignmentQuery = $this->applyWarehouseUserAssignmentSorting(
@@ -112,7 +112,7 @@ class WarehouseUserRepository extends AbstractRepository implements WarehouseUse
 
     /**
      * @param \Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery<\Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignment> $warehouseUserAssignmentQuery
-     * @param \ArrayObject<\Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
      *
      * @return \Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery<\Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignment>
      */

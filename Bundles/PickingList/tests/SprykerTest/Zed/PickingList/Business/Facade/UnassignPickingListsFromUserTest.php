@@ -90,8 +90,6 @@ class UnassignPickingListsFromUserTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @dataProvider unassignsPickingListFromSuitableUserDataProvider
      *
      * @param string $userStatus

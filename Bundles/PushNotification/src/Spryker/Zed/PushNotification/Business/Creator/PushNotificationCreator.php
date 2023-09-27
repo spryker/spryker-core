@@ -98,7 +98,7 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer>
      */
     protected function executeCreatePushNotificationCollection(
         ArrayObject $pushNotificationTransfers,
@@ -123,10 +123,10 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $validPushNotificationTransfers
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $invalidPushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $validPushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $invalidPushNotificationTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer>
      */
     protected function mergePushNotificationTransfers(
         ArrayObject $validPushNotificationTransfers,
@@ -140,9 +140,9 @@ class PushNotificationCreator implements PushNotificationCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationTransfer>
      */
     protected function executeCreatePushNotificationCollectionTransaction(
         ArrayObject $pushNotificationTransfers

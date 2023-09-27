@@ -73,7 +73,7 @@ class PickingListReader implements PickingListReaderInterface
         $pickingListCollectionTransfer = $this->pickingListFacade
             ->getPickingListCollection($pickingListCriteriaTransfer);
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection */
         $pickingListTransferCollection = $pickingListCollectionTransfer->getPickingLists();
         if ($pickingListTransferCollection->count() === 0) {
             return (new PickingListTransfer())->setUuid($pickingListUuid);
@@ -103,7 +103,7 @@ class PickingListReader implements PickingListReaderInterface
         $pickingListCollectionTransfer = $this->pickingListFacade
             ->getPickingListCollection($pickingListCriteriaTransfer);
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingLists */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingLists */
         $pickingLists = $pickingListCollectionTransfer->getPickingLists();
 
         return $this->pickingListResponseCreator
@@ -132,9 +132,8 @@ class PickingListReader implements PickingListReaderInterface
         $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->setPickingListConditions($pickingListConditionsTransfer);
         $pickingListCollectionTransfer = $this->pickingListFacade->getPickingListCollection($pickingListCriteriaTransfer);
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */
         $pickingListTransfers = $pickingListCollectionTransfer->getPickingLists();
-
         if ($pickingListTransfers->count() < 1) {
             return $this->pickingListResponseCreator
                 ->createPickingListSingleErrorResponse(

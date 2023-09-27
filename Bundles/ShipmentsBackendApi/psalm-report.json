@@ -1,6 +1,19 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ShipmentsBackendApi\\Processor\\Reader\\SalesShipmentResourceRelationshipReader::getOrderItemUuidsGroupedBySalesShipmentUuids expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsBackendApi/src/Spryker/Glue/ShipmentsBackendApi/Processor/Reader/SalesShipmentResourceRelationshipReader.php",
+            "snippet": "            $salesShipmentResourceCollectionTransfer->getShipments(),",
+            "selected_text": "$salesShipmentResourceCollectionTransfer->getShipments()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 1
 }

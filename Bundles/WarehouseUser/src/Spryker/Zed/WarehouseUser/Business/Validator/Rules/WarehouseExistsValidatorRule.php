@@ -44,7 +44,7 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -63,7 +63,7 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *

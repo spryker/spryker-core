@@ -16,7 +16,7 @@ interface PushNotificationFilterInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer>
      */
     public function filterOutInvalidPushNotifications(
         ArrayObject $pushNotificationTransfers,
@@ -27,7 +27,7 @@ interface PushNotificationFilterInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer>
      */
     public function filterOutValidPushNotifications(
         ArrayObject $pushNotificationTransfers,

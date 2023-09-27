@@ -1,6 +1,19 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OrderTransfer> variable $orderTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOrdersBackendApi/src/Spryker/Glue/SalesOrdersBackendApi/Processor/Mapper/SalesOrdersResourceMapper.php",
+            "snippet": "        return $this->executeOrdersBackendApiAttributesMapperPlugins($orderTransfers->getArrayCopy(), $ordersBackendApiAttributesTransfers);",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 1
 }

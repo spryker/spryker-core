@@ -3,6 +3,30 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\PushNotification\\PushNotificationConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::getConfig is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::resolveBundleConfig is more specific than the inferred return type 'Spryker\\Shared\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
             "line_from": 61,
             "line_to": 61,
             "type": "PossiblyInvalidMethodCall",
@@ -27,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 74,
+            "line_to": 74,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\PushNotification\\Business\\Extractor\\PushNotificationSubscriptionDeliveryLogExtractorInterface::extractDeliveryLogs expects ArrayObject<int, Generated\\Shared\\Transfer\\PushNotificationTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PushNotificationTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PushNotification/src/Spryker/Zed/PushNotification/Business/Sender/PushNotificationSender.php",
@@ -63,5 +87,5 @@
         }
     ],
     "deprecation": [],
-    "count": 5
+    "count": 7
 }

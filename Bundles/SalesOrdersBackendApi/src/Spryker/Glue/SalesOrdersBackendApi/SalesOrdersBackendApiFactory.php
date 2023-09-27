@@ -9,16 +9,41 @@ namespace Spryker\Glue\SalesOrdersBackendApi;
 
 use Spryker\Glue\Kernel\Backend\AbstractBackendApiFactory;
 use Spryker\Glue\SalesOrdersBackendApi\Dependency\Facade\SalesOrdersBackendApiToSalesFacadeInterface;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Expander\PickingListsSalesOrdersBackendResourceRelationshipExpander;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Expander\PickingListsSalesOrdersBackendResourceRelationshipExpanderInterface;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Filter\PickingListItemResourceFilter;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Filter\PickingListItemResourceFilterInterface;
 use Spryker\Glue\SalesOrdersBackendApi\Processor\Mapper\SalesOrdersResourceMapper;
 use Spryker\Glue\SalesOrdersBackendApi\Processor\Mapper\SalesOrdersResourceMapperInterface;
 use Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceReader;
 use Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceReaderInterface;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceRelationshipReader;
+use Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceRelationshipReaderInterface;
 
 /**
  * @method \Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiConfig getConfig()
  */
 class SalesOrdersBackendApiFactory extends AbstractBackendApiFactory
 {
+    /**
+     * @return \Spryker\Glue\SalesOrdersBackendApi\Processor\Expander\PickingListsSalesOrdersBackendResourceRelationshipExpanderInterface
+     */
+    public function createPickingListsSalesOrdersBackendResourceRelationshipExpander(): PickingListsSalesOrdersBackendResourceRelationshipExpanderInterface
+    {
+        return new PickingListsSalesOrdersBackendResourceRelationshipExpander(
+            $this->createSalesOrdersResourceRelationshipReader(),
+            $this->createPickingListItemResourceFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceRelationshipReaderInterface
+     */
+    public function createSalesOrdersResourceRelationshipReader(): SalesOrdersResourceRelationshipReaderInterface
+    {
+        return new SalesOrdersResourceRelationshipReader($this->createSalesOrdersResourceReader());
+    }
+
     /**
      * @return \Spryker\Glue\SalesOrdersBackendApi\Processor\Reader\SalesOrdersResourceReaderInterface
      */
@@ -28,6 +53,14 @@ class SalesOrdersBackendApiFactory extends AbstractBackendApiFactory
             $this->getSalesFacade(),
             $this->createSalesOrdersResourceMapper(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\SalesOrdersBackendApi\Processor\Filter\PickingListItemResourceFilterInterface
+     */
+    public function createPickingListItemResourceFilter(): PickingListItemResourceFilterInterface
+    {
+        return new PickingListItemResourceFilter();
     }
 
     /**

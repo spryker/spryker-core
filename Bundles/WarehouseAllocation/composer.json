@@ -10,7 +10,7 @@
         "spryker/sales-extension": "^1.6.0",
         "spryker/stock": "^8.0.0",
         "spryker/transfer": "^3.27.0",
-        "spryker/warehouse-allocation-extension": "^0.1.0"
+        "spryker/warehouse-allocation-extension": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
@@ -20,8 +20,7 @@
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/oms": "If you want to use Oms command plugins.",
-        "spryker/sales": "If you want to use Oms command plugins."
+        "spryker/oms": "If you want to use Oms command plugins."
     },
     "autoload": {
         "psr-4": {

@@ -13,7 +13,7 @@
         "spryker/transfer": "^3.27.0",
         "spryker/user-extension": "^1.0.0",
         "spryker/uuid-behavior": "^1.0.0",
-        "spryker/warehouse-user": "^0.1.0"
+        "spryker/warehouse-user": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

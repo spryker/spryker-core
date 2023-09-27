@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\WarehouseAllocation\Communication\Plugin\Oms;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -37,12 +36,9 @@ class SalesOrderWarehouseAllocationCommandPlugin extends AbstractPlugin implemen
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
-        foreach ($orderItems as $orderItem) {
-            $orderTransfer->getItems()->append(
-                (new ItemTransfer())->fromArray($orderItem->toArray(), true),
-            );
-        }
+        $orderTransfer = $this->getFactory()
+            ->createOrderMapper()
+            ->mapOrderEntityAndOrderItemEntitiesToOrderTransfer($orderEntity, $orderItems, new OrderTransfer());
 
         $this->getFacade()->allocateWarehouses($orderTransfer);
 

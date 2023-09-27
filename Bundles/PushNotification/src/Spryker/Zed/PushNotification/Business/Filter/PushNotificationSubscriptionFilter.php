@@ -100,7 +100,7 @@ class PushNotificationSubscriptionFilter implements PushNotificationSubscription
 
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
-     * @param array<string> $invalidPushNotificationSubscriptionIdentifiers
+     * @param array<string, string> $invalidPushNotificationSubscriptionIdentifiers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
      */

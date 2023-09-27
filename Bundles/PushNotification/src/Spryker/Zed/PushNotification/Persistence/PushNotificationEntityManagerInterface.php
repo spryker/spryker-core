@@ -61,13 +61,6 @@ interface PushNotificationEntityManagerInterface
     ): PushNotificationSubscriptionDeliveryLogTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\PushNotificationTransfer $pushNotificationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationTransfer
-     */
-    public function updatePushNotification(PushNotificationTransfer $pushNotificationTransfer): PushNotificationTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
@@ -91,11 +84,4 @@ interface PushNotificationEntityManagerInterface
      * @return void
      */
     public function deletePushNotificationSubscription(PushNotificationSubscriptionTransfer $pushNotificationSubscriptionTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\PushNotificationGroupTransfer $pushNotificationGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationGroupTransfer
-     */
-    public function updatePushNotificationGroup(PushNotificationGroupTransfer $pushNotificationGroupTransfer): PushNotificationGroupTransfer;
 }

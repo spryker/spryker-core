@@ -7,10 +7,18 @@
 
 namespace SprykerTest\Glue\SalesOrdersBackendApi;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\PickingListBuilder;
+use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\PickingListItemTransfer;
+use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface;
 
 /**
  * Inherited Methods
@@ -25,7 +33,6 @@ use Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface
  *
  * @SuppressWarnings(\SprykerTest\Glue\SalesOrdersBackendApi\PHPMD)
  */
@@ -39,30 +46,97 @@ class SalesOrdersBackendApiTester extends Actor
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
-     * @return \Spryker\Glue\SalesOrdersBackendApi\SalesOrdersBackendApiResourceInterface
+     * @uses \Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig::RESOURCE_PICKING_LIST_ITEMS
+     *
+     * @var string
      */
-    public function getSalesOrdersBackendApiResource(): SalesOrdersBackendApiResourceInterface
+    protected const RESOURCE_PICKING_LIST_ITEMS = 'picking-list-items';
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\PickingListTransfer
+     */
+    public function createPickingListTransfer(array $seed = []): PickingListTransfer
     {
-        return $this->getLocator()->salesOrdersBackendApi()->resource();
+        $pickingListTransfer = (new PickingListBuilder($seed))
+            ->withWarehouse()
+            ->withUser()
+            ->build();
+
+        if (array_key_exists(PickingListTransfer::PICKING_LIST_ITEMS, $seed)) {
+            $pickingListTransfer = $pickingListTransfer->setPickingListItems(
+                new ArrayObject($seed[PickingListTransfer::PICKING_LIST_ITEMS]),
+            );
+        }
+
+        return $this->havePickingList($pickingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListItemTransfer
+     */
+    public function createPickingListItemTransfer(
+        ItemTransfer $itemTransfer
+    ): PickingListItemTransfer {
+        return (new PickingListItemBuilder([
+            PickingListItemTransfer::ORDER_ITEM => $itemTransfer,
+        ]))->build();
     }
 
     /**
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function createSaveOrderTransfer(): SaveOrderTransfer
+    public function createSaveOrderTransferWithTwoItems(): SaveOrderTransfer
     {
+        $stockData = $this->haveStock()->toArray();
+
         $quoteTransfer = (new QuoteBuilder())
             ->withCustomer()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
-            ->withItem()
             ->build();
+
+        $quoteTransfer->setItems(new ArrayObject([
+            (new ItemBuilder([
+                ItemTransfer::SKU => $this->haveProduct()->getSku(),
+                ItemTransfer::WAREHOUSE => $stockData,
+            ]))->build(),
+            (new ItemBuilder([
+                ItemTransfer::SKU => $this->haveProduct()->getSku(),
+                ItemTransfer::WAREHOUSE => $stockData,
+            ]))->build(),
+        ]));
 
         return $this->haveOrderFromQuote(
             $quoteTransfer,
             static::DEFAULT_OMS_PROCESS_NAME,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\GlueResourceTransfer>
+     */
+    public function createGlueResourceTransfers(PickingListTransfer $pickingListTransfer): array
+    {
+        $glueResourceTransfers = [];
+        foreach ($pickingListTransfer->getPickingListItems() as $pickingListItemTransfer) {
+            $pickingListItemsBackendApiAttributesTransfer = (new PickingListItemsBackendApiAttributesTransfer())->fromArray(
+                $pickingListItemTransfer->toArray(),
+                true,
+            );
+
+            $glueResourceTransfers[] = (new GlueResourceTransfer())
+                ->setType(static::RESOURCE_PICKING_LIST_ITEMS)
+                ->setAttributes($pickingListItemsBackendApiAttributesTransfer);
+        }
+
+        return $glueResourceTransfers;
     }
 }

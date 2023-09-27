@@ -29,6 +29,8 @@ use Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionL
 use Spryker\Zed\PushNotification\Business\Expander\PushNotificationSubscriptionPushNotificationProviderExpander;
 use Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractor;
 use Spryker\Zed\PushNotification\Business\Extractor\ErrorEntityIdentifierExtractorInterface;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractor;
+use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractor;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionLocaleExtractor;
@@ -240,6 +242,7 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
             $this->createPushNotificationProviderDeleteValidator(),
             $this->createPushNotificationProviderFilter(),
             $this->createPushNotificationProviderReader(),
+            $this->createPushNotificationProviderExtractor(),
         );
     }
 
@@ -302,6 +305,7 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
         return new UuidExistencePushNotificationProviderValidatorRule(
             $this->getRepository(),
             $this->createErrorAdder(),
+            $this->createPushNotificationProviderExtractor(),
         );
     }
 
@@ -333,21 +337,6 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     public function createErrorAdder(): ErrorAdderInterface
     {
         return new ErrorAdder();
-    }
-
-    /**
-     * @return \Spryker\Zed\PushNotification\Business\Validator\PushNotificationValidatorInterface
-     */
-    public function createPushNotificationUpdateValidator(): PushNotificationValidatorInterface
-    {
-        return new PushNotificationValidator(
-            [
-                $this->createPushNotificationPushNotificationProviderExistsValidatorRule(),
-                $this->createPushNotificationExistsValidatorRule(),
-            ],
-            $this->getPushNotificationValidatorPlugins(),
-            $this->createErrorCollectionExpander(),
-        );
     }
 
     /**
@@ -421,17 +410,6 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new PushNotificationPushNotificationProviderExistsValidatorRule(
             $this->createPushNotificationProviderReader(),
-            $this->createErrorCreator(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationValidatorRuleInterface
-     */
-    public function createPushNotificationExistsValidatorRule(): PushNotificationValidatorRuleInterface
-    {
-        return new PushNotificationExistsValidatorRule(
-            $this->getRepository(),
             $this->createErrorCreator(),
         );
     }
@@ -548,6 +526,14 @@ class PushNotificationBusinessFactory extends AbstractBusinessFactory
     public function createPushNotificationSubscriptionDeliveryLogExtractor(): PushNotificationSubscriptionDeliveryLogExtractorInterface
     {
         return new PushNotificationSubscriptionDeliveryLogExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\PushNotification\Business\Extractor\PushNotificationProviderExtractorInterface
+     */
+    public function createPushNotificationProviderExtractor(): PushNotificationProviderExtractorInterface
+    {
+        return new PushNotificationProviderExtractor();
     }
 
     /**

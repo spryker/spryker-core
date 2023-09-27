@@ -10,8 +10,6 @@ namespace Spryker\Zed\WarehouseUser\Business\Validator\Rules;
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentConditionsTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentCriteriaTransfer;
 use Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignmentIdentifierBuilderInterface;
 
 class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserAssignmentValidatorRuleInterface
@@ -36,7 +34,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -56,7 +54,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return bool
      */
@@ -73,24 +71,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
-     *
-     * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCriteriaTransfer
-     */
-    protected function createWarehouseUserAssignmentCriteriaTransfer(ArrayObject $warehouseUserAssignmentTransfers): WarehouseUserAssignmentCriteriaTransfer
-    {
-        $warehouseUserAssignmentConditionsTransfer = (new WarehouseUserAssignmentConditionsTransfer())->setIsActive(true);
-        foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
-            if ($warehouseUserAssignmentTransfer->getUserUuid()) {
-                $warehouseUserAssignmentConditionsTransfer->addUserUuid($warehouseUserAssignmentTransfer->getUserUuidOrFail());
-            }
-        }
-
-        return (new WarehouseUserAssignmentCriteriaTransfer())->setWarehouseUserAssignmentConditions($warehouseUserAssignmentConditionsTransfer);
-    }
-
-    /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $requestedWarehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $requestedWarehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -131,7 +112,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return array<string, list<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>>
      */

@@ -8,6 +8,7 @@
 namespace Spryker\Glue\PushNotificationsBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\PushNotificationsBackendApi\Processor\Translator\PushNotificationTranslatorInterface;
@@ -44,7 +45,7 @@ class ErrorResponseBuilder implements ErrorResponseBuilderInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      * @param string|null $localeName
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -73,6 +74,22 @@ class ErrorResponseBuilder implements ErrorResponseBuilderInterface
         }
 
         return $this->setGlueResponseHttpStatus($glueResponseTransfer);
+    }
+
+    /**
+     * @param string $errorMessage
+     * @param string|null $localeName
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function createErrorResponseFromErrorMessage(string $errorMessage, ?string $localeName = null): GlueResponseTransfer
+    {
+        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
+
+        return $this->createErrorResponse(
+            new ArrayObject([$errorTransfer]),
+            $localeName,
+        );
     }
 
     /**

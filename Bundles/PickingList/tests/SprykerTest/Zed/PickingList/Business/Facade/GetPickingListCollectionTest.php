@@ -153,10 +153,10 @@ class GetPickingListCollectionTest extends Unit
     public function testGetPickingListShouldReturnCollectionExpandedWithOrderItemsWhenCriteriaMatched(): void
     {
         // Arrange
-        $itemTransfer = (new ItemBuilder([ItemTransfer::UUID => static::TEST_UUID]))->build();
-        $this->tester->haveOrder($itemTransfer->toArray(), static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
-
-        $pickingListItemTransfer = (new PickingListItemBuilder())->build()->setOrderItem($itemTransfer);
+        $saveOrderTransfer = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $pickingListItemTransfer = (new PickingListItemBuilder())
+            ->build()
+            ->setOrderItem($saveOrderTransfer->getOrderItems()->getIterator()->current());
         $pickingListTransfer = $this->tester->createPickingListTransfer([
             PickingListTransfer::WAREHOUSE => $this->tester->haveStock(),
             PickingListTransfer::PICKING_LIST_ITEMS => [$pickingListItemTransfer],

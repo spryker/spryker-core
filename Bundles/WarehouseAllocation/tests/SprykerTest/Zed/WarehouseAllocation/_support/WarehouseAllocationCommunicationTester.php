@@ -32,7 +32,7 @@ use Spryker\Zed\WarehouseAllocationExtension\Dependency\Plugin\SalesOrderWarehou
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\WarehouseAllocation\PHPMD)
  */
 class WarehouseAllocationCommunicationTester extends Actor
 {

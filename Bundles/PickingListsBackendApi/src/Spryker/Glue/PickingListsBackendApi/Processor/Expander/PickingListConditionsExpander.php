@@ -13,16 +13,10 @@ use Generated\Shared\Transfer\PickingListConditionsTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 use Spryker\Glue\PickingListsBackendApi\Processor\Extractor\WarehouseUserAssignmentExtractorInterface;
-use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader;
 
 class PickingListConditionsExpander implements PickingListConditionsExpanderInterface
 {
-    /**
-     * @var \Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface
-     */
-    protected StockReaderInterface $stockReader;
-
     /**
      * @var \Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader
      */
@@ -34,16 +28,13 @@ class PickingListConditionsExpander implements PickingListConditionsExpanderInte
     protected WarehouseUserAssignmentExtractorInterface $warehouseUserAssignmentExtractor;
 
     /**
-     * @param \Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface $stockReader
      * @param \Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader $warehouseUserAssignmentReader
      * @param \Spryker\Glue\PickingListsBackendApi\Processor\Extractor\WarehouseUserAssignmentExtractorInterface $warehouseUserAssignmentExtractor
      */
     public function __construct(
-        StockReaderInterface $stockReader,
         WarehouseUserAssignmentReader $warehouseUserAssignmentReader,
         WarehouseUserAssignmentExtractorInterface $warehouseUserAssignmentExtractor
     ) {
-        $this->stockReader = $stockReader;
         $this->warehouseUserAssignmentReader = $warehouseUserAssignmentReader;
         $this->warehouseUserAssignmentExtractor = $warehouseUserAssignmentExtractor;
     }
@@ -62,12 +53,9 @@ class PickingListConditionsExpander implements PickingListConditionsExpanderInte
             return $this->expandWithUserData($pickingListConditionsTransfer, $glueRequestTransfer->getRequestUserOrFail());
         }
 
-        $stockTransfer = $this->stockReader->getStockTransfer($glueRequestTransfer);
-        if ($stockTransfer === null || $stockTransfer->getUuid() === null) {
-            return $pickingListConditionsTransfer;
-        }
-
-        $pickingListConditionsTransfer->addWarehouseUuid($stockTransfer->getUuidOrFail());
+        $pickingListConditionsTransfer->addIdWarehouse(
+            $glueRequestTransfer->getRequestWarehouseOrFail()->getIdWarehouseOrFail(),
+        );
 
         return $pickingListConditionsTransfer;
     }

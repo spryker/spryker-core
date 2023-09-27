@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\OrderWriter;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -240,6 +241,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
             $shippingAddressEntityTransfer = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
             $salesOrderEntityTransfer->setShippingAddress($shippingAddressEntityTransfer);
             $salesOrderEntityTransfer->setFkSalesOrderAddressShipping($shippingAddressEntityTransfer->getIdSalesOrderAddress());
+            $this->mapShippingAddressEntityTransferToItemTransfers($shippingAddressEntityTransfer, $quoteTransfer->getItems());
         }
 
         return $salesOrderEntityTransfer;
@@ -345,5 +347,28 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     protected function assertOrderRequirements(QuoteTransfer $quoteTransfer): void
     {
         $quoteTransfer->requireItems()->requireTotals();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer $shippingAddressEntityTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function mapShippingAddressEntityTransferToItemTransfers(
+        SpySalesOrderAddressEntityTransfer $shippingAddressEntityTransfer,
+        ArrayObject $itemTransfers
+    ): ArrayObject {
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null || $itemTransfer->getShipmentOrFail()->getShippingAddress() === null) {
+                continue;
+            }
+
+            $itemTransfer->getShipmentOrFail()
+                ->getShippingAddressOrFail()
+                ->fromArray($shippingAddressEntityTransfer->toArray(), true);
+        }
+
+        return $itemTransfers;
     }
 }

@@ -16,7 +16,7 @@
         "spryker/util-encoding": "^2.0.0",
         "spryker/util-sanitize": "^2.0.0",
         "spryker/util-text": "^1.2.0",
-        "spryker/warehouse-user": "^0.1.0"
+        "spryker/warehouse-user": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

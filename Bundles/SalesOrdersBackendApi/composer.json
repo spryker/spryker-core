@@ -5,16 +5,21 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.66.0",
         "spryker/sales": "^11.40.0",
-        "spryker/sales-orders-backend-api-extension": "^0.2.0",
-        "spryker/transfer": "^3.31.0"
+        "spryker/sales-orders-backend-api-extension": "^1.0.0",
+        "spryker/transfer": "^3.31.0",
+        "spryker/uuid-behavior": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/oms": "*",
+        "spryker/picking-list": "*",
+        "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/stock": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
     },

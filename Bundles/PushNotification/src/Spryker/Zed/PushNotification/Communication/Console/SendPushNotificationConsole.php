@@ -71,9 +71,7 @@ class SendPushNotificationConsole extends Console
             (new PushNotificationCollectionRequestTransfer())->setPushNotifications($pushNotificationCollectionTransfer->getPushNotifications()),
         );
 
-        /**
-         * @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $pushNotificationCollectionResponseTransfer->getErrors();
 
         if ($errorTransfers->count() === 0) {

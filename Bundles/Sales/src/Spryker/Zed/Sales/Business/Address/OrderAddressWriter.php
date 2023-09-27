@@ -52,7 +52,7 @@ class OrderAddressWriter implements OrderAddressWriterInterface
             return $addressTransfer;
         }
 
-        return $this->entityManager->createSalesOrderAddress($addressTransfer);
+        return $this->entityManager->createSalesOrderAddress($this->cleanUpAddressUuid($addressTransfer));
     }
 
     /**
@@ -71,8 +71,19 @@ class OrderAddressWriter implements OrderAddressWriterInterface
             return false;
         }
 
-        $this->entityManager->updateSalesOrderAddress($addressTransfer);
+
+        $this->entityManager->updateSalesOrderAddress($this->cleanUpAddressUuid($addressTransfer));
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function cleanUpAddressUuid(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        return $addressTransfer->setUuid(null);
     }
 }

@@ -80,7 +80,7 @@ class PushNotificationFilter implements PushNotificationFilterInterface
 
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer> $pushNotificationTransfers
-     * @param array<string> $invalidPushNotificationIdentifiers
+     * @param array<string, string> $invalidPushNotificationIdentifiers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationTransfer>
      */

@@ -20,7 +20,17 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Testify\Helper\BusinessHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\PickingList\Helper\PickingListHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Zed\WarehouseUser\Helper\WarehouseUserHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

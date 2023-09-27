@@ -118,6 +118,7 @@
         <property name="description" type="string"/>
         <property name="country" type="Country"/>
         <property name="fkCountry" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Comment">
@@ -456,6 +457,7 @@
 
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
     </transfer>
 
     <transfer name="AclEntityMetadataCollection">
@@ -470,6 +472,7 @@
 
     <transfer name="AclEntityParentMetadata">
         <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
     </transfer>
 
     <transfer name="AclEntityParentConnectionMetadata">

@@ -21,6 +21,7 @@
 
     <transfer name="Shipment">
         <property name="uuid" type="string" strict="true"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="SalesShipmentCollection" strict="true">
@@ -31,6 +32,26 @@
         <property name="type" type="string"/>
         <property name="id" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
+    </transfer>
+
+    <transfer name="GlueRelationship">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+    </transfer>
+
+    <transfer name="Item">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="PickingListItemsBackendApiAttributes" strict="true">
+        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
+    </transfer>
+
+    <transfer name="OrderItemsBackendApiAttributes" strict="true">
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

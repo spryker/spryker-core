@@ -12,9 +12,9 @@ use ArrayObject;
 interface WarehouseUserAssignmentExpanderInterface
 {
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
      */
     public function expandWarehouseUserAssignmentTransfersWithWarehouses(ArrayObject $warehouseUserAssignmentTransfers): ArrayObject;
 }

@@ -85,6 +85,7 @@
         <property name="userUuids" type="string[]" singular="userUuid"/>
         <property name="withUnassignedUser" type="bool"/>
         <property name="warehouseUuids" type="string[]" singular="warehouseUuid"/>
+        <property name="warehouseIds" type="int[]" singular="idWarehouse"/>
     </transfer>
 
     <transfer name="PickingListCriteria" strict="true">

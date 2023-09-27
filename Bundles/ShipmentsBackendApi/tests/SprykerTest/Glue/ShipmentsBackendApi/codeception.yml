@@ -12,7 +12,7 @@ coverage:
             - '../../../../src/*'
 suites:
     Business:
-        path: Resource
+        path: .
         actor: ShipmentsBackendApiResourceTester
         modules:
             enabled:
@@ -25,4 +25,6 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Zed\PickingList\Helper\PickingListHelper

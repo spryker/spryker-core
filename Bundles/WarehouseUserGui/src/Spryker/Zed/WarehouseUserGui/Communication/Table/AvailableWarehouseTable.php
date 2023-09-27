@@ -12,6 +12,7 @@ use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\WarehouseUser\Persistence\Map\SpyWarehouseUserAssignmentTableMap;
 use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\WarehouseUserGui\Dependency\Service\WarehouseUserGuiToUtilEncodingServiceInterface;
@@ -69,9 +70,9 @@ class AvailableWarehouseTable extends AbstractWarehouseTable
     }
 
     /**
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function prepareQuery(): SpyStockQuery
+    protected function prepareQuery(): ModelCriteria
     {
         $stockIds = $this->warehouseUserAssignmentQuery
             ->filterByUserUuid($this->userTransfer->getUuidOrFail())

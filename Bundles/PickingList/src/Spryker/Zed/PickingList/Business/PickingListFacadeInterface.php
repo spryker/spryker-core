@@ -28,6 +28,7 @@ interface PickingListFacadeInterface
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.uuids` to filter pickingLists by uuids.
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.userUuids` to filter pickingLists by user uuids.
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.withUnassignedUser` to also include not assigned picking lists.
+     * - Uses `PickingListCriteriaTransfer.PickingListConditions.warehouseIds` to filter pickingLists by warehouse ids.
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.warehouseUuids` to filter pickingLists by warehouse uuids.
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.statuses` to filter pickingLists by statuses.
      * - Uses `PickingListCriteriaTransfer.PickingListConditions.salesOrderItemUuids` to filter pickingLists by sales order item uuids.
@@ -90,7 +91,7 @@ interface PickingListFacadeInterface
      * - Updates picking list item entities in Persistence.
      * - Uses `PickingListCollectionRequestTransfer.isTransactional` to make transactional update.
      * - Executes the stack of {@link \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostUpdatePluginInterface} plugins.
-     * - Breaks {@link \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostCreatePluginInterface} plugins execution after the first error occurrence.
+     * - Breaks {@link \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostUpdatePluginInterface} plugins execution after the first error occurrence.
      * - Persists nothing in case if at least one of {@link \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostUpdatePluginInterface} plugins returns error.
      * - Returns `PickingListCollectionResponseTransfer.PickingListTransfer[]` filled with updated pickingLists.
      * - Returns `PickingListCollectionResponseTransfer.ErrorTransfer[]` filled with validation errors.

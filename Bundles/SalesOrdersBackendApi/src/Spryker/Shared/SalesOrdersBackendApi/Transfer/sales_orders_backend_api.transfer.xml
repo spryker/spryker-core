@@ -10,6 +10,7 @@
         <property name="type" type="string"/>
         <property name="id" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
     </transfer>
 
     <transfer name="OrdersBackendApiAttributes" strict="true">
@@ -17,10 +18,42 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="orderReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="OrderList">
         <property name="orders" type="Order[]" singular="order"/>
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+        <property name="format" type="OrderListFormat"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="OrderListFormat">
+        <property name="expandWithItems" type="bool"/>
+    </transfer>
+
+    <transfer name="GlueRelationship">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+    </transfer>
+
+    <transfer name="Item">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="PickingListItemsBackendApiAttributes" strict="true">
+        <property name="orderItem" type="OrderItemsBackendApiAttributes"/>
+    </transfer>
+
+    <transfer name="OrderItemsBackendApiAttributes" strict="true">
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

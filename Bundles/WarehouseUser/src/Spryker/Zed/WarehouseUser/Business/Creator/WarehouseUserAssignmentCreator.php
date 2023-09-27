@@ -76,7 +76,7 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     public function createWarehouseUserAssignmentCollection(
         WarehouseUserAssignmentCollectionRequestTransfer $warehouseUserAssignmentCollectionRequestTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers */
         $warehouseUserAssignmentTransfers = $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments();
         $warehouseUserAssignmentTransfers = $this->warehouseUserAssignmentExpander
             ->expandWarehouseUserAssignmentTransfersWithWarehouses($warehouseUserAssignmentTransfers);
@@ -85,7 +85,7 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
             $warehouseUserAssignmentTransfers,
         );
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
 
         if (
@@ -138,7 +138,7 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     protected function splitWarehouseUserAssignmentTransfersByValidity(
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): array {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
 
         $warehouseUserAssignmentIdsWithErrors = $this->getErroredWarehouseUserAssignmentsIdentifiers(
@@ -164,7 +164,7 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return list<string>
      */

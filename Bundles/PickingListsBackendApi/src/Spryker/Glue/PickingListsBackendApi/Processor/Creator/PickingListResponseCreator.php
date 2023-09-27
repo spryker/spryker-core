@@ -52,7 +52,7 @@ class PickingListResponseCreator implements PickingListResponseCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
@@ -70,7 +70,7 @@ class PickingListResponseCreator implements PickingListResponseCreatorInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      * @param string|null $localeName
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -179,9 +179,8 @@ class PickingListResponseCreator implements PickingListResponseCreatorInterface
      */
     protected function setGlueResponseHttpStatus(GlueResponseTransfer $glueResponseTransfer): GlueResponseTransfer
     {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\GlueErrorTransfer> $errorTransferCollection */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\GlueErrorTransfer> $errorTransferCollection */
         $errorTransferCollection = $glueResponseTransfer->getErrors();
-
         if ($errorTransferCollection->count() !== 1) {
             return $glueResponseTransfer->setHttpStatus(
                 Response::HTTP_MULTI_STATUS,

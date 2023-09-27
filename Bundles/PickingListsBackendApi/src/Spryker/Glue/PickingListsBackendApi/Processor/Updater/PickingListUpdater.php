@@ -88,14 +88,14 @@ class PickingListUpdater implements PickingListUpdaterInterface
         GlueRequestTransfer $glueRequestTransfer,
         PickingListCollectionResponseTransfer $pickingListCollectionResponseTransfer
     ): GlueResponseTransfer {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $pickingListCollectionResponseTransfer->getErrors();
 
         if ($errorTransfers->count()) {
             return $this->pickingListResponseCreator->createPickingListErrorResponse($errorTransfers, $glueRequestTransfer->getLocale());
         }
 
-        /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers */
         $pickingListTransfers = $pickingListCollectionResponseTransfer->getPickingLists();
 
         return $this->pickingListResponseCreator->createPickingListSuccessfulResponse($pickingListTransfers);

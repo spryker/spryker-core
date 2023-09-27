@@ -87,7 +87,7 @@ class PickingListMapper implements PickingListMapperInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransferCollection
      * @param \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer
      *
      * @return \Generated\Shared\Transfer\PickingListTransfer

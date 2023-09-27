@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 interface WarehouseUserAssignmentFormExpanderInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return void
      */

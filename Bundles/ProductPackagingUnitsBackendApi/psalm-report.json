@@ -1,19 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Glue\\ProductPackagingUnitsBackendApi\\Processor\\Mapper\\ProductPackagingUnitPickingListItemsMapper::mapProductMeasurementSalesUnitTransferToApiProductMeasurementSalesUnitAttributesTransfer cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitsBackendApi/src/Spryker/Glue/ProductPackagingUnitsBackendApi/Processor/Mapper/ProductPackagingUnitPickingListItemsMapper.php",
-            "snippet": "            $itemTransfer->getAmountSalesUnit(),",
-            "selected_text": "$itemTransfer->getAmountSalesUnit()",
-            "error_level": 3,
-            "shortcode": 78
-        }
-    ],
+    "warning": [],
     "deprecation": [],
-    "count": 1
+    "count": 0
 }

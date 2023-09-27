@@ -87,16 +87,12 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     public function createPushNotificationSubscriptionCollection(
         PushNotificationSubscriptionCollectionRequestTransfer $pushNotificationSubscriptionCollectionRequestTransfer
     ): PushNotificationSubscriptionCollectionResponseTransfer {
-        /**
-         * @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
-         */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers */
         $pushNotificationSubscriptionTransfers = $pushNotificationSubscriptionCollectionRequestTransfer->getPushNotificationSubscriptions();
         $pushNotificationSubscriptionTransfers = $this->generateCheckSum($pushNotificationSubscriptionTransfers);
         $errorCollectionTransfer = $this->pushNotificationSubscriptionValidator
             ->validateCollection($pushNotificationSubscriptionTransfers);
-        /**
-         * @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-         */
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
         $errorTransfers = $errorCollectionTransfer->getErrors();
 
         $pushNotificationSubscriptionCollectionResponseTransfer = $this->createPushNotificationSubscriptionCollectionResponseTransfer(
@@ -125,7 +121,7 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
      */
     protected function executeCreatePushNotificationSubscriptionCollection(
         ArrayObject $pushNotificationSubscriptionTransfers,
@@ -160,10 +156,10 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $validPushNotificationSubscriptionTransfers
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $invalidPushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $validPushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $invalidPushNotificationSubscriptionTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
      */
     protected function mergePushNotificationSubscriptionTransfers(
         ArrayObject $validPushNotificationSubscriptionTransfers,
@@ -177,9 +173,9 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer>
      */
     protected function executeCreatePushNotificationSubscriptionCollectionTransaction(
         ArrayObject $pushNotificationSubscriptionTransfers
@@ -226,7 +222,7 @@ class PushNotificationSubscriptionCreator implements PushNotificationSubscriptio
 
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $pushNotificationSubscriptionTransfers
-     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return \Generated\Shared\Transfer\PushNotificationSubscriptionCollectionResponseTransfer
      */

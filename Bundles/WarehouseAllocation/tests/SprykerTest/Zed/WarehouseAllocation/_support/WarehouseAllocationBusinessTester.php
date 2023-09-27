@@ -26,7 +26,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\WarehouseAllocation\Business\WarehouseAllocationFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\WarehouseAllocation\PHPMD)
  */
 class WarehouseAllocationBusinessTester extends Actor
 {

@@ -21,9 +21,16 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/glue-application": "*",
+        "spryker/oms": "*",
+        "spryker/picking-list": "*",
         "spryker/propel": "*",
-        "spryker/testify": "*"
+        "spryker/sales": "*",
+        "spryker/stock": "*",
+        "spryker/testify": "*",
+        "spryker/user": "*",
+        "spryker/warehouse-user": "*"
     },
     "suggest": {
         "spryker/glue-application": "If you want to use the Glue backend resource plugins. The minimum varsion is 1.39.0."

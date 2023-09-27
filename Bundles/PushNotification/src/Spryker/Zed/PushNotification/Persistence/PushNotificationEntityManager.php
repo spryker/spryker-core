@@ -111,34 +111,6 @@ class PushNotificationEntityManager extends AbstractEntityManager implements Pus
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PushNotificationTransfer $pushNotificationTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationTransfer
-     */
-    public function updatePushNotification(PushNotificationTransfer $pushNotificationTransfer): PushNotificationTransfer
-    {
-        $pushNotificationEntity = $this->getFactory()
-            ->createPushNotificationQuery()
-            ->filterByIdPushNotification($pushNotificationTransfer->getIdPushNotificationOrFail())
-            ->findOne();
-        if (!$pushNotificationEntity) {
-            return $pushNotificationTransfer;
-        }
-
-        $pushNotificationMapper = $this->getFactory()->createPushNotificationMapper();
-        $pushNotificationEntity = $pushNotificationMapper->mapPushNotificationTransferToPushNotificationEntity(
-            $pushNotificationTransfer,
-            $pushNotificationEntity,
-        );
-        $pushNotificationEntity->save();
-
-        return $pushNotificationMapper->mapPushNotificationEntityToPushNotificationTransfer(
-            $pushNotificationEntity,
-            $pushNotificationTransfer,
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PushNotificationProviderTransfer $pushNotificationProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PushNotificationProviderTransfer
@@ -182,30 +154,6 @@ class PushNotificationEntityManager extends AbstractEntityManager implements Pus
             ->filterByUuid_In($pushNotificationProviderUuids)
             ->find()
             ->delete();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PushNotificationGroupTransfer $pushNotificationGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\PushNotificationGroupTransfer
-     */
-    public function updatePushNotificationGroup(PushNotificationGroupTransfer $pushNotificationGroupTransfer): PushNotificationGroupTransfer
-    {
-        $pushNotificationGroupEntity = $this->getFactory()
-            ->createPushNotificationGroupQuery()
-            ->filterByIdPushNotificationGroup($pushNotificationGroupTransfer->getIdPushNotificationGroupOrFail())
-            ->findOne();
-        if (!$pushNotificationGroupEntity) {
-            return $pushNotificationGroupTransfer;
-        }
-        $pushNotificationGroupMapper = $this->getFactory()->createPushNotificationGroupMapper();
-        $pushNotificationGroupEntity = $pushNotificationGroupMapper->mapPushNotificationGroupTransferToPushNotificationGroupEntity(
-            $pushNotificationGroupTransfer,
-            $pushNotificationGroupEntity,
-        );
-        $pushNotificationGroupEntity->save();
-
-        return $pushNotificationGroupMapper->mapPushNotificationGroupEntityToPushNotificationGroupTransfer($pushNotificationGroupEntity, $pushNotificationGroupTransfer);
     }
 
     /**

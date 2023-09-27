@@ -28,7 +28,7 @@ class WarehouseUserAssignmentFormExpander implements WarehouseUserAssignmentForm
     protected const TEMPLATE_PATH_IS_WAREHOUSE_USER = '@WarehouseUserGui/_partials/user-form-is-warehouse-user-field.twig';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return void
      */

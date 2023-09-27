@@ -19,10 +19,16 @@ use Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToUrlFac
 use Spryker\Glue\ProductsBackendApi\Dependency\Service\ProductsBackedApiToUtilEncodingServiceInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Creator\ProductAbstractCreator;
 use Spryker\Glue\ProductsBackendApi\Processor\Creator\ProductAbstractCreatorInterface;
+use Spryker\Glue\ProductsBackendApi\Processor\Expander\PickingListItemsBackendResourceRelationshipExpander;
+use Spryker\Glue\ProductsBackendApi\Processor\Expander\PickingListItemsBackendResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductsBackendApi\Processor\Filter\PickingListItemResourceFilter;
+use Spryker\Glue\ProductsBackendApi\Processor\Filter\PickingListItemResourceFilterInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapper;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapperInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductConcreteResourceMapper;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductConcreteResourceMapperInterface;
+use Spryker\Glue\ProductsBackendApi\Processor\Reader\ConcreteProductResourceRelationshipReader;
+use Spryker\Glue\ProductsBackendApi\Processor\Reader\ConcreteProductResourceRelationshipReaderInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReader;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReaderInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductConcreteResourceReader;
@@ -113,6 +119,27 @@ class ProductsBackendApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductsBackendApi\Processor\Expander\PickingListItemsBackendResourceRelationshipExpanderInterface
+     */
+    public function createPickingListItemsBackendResourceRelationshipExpander(): PickingListItemsBackendResourceRelationshipExpanderInterface
+    {
+        return new PickingListItemsBackendResourceRelationshipExpander(
+            $this->createPickingListItemResourceFilter(),
+            $this->createConcreteProductResourceRelationshipReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsBackendApi\Processor\Reader\ConcreteProductResourceRelationshipReaderInterface
+     */
+    public function createConcreteProductResourceRelationshipReader(): ConcreteProductResourceRelationshipReaderInterface
+    {
+        return new ConcreteProductResourceRelationshipReader(
+            $this->createProductConcreteResourceReader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductConcreteResourceReaderInterface
      */
     public function createProductConcreteResourceReader(): ProductConcreteResourceReaderInterface
@@ -121,6 +148,14 @@ class ProductsBackendApiFactory extends AbstractFactory
             $this->getProductFacade(),
             $this->createProductConcreteResourceMapper(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsBackendApi\Processor\Filter\PickingListItemResourceFilterInterface
+     */
+    public function createPickingListItemResourceFilter(): PickingListItemResourceFilterInterface
+    {
+        return new PickingListItemResourceFilter();
     }
 
     /**

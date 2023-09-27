@@ -10,7 +10,6 @@ namespace Spryker\Glue\PickingListsBackendApi;
 use Spryker\Glue\Kernel\Backend\AbstractBackendApiFactory;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Client\PickingListsBackendApiToGlossaryStorageClientInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface;
-use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToStockFacadeInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToWarehouseUserFacadeInterface;
 use Spryker\Glue\PickingListsBackendApi\Dependency\Service\PickingListsBackendApiToUtilEncodingServiceInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Creator\PickingListResponseCreator;
@@ -35,8 +34,6 @@ use Spryker\Glue\PickingListsBackendApi\Processor\Reader\GlossaryReader;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\GlossaryReaderInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReader;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\PickingListReaderInterface;
-use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReader;
-use Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface;
 use Spryker\Glue\PickingListsBackendApi\Processor\Reader\WarehouseUserAssignmentReader;
 use Spryker\Glue\PickingListsBackendApi\Processor\Updater\PickingListItemUpdater;
 use Spryker\Glue\PickingListsBackendApi\Processor\Updater\PickingListItemUpdaterInterface;
@@ -161,7 +158,6 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     public function createPickingListConditionsExpander(): PickingListConditionsExpanderInterface
     {
         return new PickingListConditionsExpander(
-            $this->createStockReader(),
             $this->createWarehouseUserAssignmentReader(),
             $this->createWarehouseUserAssignmentExtractor(),
         );
@@ -197,14 +193,6 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return \Spryker\Glue\PickingListsBackendApi\Processor\Reader\StockReaderInterface
-     */
-    public function createStockReader(): StockReaderInterface
-    {
-        return new StockReader($this->getStockFacade());
-    }
-
-    /**
      * @return \Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToPickingListFacadeInterface
      */
     public function getPickingListFacade(): PickingListsBackendApiToPickingListFacadeInterface
@@ -218,14 +206,6 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     public function getWarehouseUserFacade(): PickingListsBackendApiToWarehouseUserFacadeInterface
     {
         return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::FACADE_WAREHOUSE_USER);
-    }
-
-    /**
-     * @return \Spryker\Glue\PickingListsBackendApi\Dependency\Facade\PickingListsBackendApiToStockFacadeInterface
-     */
-    public function getStockFacade(): PickingListsBackendApiToStockFacadeInterface
-    {
-        return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::FACADE_STOCK);
     }
 
     /**
