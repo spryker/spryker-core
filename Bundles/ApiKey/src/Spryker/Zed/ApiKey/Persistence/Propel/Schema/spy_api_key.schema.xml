@@ -7,6 +7,7 @@
         <column name="key_hash" required="true" size="64" type="VARCHAR"/>
         <column name="scopes" type="VARCHAR" size="1024" required="false"/>
         <column name="created_by" type="INTEGER" required="true"/>
+        <column name="valid_to" type="TIMESTAMP" default="NULL"/>
         <id-method-parameter value="spy_api_key_pk_seq"/>
         <unique name="spy_api_key-name">
             <unique-column name="name"/>

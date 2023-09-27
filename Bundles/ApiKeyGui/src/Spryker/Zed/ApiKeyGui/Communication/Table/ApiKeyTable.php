@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ApiKeyGui\Communication\Table;
 
+use DateTime;
 use Orm\Zed\ApiKey\Persistence\SpyApiKey;
 use Orm\Zed\ApiKey\Persistence\SpyApiKeyQuery;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
@@ -40,6 +41,11 @@ class ApiKeyTable extends AbstractTable
     /**
      * @var string
      */
+    protected const COL_VALID_TO = 'valid_to';
+
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
     /**
@@ -51,6 +57,11 @@ class ApiKeyTable extends AbstractTable
      * @var string
      */
     protected const VALUE_COL_CREATED_BY = 'Created by';
+
+    /**
+     * @var string
+     */
+    protected const VALUE_COL_VALID_TO = 'Expires on';
 
     /**
      * @var string
@@ -76,6 +87,11 @@ class ApiKeyTable extends AbstractTable
      * @var string
      */
     protected const DELETE_BUTTON = 'Delete';
+
+    /**
+     * @var string
+     */
+    protected const LABEL_NEVER_EXPIRES = '⚠️ Never';
 
     /**
      * @var \Orm\Zed\ApiKey\Persistence\SpyApiKeyQuery
@@ -105,6 +121,7 @@ class ApiKeyTable extends AbstractTable
         $config->setDefaultSortField(static::COL_NAME);
         $config->setRawColumns([
             static::COL_ACTIONS,
+            static::COL_VALID_TO,
         ]);
 
         return $config;
@@ -120,6 +137,7 @@ class ApiKeyTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_API_KEY => static::VALUE_COL_ID_API_KEY,
             static::COL_NAME => static::VALUE_COL_NAME,
+            static::COL_VALID_TO => static::VALUE_COL_VALID_TO,
             static::COL_CREATED_BY => static::VALUE_COL_CREATED_BY,
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
@@ -185,6 +203,7 @@ class ApiKeyTable extends AbstractTable
         return [
             static::COL_ID_API_KEY => $this->formatInt($apiKeyEntity->getIdApiKey()),
             static::COL_NAME => $apiKeyEntity->getName(),
+            static::COL_VALID_TO => $this->generateValidTo($apiKeyEntity->getValidTo()),
             static::COL_CREATED_BY => $apiKeyEntity->getVirtualColumns()[static::USERNAME],
             static::COL_ACTIONS => implode(' ', $this->createTableActions($apiKeyEntity->getIdApiKey())),
         ];
@@ -210,5 +229,40 @@ class ApiKeyTable extends AbstractTable
         );
 
         return $buttons;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     *
+     * @return string
+     */
+    protected function generateValidTo(?DateTime $dateTime): string
+    {
+        if ($dateTime === null) {
+            return $this->generateLabel(static::LABEL_NEVER_EXPIRES, 'label-info');
+        }
+
+        return $this->isDateTimeExpired($dateTime) ? $this->generateLabel($this->formatDateTime($dateTime), 'label-info')
+            : $this->generateLabel($this->formatDateTime($dateTime), 'label-warning');
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     *
+     * @return bool
+     */
+    protected function isDateTimeExpired(DateTime $dateTime): bool
+    {
+        return $dateTime > new DateTime();
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     *
+     * @return string
+     */
+    protected function formatDateTime(DateTime $dateTime): string
+    {
+        return $dateTime->format('Y-m-d');
     }
 }

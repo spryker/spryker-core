@@ -3,3 +3,4 @@
 "The key name is not provided.","Der Schlüsselname fehlt."
 "The provided key name `%s` is duplicated. Use another one and try again.","Der angegebene Schlüsselname `%s` ist dupliziert. Verwenden Sie ein anderes und versuchen Sie es erneut."
 "Created at","Hergestellt in"
+"The provided `valid to` date `%s` already expired. Use another one and try again.","Das angegebene `Ablaufdatum` `%s` ist bereits abgelaufen. Verwenden Sie ein anderes und versuchen Sie es erneut."

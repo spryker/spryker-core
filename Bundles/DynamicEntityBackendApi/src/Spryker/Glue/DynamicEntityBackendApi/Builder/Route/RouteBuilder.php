@@ -52,6 +52,18 @@ class RouteBuilder implements RouteBuilderInterface
     /**
      * @var string
      */
+    protected const STRATEGIES_AUTHORIZATION = '_authorization_strategies';
+
+    /**
+     * @uses {@link \Spryker\Zed\ApiKeyAuthorizationConnector\Communication\Plugin\Authorization\ApiKeyAuthorizationStrategyPlugin::STRATEGY_NAME}
+     *
+     * @var string
+     */
+    protected const STRATEGY_AUTHORIZATION_API_KEY = 'ApiKey';
+
+    /**
+     * @var string
+     */
     protected const GET_COLLECTION_ACTION = 'getCollectionAction';
 
     /**
@@ -132,6 +144,7 @@ class RouteBuilder implements RouteBuilderInterface
         $route = new Route($path);
         $route->setDefault(static::CONTROLLER, [DynamicEntityBackendApiController::class, $action])
             ->setDefault(static::METHOD, $method)
+            ->setDefault(static::STRATEGIES_AUTHORIZATION, [static::STRATEGY_AUTHORIZATION_API_KEY])
             ->setMethods($method);
 
         return $route;

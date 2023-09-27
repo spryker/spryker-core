@@ -10,6 +10,7 @@ namespace Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\AuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\DefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy;
+use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\GenericResourceAuthorizationConfigExtractorStrategy;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\AuthorizationValidator\AuthorizationValidator;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\AuthorizationValidator\AuthorizationValidatorInterface;
@@ -50,6 +51,14 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
     }
 
     /**
+     * @return \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface
+     */
+    public function createGenericResourceAuthorizationConfigExtractorStrategy(): ConfigExtractorStrategyInterface
+    {
+        return new GenericResourceAuthorizationConfigExtractorStrategy();
+    }
+
+    /**
      * @return array<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface>
      */
     public function getConfigExtractorStrategies(): array
@@ -57,6 +66,7 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
         return [
             $this->createAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
             $this->createDefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
+            $this->createGenericResourceAuthorizationConfigExtractorStrategy(),
         ];
     }
 

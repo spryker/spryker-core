@@ -12,13 +12,18 @@ use Spryker\Zed\ApiKey\Business\Creator\ApiKeyCreator;
 use Spryker\Zed\ApiKey\Business\Creator\ApiKeyCreatorInterface;
 use Spryker\Zed\ApiKey\Business\Deleter\ApiKeyDeleter;
 use Spryker\Zed\ApiKey\Business\Deleter\ApiKeyDeleterInterface;
+use Spryker\Zed\ApiKey\Business\Hasher\ApiKeyHasher;
+use Spryker\Zed\ApiKey\Business\Hasher\ApiKeyHasherInterface;
 use Spryker\Zed\ApiKey\Business\Mapper\ApiKeyMapper;
+use Spryker\Zed\ApiKey\Business\Reader\ApiKeyReader;
+use Spryker\Zed\ApiKey\Business\Reader\ApiKeyReaderInterface;
 use Spryker\Zed\ApiKey\Business\Updater\ApiKeyUpdater;
 use Spryker\Zed\ApiKey\Business\Updater\ApiKeyUpdaterInterface;
 use Spryker\Zed\ApiKey\Business\Validator\ApiKeyValidator;
 use Spryker\Zed\ApiKey\Business\Validator\ApiKeyValidatorInterface;
 use Spryker\Zed\ApiKey\Business\Validator\Field\ApiKeyDuplicatedNameValidator;
 use Spryker\Zed\ApiKey\Business\Validator\Field\ApiKeyNameValidator;
+use Spryker\Zed\ApiKey\Business\Validator\Field\ApiKeyValidToValidator;
 use Spryker\Zed\ApiKey\Dependency\Facade\ApiKeyToUserFacadeInterface;
 use Spryker\Zed\ApiKey\Dependency\Service\ApiKeyToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -59,6 +64,17 @@ class ApiKeyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ApiKey\Business\Reader\ApiKeyReaderInterface
+     */
+    public function createApiKeyReader(): ApiKeyReaderInterface
+    {
+        return new ApiKeyReader(
+            $this->getRepository(),
+            $this->createApiKeyHasher(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ApiKey\Business\Deleter\ApiKeyDeleterInterface
      */
     public function createApiKeyDeleter(): ApiKeyDeleterInterface
@@ -66,6 +82,17 @@ class ApiKeyBusinessFactory extends AbstractBusinessFactory
         return new ApiKeyDeleter(
             $this->getEntityManager(),
             $this->createApiKeyMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ApiKey\Business\Hasher\ApiKeyHasherInterface
+     */
+    public function createApiKeyHasher(): ApiKeyHasherInterface
+    {
+        return new ApiKeyHasher(
+            $this->getUtilTextService(),
+            $this->getConfig(),
         );
     }
 
@@ -87,7 +114,16 @@ class ApiKeyBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createApiKeyNameValidator(),
             $this->createApiKeyDuplicatedNameValidator(),
+            $this->createApiKeyValidToValidator(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ApiKey\Business\Validator\ApiKeyValidatorInterface
+     */
+    public function createApiKeyValidToValidator(): ApiKeyValidatorInterface
+    {
+        return new ApiKeyValidToValidator();
     }
 
     /**

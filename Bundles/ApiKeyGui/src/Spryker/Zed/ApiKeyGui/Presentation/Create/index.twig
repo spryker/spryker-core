@@ -11,6 +11,13 @@
 
 {% block content %}
 
+    <div class="alert alert-warning">
+        <i class="alert__icon fa fas fa-exclamation-triangle" aria-hidden="true"></i>
+        <div class="alert__text">
+            {{ 'We highly recommend setting an expiration date to the token, because of security reasons.' | trans }}
+        </div>
+    </div>
+
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
@@ -26,4 +33,9 @@
 
     {% endembed %}
 
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-api-key-gui-main.js') }}"></script>
 {% endblock %}

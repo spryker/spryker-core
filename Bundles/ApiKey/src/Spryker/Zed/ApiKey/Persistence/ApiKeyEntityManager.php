@@ -49,6 +49,7 @@ class ApiKeyEntityManager extends AbstractEntityManager implements ApiKeyEntityM
         }
 
         $apiKeyEntity->setName($apiKeyTransfer->getNameOrFail());
+        $apiKeyEntity->setValidTo($apiKeyTransfer->getValidTo());
         $apiKeyEntity->save();
 
         return $this->getFactory()

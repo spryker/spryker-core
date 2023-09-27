@@ -32,7 +32,7 @@ class ApiKeyFacade extends AbstractFacade implements ApiKeyFacadeInterface
      */
     public function getApiKeyCollection(ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer): ApiKeyCollectionTransfer
     {
-        return $this->getRepository()->getApiKeyCollection($apiKeyCriteriaTransfer);
+        return $this->getFactory()->createApiKeyReader()->getApiKeyCollection($apiKeyCriteriaTransfer);
     }
 
     /**

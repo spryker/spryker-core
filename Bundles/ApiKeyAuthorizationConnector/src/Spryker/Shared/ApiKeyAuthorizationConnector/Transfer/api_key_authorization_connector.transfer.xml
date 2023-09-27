@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ApiKey" strict="true">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ApiKeyCriteria" strict="true">
+        <property name="apiKeyConditions" type="ApiKeyConditions"/>
+    </transfer>
+
+    <transfer name="ApiKeyConditions" strict="true">
+        <property name="apiKeys" type="string[]" singular="apiKey"/>
+        <property name="filterValidTo" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+    </transfer>
+
+    <transfer name="ApiKeyCollection" strict="true">
+        <property name="apiKeys" type="ApiKey[]" singular="apiKey"/>
+    </transfer>
+
+    <transfer name="AuthorizationRequest">
+        <property name="identity" type="AuthorizationIdentity"/>
+        <property name="entity" type="AuthorizationEntity"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="queryFields" type="array" associative="true" singular="queryField"/>
+    </transfer>
+
+    <transfer name="AuthorizationIdentity">
+        <property name="apiKeyIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="AuthorizationEntity">
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="AuthorizationResponse">
+        <property name="isAuthorized" type="bool"/>
+    </transfer>
+</transfers>

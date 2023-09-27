@@ -70,6 +70,11 @@ class EditController extends AbstractController
     protected const FIELD_NAME = 'name';
 
     /**
+     * @var string
+     */
+    protected const FIELD_VALID_TO = 'valid_to';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
@@ -119,6 +124,7 @@ class EditController extends AbstractController
                 (new ApiKeyTransfer())
                     ->setIdApiKey($editApiKeyForm->getData()[static::ID_API_KEY])
                     ->setName($editApiKeyForm->getData()[static::FIELD_NAME])
+                    ->setValidTo($editApiKeyForm->getData()[static::FIELD_VALID_TO])
                     ->setKey($key),
             );
 

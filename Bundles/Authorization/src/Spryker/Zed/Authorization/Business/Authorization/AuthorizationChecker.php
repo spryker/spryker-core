@@ -9,6 +9,7 @@ namespace Spryker\Zed\Authorization\Business\Authorization;
 
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Generated\Shared\Transfer\AuthorizationResponseTransfer;
+use Spryker\Zed\Authorization\AuthorizationConfig;
 use Spryker\Zed\Authorization\Business\Exception\AuthorizationStrategyNotFoundException;
 
 class AuthorizationChecker implements AuthorizationCheckerInterface
@@ -16,14 +17,21 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
     /**
      * @var \Spryker\Zed\Authorization\Business\Authorization\AuthorizationStrategyCollectionInterface
      */
-    protected $authorizationStrategyCollection;
+    protected AuthorizationStrategyCollectionInterface $authorizationStrategyCollection;
+
+    /**
+     * @var \Spryker\Zed\Authorization\AuthorizationConfig
+     */
+    protected AuthorizationConfig $authorizationConfig;
 
     /**
      * @param \Spryker\Zed\Authorization\Business\Authorization\AuthorizationStrategyCollectionInterface $authorizationStrategyCollection
+     * @param \Spryker\Zed\Authorization\AuthorizationConfig $authorizationConfig
      */
-    public function __construct(AuthorizationStrategyCollectionInterface $authorizationStrategyCollection)
+    public function __construct(AuthorizationStrategyCollectionInterface $authorizationStrategyCollection, AuthorizationConfig $authorizationConfig)
     {
         $this->authorizationStrategyCollection = $authorizationStrategyCollection;
+        $this->authorizationConfig = $authorizationConfig;
     }
 
     /**
@@ -54,12 +62,15 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
                 ->get($strategy)
                 ->authorize($authorizationRequestTransfer);
 
-            $authorizationResponseTransfer
-                ->setIsAuthorized($isAuthorized);
+            $authorizationResponseTransfer->setIsAuthorized($isAuthorized);
 
-            if (!$authorizationResponseTransfer->getIsAuthorized()) {
-                $authorizationResponseTransfer->setFailedStrategy($strategy);
+            if ($isAuthorized) {
+                return $authorizationResponseTransfer;
+            }
 
+            $authorizationResponseTransfer->setFailedStrategy($strategy);
+
+            if (!$this->authorizationConfig->isMultistrategyAuthorizationAllowed()) {
                 return $authorizationResponseTransfer;
             }
         }

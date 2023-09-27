@@ -10,6 +10,7 @@
         <property name="name" type="string"/>
         <property name="idApiKey" type="int"/>
         <property name="key" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="ApiKeyCollectionResponse" strict="true">

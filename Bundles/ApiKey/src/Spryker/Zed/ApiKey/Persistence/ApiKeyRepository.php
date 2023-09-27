@@ -22,16 +22,19 @@ class ApiKeyRepository extends AbstractRepository implements ApiKeyRepositoryInt
 {
     /**
      * @param \Generated\Shared\Transfer\ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer
+     * @param array<string> $apiKeyHashes
      *
      * @return \Generated\Shared\Transfer\ApiKeyCollectionTransfer
      */
-    public function getApiKeyCollection(ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer): ApiKeyCollectionTransfer
+    public function getApiKeyCollection(ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer, array $apiKeyHashes = []): ApiKeyCollectionTransfer
     {
         $apiKeyQuery = $this->getFactory()->createApiKeyQuery();
-        $apiKeysData = [];
 
         if ($apiKeyCriteriaTransfer->getApiKeyConditions() !== null) {
             $apiKeyQuery = $this->applyApiKeyConditions($apiKeyQuery, $apiKeyCriteriaTransfer->getApiKeyConditionsOrFail());
+        }
+        if ($apiKeyHashes !== []) {
+            $apiKeyQuery = $this->applyApikKeyHashesCondition($apiKeyQuery, $apiKeyHashes);
         }
 
         $apiKeysCollection = $apiKeyQuery->find();
@@ -87,6 +90,27 @@ class ApiKeyRepository extends AbstractRepository implements ApiKeyRepositoryInt
             );
         }
 
+        if ($apiKeyConditionsTransfer->getFilterValidTo() !== null) {
+            $criteriaRangeFilterTransfer = $apiKeyConditionsTransfer->getFilterValidTo();
+            $apiKeyQuery
+                ->filterByValidTo(
+                    $criteriaRangeFilterTransfer->getFromOrFail(),
+                    Criteria::GREATER_THAN,
+                )->_or()
+                ->filterByValidTo(null);
+        }
+
         return $apiKeyQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ApiKey\Persistence\Base\SpyApiKeyQuery $apiKeyQuery
+     * @param array $apiKeyHashes
+     *
+     * @return \Orm\Zed\ApiKey\Persistence\Base\SpyApiKeyQuery
+     */
+    protected function applyApikKeyHashesCondition(SpyApiKeyQuery $apiKeyQuery, array $apiKeyHashes): SpyApiKeyQuery
+    {
+        return $apiKeyQuery->filterByKeyHash_In($apiKeyHashes);
     }
 }

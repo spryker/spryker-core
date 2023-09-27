@@ -43,6 +43,7 @@
         "spryker/api": "*",
         "spryker/api-extension": "*",
         "spryker/api-key": "*",
+        "spryker/api-key-authorization-connector": "*",
         "spryker/api-key-gui": "*",
         "spryker/api-query-builder": "*",
         "spryker/app-catalog-gui": "*",

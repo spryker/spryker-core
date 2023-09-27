@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\ApiKey;
 
 use Codeception\Actor;
+use DateTime;
 use Orm\Zed\ApiKey\Persistence\Base\SpyApiKeyQuery;
 use Orm\Zed\ApiKey\Persistence\Map\SpyApiKeyTableMap;
 use Orm\Zed\ApiKey\Persistence\SpyApiKey;
@@ -57,12 +58,66 @@ class ApiKeyBusinessTester extends Actor
     public const FOO_KEY_HASH = 'foo';
 
     /**
+     * @var string
+     */
+    public const EXPIRED_KEY_NAME = 'EXPIRED';
+
+    /**
+     * @var string
+     */
+    public const NO_EXPIRED_KEY_NAME = 'NO_EXPIRED';
+
+    /**
+     * @var string
+     */
+    public const EXPIRED_API_KEY = 'expiredtestkey';
+
+    /**
+     * @var string
+     */
+    public const NO_EXPIRED_API_KEY = 'noexpiredtestkey';
+
+    /**
+     * @var string
+     */
+    protected const EXPIRED_API_KEY_HASH = '85ed2a56f82aed1644372cf7ff8cc8e9b1f3d46f404af9c2a73fe1828855138a';
+
+    /**
+     * @var string
+     */
+    protected const NO_EXPIRED_API_KEY_HASH = 'fe4f0f707a786f2b4b5977cb49b2348d0fcb40dd5840a0ea4332c4af337e0c35';
+
+    /**
      * @return void
      */
     public function createFakeApiKeyRecord(): void
     {
         (new SpyApiKey())->setName(static::FOO_NAME)
             ->setKeyHash(static::FOO_KEY_HASH)
+            ->setCreatedBy(1)
+            ->save();
+    }
+
+    /**
+     * @return void
+     */
+    public function createFakeApiKeyExpiredRecord(): void
+    {
+        (new SpyApiKey())->setName(static::EXPIRED_KEY_NAME)
+            ->setKeyHash(static::EXPIRED_API_KEY_HASH)
+            ->setValidTo((new DateTime('-2 day')))
+            ->setCreatedBy(1)
+            ->save();
+    }
+
+    /**
+     * @return void
+     */
+    public function createFakeApiKeyNotExpiredRecord(): void
+    {
+        (new SpyApiKey())->setName(static::NO_EXPIRED_KEY_NAME)
+            ->setKeyHash(static::NO_EXPIRED_API_KEY_HASH)
+            ->setValidTo((new DateTime('+2 day')))
             ->setCreatedBy(1)
             ->save();
     }

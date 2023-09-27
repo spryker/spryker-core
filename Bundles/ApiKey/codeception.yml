@@ -1,6 +1,6 @@
 namespace: ApiKey
 include:
-    - tests/SprykerTest/Glue/ApiKey
+    - tests/SprykerTest/Zed/ApiKey
 actor: Tester
 paths:
     tests: tests

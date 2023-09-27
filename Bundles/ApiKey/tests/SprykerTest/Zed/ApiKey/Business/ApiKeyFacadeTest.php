@@ -5,14 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ApiKey\Business\Facade;
+namespace SprykerTest\Zed\ApiKey\Business;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\ApiKeyCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\ApiKeyCollectionRequestTransfer;
 use Generated\Shared\Transfer\ApiKeyConditionsTransfer;
 use Generated\Shared\Transfer\ApiKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ApiKeyTransfer;
+use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 use Spryker\Zed\ApiKey\ApiKeyDependencyProvider;
 use Spryker\Zed\ApiKey\Dependency\Facade\ApiKeyToUserFacadeInterface;
 
@@ -23,7 +25,6 @@ use Spryker\Zed\ApiKey\Dependency\Facade\ApiKeyToUserFacadeInterface;
  * @group Zed
  * @group ApiKey
  * @group Business
- * @group Facade
  * @group Facade
  * @group ApiKeyFacadeTest
  * Add your own group annotations below this line
@@ -44,6 +45,16 @@ class ApiKeyFacadeTest extends Unit
      * @var string
      */
     protected const ERROR_MESSAGE_DUPLICATED_NAME = 'The provided key name `%s` is duplicated. Use another one and try again.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_INVALID_VALID_TO_DATE = 'The provided `valid to` date `%s` already expired. Use another one and try again.';
+
+    /**
+     * @var string
+     */
+    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var \SprykerTest\Zed\ApiKey\ApiKeyBusinessTester
@@ -73,6 +84,8 @@ class ApiKeyFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->createFakeApiKeyRecord();
+        $this->tester->createFakeApiKeyNotExpiredRecord();
+        $this->tester->createFakeApiKeyExpiredRecord();
         $this->apiKeyEntity = $this->tester->getFakeApiKeyEntityByName($this->tester::FOO_NAME);
         $this->userTransfer = $this->tester->haveUser();
         $this->mockUserFacade();
@@ -96,6 +109,49 @@ class ApiKeyFacadeTest extends Unit
         $this->assertEquals($this->apiKeyEntity->getIdApiKey(), $apiKeyCollectionTransfer->getApiKeys()->offsetGet(0)->getIdApiKeyOrFail());
         $this->assertEquals($this->tester::FOO_NAME, $apiKeyCollectionTransfer->getApiKeys()->offsetGet(0)->getNameOrFail());
         $this->assertNull($apiKeyCollectionTransfer->getApiKeys()->offsetGet(0)->getKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApiKeyCollectionReturnsCollectionResponseTransferWithNoExpiredValidData(): void
+    {
+        //Arrange
+        $apiKeyCriteriaTransfer = (new ApiKeyCriteriaTransfer())
+            ->setApiKeyConditions((new ApiKeyConditionsTransfer())
+                ->addApiKey($this->tester::NO_EXPIRED_API_KEY)
+                ->setFilterValidTo(
+                    (new CriteriaRangeFilterTransfer())
+                        ->setFrom((new DateTime())->format(static::DATE_TIME_FORMAT)),
+                ));
+
+        //Act
+        $apiKeyCollectionTransfer = $this->tester->getFacade()->getApiKeyCollection($apiKeyCriteriaTransfer);
+
+        //Assert
+        $this->assertEquals(1, $apiKeyCollectionTransfer->getApiKeys()->count());
+        $this->assertEquals($this->tester::NO_EXPIRED_KEY_NAME, $apiKeyCollectionTransfer->getApiKeys()->offsetGet(0)->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApiKeyCollectionReturnsCollectionResponseTransferWithoutTransfers(): void
+    {
+        //Arrange
+        $apiKeyCriteriaTransfer = (new ApiKeyCriteriaTransfer())
+            ->setApiKeyConditions((new ApiKeyConditionsTransfer())
+                ->addApiKey($this->tester::EXPIRED_API_KEY)
+                ->setFilterValidTo(
+                    (new CriteriaRangeFilterTransfer())
+                        ->setFrom((new DateTime())->format(static::DATE_TIME_FORMAT)),
+                ));
+
+        //Act
+        $apiKeyCollectionTransfer = $this->tester->getFacade()->getApiKeyCollection($apiKeyCriteriaTransfer);
+
+        //Assert
+        $this->assertEquals(0, $apiKeyCollectionTransfer->getApiKeys()->count());
     }
 
     /**
@@ -134,6 +190,52 @@ class ApiKeyFacadeTest extends Unit
         $createdApiKeyEntity = $this->tester->getFakeApiKeyEntityByName($this->tester::BAR_NAME);
         $this->assertEquals($this->userTransfer->getIdUser(), $createdApiKeyEntity->getCreatedBy());
         $this->assertNotEmpty($createdApiKeyEntity->getKeyHash());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateApiKeyCollectionWithValidToDateToCreatesRecord(): void
+    {
+        //Arrange
+        $apiKeyCollectionRequestTransfer = (new ApiKeyCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addApiKey((new ApiKeyTransfer())
+                ->setName($this->tester::BAR_NAME)
+                ->setKey($this->tester::FOO_KEY)
+                ->setValidTo(date(static::DATE_TIME_FORMAT, strtotime('+1 day'))));
+
+        //Act
+        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
+
+        //Assert
+        $createdApiKeyEntity = $this->tester->getFakeApiKeyEntityByName($this->tester::BAR_NAME);
+        $this->assertEquals($this->userTransfer->getIdUser(), $createdApiKeyEntity->getCreatedBy());
+        $this->assertNotEmpty($createdApiKeyEntity->getKeyHash());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateApiKeyCollectionWithInvalidReturnsError(): void
+    {
+        //Arrange
+        $validToDate = date(static::DATE_TIME_FORMAT, strtotime('-1 day'));
+        $apiKeyCollectionRequestTransfer = (new ApiKeyCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addApiKey((new ApiKeyTransfer())
+                ->setName($this->tester::BAR_NAME)
+                ->setKey($this->tester::FOO_KEY)
+                ->setValidTo(date(static::DATE_TIME_FORMAT, strtotime('-1 day'))));
+
+        //Act
+        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
+
+        //Assert
+        $this->assertEquals(
+            sprintf(static::ERROR_MESSAGE_INVALID_VALID_TO_DATE, $validToDate),
+            $apiKeyCollectionResponseTransfer->getErrors()->offsetGet(0)->getMessageOrFail(),
+        );
     }
 
     /**

@@ -3,3 +3,4 @@
 "The key name is not provided.","The key name is not provided."
 "The provided key name `%s` is duplicated. Use another one and try again.","The provided key name `%s` is duplicated. Use another one and try again."
 "Created at","Created at"
+"The provided `valid to` date `%s` already expired. Use another one and try again.","The provided `valid to` date `%s` already expired. Use another one and try again."

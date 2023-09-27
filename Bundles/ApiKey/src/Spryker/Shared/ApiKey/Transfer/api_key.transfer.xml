@@ -17,6 +17,7 @@
         <property name="key" type="string"/>
         <property name="keyHash" type="string"/>
         <property name="createdBy" type="int"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="Error">
@@ -42,6 +43,12 @@
 
     <transfer name="ApiKeyConditions" strict="true">
         <property name="apiKeyIds" type="int[]" singular="idApiKey"/>
+        <property name="apiKeys" type="string[]" singular="apiKey"/>
+        <property name="filterValidTo" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
     </transfer>
 
 </transfers>

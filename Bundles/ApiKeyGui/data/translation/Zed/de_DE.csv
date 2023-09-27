@@ -24,3 +24,6 @@ Actions,Aktionen
 "API key removal confirmation","Bestätigung zum Entfernen des API-Schlüssels"
 "Are you sure you want to delete this API key?","Sind Sie sicher, dass Sie diesen API-Schlüssel löschen möchten?"
 "No, I want to keep this API key","Nein, Ich möchte diesen API-Schlüssel behalten"
+"We highly recommend setting an expiration date to the token, because of security reasons.","Wir empfehlen dringend, aus Sicherheitsgründen ein Ablaufdatum für das Token festzulegen."
+"Expires on",Ablaufdatum
+"⚠️ Never","⚠️ Nie"

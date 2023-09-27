@@ -11,4 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthorizationConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - Defines if multiple authorization strategies can be executed during request.
+     *
+     * @api
+     *
+     * @deprecated Will be removed with next major. Multistrategy authorization will be enabled by default.
+     *
+     * @return bool
+     */
+    public function isMultistrategyAuthorizationAllowed(): bool
+    {
+        return false;
+    }
 }

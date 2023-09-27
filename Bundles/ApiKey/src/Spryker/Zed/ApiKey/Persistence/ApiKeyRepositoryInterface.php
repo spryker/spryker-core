@@ -15,10 +15,11 @@ interface ApiKeyRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer
+     * @param array<string> $apiKeyHashes
      *
      * @return \Generated\Shared\Transfer\ApiKeyCollectionTransfer
      */
-    public function getApiKeyCollection(ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer): ApiKeyCollectionTransfer;
+    public function getApiKeyCollection(ApiKeyCriteriaTransfer $apiKeyCriteriaTransfer, array $apiKeyHashes = []): ApiKeyCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ApiKeyTransfer $apiKeyTransfer
