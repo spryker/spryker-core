@@ -35,6 +35,20 @@ class ServicePointsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_SERVICE_TYPES = 'service-types';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_DETAILS_SERVICE_POINT_IS_UNAVAILABLE = 'Service point is unavailable.';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_DETAILS_SERVICE_POINT_ITEM_IS_DUPLICATED = 'Service point item is duplicated.';
+
+    /**
      * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ExistenceByUuidServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND
      *
      * @api
@@ -92,6 +106,20 @@ class ServicePointsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const RESPONSE_CODE_SERVICE_POINT_IDENTIFIER_IS_NOT_SPECIFIED = '5404';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_SERVICE_POINT_IS_UNAVAILABLE = '5405';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_SERVICE_POINT_ITEM_IS_DUPLICATED = '5406';
 
     /**
      * @uses \Spryker\Client\ServicePointSearch\ServicePointSearchConfig::SORT_CITY

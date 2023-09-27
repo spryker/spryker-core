@@ -1,0 +1,38 @@
+checkout-data:
+    post:
+        servicePoints:
+            - Optional:
+                  constraints:
+                      - All:
+                            constraints:
+                                - Collection:
+                                      fields:
+                                          items:
+                                              - All:
+                                                    constraints:
+                                                        - NotBlank
+                                                        - Type:
+                                                              type: string
+                                          idServicePoint:
+                                              - NotBlank
+                                              - Type:
+                                                    type: string
+checkout:
+    post:
+        servicePoints:
+            - Optional:
+                  constraints:
+                      - All:
+                            constraints:
+                                - Collection:
+                                      fields:
+                                          items:
+                                              - All:
+                                                    constraints:
+                                                        - NotBlank
+                                                        - Type:
+                                                              type: string
+                                          idServicePoint:
+                                              - NotBlank
+                                              - Type:
+                                                    type: string

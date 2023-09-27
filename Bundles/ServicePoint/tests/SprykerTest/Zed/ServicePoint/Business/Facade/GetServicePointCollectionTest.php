@@ -184,6 +184,75 @@ class GetServicePointCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testReturnsServicePointsByIsActiveParameter(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $servicePointTransfer = $this->createServicePointWithStoreRelation(
+            [$storeTransfer->getIdStoreOrFail()],
+            [ServicePointTransfer::IS_ACTIVE => true],
+        );
+        $this->createServicePointWithStoreRelation(
+            [$storeTransfer->getIdStoreOrFail()],
+            [ServicePointTransfer::IS_ACTIVE => false],
+        );
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->setIsActive(true);
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+        $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
+        $this->assertTrue($servicePointTransfer->getIsActive());
+        $this->assertSame($servicePointTransfer->getKeyOrFail(), $retrievedServicePointTransfer->getKeyOrFail());
+        $this->assertNull($servicePointCollectionTransfer->getPagination());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsServicePointsByStoreNames(): void
+    {
+        // Arrange
+        $storeTransfer1 = $this->tester->haveStore();
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'testStore']);
+        $servicePointTransfer = $this->createServicePointWithStoreRelation([
+            $storeTransfer1->getIdStoreOrFail(),
+            $storeTransfer2->getIdStoreOrFail(),
+        ]);
+        $this->createServicePointWithStoreRelation([$storeTransfer2->getIdStoreOrFail()]);
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addStoreName($storeTransfer1->getNameOrFail());
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer */
+        $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+
+        $this->assertSame(
+            $servicePointTransfer->getIdServicePointOrFail(),
+            $retrievedServicePointTransfer->getIdServicePointOrFail(),
+        );
+        $this->assertNull($servicePointCollectionTransfer->getPagination());
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsServicePointsWithStoreRelations(): void
     {
         // Arrange
@@ -632,15 +701,16 @@ class GetServicePointCollectionTest extends Unit
     {
         $servicePointBuilder = (new ServicePointBuilder($servicePointData));
 
+        $storeData = [];
         foreach ($storeIds as $idStore) {
-            $servicePointBuilder->withStoreRelation([
-                StoreRelationTransfer::STORES => [
-                    [
-                        StoreTransfer::ID_STORE => $idStore,
-                    ],
-                ],
-            ]);
+            $storeData[] = [
+                StoreTransfer::ID_STORE => $idStore,
+            ];
         }
+
+        $servicePointBuilder->withStoreRelation([
+            StoreRelationTransfer::STORES => $storeData,
+        ]);
 
         return $this->tester->haveServicePoint(
             $servicePointBuilder->build()->toArray(),

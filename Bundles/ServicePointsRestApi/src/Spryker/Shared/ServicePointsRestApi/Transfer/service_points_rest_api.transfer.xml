@@ -15,6 +15,19 @@
         <property name="city" type="string"/>
     </transfer>
 
+    <transfer name="RestCheckoutData">
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestCheckoutDataResponseAttributes">
+        <property name="selectedServicePoints" type="RestServicePoint[]" singular="selectedServicePoint"/>
+    </transfer>
+
+    <transfer name="ServicePoint" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
         <property name="code" type="string"/>
@@ -65,6 +78,41 @@
 
     <transfer name="CountryStorage" strict="true">
         <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointCollection" strict="true">
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+    </transfer>
+
+    <transfer name="ServicePointCriteria" strict="true">
+        <property name="servicePointConditions" type="ServicePointConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointConditions" strict="true">
+        <property name="withStoreRelations" type="bool"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="servicePoints" type="RestServicePoint[]" restRequestParameter="yes" singular="servicePoint"/>
+    </transfer>
+
+    <transfer name="RestServicePoint" strict="true">
+        <property name="idServicePoint" type="string" restRequestParameter="yes"/>
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="servicePoint" type="ServicePoint" strict="true"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
     </transfer>
 
     <transfer name="ServiceTypeResourceCriteria" strict="true">

@@ -1,0 +1,28 @@
+namespace: SprykerTest\Zed\ServicePointsRestApi
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        actor: ServicePointsRestApiBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
+                - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

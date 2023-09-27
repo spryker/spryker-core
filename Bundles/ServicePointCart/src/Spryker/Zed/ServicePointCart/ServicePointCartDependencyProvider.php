@@ -10,6 +10,7 @@ namespace Spryker\Zed\ServicePointCart;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToCartFacadeBridge;
+use Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToServicePointFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ServicePointCart\ServicePointCartConfig getConfig()
@@ -20,6 +21,11 @@ class ServicePointCartDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
+    /**
+     * @var string
+     */
+    public const FACADE_SERVICE_POINT = 'FACADE_SERVICE_POINT';
 
     /**
      * @var string
@@ -37,6 +43,7 @@ class ServicePointCartDependencyProvider extends AbstractBundleDependencyProvide
 
         $container = $this->addCartFacade($container);
         $container = $this->addServicePointQuoteItemReplaceStrategyPlugins($container);
+        $container = $this->addServicePointFacade($container);
 
         return $container;
     }
@@ -50,6 +57,20 @@ class ServicePointCartDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::FACADE_CART, function (Container $container) {
             return new ServicePointCartToCartFacadeBridge($container->getLocator()->cart()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addServicePointFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SERVICE_POINT, function (Container $container) {
+            return new ServicePointCartToServicePointFacadeBridge($container->getLocator()->servicePoint()->facade());
         });
 
         return $container;

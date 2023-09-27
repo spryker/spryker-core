@@ -278,6 +278,8 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     }
 
     /**
+     * @module Store
+     *
      * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery $servicePointQuery
      * @param \Generated\Shared\Transfer\ServicePointCriteriaTransfer $servicePointCriteriaTransfer
      *
@@ -310,6 +312,20 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 $servicePointConditionsTransfer->getUuids(),
                 $servicePointConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
             );
+        }
+
+        if ($servicePointConditionsTransfer->getStoreNames()) {
+            $servicePointQuery
+                ->groupByIdServicePoint()
+                ->useServicePointStoreQuery()
+                    ->useStoreQuery()
+                        ->filterByName_In($servicePointConditionsTransfer->getStoreNames())
+                    ->endUse()
+                ->endUse();
+        }
+
+        if ($servicePointConditionsTransfer->getIsActive() !== null) {
+            $servicePointQuery->filterByIsActive($servicePointConditionsTransfer->getIsActive());
         }
 
         return $servicePointQuery;

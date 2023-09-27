@@ -1,5 +1,6 @@
 namespace: ServicePointsRestApi
 include:
+    - tests/SprykerTest/Zed/ServicePointsRestApi
     - tests/SprykerTest/Glue/ServicePointsRestApi
 paths:
     tests: tests/

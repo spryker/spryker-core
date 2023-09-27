@@ -6,9 +6,10 @@
     "require": {
         "php": ">=8.0",
         "spryker/cart": "^7.0.0",
+        "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/quote": "^2.0.0",
-        "spryker/service-point": "^0.4.0",
+        "spryker/service-point": "^0.4.7",
         "spryker/service-point-cart-extension": "^0.1.0",
         "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.0.0"
@@ -16,6 +17,8 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

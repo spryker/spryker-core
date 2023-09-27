@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\ServicePointsRestApi;
+namespace SprykerTest\Glue\ServicePointsRestApi\Resource;
 
 use Codeception\Stub;
 use Codeception\Test\Unit;
@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToServicePointStorageClientInterface;
 use Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiDependencyProvider;
+use SprykerTest\Glue\ServicePointsRestApi\ServicePointsRestApiResourceTester;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +28,7 @@ use Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiDependencyProvider;
  * @group SprykerTest
  * @group Glue
  * @group ServicePointsRestApi
+ * @group Resource
  * @group ServicePointsRestApiResourceTest
  * Add your own group annotations below this line
  */

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -30,5 +31,20 @@ class ServicePointCartFacade extends AbstractFacade implements ServicePointCartF
         return $this->getFactory()
             ->createQuoteItemReplacer()
             ->replaceQuoteItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()->createQuoteItemServicePointValidator()->validate($quoteTransfer, $checkoutResponseTransfer);
     }
 }

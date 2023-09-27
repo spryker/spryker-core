@@ -5,10 +5,12 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/checkout-rest-api-extension": "^1.5.0",
         "spryker/glossary-storage": "^1.5.0",
         "spryker/glue-application": "^1.8.0",
         "spryker/glue-application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/service-point": "^0.4.7",
         "spryker/service-point-search": "^0.3.1",
         "spryker/service-point-storage": "^0.4.0",
         "spryker/store": "^1.19.0",
@@ -17,6 +19,9 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/propel": "*",
+        "spryker/quote": "*",
         "spryker/testify": "*"
     },
     "autoload": {

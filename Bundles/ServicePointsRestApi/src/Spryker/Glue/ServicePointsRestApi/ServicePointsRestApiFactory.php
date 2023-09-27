@@ -20,8 +20,12 @@ use Spryker\Glue\ServicePointsRestApi\Processor\Builder\ServicePointResponseBuil
 use Spryker\Glue\ServicePointsRestApi\Processor\Builder\ServicePointResponseBuilderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Builder\ServicePointSearchRequestBuilder;
 use Spryker\Glue\ServicePointsRestApi\Processor\Builder\ServicePointSearchRequestBuilderInterface;
+use Spryker\Glue\ServicePointsRestApi\Processor\Expander\CheckoutDataResponseAttributesExpander;
+use Spryker\Glue\ServicePointsRestApi\Processor\Expander\CheckoutDataResponseAttributesExpanderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Expander\ServicePointAddressRelationshipExpander;
 use Spryker\Glue\ServicePointsRestApi\Processor\Expander\ServicePointAddressRelationshipExpanderInterface;
+use Spryker\Glue\ServicePointsRestApi\Processor\Expander\ServicePointByCheckoutDataResourceRelationshipExpander;
+use Spryker\Glue\ServicePointsRestApi\Processor\Expander\ServicePointByCheckoutDataResourceRelationshipExpanderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointAddressMapper;
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointAddressMapperInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Mapper\ServicePointMapper;
@@ -36,6 +40,8 @@ use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointStorageReader
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServicePointStorageReaderInterface;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReader;
 use Spryker\Glue\ServicePointsRestApi\Processor\Reader\ServiceTypeResourceReaderInterface;
+use Spryker\Glue\ServicePointsRestApi\Processor\Validator\ServicePointCheckoutRequestAttributesValidator;
+use Spryker\Glue\ServicePointsRestApi\Processor\Validator\ServicePointCheckoutRequestAttributesValidatorInterface;
 
 /**
  * @method \Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiConfig getConfig()
@@ -85,6 +91,17 @@ class ServicePointsRestApiFactory extends AbstractFactory
         return new ServiceTypeResourceReader(
             $this->createServiceTypeMapper(),
             $this->getServicePointStorageClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ServicePointsRestApi\Processor\Expander\ServicePointByCheckoutDataResourceRelationshipExpanderInterface
+     */
+    public function createServicePointByCheckoutDataResourceRelationshipExpander(): ServicePointByCheckoutDataResourceRelationshipExpanderInterface
+    {
+        return new ServicePointByCheckoutDataResourceRelationshipExpander(
+            $this->createServicePointMapper(),
+            $this->getResourceBuilder(),
         );
     }
 
@@ -167,6 +184,25 @@ class ServicePointsRestApiFactory extends AbstractFactory
     public function createServiceTypeMapper(): ServiceTypeMapperInterface
     {
         return new ServiceTypeMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ServicePointsRestApi\Processor\Expander\CheckoutDataResponseAttributesExpanderInterface
+     */
+    public function createCheckoutDataResponseAttributesExpander(): CheckoutDataResponseAttributesExpanderInterface
+    {
+        return new CheckoutDataResponseAttributesExpander();
+    }
+
+    /**
+     * @return \Spryker\Glue\ServicePointsRestApi\Processor\Validator\ServicePointCheckoutRequestAttributesValidatorInterface
+     */
+    public function createServicePointCheckoutRequestAttributesValidator(): ServicePointCheckoutRequestAttributesValidatorInterface
+    {
+        return new ServicePointCheckoutRequestAttributesValidator(
+            $this->getServicePointStorageClient(),
+            $this->getStoreClient(),
+        );
     }
 
     /**

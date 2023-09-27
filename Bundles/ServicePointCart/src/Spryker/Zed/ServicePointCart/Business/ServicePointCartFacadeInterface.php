@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -27,4 +28,23 @@ interface ServicePointCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `QuoteTransfer.items.servicePoint` to be provided.
+     * - Requires `QuoteTransfer.store.name` and `QuoteTransfer.items.servicePoint.uuid` to be provided if `QuoteTransfer.items.servicePoint` is provided.
+     * - Checks if `QuoteTransfer.items.servicePoint` are active and available for the current store.
+     * - Sets `CheckoutResponseTransfer.isSuccess` = `false` if any of the service points is inactive or unavailable for the current store.
+     * - Adds `CheckoutResponseTransfer.checkoutError` with corresponding error message if any of the service points is inactive or unavailable for the current store.
+     * - Returns `true` if all service points are active and available for the current store, `false` otherwise.
+     * - Returns `true` if no service points are provided in `QuoteTransfer.items`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

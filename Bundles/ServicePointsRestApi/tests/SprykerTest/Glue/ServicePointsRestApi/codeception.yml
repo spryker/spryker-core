@@ -13,12 +13,23 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Resource
         actor: ServicePointsRestApiResourceTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+    Glue:
+        path: Plugin
+        actor: ServicePointsRestApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper

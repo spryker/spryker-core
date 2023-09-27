@@ -10,7 +10,10 @@ namespace Spryker\Zed\ServicePointCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ServicePointCart\Business\Replacer\QuoteItemReplacer;
 use Spryker\Zed\ServicePointCart\Business\Replacer\QuoteItemReplacerInterface;
+use Spryker\Zed\ServicePointCart\Business\Validator\QuoteItemServicePointValidator;
+use Spryker\Zed\ServicePointCart\Business\Validator\QuoteItemServicePointValidatorInterface;
 use Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToCartFacadeInterface;
+use Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToServicePointFacadeInterface;
 use Spryker\Zed\ServicePointCart\ServicePointCartDependencyProvider;
 
 /**
@@ -30,11 +33,29 @@ class ServicePointCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ServicePointCart\Business\Validator\QuoteItemServicePointValidatorInterface
+     */
+    public function createQuoteItemServicePointValidator(): QuoteItemServicePointValidatorInterface
+    {
+        return new QuoteItemServicePointValidator(
+            $this->getServicePointFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToCartFacadeInterface
      */
     public function getCartFacade(): ServicePointCartToCartFacadeInterface
     {
         return $this->getProvidedDependency(ServicePointCartDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToServicePointFacadeInterface
+     */
+    public function getServicePointFacade(): ServicePointCartToServicePointFacadeInterface
+    {
+        return $this->getProvidedDependency(ServicePointCartDependencyProvider::FACADE_SERVICE_POINT);
     }
 
     /**

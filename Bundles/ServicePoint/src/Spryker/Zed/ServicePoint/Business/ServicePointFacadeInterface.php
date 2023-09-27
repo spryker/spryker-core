@@ -32,6 +32,8 @@ interface ServicePointFacadeInterface
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.uuids` to filter by service point uuids.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.keys` to filter by service point keys.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.servicePointIds` to filter by service point ids.
+     * - Uses `ServicePointCriteriaTransfer.servicePointConditions.storeNames` to filter by related store names.
+     * - Uses `ServicePointCriteriaTransfer.servicePointConditions.isActive` to filter by service point active status.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withStoreRelations` to load store relations.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withAddressRelation` to load address relation.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withServiceRelations` to load service relations.

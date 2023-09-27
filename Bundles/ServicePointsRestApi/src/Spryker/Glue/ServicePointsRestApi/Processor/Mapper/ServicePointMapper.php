@@ -10,6 +10,7 @@ namespace Spryker\Glue\ServicePointsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestServicePointsAttributesTransfer;
 use Generated\Shared\Transfer\ServicePointSearchTransfer;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
+use Generated\Shared\Transfer\ServicePointTransfer;
 
 class ServicePointMapper implements ServicePointMapperInterface
 {
@@ -37,5 +38,18 @@ class ServicePointMapper implements ServicePointMapperInterface
         RestServicePointsAttributesTransfer $restServicePointsAttributesTransfer
     ): RestServicePointsAttributesTransfer {
         return $restServicePointsAttributesTransfer->fromArray($servicePointStorageTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
+     * @param \Generated\Shared\Transfer\RestServicePointsAttributesTransfer $restServicePointsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestServicePointsAttributesTransfer
+     */
+    public function mapServicePointTransferToRestServicePointsAttributesTransfer(
+        ServicePointTransfer $servicePointTransfer,
+        RestServicePointsAttributesTransfer $restServicePointsAttributesTransfer
+    ): RestServicePointsAttributesTransfer {
+        return $restServicePointsAttributesTransfer->fromArray($servicePointTransfer->toArray(), true);
     }
 }
