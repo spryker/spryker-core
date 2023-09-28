@@ -78,10 +78,6 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
             ->setProductOfferServicePointAvailabilityRequestItems(new ArrayObject());
 
         foreach ($originalProductOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems() as $productOfferServicePointAvailabilityRequestItemTransfer) {
-            if (!$productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReference()) {
-                continue;
-            }
-
             $productOfferServicePointAvailabilityConditionsTransfer->addProductOfferServicePointAvailabilityRequestItem(
                 $productOfferServicePointAvailabilityRequestItemTransfer,
             );

@@ -11,8 +11,6 @@ product-offer-service-point-availabilities:
                             fields:
                                 productConcreteSku:
                                     - NotBlank
-                                productOfferReference:
-                                    - NotBlank
                                 quantity:
                                     - NotBlank
                                     - Type:

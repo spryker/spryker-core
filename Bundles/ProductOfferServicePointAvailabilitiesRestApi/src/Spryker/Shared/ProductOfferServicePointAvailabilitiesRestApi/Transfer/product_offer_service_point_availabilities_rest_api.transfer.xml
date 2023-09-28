@@ -24,6 +24,7 @@
         <property name="isAvailable" type="bool"/>
         <property name="availableQuantity" type="int"/>
         <property name="productConcreteSku" type="string"/>
+        <property name="identifier" type="string"/>
     </transfer>
 
     <transfer name="RestProductOfferServicePointAvailabilitiesResponseAttributesCollection" strict="true">

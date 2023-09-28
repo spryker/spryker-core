@@ -11,9 +11,23 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTran
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer;
+use Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorterInterface;
 
 class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServicePointAvailabilityCalculatorInterface
 {
+    /**
+     * @var \Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorterInterface
+     */
+    protected ProductOfferServicePointAvailabilityResponseItemSorterInterface $productOfferServicePointAvailabilityResponseItemSorter;
+
+    /**
+     * @param \Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorterInterface $productOfferServicePointAvailabilityResponseItemSorter
+     */
+    public function __construct(ProductOfferServicePointAvailabilityResponseItemSorterInterface $productOfferServicePointAvailabilityResponseItemSorter)
+    {
+        $this->productOfferServicePointAvailabilityResponseItemSorter = $productOfferServicePointAvailabilityResponseItemSorter;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer $productOfferServicePointAvailabilityCollectionTransfer
      * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer $productOfferServicePointAvailabilityConditionsTransfer
@@ -51,8 +65,18 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
     ): array {
         $productOfferServicePointAvailabilityRequestItemTransfers = $productOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems()->getArrayCopy();
 
+        $requestedProductOffers = $this->extractProductOfferReferencesFromProductOfferServicePointAvailabilityRequestItemTransfers(
+            $productOfferServicePointAvailabilityRequestItemTransfers,
+        );
+
+        $productOfferServicePointAvailabilityResponseItemTransfers = $this->productOfferServicePointAvailabilityResponseItemSorter
+            ->sortProductOfferServicePointAvailabilityResponseItemTransfersByRequestedProductOffers(
+                $productOfferServicePointAvailabilityCollectionTransfer->getProductOfferServicePointAvailabilityResponseItems()->getArrayCopy(),
+                $requestedProductOffers,
+            );
+
         $productOfferServicePointAvailabilityResponseItemTransfersMap = $this->getProductOfferServicePointAvailabilityResponseItemTransfersMap(
-            $productOfferServicePointAvailabilityCollectionTransfer->getProductOfferServicePointAvailabilityResponseItems()->getArrayCopy(),
+            $productOfferServicePointAvailabilityResponseItemTransfers,
         );
 
         $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = [];
@@ -135,7 +159,7 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
             if ($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStockOrFail()) {
                 return (clone $productOfferServicePointAvailabilityResponseItemTransfer)
                     ->setIsAvailable(true)
-                    ->setProductOfferReference($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReferenceOrFail());
+                    ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail());
             }
 
             $availableQuantity = $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantityOrFail();
@@ -144,7 +168,7 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
             if ($availableQuantity >= $requestedQuantity) {
                 $resolvedProductOfferServicePointAvailabilityResponseItemTransfer = (clone $productOfferServicePointAvailabilityResponseItemTransfer)
                     ->setIsAvailable(true)
-                    ->setProductOfferReference($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReferenceOrFail());
+                    ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail());
 
                 $productOfferServicePointAvailabilityResponseItemTransfer->setAvailableQuantity(
                     $availableQuantity - $requestedQuantity,
@@ -199,6 +223,27 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer> $productOfferServicePointAvailabilityRequestItemTransfers
+     *
+     * @return list<string>
+     */
+    protected function extractProductOfferReferencesFromProductOfferServicePointAvailabilityRequestItemTransfers(
+        array $productOfferServicePointAvailabilityRequestItemTransfers
+    ): array {
+        $productOfferReferences = [];
+
+        foreach ($productOfferServicePointAvailabilityRequestItemTransfers as $productOfferServicePointAvailabilityRequestItemTransfer) {
+            $productOfferReference = $productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReference();
+
+            if ($productOfferReference) {
+                $productOfferReferences[] = $productOfferReference;
+            }
+        }
+
+        return $productOfferReferences;
+    }
+
+    /**
      * @param array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>> $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid
      * @param list<string> $servicePointUuids
      *
@@ -231,8 +276,9 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
     ): ProductOfferServicePointAvailabilityResponseItemTransfer {
         return (new ProductOfferServicePointAvailabilityResponseItemTransfer())
             ->setProductConcreteSku($productOfferServicePointAvailabilityRequestItemTransfer->getProductConcreteSkuOrFail())
-            ->setProductOfferReference($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReferenceOrFail())
+            ->setProductOfferReference($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReference())
             ->setMerchantReference($productOfferServicePointAvailabilityRequestItemTransfer->getMerchantReference())
+            ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail())
             ->setServicePointUuid($servicePointUuid)
             ->setAvailableQuantity($quantity)
             ->setIsNeverOutOfStock(false)

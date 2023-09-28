@@ -26,6 +26,11 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
     ): array {
         $productOfferServicePointAvailabilityRequestItemTransfers = $productOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems()->getArrayCopy();
 
+        [
+            $productOfferServicePointAvailabilityRequestItemTransfers,
+            $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference,
+        ] = $this->splitProductOfferServicePointAvailabilityRequestItemTransfersByProductOfferReferencePresence($productOfferServicePointAvailabilityRequestItemTransfers);
+
         $requestedProductOfferReferences = $this->extractProductOfferReferencesFromProductOfferServicePointAvailabilityRequestItemTransfers(
             $productOfferServicePointAvailabilityRequestItemTransfers,
         );
@@ -52,6 +57,14 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
             );
         }
 
+        if ($productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference) {
+            $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid = $this->addAvailabilitiesForItemsWithoutProductOfferReference(
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+                $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference,
+                $servicePointUuids,
+            );
+        }
+
         return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
     }
 
@@ -74,20 +87,19 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
             $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilityResponseItemTransfersMap[$servicePointUuid][$productOfferReference] ?? null;
 
             if (!$productOfferServicePointAvailabilityResponseItemTransfer) {
-                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] = (new ProductOfferServicePointAvailabilityResponseItemTransfer())
-                    ->setServicePointUuid($servicePointUuid)
-                    ->setProductOfferReference($productOfferReference)
-                    ->setProductConcreteSku($productOfferServicePointAvailabilityRequestItemTransfer->getProductConcreteSkuOrFail())
-                    ->setAvailableQuantity(0)
-                    ->setIsNeverOutOfStock(false)
-                    ->setIsAvailable(false);
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] = $this->createUnavailableProductOfferServicePointAvailabilityResponseItem(
+                    $productOfferServicePointAvailabilityRequestItemTransfer,
+                    $servicePointUuid,
+                );
 
                 continue;
             }
 
             if ($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStockOrFail()) {
                 $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] =
-                    (clone $productOfferServicePointAvailabilityResponseItemTransfer)->setIsAvailable(true);
+                    (clone $productOfferServicePointAvailabilityResponseItemTransfer)
+                        ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail())
+                        ->setIsAvailable(true);
 
                 continue;
             }
@@ -97,7 +109,9 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
 
             if ($availableQuantity >= $requestedQuantity) {
                 $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] =
-                    (clone $productOfferServicePointAvailabilityResponseItemTransfer)->setIsAvailable(true);
+                    (clone $productOfferServicePointAvailabilityResponseItemTransfer)
+                        ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail())
+                        ->setIsAvailable(true);
 
                 $productOfferServicePointAvailabilityResponseItemTransfer->setAvailableQuantity(
                     $availableQuantity - $requestedQuantity,
@@ -107,10 +121,39 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
             }
 
             $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] =
-                $productOfferServicePointAvailabilityResponseItemTransfer->setIsAvailable(false);
+                $productOfferServicePointAvailabilityResponseItemTransfer
+                    ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail())
+                    ->setIsAvailable(false);
         }
 
         return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer> $productOfferServicePointAvailabilityRequestItemTransfers
+     *
+     * @return list<list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer>>
+     */
+    protected function splitProductOfferServicePointAvailabilityRequestItemTransfersByProductOfferReferencePresence(
+        array $productOfferServicePointAvailabilityRequestItemTransfers
+    ): array {
+        $productOfferServicePointAvailabilityRequestItemTransfersWithProductOfferReference = [];
+        $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference = [];
+
+        foreach ($productOfferServicePointAvailabilityRequestItemTransfers as $productOfferServicePointAvailabilityRequestItemTransfer) {
+            if ($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReference()) {
+                $productOfferServicePointAvailabilityRequestItemTransfersWithProductOfferReference[] = $productOfferServicePointAvailabilityRequestItemTransfer;
+
+                continue;
+            }
+
+            $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference[] = $productOfferServicePointAvailabilityRequestItemTransfer;
+        }
+
+        return [
+            $productOfferServicePointAvailabilityRequestItemTransfersWithProductOfferReference,
+            $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference,
+        ];
     }
 
     /**
@@ -176,5 +219,49 @@ class DefaultProductOfferServicePointAvailabilityCalculatorStrategy implements P
         }
 
         return $productOfferServicePointAvailabilityResponseItemTransfersMap;
+    }
+
+    /**
+     * @param array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>> $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer> $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference
+     * @param list<string> $servicePointUuids
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer>>
+     */
+    protected function addAvailabilitiesForItemsWithoutProductOfferReference(
+        array $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid,
+        array $productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference,
+        array $servicePointUuids
+    ): array {
+        foreach ($productOfferServicePointAvailabilityRequestItemTransfersWithoutProductOfferReference as $productOfferServicePointAvailabilityRequestItemTransfer) {
+            foreach ($servicePointUuids as $servicePointUuid) {
+                $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid[$servicePointUuid][] = $this->createUnavailableProductOfferServicePointAvailabilityResponseItem(
+                    $productOfferServicePointAvailabilityRequestItemTransfer,
+                    $servicePointUuid,
+                );
+            }
+        }
+
+        return $productOfferServicePointAvailabilityResponseItemTransfersGroupedByServicePointUuid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer $productOfferServicePointAvailabilityRequestItemTransfer
+     * @param string $servicePointUuid
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferServicePointAvailabilityResponseItemTransfer
+     */
+    protected function createUnavailableProductOfferServicePointAvailabilityResponseItem(
+        ProductOfferServicePointAvailabilityRequestItemTransfer $productOfferServicePointAvailabilityRequestItemTransfer,
+        string $servicePointUuid
+    ): ProductOfferServicePointAvailabilityResponseItemTransfer {
+        return (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+            ->setServicePointUuid($servicePointUuid)
+            ->setProductOfferReference($productOfferServicePointAvailabilityRequestItemTransfer->getProductOfferReference())
+            ->setProductConcreteSku($productOfferServicePointAvailabilityRequestItemTransfer->getProductConcreteSkuOrFail())
+            ->setIdentifier($productOfferServicePointAvailabilityRequestItemTransfer->getIdentifierOrFail())
+            ->setAvailableQuantity(0)
+            ->setIsNeverOutOfStock(false)
+            ->setIsAvailable(false);
     }
 }

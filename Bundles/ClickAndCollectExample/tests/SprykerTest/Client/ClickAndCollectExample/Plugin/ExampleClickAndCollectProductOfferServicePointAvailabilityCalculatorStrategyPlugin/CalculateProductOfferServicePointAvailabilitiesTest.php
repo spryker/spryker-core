@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Client\ClickAndCollectExample\Plugin\ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin;
+namespace SprykerTest\Client\fi\Plugin\ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer;
@@ -20,7 +20,7 @@ use SprykerTest\Client\ClickAndCollectExample\ClickAndCollectExampleClientTester
  *
  * @group SprykerTest
  * @group Client
- * @group ClickAndCollectExample
+ * @group fi
  * @group Plugin
  * @group ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin
  * @group CalculateProductOfferServicePointAvailabilitiesTest
@@ -51,6 +51,11 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
     /**
      * @var string
      */
+    protected const PRODUCT_OFFER_REFERENCE_3 = 'offer-3';
+
+    /**
+     * @var string
+     */
     protected const PRODUCT_SKU_1 = 'sku-1';
 
     /**
@@ -76,11 +81,13 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_2,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_2,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
             ],
             [
@@ -109,12 +116,14 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
             $this->assertSame($servicePointUuid, $firstProductOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
             $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $firstProductOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
             $this->assertSame(static::MERCHANT_REFERENCE_1, $firstProductOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+            $this->assertSame('0', $firstProductOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
 
             $this->assertFalse($secondProductOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
             $this->assertFalse($secondProductOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
             $this->assertSame(0, $secondProductOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
             $this->assertSame($servicePointUuid, $secondProductOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
             $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $secondProductOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+            $this->assertSame('1', $secondProductOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         }
     }
 
@@ -130,6 +139,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -172,6 +182,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(0, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -187,6 +198,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -221,6 +233,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(4, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -236,6 +249,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -270,6 +284,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(4, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -285,12 +300,14 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -323,16 +340,18 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(11, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(6, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -348,12 +367,14 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -386,8 +407,9 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(9, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
@@ -396,6 +418,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(4, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -411,12 +434,14 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -449,16 +474,18 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(1, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(1, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -473,6 +500,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -515,6 +543,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(0, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -529,6 +558,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -562,6 +592,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(4, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -576,6 +607,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -607,8 +639,9 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(5, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -623,11 +656,13 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -659,16 +694,18 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(11, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(6, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -683,11 +720,13 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -719,8 +758,9 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(9, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
@@ -729,6 +769,235 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertSame(4, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
         $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
+        $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUsesAvailabilityFromTheRequestedOfferWhenSeveralOffersAreAvailable(): void
+    {
+        // Arrange
+        $productOfferServicePointAvailabilityConditionsTransfer = $this->tester->createProductOfferServicePointAvailabilityConditionsTransfer([
+            [
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
+            ],
+        ]);
+
+        $productOfferServicePointAvailabilityCollectionTransfer = (new ProductOfferServicePointAvailabilityCollectionTransfer())
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_3)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            )
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_1)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            )
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_2)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            );
+
+        // Act
+        $productOfferServicePointAvailabilities = (new ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin())
+            ->calculateProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+
+        // Assert
+        $this->assertCount(1, $productOfferServicePointAvailabilities);
+        $this->assertArrayHasKey(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilities);
+
+        $productOfferServicePointAvailabilitiesPerServicePoint = $productOfferServicePointAvailabilities[ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1];
+        $this->assertCount(1, $productOfferServicePointAvailabilitiesPerServicePoint);
+
+        $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[0];
+        $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
+        $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
+        $this->assertSame(10, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
+        $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUsesAvailabilityFromTheRequestedOfferWithMerchantWhenSeveralOffersAreAvailable(): void
+    {
+        // Arrange
+        $productOfferServicePointAvailabilityConditionsTransfer = $this->tester->createProductOfferServicePointAvailabilityConditionsTransfer([
+            [
+                ProductOfferServicePointAvailabilityRequestItemTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
+            ],
+        ]);
+
+        $productOfferServicePointAvailabilityCollectionTransfer = (new ProductOfferServicePointAvailabilityCollectionTransfer())
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_3)
+                    ->setMerchantReference(static::MERCHANT_REFERENCE_1)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            )
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_1)
+                    ->setMerchantReference(static::MERCHANT_REFERENCE_1)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            )
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_2)
+                    ->setMerchantReference(static::MERCHANT_REFERENCE_1)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            );
+
+        // Act
+        $productOfferServicePointAvailabilities = (new ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin())
+            ->calculateProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+
+        // Assert
+        $this->assertCount(1, $productOfferServicePointAvailabilities);
+        $this->assertArrayHasKey(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilities);
+
+        $productOfferServicePointAvailabilitiesPerServicePoint = $productOfferServicePointAvailabilities[ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1];
+        $this->assertCount(1, $productOfferServicePointAvailabilitiesPerServicePoint);
+
+        $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[0];
+        $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
+        $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
+        $this->assertSame(10, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::MERCHANT_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
+        $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUsesFirstAvailableOfferWhenProductOfferReferenceIsNotProvided(): void
+    {
+        // Arrange
+        $productOfferServicePointAvailabilityConditionsTransfer = $this->tester->createProductOfferServicePointAvailabilityConditionsTransfer([
+            [
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
+            ],
+        ]);
+
+        $productOfferServicePointAvailabilityCollectionTransfer = (new ProductOfferServicePointAvailabilityCollectionTransfer())
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_1)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            )
+            ->addProductOfferServicePointAvailabilityResponseItem(
+                (new ProductOfferServicePointAvailabilityResponseItemTransfer())
+                    ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE_2)
+                    ->setProductConcreteSku(static::PRODUCT_SKU_1)
+                    ->setAvailableQuantity(10)
+                    ->setIsNeverOutOfStock(false)
+                    ->setServicePointUuid(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1),
+            );
+
+        // Act
+        $productOfferServicePointAvailabilities = (new ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin())
+            ->calculateProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+
+        // Assert
+        $this->assertCount(1, $productOfferServicePointAvailabilities);
+        $this->assertArrayHasKey(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilities);
+
+        $productOfferServicePointAvailabilitiesPerServicePoint = $productOfferServicePointAvailabilities[ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1];
+        $this->assertCount(1, $productOfferServicePointAvailabilitiesPerServicePoint);
+
+        $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[0];
+        $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
+        $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
+        $this->assertSame(10, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
+        $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsAvailabilityResponseWhenProductOfferReferenceIsNotProvidedAndProductIsNotAvailable(): void
+    {
+        // Arrange
+        $productOfferServicePointAvailabilityConditionsTransfer = $this->tester->createProductOfferServicePointAvailabilityConditionsTransfer([
+            [
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
+            ],
+        ]);
+
+        $productOfferServicePointAvailabilityCollectionTransfer = new ProductOfferServicePointAvailabilityCollectionTransfer();
+
+        // Act
+        $productOfferServicePointAvailabilities = (new ExampleClickAndCollectProductOfferServicePointAvailabilityCalculatorStrategyPlugin())
+            ->calculateProductOfferServicePointAvailabilities(
+                $productOfferServicePointAvailabilityCollectionTransfer,
+                $productOfferServicePointAvailabilityConditionsTransfer,
+            );
+
+        // Assert
+        $this->assertCount(1, $productOfferServicePointAvailabilities);
+        $this->assertArrayHasKey(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilities);
+
+        $productOfferServicePointAvailabilitiesPerServicePoint = $productOfferServicePointAvailabilities[ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1];
+        $this->assertCount(1, $productOfferServicePointAvailabilitiesPerServicePoint);
+
+        $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[0];
+        $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
+        $this->assertFalse($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
+        $this->assertSame(0, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
+        $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -743,11 +1012,13 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 5,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '1',
             ],
         ]);
 
@@ -779,16 +1050,18 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(1, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('0', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
 
         $productOfferServicePointAvailabilityResponseItemTransfer = $productOfferServicePointAvailabilitiesPerServicePoint[1];
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsAvailable());
         $this->assertTrue($productOfferServicePointAvailabilityResponseItemTransfer->getIsNeverOutOfStock());
         $this->assertSame(1, $productOfferServicePointAvailabilityResponseItemTransfer->getAvailableQuantity());
-        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_1, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
+        $this->assertSame(static::PRODUCT_OFFER_REFERENCE_2, $productOfferServicePointAvailabilityResponseItemTransfer->getProductOfferReference());
         $this->assertNull($productOfferServicePointAvailabilityResponseItemTransfer->getMerchantReference());
+        $this->assertSame('1', $productOfferServicePointAvailabilityResponseItemTransfer->getIdentifier());
         $this->assertSame(ClickAndCollectExampleClientTester::SERVICE_POINT_UUID_1, $productOfferServicePointAvailabilityResponseItemTransfer->getServicePointUuid());
     }
 
@@ -812,6 +1085,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -845,6 +1119,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
             [
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
+                ProductOfferServicePointAvailabilityRequestItemTransfer::IDENTIFIER => '0',
             ],
         ]);
 
@@ -861,7 +1136,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
     /**
      * @return void
      */
-    public function testThrowsExceptionWhenProductOfferReferencePropertyIsMissingInRequestItem(): void
+    public function testThrowsExceptionWhenIdentifierPropertyIsMissingInRequestItem(): void
     {
         // Arrange
         $productOfferServicePointAvailabilityCollectionTransfer = (new ProductOfferServicePointAvailabilityCollectionTransfer())
@@ -876,6 +1151,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
 
         $productOfferServicePointAvailabilityConditionsTransfer = $this->tester->createProductOfferServicePointAvailabilityConditionsTransfer([
             [
+                ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::PRODUCT_CONCRETE_SKU => static::PRODUCT_SKU_1,
                 ProductOfferServicePointAvailabilityRequestItemTransfer::QUANTITY => 1,
             ],
@@ -993,7 +1269,7 @@ class CalculateProductOfferServicePointAvailabilitiesTest extends Unit
     /**
      * @return void
      */
-    public function testThrowsExceptionWhenServicePointUuidPropertyIsMissingInResponseItem(): void
+    public function testThrowsExceptionWhenIdentifierPropertyIsMissingInResponseItem(): void
     {
         // Arrange
         $productOfferServicePointAvailabilityCollectionTransfer = (new ProductOfferServicePointAvailabilityCollectionTransfer())

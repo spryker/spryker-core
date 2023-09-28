@@ -9,6 +9,8 @@ namespace Spryker\Client\ClickAndCollectExample;
 
 use Spryker\Client\ClickAndCollectExample\Calculator\ProductOfferServicePointAvailabilityCalculator;
 use Spryker\Client\ClickAndCollectExample\Calculator\ProductOfferServicePointAvailabilityCalculatorInterface;
+use Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorter;
+use Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ClickAndCollectExampleFactory extends AbstractFactory
@@ -18,6 +20,16 @@ class ClickAndCollectExampleFactory extends AbstractFactory
      */
     public function createProductOfferServicePointAvailabilityCalculator(): ProductOfferServicePointAvailabilityCalculatorInterface
     {
-        return new ProductOfferServicePointAvailabilityCalculator();
+        return new ProductOfferServicePointAvailabilityCalculator(
+            $this->createProductOfferServicePointAvailabilityResponseItemSorter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ClickAndCollectExample\Sorter\ProductOfferServicePointAvailabilityResponseItemSorterInterface
+     */
+    public function createProductOfferServicePointAvailabilityResponseItemSorter(): ProductOfferServicePointAvailabilityResponseItemSorterInterface
+    {
+        return new ProductOfferServicePointAvailabilityResponseItemSorter();
     }
 }

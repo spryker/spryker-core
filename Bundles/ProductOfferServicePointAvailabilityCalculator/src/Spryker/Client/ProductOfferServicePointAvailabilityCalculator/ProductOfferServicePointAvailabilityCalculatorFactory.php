@@ -14,6 +14,8 @@ use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Str
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Dependency\Client\ProductOfferServicePointAvailabilityCalculatorToProductOfferServicePointAvailabilityClientInterface;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Dependency\Client\ProductOfferServicePointAvailabilityCalculatorToStoreClientInterface;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpander;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpanderInterface;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReader;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface;
 
@@ -31,12 +33,21 @@ class ProductOfferServicePointAvailabilityCalculatorFactory extends AbstractFact
     }
 
     /**
+     * @return \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpanderInterface
+     */
+    public function createProductOfferServicePointAvailabilityRequestItemsExpander(): ProductOfferServicePointAvailabilityRequestItemsExpanderInterface
+    {
+        return new ProductOfferServicePointAvailabilityRequestItemsExpander();
+    }
+
+    /**
      * @return \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\ProductOfferServicePointAvailabilityCalculatorInterface
      */
     public function createProductOfferServicePointAvailabilityCalculator(): ProductOfferServicePointAvailabilityCalculatorInterface
     {
         return new ProductOfferServicePointAvailabilityCalculator(
             $this->createProductOfferServicePointAvailabilityReader(),
+            $this->createProductOfferServicePointAvailabilityRequestItemsExpander(),
             $this->createDefaultProductOfferServicePointAvailabilityCalculatorStrategy(),
             $this->getProductOfferServicePointAvailabilityCalculatorStrategyPlugins(),
         );

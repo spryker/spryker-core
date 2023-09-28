@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTran
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpanderInterface;
 use Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface;
 
 class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServicePointAvailabilityCalculatorInterface
@@ -19,6 +20,11 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
      * @var \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface
      */
     protected ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader;
+
+    /**
+     * @var \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpanderInterface
+     */
+    protected ProductOfferServicePointAvailabilityRequestItemsExpanderInterface $productOfferServicePointAvailabilityRequestItemsExpander;
 
     /**
      * @var \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface
@@ -32,15 +38,18 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
 
     /**
      * @param \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Reader\ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader
+     * @param \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Expander\ProductOfferServicePointAvailabilityRequestItemsExpanderInterface $productOfferServicePointAvailabilityRequestItemsExpander
      * @param \Spryker\Client\ProductOfferServicePointAvailabilityCalculator\Calculator\Strategy\ProductOfferServicePointAvailabilityCalculatorStrategyInterface $defaultProductOfferServicePointAvailabilityCalculatorStrategy
      * @param list<\Spryker\Client\ProductOfferServicePointAvailabilityCalculatorExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface> $productOfferServicePointAvailabilityCalculatorStrategyPlugins
      */
     public function __construct(
         ProductOfferServicePointAvailabilityReaderInterface $productOfferServicePointAvailabilityReader,
+        ProductOfferServicePointAvailabilityRequestItemsExpanderInterface $productOfferServicePointAvailabilityRequestItemsExpander,
         ProductOfferServicePointAvailabilityCalculatorStrategyInterface $defaultProductOfferServicePointAvailabilityCalculatorStrategy,
         array $productOfferServicePointAvailabilityCalculatorStrategyPlugins
     ) {
         $this->productOfferServicePointAvailabilityReader = $productOfferServicePointAvailabilityReader;
+        $this->productOfferServicePointAvailabilityRequestItemsExpander = $productOfferServicePointAvailabilityRequestItemsExpander;
         $this->defaultProductOfferServicePointAvailabilityCalculatorStrategy = $defaultProductOfferServicePointAvailabilityCalculatorStrategy;
         $this->productOfferServicePointAvailabilityCalculatorStrategyPlugins = $productOfferServicePointAvailabilityCalculatorStrategyPlugins;
     }
@@ -55,6 +64,12 @@ class ProductOfferServicePointAvailabilityCalculator implements ProductOfferServ
     ): array {
         $productOfferServicePointAvailabilityConditionsTransfer = $productOfferServicePointAvailabilityCriteriaTransfer->getProductOfferServicePointAvailabilityConditionsOrFail();
         $productOfferServicePointAvailabilityConditionsTransfer->requireProductOfferServicePointAvailabilityRequestItems();
+
+        $productOfferServicePointAvailabilityConditionsTransfer->setProductOfferServicePointAvailabilityRequestItems(
+            $this->productOfferServicePointAvailabilityRequestItemsExpander->expandWithIdentifier(
+                $productOfferServicePointAvailabilityConditionsTransfer->getProductOfferServicePointAvailabilityRequestItems(),
+            ),
+        );
 
         $productOfferServicePointAvailabilityCollectionTransfer = $this->productOfferServicePointAvailabilityReader
             ->getProductOfferServicePointAvailabilities($productOfferServicePointAvailabilityCriteriaTransfer);

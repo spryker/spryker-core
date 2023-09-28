@@ -16,13 +16,15 @@ interface ProductOfferServicePointAvailabilityCalculatorClientInterface
      * - Requires `ProductOfferServicePointAvailabilityCriteriaTransfer.productOfferServicePointAvailabilityConditions` to be set.
      * - Requires `ProductOfferServicePointAvailabilityConditionsTransfer.productOfferServicePointAvailabilityRequestItems` to be set.
      * - Requires `ProductOfferServicePointAvailabilityRequestItemTransfer.productConcreteSku` to be set.
-     * - Requires `ProductOfferServicePointAvailabilityRequestItemTransfer.productOfferReference` to be set.
      * - Requires `ProductOfferServicePointAvailabilityRequestItemTransfer.quantity` to be set.
+     * - Expects `ProductOfferServicePointAvailabilityRequestItemTransfer.productOfferReference` to be set.
      * - If `ProductOfferServicePointAvailabilityConditionsTransfer.storeName` is not set, uses current store name.
      * - Finds applicable strategy by executing {@link \Spryker\Client\ProductOfferServicePointAvailabilityCalculatorExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface} plugins.
      * - Executes default strategy to calculate availabilities if no applicable strategy found.
-     * - Checks if there is an offer available for each product for selling in each service point.
+     * - Checks if offer is available for selling in each service point.
+     * - Items without `ProductOfferServicePointAvailabilityRequestItemTransfer.productOfferReference` set are recognized as not available.
      * - Returns a map of availabilities per service point by UUID for requested items.
+     * - Response items in returned map have `identifier` property which matches their initial index in request items array.
      *
      * @api
      *

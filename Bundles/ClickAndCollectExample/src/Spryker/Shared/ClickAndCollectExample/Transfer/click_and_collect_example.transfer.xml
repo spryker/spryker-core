@@ -15,6 +15,7 @@
         <property name="quantity" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
+        <property name="identifier" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">
@@ -25,6 +26,7 @@
         <property name="servicePointUuid" type="string"/>
         <property name="productConcreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
+        <property name="identifier" type="string"/>
     </transfer>
 
 </transfers>

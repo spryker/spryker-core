@@ -21,7 +21,8 @@ class ProductOfferServicePointAvailabilitiesResourceController extends AbstractC
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Returns list of Product Offer Service Point Availabilities filtered by criteria."
+     *              "Returns list of Product Offer Service Point Availabilities filtered by criteria.",
+     *              "Response items have `identifier` field equal to initial index in request array. This field is considered to be used for response-to-request mapping purposes."
      *          ],
      *          "parameters": [
      *              {
