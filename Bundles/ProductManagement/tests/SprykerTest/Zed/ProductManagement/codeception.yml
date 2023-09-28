@@ -12,6 +12,16 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
+    Business:
+        path: Business
+        actor: ProductManagementBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\UtilText\Helper\UtilTextHelper
+
     Communication:
         path: Communication
         actor: ProductManagementCommunicationTester
