@@ -13,10 +13,12 @@
         "spryker/quote-requests-rest-api-extension": "^1.0.0",
         "spryker/shipment": "^6.11.0 || ^7.4.0 || ^8.17.0",
         "spryker/shipments-rest-api-extension": "^1.0.0",
-        "spryker/symfony": "^3.3.0"
+        "spryker/symfony": "^3.3.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/store": "*",
         "spryker/testify": "*"

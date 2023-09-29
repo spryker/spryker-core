@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentType\Business\Filter;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\ShipmentType\Persistence\ShipmentTypeRepositoryInterface;
@@ -40,7 +41,7 @@ class ShipmentGroupFilter implements ShipmentGroupFilterInterface
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers */
         $shipmentMethodTransfers = $shipmentGroupTransfer->getAvailableShipmentMethodsOrFail()->getMethods();
 
-        $shipmentTypeUuids = $this->extractShipmentTypeUuidsFromItemTransfers($shipmentGroupTransfer->getItems());
+        $shipmentTypeUuids = $this->extractShipmentTypeUuids($shipmentGroupTransfer->getItems());
         if ($shipmentTypeUuids === []) {
             return $shipmentMethodTransfers;
         }
@@ -53,6 +54,21 @@ class ShipmentGroupFilter implements ShipmentGroupFilterInterface
         }
 
         return $this->filterOutUnavailableShipmentMethodTransfers($shipmentMethodTransfers, $availableShipmentMethodIds);
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return list<string>
+     */
+    protected function extractShipmentTypeUuids(ArrayObject $itemTransfers): array
+    {
+        return array_unique(
+            array_merge(
+                $this->extractShipmentTypeUuidsFromItemTransfers($itemTransfers),
+                $this->extractShipmentTypeUuidsFromItemsShipment($itemTransfers),
+            ),
+        );
     }
 
     /**
@@ -70,7 +86,38 @@ class ShipmentGroupFilter implements ShipmentGroupFilterInterface
             $shipmentTypeUuids[] = $itemTransfer->getShipmentTypeOrFail()->getUuidOrFail();
         }
 
-        return array_unique($shipmentTypeUuids);
+        return $shipmentTypeUuids;
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return list<string>
+     */
+    protected function extractShipmentTypeUuidsFromItemsShipment(ArrayObject $itemTransfers): array
+    {
+        $shipmentTypeUuids = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!$this->hasShipmentTypeInShipment($itemTransfer)) {
+                continue;
+            }
+            $shipmentTransfer = $itemTransfer->getShipmentOrFail();
+            $shipmentTypeUuids[] = $shipmentTransfer->getMethodOrFail()->getShipmentTypeOrFail()->getUuidOrFail();
+        }
+
+        return $shipmentTypeUuids;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasShipmentTypeInShipment(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getShipment()
+            && $itemTransfer->getShipmentOrFail()->getMethod()
+            && $itemTransfer->getShipmentOrFail()->getMethodOrFail()->getShipmentType();
     }
 
     /**

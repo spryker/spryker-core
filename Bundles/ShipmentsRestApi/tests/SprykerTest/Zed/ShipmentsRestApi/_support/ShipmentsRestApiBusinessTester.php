@@ -41,7 +41,7 @@ use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacade getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShipmentsRestApi\PHPMD)
  */
 class ShipmentsRestApiBusinessTester extends Actor
 {

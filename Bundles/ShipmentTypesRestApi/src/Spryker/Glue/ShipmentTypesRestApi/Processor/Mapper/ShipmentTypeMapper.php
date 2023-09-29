@@ -9,6 +9,7 @@ namespace Spryker\Glue\ShipmentTypesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestShipmentTypesAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
+use Generated\Shared\Transfer\ShipmentTypeTransfer;
 
 class ShipmentTypeMapper implements ShipmentTypeMapperInterface
 {
@@ -23,5 +24,18 @@ class ShipmentTypeMapper implements ShipmentTypeMapperInterface
         RestShipmentTypesAttributesTransfer $restShipmentTypesAttributesTransfer
     ): RestShipmentTypesAttributesTransfer {
         return $restShipmentTypesAttributesTransfer->fromArray($shipmentTypeStorageTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentTypesAttributesTransfer $restShipmentTypesAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShipmentTypesAttributesTransfer
+     */
+    public function mapShipmentTypeTransferToRestShipmentTypesAttributesTransfer(
+        ShipmentTypeTransfer $shipmentTypeTransfer,
+        RestShipmentTypesAttributesTransfer $restShipmentTypesAttributesTransfer
+    ): RestShipmentTypesAttributesTransfer {
+        return $restShipmentTypesAttributesTransfer->fromArray($shipmentTypeTransfer->toArray(), true);
     }
 }

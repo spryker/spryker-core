@@ -94,6 +94,11 @@
 
     <transfer name="Item">
         <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="Error">

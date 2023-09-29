@@ -36,6 +36,7 @@ interface CheckoutRestApiFacadeInterface
      * - Validates quote.
      * - Executes plugins that maps request data into QuoteTransfer.
      * - Recalculates quote.
+     * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::shouldExecuteQuotePostRecalculationPlugins()} method to determine if quote post recalculate plugins should be executed.
      * - Places an order.
      * - Deletes quote if order was placed successfully.
      *

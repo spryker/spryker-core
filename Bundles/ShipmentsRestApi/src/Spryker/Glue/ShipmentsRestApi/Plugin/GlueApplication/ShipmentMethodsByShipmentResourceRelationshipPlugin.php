@@ -24,6 +24,7 @@ class ShipmentMethodsByShipmentResourceRelationshipPlugin extends AbstractPlugin
     /**
      * {@inheritDoc}
      * - Adds `shipment-methods` resource as relationship in case `ShipmentGroupTransfer` is provided as payload.
+     * - Adds `ShipmentMethodTransfer` as a payload for `shipment-methods` resource.
      *
      * @api
      *

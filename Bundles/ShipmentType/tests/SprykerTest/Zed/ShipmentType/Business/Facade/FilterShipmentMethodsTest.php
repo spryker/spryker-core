@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -115,6 +116,60 @@ class FilterShipmentMethodsTest extends Unit
         $this->assertCount(1, $shipmentMethodTransfers);
         $this->assertSame(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+            $shipmentMethodTransfers->getIterator()->current()->getIdShipmentMethod(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDoesNotFilterOutShipmentMethodsWhenShipmentTypeIsProvidedInItemShipmentMethod(): void
+    {
+        // Arrange
+        $shipmentMethodTransfer1 = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer2 = $this->tester->haveShipmentMethod();
+        $shipmentMethodsTransfer = (new ShipmentMethodsTransfer())
+            ->addMethod($shipmentMethodTransfer1)
+            ->addMethod($shipmentMethodTransfer2);
+
+        $storeTransfer = $this->tester->haveStore();
+        $shipmentTypeTransfer1 = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $shipmentTypeTransfer2 = $this->tester->haveShipmentType([
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+            ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $this->tester->createShipmentMethodShipmentTypeRelation(
+            $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
+            $shipmentTypeTransfer1->getIdShipmentTypeOrFail(),
+        );
+        $this->tester->createShipmentMethodShipmentTypeRelation(
+            $shipmentMethodTransfer2->getIdShipmentMethodOrFail(),
+            $shipmentTypeTransfer2->getIdShipmentTypeOrFail(),
+        );
+
+        $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
+        $shipmentGroupTransfer = (new ShipmentGroupBuilder())
+            ->withItem(
+                (new ItemBuilder())
+                    ->withShipment([
+                        ShipmentTransfer::METHOD => [
+                            ShipmentMethodTransfer::SHIPMENT_TYPE => $shipmentTypeTransfer1->toArray(),
+                        ],
+                    ]),
+            )
+            ->withAvailableShipmentMethods($shipmentMethodsTransfer->toArray())
+            ->build();
+
+        // Act
+        $shipmentMethodTransfers = $this->tester->getFacade()->filterShipmentGroupMethods($shipmentGroupTransfer, $quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $shipmentMethodTransfers);
+        $this->assertSame(
+            $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
             $shipmentMethodTransfers->getIterator()->current()->getIdShipmentMethod(),
         );
     }

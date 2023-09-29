@@ -25,6 +25,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * Specification:
      * - If set to `true` a stack of {@link \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface} will be executed after quote recalculation.
      * - Impacts {@link \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade::getCheckoutData()} method.
+     * - Impacts {@link \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade::placeOrder()} method.
      *
      * @api
      *

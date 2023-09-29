@@ -31,4 +31,8 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="ShipmentMethod">
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
 </transfers>

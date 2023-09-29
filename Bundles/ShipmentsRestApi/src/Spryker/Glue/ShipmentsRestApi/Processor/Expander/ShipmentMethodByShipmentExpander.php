@@ -68,6 +68,10 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
                     $shipmentGroupTransfer->getAvailableShipmentMethods()->getMethods(),
                 );
 
+            $shipmentMethodTransfersIndexedByIdShipmentMethod = $this->getShipmentMethodTransfersIndexedByIdShipmentMethod(
+                $shipmentGroupTransfer,
+            );
+
             $restShipmentMethodsAttributesTransfers = $this->shipmentMethodSorter
                 ->sortRestShipmentMethodsAttributesTransfers($restShipmentMethodsAttributesTransfers, $restRequest);
 
@@ -75,8 +79,30 @@ class ShipmentMethodByShipmentExpander implements ShipmentMethodByShipmentExpand
                 $shipmentMethodRestResource = $this->shipmentMethodRestResponseBuilder
                     ->createShipmentMethodRestResource((string)$idShipmentMethod, $restShipmentMethodsAttributesTransfer);
 
+                $shipmentMethodRestResource->setPayload($shipmentMethodTransfersIndexedByIdShipmentMethod[$idShipmentMethod] ?? null);
                 $resource->addRelationship($shipmentMethodRestResource);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return array<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
+     */
+    protected function getShipmentMethodTransfersIndexedByIdShipmentMethod(ShipmentGroupTransfer $shipmentGroupTransfer): array
+    {
+        $shipmentMethodTransfersIndexedByIdShipmentMethod = [];
+
+        if (!$shipmentGroupTransfer->getAvailableShipmentMethods()) {
+            return $shipmentMethodTransfersIndexedByIdShipmentMethod;
+        }
+
+        foreach ($shipmentGroupTransfer->getAvailableShipmentMethodsOrFail()->getMethods() as $shipmentMethodTransfer) {
+            $shipmentMethodTransfersIndexedByIdShipmentMethod[$shipmentMethodTransfer->getIdShipmentMethod()] = $shipmentMethodTransfer;
+        }
+
+        /** @phpstan-var array<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> */
+        return $shipmentMethodTransfersIndexedByIdShipmentMethod;
     }
 }

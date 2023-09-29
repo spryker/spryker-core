@@ -15,6 +15,10 @@ use Spryker\Glue\ShipmentTypesRestApi\Processor\Builder\ErrorResponseBuilder;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Builder\ErrorResponseBuilderInterface;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Builder\ShipmentTypeResponseBuilder;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Builder\ShipmentTypeResponseBuilderInterface;
+use Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\CheckoutDataResponseAttributesExpander;
+use Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\CheckoutDataResponseAttributesExpanderInterface;
+use Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\ShipmentTypeByShipmentMethodResourceRelationshipExpander;
+use Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\ShipmentTypeByShipmentMethodResourceRelationshipExpanderInterface;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Mapper\ShipmentTypeMapper;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Mapper\ShipmentTypeMapperInterface;
 use Spryker\Glue\ShipmentTypesRestApi\Processor\Reader\ShipmentTypeReader;
@@ -61,6 +65,16 @@ class ShipmentTypesRestApiFactory extends AbstractStorefrontApiFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\CheckoutDataResponseAttributesExpanderInterface
+     */
+    public function createCheckoutDataResponseAttributesExpander(): CheckoutDataResponseAttributesExpanderInterface
+    {
+        return new CheckoutDataResponseAttributesExpander();
+    }
+
+    /**
      * @return \Spryker\Glue\ShipmentTypesRestApi\Processor\Sorter\ShipmentTypeSorterInterface
      */
     public function createShipmentTypeSorter(): ShipmentTypeSorterInterface
@@ -77,6 +91,17 @@ class ShipmentTypesRestApiFactory extends AbstractStorefrontApiFactory
             $this->getConfig(),
             $this->getResourceBuilder(),
             $this->getGlossaryStorageClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ShipmentTypesRestApi\Processor\Expander\ShipmentTypeByShipmentMethodResourceRelationshipExpanderInterface
+     */
+    public function createShipmentTypeByShipmentMethodResourceRelationshipExpander(): ShipmentTypeByShipmentMethodResourceRelationshipExpanderInterface
+    {
+        return new ShipmentTypeByShipmentMethodResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createShipmentTypeMapper(),
         );
     }
 

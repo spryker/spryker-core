@@ -24,6 +24,7 @@ class ShipmentTypeShipmentMethodFilterPlugin extends AbstractPlugin implements S
      * - Requires `QuoteTransfer.store.name` transfer property to be set.
      * - Requires `ShipmentGroupTransfer.availableShipmentMethods.methods.idShipmentMethod` transfer property to be set.
      * - Expects `ShipmentGroupTransfer.items.shipmentType.uuid` transfer property to be provided.
+     * - Expects `ShipmentGroupTransfer.items.shipment.method.shipmentType.uuid` transfer property to be provided.
      * - Filters out shipment methods that have relation to shipment types which are not active or not available for store.
      *
      * @api
