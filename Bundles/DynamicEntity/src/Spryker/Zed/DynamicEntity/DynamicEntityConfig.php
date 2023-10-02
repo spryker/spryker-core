@@ -82,8 +82,6 @@ class DynamicEntityConfig extends AbstractBundleConfig
      */
     public function getDisallowedTables(): array
     {
-        return [
-            'spy_dynamic_entity_configuration',
-        ];
+        return [];
     }
 }

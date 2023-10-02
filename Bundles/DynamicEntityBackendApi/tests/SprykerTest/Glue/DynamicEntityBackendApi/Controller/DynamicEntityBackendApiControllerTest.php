@@ -30,6 +30,11 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @var string
      */
+    protected const RESPONSE_KEY_DATA = 'data';
+
+    /**
+     * @var string
+     */
     protected const ERROR_REQUEST_BODY_CONFLICT = 'Modification of immutable field `table_alias` is prohibited';
 
     /**
@@ -99,7 +104,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         //Assert
         $this->assertNotNull($glueResponseTransfer->getContent());
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
+        $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[static::RESPONSE_KEY_DATA][0][$this->tester::TABLE_ALIAS_COLUMN]);
     }
 
     /**
@@ -115,7 +120,8 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->getCollectionAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEmpty(json_decode($glueResponseTransfer->getContentOrFail(), true));
+        $contentData = json_decode($glueResponseTransfer->getContentOrFail(), true);
+        $this->assertEmpty($contentData[static::RESPONSE_KEY_DATA]);
     }
 
     /**
@@ -133,7 +139,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         //Assert
         $this->assertNotNull($glueResponseTransfer->getContent());
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
+        $this->assertEquals($this->tester::FOO_TABLE_ALIAS, $content[static::RESPONSE_KEY_DATA][0][$this->tester::TABLE_ALIAS_COLUMN]);
     }
 
     /**
@@ -164,7 +170,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $this->assertNotNull($glueResponseTransfer->getContent());
 
         $content = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertEquals($this->tester::BAR_TABLE_ALIAS, $content[0][$this->tester::TABLE_ALIAS_COLUMN]);
+        $this->assertEquals($this->tester::BAR_TABLE_ALIAS, $content[static::RESPONSE_KEY_DATA][0][$this->tester::TABLE_ALIAS_COLUMN]);
 
         $barEntity = $this->findEntityByTableAlias($this->tester::BAR_TABLE_ALIAS);
         $this->assertNotNull($barEntity);
@@ -458,7 +464,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $this->assertNotNull($glueResponseTransfer->getContent());
 
         $content = json_decode($glueResponseTransfer->getContent(), true);
-        $barEntity = $this->findEntityByTableAlias($content[0][$this->tester::TABLE_ALIAS_COLUMN]);
+        $barEntity = $this->findEntityByTableAlias($content[static::RESPONSE_KEY_DATA][0][$this->tester::TABLE_ALIAS_COLUMN]);
         $this->assertNotNull($barEntity);
         $this->assertEquals($this->tester::DEFINITION_CREATED_VALUE, $barEntity->getDefinition());
     }

@@ -71,6 +71,11 @@ class GlueResponseDynamicEntityMapper
     protected const GLOSSARY_KEY_ERROR_MISSING_IDENTIFIER = 'dynamic_entity.validation.missing_identifier';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_DATA = 'data';
+
+    /**
      * @var int
      */
     protected const RESPONSE_CODE_PARAMETERS_ARE_INVALID = 1301;
@@ -194,7 +199,7 @@ class GlueResponseDynamicEntityMapper
 
         if ($this->isRequestedApplicationJson($glueRequestTransfer)) {
             $fieldsCollection = $this->mapDynamicEntitiesToFieldsCollection($dynamicEntityCollectionTransfer->getDynamicEntities(), $glueRequestTransfer);
-            $glueResponseTransfer->setContent($this->serviceUtilEncoding->encodeJson($fieldsCollection));
+            $glueResponseTransfer->setContent($this->buildResponseContent($fieldsCollection));
 
             return $glueResponseTransfer;
         }
@@ -206,6 +211,20 @@ class GlueResponseDynamicEntityMapper
         }
 
         return $glueResponseTransfer;
+    }
+
+    /**
+     * @param array<mixed, mixed> $fieldsCollection
+     *
+     * @return string|null
+     */
+    protected function buildResponseContent(array $fieldsCollection): ?string
+    {
+        return $this->serviceUtilEncoding->encodeJson(
+            [
+                static::RESPONSE_KEY_DATA => $fieldsCollection,
+            ],
+        );
     }
 
     /**
@@ -241,7 +260,7 @@ class GlueResponseDynamicEntityMapper
         }
 
         $fieldsCollection = $this->mapDynamicEntitiesToFieldsCollection($dynamicEntityCollectionResponseTransfer->getDynamicEntities(), $glueRequestTransfer);
-        $glueResponseTransfer->setContent($this->serviceUtilEncoding->encodeJson($fieldsCollection));
+        $glueResponseTransfer->setContent($this->buildResponseContent($fieldsCollection));
 
         return $glueResponseTransfer;
     }
@@ -317,14 +336,9 @@ class GlueResponseDynamicEntityMapper
     }
 
     /**
-     * Specification:
-     * - Returns a map of glossary keys for error data.
-     *
-     * @api
-     *
      * @return array<string, array<string, mixed>>
      */
-    public function getErrorDataIndexedByGlossaryKey(): array
+    protected function getErrorDataIndexedByGlossaryKey(): array
     {
         return [
             DynamicEntityBackendApiConfig::GLOSSARY_KEY_ERROR_INVALID_DATA_FORMAT => [

@@ -12,6 +12,8 @@ use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
+use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
+use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
@@ -266,6 +268,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AllowedTablesValidatorRule(
             $this->getConfig(),
+            $this->createDisallowedTablesReader(),
         );
     }
 
@@ -341,5 +344,15 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function getConnection(): DynamicEntityToConnectionInterface
     {
         return $this->getProvidedDependency(DynamicEntityDependencyProvider::CONNECTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface
+     */
+    public function createDisallowedTablesReader(): DisallowedTablesReaderInterface
+    {
+        return new DisallowedTablesReader(
+            $this->getConfig(),
+        );
     }
 }

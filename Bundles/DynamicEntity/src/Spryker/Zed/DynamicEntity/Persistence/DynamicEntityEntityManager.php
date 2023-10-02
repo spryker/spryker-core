@@ -309,7 +309,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
      *
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */

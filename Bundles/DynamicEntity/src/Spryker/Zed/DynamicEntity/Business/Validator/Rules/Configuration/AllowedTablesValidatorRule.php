@@ -10,6 +10,9 @@ namespace Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration;
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\Business\Reader\AllowedTablesReaderInterface;
+use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
+use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\ValidatorRuleInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
@@ -36,11 +39,17 @@ class AllowedTablesValidatorRule implements ValidatorRuleInterface
     protected DynamicEntityConfig $dynamicEntityConfig;
 
     /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface
+     */
+    protected DisallowedTablesReaderInterface $disallowedTablesReader;
+
+    /**
      * @param \Spryker\Zed\DynamicEntity\DynamicEntityConfig $dynamicEntityConfig
      */
-    public function __construct(DynamicEntityConfig $dynamicEntityConfig)
+    public function __construct(DynamicEntityConfig $dynamicEntityConfig, DisallowedTablesReaderInterface $disallowedTablesReader)
     {
         $this->dynamicEntityConfig = $dynamicEntityConfig;
+        $this->disallowedTablesReader = $disallowedTablesReader;
     }
 
     /**
@@ -53,7 +62,7 @@ class AllowedTablesValidatorRule implements ValidatorRuleInterface
         $errorCollectionTransfer = new ErrorCollectionTransfer();
 
         foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
-            if (!in_array($dynamicEntityConfigurationTransfer->getTableName(), $this->dynamicEntityConfig->getDisallowedTables())) {
+            if (!in_array($dynamicEntityConfigurationTransfer->getTableName(), $this->disallowedTablesReader->getDisallowedTables())) {
                 continue;
             }
 

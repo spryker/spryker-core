@@ -106,7 +106,7 @@ class DynamicEntityFacade extends AbstractFacade implements DynamicEntityFacadeI
      */
     public function getDisallowedTables(): array
     {
-        return $this->getFactory()->getConfig()->getDisallowedTables();
+        return $this->getFactory()->createDisallowedTablesReader()->getDisallowedTables();
     }
 
     /**

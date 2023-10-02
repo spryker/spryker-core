@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\DynamicEntity\Business\Validator\Rules\Configuration;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration\AllowedTablesValidatorRule;
 
 /**
@@ -37,7 +38,8 @@ class AllowedTablesValidatorRuleTest extends Unit
     public function testValidateEmptyCollectionWillReturnWithoutErrors(): void
     {
         // Arrange
-        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig());
+        $disallowedReader = new DisallowedTablesReader($this->tester->getModuleConfig());
+        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig(), $disallowedReader);
         $dynamicEntityConfigurationTransfers = new ArrayObject();
 
         // Act
@@ -53,7 +55,8 @@ class AllowedTablesValidatorRuleTest extends Unit
     public function testValidateCollectionWillReturnWithoutErrors(): void
     {
         // Arrange
-        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig());
+        $disallowedReader = new DisallowedTablesReader($this->tester->getModuleConfig());
+        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig(), $disallowedReader);
         $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();
 
         // Act
@@ -69,7 +72,8 @@ class AllowedTablesValidatorRuleTest extends Unit
     public function testValidateCollectionWillReturnWithErrors(): void
     {
         // Arrange
-        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig());
+        $disallowedReader = new DisallowedTablesReader($this->tester->getModuleConfig());
+        $validatorRule = new AllowedTablesValidatorRule($this->tester->getModuleConfig(), $disallowedReader);
         $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer('spy_dynamic_entity_configuration');
 
         // Act
