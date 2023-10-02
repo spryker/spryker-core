@@ -29,4 +29,88 @@
         <property name="identifier" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="servicePoint" type="ServicePoint" strict="true"/>
+        <property name="quantity" type="int"/>
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="groupKey" type="string"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+    </transfer>
+
+    <transfer name="ProductOfferServicePoint" strict="true">
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="productOfferPrice" type="int"/>
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="idProductOffer" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="concreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferPrice" strict="true">
+        <property name="idProductOffer" type="int"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferStock">
+        <property name="idProductOffer" type="int"/>
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointCriteria" strict="true">
+        <property name="storeName" type="string"/>
+        <property name="shipmentTypeKey" type="string"/>
+        <property name="concreteSkus" type="string[]" singular="concreteSku"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="servicePointIds" type="int[]" singular="idServicePoint"/>
+        <property name="currencyCode" type="string"/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePoint" strict="true">
+        <property name="idServicePoint" type="int"/>
+    </transfer>
+
 </transfers>

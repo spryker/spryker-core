@@ -10,6 +10,7 @@ namespace Spryker\Client\ServicePointCart\Replacer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ServicePointCart\Dependency\Client\ServicePointCartToQuoteClientInterface;
+use Spryker\Client\ServicePointCart\MessageAdder\MessageAdderInterface;
 use Spryker\Client\ServicePointCart\Zed\ServicePointCartStubInterface;
 
 class QuoteItemReplacer implements QuoteItemReplacerInterface
@@ -25,15 +26,23 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     protected ServicePointCartToQuoteClientInterface $quoteClient;
 
     /**
+     * @var \Spryker\Client\ServicePointCart\MessageAdder\MessageAdderInterface
+     */
+    protected MessageAdderInterface $messageAdder;
+
+    /**
      * @param \Spryker\Client\ServicePointCart\Zed\ServicePointCartStubInterface $servicePointCartStub
      * @param \Spryker\Client\ServicePointCart\Dependency\Client\ServicePointCartToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\ServicePointCart\MessageAdder\MessageAdderInterface $messageAdder
      */
     public function __construct(
         ServicePointCartStubInterface $servicePointCartStub,
-        ServicePointCartToQuoteClientInterface $quoteClient
+        ServicePointCartToQuoteClientInterface $quoteClient,
+        MessageAdderInterface $messageAdder
     ) {
         $this->servicePointCartStub = $servicePointCartStub;
         $this->quoteClient = $quoteClient;
+        $this->messageAdder = $messageAdder;
     }
 
     /**
@@ -44,6 +53,10 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->servicePointCartStub->replaceQuoteItems($quoteTransfer);
+        if ($quoteResponseTransfer->getErrors()->count() !== 0) {
+            $this->messageAdder->addQuoteResponseErrors($quoteResponseTransfer->getErrors());
+        }
+
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransferOrFail());
 
         return $quoteResponseTransfer;

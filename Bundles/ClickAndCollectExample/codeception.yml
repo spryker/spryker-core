@@ -1,6 +1,7 @@
 namespace: ClickAndCollectExample
 include:
     - tests/SprykerTest/Client/ClickAndCollectExample
+    - tests/SprykerTest/Zed/ClickAndCollectExample
 paths:
     tests: tests/
     output: tests/_output/
