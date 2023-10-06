@@ -50,7 +50,7 @@ class ProductApprovalCartChangeValidator implements ProductApprovalCartChangeVal
      */
     public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $approvalStatusesIndexedByProductSku = $this->getApprovalStatusesIndexedByProductSku($cartChangeTransfer);
 
         if (!$approvalStatusesIndexedByProductSku) {
@@ -69,10 +69,6 @@ class ProductApprovalCartChangeValidator implements ProductApprovalCartChangeVal
 
             $cartPreCheckResponseTransfer->setIsSuccess(false)
                 ->addMessage($this->createErrorMessage($sku));
-        }
-
-        if ($cartPreCheckResponseTransfer->getIsSuccess() === null) {
-            $cartPreCheckResponseTransfer->setIsSuccess(true);
         }
 
         return $cartPreCheckResponseTransfer;

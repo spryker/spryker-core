@@ -590,6 +590,21 @@ class ProductApprovalFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testValidateCartChangeReturnsSuccessResponseForEmptyCartChange(): void
+    {
+        // Arrange
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartChange($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
      * @dataProvider getNotApprovedApprovalStatuses
      *
      * @param string|null $approvalStatus
