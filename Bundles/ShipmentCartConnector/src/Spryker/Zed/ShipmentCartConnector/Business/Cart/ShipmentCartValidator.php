@@ -180,7 +180,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     protected function createMessage(ShipmentMethodTransfer $shipmentMethodTransfer): MessageTransfer
     {
         return (new MessageTransfer())
-            ->addParameters([
+            ->setParameters([
                 '%method_name%' => $shipmentMethodTransfer->getName(),
                 '%carrier_name%' => $shipmentMethodTransfer->getCarrierName(),
             ])
