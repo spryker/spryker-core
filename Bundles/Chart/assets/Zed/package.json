@@ -3,9 +3,9 @@
     "name": "spryker-zed-chart-plotly",
     "version": "1.0.0",
     "dependencies": {
-        "plotly.js": "~1.54.5"
+        "plotly.js": "~2.26.0"
     },
     "devDependencies": {
-        "buffer": "~5.7.1"
+        "node-polyfill-webpack-plugin": "~2.0.1"
     }
 }
