@@ -19,6 +19,11 @@ use Spryker\Zed\Router\Business\UrlMatcher\CompiledUrlMatcher;
 class RouterConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    protected const DIRECTORY_NAME_MERCHANT_PORTAL_APPLICATION = 'MerchantPortalApplication';
+
+    /**
      * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
@@ -287,5 +292,20 @@ class RouterConfig extends AbstractBundleConfig
     public function getSslExcludedRouteNames(): array
     {
         return $this->get(RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES, []);
+    }
+
+    /**
+     * Specification:
+     * - Returns a list of directories that are not allowed for Backoffice controllers.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getNotAllowedBackofficeControllerDirectories(): array
+    {
+        return [
+            static::DIRECTORY_NAME_MERCHANT_PORTAL_APPLICATION,
+        ];
     }
 }

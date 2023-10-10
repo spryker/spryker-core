@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Router\Business\Router\RouterResource;
 
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
 class BackofficeRouterResource extends AbstractRouterResource
@@ -20,7 +21,18 @@ class BackofficeRouterResource extends AbstractRouterResource
         $finder->files()
             ->in($this->config->getControllerDirectories())
             ->name('*Controller.php')
-            ->notName('GatewayController.php');
+            ->notName('GatewayController.php')
+            ->filter(function (SplFileInfo $splFileInfo) {
+                $pathToController = $splFileInfo->getPathname();
+                foreach ($this->config->getNotAllowedBackofficeControllerDirectories() as $notAllowedBackofficeControllerDirectory) {
+                    $notAllowedBackofficeControllerDirectoryPath = sprintf('%s%s%s', DIRECTORY_SEPARATOR, $notAllowedBackofficeControllerDirectory, DIRECTORY_SEPARATOR);
+                    if (strpos($pathToController, $notAllowedBackofficeControllerDirectoryPath) !== false) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
 
         return $finder;
     }

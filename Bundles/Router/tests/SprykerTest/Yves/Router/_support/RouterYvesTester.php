@@ -21,7 +21,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Yves\Router\PHPMD)
  */
 class RouterYvesTester extends Actor
 {

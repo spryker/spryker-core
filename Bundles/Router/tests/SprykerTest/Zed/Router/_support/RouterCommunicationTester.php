@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Router\PHPMD)
  */
 class RouterCommunicationTester extends Actor
 {

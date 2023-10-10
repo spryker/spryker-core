@@ -20,6 +20,14 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
 
+    Business:
+        path: ./Business
+        actor: RouterBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+
     Communication:
         path: ./Communication
         actor: RouterCommunicationTester

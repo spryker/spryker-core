@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\Router;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(\SprykerTest\Zed\Router\PHPMD)
  */
-class RouterRootTester extends Actor
+class RouterBusinessTester extends Actor
 {
-    use _generated\RouterRootTesterActions;
+    use _generated\RouterBusinessTesterActions;
 }

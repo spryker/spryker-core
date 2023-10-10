@@ -35,6 +35,11 @@ abstract class AbstractRouterResource implements ResourceInterface
     public const CONTROLLER_NAME_POSITION = 5;
 
     /**
+     * @var string
+     */
+    protected const APPLICATION_MODULE_NAME = 'application';
+
+    /**
      * @var \Spryker\Zed\Router\RouterConfig
      */
     protected $config;
@@ -208,7 +213,7 @@ abstract class AbstractRouterResource implements ResourceInterface
             $pathCandidates[] = sprintf('/%s', $module);
         }
 
-        if ($module === 'application' && $controller === 'index' && $action === 'index') {
+        if ($module === static::APPLICATION_MODULE_NAME && $controller === 'index' && $action === 'index') {
             $pathCandidates[] = '/';
         }
 
