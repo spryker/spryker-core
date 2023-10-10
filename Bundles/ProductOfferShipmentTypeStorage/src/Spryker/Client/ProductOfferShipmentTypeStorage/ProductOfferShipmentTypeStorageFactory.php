@@ -8,15 +8,12 @@
 namespace Spryker\Client\ProductOfferShipmentTypeStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToShipmentTypeStorageClientInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToStorageClientInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToStoreClientInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Service\ProductOfferShipmentTypeStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Expander\ProductOfferStorageExpander;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Expander\ProductOfferStorageExpanderInterface;
-use Spryker\Client\ProductOfferShipmentTypeStorage\Filter\ShipmentTypeFilter;
-use Spryker\Client\ProductOfferShipmentTypeStorage\Filter\ShipmentTypeFilterInterface;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Generator\ProductOfferShipmentTypeKeyGenerator;
 use Spryker\Client\ProductOfferShipmentTypeStorage\Generator\ProductOfferShipmentTypeKeyGeneratorInterface;
 
@@ -32,16 +29,6 @@ class ProductOfferShipmentTypeStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getStoreClient(),
             $this->getShipmentTypeStorageClient(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\ProductOfferShipmentTypeStorage\Filter\ShipmentTypeFilterInterface
-     */
-    public function createShipmentTypeFilter(): ShipmentTypeFilterInterface
-    {
-        return new ShipmentTypeFilter(
-            $this->getProductOfferStorageClient(),
         );
     }
 
@@ -83,13 +70,5 @@ class ProductOfferShipmentTypeStorageFactory extends AbstractFactory
     public function getStoreClient(): ProductOfferShipmentTypeStorageToStoreClientInterface
     {
         return $this->getProvidedDependency(ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_STORE);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface
-     */
-    public function getProductOfferStorageClient(): ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductOfferShipmentTypeStorageDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 }

@@ -116,21 +116,4 @@
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
     </transfer>
 
-    <transfer name="ProductOfferStorageCriteria">
-        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
-    </transfer>
-
-    <transfer name="ProductOfferStorageCollection">
-        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="Item">
-        <property name="sku" type="string"/>
-        <property name="productOfferReference" type="string"/>
-    </transfer>
-
 </transfers>

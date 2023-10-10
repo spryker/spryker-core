@@ -113,4 +113,26 @@
         <property name="idServicePoint" type="int"/>
     </transfer>
 
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="productOfferReference" type="string"/>
+        <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
+        <property name="productConcreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorage" strict="true">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCollection" strict="true">
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
 </transfers>

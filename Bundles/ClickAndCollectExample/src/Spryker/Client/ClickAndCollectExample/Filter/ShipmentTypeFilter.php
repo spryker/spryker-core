@@ -1,29 +1,29 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Client\ProductOfferShipmentTypeStorage\Filter;
+namespace Spryker\Client\ClickAndCollectExample\Filter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageCollectionTransfer;
-use Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface;
+use Spryker\Client\ClickAndCollectExample\Dependency\Client\ClickAndCollectExampleToProductOfferStorageClientInterface;
 
 class ShipmentTypeFilter implements ShipmentTypeFilterInterface
 {
     /**
-     * @var \Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface
+     * @var \Spryker\Client\ClickAndCollectExample\Dependency\Client\ClickAndCollectExampleToProductOfferStorageClientInterface
      */
-    protected ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface $productOfferStorageClient;
+    protected ClickAndCollectExampleToProductOfferStorageClientInterface $productOfferStorageClient;
 
     /**
-     * @param \Spryker\Client\ProductOfferShipmentTypeStorage\Dependency\Client\ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface $productOfferStorageClient
+     * @param \Spryker\Client\ClickAndCollectExample\Dependency\Client\ClickAndCollectExampleToProductOfferStorageClientInterface $productOfferStorageClient
      */
-    public function __construct(ProductOfferShipmentTypeStorageToProductOfferStorageClientInterface $productOfferStorageClient)
+    public function __construct(ClickAndCollectExampleToProductOfferStorageClientInterface $productOfferStorageClient)
     {
         $this->productOfferStorageClient = $productOfferStorageClient;
     }

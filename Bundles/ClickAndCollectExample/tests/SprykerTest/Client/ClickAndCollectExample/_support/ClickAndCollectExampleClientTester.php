@@ -5,8 +5,6 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace SprykerTest\Client\ClickAndCollectExample;
 
 use Codeception\Actor;
@@ -26,6 +24,7 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTra
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause($vars = [])
+ * @method \Spryker\Client\ClickAndCollectExample\ClickAndCollectExampleClientInterface getClient(?string $moduleName = null)
  *
  * @SuppressWarnings(\SprykerTest\Client\ClickAndCollectExample\PHPMD)
  */

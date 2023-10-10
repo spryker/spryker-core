@@ -1,4 +1,4 @@
 parameters:
     level: 8
-    ignoreErrors:
-        - '#Call to an undefined method Orm\\Zed\\#'
+    excludePaths:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Persistence/ClickAndCollectExampleRepository.php'
