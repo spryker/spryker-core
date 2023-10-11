@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentTypeServicePoint\Persistence;
 
 use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ShipmentTypeServicePoint\Persistence\Propel\Mapper\ShipmentTypeServicePointMapper;
 
 /**
  * @method \Spryker\Zed\ShipmentTypeServicePoint\ShipmentTypeServicePointConfig getConfig()
@@ -22,5 +23,13 @@ class ShipmentTypeServicePointPersistenceFactory extends AbstractPersistenceFact
     public function createShipmentTypeServiceTypeQuery(): SpyShipmentTypeServiceTypeQuery
     {
         return SpyShipmentTypeServiceTypeQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeServicePoint\Persistence\Propel\Mapper\ShipmentTypeServicePointMapper
+     */
+    public function createShipmentTypeServicePointMapper(): ShipmentTypeServicePointMapper
+    {
+        return new ShipmentTypeServicePointMapper();
     }
 }

@@ -1,47 +1,64 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ShipmentTypeStorage" strict="true">
-        <property name="idShipmentType" type="int"/>
-        <property name="serviceType" type="ServiceTypeStorage"/>
+    <transfer name="ShipmentTypeServiceTypeCriteria" strict="true">
+        <property name="shipmentTypeServiceTypeConditions" type="ShipmentTypeServiceTypeConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="ServiceTypeCriteria" strict="true">
-        <property name="serviceTypeConditions" type="ServiceTypeConditions"/>
+    <transfer name="ShipmentTypeServiceTypeConditions" strict="true">
+        <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
+        <property name="withServiceTypeRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeServiceTypeCollection" strict="true">
+        <property name="shipmentTypeServiceTypes" type="ShipmentTypeServiceType[]" singular="shipmentTypeServiceType"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeServiceType" strict="true">
+        <property name="shipmentType" type="ShipmentType"/>
+        <property name="serviceType" type="ServiceType"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="idShipmentType" type="int"/>
+    </transfer>
+
+    <transfer name="ServiceType" strict="true">
+        <property name="idServiceType" type="int"/>
     </transfer>
 
     <transfer name="ServiceTypeConditions" strict="true">
         <property name="serviceTypeIds" type="int[]" singular="idServiceType"/>
     </transfer>
 
+    <transfer name="ServiceTypeCriteria" strict="true">
+        <property name="serviceTypeConditions" type="ServiceTypeConditions"/>
+    </transfer>
+
     <transfer name="ServiceTypeCollection" strict="true">
         <property name="serviceTypes" type="ServiceType[]" singular="serviceType"/>
     </transfer>
 
-    <transfer name="ServiceType" strict="true">
-        <property name="key" type="string"/>
-        <property name="idServiceType" type="int"/>
-        <property name="uuid" type="string"/>
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
     </transfer>
 
-    <transfer name="ShipmentTypeStorageCollection" strict="true">
-        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
-    </transfer>
-
-    <transfer name="ServiceTypeStorageCollection" strict="true">
-        <property name="serviceTypeStorages" type="ServiceTypeStorage[]" singular="serviceTypeStorage"/>
-    </transfer>
-
-    <transfer name="ServiceTypeStorage" strict="true">
-        <property name="uuid" type="string"/>
-    </transfer>
-
-    <transfer name="ServiceTypeStorageConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
-    </transfer>
-
-    <transfer name="ServiceTypeStorageCriteria" strict="true">
-        <property name="serviceTypeStorageConditions" type="ServiceTypeStorageConditions"/>
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
 </transfers>

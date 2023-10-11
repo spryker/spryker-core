@@ -7,7 +7,12 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePoint\Persistence;
 
-use Orm\Zed\ShipmentTypeServicePoint\Persistence\Map\SpyShipmentTypeServiceTypeTableMap;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer;
+use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,20 +21,119 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ShipmentTypeServicePointRepository extends AbstractRepository implements ShipmentTypeServicePointRepositoryInterface
 {
     /**
-     * @param list<int> $shipmentTypeIds
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
      *
-     * @return array<int, int>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function getServiceTypeIdsIndexedByIdShipmentType(array $shipmentTypeIds): array
-    {
+    public function getShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer {
+        $shipmentTypeServiceTypeQuery = $this->getFactory()
+            ->createShipmentTypeServiceTypeQuery();
+        $shipmentTypeServiceTypeQuery = $this->applyShipmentTypeServiceTypeFilters(
+            $shipmentTypeServiceTypeQuery,
+            $shipmentTypeServiceTypeCriteriaTransfer,
+        );
+        $shipmentTypeServiceTypeQuery = $this->applyShipmentTypeServiceTypeSorting(
+            $shipmentTypeServiceTypeQuery,
+            $shipmentTypeServiceTypeCriteriaTransfer,
+        );
+        $shipmentTypeServiceTypeCollectionTransfer = new ShipmentTypeServiceTypeCollectionTransfer();
+        $paginationTransfer = $shipmentTypeServiceTypeCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $shipmentTypeServiceTypeQuery = $this->applyShipmentTypeServiceTypePagination($shipmentTypeServiceTypeQuery, $paginationTransfer);
+            $shipmentTypeServiceTypeCollectionTransfer->setPagination($paginationTransfer);
+        }
+
         return $this->getFactory()
-            ->createShipmentTypeServiceTypeQuery()
-            ->select([
-                SpyShipmentTypeServiceTypeTableMap::COL_FK_SHIPMENT_TYPE,
-                SpyShipmentTypeServiceTypeTableMap::COL_FK_SERVICE_TYPE,
-            ])
-            ->filterByFkShipmentType_In($shipmentTypeIds)
-            ->find()
-            ->toKeyValue(SpyShipmentTypeServiceTypeTableMap::COL_FK_SHIPMENT_TYPE, SpyShipmentTypeServiceTypeTableMap::COL_FK_SERVICE_TYPE);
+            ->createShipmentTypeServicePointMapper()
+            ->mapShipmentTypeServiceTypeEntitiesToShipmentTypeServiceTypeCollectionTransfer(
+                $shipmentTypeServiceTypeQuery->find(),
+                $shipmentTypeServiceTypeCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+     *
+     * @return \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery
+     */
+    protected function applyShipmentTypeServiceTypeFilters(
+        SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery,
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): SpyShipmentTypeServiceTypeQuery {
+        $shipmentTypeServiceTypeConditionsTransfer = $shipmentTypeServiceTypeCriteriaTransfer->getShipmentTypeServiceTypeConditions();
+        if ($shipmentTypeServiceTypeConditionsTransfer === null) {
+            return $shipmentTypeServiceTypeQuery;
+        }
+
+        if ($shipmentTypeServiceTypeConditionsTransfer->getShipmentTypeIds() !== []) {
+            $shipmentTypeServiceTypeQuery->filterByFkShipmentType_In($shipmentTypeServiceTypeConditionsTransfer->getShipmentTypeIds());
+        }
+
+        return $shipmentTypeServiceTypeQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+     *
+     * @return \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery
+     */
+    protected function applyShipmentTypeServiceTypeSorting(
+        SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery,
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): SpyShipmentTypeServiceTypeQuery {
+        $sortTransfers = $shipmentTypeServiceTypeCriteriaTransfer->getSortCollection();
+        foreach ($sortTransfers as $sortTransfer) {
+            $shipmentTypeServiceTypeQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $shipmentTypeServiceTypeQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyShipmentTypeServiceTypePagination(
+        SpyShipmentTypeServiceTypeQuery $shipmentTypeServiceTypeQuery,
+        PaginationTransfer $paginationTransfer
+    ): ModelCriteria {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($shipmentTypeServiceTypeQuery->count());
+
+            $shipmentTypeServiceTypeQuery
+                ->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail());
+
+            return $shipmentTypeServiceTypeQuery;
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage() !== null) {
+            $paginationModel = $shipmentTypeServiceTypeQuery->paginate(
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
+            );
+
+            $paginationTransfer
+                ->setNbResults($paginationModel->getNbResults())
+                ->setFirstIndex($paginationModel->getFirstIndex())
+                ->setLastIndex($paginationModel->getLastIndex())
+                ->setFirstPage($paginationModel->getFirstPage())
+                ->setLastPage($paginationModel->getLastPage())
+                ->setNextPage($paginationModel->getNextPage())
+                ->setPreviousPage($paginationModel->getPreviousPage());
+
+            return $paginationModel->getQuery();
+        }
+
+        return $shipmentTypeServiceTypeQuery;
     }
 }

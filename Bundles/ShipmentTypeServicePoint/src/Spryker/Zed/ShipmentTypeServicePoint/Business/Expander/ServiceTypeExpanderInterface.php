@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePoint\Business\Expander;
 
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
+
 interface ServiceTypeExpanderInterface
 {
     /**
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function expandShipmentTypeStoragesWithServiceType(array $shipmentTypeStorageTransfers): array;
+    public function expandShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer;
 }

@@ -1,6 +1,19 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeServiceTypeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeServicePoint/src/Spryker/Zed/ShipmentTypeServicePoint/Business/Reader/ShipmentTypeServiceTypeReader.php",
+            "snippet": "        if ($shipmentTypeServiceTypeCollectionTransfer->getShipmentTypeServiceTypes()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 1
 }

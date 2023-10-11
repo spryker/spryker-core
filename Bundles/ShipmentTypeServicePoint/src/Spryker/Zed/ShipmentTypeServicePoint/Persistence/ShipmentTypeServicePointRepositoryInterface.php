@@ -7,12 +7,17 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePoint\Persistence;
 
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer;
+
 interface ShipmentTypeServicePointRepositoryInterface
 {
     /**
-     * @param list<int> $shipmentTypeIds
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
      *
-     * @return array<int, int>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function getServiceTypeIdsIndexedByIdShipmentType(array $shipmentTypeIds): array;
+    public function getShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer;
 }

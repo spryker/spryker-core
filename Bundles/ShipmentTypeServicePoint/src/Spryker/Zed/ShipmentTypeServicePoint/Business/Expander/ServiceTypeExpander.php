@@ -9,61 +9,65 @@ namespace Spryker\Zed\ShipmentTypeServicePoint\Business\Expander;
 
 use Generated\Shared\Transfer\ServiceTypeConditionsTransfer;
 use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
-use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
 use Spryker\Zed\ShipmentTypeServicePoint\Dependency\Facade\ShipmentTypeServicePointToServicePointFacadeInterface;
-use Spryker\Zed\ShipmentTypeServicePoint\Persistence\ShipmentTypeServicePointRepositoryInterface;
 
 class ServiceTypeExpander implements ServiceTypeExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ShipmentTypeServicePoint\Persistence\ShipmentTypeServicePointRepositoryInterface
-     */
-    protected ShipmentTypeServicePointRepositoryInterface $shipmentTypeServicePointRepository;
-
     /**
      * @var \Spryker\Zed\ShipmentTypeServicePoint\Dependency\Facade\ShipmentTypeServicePointToServicePointFacadeInterface
      */
     protected ShipmentTypeServicePointToServicePointFacadeInterface $servicePointFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentTypeServicePoint\Persistence\ShipmentTypeServicePointRepositoryInterface $shipmentTypeServicePointRepository
      * @param \Spryker\Zed\ShipmentTypeServicePoint\Dependency\Facade\ShipmentTypeServicePointToServicePointFacadeInterface $servicePointFacade
      */
-    public function __construct(
-        ShipmentTypeServicePointRepositoryInterface $shipmentTypeServicePointRepository,
-        ShipmentTypeServicePointToServicePointFacadeInterface $servicePointFacade
-    ) {
-        $this->shipmentTypeServicePointRepository = $shipmentTypeServicePointRepository;
+    public function __construct(ShipmentTypeServicePointToServicePointFacadeInterface $servicePointFacade)
+    {
         $this->servicePointFacade = $servicePointFacade;
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function expandShipmentTypeStoragesWithServiceType(array $shipmentTypeStorageTransfers): array
-    {
-        $shipmentTypeIds = $this->extractShipmentTypeIds($shipmentTypeStorageTransfers);
-        $serviceTypeIdsIndexedByIdShipmentType = $this->shipmentTypeServicePointRepository->getServiceTypeIdsIndexedByIdShipmentType($shipmentTypeIds);
+    public function expandShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer {
+        $serviceTypeIds = $this->extractServiceTypeIds($shipmentTypeServiceTypeCollectionTransfer);
+        $serviceTypeTransfersIndexedByIdServiceType = $this->getServiceTypesIndexedByIdServiceType($serviceTypeIds);
 
-        if (!$serviceTypeIdsIndexedByIdShipmentType) {
-            return $shipmentTypeStorageTransfers;
+        foreach ($shipmentTypeServiceTypeCollectionTransfer->getShipmentTypeServiceTypes() as $shipmentTypeServiceTypeTransfer) {
+            $idServiceType = $shipmentTypeServiceTypeTransfer->getServiceTypeOrFail()->getIdServiceTypeOrFail();
+            $serviceTypeTransfer = $serviceTypeTransfersIndexedByIdServiceType[$idServiceType] ?? null;
+            if (!$serviceTypeTransfer) {
+                continue;
+            }
+
+            $shipmentTypeServiceTypeTransfer->setServiceType($serviceTypeTransfer);
         }
 
-        $serviceTypeTransfersIndexedByIdServiceType = $this->getServiceTypesIndexedByIdServiceType(
-            array_unique(array_values($serviceTypeIdsIndexedByIdShipmentType)),
-        );
-
-        return $this->expandShipmentTypeStorages(
-            $shipmentTypeStorageTransfers,
-            $serviceTypeIdsIndexedByIdShipmentType,
-            $serviceTypeTransfersIndexedByIdServiceType,
-        );
+        return $shipmentTypeServiceTypeCollectionTransfer;
     }
 
     /**
-     * @param list<int> $serviceTypeIds
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer
+     *
+     * @return array<int, int>
+     */
+    protected function extractServiceTypeIds(ShipmentTypeServiceTypeCollectionTransfer $shipmentTypeServiceTypeCollectionTransfer): array
+    {
+        $serviceTypeIds = [];
+        foreach ($shipmentTypeServiceTypeCollectionTransfer->getShipmentTypeServiceTypes() as $shipmentTypeServiceTypeTransfer) {
+            $serviceTypeIds[] = $shipmentTypeServiceTypeTransfer->getServiceTypeOrFail()->getIdServiceTypeOrFail();
+        }
+
+        return array_unique($serviceTypeIds);
+    }
+
+    /**
+     * @param array<int, int> $serviceTypeIds
      *
      * @return array<int, \Generated\Shared\Transfer\ServiceTypeTransfer>
      */
@@ -80,52 +84,5 @@ class ServiceTypeExpander implements ServiceTypeExpanderInterface
         }
 
         return $indexedServiceTypes;
-    }
-
-    /**
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
-     *
-     * @return list<int>
-     */
-    protected function extractShipmentTypeIds(array $shipmentTypeStorageTransfers): array
-    {
-        $shipmentTypeIds = [];
-
-        foreach ($shipmentTypeStorageTransfers as $shipmentTypeStorageTransfer) {
-            $shipmentTypeIds[] = $shipmentTypeStorageTransfer->getIdShipmentTypeOrFail();
-        }
-
-        return $shipmentTypeIds;
-    }
-
-    /**
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
-     * @param array<int, int> $serviceTypeIdsIndexedByIdShipmentType
-     * @param array<int, \Generated\Shared\Transfer\ServiceTypeTransfer> $serviceTypeTransfersIndexedByIdServiceType
-     *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
-     */
-    public function expandShipmentTypeStorages(
-        array $shipmentTypeStorageTransfers,
-        array $serviceTypeIdsIndexedByIdShipmentType,
-        array $serviceTypeTransfersIndexedByIdServiceType
-    ): array {
-        foreach ($shipmentTypeStorageTransfers as $shipmentTypeStorageTransfer) {
-            $idServiceType = $serviceTypeIdsIndexedByIdShipmentType[$shipmentTypeStorageTransfer->getIdShipmentTypeOrFail()] ?? null;
-            if (!$idServiceType) {
-                continue;
-            }
-
-            $serviceTypeTransfer = $serviceTypeTransfersIndexedByIdServiceType[$idServiceType] ?? null;
-            if (!$serviceTypeTransfer) {
-                continue;
-            }
-
-            $shipmentTypeStorageTransfer->setServiceType(
-                (new ServiceTypeStorageTransfer())->setUuid($serviceTypeTransfer->getUuidOrFail()),
-            );
-        }
-
-        return $shipmentTypeStorageTransfers;
     }
 }

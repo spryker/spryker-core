@@ -18,7 +18,7 @@
         "spryker/service-point": "^0.4.5",
         "spryker/service-point-cart-extension": "^0.1.0",
         "spryker/shipment-type": "^0.1.5",
-        "spryker/shipment-type-service-point": "^0.3.0",
+        "spryker/shipment-type-service-point": "^0.4.0",
         "spryker/shipment-type-storage-extension": "^0.1.0",
         "spryker/store": "^1.19.0",
         "spryker/transfer": "^3.27.0"

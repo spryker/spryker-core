@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShipmentTypeServiceTypeCriteria" strict="true">
+        <property name="shipmentTypeServiceTypeConditions" type="ShipmentTypeServiceTypeConditions"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCollection" strict="true">
+        <property name="serviceTypeStorages" type="ServiceTypeStorage[]" singular="serviceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorage" strict="true">
+        <property name="serviceType" type="ServiceTypeStorage"/>
+        <property name="idShipmentType" type="int"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeStorageCollection" strict="true">
+        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorageCriteria" strict="true">
+        <property name="serviceTypeStorageConditions" type="ServiceTypeStorageConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeServiceTypeCollection" strict="true">
+        <property name="shipmentTypeServiceTypes" type="ShipmentTypeServiceType[]" singular="shipmentTypeServiceType"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeServiceType" strict="true">
+        <property name="shipmentType" type="ShipmentType"/>
+        <property name="serviceType" type="ServiceType"/>
+    </transfer>
+
+    <transfer name="ShipmentTypeServiceTypeConditions" strict="true">
+        <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
+        <property name="withServiceTypeRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="ShipmentType" strict="true">
+        <property name="idShipmentType" type="int"/>
+    </transfer>
+
+    <transfer name="ServiceType" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+</transfers>

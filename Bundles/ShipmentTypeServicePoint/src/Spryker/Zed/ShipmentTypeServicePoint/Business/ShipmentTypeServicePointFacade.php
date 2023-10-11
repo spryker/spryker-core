@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePoint\Business;
 
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,14 +22,15 @@ class ShipmentTypeServicePointFacade extends AbstractFacade implements ShipmentT
      *
      * @api
      *
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function expandShipmentTypeStoragesWithServiceType(array $shipmentTypeStorageTransfers): array
-    {
+    public function getShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer {
         return $this->getFactory()
-            ->createServiceTypeExpander()
-            ->expandShipmentTypeStoragesWithServiceType($shipmentTypeStorageTransfers);
+            ->createShipmentTypeServiceTypeReader()
+            ->getShipmentTypeServiceTypeCollection($shipmentTypeServiceTypeCriteriaTransfer);
     }
 }

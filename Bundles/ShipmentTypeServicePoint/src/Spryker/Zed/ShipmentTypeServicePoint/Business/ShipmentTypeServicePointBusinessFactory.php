@@ -10,6 +10,8 @@ namespace Spryker\Zed\ShipmentTypeServicePoint\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentTypeServicePoint\Business\Expander\ServiceTypeExpander;
 use Spryker\Zed\ShipmentTypeServicePoint\Business\Expander\ServiceTypeExpanderInterface;
+use Spryker\Zed\ShipmentTypeServicePoint\Business\Reader\ShipmentTypeServiceTypeReader;
+use Spryker\Zed\ShipmentTypeServicePoint\Business\Reader\ShipmentTypeServiceTypeReaderInterface;
 use Spryker\Zed\ShipmentTypeServicePoint\Dependency\Facade\ShipmentTypeServicePointToServicePointFacadeInterface;
 use Spryker\Zed\ShipmentTypeServicePoint\ShipmentTypeServicePointDependencyProvider;
 
@@ -20,14 +22,22 @@ use Spryker\Zed\ShipmentTypeServicePoint\ShipmentTypeServicePointDependencyProvi
 class ShipmentTypeServicePointBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \Spryker\Zed\ShipmentTypeServicePoint\Business\Reader\ShipmentTypeServiceTypeReaderInterface
+     */
+    public function createShipmentTypeServiceTypeReader(): ShipmentTypeServiceTypeReaderInterface
+    {
+        return new ShipmentTypeServiceTypeReader(
+            $this->getRepository(),
+            $this->createServiceTypeExpander(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ShipmentTypeServicePoint\Business\Expander\ServiceTypeExpanderInterface
      */
     public function createServiceTypeExpander(): ServiceTypeExpanderInterface
     {
-        return new ServiceTypeExpander(
-            $this->getRepository(),
-            $this->getServicePointFacade(),
-        );
+        return new ServiceTypeExpander($this->getServicePointFacade());
     }
 
     /**

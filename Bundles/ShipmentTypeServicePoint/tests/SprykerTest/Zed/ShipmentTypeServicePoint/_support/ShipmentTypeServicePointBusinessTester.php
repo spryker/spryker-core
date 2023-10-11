@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShipmentTypeServicePoint;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery;
 
 /**
@@ -38,6 +39,19 @@ class ShipmentTypeServicePointBusinessTester extends Actor
     public function ensureShipmentTypeServiceTypeTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getShipmentTypeServiceTypeQuery());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     * @param list<\Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     *
+     * @return void
+     */
+    public function createShipmentTypesServiceTypeRelations(ServiceTypeTransfer $serviceTypeTransfer, array $shipmentTypeTransfers): void
+    {
+        foreach ($shipmentTypeTransfers as $shipmentTypeTransfer) {
+            $this->haveShipmentTypeServiceTypeRelation($shipmentTypeTransfer, $serviceTypeTransfer);
+        }
     }
 
     /**

@@ -1,6 +1,5 @@
 namespace: ShipmentTypeServicePoint
 include:
-    - tests/SprykerTest/Client/ShipmentTypeServicePoint
     - tests/SprykerTest/Zed/ShipmentTypeServicePoint
 paths:
     tests: tests/

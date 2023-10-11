@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\ShipmentTypeServicePointStorage\\Expander\\ServiceTypeExpander::extractServiceTypeUuids expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeStorageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeServicePointStorage/src/Spryker/Client/ShipmentTypeServicePointStorage/Expander/ServiceTypeExpander.php",
+            "snippet": "        $serviceTypeUuids = $this->extractServiceTypeUuids($shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages());",
+            "selected_text": "$shipmentTypeStorageCollectionTransfer->getShipmentTypeStorages()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\ShipmentTypeServicePointStorage\\Expander\\ServiceTypeExpander::getServiceTypeStorageTransfersIndexedByUuid expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ServiceTypeStorageTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ServiceTypeStorageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeServicePointStorage/src/Spryker/Client/ShipmentTypeServicePointStorage/Expander/ServiceTypeExpander.php",
+            "snippet": "            $serviceTypeStorageCollectionTransfer->getServiceTypeStorages(),",
+            "selected_text": "$serviceTypeStorageCollectionTransfer->getServiceTypeStorages()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentTypeServicePointStorage\\Business\\Expander\\ServiceTypeExpander::getServiceTypeUuidsIndexedByIdShipmentType expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ShipmentTypeServiceTypeTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentTypeServiceTypeTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentTypeServicePointStorage/src/Spryker/Zed/ShipmentTypeServicePointStorage/Business/Expander/ServiceTypeExpander.php",
+            "snippet": "            $shipmentTypeServiceTypeCollectionTransfer->getShipmentTypeServiceTypes(),",
+            "selected_text": "$shipmentTypeServiceTypeCollectionTransfer->getShipmentTypeServiceTypes()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": [],
+    "count": 3
+}

@@ -7,21 +7,29 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePoint\Business;
 
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer;
+
 interface ShipmentTypeServicePointFacadeInterface
 {
     /**
      * Specification:
-     * - Requires `ShipmentTypeStorageTransfer.idShipmentType` to be set.
-     * - Retrieves service type IDs from Persistence by provided shipment type IDs.
-     * - Retrieves service types.
-     * - Maps related `ServiceType.uuid` to `ShipmentTypeStorageTransfer.serviceType.uuid`.
-     * - Returns expanded list of `ShipmentTypeStorageTransfer` objects with service type.
+     * - Retrieves shipment type service type entities filtered by criteria from Persistence.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.shipmentTypeServiceTypeConditions.shipmentTypeIds` to filter by shipment type IDs.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.shipmentTypeServiceTypeConditions.withServiceTypeRelations` to expand `ShipmentTypeServiceTypeTransfers` with service type data.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `ShipmentTypeServiceTypeCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `ShipmentTypeServiceTypeCollectionTransfer` filled with found shipment type service types.
      *
      * @api
      *
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     * @return \Generated\Shared\Transfer\ShipmentTypeServiceTypeCollectionTransfer
      */
-    public function expandShipmentTypeStoragesWithServiceType(array $shipmentTypeStorageTransfers): array;
+    public function getShipmentTypeServiceTypeCollection(
+        ShipmentTypeServiceTypeCriteriaTransfer $shipmentTypeServiceTypeCriteriaTransfer
+    ): ShipmentTypeServiceTypeCollectionTransfer;
 }

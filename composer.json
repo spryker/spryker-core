@@ -924,6 +924,7 @@
         "spryker/shipment-type-product-offer-service-point-availabilities-rest-api": "*",
         "spryker/shipment-type-service-point": "*",
         "spryker/shipment-type-service-point-data-import": "*",
+        "spryker/shipment-type-service-point-storage": "*",
         "spryker/shipment-type-storage": "*",
         "spryker/shipment-type-storage-extension": "*",
         "spryker/shipment-types-backend-api": "*",
