@@ -7,30 +7,31 @@
 
 namespace Spryker\Glue\GlueBackendApiApplication\Language;
 
-use Negotiation\AcceptLanguage;
-use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface;
+use Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface;
 
 class LanguageNegotiation implements LanguageNegotiationInterface
 {
     /**
      * @var \Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected GlueBackendApiApplicationToStoreFacadeInterface $storeFacade;
 
     /**
-     * @var \Negotiation\LanguageNegotiator
+     * @var \Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface
      */
-    protected $negotiator;
+    protected GlueBackendApiApplicationToLocaleServiceInterface $localeService;
 
     /**
      * @param \Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface $storeFacade
-     * @param \Negotiation\LanguageNegotiator $negotiator
+     * @param \Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface $localeService
      */
-    public function __construct(GlueBackendApiApplicationToStoreFacadeInterface $storeFacade, LanguageNegotiator $negotiator)
-    {
+    public function __construct(
+        GlueBackendApiApplicationToStoreFacadeInterface $storeFacade,
+        GlueBackendApiApplicationToLocaleServiceInterface $localeService
+    ) {
         $this->storeFacade = $storeFacade;
-        $this->negotiator = $negotiator;
+        $this->localeService = $localeService;
     }
 
     /**
@@ -47,25 +48,16 @@ class LanguageNegotiation implements LanguageNegotiationInterface
             return array_shift($storeLocaleCodes);
         }
 
-        $language = $this->findAcceptedLanguage($acceptLanguage, $storeLocaleCodes);
-        if (!$language) {
+        $acceptLanguageTransfer = $this->localeService->getAcceptLanguage($acceptLanguage, array_keys($storeLocaleCodes));
+
+        if (!$acceptLanguageTransfer || $acceptLanguageTransfer->getType() === null) {
             return array_shift($storeLocaleCodes);
         }
 
-        return $storeLocaleCodes[$language->getType()];
-    }
+        if (!isset($storeLocaleCodes[$acceptLanguageTransfer->getType()])) {
+            return array_shift($storeLocaleCodes);
+        }
 
-    /**
-     * @param string $acceptLanguage
-     * @param array<string, string> $storeLocaleCodes
-     *
-     * @return \Negotiation\AcceptLanguage|null
-     */
-    protected function findAcceptedLanguage(string $acceptLanguage, array $storeLocaleCodes): ?AcceptLanguage
-    {
-        /** @var \Negotiation\AcceptLanguage $acceptedLanguage */
-        $acceptedLanguage = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
-
-        return $acceptedLanguage;
+        return $storeLocaleCodes[$acceptLanguageTransfer->getType()];
     }
 }

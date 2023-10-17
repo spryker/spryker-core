@@ -9,8 +9,9 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Language;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
-use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
+use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceBridge;
+use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
 
@@ -88,7 +89,7 @@ class LanguageNegotiationTest extends Unit
      */
     protected function createLanguageNegotiation(): LanguageNegotiationInterface
     {
-        return new LanguageNegotiation($this->createStoreClientMock(), $this->createLanguageNegotiator());
+        return new LanguageNegotiation($this->createStoreClientMock(), $this->createLocaleServiceMock());
     }
 
     /**
@@ -111,11 +112,13 @@ class LanguageNegotiationTest extends Unit
     }
 
     /**
-     * @return \Negotiation\LanguageNegotiator
+     * @return \Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface
      */
-    protected function createLanguageNegotiator(): LanguageNegotiator
+    protected function createLocaleServiceMock(): GlueApplicationToLocaleServiceInterface
     {
-        return new LanguageNegotiator();
+        return new GlueApplicationToLocaleServiceBridge(
+            $this->tester->getLocator()->locale()->service(),
+        );
     }
 
     /**

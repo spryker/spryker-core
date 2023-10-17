@@ -389,6 +389,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Twig_' => 'spryker/twig',
             'Twig\\' => 'spryker/twig',
             'Webmozart\\Glob' => 'spryker/util-glob',
+            'Willdurand\\Negotiation\\' => 'spryker/willdurand-negotiation',
             'Zend\\' => 'spryker/zend',
         ];
     }
@@ -462,6 +463,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'swiftmailer/swiftmailer' => 'spryker/mail',
             'twig/twig' => 'spryker/twig',
             'webmozart/glob' => 'spryker/util-glob',
+            'willdurand/negotiation' => 'spryker/willdurand-negotiation',
             'zendframework/zend-config' => 'spryker/zend',
             'zendframework/zend-filter' => 'spryker/zend',
             'zendframework/zend-servicemanager' => 'spryker/zend',

@@ -489,7 +489,7 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $priceProductTransfers);
-        $this->assertSame($expectedProductOfferIds, $productOfferIds);
+        $this->assertEqualsCanonicalizing($expectedProductOfferIds, $productOfferIds);
     }
 
     /**

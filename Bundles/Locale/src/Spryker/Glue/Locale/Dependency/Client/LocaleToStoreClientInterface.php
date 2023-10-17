@@ -7,17 +7,10 @@
 
 namespace Spryker\Glue\Locale\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface LocaleToStoreClientInterface
 {
     /**
      * @return bool
      */
     public function isDynamicStoreEnabled(): bool;
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer;
 }

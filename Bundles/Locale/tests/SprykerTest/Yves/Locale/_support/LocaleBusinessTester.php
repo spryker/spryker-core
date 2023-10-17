@@ -21,7 +21,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Yves\Locale\PHPMD)
  */
 class LocaleBusinessTester extends Actor
 {

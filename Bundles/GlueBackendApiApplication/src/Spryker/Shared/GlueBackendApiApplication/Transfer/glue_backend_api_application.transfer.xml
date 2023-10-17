@@ -95,4 +95,8 @@
         <property name="apiApplication" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>
     </transfer>
+
+    <transfer name="AcceptLanguage" strict="true">
+        <property name="type" type="string"/>
+    </transfer>
 </transfers>

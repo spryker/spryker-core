@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\Locale\Plugin\Application;
 
-use Exception;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
@@ -42,6 +41,11 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
 
     /**
      * {@inheritDoc}
+     * - Negotiates and provides application language ISO code.
+     * - Sets the negotiated language ISO code to the container based on `Accept-Language` header.
+     * - If the `Accept-Language` header is either empty or invalid, then language ISO code of the current store is used.
+     * - If dynamic store is enabled, the store default language ISO code is used, otherwise the first of available store ISO codes.
+     * - Throws exception {@link \Exception} while current store has no locale codes defined.
      *
      * @api
      *
@@ -64,55 +68,34 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected function addLocale(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container) {
-            $localeName = $this->getLocale($container);
-            $this->setStoreCurrentLocale($localeName);
-            ApplicationEnvironment::initializeLocale($localeName);
+            $acceptLanguageHeader = $this->getAcceptLanguageHeader($container);
+            $locale = $this->getFactory()
+                ->createLanguageNegotiator()
+                ->getLanguageIsoCode($acceptLanguageHeader);
 
-            return $localeName;
+            $this->setStoreCurrentLocale($locale);
+            ApplicationEnvironment::initializeLocale($locale);
+
+            return $locale;
         });
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
-    protected function getLocale(ContainerInterface $container): string
-    {
-        $acceptLanguage = $this->getAcceptLanguageHeader($container);
-
-        $allowedLocaleNames = $this->getClient()->getLocales();
-
-        if ($allowedLocaleNames === []) {
-            throw new Exception('Allowed locale names are missed');
-        }
-
-        if (!$acceptLanguage || !array_key_exists($acceptLanguage, $allowedLocaleNames)) {
-            /** @phpstan-var string */
-            return array_shift($allowedLocaleNames);
-        }
-
-        return $allowedLocaleNames[$acceptLanguage];
-    }
-
-    /**
      * @deprecated Will be removed after dynamic multi-store is always enabled.
      *
-     * @param string $localeName
+     * @param string $locale
      *
      * @return void
      */
-    protected function setStoreCurrentLocale(string $localeName): void
+    protected function setStoreCurrentLocale(string $locale): void
     {
         if ($this->getFactory()->getStoreClient()->isDynamicStoreEnabled()) {
             return;
         }
 
-        Store::getInstance()->setCurrentLocale($localeName);
+        Store::getInstance()->setCurrentLocale($locale);
     }
 
     /**

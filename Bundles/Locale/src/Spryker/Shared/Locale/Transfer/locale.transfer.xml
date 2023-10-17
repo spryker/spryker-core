@@ -51,4 +51,8 @@
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
     </transfer>
+
+    <transfer name="AcceptLanguage" strict="true">
+        <property name="type" type="string"/>
+    </transfer>
 </transfers>

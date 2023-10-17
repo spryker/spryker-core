@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\GlueStorefrontApiApplication;
 
-use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication;
 use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollector;
 use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface;
@@ -15,6 +14,7 @@ use Spryker\Glue\GlueStorefrontApiApplication\Collector\StorefrontScopeCollector
 use Spryker\Glue\GlueStorefrontApiApplication\Collector\StorefrontScopeCollectorInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapterInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Service\GlueStorefrontApiApplicationToLocaleServiceInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\ContextExpanderInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\CustomRoutesContextExpander;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\ResourcesContextExpander;
@@ -84,15 +84,7 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
      */
     public function createLanguageNegotiation(): LanguageNegotiationInterface
     {
-        return new LanguageNegotiation($this->getStoreClient(), $this->createLanguageNegotiator());
-    }
-
-    /**
-     * @return \Negotiation\LanguageNegotiator
-     */
-    public function createLanguageNegotiator(): LanguageNegotiator
-    {
-        return new LanguageNegotiator();
+        return new LanguageNegotiation($this->getStoreClient(), $this->getLocaleService());
     }
 
     /**
@@ -239,5 +231,13 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     public function createResourceRouteBuilder(): ResourceRouteBuilderInterface
     {
         return new ResourceRouteBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Dependency\Service\GlueStorefrontApiApplicationToLocaleServiceInterface
+     */
+    public function getLocaleService(): GlueStorefrontApiApplicationToLocaleServiceInterface
+    {
+        return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::SERVICE_LOCALE);
     }
 }

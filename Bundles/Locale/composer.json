@@ -13,7 +13,8 @@
         "spryker/propel-orm": "^1.8.0",
         "spryker/store": "^1.19.0",
         "spryker/store-extension": "^1.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/willdurand-negotiation": "^1.0.0",
         "spryker/zed-request-extension": "^1.1.0"
     },
     "require-dev": {

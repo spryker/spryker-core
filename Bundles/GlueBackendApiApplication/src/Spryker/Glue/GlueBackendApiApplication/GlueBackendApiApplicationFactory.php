@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\GlueBackendApiApplication;
 
-use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication;
 use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollector;
 use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollectorInterface;
@@ -15,6 +14,7 @@ use Spryker\Glue\GlueBackendApiApplication\Collector\BackendScopeCollector;
 use Spryker\Glue\GlueBackendApiApplication\Collector\BackendScopeCollectorInterface;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\External\GlueBackendApiApplicationToYamlAdapterInterface;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface;
+use Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface;
 use Spryker\Glue\GlueBackendApiApplication\Expander\ContextExpanderInterface;
 use Spryker\Glue\GlueBackendApiApplication\Expander\CustomRoutesContextExpander;
 use Spryker\Glue\GlueBackendApiApplication\Expander\ResourcesContextExpander;
@@ -84,7 +84,10 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
      */
     public function createLanguageNegotiation(): LanguageNegotiationInterface
     {
-        return new LanguageNegotiation($this->getStoreFacade(), $this->createLanguageNegotiator());
+        return new LanguageNegotiation(
+            $this->getStoreFacade(),
+            $this->getLocaleService(),
+        );
     }
 
     /**
@@ -93,14 +96,6 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
     public function getStoreFacade(): GlueBackendApiApplicationToStoreFacadeInterface
     {
         return $this->getProvidedDependency(GlueBackendApiApplicationDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Negotiation\LanguageNegotiator
-     */
-    public function createLanguageNegotiator(): LanguageNegotiator
-    {
-        return new LanguageNegotiator();
     }
 
     /**
@@ -239,5 +234,13 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
     public function createResourceRouteBuilder(): ResourceRouteBuilderInterface
     {
         return new ResourceRouteBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface
+     */
+    public function getLocaleService(): GlueBackendApiApplicationToLocaleServiceInterface
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationDependencyProvider::SERVICE_LOCALE);
     }
 }

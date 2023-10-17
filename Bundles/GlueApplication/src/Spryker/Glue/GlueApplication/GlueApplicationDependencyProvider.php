@@ -10,6 +10,7 @@ namespace Spryker\Glue\GlueApplication;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToInflectorAdapter;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemAdapter;
+use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceBridge;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\FallbackStorefrontApiGlueApplicationBootstrapPlugin;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
@@ -239,6 +240,11 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const INFLECTOR = 'INFLECTOR';
 
     /**
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'SERVICE_LOCALE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -283,6 +289,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRequestValidatorPlugins($container);
         $container = $this->addRequestAfterRoutingValidatorPlugins($container);
         $container = $this->addResponseFormatterPlugins($container);
+
+        $container = $this->addLocaleService($container);
 
         return $container;
     }
@@ -1115,6 +1123,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::INFLECTOR, function () {
             return new GlueApplicationToInflectorAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addLocaleService(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return new GlueApplicationToLocaleServiceBridge($container->getLocator()->locale()->service());
         });
 
         return $container;

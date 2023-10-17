@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication;
 
-use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolver;
 use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolverInterface;
 use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
@@ -31,6 +30,7 @@ use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToInflectorInterface;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface;
+use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Descriptor\TextDescriptor;
 use Spryker\Glue\GlueApplication\Encoder\Response\JsonResponseEncoderStrategy;
@@ -440,17 +440,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createLanguageNegotiation(): LanguageNegotiationInterface
     {
-        return new LanguageNegotiation($this->getStoreClient(), $this->createNegotiator());
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return \Negotiation\LanguageNegotiator
-     */
-    public function createNegotiator(): LanguageNegotiator
-    {
-        return new LanguageNegotiator();
+        return new LanguageNegotiation($this->getStoreClient(), $this->getLocaleService());
     }
 
     /**
@@ -1301,5 +1291,13 @@ class GlueApplicationFactory extends AbstractFactory
     public function createFilterRequestValidator(): RequestRequestValidatorInterface
     {
         return new FilterRequestValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface
+     */
+    public function getLocaleService(): GlueApplicationToLocaleServiceInterface
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::SERVICE_LOCALE);
     }
 }

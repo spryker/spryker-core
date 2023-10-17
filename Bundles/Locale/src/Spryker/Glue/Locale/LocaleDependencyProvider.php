@@ -22,6 +22,11 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'SERVICE_LOCALE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -31,6 +36,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
 
         $container = $this->addStoreClient($container);
+        $container = $this->addLocaleService($container);
 
         return $container;
     }
@@ -46,6 +52,20 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
             return new LocaleToStoreClientBridge(
                 $container->getLocator()->store()->client(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addLocaleService(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return $container->getLocator()->locale()->service();
         });
 
         return $container;

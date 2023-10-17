@@ -9,6 +9,7 @@ namespace Spryker\Glue\GlueStorefrontApiApplication;
 
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientBridge;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapter;
+use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Service\GlueStorefrontApiApplicationToLocaleServiceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -63,6 +64,11 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     public const ADAPTER_YAML = 'ADAPTER_YAML';
 
     /**
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'SERVICE_LOCALE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -79,6 +85,7 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
         $container = $this->addStoreClient($container);
         $container = $this->addRouteProviderPlugins($container);
         $container = $this->addYamlAdapter($container);
+        $container = $this->addLocaleService($container);
 
         return $container;
     }
@@ -260,6 +267,20 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::ADAPTER_YAML, function () {
             return new GlueStorefrontApiApplicationToYamlAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addLocaleService(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (Container $container) {
+            return new GlueStorefrontApiApplicationToLocaleServiceBridge($container->getLocator()->locale()->service());
         });
 
         return $container;
