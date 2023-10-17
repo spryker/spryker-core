@@ -10,9 +10,11 @@ namespace SprykerTest\Client\Payment;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
+use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\StreamInterface;
 use Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface;
 use Spryker\Client\Payment\PaymentDependencyProvider;
+use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyHttpResponse;
 
 /**
@@ -86,6 +88,39 @@ class PaymentClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAuthorizePaymentReturnsCorrectResponseWhenPaymentAuthorizeRequestTransferHasTenantIdentifier(): void
+    {
+        // Arrange
+        $httpClientMock = $this->getHttpClientMock();
+        $responseMock = $this->getResponseMock('successful_request.json', SymfonyHttpResponse::HTTP_OK);
+        $paymentAuthorizeRequestTransfer = $this->getPaymentAuthorizeRequestTransfer();
+
+        $httpClientMock
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                SymfonyHttpRequest::METHOD_POST,
+                $paymentAuthorizeRequestTransfer->getRequestUrl(),
+                [
+                    RequestOptions::FORM_PARAMS => $paymentAuthorizeRequestTransfer->getPostData(),
+                    RequestOptions::HEADERS => [
+                        'X-Tenant-Identifier' => $paymentAuthorizeRequestTransfer->getTenantIdentifier(),
+                        'X-Store-Reference' => $paymentAuthorizeRequestTransfer->getTenantIdentifier(),
+                    ],
+                ],
+            )->willReturn($responseMock);
+
+        // Act
+        $paymentAuthorizeResponseTransfer = $this->tester->getClient()
+            ->authorizeForeignPayment($paymentAuthorizeRequestTransfer);
+
+        // Assert
+        $this->assertTrue($paymentAuthorizeResponseTransfer->getIsSuccessful());
+    }
+
+    /**
      * @return \Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getHttpClientMock(): PaymentToHttpClientAdapterInterface
@@ -128,7 +163,8 @@ class PaymentClientTest extends Unit
     protected function getPaymentAuthorizeRequestTransfer(): PaymentAuthorizeRequestTransfer
     {
         return (new PaymentAuthorizeRequestTransfer())
-            ->setRequestUrl('url-value');
+            ->setRequestUrl('url-value')
+            ->setTenantIdentifier('test');
     }
 
     /**
