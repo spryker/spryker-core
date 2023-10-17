@@ -57,7 +57,7 @@ class SearchHeaderBuilder implements SearchHeaderBuilderInterface
         $headers = [
             'User-Agent' => sprintf('Spryker/%s', APPLICATION),
             'Accept-Language' => $searchQuery->getSearchQuery()->getLocaleOrFail(),
-            static::HEADER_STORE_REFERENCE => $this->storeClient->getCurrentStore()->getStoreReferenceOrFail(),
+            static::HEADER_STORE_REFERENCE => $this->storeClient->getCurrentStore()->getStoreReference() ?? $this->searchHttpConfig->getTenantIdentifier(),
             static::HEADER_TENANT_IDENTIFIER => $this->searchHttpConfig->getTenantIdentifier(),
         ];
 

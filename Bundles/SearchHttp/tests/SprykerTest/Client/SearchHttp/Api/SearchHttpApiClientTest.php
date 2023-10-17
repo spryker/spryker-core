@@ -58,6 +58,7 @@ class SearchHttpApiClientTest extends Unit
             'url',
             static::REQUEST_HEADERS + [
                 'User-Agent' => sprintf('Spryker/%s', APPLICATION),
+                'X-Store-Reference' => $this->tester->getModuleConfig()->getTenantIdentifier(),
                 'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
             ],
         );
