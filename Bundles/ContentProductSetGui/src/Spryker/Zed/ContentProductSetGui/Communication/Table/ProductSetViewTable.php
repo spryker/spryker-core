@@ -173,7 +173,7 @@ class ProductSetViewTable extends AbstractTable
     protected function formatRow(SpyProductSet $productSetEntity): array
     {
         return [
-            static::COL_ID_PRODUCT_SET => $this->formatInt($productSetEntity->getIdProductSet()),
+            static::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
             static::COL_NAME => $productSetEntity->getVirtualColumn(static::COL_ALIAS_NAME),
             static::COL_COUNT => $this->formatInt($productSetEntity->countSpyProductAbstractSets()),
             static::COL_STATUS => $this->getStatusLabel($productSetEntity),
