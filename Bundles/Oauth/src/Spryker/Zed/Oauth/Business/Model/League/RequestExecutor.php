@@ -120,7 +120,7 @@ class RequestExecutor implements RequestExecutorInterface
      */
     public function expandOauthRequestTransfer(OauthRequestTransfer $oauthRequestTransfer): OauthRequestTransfer
     {
-        if ($oauthRequestTransfer->getClientId() && $oauthRequestTransfer->getClientSecret()) {
+        if ($oauthRequestTransfer->getClientId()) {
             return $oauthRequestTransfer;
         }
 
