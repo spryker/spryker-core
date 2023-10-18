@@ -248,7 +248,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      */
     protected function findCachedTranslation(string $keyName, string $localeName): ?string
     {
-        return static::$translationsCache[$keyName][$localeName] ?? null;
+        return static::$translationsCache[$localeName][$keyName] ?? null;
     }
 
     /**
