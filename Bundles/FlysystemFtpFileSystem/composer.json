@@ -4,8 +4,7 @@
     "description": "FlysystemFtpFileSystem module",
     "license": "proprietary",
     "require": {
-        "league/flysystem": "^2.0",
-        "league/flysystem-ftp": "^2.0.8",
+        "league/flysystem": "^2.0.8",
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/transfer": "^3.25.0"
@@ -35,6 +34,12 @@
         "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
         "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:thephpleague/flysystem.git"
+        }
+    ],
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"
