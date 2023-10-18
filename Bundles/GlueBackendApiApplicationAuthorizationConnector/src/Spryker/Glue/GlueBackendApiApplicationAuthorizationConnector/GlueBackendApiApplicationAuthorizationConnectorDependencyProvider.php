@@ -24,6 +24,11 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
     /**
      * @var string
      */
+    public const FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR = 'FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_AUTHORIZATION_REQUEST_EXPANDER = 'PLUGINS_AUTHORIZATION_REQUEST_EXPANDER';
 
     /**
@@ -35,6 +40,7 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
     {
         $container = parent::provideBackendDependencies($container);
         $container = $this->addAuthorizationFacade($container);
+        $container = $this->addGlueBackendApiApplicationAuthorizationConnectorFacade($container);
         $container = $this->addAuthorizationRequestExpanderPlugins($container);
 
         return $container;
@@ -49,6 +55,20 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
     {
         $container->set(static::FACADE_AUTHORIZATION, function (Container $container) {
             return new GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeBridge($container->getLocator()->authorization()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    protected function addGlueBackendApiApplicationAuthorizationConnectorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR, function (Container $container) {
+            return $container->getLocator()->glueBackendApiApplicationAuthorizationConnector()->facade();
         });
 
         return $container;

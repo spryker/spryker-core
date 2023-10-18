@@ -15,9 +15,10 @@ use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Faca
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\AuthorizationValidator\AuthorizationValidator;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\AuthorizationValidator\AuthorizationValidatorInterface;
 use Spryker\Glue\Kernel\Backend\AbstractFactory;
+use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface;
 
 /**
- * @method \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig getConfig()
+ * @method \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface getFacade()
  */
 class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFactory
 {
@@ -29,7 +30,7 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
         return new AuthorizationValidator(
             $this->getAuthorizationFacade(),
             $this->getConfigExtractorStrategies(),
-            $this->getConfig(),
+            $this->getGlueBackendApiApplicationAuthorizationConnectorFacade(),
             $this->getAuthorizationRequestExpanderPlugins(),
         );
     }
@@ -76,6 +77,14 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
     public function getAuthorizationFacade(): GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
     {
         return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_AUTHORIZATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
+     */
+    public function getGlueBackendApiApplicationAuthorizationConnectorFacade(): GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR);
     }
 
     /**
