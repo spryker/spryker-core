@@ -31,6 +31,8 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
 
     Communication:
         path: Communication

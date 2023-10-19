@@ -82,7 +82,7 @@ class ProductPageSearchConfig extends AbstractSharedConfig
 
     /**
      * Specification
-     * - This event will be used for spy_product_image_set_to_product_image entity creation.
+     * - This event will be used for `spy_product_image_set_to_product_image` entity creation.
      *
      * @uses \Spryker\Zed\ProductImage\Dependency\ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE
      *
@@ -91,4 +91,40 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image_set_to_product_image.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_category_store` entity creation.
+     *
+     * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_CREATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_CREATE = 'Entity.spy_category_store.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_category_store` entity changes.
+     *
+     * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_UPDATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_UPDATE = 'Entity.spy_category_store.update';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_category_store` entity deletion.
+     *
+     * @uses \Spryker\Shared\CategoryStorage\CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_DELETE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_DELETE = 'Entity.spy_category_store.delete';
 }

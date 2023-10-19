@@ -7,10 +7,19 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductCategoryStorageToStoreFacadeInterface
 {
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
+
+    /**
+     * @param bool $fallbackToDefault
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductCategoryStorageToStoreFacadeBridge implements ProductCategoryStorageToStoreFacadeInterface
 {
     /**
@@ -28,5 +30,15 @@ class ProductCategoryStorageToStoreFacadeBridge implements ProductCategoryStorag
     public function getAllStores()
     {
         return $this->storeFacade->getAllStores();
+    }
+
+    /**
+     * @param bool $fallbackToDefault
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer
+    {
+        return $this->storeFacade->getCurrentStore($fallbackToDefault);
     }
 }

@@ -15,15 +15,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use ReflectionClass;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
-use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -42,11 +38,6 @@ class ProductCategoryStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
-
-    /**
-     * @var string
-     */
-    protected const STORE_AT = 'AT';
 
     /**
      * @var int
@@ -130,107 +121,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     {
         parent::tearDown();
 
-        $this->cleanStaticProperty();
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByCategoryStoreEvents(): void
-    {
-        $this->markTestSkipped('Debugging and refactoring requires.');
-
-        // Arrange
-        $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->assignProductToCategory(
-            $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract(),
-        );
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryStoreTableMap::COL_FK_CATEGORY => $this->categoryTransfer->getIdCategory(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
-
-        // Assert
-        $this->tester->assertCount(
-            1,
-            $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG,
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByCategoryStoreEventsWithFakeIdCategory(): void
-    {
-        // Arrange
-        $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->assignProductToCategory(
-            $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract(),
-        );
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryStoreTableMap::COL_FK_CATEGORY => static::FAKE_ID_CATEGORY,
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
-
-        // Assert
-        $this->tester->assertCount(
-            0,
-            $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG,
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByCategoryStoreEventsWithTwoStoreRelations(): void
-    {
-        // Arrange
-        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
-        $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => static::STORE_AT,
-            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_DE, static::LOCALE_EN],
-        ]);
-
-        $this->tester->haveCategoryStoreRelation(
-            $this->categoryTransfer->getIdCategory(),
-            $storeTransfer->getIdStore(),
-        );
-
-        $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->assignProductToCategory(
-            $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract(),
-        );
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryStoreTableMap::COL_FK_CATEGORY => $this->categoryTransfer->getIdCategory(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
-
-        // Assert
-        $this->tester->assertCount(
-            2,
-            $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG,
-        );
+        $this->tester->cleanStaticProperty();
     }
 
     /**
@@ -930,16 +821,5 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         // Assert
         $this->assertCount($expectedCount, $productCategoryTransfers, sprintf('Exactly %d product categories should exist.', $expectedCount));
-    }
-
-    /**
-     * @return void
-     */
-    protected function cleanStaticProperty(): void
-    {
-        $reflectedClass = new ReflectionClass(ProductCategoryStorageReader::class);
-        $property = $reflectedClass->getProperty('categoryTree');
-        $property->setAccessible(true);
-        $property->setValue(null);
     }
 }

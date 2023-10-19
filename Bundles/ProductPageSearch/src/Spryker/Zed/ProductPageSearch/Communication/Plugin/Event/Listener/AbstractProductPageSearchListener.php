@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
@@ -43,21 +44,39 @@ class AbstractProductPageSearchListener extends AbstractPlugin
     }
 
     /**
-     * @param array $categoryIds
+     * @param list<int> $categoryIds
      *
-     * @return array
+     * @return list<int>
      */
-    protected function getRelatedCategoryIds(array $categoryIds)
+    protected function getRelatedCategoryIds(array $categoryIds): array
     {
-        $relatedCategoryIds = [];
-        foreach ($categoryIds as $categoryId) {
-            $categoryNodes = $this->getFactory()->getCategoryFacade()->getAllNodesByIdCategory($categoryId);
-            foreach ($categoryNodes as $categoryNode) {
-                $result = $this->getQueryContainer()->queryAllCategoryIdsByNodeId($categoryNode->getIdCategoryNode())->find()->getData();
-                $relatedCategoryIds = array_merge($relatedCategoryIds, $result);
-            }
+        $categoryNodeTransfers = [];
+
+        foreach ($categoryIds as $idCategory) {
+            $categoryNodeTransfers = array_merge(
+                $categoryNodeTransfers,
+                $this->getFactory()->getCategoryFacade()->getAllNodesByIdCategory($idCategory),
+            );
         }
 
-        return array_unique($relatedCategoryIds);
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromCategoryNodes($categoryNodeTransfers);
+
+        return array_unique($this->getRepository()->getCategoryIdsByCategoryNodeIds($categoryNodeIds));
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\NodeTransfer> $categoryNodeTransfers
+     *
+     * @return list<int>
+     */
+    protected function extractCategoryNodeIdsFromCategoryNodes(array $categoryNodeTransfers): array
+    {
+        $categoryNodeIds = [];
+
+        foreach ($categoryNodeTransfers as $categoryNodeTransfer) {
+            $categoryNodeIds[] = $categoryNodeTransfer->getIdCategoryNodeOrFail();
+        }
+
+        return $categoryNodeIds;
     }
 }

@@ -32,6 +32,25 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
+     * @var string
+     */
+    protected const FK_CATEGORY = 'fkCategory';
+
+    /**
+     * @uses \Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_ABSTRACT = 'spy_product_category.fk_product_abstract';
+
+    /**
+     * @uses \Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap::COL_FK_CATEGORY
+     *
+     * @var string
+     */
+    protected const COL_FK_CATEGORY = 'spy_category_node.fk_category';
+
+    /**
      * @param array<int> $productSearchIds
      *
      * @return array<int>
@@ -187,6 +206,44 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->getProductImageSetQuery()
             ->filterByIdProductImageSet_In($productImageSetIds)
             ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module Category
+     *
+     * @param list<int> $categoryNodeIds
+     *
+     * @return list<int>
+     */
+    public function getCategoryIdsByCategoryNodeIds(array $categoryNodeIds): array
+    {
+        return $this->getFactory()
+            ->getCategoryClosureTableQuery()
+            ->filterByFkCategoryNode_In($categoryNodeIds)
+            ->_or()
+            ->filterByFkCategoryNodeDescendant_In($categoryNodeIds)
+            ->joinDescendantNode()
+            ->withColumn(static::COL_FK_CATEGORY, static::FK_CATEGORY)
+            ->select([static::FK_CATEGORY])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module ProductCategory
+     *
+     * @param list<int> $categoryIds
+     *
+     * @return list<int>
+     */
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getFactory()
+            ->getProductCategoryQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->select(static::COL_FK_PRODUCT_ABSTRACT)
             ->find()
             ->toArray();
     }

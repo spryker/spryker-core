@@ -56,6 +56,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
+use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -265,8 +266,8 @@ class ProductPageSearchListenerTest extends Unit
         // Prepare
         $categoryIds = [$this->categoryTransfer->getIdCategory()];
 
-        $productPageSearchQueryContainer = new ProductPageSearchQueryContainer();
-        $productAbstractIds = $productPageSearchQueryContainer->queryProductAbstractIdsByCategoryIds($categoryIds)->find()->getData();
+        $productPageSearchRepository = new ProductPageSearchRepository();
+        $productAbstractIds = $productPageSearchRepository->getProductAbstractIdsByCategoryIds($categoryIds);
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -294,8 +295,8 @@ class ProductPageSearchListenerTest extends Unit
         // Prepare
         $categoryIds = [$this->categoryTransfer->getIdCategory()];
 
-        $productPageSearchQueryContainer = new ProductPageSearchQueryContainer();
-        $productAbstractIds = $productPageSearchQueryContainer->queryProductAbstractIdsByCategoryIds($categoryIds)->find()->getData();
+        $productPageSearchRepository = new ProductPageSearchRepository();
+        $productAbstractIds = $productPageSearchRepository->getProductAbstractIdsByCategoryIds($categoryIds);
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 

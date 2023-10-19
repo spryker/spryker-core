@@ -162,11 +162,15 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @module Category
+     * @module Store
+     *
      * @param array<int> $productAbstractIds
+     * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
-    public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array
+    public function getProductCategoryWithCategoryNodes(array $productAbstractIds, string $storeName): array
     {
         $productCategoryQuery = $this->getFactory()
             ->getProductCategoryPropelQuery()
@@ -177,9 +181,15 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
                 true,
                 Criteria::EQUAL,
             )
-            ->joinWithSpyCategory()
-            ->joinWith('SpyCategory.Node')
-            ->orderByProductOrder();
+            ->orderByProductOrder()
+            ->useSpyCategoryQuery()
+                ->useSpyCategoryStoreQuery()
+                    ->useInSpyStoreQuery()
+                        ->filterByName($storeName)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->joinWith('SpyCategory.Node');
 
         return $this->getFactory()
             ->createProductCategoryMapper()

@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\ProductPageSearch;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductPageSearch\Persistence\Base\SpyProductAbstractPageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -18,6 +20,7 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Kernel\Container as ZedContainer;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePageMapPlugin;
 use Spryker\Zed\Search\SearchDependencyProvider;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -33,6 +36,7 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  *
  * @SuppressWarnings(\SprykerTest\Zed\ProductPageSearch\PHPMD)
  */
@@ -115,6 +119,28 @@ class ProductPageSearchBusinessTester extends Actor
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer|null
+     */
+    public function findProductPageSearchTransfer(int $idProductAbstract, string $storeName): ?ProductPageSearchTransfer
+    {
+        $productAbstractPageSearchEntity = $this->findProductAbstractPageSearch($idProductAbstract, $storeName);
+
+        if (!$productAbstractPageSearchEntity) {
+            return null;
+        }
+
+        $decodedStructuredData = $this->getLocator()
+            ->utilEncoding()
+            ->service()
+            ->decodeJson($productAbstractPageSearchEntity->getStructuredData(), true);
+
+        return (new ProductPageSearchTransfer())->fromArray($decodedStructuredData);
+    }
+
+    /**
      * @param bool $isSearchable
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearch
@@ -162,6 +188,22 @@ class ProductPageSearchBusinessTester extends Actor
             ->filterByFkProduct($productSearchEntity->getFkProduct())
             ->filterByLocale($productSearchEntity->getSpyLocale()->getLocaleName())
             ->findOne();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    public function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    public function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->getLocator()->store()->facade();
     }
 
     /**
@@ -253,10 +295,23 @@ class ProductPageSearchBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @param int $idProductAbstract
+     * @param string $storeName
+     *
+     * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage|null
      */
-    protected function getStoreFacade(): StoreFacadeInterface
+    protected function findProductAbstractPageSearch(int $idProductAbstract, string $storeName): ?SpyProductAbstractPageSearch
     {
-        return $this->getLocator()->store()->facade();
+        return $this->getProductAbstractPageSearchPropelQuery()
+            ->filterByStore($storeName)
+            ->findOneByFkProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
+     */
+    protected function getProductAbstractPageSearchPropelQuery(): SpyProductAbstractPageSearchQuery
+    {
+        return SpyProductAbstractPageSearchQuery::create();
     }
 }

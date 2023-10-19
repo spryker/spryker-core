@@ -270,7 +270,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     {
         $mappedProductCategoryTransfers = [];
         $productCategoryTransfers = $this->productCategoryStorageRepository
-            ->getProductCategoryWithCategoryNodes($productAbstractIds);
+            ->getProductCategoryWithCategoryNodes($productAbstractIds, $this->storeFacade->getCurrentStore()->getNameOrFail());
 
         foreach ($productCategoryTransfers as $productCategoryTransfer) {
             $mappedProductCategoryTransfers[$productCategoryTransfer->getFkProductAbstract()][] = $productCategoryTransfer;

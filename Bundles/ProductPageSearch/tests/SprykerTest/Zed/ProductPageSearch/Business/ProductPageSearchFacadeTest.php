@@ -20,8 +20,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
+use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisherInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface;
+use SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -39,12 +41,12 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester
      */
-    protected $tester;
+    protected ProductPageSearchBusinessTester $tester;
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface
      */
-    protected $productPageSearchFacade;
+    protected ProductPageSearchFacadeInterface $productPageSearchFacade;
 
     /**
      * @return void

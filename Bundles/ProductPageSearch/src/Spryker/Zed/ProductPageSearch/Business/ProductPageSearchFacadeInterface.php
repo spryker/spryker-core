@@ -250,4 +250,22 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes product abstract page data by `SpyCategoryStore` entity events.
+     * - Extracts category IDs from the `$eventEntityTransfers` created by category store events.
+     * - Finds all category IDs related to the category IDs from the `$eventTransfers`.
+     * - Finds abstract products by category IDs.
+     * - Executes a stack of {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchCollectionFilterPluginInterface} plugins.
+     * - Stores data in storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractPageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 }

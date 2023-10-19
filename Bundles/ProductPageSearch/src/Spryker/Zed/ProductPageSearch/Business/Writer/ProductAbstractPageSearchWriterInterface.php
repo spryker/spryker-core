@@ -15,4 +15,11 @@ interface ProductAbstractPageSearchWriterInterface
      * @return void
      */
     public function writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractPageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 }

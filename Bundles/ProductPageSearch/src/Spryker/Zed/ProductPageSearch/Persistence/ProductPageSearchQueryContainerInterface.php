@@ -108,6 +108,8 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getCategoryIdsByCategoryNodeIds()} instead.
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
@@ -119,6 +121,8 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface::getProductAbstractIdsByCategoryIds()} instead.
      *
      * @param array $categoryIds
      *

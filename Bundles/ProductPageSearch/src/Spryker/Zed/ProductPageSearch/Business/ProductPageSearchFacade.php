@@ -285,4 +285,20 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductAbstractPageSearchWriter()
             ->writeProductAbstractPageSearchCollectionByProductImageSetToProductImageEvents($eventEntityTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductAbstractPageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductAbstractPageSearchWriter()
+            ->writeProductAbstractPageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
+    }
 }

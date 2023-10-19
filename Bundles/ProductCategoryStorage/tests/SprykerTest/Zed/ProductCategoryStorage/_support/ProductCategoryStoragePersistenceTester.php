@@ -28,7 +28,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductCategoryStorage\PHPMD)
  */
 class ProductCategoryStoragePersistenceTester extends Actor
 {

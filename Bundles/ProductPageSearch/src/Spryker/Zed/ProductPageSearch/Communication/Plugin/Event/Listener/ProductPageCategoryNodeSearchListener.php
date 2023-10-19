@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -30,7 +31,7 @@ class ProductPageCategoryNodeSearchListener extends AbstractProductPageSearchLis
     {
         $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryNodeTableMap::COL_FK_CATEGORY);
         $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
-        $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)->find()->getData();
+        $productAbstractIds = $this->getRepository()->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
 
         $this->publish($productAbstractIds);
     }

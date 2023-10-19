@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -123,6 +125,22 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getProductQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRODUCT);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function getProductCategoryQuery(): SpyProductCategoryQuery
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    public function getCategoryClosureTableQuery(): SpyCategoryClosureTableQuery
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_CATEGORY_CLOSURE_TABLE);
     }
 
     /**

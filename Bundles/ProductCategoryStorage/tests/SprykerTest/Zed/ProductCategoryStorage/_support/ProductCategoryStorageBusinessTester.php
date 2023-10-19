@@ -14,6 +14,8 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use ReflectionClass;
+use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
 
 /**
  * @method void wantToTest($text)
@@ -28,7 +30,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductCategoryStorage\PHPMD)
  */
 class ProductCategoryStorageBusinessTester extends Actor
 {
@@ -90,6 +92,17 @@ class ProductCategoryStorageBusinessTester extends Actor
         $productAbstractCategoryStorageEntity->save();
 
         return $productAbstractCategoryStorageEntity;
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanStaticProperty(): void
+    {
+        $reflectedClass = new ReflectionClass(ProductCategoryStorageReader::class);
+        $property = $reflectedClass->getProperty('categoryTree');
+        $property->setAccessible(true);
+        $property->setValue(null);
     }
 
     /**

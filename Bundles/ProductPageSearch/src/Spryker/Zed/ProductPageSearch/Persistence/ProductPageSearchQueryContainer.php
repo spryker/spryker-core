@@ -344,6 +344,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getCategoryIdsByCategoryNodeIds()} instead.
+     *
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
@@ -362,6 +364,8 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepository::getProductAbstractIdsByCategoryIds()} instead.
      *
      * @param array $categoryIds
      *
