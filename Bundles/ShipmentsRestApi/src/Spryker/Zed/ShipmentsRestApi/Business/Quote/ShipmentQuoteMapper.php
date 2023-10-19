@@ -18,6 +18,13 @@ use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFac
 class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 {
     /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
+     * @var string
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
      * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface
      */
     protected ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade;
@@ -63,27 +70,33 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             ->setShippingAddress($quoteTransfer->getShippingAddress());
 
         $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
-        $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer);
+        $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer, $quoteTransfer);
 
         return $this->setShipmentExpense($quoteTransfer, $expenseTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentTransfer $shipmentTransfer): ExpenseTransfer
+    protected function createShippingExpenseTransfer(ShipmentTransfer $shipmentTransfer, QuoteTransfer $quoteTransfer): ExpenseTransfer
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentTransfer->getMethod()->toArray(), true);
         $shipmentExpenseTransfer->setType(ShipmentsRestApiConfig::SHIPMENT_EXPENSE_TYPE);
-        $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);
         $shipmentExpenseTransfer->setShipment($shipmentTransfer);
+        if ($quoteTransfer->getPriceMode() === static::PRICE_MODE_NET) {
+            return $shipmentExpenseTransfer
+                ->setUnitNetPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice())
+                ->setUnitGrossPrice(0);
+        }
 
-        return $shipmentExpenseTransfer;
+        return $shipmentExpenseTransfer
+            ->setUnitNetPrice(0)
+            ->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
     }
 
     /**
