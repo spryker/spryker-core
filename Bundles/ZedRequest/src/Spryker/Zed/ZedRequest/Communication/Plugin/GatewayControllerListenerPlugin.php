@@ -9,7 +9,9 @@ namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use LogicException;
+use ReflectionClass;
 use ReflectionObject;
+use ReflectionParameter;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -152,7 +154,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         $parameter = array_shift($parameters);
         if ($parameter) {
-            $class = $parameter->getClass();
+            $class = $this->getReflectionClass($parameter);
             if (!$class) {
                 throw new LogicException('You need to specify a class for the parameter in the yves-action.');
             }
@@ -265,5 +267,19 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         throw new LogicException('Only transfer classes are allowed in yves action as parameter');
+    }
+
+    /**
+     * @param \ReflectionParameter $parameter
+     *
+     * @return \ReflectionClass|null
+     */
+    protected function getReflectionClass(ReflectionParameter $parameter): ?ReflectionClass
+    {
+        if ($parameter->getType() !== null && !$parameter->getType()->isBuiltin()) {
+            return new ReflectionClass($parameter->getType()->getName());
+        }
+
+        return null;
     }
 }
