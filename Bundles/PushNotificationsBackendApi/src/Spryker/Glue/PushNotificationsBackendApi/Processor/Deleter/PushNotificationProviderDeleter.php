@@ -80,6 +80,12 @@ class PushNotificationProviderDeleter implements PushNotificationProviderDeleter
             );
         }
 
+        $glueResponseTransfer = $this->pushNotificationProviderReader->getPushNotificationProvider($glueRequestTransfer);
+
+        if ($glueResponseTransfer->getErrors()->count()) {
+            return $glueResponseTransfer;
+        }
+
         $pushNotificationProviderCollectionDeleteCriteriaTransfer = $this->createPushNotificationProviderCollectionDeleteCriteriaTransfer($glueRequestTransfer->getResourceOrFail());
         $pushNotificationProviderCollectionResponseTransfer = $this->pushNotificationFacade->deletePushNotificationProviderCollection($pushNotificationProviderCollectionDeleteCriteriaTransfer);
         $errorTransfers = $pushNotificationProviderCollectionResponseTransfer->getErrors();

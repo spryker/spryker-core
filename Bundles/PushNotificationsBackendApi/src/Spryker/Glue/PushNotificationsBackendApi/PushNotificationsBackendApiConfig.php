@@ -171,7 +171,7 @@ class PushNotificationsBackendApiConfig extends AbstractBundleConfig
         return [
             static::GLOSSARY_KEY_VALIDATION_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND => [
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_PUSH_NOTIFICATION_PROVIDER_NOT_FOUND,
-                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                GlueErrorTransfer::STATUS => Response::HTTP_NOT_FOUND,
             ],
             static::GLOSSARY_KEY_VALIDATION_WRONG_GROUP_NAME => [
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_WRONG_GROUP_NAME,
