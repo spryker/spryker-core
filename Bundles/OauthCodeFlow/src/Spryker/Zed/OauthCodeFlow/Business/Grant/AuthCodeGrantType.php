@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OauthCodeFlow\Business\Grant;
 
 use DateInterval;
-use DateTimeImmutable;
 use League\OAuth2\Server\CodeChallengeVerifiers\PlainVerifier;
 use League\OAuth2\Server\CodeChallengeVerifiers\S256Verifier;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -208,40 +207,6 @@ class AuthCodeGrantType extends AuthCodeGrant implements GrantTypeInterface
         if ($authCodePayload->redirect_uri !== $redirectUri) {
             throw OAuthServerException::invalidRequest(static::REQUEST_PARAMETER_REDIRECT_URI, 'Invalid redirect URI');
         }
-    }
-
-    /**
-     * @param \DateInterval $accessTokenTTL
-     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
-     * @param string|null $userIdentifier
-     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
-     *
-     * @return \League\OAuth2\Server\Entities\AccessTokenEntityInterface
-     */
-    protected function issueAccessToken(
-        DateInterval $accessTokenTTL,
-        ClientEntityInterface $client,
-        $userIdentifier,
-        array $scopes = []
-    ) {
-        $accessTokenTransfer = $this->accessTokenRepository->findAccessToken($client, $scopes);
-        if ($accessTokenTransfer !== null) {
-            $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
-            /** @phpstan-var \DateTime $expirityDate */
-            $expirityDate = $accessTokenTransfer->getExpiresAtOrFail();
-            $accessToken->setExpiryDateTime(DateTimeImmutable::createFromMutable($expirityDate));
-            $accessToken->setPrivateKey($this->privateKey);
-            $accessToken->setIdentifier($accessTokenTransfer->getAccessTokenIdentifierOrFail());
-
-            return $accessToken;
-        }
-
-        return parent::issueAccessToken(
-            $accessTokenTTL,
-            $client,
-            $userIdentifier,
-            $scopes,
-        );
     }
 
     /**
