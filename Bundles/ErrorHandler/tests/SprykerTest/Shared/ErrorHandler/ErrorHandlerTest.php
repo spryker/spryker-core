@@ -28,6 +28,11 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 class ErrorHandlerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Shared\ErrorHandler\ErrorHandlerTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testIfHandleExceptionThrowsExceptionErrorLoggerShouldLogBeforeExceptionAndLogExceptionAndSendExitCode(): void
@@ -45,6 +50,37 @@ class ErrorHandlerTest extends Unit
         $errorHandlerMock->expects($this->never())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
+        $errorHandlerMock->handleException($exception);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHandleExceptionSanitizesExceptionMessageBeforeRendering(): void
+    {
+        $errorLoggerMock = $this->getErrorLoggerMock();
+        $errorLoggerMock->expects($this->exactly(1))->method('log');
+        $exception = new Exception("Test exception: <script>alert('XSS');</script>");
+
+        $errorRendererMock = $this->getMockBuilder(ErrorRendererInterface::class)
+            ->getMock();
+        $errorRendererMock->expects($this->once())
+            ->method('render')
+            ->with(
+                new Exception('Test exception: &lt;script&gt;alert(&#039;XSS&#039;);&lt;/script&gt;'),
+            );
+
+        $errorHandlerMock = $this->getErrorHandlerMock($errorLoggerMock, $errorRendererMock);
+        $errorHandlerMock->expects($this->once())
+            ->method('send500Header')
+            ->willReturn(null);
+
+        $errorHandlerMock->expects($this->once())
+            ->method('cleanOutputBuffer');
+        $errorHandlerMock->expects($this->once())
+            ->method('sendExitCode');
+
+        // Act
         $errorHandlerMock->handleException($exception);
     }
 

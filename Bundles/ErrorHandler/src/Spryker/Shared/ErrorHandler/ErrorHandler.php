@@ -132,6 +132,7 @@ class ErrorHandler
     protected function sanitizeExceptionMessage(Throwable $exception): Throwable
     {
         $sanitizedExceptionMessage = $this->utilSanitizeService->sanitizeString($exception->getMessage());
+        $sanitizedExceptionMessage = $this->utilSanitizeService->escapeHtml($sanitizedExceptionMessage);
         $exception = $this->injectSanitizedMessageIntoException($exception, $sanitizedExceptionMessage);
 
         return $exception;
