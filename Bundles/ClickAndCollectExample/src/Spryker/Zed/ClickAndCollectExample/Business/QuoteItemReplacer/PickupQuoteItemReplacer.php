@@ -124,7 +124,8 @@ class PickupQuoteItemReplacer implements QuoteItemReplacerInterface
      */
     protected function isQuoteItemApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $itemTransfer->getShipmentType() !== null
+        return !$this->isItemProductBundle($itemTransfer)
+            && $itemTransfer->getShipmentType() !== null
             && $itemTransfer->getShipmentTypeOrFail()->getKey() === $this->clickAndCollectExampleConfig->getPickupShipmentTypeKey();
     }
 
@@ -163,5 +164,15 @@ class PickupQuoteItemReplacer implements QuoteItemReplacerInterface
         }
 
         return $productOfferServicePointCriteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemProductBundle(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier();
     }
 }

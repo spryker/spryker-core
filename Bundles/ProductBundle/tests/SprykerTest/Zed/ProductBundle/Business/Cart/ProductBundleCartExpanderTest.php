@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Cart;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
@@ -27,6 +29,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInter
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 /**
  * Auto-generated group annotations
@@ -98,6 +101,70 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandBundleItemsShouldCopyShipmentMethodFromBundleItemToBundledItems(): void
+    {
+        // Arrange
+        $shipmentTransfer = (new ShipmentTransfer())->setIdShipmentMethod(1234);
+
+        $productBundleConfigMock = Stub::makeEmpty(
+            ProductBundleConfig::class,
+            [
+                'getAllowedBundleItemFieldsToCopy' => [ItemTransfer::SHIPMENT],
+            ],
+        );
+
+        $productExpanderMock = $this->setupProductExpander($productBundleConfigMock);
+
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer->getItems()->getIterator()->current()->setShipment($shipmentTransfer);
+
+        // Act
+        $cartChangeTransfer = $productExpanderMock->expandBundleItems($cartChangeTransfer);
+
+        // Assert
+        $this->assertSame(
+            $shipmentTransfer->getIdShipmentMethod(),
+            $cartChangeTransfer->getItems()->offsetGet(0)->getShipment()->getIdShipmentMethod(),
+        );
+        $this->assertSame(
+            $shipmentTransfer->getIdShipmentMethod(),
+            $cartChangeTransfer->getItems()->offsetGet(1)->getShipment()->getIdShipmentMethod(),
+        );
+        $this->assertSame(
+            $shipmentTransfer->getIdShipmentMethod(),
+            $cartChangeTransfer->getItems()->offsetGet(2)->getShipment()->getIdShipmentMethod(),
+        );
+        $this->assertSame(
+            $shipmentTransfer->getIdShipmentMethod(),
+            $cartChangeTransfer->getItems()->offsetGet(3)->getShipment()->getIdShipmentMethod(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandBundleItemsShouldSkipCopyFromBundleItemToBundledItems(): void
+    {
+        // Arrange
+        $shipmentTransfer = (new ShipmentTransfer())->setIdShipmentMethod(1234);
+        $productExpanderMock = $this->setupProductExpander();
+
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer->getItems()->getIterator()->current()->setShipment($shipmentTransfer);
+
+        // Act
+        $cartChangeTransfer = $productExpanderMock->expandBundleItems($cartChangeTransfer);
+
+        // Assert
+        $this->assertNull($cartChangeTransfer->getItems()->offsetGet(0)->getShipment());
+        $this->assertNull($cartChangeTransfer->getItems()->offsetGet(1)->getShipment());
+        $this->assertNull($cartChangeTransfer->getItems()->offsetGet(2)->getShipment());
+        $this->assertNull($cartChangeTransfer->getItems()->offsetGet(3)->getShipment());
+    }
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface|null $priceProductFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface|null $productFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface|null $localeFacadeMock
@@ -107,7 +174,8 @@ class ProductBundleCartExpanderTest extends Unit
     protected function createProductExpanderMock(
         ?ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
         ?ProductBundleToProductFacadeInterface $productFacadeMock = null,
-        ?ProductBundleToLocaleFacadeInterface $localeFacadeMock = null
+        ?ProductBundleToLocaleFacadeInterface $localeFacadeMock = null,
+        ?ProductBundleConfig $productBundleConfigMock = null
     ): ProductBundleCartExpander {
         if ($priceProductFacadeMock === null) {
             $priceProductFacadeMock = $this->createPriceProductFacadeMock();
@@ -121,6 +189,10 @@ class ProductBundleCartExpanderTest extends Unit
             $localeFacadeMock = $this->createLocaleFacadeMock();
         }
 
+        if ($productBundleConfigMock === null) {
+            $productBundleConfigMock = Stub::makeEmpty(ProductBundleConfig::class);
+        }
+
         $priceReaderMock = $this->createPriceReaderMock();
 
         $productBundleReaderMock = $this->createProductBundleReaderMock();
@@ -132,15 +204,18 @@ class ProductBundleCartExpanderTest extends Unit
                 $localeFacadeMock,
                 $productBundleReaderMock,
                 $priceReaderMock,
+                $productBundleConfigMock,
             ])
             ->setMethods(['findBundledItemsByIdProductConcrete'])
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig|null $productBundleConfigMock
+     *
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
-    protected function setupProductExpander(): ProductBundleCartExpander
+    protected function setupProductExpander(?ProductBundleConfig $productBundleConfigMock = null): ProductBundleCartExpander
     {
         $productFacadeMock = $this->createProductFacadeMock();
 
@@ -156,7 +231,12 @@ class ProductBundleCartExpanderTest extends Unit
         $priceFacadeMock = $this->createPriceProductFacadeMock();
         $priceFacadeMock->method('findPriceFor')->willReturn(25);
 
-        $productExpanderMock = $this->createProductExpanderMock($priceFacadeMock, $productFacadeMock, $localeFacadeMock);
+        $productExpanderMock = $this->createProductExpanderMock(
+            $priceFacadeMock,
+            $productFacadeMock,
+            $localeFacadeMock,
+            $productBundleConfigMock,
+        );
 
         return $productExpanderMock;
     }

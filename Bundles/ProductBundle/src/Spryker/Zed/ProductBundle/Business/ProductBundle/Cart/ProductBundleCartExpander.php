@@ -22,6 +22,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterfac
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
@@ -76,24 +77,32 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $productBundleReader;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\ProductBundleConfig
+     */
+    protected ProductBundleConfig $productBundleConfig;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface $priceReader
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
      */
     public function __construct(
         ProductBundleToPriceProductFacadeInterface $priceProductFacade,
         ProductBundleToProductFacadeInterface $productFacade,
         ProductBundleToLocaleFacadeInterface $localeFacade,
         ProductBundleReaderInterface $productBundleReader,
-        PriceReaderInterface $priceReader
+        PriceReaderInterface $priceReader,
+        ProductBundleConfig $productBundleConfig
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
         $this->productBundleReader = $productBundleReader;
         $this->priceReader = $priceReader;
+        $this->productBundleConfig = $productBundleConfig;
     }
 
     /**
@@ -177,6 +186,8 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
                 $bundleItemIdentifier,
                 $quoteTransfer,
             );
+
+            $bundledItems = $this->copyAdditionalBundleItemFields($bundledItems, $bundleItemTransfer);
 
             $lastBundledItemTransfer = $bundledItems[count($bundledItems) - 1];
             $lastBundledItemTransfer->setProductOptions($productOptions);
@@ -531,5 +542,22 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         }
 
         return $productConcreteSkus;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function copyAdditionalBundleItemFields(array $bundledItems, ItemTransfer $bundleItemTransfer): array
+    {
+        foreach ($bundledItems as $bundledItem) {
+            foreach ($this->productBundleConfig->getAllowedBundleItemFieldsToCopy() as $allowedFieldToCopy) {
+                $bundledItem->offsetSet($allowedFieldToCopy, $bundleItemTransfer->offsetGet($allowedFieldToCopy));
+            }
+        }
+
+        return $bundledItems;
     }
 }

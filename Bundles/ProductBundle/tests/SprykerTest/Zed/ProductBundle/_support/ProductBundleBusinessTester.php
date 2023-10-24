@@ -41,7 +41,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductBundle\PHPMD)
  */
 class ProductBundleBusinessTester extends Actor
 {

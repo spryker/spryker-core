@@ -114,6 +114,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->createProductBundleReader(),
             $this->createPriceReader(),
+            $this->getConfig(),
         );
     }
 

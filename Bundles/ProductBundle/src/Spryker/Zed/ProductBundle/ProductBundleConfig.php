@@ -44,4 +44,17 @@ class ProductBundleConfig extends AbstractBundleConfig
     {
         return static::PARAMETER_PRODUCT_SKU_AVAILABILITY;
     }
+
+    /**
+     * Specification:
+     * - Defines a list of allowed fields to be copied from a source bundle item to destination bundled items.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getAllowedBundleItemFieldsToCopy(): array
+    {
+        return [];
+    }
 }

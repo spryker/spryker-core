@@ -21,6 +21,11 @@ class ExpandBundleItemsPlugin extends AbstractPlugin implements ItemExpanderPlug
 {
     /**
      * {@inheritDoc}
+     * - Takes all items to be added to cart and checks if any is bundle item.
+     * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned.
+     * - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
+     * - Copies extra properties from original bundle item object to bundled items based on {@link \Spryker\Zed\ProductBundle\ProductBundleConfig::getAllowedBundleItemFieldsToCopy()}.
+     * - The price amount is assigned, proportionally split through items quantity = 1.
      *
      * @api
      *

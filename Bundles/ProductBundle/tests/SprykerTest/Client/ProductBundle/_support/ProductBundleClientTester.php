@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Client\ProductBundle\ProductBundleClientInterface getClient()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ProductBundle\PHPMD)
  */
 class ProductBundleClientTester extends Actor
 {

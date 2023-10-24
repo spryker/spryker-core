@@ -116,7 +116,8 @@ class DeliveryQuoteItemReplacer implements QuoteItemReplacerInterface
      */
     protected function isQuoteItemApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $itemTransfer->getShipmentTypeOrFail()->getKey() === $this->clickAndCollectExampleConfig->getDeliveryShipmentTypeKey()
+        return !$this->isItemProductBundle($itemTransfer)
+            && $itemTransfer->getShipmentTypeOrFail()->getKey() === $this->clickAndCollectExampleConfig->getDeliveryShipmentTypeKey()
             && $itemTransfer->getProductOfferReference();
     }
 
@@ -142,5 +143,15 @@ class DeliveryQuoteItemReplacer implements QuoteItemReplacerInterface
         }
 
         return $productOfferServicePointCriteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemProductBundle(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier();
     }
 }

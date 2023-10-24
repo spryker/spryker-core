@@ -65,6 +65,8 @@
         <property name="shipmentType" type="ShipmentType" strict="true"/>
         <property name="groupKey" type="string"/>
         <property name="shipment" type="Shipment"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
