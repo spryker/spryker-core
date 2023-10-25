@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Generated\Shared\Transfer\RestShipmentTransfer;
 use Spryker\Glue\ShipmentsRestApi\Plugin\CheckoutRestApi\ShipmentDataCheckoutRequestValidatorPlugin;
+use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
+use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
+use Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -58,6 +61,56 @@ class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testValidateExecutesShippingAddressValidationStrategyPluginsWhenPluginsExecutionIsConfigured(): void
+    {
+        // Arrange
+        $configMock = $this->getMockBuilder(ShipmentsRestApiConfig::class)->getMock();
+        $configMock->method('shouldExecuteShippingAddressValidationStrategyPlugins')->willReturn(true);
+
+        $shippingAddressValidationStrategyPluginMock = $this
+            ->getMockBuilder(ShippingAddressValidationStrategyPluginInterface::class)
+            ->getMock();
+        $shippingAddressValidationStrategyPluginMock->method('isApplicable')->willReturn(true);
+        $shippingAddressValidationStrategyPluginMock->expects($this->once())->method('validate');
+
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
+            ->setShipment((new RestShipmentTransfer()))
+            ->setShippingAddress((new RestAddressTransfer()));
+
+        $this->tester->mockFactoryMethod('getConfig', $configMock);
+        $factory = $this->tester->mockFactoryMethod('getShippingAddressValidationStrategyPlugins', [$shippingAddressValidationStrategyPluginMock]);
+        $factory->setConfig($configMock);
+
+        // Act, Assert
+        (new ShipmentDataCheckoutRequestValidatorPlugin())
+            ->setFactory($factory)
+            ->validateAttributes($restCheckoutRequestAttributesTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateDoesNotExecutesShippingAddressValidationStrategyPluginsWhenPluginsExecutionIsNotConfigured(): void
+    {
+        // Arrange
+        $shippingAddressValidationStrategyPluginMock = $this
+            ->getMockBuilder(ShippingAddressValidationStrategyPluginInterface::class)
+            ->getMock();
+        $shippingAddressValidationStrategyPluginMock->expects($this->never())->method('validate');
+
+        $this->tester->setDependency(
+            ShipmentsRestApiDependencyProvider::PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY,
+            [$shippingAddressValidationStrategyPluginMock],
+        );
+
+        // Act, Assert
+        (new ShipmentDataCheckoutRequestValidatorPlugin())
+            ->validateAttributes(new RestCheckoutRequestAttributesTransfer());
+    }
+
+    /**
      * @return array<mixed>
      */
     public function shipmentDataCheckoutRequestValidatorPluginDataProvider(): array
@@ -90,8 +143,8 @@ class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
             [
                 (new RestCheckoutRequestAttributesTransfer())
                     ->addShipment(new RestShipmentsTransfer()),
-                0,
-                'Passing item level shipments should be valid.',
+                1,
+                'Passing item level shipments without address should not be valid.',
             ],
             [
                 (new RestCheckoutRequestAttributesTransfer())

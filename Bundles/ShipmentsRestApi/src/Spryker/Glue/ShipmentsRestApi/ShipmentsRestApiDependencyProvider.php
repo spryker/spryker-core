@@ -27,6 +27,11 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGINS_ADDRESS_SOURCE_CHECKER = 'PLUGINS_ADDRESS_SOURCE_CHECKER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY = 'PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -36,6 +41,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = parent::provideDependencies($container);
         $container = $this->addShipmentService($container);
         $container = $this->addAddressSourceCheckerPlugins($container);
+        $container = $this->addShipmentAddressValidationStrategyPlugins($container);
 
         return $container;
     }
@@ -59,6 +65,20 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
+    protected function addShipmentAddressValidationStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY, function () {
+            return $this->getShippingAddressValidationStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
     protected function addAddressSourceCheckerPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ADDRESS_SOURCE_CHECKER, function () {
@@ -72,6 +92,14 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     protected function getAddressSourceCheckerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface>
+     */
+    protected function getShippingAddressValidationStrategyPlugins(): array
     {
         return [];
     }

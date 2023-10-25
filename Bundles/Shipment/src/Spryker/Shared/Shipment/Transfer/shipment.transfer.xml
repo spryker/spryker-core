@@ -43,6 +43,25 @@
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="ShipmentMethodCollection" strict="true">
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodCriteria" strict="true">
+        <property name="shipmentMethodConditions" type="ShipmentMethodConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodConditions" strict="true">
+        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
+        <property name="shipmentCarrierIds" type="int[]" singular="idShipmentCarrier"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="isActive" type="bool"/>
+        <property name="isActiveShipmentCarrier" type="bool"/>
+    </transfer>
+
     <transfer name="ShipmentCriteria" strict="true">
         <property name="shipmentConditions" type="ShipmentConditions"/>
     </transfer>
@@ -312,10 +331,6 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
-    </transfer>
-
-    <transfer name="ShipmentMethodCollection" strict="true">
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
     </transfer>
 
 </transfers>

@@ -98,7 +98,7 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
@@ -141,11 +141,11 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer1->getIdShipmentTypeOrFail(),
         );
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer2->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer2->getIdShipmentTypeOrFail(),
         );
@@ -188,7 +188,7 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
@@ -231,11 +231,11 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => false,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
             $activeShipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer2->getIdShipmentMethodOrFail(),
             $inactiveShipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
@@ -280,11 +280,11 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransferAt),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer1->getIdShipmentTypeOrFail(),
         );
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer2->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer2->getIdShipmentTypeOrFail(),
         );
@@ -330,15 +330,15 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => false,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer1->getIdShipmentMethodOrFail(),
             $activeShipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer2->getIdShipmentMethodOrFail(),
             $inactiveShipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer3->getIdShipmentMethodOrFail(),
             $inactiveShipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
@@ -392,7 +392,7 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );
@@ -422,7 +422,7 @@ class FilterShipmentMethodsTest extends Unit
             ShipmentTypeTransfer::IS_ACTIVE => true,
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );

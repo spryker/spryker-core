@@ -2,7 +2,7 @@
     "name": "spryker/shipment-data-import",
     "type": "library",
     "description": "ShipmentDataImport module",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": ">=8.0",
         "spryker/currency": "^3.0.0 || ^4.0.0",

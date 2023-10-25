@@ -10,11 +10,19 @@ namespace Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentDataSetInterface;
 
-class ShipmentCarrierWriterStep implements DataImportStepInterface
+class ShipmentCarrierWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig::SHIPMENT_CARRIER_PUBLISH
+     *
+     * @var string
+     */
+    protected const SHIPMENT_CARRIER_PUBLISH = 'Shipment.shipment_carrier.publish';
+
     /**
      * @var array<int>
      */
@@ -39,7 +47,12 @@ class ShipmentCarrierWriterStep implements DataImportStepInterface
             $shipmentCarrierEntity = SpyShipmentCarrierQuery::create()
                 ->filterByName($carrierName)
                 ->findOneOrCreate();
-            $shipmentCarrierEntity->save();
+
+            if ($shipmentCarrierEntity->isNew()) {
+                $shipmentCarrierEntity->save();
+
+                $this->addPublishEvents(static::SHIPMENT_CARRIER_PUBLISH, $shipmentCarrierEntity->getIdShipmentCarrier());
+            }
 
             static::$idShipmentCarrierCache[$carrierName] = $shipmentCarrierEntity->getIdShipmentCarrier();
         }

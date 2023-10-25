@@ -65,4 +65,18 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_DETAIL_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED = 'Shipments attributes are not specified.';
+
+    /**
+     * Specification:
+     * - If set to `true` a plugin stack {@link \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface} will be executed during shipment checkout data validation.
+     * - The original validation will be replaced by the plugin validation if an applicable plugin is found.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function shouldExecuteShippingAddressValidationStrategyPlugins(): bool
+    {
+        return false;
+    }
 }

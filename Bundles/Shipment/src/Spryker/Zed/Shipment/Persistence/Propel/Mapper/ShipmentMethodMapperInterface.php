@@ -9,11 +9,13 @@ namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
+use Propel\Runtime\Collection\Collection;
 
 interface ShipmentMethodMapperInterface
 {
@@ -93,4 +95,15 @@ interface ShipmentMethodMapperInterface
         iterable $shipmentMethodsEntities,
         array $shipmentMethodTransfers
     ): array;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $shipmentMethodEntities
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function mapShipmentMethodEntitiesToShipmentMethodCollectionTransfer(
+        Collection $shipmentMethodEntities,
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer;
 }

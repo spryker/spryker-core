@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CheckoutRestApi;
 
+use Generated\Shared\Transfer\RestCustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig as SharedCheckoutRestApiConfig;
@@ -98,6 +99,13 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_INVALID_PAYMENT = '1108';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_CUSTOMER_DATA_MISSING = '1109';
+
+    /**
      * @var string
      */
     public const RESPONSE_DETAILS_CHECKOUT_DATA_INVALID = 'Checkout data is invalid.';
@@ -136,6 +144,13 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_DETAILS_INVALID_PAYMENT = 'Payment method "%s" of payment provider "%s" is invalid';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_DETAILS_CUSTOMER_DATA_MISSING = 'Required customer information is missing from the request body.';
 
     /**
      * @var array<string>
@@ -271,5 +286,21 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public function isAddressesMappedToAttributes(): bool
     {
         return true;
+    }
+
+    /**
+     * Specification:
+     * - Returns the list of customer data fields required for checkout as guest user.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getRequiredCustomerRequestDataForGuestCheckout(): array
+    {
+        return [
+            RestCustomerTransfer::SALUTATION,
+            RestCustomerTransfer::EMAIL,
+        ];
     }
 }

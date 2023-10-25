@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -520,4 +522,27 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
      */
     public function getSalesShipmentCollection(SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer): SalesShipmentCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves shipment methods filtered by the criteria.
+     * - Uses `ShipmentMethodCriteriaTransfer.shipmentMethodConditions.shipmentMethodIds` to filter shipment methods by shipment method IDs.
+     * - Uses `ShipmentMethodCriteriaTransfer.shipmentMethodConditions.shipmentCarrierIds` to filter shipment methods by shipment carrier IDs.
+     * - Uses `ShipmentMethodCriteriaTransfer.shipmentMethodConditions.storeNames` to filter shipment methods by related store names.
+     * - Uses `ShipmentMethodCriteriaTransfer.shipmentMethodConditions.isActive` to filter shipment methods by `isActive` status.
+     * - Uses `ShipmentMethodCriteriaTransfer.shipmentMethodConditions.isActiveShipmentCarrier` to filter shipment methods by shipment carrier's `isActive` status.
+     * - Uses `ShipmentMethodCriteriaTransfer.sort.field` to set the `order by` field.
+     * - Uses `ShipmentMethodCriteriaTransfer.sort.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ShipmentMethodCriteriaTransfer.pagination.{limit, offset}` to paginate result with `limit` and `offset`.
+     * - Uses `ShipmentMethodCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with `page` and `maxPerPage`.
+     * - Executes a stack of {@link \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodCollectionExpanderPluginInterface} plugins.
+     * - Returns `ShipmentMethodCollectionTransfer` filled with found shipment methods.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer): ShipmentMethodCollectionTransfer;
 }

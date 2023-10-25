@@ -92,22 +92,6 @@ class ShipmentTypeBusinessTester extends Actor
     }
 
     /**
-     * @param int $idShipmentMethod
-     * @param int $idShipmentType
-     *
-     * @return void
-     */
-    public function createShipmentMethodShipmentTypeRelation(int $idShipmentMethod, int $idShipmentType): void
-    {
-        $shipmentMethodEntity = $this->getShipmentMethodQuery()
-            ->filterByIdShipmentMethod($idShipmentMethod)
-            ->findOne();
-
-        $shipmentMethodEntity->setFkShipmentType($idShipmentType);
-        $shipmentMethodEntity->save();
-    }
-
-    /**
      * @return int
      */
     public function getShipmentTypeEntitiesCount(): int

@@ -8,11 +8,16 @@
 namespace Spryker\Zed\ShipmentTypeStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpander;
+use Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface;
 use Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapper;
 use Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapperInterface;
+use Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReader;
+use Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReaderInterface;
 use Spryker\Zed\ShipmentTypeStorage\Business\Writer\ShipmentTypeStorageWriter;
 use Spryker\Zed\ShipmentTypeStorage\Business\Writer\ShipmentTypeStorageWriterInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\ShipmentTypeStorageDependencyProvider;
@@ -31,11 +36,12 @@ class ShipmentTypeStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentTypeStorageWriter(
             $this->getEntityManager(),
+            $this->createShipmentMethodReader(),
             $this->createShipmentTypeStorageMapper(),
+            $this->createShipmentTypeStorageExpander(),
             $this->getShipmentTypeFacade(),
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
-            $this->getShipmentTypeStorageExpanderPlugins(),
         );
     }
 
@@ -45,6 +51,25 @@ class ShipmentTypeStorageBusinessFactory extends AbstractBusinessFactory
     public function createShipmentTypeStorageMapper(): ShipmentTypeStorageMapperInterface
     {
         return new ShipmentTypeStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface
+     */
+    public function createShipmentTypeStorageExpander(): ShipmentTypeStorageExpanderInterface
+    {
+        return new ShipmentTypeStorageExpander(
+            $this->createShipmentMethodReader(),
+            $this->getShipmentTypeStorageExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReaderInterface
+     */
+    public function createShipmentMethodReader(): ShipmentMethodReaderInterface
+    {
+        return new ShipmentMethodReader($this->getShipmentFacade());
     }
 
     /**
@@ -69,6 +94,14 @@ class ShipmentTypeStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ShipmentTypeStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentFacadeInterface
+     */
+    public function getShipmentFacade(): ShipmentTypeStorageToShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(ShipmentTypeStorageDependencyProvider::FACADE_SHIPMENT);
     }
 
     /**

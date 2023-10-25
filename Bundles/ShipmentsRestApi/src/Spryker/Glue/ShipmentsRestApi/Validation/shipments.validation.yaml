@@ -14,14 +14,17 @@ checkout-data:
                                                         - Type:
                                                               type: string
                                           shippingAddress:
-                                              - NotBlank
+                                              - Optional:
+                                                    constraints:
+                                                        - NotBlank
                                           idShipmentMethod:
                                               - Optional
                                               - Type:
                                                     type: numeric
                                           requestedDeliveryDate:
-                                              - Optional
-                                              - Date
+                                              - Optional:
+                                                    constraints:
+                                                        - Date
 checkout:
     post:
         shipments:
@@ -38,11 +41,14 @@ checkout:
                                                         - Type:
                                                               type: string
                                           shippingAddress:
-                                              - NotBlank
+                                              - Optional:
+                                                    constraints:
+                                                        - NotBlank
                                           idShipmentMethod:
                                               - NotBlank
                                               - Type:
                                                     type: numeric
                                           requestedDeliveryDate:
-                                              - Optional
-                                              - Date
+                                              - Optional:
+                                                    constraints:
+                                                        - Date

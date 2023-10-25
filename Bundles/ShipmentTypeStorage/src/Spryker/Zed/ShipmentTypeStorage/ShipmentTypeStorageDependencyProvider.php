@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentTypeStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentFacadeBridge;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeBridge;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeBridge;
 
@@ -32,6 +33,11 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**
      * @var string
@@ -62,6 +68,7 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addShipmentTypeFacade($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addShipmentFacade($container);
         $container = $this->addShipmentTypeStorageExpanderPlugins($container);
 
         return $container;
@@ -109,6 +116,22 @@ class ShipmentTypeStorageDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new ShipmentTypeStorageToStoreFacadeBridge(
                 $container->getLocator()->store()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
+            return new ShipmentTypeStorageToShipmentFacadeBridge(
+                $container->getLocator()->shipment()->facade(),
             );
         });
 

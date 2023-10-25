@@ -18,7 +18,7 @@ use SprykerTest\Zed\ShipmentTypeDataImport\ShipmentTypeDataImportCommunicationTe
  *
  * @group SprykerTest
  * @group Zed
- * @group ShipmentType
+ * @group ShipmentTypeDataImport
  * @group Communication
  * @group Plugin
  * @group DataImport

@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ShipmentTypeStorage\Business\Writer;
 
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreCriteriaTransfer;
+use Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface;
 use Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapperInterface;
+use Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReaderInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface;
 use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface;
@@ -25,7 +28,21 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
      *
      * @var string
      */
-    protected const COL_FK_SHIPMENT_TYPE = 'spy_shipment_type_store.fk_shipment_type';
+    protected const COL_SHIPMENT_TYPE_STORE_FK_SHIPMENT_TYPE = 'spy_shipment_type_store.fk_shipment_type';
+
+    /**
+     * @uses \Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap::COL_FK_SHIPMENT_TYPE
+     *
+     * @var string
+     */
+    protected const COL_SHIPMENT_METHOD_FK_SHIPMENT_TYPE = 'spy_shipment_method.fk_shipment_type';
+
+    /**
+     * @uses \Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodStoreTableMap::COL_FK_SHIPMENT_METHOD
+     *
+     * @var string
+     */
+    protected const COL_FK_SHIPMENT_METHOD = 'spy_shipment_method_store.fk_shipment_method';
 
     /**
      * @var \Spryker\Zed\ShipmentTypeStorage\Persistence\ShipmentTypeStorageEntityManagerInterface
@@ -33,9 +50,19 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
     protected ShipmentTypeStorageEntityManagerInterface $shipmentTypeStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReaderInterface
+     */
+    protected ShipmentMethodReaderInterface $shipmentMethodReader;
+
+    /**
      * @var \Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapperInterface
      */
     protected ShipmentTypeStorageMapperInterface $shipmentTypeStorageMapper;
+
+    /**
+     * @var \Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface
+     */
+    protected ShipmentTypeStorageExpanderInterface $shipmentTypeStorageExpander;
 
     /**
      * @var \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface
@@ -53,32 +80,30 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
     protected ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade;
 
     /**
-     * @var list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface>
-     */
-    protected array $shipmentTypeStorageExpanderPlugins;
-
-    /**
      * @param \Spryker\Zed\ShipmentTypeStorage\Persistence\ShipmentTypeStorageEntityManagerInterface $shipmentTypeStorageEntityManager
+     * @param \Spryker\Zed\ShipmentTypeStorage\Business\Reader\ShipmentMethodReaderInterface $shipmentMethodReader
      * @param \Spryker\Zed\ShipmentTypeStorage\Business\Mapper\ShipmentTypeStorageMapperInterface $shipmentTypeStorageMapper
+     * @param \Spryker\Zed\ShipmentTypeStorage\Business\Expander\ShipmentTypeStorageExpanderInterface $shipmentTypeStorageExpander
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface $shipmentTypeFacade
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param list<\Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface> $shipmentTypeStorageExpanderPlugins
      */
     public function __construct(
         ShipmentTypeStorageEntityManagerInterface $shipmentTypeStorageEntityManager,
+        ShipmentMethodReaderInterface $shipmentMethodReader,
         ShipmentTypeStorageMapperInterface $shipmentTypeStorageMapper,
+        ShipmentTypeStorageExpanderInterface $shipmentTypeStorageExpander,
         ShipmentTypeStorageToShipmentTypeFacadeInterface $shipmentTypeFacade,
         ShipmentTypeStorageToStoreFacadeInterface $storeFacade,
-        ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        array $shipmentTypeStorageExpanderPlugins
+        ShipmentTypeStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
     ) {
         $this->shipmentTypeStorageEntityManager = $shipmentTypeStorageEntityManager;
+        $this->shipmentMethodReader = $shipmentMethodReader;
         $this->shipmentTypeStorageMapper = $shipmentTypeStorageMapper;
+        $this->shipmentTypeStorageExpander = $shipmentTypeStorageExpander;
         $this->shipmentTypeFacade = $shipmentTypeFacade;
         $this->storeFacade = $storeFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->shipmentTypeStorageExpanderPlugins = $shipmentTypeStorageExpanderPlugins;
     }
 
     /**
@@ -100,13 +125,78 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
      */
     public function writeShipmentTypeStorageCollectionByShipmentTypeStoreEvents(array $eventEntityTransfers): void
     {
-        $shipmentTypeIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, static::COL_FK_SHIPMENT_TYPE);
+        $shipmentTypeIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, static::COL_SHIPMENT_TYPE_STORE_FK_SHIPMENT_TYPE);
 
         $this->writeShipmentTypeCollection(array_unique($shipmentTypeIds));
     }
 
     /**
-     * @param list<int> $shipmentTypeIds
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodEvents(array $eventEntityTransfers): void
+    {
+        $shipmentTypeIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, static::COL_SHIPMENT_METHOD_FK_SHIPMENT_TYPE);
+
+        $this->writeShipmentTypeCollection(array_unique($shipmentTypeIds));
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodPublishEvents(array $eventEntityTransfers): void
+    {
+        $shipmentMethodIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->writeShipmentTypeCollectionByShipmentMethodIds($shipmentMethodIds);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodStoreEvents(array $eventEntityTransfers): void
+    {
+        $shipmentMethodIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, static::COL_FK_SHIPMENT_METHOD);
+
+        $this->writeShipmentTypeCollectionByShipmentMethodIds($shipmentMethodIds);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentCarrierEvents(array $eventEntityTransfers): void
+    {
+        $shipmentCarrierIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+        $shipmentMethodCollectionTransfer = $this->shipmentMethodReader->getShipmentMethodCollectionByShipmentCarrierIds(
+            array_unique($shipmentCarrierIds),
+        );
+
+        $this->writeShipmentTypeCollection($this->extractShipmentTypeIds($shipmentMethodCollectionTransfer));
+    }
+
+    /**
+     * @param list<int> $shipmentMethodIds
+     *
+     * @return void
+     */
+    protected function writeShipmentTypeCollectionByShipmentMethodIds(array $shipmentMethodIds): void
+    {
+        $shipmentMethodCollectionTransfer = $this->shipmentMethodReader->getShipmentMethodCollectionByShipmentMethodIds(
+            array_unique($shipmentMethodIds),
+        );
+
+        $this->writeShipmentTypeCollection($this->extractShipmentTypeIds($shipmentMethodCollectionTransfer));
+    }
+
+    /**
+     * @param array<int, int> $shipmentTypeIds
      *
      * @return void
      */
@@ -144,7 +234,10 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
                 [],
             );
 
-            $shipmentTypeStorageTransfers = $this->executeShipmentTypeStorageExpanderPlugins($shipmentTypeStorageTransfers);
+            $shipmentTypeStorageTransfers = $this->shipmentTypeStorageExpander->expandShipmentTypeStorageTransfers(
+                $shipmentTypeStorageTransfers,
+                $storeName,
+            );
             $this->writeShipmentTypeStorageTransfersForStore($shipmentTypeStorageTransfers, $storeName);
         }
     }
@@ -224,16 +317,21 @@ class ShipmentTypeStorageWriter implements ShipmentTypeStorageWriterInterface
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $shipmentTypeStorageTransfers
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
      *
-     * @return list<\Generated\Shared\Transfer\ShipmentTypeStorageTransfer>
+     * @return array<int, int>
      */
-    protected function executeShipmentTypeStorageExpanderPlugins(array $shipmentTypeStorageTransfers): array
+    protected function extractShipmentTypeIds(ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer): array
     {
-        foreach ($this->shipmentTypeStorageExpanderPlugins as $shipmentTypeStorageExpanderPlugin) {
-            $shipmentTypeStorageTransfers = $shipmentTypeStorageExpanderPlugin->expand($shipmentTypeStorageTransfers);
+        $shipmentTypeIds = [];
+        foreach ($shipmentMethodCollectionTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getShipmentType() === null) {
+                continue;
+            }
+
+            $shipmentTypeIds[] = $shipmentMethodTransfer->getShipmentTypeOrFail()->getIdShipmentTypeOrFail();
         }
 
-        return $shipmentTypeStorageTransfers;
+        return array_unique($shipmentTypeIds);
     }
 }

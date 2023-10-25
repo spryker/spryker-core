@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
+use Propel\Runtime\Collection\Collection;
 
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
@@ -163,6 +165,28 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         }
 
         return $shipmentMethodTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function mapShipmentMethodEntitiesToShipmentMethodCollectionTransfer(
+        Collection $shipmentMethodEntities,
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer {
+        foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
+            $shipmentMethodCollectionTransfer->addShipmentMethod(
+                $this->mapShipmentMethodEntityToShipmentMethodTransfer(
+                    $shipmentMethodEntity,
+                    new ShipmentMethodTransfer(),
+                ),
+            );
+        }
+
+        return $shipmentMethodCollectionTransfer;
     }
 
     /**

@@ -10,6 +10,7 @@
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="key" type="string"/>
+        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageCriteria" strict="true">
@@ -44,6 +45,27 @@
     <transfer name="ShipmentTypeCriteria" strict="true">
         <property name="shipmentTypeConditions" type="ShipmentTypeConditions"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodCollection" strict="true">
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodConditions" strict="true">
+        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
+        <property name="shipmentCarrierIds" type="int[]" singular="idShipmentCarrier"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="isActive" type="bool"/>
+        <property name="isActiveShipmentCarrier" type="bool"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodCriteria" strict="true">
+        <property name="shipmentMethodConditions" type="ShipmentMethodConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int"/>
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
     </transfer>
 
     <transfer name="StoreCriteria">

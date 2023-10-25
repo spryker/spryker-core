@@ -8,7 +8,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/service-point-storage": "^0.4.0",
         "spryker/shipment-type-service-point": "^0.4.0",
-        "spryker/shipment-type-storage": "^0.1.0",
+        "spryker/shipment-type-storage": "^0.2.0",
         "spryker/shipment-type-storage-extension": "^0.1.1",
         "spryker/transfer": "^3.27.0"
     },

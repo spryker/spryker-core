@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -183,4 +185,13 @@ interface ShipmentRepositoryInterface
     public function getSalesShipmentCollection(
         SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
     ): SalesShipmentCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(
+        ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+    ): ShipmentMethodCollectionTransfer;
 }

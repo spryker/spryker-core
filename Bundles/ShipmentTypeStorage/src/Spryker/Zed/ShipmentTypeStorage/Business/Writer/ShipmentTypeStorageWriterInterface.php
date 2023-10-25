@@ -22,4 +22,32 @@ interface ShipmentTypeStorageWriterInterface
      * @return void
      */
     public function writeShipmentTypeStorageCollectionByShipmentTypeStoreEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodPublishEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodStoreEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentCarrierEvents(array $eventEntityTransfers): void;
 }

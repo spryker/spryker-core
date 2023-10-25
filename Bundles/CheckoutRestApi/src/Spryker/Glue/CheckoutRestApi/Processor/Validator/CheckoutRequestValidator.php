@@ -79,6 +79,11 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestErrorCollectionTransfer {
         $restErrorCollectionTransfer = $this->validateCustomer($restRequest, new RestErrorCollectionTransfer());
+        $restErrorCollectionTransfer = $this->validateGuestCustomerData(
+            $restRequest,
+            $restCheckoutRequestAttributesTransfer,
+            $restErrorCollectionTransfer,
+        );
         $restErrorCollectionTransfer = $this->validatePayments(
             $restCheckoutRequestAttributesTransfer,
             $restErrorCollectionTransfer,
@@ -116,6 +121,34 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         }
 
         return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function validateGuestCustomerData(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
+        if (
+            $restRequest->getRestUser() === null
+            || $restRequest->getRestUser()->getSurrogateIdentifier()
+            || $this->isRequiredGuestCustomerDataProvided($restCheckoutRequestAttributesTransfer)
+        ) {
+            return $restErrorCollectionTransfer;
+        }
+
+        $resErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CUSTOMER_DATA_MISSING)
+            ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CUSTOMER_DATA_MISSING);
+
+        return $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
     }
 
     /**
@@ -196,6 +229,23 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         }
 
         return $restErrorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function isRequiredGuestCustomerDataProvided(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): bool
+    {
+        if ($restCheckoutRequestAttributesTransfer->getCustomer() === null) {
+            return false;
+        }
+
+        $requiredCustomerFieldsForGuestCheckout = $this->config->getRequiredCustomerRequestDataForGuestCheckout();
+        $restCustomerData = $restCheckoutRequestAttributesTransfer->getCustomerOrFail()->modifiedToArray(true, true);
+
+        return $requiredCustomerFieldsForGuestCheckout === array_intersect($requiredCustomerFieldsForGuestCheckout, array_keys($restCustomerData));
     }
 
     /**

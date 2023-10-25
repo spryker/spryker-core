@@ -47,7 +47,7 @@ class ExpandShipmentMethodCollectionWithShipmentTypeTest extends Unit
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
         ]);
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
-        $this->tester->createShipmentMethodShipmentTypeRelation(
+        $this->tester->haveShipmentMethodShipmentTypeRelation(
             $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
         );

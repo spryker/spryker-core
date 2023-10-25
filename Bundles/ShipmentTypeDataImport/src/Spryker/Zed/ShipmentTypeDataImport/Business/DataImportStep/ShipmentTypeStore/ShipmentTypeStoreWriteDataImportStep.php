@@ -57,7 +57,6 @@ class ShipmentTypeStoreWriteDataImportStep extends PublishAwareStep implements D
         $shipmentTypeStoreEntity->save();
 
         $this->addPublishEvents(static::SHIPMENT_TYPE_PUBLISH, $shipmentTypeStoreEntity->getFkShipmentType());
-
     }
 
     /**

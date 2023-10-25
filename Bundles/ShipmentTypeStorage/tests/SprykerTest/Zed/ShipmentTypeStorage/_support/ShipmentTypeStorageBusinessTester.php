@@ -8,13 +8,23 @@
 namespace SprykerTest\Zed\ShipmentTypeStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Codeception\Stub\Expected;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeStorageTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeStorage;
 use Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeStorageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use Spryker\Client\Kernel\Container;
+use Spryker\Zed\ShipmentType\Communication\Plugin\Shipment\ShipmentTypeShipmentMethodCollectionExpanderPlugin;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface;
+use Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface;
+use Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface;
 
 /**
  * Inherited Methods
@@ -36,6 +46,25 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 class ShipmentTypeStorageBusinessTester extends Actor
 {
     use _generated\ShipmentTypeStorageBusinessTesterActions;
+
+    /**
+     * @uses \Spryker\Client\Queue\QueueDependencyProvider::QUEUE_ADAPTERS
+     *
+     * @var string
+     */
+    protected const QUEUE_ADAPTERS = 'queue adapters';
+
+    /**
+     * @var string
+     */
+    protected const COL_FK_SHIPMENT_TYPE = 'FkShipmentType';
+
+    /**
+     * @uses \Spryker\Zed\Shipment\ShipmentDependencyProvider::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER
+     *
+     * @var string
+     */
+    protected const PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER = 'PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER';
 
     /**
      * @param int $idShipmentType
@@ -121,6 +150,89 @@ class ShipmentTypeStorageBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<string, mixed> $shipmentMethodSeedData
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function haveShipmentMethodWithShipmentTypeRelation(
+        ShipmentTypeTransfer $shipmentTypeTransfer,
+        StoreTransfer $storeTransfer,
+        array $shipmentMethodSeedData = []
+    ): ShipmentMethodTransfer {
+        $shipmentMethodTransfer = $this->haveShipmentMethod(
+            $shipmentMethodSeedData,
+            [],
+            [],
+            [$storeTransfer->getIdStoreOrFail()],
+        );
+
+        $this->haveShipmentMethodShipmentTypeRelation(
+            $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+            $shipmentTypeTransfer->getIdShipmentTypeOrFail(),
+        );
+
+        return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function setUpShipmentTypeShipmentMethodCollectionExpanderPluginDependency(): void
+    {
+        $this->setDependency(static::PLUGINS_SHIPMENT_METHOD_COLLECTION_EXPANDER, function () {
+            return [
+                new ShipmentTypeShipmentMethodCollectionExpanderPlugin(),
+            ];
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function setUpQueueAdapter(): void
+    {
+        $this->setDependency(static::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorageExtension\Dependency\Plugin\ShipmentTypeStorageExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function getShipmentTypeStorageExpanderPluginMock(): ShipmentTypeStorageExpanderPluginInterface
+    {
+        return Stub::makeEmpty(ShipmentTypeStorageExpanderPluginInterface::class, [
+            'expand' => Expected::once(function (array $shipmentTypeStorageTransfers) {
+                return $shipmentTypeStorageTransfers;
+            }),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToShipmentTypeFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function getShipmentTypeFacadeMock(): ShipmentTypeStorageToShipmentTypeFacadeInterface
+    {
+        return Stub::makeEmpty(ShipmentTypeStorageToShipmentTypeFacadeInterface::class, [
+            'getShipmentTypeCollection' => new ShipmentTypeCollectionTransfer(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentTypeStorage\Dependency\Facade\ShipmentTypeStorageToStoreFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function getStoreFacadeMock(): ShipmentTypeStorageToStoreFacadeInterface
+    {
+        return Stub::makeEmpty(ShipmentTypeStorageToStoreFacadeInterface::class, [
+            'getStoreCollection' => Expected::never(),
+        ]);
+    }
+
+    /**
      * @return \Orm\Zed\ShipmentTypeStorage\Persistence\SpyShipmentTypeStorageQuery
      */
     protected function getShipmentTypeStorageQuery(): SpyShipmentTypeStorageQuery
@@ -134,5 +246,13 @@ class ShipmentTypeStorageBusinessTester extends Actor
     protected function getStoreQuery(): SpyStoreQuery
     {
         return SpyStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function getShipmentMethodQuery(): SpyShipmentMethodQuery
+    {
+        return SpyShipmentMethodQuery::create();
     }
 }

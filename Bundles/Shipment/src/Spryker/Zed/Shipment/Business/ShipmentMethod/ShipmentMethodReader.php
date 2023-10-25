@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Business\Expander\ShipmentMethodExpanderInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
@@ -112,6 +114,18 @@ class ShipmentMethodReader implements ShipmentMethodReaderInterface
         $shipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
 
         return $this->shipmentMethodExpander->expandShipmentMethodTransfers($shipmentMethodTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer): ShipmentMethodCollectionTransfer
+    {
+        $shipmentMethodsCollectionTransfer = $this->shipmentRepository->getShipmentMethodCollection($shipmentMethodCriteriaTransfer);
+
+        return $this->shipmentMethodExpander->expandShipmentMethodCollectionTransfer($shipmentMethodsCollectionTransfer);
     }
 
     /**

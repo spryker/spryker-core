@@ -21,6 +21,8 @@ class ShipmentDataCheckoutRequestValidatorPlugin extends AbstractPlugin implemen
      * {@inheritDoc}
      * - Validates if `RestCheckoutRequestAttributesTransfer` provides shipment data per item or on the top level.
      * - Mixing the multi-shipment and single-shipment is not valid.
+     * - Executes stack of {@link \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface} plugins if {@link \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig::shouldExecuteShippingAddressValidationStrategyPlugins()} return true.
+     * - The original validation will be replaced by the plugin validation if an applicable plugin is found.
      * - Expects `RestCheckoutRequestAttributesTransfer.shipment` in case single-shipment to be provided.
      * - Expects `RestCheckoutRequestAttributesTransfer.shipments` in case multi-shipment to be provided.
      *

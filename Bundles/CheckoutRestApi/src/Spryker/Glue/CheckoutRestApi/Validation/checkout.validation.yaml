@@ -102,12 +102,14 @@ checkout:
         idCart:
             - NotBlank
         customer:
-            - Collection:
-                  fields:
-                      salutation:
-                          - NotBlank
-                      email:
-                          - EmailConstraint
+            - Optional:
+                  constraints:
+                      - Collection:
+                            fields:
+                                salutation:
+                                    - NotBlank
+                                email:
+                                    - EmailConstraint
         billingAddress:
             - Collection:
                   fields:

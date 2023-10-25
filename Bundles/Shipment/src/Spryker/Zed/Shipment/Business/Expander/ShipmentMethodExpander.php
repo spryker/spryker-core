@@ -35,7 +35,7 @@ class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
      */
     public function expandShipmentMethodTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer
     {
-        $shipmentMethodTransfers = $this->executeShipmentMethodCollectionExpanderPlugins([$shipmentMethodTransfer]);
+        $shipmentMethodTransfers = $this->executeShipmentMethodCollectionExpanderPluginsForShipmentMethodTransfers([$shipmentMethodTransfer]);
 
         return $shipmentMethodTransfers[0];
     }
@@ -47,7 +47,17 @@ class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
      */
     public function expandShipmentMethodTransfers(array $shipmentMethodTransfers): array
     {
-        return $this->executeShipmentMethodCollectionExpanderPlugins($shipmentMethodTransfers);
+        return $this->executeShipmentMethodCollectionExpanderPluginsForShipmentMethodTransfers($shipmentMethodTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function expandShipmentMethodCollectionTransfer(ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer): ShipmentMethodCollectionTransfer
+    {
+        return $this->executeShipmentMethodCollectionExpanderPlugins($shipmentMethodCollectionTransfer);
     }
 
     /**
@@ -59,7 +69,7 @@ class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
         ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
     ): ShipmentMethodsCollectionTransfer {
         $shipmentMethodTransfers = $this->extractShipmentMethodTransfersFromShipmentMethodsCollectionTransfer($shipmentMethodsCollectionTransfer);
-        $shipmentMethodTransfers = $this->executeShipmentMethodCollectionExpanderPlugins($shipmentMethodTransfers);
+        $shipmentMethodTransfers = $this->executeShipmentMethodCollectionExpanderPluginsForShipmentMethodTransfers($shipmentMethodTransfers);
         $indexedShipmentMethodTransfers = $this->getShipmentMethodTransfersIndexedByShipmentMethodIds($shipmentMethodTransfers);
 
         foreach ($shipmentMethodsCollectionTransfer->getShipmentMethods() as $shipmentMethodsTransfer) {
@@ -74,16 +84,28 @@ class ShipmentMethodExpander implements ShipmentMethodExpanderInterface
      *
      * @return list<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
-    protected function executeShipmentMethodCollectionExpanderPlugins(array $shipmentMethodTransfers): array
+    protected function executeShipmentMethodCollectionExpanderPluginsForShipmentMethodTransfers(array $shipmentMethodTransfers): array
     {
         $shipmentMethodCollectionTransfer = (new ShipmentMethodCollectionTransfer())
             ->setShipmentMethods((new ArrayObject($shipmentMethodTransfers)));
+        $shipmentMethodCollectionTransfer = $this->executeShipmentMethodCollectionExpanderPlugins($shipmentMethodCollectionTransfer);
 
+        return $shipmentMethodCollectionTransfer->getShipmentMethods()->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    protected function executeShipmentMethodCollectionExpanderPlugins(
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer {
         foreach ($this->shipmentMethodCollectionExpanderPlugins as $shipmentMethodCollectionExpanderPlugin) {
             $shipmentMethodCollectionTransfer = $shipmentMethodCollectionExpanderPlugin->expand($shipmentMethodCollectionTransfer);
         }
 
-        return $shipmentMethodCollectionTransfer->getShipmentMethods()->getArrayCopy();
+        return $shipmentMethodCollectionTransfer;
     }
 
     /**

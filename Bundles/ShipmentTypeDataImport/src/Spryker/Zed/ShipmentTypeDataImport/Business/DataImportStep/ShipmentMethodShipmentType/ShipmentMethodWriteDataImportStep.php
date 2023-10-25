@@ -9,11 +9,19 @@ namespace Spryker\Zed\ShipmentTypeDataImport\Business\DataImportStep\ShipmentMet
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentTypeDataImport\Business\DataSet\ShipmentMethodShipmentTypeDataSetInterface;
 
-class ShipmentMethodWriteDataImportStep implements DataImportStepInterface
+class ShipmentMethodWriteDataImportStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ShipmentTypeStorage\ShipmentTypeStorageConfig::SHIPMENT_METHOD_PUBLISH
+     *
+     * @var string
+     */
+    protected const SHIPMENT_METHOD_PUBLISH = 'Shipment.shipment_method.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -29,7 +37,11 @@ class ShipmentMethodWriteDataImportStep implements DataImportStepInterface
             $dataSet[ShipmentMethodShipmentTypeDataSetInterface::ID_SHIPMENT_TYPE],
         );
 
-        $shipmentMethodEntity->save();
+        if ($shipmentMethodEntity->isModified()) {
+            $shipmentMethodEntity->save();
+
+            $this->addPublishEvents(static::SHIPMENT_METHOD_PUBLISH, $shipmentMethodEntity->getIdShipmentMethod());
+        }
     }
 
     /**

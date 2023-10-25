@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -585,5 +587,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
     ): SalesShipmentCollectionTransfer {
         return $this->getRepository()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(
+        ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+    ): ShipmentMethodCollectionTransfer {
+        return $this->getFactory()
+            ->createShipmentMethodReader()
+            ->getShipmentMethodCollection($shipmentMethodCriteriaTransfer);
     }
 }

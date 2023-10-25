@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface ShipmentMethodReaderInterface
@@ -36,4 +38,13 @@ interface ShipmentMethodReaderInterface
      * @return list<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getActiveShipmentMethods(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(
+        ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+    ): ShipmentMethodCollectionTransfer;
 }

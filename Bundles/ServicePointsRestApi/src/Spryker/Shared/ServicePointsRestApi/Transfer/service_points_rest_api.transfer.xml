@@ -16,12 +16,12 @@
     </transfer>
 
     <transfer name="RestCheckoutData">
-        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint" strict="true"/>
         <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="RestCheckoutDataResponseAttributes">
-        <property name="selectedServicePoints" type="RestServicePoint[]" singular="selectedServicePoint"/>
+        <property name="selectedServicePoints" type="RestServicePoint[]" singular="selectedServicePoint" strict="true"/>
     </transfer>
 
     <transfer name="ServicePoint" strict="true">
@@ -94,7 +94,7 @@
     </transfer>
 
     <transfer name="RestCheckoutRequestAttributes">
-        <property name="servicePoints" type="RestServicePoint[]" restRequestParameter="yes" singular="servicePoint"/>
+        <property name="servicePoints" type="RestServicePoint[]" restRequestParameter="yes" singular="servicePoint" strict="true"/>
     </transfer>
 
     <transfer name="RestServicePoint" strict="true">

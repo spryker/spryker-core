@@ -180,6 +180,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         $this->getFactory()
             ->createShipmentMethodStoreQuery()
             ->filterByFkShipmentMethod($idShipmentMethod)
+            ->find()
             ->delete();
     }
 
@@ -232,6 +233,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
             ->createShipmentMethodStoreQuery()
             ->filterByFkShipmentMethod($idShipmentMethod)
             ->filterByFkStore_In($idStores)
+            ->find()
             ->delete();
     }
 

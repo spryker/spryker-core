@@ -10,4 +10,10 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="RestCheckoutRequestAttributes">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+    </transfer>
+
 </transfers>

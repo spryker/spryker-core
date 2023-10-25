@@ -38,6 +38,9 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Validator\AddressSourceCheckoutDataV
 use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidator;
 use Spryker\Glue\ShipmentsRestApi\Processor\Validator\ShipmentCheckoutDataValidatorInterface;
 
+/**
+ * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig getConfig()
+ */
 class ShipmentsRestApiFactory extends AbstractFactory
 {
     /**
@@ -113,7 +116,10 @@ class ShipmentsRestApiFactory extends AbstractFactory
      */
     public function createShipmentCheckoutDataValidator(): ShipmentCheckoutDataValidatorInterface
     {
-        return new ShipmentCheckoutDataValidator();
+        return new ShipmentCheckoutDataValidator(
+            $this->getConfig(),
+            $this->getShippingAddressValidationStrategyPlugins(),
+        );
     }
 
     /**
@@ -168,6 +174,14 @@ class ShipmentsRestApiFactory extends AbstractFactory
     public function getAddressSourceCheckerPlugins(): array
     {
         return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_ADDRESS_SOURCE_CHECKER);
+    }
+
+    /**
+     * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface>
+     */
+    public function getShippingAddressValidationStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY);
     }
 
     /**

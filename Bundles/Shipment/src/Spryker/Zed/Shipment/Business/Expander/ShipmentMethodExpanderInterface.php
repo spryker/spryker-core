@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Expander;
 
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
@@ -25,6 +26,15 @@ interface ShipmentMethodExpanderInterface
      * @return list<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function expandShipmentMethodTransfers(array $shipmentMethodTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function expandShipmentMethodCollectionTransfer(
+        ShipmentMethodCollectionTransfer $shipmentMethodCollectionTransfer
+    ): ShipmentMethodCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer

@@ -43,7 +43,7 @@ class ShipmentTypeStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This event will be used for `spy_shipment_type_store` entity changes.
+     * - This event will be used for `spy_shipment_type_store` entity creation.
      *
      * @api
      *
@@ -63,6 +63,66 @@ class ShipmentTypeStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - This event will be used for `spy_shipment_method` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_METHOD_CREATE = 'Entity.spy_shipment_method.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_shipment_method` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_METHOD_UPDATE = 'Entity.spy_shipment_method.update';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_shipment_method` entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_METHOD_DELETE = 'Entity.spy_shipment_method.delete';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_shipment_method_store` entity creation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_METHOD_STORE_CREATE = 'Entity.spy_shipment_method_store.create';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_shipment_method_store` entity deletion.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_METHOD_STORE_DELETE = 'Entity.spy_shipment_method_store.delete';
+
+    /**
+     * Specification:
+     * - This event will be used for `spy_shipment_carrier` entity changes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_SHIPMENT_CARRIER_UPDATE = 'Entity.spy_shipment_carrier.update';
+
+    /**
+     * Specification:
      * - This event will be used for `ShipmentType` publish.
      *
      * @api
@@ -70,6 +130,26 @@ class ShipmentTypeStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const SHIPMENT_TYPE_PUBLISH = 'ShipmentType.shipment_type.publish';
+
+    /**
+     * Specification:
+     *  - This event will be used for `ShipmentMethod` publish.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SHIPMENT_METHOD_PUBLISH = 'Shipment.shipment_method.publish';
+
+    /**
+     * Specification:
+     *  - This event will be used for `ShipmentCarrier` publish.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SHIPMENT_CARRIER_PUBLISH = 'Shipment.shipment_carrier.publish';
 
     /**
      * Specification:

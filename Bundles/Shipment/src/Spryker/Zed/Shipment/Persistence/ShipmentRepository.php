@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
 use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -725,13 +727,13 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             $salesShipmentQuery->leftJoinWithSpySalesOrderItem();
         }
         $salesShipmentQuery = $this->applySalesShipmentFilters($salesShipmentQuery, $salesShipmentCriteriaTransfer);
-        $salesShipmentQuery = $this->applySalesShipmentSorting($salesShipmentQuery, $salesShipmentCriteriaTransfer);
+        $salesShipmentQuery = $this->applySortingToQuery($salesShipmentQuery, $salesShipmentCriteriaTransfer->getSortCollection());
 
         $paginationTransfer = $salesShipmentCriteriaTransfer->getPagination();
         $salesShipmentCollectionTransfer = new SalesShipmentCollectionTransfer();
 
         if ($paginationTransfer !== null) {
-            $salesShipmentQuery = $this->applySalesShipmentPagination($salesShipmentQuery, $paginationTransfer);
+            $salesShipmentQuery = $this->applyPaginationToQuery($salesShipmentQuery, $paginationTransfer);
             $salesShipmentCollectionTransfer->setPagination($paginationTransfer);
         }
 
@@ -746,6 +748,40 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
                 $salesShipmentEntities,
                 $salesShipmentCollectionTransfer,
                 $salesShipmentCriteriaTransfer->getSalesShipmentConditions(),
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodCollectionTransfer
+     */
+    public function getShipmentMethodCollection(
+        ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+    ): ShipmentMethodCollectionTransfer {
+        $shipmentMethodQuery = $this->getFactory()->createShipmentMethodQuery();
+
+        $shipmentMethodQuery = $this->applyShipmentMethodFilters($shipmentMethodQuery, $shipmentMethodCriteriaTransfer);
+        $shipmentMethodQuery = $this->applySortingToQuery($shipmentMethodQuery, $shipmentMethodCriteriaTransfer->getSortCollection());
+
+        $paginationTransfer = $shipmentMethodCriteriaTransfer->getPagination();
+        $shipmentMethodCollectionTransfer = new ShipmentMethodCollectionTransfer();
+
+        if ($paginationTransfer !== null) {
+            $shipmentMethodQuery = $this->applyPaginationToQuery($shipmentMethodQuery, $paginationTransfer);
+            $shipmentMethodCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $shipmentMethodEntities = $shipmentMethodQuery->find();
+        if ($shipmentMethodEntities->count() === 0) {
+            return $shipmentMethodCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntitiesToShipmentMethodCollectionTransfer(
+                $shipmentMethodEntities,
+                $shipmentMethodCollectionTransfer,
             );
     }
 
@@ -858,45 +894,93 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery $salesShipmentQuery
-     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+     * @module Store
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery $shipmentMethodQuery
+     * @param \Generated\Shared\Transfer\ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    protected function applySalesShipmentSorting(
-        SpySalesShipmentQuery $salesShipmentQuery,
-        SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
-    ): SpySalesShipmentQuery {
-        $sortCollection = $salesShipmentCriteriaTransfer->getSortCollection();
-        foreach ($sortCollection as $sortTransfer) {
-            $salesShipmentQuery->orderBy(
+    protected function applyShipmentMethodFilters(
+        SpyShipmentMethodQuery $shipmentMethodQuery,
+        ShipmentMethodCriteriaTransfer $shipmentMethodCriteriaTransfer
+    ): SpyShipmentMethodQuery {
+        $shipmentMethodConditionsTransfer = $shipmentMethodCriteriaTransfer->getShipmentMethodConditions();
+        if ($shipmentMethodConditionsTransfer === null) {
+            return $shipmentMethodQuery;
+        }
+
+        if ($shipmentMethodConditionsTransfer->getShipmentMethodIds() !== []) {
+            $shipmentMethodQuery->filterByIdShipmentMethod_In($shipmentMethodConditionsTransfer->getShipmentMethodIds());
+        }
+
+        if ($shipmentMethodConditionsTransfer->getShipmentCarrierIds() !== []) {
+            $shipmentMethodQuery->filterByFkShipmentCarrier_In($shipmentMethodConditionsTransfer->getShipmentCarrierIds());
+        }
+
+        if ($shipmentMethodConditionsTransfer->getStoreNames() !== []) {
+            $shipmentMethodQuery
+                ->groupByIdShipmentMethod()
+                ->useShipmentMethodStoreQuery()
+                    ->useStoreQuery()
+                        ->filterByName_In($shipmentMethodConditionsTransfer->getStoreNames())
+                    ->endUse()
+                ->endUse();
+        }
+
+        if ($shipmentMethodConditionsTransfer->getIsActive() !== null) {
+            $shipmentMethodQuery->filterByIsActive($shipmentMethodConditionsTransfer->getIsActiveOrFail());
+        }
+
+        if ($shipmentMethodConditionsTransfer->getIsActiveShipmentCarrier() !== null) {
+            $shipmentMethodQuery
+                ->useShipmentCarrierQuery()
+                    ->filterByIsActive($shipmentMethodConditionsTransfer->getIsActiveShipmentCarrierOrFail())
+                ->endUse();
+        }
+
+        return $shipmentMethodQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applySortingToQuery(ModelCriteria $query, ArrayObject $sortTransfers): ModelCriteria
+    {
+        foreach ($sortTransfers as $sortTransfer) {
+            $query->orderBy(
                 $sortTransfer->getFieldOrFail(),
                 $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
             );
         }
 
-        return $salesShipmentQuery;
+        return $query;
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery $salesShipmentQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applySalesShipmentPagination(
-        SpySalesShipmentQuery $salesShipmentQuery,
+    protected function applyPaginationToQuery(
+        ModelCriteria $query,
         PaginationTransfer $paginationTransfer
     ): ModelCriteria {
         if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
-            $salesShipmentQuery->offset($paginationTransfer->getOffsetOrFail())
+            $paginationTransfer->setNbResults($query->count());
+
+            $query->offset($paginationTransfer->getOffsetOrFail())
                 ->setLimit($paginationTransfer->getLimitOrFail());
 
-            return $salesShipmentQuery;
+            return $query;
         }
 
         if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage() !== null) {
-            $paginationModel = $salesShipmentQuery->paginate(
+            $paginationModel = $query->paginate(
                 $paginationTransfer->getPageOrFail(),
                 $paginationTransfer->getMaxPerPageOrFail(),
             );
@@ -909,6 +993,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             return $paginationModel->getQuery();
         }
 
-        return $salesShipmentQuery;
+        return $query;
     }
 }

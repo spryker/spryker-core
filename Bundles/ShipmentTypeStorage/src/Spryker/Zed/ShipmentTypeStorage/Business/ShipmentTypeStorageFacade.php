@@ -54,6 +54,70 @@ class ShipmentTypeStorageFacade extends AbstractFacade implements ShipmentTypeSt
      *
      * @api
      *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createShipmentTypeStorageWriter()
+            ->writeShipmentTypeStorageCollectionByShipmentMethodEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodPublishEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createShipmentTypeStorageWriter()
+            ->writeShipmentTypeStorageCollectionByShipmentMethodPublishEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentMethodStoreEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createShipmentTypeStorageWriter()
+            ->writeShipmentTypeStorageCollectionByShipmentMethodStoreEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeShipmentTypeStorageCollectionByShipmentCarrierEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createShipmentTypeStorageWriter()
+            ->writeShipmentTypeStorageCollectionByShipmentCarrierEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param list<int> $shipmentTypeIds
      *
