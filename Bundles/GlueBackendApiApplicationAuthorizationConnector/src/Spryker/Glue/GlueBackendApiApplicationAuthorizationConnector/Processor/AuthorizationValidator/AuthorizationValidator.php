@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\RouteTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface;
 use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationValidator implements AuthorizationValidatorInterface
@@ -94,6 +95,10 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
      */
     public function validate(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer
     {
+        if ($glueRequestTransfer->getMethod() === Request::METHOD_OPTIONS) {
+            return (new GlueRequestValidationTransfer())->setIsValid(true);
+        }
+
         $routeAuthorizationConfigTransfers = $this->extractRouteAuthorizationDefaultConfiguration($glueRequestTransfer, $resource);
 
         $authorizationRequestTransfer = $this->createAuthorizationRequestTransfer($routeAuthorizationConfigTransfers, $glueRequestTransfer);

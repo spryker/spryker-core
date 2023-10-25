@@ -18,6 +18,7 @@ use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Plugin\GlueS
 use SprykerTest\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Stub\TestAuthorizationStrategyAwareResourceRoutePlugin;
 use SprykerTest\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Stub\TestDefaultAuthorizationStrategyAwareResourceRoutePlugin;
 use SprykerTest\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Stub\TestUnsupportResourcePlugin;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -192,6 +193,22 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
 
         //Assert
         $this->assertFalse($glueRequestValidationTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldSkipValidationForOptionsPreflightRequest(): void
+    {
+        //Arrange
+        $glueRequestTransfer = (new GlueRequestTransfer())->setMethod(Request::METHOD_OPTIONS);
+        $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
+
+        //Act
+        $glueRequestValidationTransfer = (new AuthorizationRequestAfterRoutingValidatorPlugin())->validate($glueRequestTransfer, $stubResource);
+
+        //Assert
+        $this->assertTrue($glueRequestValidationTransfer->getIsValid());
     }
 
     /**

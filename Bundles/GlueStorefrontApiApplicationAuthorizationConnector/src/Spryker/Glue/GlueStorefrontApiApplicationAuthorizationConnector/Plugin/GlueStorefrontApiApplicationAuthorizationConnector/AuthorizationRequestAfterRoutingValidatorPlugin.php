@@ -20,6 +20,7 @@ class AuthorizationRequestAfterRoutingValidatorPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
+     * - Skips validation for OPTIONS requests.
      * - Performs the authorization check on the resource.
      * - Resource can implement `AuthorizationStrategyAwareResourceRoutePluginInterface` or `DefaultAuthorizationStrategyAwareResourceRoutePluginInterface`.
      * - If the plugins have implemented one of these interfaces, the `RouteAuthorizationConfigTransfer` configuration is used.
