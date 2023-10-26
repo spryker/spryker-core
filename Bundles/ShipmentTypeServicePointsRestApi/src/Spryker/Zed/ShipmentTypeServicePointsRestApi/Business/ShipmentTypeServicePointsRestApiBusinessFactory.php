@@ -34,6 +34,7 @@ class ShipmentTypeServicePointsRestApiBusinessFactory extends AbstractBusinessFa
         return new MultiShipmentQuoteMapper(
             $this->createShipmentTypeReader(),
             $this->createCustomerReader(),
+            $this->getShipmentFacade(),
         );
     }
 
@@ -48,6 +49,7 @@ class ShipmentTypeServicePointsRestApiBusinessFactory extends AbstractBusinessFa
         return new SingleShipmentQuoteMapper(
             $this->createShipmentTypeReader(),
             $this->createCustomerReader(),
+            $this->getShipmentFacade(),
         );
     }
 

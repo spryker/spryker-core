@@ -32,7 +32,7 @@ class ShipmentTypeServicePointsRestApiFacade extends AbstractFacade implements S
     ): QuoteTransfer {
         return $this->getFactory()
             ->createQuoteMapperStrategyResolver()
-            ->resolve($quoteTransfer)
+            ->resolve($restCheckoutRequestAttributesTransfer)
             ->mapCustomerAddressDataToShippingAddresses($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

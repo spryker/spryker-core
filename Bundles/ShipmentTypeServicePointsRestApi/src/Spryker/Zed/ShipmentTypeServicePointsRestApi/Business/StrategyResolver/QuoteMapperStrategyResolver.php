@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\StrategyResolver;
 
 use Closure;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Mapper\QuoteMapperInterface;
 
@@ -41,13 +41,13 @@ class QuoteMapperStrategyResolver implements QuoteMapperStrategyResolverInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Mapper\QuoteMapperInterface
      */
-    public function resolve(QuoteTransfer $quoteTransfer): QuoteMapperInterface
+    public function resolve(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): QuoteMapperInterface
     {
-        if ($quoteTransfer->getShipment() !== null) {
+        if ($restCheckoutRequestAttributesTransfer->getShipment() !== null) {
             $this->assertRequiredStrategyContainerItems(static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT);
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);

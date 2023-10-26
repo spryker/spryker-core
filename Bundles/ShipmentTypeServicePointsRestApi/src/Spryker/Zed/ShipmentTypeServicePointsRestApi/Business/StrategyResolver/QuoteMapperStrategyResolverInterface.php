@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\StrategyResolver;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Mapper\QuoteMapperInterface;
 
 /**
@@ -16,9 +16,9 @@ use Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Mapper\QuoteMapperInte
 interface QuoteMapperStrategyResolverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Mapper\QuoteMapperInterface
      */
-    public function resolve(QuoteTransfer $quoteTransfer): QuoteMapperInterface;
+    public function resolve(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): QuoteMapperInterface;
 }

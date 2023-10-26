@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ShipmentTypeServicePointsRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\RestShipmentTransfer;
 use SprykerTest\Zed\ShipmentTypeServicePointsRestApi\ShipmentTypeServicePointsRestApiBusinessTester as ShipmentTypeServicePointsRestApiBusinessTesterAlias;
 
 /**
@@ -71,7 +72,11 @@ class ShipmentTypeServicePointsRestApiFacadeTest extends Unit
             AddressTransfer::LAST_NAME => null,
             AddressTransfer::SALUTATION => null,
         ]);
-        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransfer($customerTransfer);
+        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransferWithSingleShipment(
+            $customerTransfer,
+            $shipmentMethodTransfer,
+        );
+        $restCheckoutRequestAttributesTransfer->setShipment((new RestShipmentTransfer())->setIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethodOrFail()));
 
         // Act
         $quoteTransfer = $this->tester->getFacade()->mapCustomerAddressDataToShippingAddresses(
@@ -83,6 +88,40 @@ class ShipmentTypeServicePointsRestApiFacadeTest extends Unit
         $this->assertSame($customerTransfer->getFirstNameOrFail(), $quoteTransfer->getShippingAddressOrFail()->getFirstName());
         $this->assertSame($customerTransfer->getLastNameOrFail(), $quoteTransfer->getShippingAddressOrFail()->getLastName());
         $this->assertSame($customerTransfer->getSalutationOrFail(), $quoteTransfer->getShippingAddressOrFail()->getSalutation());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCustomerAddressDataToShippingAddressesExpandsQuoteLevelShipmentShippingAddressWithCustomerData(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethodWithApplicableShipmentType($storeTransfer);
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $quoteTransfer = $this->tester->createQuoteTransfer($storeTransfer, $shipmentMethodTransfer, [
+            AddressTransfer::FIRST_NAME => null,
+            AddressTransfer::LAST_NAME => null,
+            AddressTransfer::SALUTATION => null,
+        ]);
+        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransferWithSingleShipment(
+            $customerTransfer,
+            $shipmentMethodTransfer,
+        );
+
+        // Act
+        $quoteTransfer = $this->tester->getFacade()->mapCustomerAddressDataToShippingAddresses(
+            $restCheckoutRequestAttributesTransfer,
+            $quoteTransfer,
+        );
+
+        // Assert
+        $shippingAddressTransfer = $quoteTransfer->getShipment()->getShippingAddress();
+        $this->assertSame($customerTransfer->getFirstNameOrFail(), $shippingAddressTransfer->getFirstName());
+        $this->assertSame($customerTransfer->getLastNameOrFail(), $shippingAddressTransfer->getLastName());
+        $this->assertSame($customerTransfer->getSalutationOrFail(), $shippingAddressTransfer->getSalutation());
     }
 
     /**
@@ -101,7 +140,10 @@ class ShipmentTypeServicePointsRestApiFacadeTest extends Unit
             AddressTransfer::LAST_NAME => null,
             AddressTransfer::SALUTATION => null,
         ]);
-        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransfer($customerTransfer);
+        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransferWithSplitShipment(
+            $customerTransfer,
+            $shipmentMethodTransfer,
+        );
 
         // Act
         $quoteTransfer = $this->tester->getFacade()->mapCustomerAddressDataToShippingAddresses(
@@ -132,7 +174,10 @@ class ShipmentTypeServicePointsRestApiFacadeTest extends Unit
             AddressTransfer::LAST_NAME => static::TEST_LAST_NAME,
             AddressTransfer::SALUTATION => static::TEST_SALUTATION,
         ]);
-        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransfer($customerTransfer);
+        $restCheckoutRequestAttributesTransfer = $this->tester->createRestCheckoutRequestAttributesTransferWithSingleShipment(
+            $customerTransfer,
+            $shipmentMethodTransfer,
+        );
 
         // Act
         $quoteTransfer = $this->tester->getFacade()->mapCustomerAddressDataToShippingAddresses(

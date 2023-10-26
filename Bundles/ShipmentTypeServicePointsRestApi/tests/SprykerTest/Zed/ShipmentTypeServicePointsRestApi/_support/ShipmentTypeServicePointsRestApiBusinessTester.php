@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomerTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
+use Generated\Shared\Transfer\RestShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
@@ -61,6 +63,13 @@ class ShipmentTypeServicePointsRestApiBusinessTester extends Actor
      * @var string
      */
     protected const CURRENCY_EUR = 'EUR';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
+     * @var string
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @return void
@@ -127,14 +136,17 @@ class ShipmentTypeServicePointsRestApiBusinessTester extends Actor
             ->withShipment([
                 ShipmentTransfer::METHOD => $shipmentMethodTransfer->toArray(),
                 ShipmentTransfer::SHIPPING_ADDRESS => $addressTransfer->toArray(),
+                ShipmentTransfer::SHIPMENT_SELECTION => (string)$shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             ]);
 
-        return (new QuoteBuilder())
+        return (new QuoteBuilder([QuoteTransfer::PRICE_MODE => static::PRICE_MODE_GROSS]))
             ->withStore($storeTransfer->toArray())
             ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_EUR])
             ->withItem($itemBuilder)
             ->withShipment([
                 ShipmentTransfer::METHOD => $shipmentMethodTransfer->toArray(),
+                ShipmentTransfer::SHIPPING_ADDRESS => $addressTransfer->toArray(),
+                ShipmentTransfer::SHIPMENT_SELECTION => (string)$shipmentMethodTransfer->getIdShipmentMethodOrFail(),
             ])
             ->withShippingAddress($addressTransfer->toArray())
             ->build();
@@ -142,13 +154,36 @@ class ShipmentTypeServicePointsRestApiBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
      */
-    public function createRestCheckoutRequestAttributesTransfer(CustomerTransfer $customerTransfer): RestCheckoutRequestAttributesTransfer
-    {
+    public function createRestCheckoutRequestAttributesTransferWithSingleShipment(
+        CustomerTransfer $customerTransfer,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): RestCheckoutRequestAttributesTransfer {
+        return (new RestCheckoutRequestAttributesBuilder([
+            RestCheckoutRequestAttributesTransfer::SHIPMENT => [
+                RestShipmentTransfer::ID_SHIPMENT_METHOD => $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+            ],
+        ]))
+            ->withCustomer([RestCustomerTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference()])
+            ->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
+     */
+    public function createRestCheckoutRequestAttributesTransferWithSplitShipment(
+        CustomerTransfer $customerTransfer,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): RestCheckoutRequestAttributesTransfer {
         return (new RestCheckoutRequestAttributesBuilder())
             ->withCustomer([RestCustomerTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference()])
+            ->withShipment([RestShipmentsTransfer::ID_SHIPMENT_METHOD => $shipmentMethodTransfer->getIdShipmentMethodOrFail()])
             ->build();
     }
 

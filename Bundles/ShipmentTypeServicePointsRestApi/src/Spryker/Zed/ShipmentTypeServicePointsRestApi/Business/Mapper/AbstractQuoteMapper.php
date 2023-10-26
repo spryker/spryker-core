@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Reader\CustomerReaderInterface;
 use Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Reader\ShipmentTypeReaderInterface;
+use Spryker\Zed\ShipmentTypeServicePointsRestApi\Dependency\Facade\ShipmentTypeServicePointsRestApiToShipmentFacadeInterface;
 
 abstract class AbstractQuoteMapper implements QuoteMapperInterface
 {
@@ -29,13 +30,23 @@ abstract class AbstractQuoteMapper implements QuoteMapperInterface
     protected CustomerReaderInterface $customerReader;
 
     /**
+     * @var \Spryker\Zed\ShipmentTypeServicePointsRestApi\Dependency\Facade\ShipmentTypeServicePointsRestApiToShipmentFacadeInterface
+     */
+    protected ShipmentTypeServicePointsRestApiToShipmentFacadeInterface $shipmentFacade;
+
+    /**
      * @param \Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Reader\ShipmentTypeReaderInterface $shipmentTypeReader
      * @param \Spryker\Zed\ShipmentTypeServicePointsRestApi\Business\Reader\CustomerReaderInterface $customerReader
+     * @param \Spryker\Zed\ShipmentTypeServicePointsRestApi\Dependency\Facade\ShipmentTypeServicePointsRestApiToShipmentFacadeInterface $shipmentFacade
      */
-    public function __construct(ShipmentTypeReaderInterface $shipmentTypeReader, CustomerReaderInterface $customerReader)
-    {
+    public function __construct(
+        ShipmentTypeReaderInterface $shipmentTypeReader,
+        CustomerReaderInterface $customerReader,
+        ShipmentTypeServicePointsRestApiToShipmentFacadeInterface $shipmentFacade
+    ) {
         $this->shipmentTypeReader = $shipmentTypeReader;
         $this->customerReader = $customerReader;
+        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
@@ -83,11 +94,13 @@ abstract class AbstractQuoteMapper implements QuoteMapperInterface
             $quoteTransfer,
         );
 
-        return $this->expandShippingAddressWithCustomerData(
+        $quoteTransfer = $this->expandShippingAddressWithCustomerData(
             $quoteTransfer,
             $customerTransfer,
             $shipmentTypeTransfersIndexedByIdShipmentMethod,
         );
+
+        return $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
     }
 
     /**
