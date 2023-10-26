@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantStockAddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaleTaxMetadataTransfer;
+use Generated\Shared\Transfer\ShippingWarehouseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppAddressTransfer;
 use Generated\Shared\Transfer\TaxAppItemTransfer;
@@ -24,7 +26,7 @@ use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use Generated\Shared\Transfer\TaxAppShipmentTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface;
-use Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatterInterface;
+use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface;
 
 class TaxAppMapper implements TaxAppMapperInterface
 {
@@ -33,7 +35,7 @@ class TaxAppMapper implements TaxAppMapperInterface
      *
      * @var string
      */
-    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
     /**
      * @var string
@@ -46,22 +48,25 @@ class TaxAppMapper implements TaxAppMapperInterface
     protected AddressMapperInterface $addressMapper;
 
     /**
-     * @var \Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatterInterface
+     * @var \Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface
      */
-    protected PriceFormatterInterface $priceFormatter;
+    protected ItemExpensePriceRetrieverInterface $priceFormatter;
 
     /**
      * @param \Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface $addressMapper
-     * @param \Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatterInterface $priceFormatter
+     * @param \Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface $priceFormatter
      */
-    public function __construct(AddressMapperInterface $addressMapper, PriceFormatterInterface $priceFormatter)
+    public function __construct(AddressMapperInterface $addressMapper, ItemExpensePriceRetrieverInterface $priceFormatter)
     {
         $this->addressMapper = $addressMapper;
         $this->priceFormatter = $priceFormatter;
     }
 
     /**
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\TaxAppSaleTransfer $taxAppSaleTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppSaleTransfer
      */
     public function mapCalculableObjectToTaxAppSaleTransfer(
         CalculableObjectTransfer $calculableObjectTransfer,
@@ -71,7 +76,7 @@ class TaxAppMapper implements TaxAppMapperInterface
         $saleItemTransfers = new ArrayObject();
         $saleShipmentTransfers = new ArrayObject();
 
-        if (!$taxAppSaleTransfer->getTaxMetadata()) {
+        if (!$calculableObjectTransfer->getTaxMetadata()) {
             $taxAppSaleTransfer->setTaxMetadata([]);
         }
 
@@ -85,18 +90,13 @@ class TaxAppMapper implements TaxAppMapperInterface
             ->setDocumentNumber($transferIdentifier)
             ->setDocumentDate($documentDate);
 
-        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+        foreach ($calculableObjectTransfer->getItems() as $itemIndex => $itemTransfer) {
             $taxAppItemTransfer = $this->mapItemTransfersToSaleItemTransfers(
                 $itemTransfer,
+                $calculableObjectTransfer->getPriceModeOrFail(),
                 $originalTransfer->getBillingAddress(),
-                $calculableObjectTransfer->getPriceMode(),
+                $itemIndex,
             );
-
-            if ($itemTransfer->getMerchantStockAddresses()->count()) {
-                $saleItemTransfers = $this->duplicateTaxAppItemTransferPerMerchantStockAddress($saleItemTransfers, $itemTransfer, $taxAppItemTransfer);
-
-                continue;
-            }
 
             $saleItemTransfers->append($taxAppItemTransfer);
         }
@@ -106,7 +106,12 @@ class TaxAppMapper implements TaxAppMapperInterface
                 continue;
             }
 
-            $taxAppShipmentTransfer = $this->mapExpenseTransferToSaleShipmentTransfer($expenseTransfer, $originalTransfer->getBillingAddress(), $calculableObjectTransfer->getPriceMode());
+            $taxAppShipmentTransfer = $this->mapExpenseTransferToSaleShipmentTransfer(
+                $expenseTransfer,
+                $calculableObjectTransfer->getPriceModeOrFail(),
+                $originalTransfer->getBillingAddress(),
+            );
+
             $taxAppShipmentTransfer->setId($hash);
             $saleShipmentTransfers->append($taxAppShipmentTransfer);
         }
@@ -119,24 +124,27 @@ class TaxAppMapper implements TaxAppMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
      * @param \Generated\Shared\Transfer\AddressTransfer|null $billingAddressTransfer
-     * @param string|null $priceMode
+     * @param int $itemIndex
      *
      * @return \Generated\Shared\Transfer\TaxAppItemTransfer
      */
     public function mapItemTransfersToSaleItemTransfers(
         ItemTransfer $itemTransfer,
+        string $priceMode,
         ?AddressTransfer $billingAddressTransfer,
-        ?string $priceMode
+        int $itemIndex
     ): TaxAppItemTransfer {
         $taxAppItemTransfer = new TaxAppItemTransfer();
 
         $taxAppItemTransfer->fromArray($itemTransfer->toArray(true, true), true);
-        $taxAppItemTransfer->setId($itemTransfer->getSku());
+        $taxAppItemTransfer->setId(sprintf('%s_%s', $itemTransfer->getSku(), $itemIndex));
+        $taxAppItemTransfer->setSku($itemTransfer->getSku());
 
-        $taxAppItemTransfer->setPriceAmount($this->priceFormatter->getSumPrice($itemTransfer, $priceMode));
+        $taxAppItemTransfer->setPriceAmount($this->priceFormatter->getUnitPrice($itemTransfer, $priceMode));
 
-        $taxAppItemTransfer->setDiscountAmount($this->priceFormatter->priceToString($itemTransfer->getSumDiscountAmountFullAggregation()));
+        $taxAppItemTransfer->setDiscountAmount($itemTransfer->getUnitDiscountAmountFullAggregation());
 
         if ($itemTransfer->getShipment() && $itemTransfer->getShipment()->getShippingAddress()) {
             $shippingTaxAppAddressTransfer = $this->addressMapper->mapAddressTransferToTaxAppAddressTransfer($itemTransfer->getShipment()->getShippingAddress(), new TaxAppAddressTransfer());
@@ -153,8 +161,20 @@ class TaxAppMapper implements TaxAppMapperInterface
             $taxAppItemTransfer->setSellerAddress($sellerAddress);
         }
 
-        if (!$taxAppItemTransfer->getTaxMetadata()) {
+        if (!$itemTransfer->getTaxMetadata()) {
             $taxAppItemTransfer->setTaxMetadata([]);
+        }
+
+        if ($itemTransfer->getMerchantStockAddresses()->count()) {
+            foreach ($itemTransfer->getMerchantStockAddresses() as $merchantStockAddress) {
+                $shippingWarehouseTransfer = $this->mapMerchantStockAddressTransferToShippingWarehouse(
+                    $taxAppItemTransfer,
+                    $merchantStockAddress,
+                    new ShippingWarehouseTransfer(),
+                );
+
+                $taxAppItemTransfer->addShippingWarehouse($shippingWarehouseTransfer);
+            }
         }
 
         return $taxAppItemTransfer;
@@ -163,39 +183,41 @@ class TaxAppMapper implements TaxAppMapperInterface
     /**
      * @param \Generated\Shared\Transfer\TaxAppItemTransfer $taxAppItemTransfer
      * @param \Generated\Shared\Transfer\MerchantStockAddressTransfer $merchantStockAddressTransfer
+     * @param \Generated\Shared\Transfer\ShippingWarehouseTransfer $shippingWarehouseTransfer
      *
-     * @return \Generated\Shared\Transfer\TaxAppItemTransfer
+     * @return \Generated\Shared\Transfer\ShippingWarehouseTransfer
      */
-    public function mapMerchantStockAddressTransferToSaleItemTransfer(
+    public function mapMerchantStockAddressTransferToShippingWarehouse(
         TaxAppItemTransfer $taxAppItemTransfer,
-        MerchantStockAddressTransfer $merchantStockAddressTransfer
-    ): TaxAppItemTransfer {
-        $quantityToShip = '0';
+        MerchantStockAddressTransfer $merchantStockAddressTransfer,
+        ShippingWarehouseTransfer $shippingWarehouseTransfer
+    ): ShippingWarehouseTransfer {
+        $quantityToShip = 0;
         if ($merchantStockAddressTransfer->getQuantityToShip()) {
-            $quantityToShip = $merchantStockAddressTransfer->getQuantityToShip()->toString();
+            $quantityToShip = $merchantStockAddressTransfer->getQuantityToShip()->toInt();
         }
 
-        $taxAppItemTransfer->setQuantity($quantityToShip);
+        $shippingWarehouseTransfer->setQuantity($quantityToShip);
 
         if ($merchantStockAddressTransfer->getStockAddress()) {
             $warehouseAddress = $this->addressMapper->mapStockAddressTransferToTaxAppAddressTransfer($merchantStockAddressTransfer->getStockAddress(), new TaxAppAddressTransfer());
-            $taxAppItemTransfer->setWarehouseAddress($warehouseAddress);
+            $shippingWarehouseTransfer->setWarehouseAddress($warehouseAddress);
         }
 
-        return $taxAppItemTransfer;
+        return $shippingWarehouseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param string $priceMode
      * @param \Generated\Shared\Transfer\AddressTransfer|null $billingAddressTransfer
-     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\TaxAppShipmentTransfer
      */
     public function mapExpenseTransferToSaleShipmentTransfer(
         ExpenseTransfer $expenseTransfer,
-        ?AddressTransfer $billingAddressTransfer,
-        ?string $priceMode
+        string $priceMode,
+        ?AddressTransfer $billingAddressTransfer
     ): TaxAppShipmentTransfer {
         $taxAppShipmentTransfer = new TaxAppShipmentTransfer();
 
@@ -211,33 +233,9 @@ class TaxAppMapper implements TaxAppMapperInterface
         }
 
         $taxAppShipmentTransfer->setPriceAmount($this->priceFormatter->getSumPrice($expenseTransfer, $priceMode));
-        $taxAppShipmentTransfer->setDiscountAmount($this->priceFormatter->priceToString($expenseTransfer->getSumDiscountAmountAggregation()));
+        $taxAppShipmentTransfer->setDiscountAmount($expenseTransfer->getSumDiscountAmountAggregation());
 
         return $taxAppShipmentTransfer;
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\TaxAppItemTransfer> $saleItemTransfers
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\TaxAppItemTransfer $taxAppItemTransfer
-     *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\TaxAppItemTransfer>
-     */
-    protected function duplicateTaxAppItemTransferPerMerchantStockAddress(
-        ArrayObject $saleItemTransfers,
-        ItemTransfer $itemTransfer,
-        TaxAppItemTransfer $taxAppItemTransfer
-    ): ArrayObject {
-        foreach ($itemTransfer->getMerchantStockAddresses() as $merchantStockAddress) {
-            $taxAppItemTransferWithWarehouseAddress = $this->mapMerchantStockAddressTransferToSaleItemTransfer(
-                clone $taxAppItemTransfer,
-                $merchantStockAddress,
-            );
-
-            $saleItemTransfers->append($taxAppItemTransferWithWarehouseAddress);
-        }
-
-        return $saleItemTransfers;
     }
 
     /**
@@ -270,14 +268,20 @@ class TaxAppMapper implements TaxAppMapperInterface
         $transferIdentifier = null;
 
         if (method_exists($transfer, 'getUuid')) {
-            $transferIdentifier = $transfer->getUuid();
+            $transferIdentifier = $transfer->getUuid() ?? Uuid::uuid4()->toString();
+            //@phpstan-ignore-next-line
+            $transfer->setUuid($transferIdentifier);
         }
 
         if (method_exists($transfer, 'getOrderReference') && !$transferIdentifier) {
             $transferIdentifier = $transfer->getOrderReference();
         }
 
-        return $transferIdentifier ?? Uuid::uuid4()->toString();
+        if (!$transferIdentifier) {
+            return Uuid::uuid4()->toString();
+        }
+
+        return $transferIdentifier;
     }
 
     /**
@@ -290,6 +294,10 @@ class TaxAppMapper implements TaxAppMapperInterface
     {
         $calculableObjectTransfer = new CalculableObjectTransfer();
         $calculableObjectTransfer->fromArray($orderTransfer->toArray(), true);
+        if (!$orderTransfer->getTaxMetadata()) {
+            $calculableObjectTransfer->setTaxMetadata(new SaleTaxMetadataTransfer());
+        }
+
         $calculableObjectTransfer->setStore((new StoreTransfer())->setName($orderTransfer->getStore()));
         $calculableObjectTransfer->setOriginalOrder($orderTransfer);
 

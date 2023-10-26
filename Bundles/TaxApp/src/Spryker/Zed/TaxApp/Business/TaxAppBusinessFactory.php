@@ -11,6 +11,8 @@ use Spryker\Client\TaxApp\TaxAppClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxApp\Business\AccessTokenProvider\AccessTokenProvider;
 use Spryker\Zed\TaxApp\Business\AccessTokenProvider\AccessTokenProviderInterface;
+use Spryker\Zed\TaxApp\Business\Aggregator\PriceAggregator;
+use Spryker\Zed\TaxApp\Business\Aggregator\PriceAggregatorInterface;
 use Spryker\Zed\TaxApp\Business\Calculator\Calculator;
 use Spryker\Zed\TaxApp\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\TaxApp\Business\Config\ConfigDeleter;
@@ -19,8 +21,8 @@ use Spryker\Zed\TaxApp\Business\Config\ConfigWriter;
 use Spryker\Zed\TaxApp\Business\Config\ConfigWriterInterface;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapper;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface;
-use Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatter;
-use Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatterInterface;
+use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpenseItemExpensePriceRetriever;
+use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface;
 use Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapper;
 use Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapperInterface;
 use Spryker\Zed\TaxApp\Business\PaymentSubmitTaxInvoiceSender\PaymentSubmitTaxInvoiceSender;
@@ -89,6 +91,7 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createAccessTokenProvider(),
             $this->getCalculableObjectTaxAppExpanderPlugins(),
+            $this->createPriceAggregator(),
         );
     }
 
@@ -138,7 +141,7 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxAppMapper(): TaxAppMapperInterface
     {
-        return new TaxAppMapper($this->createAddressMapper(), $this->createPriceFormatter());
+        return new TaxAppMapper($this->createAddressMapper(), $this->createItemExpensePriceRetriever());
     }
 
     /**
@@ -150,11 +153,11 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\TaxApp\Business\Mapper\Prices\PriceFormatterInterface
+     * @return \Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface
      */
-    public function createPriceFormatter(): PriceFormatterInterface
+    public function createItemExpensePriceRetriever(): ItemExpensePriceRetrieverInterface
     {
-        return new PriceFormatter();
+        return new ItemExpenseItemExpensePriceRetriever();
     }
 
     /**
@@ -171,5 +174,13 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     public function getOauthClientFacade(): TaxAppToOauthClientFacadeInterface
     {
         return $this->getProvidedDependency(TaxAppDependencyProvider::FACADE_OAUTH_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Aggregator\PriceAggregatorInterface
+     */
+    public function createPriceAggregator(): PriceAggregatorInterface
+    {
+        return new PriceAggregator();
     }
 }

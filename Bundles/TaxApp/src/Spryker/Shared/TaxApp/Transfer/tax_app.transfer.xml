@@ -10,6 +10,8 @@
         <property name="priceMode" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalOrder" type="Order"/>
+        <property name="taxAppSaleHash" type="string" strict="true"/>
+        <property name="taxCalculationResponse" type="TaxCalculationResponse" strict="true"/>
     </transfer>
 
     <transfer name="Order">
@@ -26,6 +28,15 @@
         <property name="shipment" type="Shipment"/>
         <property name="merchantProfileAddress" type="MerchantProfileAddress"/>
         <property name="merchantStockAddresses" type="MerchantStockAddress[]" singular="merchantStockAddress"/>
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
     </transfer>
 
     <transfer name="SaleTaxMetadata" strict="true">
@@ -73,7 +84,7 @@
         <property name="fkStores" type="int[]" singular="fkStore"/>
     </transfer>
 
-    <transfer name="TaxAppConfigCollection">
+    <transfer name="TaxAppConfigCollection" strict="true">
         <property name="taxAppConfigs" type="TaxAppConfig[]" singular="taxAppConfig"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -83,7 +94,6 @@
         <property name="isActive" type="bool"/>
         <property name="apiUrl" type="string"/>
         <property name="vendorCode" type="string"/>
-        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="DeleteTaxApp" strict="true">
@@ -92,14 +102,14 @@
         <property name="storeReference" type="string"/>
     </transfer>
 
-    <transfer name="TaxAppSale">
+    <transfer name="TaxAppSale" strict="true">
         <property name="transactionId" type="string"/>
         <property name="documentNumber" type="string"/>
         <property name="documentDate" type="string"/>
         <property name="items" type="TaxAppItem[]" singular="item"/>
         <property name="shipments" type="TaxAppShipment[]" singular="shipment"/>
         <property name="taxMetadata" type="array" associative="true" singular="taxMetadataEntry"/>
-        <property name="taxTotal" type="string"/>
+        <property name="taxTotal" type="int"/>
     </transfer>
 
     <transfer name="Expense">
@@ -107,35 +117,48 @@
         <property name="shipment" type="Shipment"/>
         <property name="sumDiscountAmountAggregation" type="int"/>
         <property name="type" type="string"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
     </transfer>
 
     <transfer name="ProductOption">
         <property name="taxMetadata" type="ItemTaxMetadata" strict="true"/>
     </transfer>
 
-    <transfer name="TaxAppItem">
+    <transfer name="TaxAppItem" strict="true">
         <property name="id" type="string"/>
-        <property name="priceAmount" type="string"/>
-        <property name="discountAmount" type="string"/>
-        <property name="quantity" type="string"/>
-        <property name="taxTotal" type="string"/>
+        <property name="priceAmount" type="int"/>
+        <property name="discountAmount" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="taxTotal" type="int"/>
         <property name="shippingAddress" type="TaxAppAddress"/>
         <property name="billingAddress" type="TaxAppAddress"/>
         <property name="sellerAddress" type="TaxAppAddress"/>
-        <property name="warehouseAddress" type="TaxAppAddress"/>
+        <property name="shippingWarehouses" type="ShippingWarehouse[]" singular="shippingWarehouse"/>
         <property name="taxMetadata" type="array" associative="true" singular="taxMetadataEntry"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ShippingWarehouse" strict="true">
+        <property name="quantity" type="int"/>
+        <property name="warehouseAddress" type="TaxAppAddress"/>
     </transfer>
 
     <transfer name="TaxAppShipment" strict="true">
         <property name="id" type="string"/>
-        <property name="priceAmount" type="string"/>
-        <property name="discountAmount" type="string"/>
-        <property name="taxTotal" type="string"/>
+        <property name="priceAmount" type="int"/>
+        <property name="discountAmount" type="int"/>
+        <property name="taxTotal" type="int"/>
         <property name="shippingAddress" type="TaxAppAddress"/>
         <property name="billingAddress" type="TaxAppAddress"/>
     </transfer>
 
-    <transfer name="TaxAppAddress">
+    <transfer name="TaxAppAddress" strict="true">
         <property name="address1" type="string"/>
         <property name="address2" type="string"/>
         <property name="city" type="string"/>
@@ -155,7 +178,7 @@
         <property name="apiErrorMessages" type="ApiErrorMessage[]" singular="apiErrorMessage"/>
     </transfer>
 
-    <transfer name="ApiErrorMessage">
+    <transfer name="ApiErrorMessage" strict="true">
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
@@ -197,6 +220,8 @@
         <property name="uuid" type="string"/>
         <property name="billingAddress" type="Address"/>
         <property name="hideTaxInCart" type="bool" strict="true"/>
+        <property name="taxAppSaleHash" type="string" strict="true"/>
+        <property name="taxCalculationResponse" type="TaxCalculationResponse" strict="true"/>
     </transfer>
 
     <transfer name="StockAddress">

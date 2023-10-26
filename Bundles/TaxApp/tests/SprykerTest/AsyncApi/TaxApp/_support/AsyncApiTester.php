@@ -85,6 +85,8 @@ class AsyncApiTester extends Actor
             $item->setSku('some_sku');
         }
 
+        $orderTransfer->setPriceMode('NET_MODE');
+
         return $orderTransfer;
     }
 

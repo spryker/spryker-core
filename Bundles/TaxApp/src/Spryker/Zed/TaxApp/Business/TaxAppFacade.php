@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxApp\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;

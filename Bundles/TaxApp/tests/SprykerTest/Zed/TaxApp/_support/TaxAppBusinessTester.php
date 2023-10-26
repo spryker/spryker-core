@@ -11,9 +11,11 @@ namespace SprykerTest\Zed\TaxApp;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Codeception\Stub\Expected;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\PriceProductBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\StockAddressBuilder;
@@ -26,10 +28,17 @@ use Generated\Shared\Transfer\MerchantStockAddressTransfer;
 use Generated\Shared\Transfer\StockAddressTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
+use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
 use ReflectionProperty;
+use Spryker\Client\TaxApp\TaxAppClient;
 use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
+use Spryker\Zed\Calculation\Business\CalculationFacade;
+use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\TaxApp\MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeBridge;
@@ -114,6 +123,7 @@ class TaxAppBusinessTester extends Actor
             ->build();
 
         $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer->setPriceMode('NET_MODE');
 
         $calculableObjectTransfer = (new CalculableObjectTransfer())->fromArray($quoteTransfer->toArray(), true);
         $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
@@ -137,15 +147,18 @@ class TaxAppBusinessTester extends Actor
             ->withCustomer()
             ->withBillingAddress()
             ->withItem(
-                (new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer1->getMerchantReference()])),
+                (new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer1->getMerchantReference()]))
+                    ->withPriceProduct(new PriceProductBuilder()),
             )
             ->withAnotherItem(
-                (new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer2->getMerchantReference()])),
+                (new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer2->getMerchantReference()]))
+                    ->withPriceProduct(new PriceProductBuilder()),
             )
             ->withTotals()
             ->build();
 
         $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer->setPriceMode('NET_MODE');
 
         $calculableObjectTransfer = (new CalculableObjectTransfer())->fromArray($quoteTransfer->toArray(), true);
         $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
@@ -315,10 +328,12 @@ class TaxAppBusinessTester extends Actor
                     ],
                 ])),
             )
+            ->withTotals()
             ->withExpense($expenseBuilder)
             ->build();
 
         $quoteTransfer->setStore($storeTransfer);
+        $quoteTransfer->setPriceMode('NET_MODE');
 
         $calculableObjectTransfer = (new CalculableObjectTransfer())->fromArray($quoteTransfer->toArray(), true);
         $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
@@ -341,5 +356,49 @@ class TaxAppBusinessTester extends Actor
         ]);
 
         $this->mockFactoryMethod('getOauthClientFacade', $oauthClientFacadeBridgeMock);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxCalculationResponseTransfer $taxCalculationResponseTransfer
+     *
+     * @return void
+     */
+    public function mockTaxAppClientWithTaxCalculationResponse(TaxCalculationResponseTransfer $taxCalculationResponseTransfer): void
+    {
+        $clientMock = Stub::makeEmpty(TaxAppClient::class);
+        $clientMock->expects(Expected::once()->getMatcher())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->mockFactoryMethod('getTaxAppClient', $clientMock);
+
+        $this->mockOauthClient();
+    }
+
+    /**
+     * @param array $calculatorPlugins
+     *
+     * @return \Spryker\Zed\Calculation\Business\CalculationFacade
+     */
+    public function createCalculationFacade(array $calculatorPlugins): CalculationFacade
+    {
+        $calculationFacade = new CalculationFacade();
+
+        $calculationBusinessFactory = new CalculationBusinessFactory();
+
+        $container = new Container();
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
+            return $calculatorPlugins;
+        };
+
+        $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function () {
+            return [];
+        };
+
+        $container->set(CalculationDependencyProvider::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
+        });
+
+        $calculationBusinessFactory->setContainer($container);
+        $calculationFacade->setFactory($calculationBusinessFactory);
+
+        return $calculationFacade;
     }
 }

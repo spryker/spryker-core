@@ -174,12 +174,14 @@ class ProductOfferAvailabilityQuoteItemsExpanderPluginTest extends Unit
             $expandedQuoteTransfer,
             [
                 [
-                    'stock_address' => $stockAddressTransfer1,
-                    'quantity_to_ship' => new Decimal(7),
-                ],
-                [
-                    'stock_address' => $stockAddressTransfer2,
-                    'quantity_to_ship' => new Decimal(3),
+                    [
+                        'stock_address' => $stockAddressTransfer1,
+                        'quantity_to_ship' => new Decimal(7),
+                    ],
+                    [
+                        'stock_address' => $stockAddressTransfer2,
+                        'quantity_to_ship' => new Decimal(3),
+                    ],
                 ],
             ],
         );
@@ -269,6 +271,81 @@ class ProductOfferAvailabilityQuoteItemsExpanderPluginTest extends Unit
         // Assert
         $this->tester->assertExpandedQuoteTransferHasNoMerchantStockAddressHydrated(
             $expandedQuoteTransfer,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteItemMustBeHydratedWithMerchantStockAddressSplitByTheQuantityToShipFromMultipleMerchants()
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+
+        /// Merchant 1's Product Offer, Stock and Stock Address
+        $stockTransferFromMerchant1 = $this->tester->haveStockWithStoreAssigned($storeTransfer);
+        $stockAddressTransferFromMerchant1 = $this->tester->haveStockAddressRelatedToStock($stockTransferFromMerchant1);
+        $productOfferTransferFromMerchant1 = $this->tester->haveProductOfferWithStoreAssigned($storeTransfer);
+        $this->tester->haveProductOfferStockWithStockAndProductOfferAssigned($stockTransferFromMerchant1, $productOfferTransferFromMerchant1);
+
+        /// Merchant 2's Product Offer, Stock and Stock Addresses
+        $stockTransfer1FromMerchant2 = $this->tester->haveStockWithStoreAssigned($storeTransfer);
+        $stockAddressTransfer1FromMerchant2 = $this->tester->haveStockAddressRelatedToStock($stockTransfer1FromMerchant2);
+
+        $stockTransfer2FromMerchant2 = $this->tester->haveStockWithStoreAssigned($storeTransfer);
+        $stockAddressTransfer2FromMerchant2 = $this->tester->haveStockAddressRelatedToStock($stockTransfer2FromMerchant2);
+
+        $stockTransfer3FromMerchant2 = $this->tester->haveStockWithStoreAssigned($storeTransfer);
+        $stockAddressTransfer3FromMerchant2 = $this->tester->haveStockAddressRelatedToStock($stockTransfer3FromMerchant2);
+
+        $productOfferTransferFromMerchant2 = $this->tester->haveProductOfferWithStoreAssigned($storeTransfer);
+        $this->tester->haveProductOfferStockWithStockAndProductOfferAssigned($stockTransfer1FromMerchant2, $productOfferTransferFromMerchant2, 7);
+        $this->tester->haveProductOfferStockWithStockAndProductOfferAssigned($stockTransfer2FromMerchant2, $productOfferTransferFromMerchant2, 3);
+        $this->tester->haveProductOfferStockWithStockAndProductOfferAssigned($stockTransfer3FromMerchant2, $productOfferTransferFromMerchant2, 2);
+
+        /// Adding the dependencies
+        $this->tester->setDependency(ProductOfferStockDependencyProvider::PLUGINS_STOCK_TRANSFER_PRODUCT_OFFER_STOCK_EXPANDER, [
+            new StockAddressProductOfferStockExpanderPluginForTesting($stockTransferFromMerchant1->getIdStock(), $stockAddressTransferFromMerchant1),
+            new StockAddressProductOfferStockExpanderPluginForTesting($stockTransfer1FromMerchant2->getIdStock(), $stockAddressTransfer1FromMerchant2),
+            new StockAddressProductOfferStockExpanderPluginForTesting($stockTransfer2FromMerchant2->getIdStock(), $stockAddressTransfer2FromMerchant2),
+            new StockAddressProductOfferStockExpanderPluginForTesting($stockTransfer3FromMerchant2->getIdStock(), $stockAddressTransfer3FromMerchant2),
+        ]);
+
+        // Act
+        $expandedQuoteTransfer = (new ProductOfferAvailabilityCalculableObjectTaxAppExpanderPlugin())->expand(
+            $this->tester->haveQuoteWithMultipleItems($storeTransfer, [
+                [
+                    'product_offer' => $productOfferTransferFromMerchant1,
+                    'quantity' => 1,
+                ],
+                [
+                    'product_offer' => $productOfferTransferFromMerchant2,
+                    'quantity' => 10,
+                ],
+            ]),
+        );
+
+        // Assert
+        $this->tester->assertExpandedQuoteTransferHasMerchantStockAddressesHydratedWithRightOrdering(
+            $expandedQuoteTransfer,
+            [
+                [
+                    [
+                        'stock_address' => $stockAddressTransferFromMerchant1,
+                        'quantity_to_ship' => new Decimal(1),
+                    ],
+                ],
+                [
+                    [
+                        'stock_address' => $stockAddressTransfer1FromMerchant2,
+                        'quantity_to_ship' => new Decimal(7),
+                    ],
+                    [
+                        'stock_address' => $stockAddressTransfer2FromMerchant2,
+                        'quantity_to_ship' => new Decimal(3),
+                    ],
+                ],
+            ],
         );
     }
 }

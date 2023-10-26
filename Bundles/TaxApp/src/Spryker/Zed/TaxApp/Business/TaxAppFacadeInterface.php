@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxApp\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 
@@ -52,6 +51,10 @@ interface TaxAppFacadeInterface
      * - Does nothing if `CalculableObjectTransfer.expenses` does not have items of `ShipmentConfig::SHIPMENT_EXPENSE_TYPE` type.
      * - Dispatch tax quotation request to ACP Apps.
      * - Sets `CalculableObject.totals.taxTotal` with returned amount, if tax quotation request is successful.
+     * - Sets `CalculableObject.totals.taxTotal` to 0 and overwrites other calculated taxes until a shipment is selected.
+     * - Sets 'Item.UnitPriceToPayAggregation', 'Item.SumPriceToPayAggregation', 'Item.UnitTaxAmountFullAggregation' and 'Item.SumTaxAmountFullAggregation' with returned amounts, if tax quotation request is successful.
+     * - Sets 'Expense.UnitTaxAmount', 'Expense.SumTaxAmount', 'Expense.UnitPriceToPayAggregation' and 'Expense.SumPriceToPayAggregation' (if expense type is shipment) with returned amounts, if tax quotation request is successful.
+     * - Recalculation does not trigger additional API calls when TaxAppSale data was not changed.
      *
      * @api
      *

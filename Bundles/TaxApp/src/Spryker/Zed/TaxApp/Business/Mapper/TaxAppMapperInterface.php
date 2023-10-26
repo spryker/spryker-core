@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantStockAddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShippingWarehouseTransfer;
 use Generated\Shared\Transfer\TaxAppItemTransfer;
 use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use Generated\Shared\Transfer\TaxAppShipmentTransfer;
@@ -32,39 +33,43 @@ interface TaxAppMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
      * @param \Generated\Shared\Transfer\AddressTransfer|null $billingAddressTransfer
-     * @param string|null $priceMode
+     * @param int $itemIndex
      *
      * @return \Generated\Shared\Transfer\TaxAppItemTransfer
      */
     public function mapItemTransfersToSaleItemTransfers(
         ItemTransfer $itemTransfer,
+        string $priceMode,
         ?AddressTransfer $billingAddressTransfer,
-        ?string $priceMode
+        int $itemIndex
     ): TaxAppItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\TaxAppItemTransfer $taxAppItemTransfer
      * @param \Generated\Shared\Transfer\MerchantStockAddressTransfer $merchantStockAddressTransfer
+     * @param \Generated\Shared\Transfer\ShippingWarehouseTransfer $shippingWarehouseTransfer
      *
-     * @return \Generated\Shared\Transfer\TaxAppItemTransfer
+     * @return \Generated\Shared\Transfer\ShippingWarehouseTransfer
      */
-    public function mapMerchantStockAddressTransferToSaleItemTransfer(
+    public function mapMerchantStockAddressTransferToShippingWarehouse(
         TaxAppItemTransfer $taxAppItemTransfer,
-        MerchantStockAddressTransfer $merchantStockAddressTransfer
-    ): TaxAppItemTransfer;
+        MerchantStockAddressTransfer $merchantStockAddressTransfer,
+        ShippingWarehouseTransfer $shippingWarehouseTransfer
+    ): ShippingWarehouseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param string $priceMode
      * @param \Generated\Shared\Transfer\AddressTransfer|null $billingAddressTransfer
-     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\TaxAppShipmentTransfer
      */
     public function mapExpenseTransferToSaleShipmentTransfer(
         ExpenseTransfer $expenseTransfer,
-        ?AddressTransfer $billingAddressTransfer,
-        ?string $priceMode
+        string $priceMode,
+        ?AddressTransfer $billingAddressTransfer
     ): TaxAppShipmentTransfer;
 
     /**

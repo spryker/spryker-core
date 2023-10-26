@@ -51,6 +51,9 @@ components:
         TaxAppConfiguration:
             type: object
             properties:
+                isActive:
+                    type: boolean
+                    description: Indicates if the tax app is active.
                 apiUrl:
                     type: string
                     description: The URI of the tax calculation endpoint.
@@ -58,6 +61,7 @@ components:
                     type: string
                     description: The vendor code to identify the tax Vendor.
             required:
+                - isActive
                 - apiUrl
                 - vendorCode
         TaxAppConfigCriteria:
@@ -118,6 +122,8 @@ components:
             properties:
                 id:
                     type: string
+                sku:
+                    type: string
                 priceAmount:
                     type: number
                 discountAmount:
@@ -150,6 +156,7 @@ components:
                             productClass: 'productClass'
             required:
                 - id
+                - sku
                 - priceAmount
                 - discountAmount
                 - quantity

@@ -14,6 +14,7 @@
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/oauth-client": "^1.4.0",
         "spryker/propel-orm": "^1.18.0",
+        "spryker/ramsey-uuid": "^2.0.0",
         "spryker/sales": "^11.0.0",
         "spryker/store": "^1.16.0",
         "spryker/symfony": "^3.0.0",
@@ -22,6 +23,7 @@
         "spryker/util-encoding": "^2.1.0"
     },
     "require-dev": {
+        "spryker/calculation": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/customer": "*",
@@ -29,7 +31,6 @@
         "spryker/merchant-profile": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
-        "spryker/ramsey-uuid": "*",
         "spryker/session": "*",
         "spryker/testify": "*"
     },

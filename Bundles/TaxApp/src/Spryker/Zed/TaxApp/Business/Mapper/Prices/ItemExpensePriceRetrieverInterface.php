@@ -10,20 +10,21 @@ namespace Spryker\Zed\TaxApp\Business\Mapper\Prices;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface PriceFormatterInterface
+interface ItemExpensePriceRetrieverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer|\Generated\Shared\Transfer\ItemTransfer $transfer
-     * @param string|null $priceMode
+     * @param string $priceMode
      *
-     * @return string|null
+     * @return int
      */
-    public function getSumPrice(ExpenseTransfer|ItemTransfer $transfer, ?string $priceMode): ?string;
+    public function getUnitPrice(ExpenseTransfer|ItemTransfer $transfer, string $priceMode): int;
 
     /**
-     * @param int|null $price
+     * @param \Generated\Shared\Transfer\ExpenseTransfer|\Generated\Shared\Transfer\ItemTransfer $transfer
+     * @param string $priceMode
      *
-     * @return string|null
+     * @return int
      */
-    public function priceToString(?int $price): ?string;
+    public function getSumPrice(ExpenseTransfer|ItemTransfer $transfer, string $priceMode): int;
 }

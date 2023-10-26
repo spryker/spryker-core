@@ -9,8 +9,14 @@ namespace SprykerTest\Zed\TaxApp\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
+use Ramsey\Uuid\Uuid;
 use Spryker\Client\TaxApp\TaxAppClient;
 use Spryker\Client\TaxApp\TaxAppClientInterface;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorForGenericAmountPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSubtotalAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
 use SprykerTest\Zed\TaxApp\TaxAppBusinessTester;
 
 /**
@@ -75,24 +81,107 @@ class TaxAppFacadeCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculableObjectDoesNotHaveTaxTotalWhenShipmentIsMissing(): void
+    public function testCalculableObjectHasTheSameTaxRequestHashWhenRecalculateWasCalledTwiceWithoutChanges(): void
     {
+        // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
         $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
-        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore()]);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $clientMock = $this->createMock(TaxAppClient::class);
+        $clientMock->expects($this->once())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
+
+        $this->tester->mockOauthClient();
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        $firstCalculationHash = $calculableObjectTransfer->getTaxAppSaleHash();
+
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        $secondCalculationHash = $calculableObjectTransfer->getTaxAppSaleHash();
+
+        $this->assertEquals($firstCalculationHash, $secondCalculationHash);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculableObjectHasTheDifferentTaxRequestHashWhenWasRecalculateCalledTwiceWithChanges(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $clientMock = $this->createMock(TaxAppClient::class);
+        $clientMock->expects($this->exactly(2))->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
+
+        $this->tester->mockOauthClient();
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        $firstCalculationHash = $calculableObjectTransfer->getTaxAppSaleHash();
+
+        $calculableObjectTransfer->getOriginalQuote()->setUuid(Uuid::uuid4()->toString());
+
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        $secondCalculationHash = $calculableObjectTransfer->getTaxAppSaleHash();
+
+        $this->assertNotEquals($firstCalculationHash, $secondCalculationHash);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculableObjectHasZeroTaxTotalWhenShipmentIsMissing(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['fk_store' => $storeTransfer->getIdStore()]);
 
         $calculableObjectTransfer = $this->tester->createCalculableObjectTransferWithoutShipment($storeTransfer);
-        $this->tester->setQuoteTaxMetadataExpanderPlugins();
 
         $clientMock = $this->createMock(TaxAppClient::class);
         $clientMock->expects($this->never())->method('requestTaxQuotation');
         $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
 
-        $this->tester->mockOauthClient();
+        $originalQuote = $calculableObjectTransfer->getOriginalQuote();
+        $originalQuote->setPriceMode('NET_MODE');
 
+        $calculationFacade = $this->tester->createCalculationFacade(
+            [
+                new PriceCalculatorPlugin(),
+                new ItemSubtotalAggregatorPlugin(),
+
+                new DiscountAmountAggregatorForGenericAmountPlugin(),
+                new ItemDiscountAmountFullAggregatorPlugin(),
+            ],
+        );
+        $calculationFacade->recalculateQuote($originalQuote);
+        $calculableObjectTransfer->setItems($originalQuote->getItems());
+
+        // Act
         $this->tester->getFacade()->recalculate($calculableObjectTransfer);
 
-        $this->assertNull($calculableObjectTransfer->getTotals()->getTaxTotal());
+        // Assert
+        $this->assertEquals(0, $calculableObjectTransfer->getTotals()->getTaxTotal()->getAmount());
     }
 
     /**
@@ -101,11 +190,19 @@ class TaxAppFacadeCalculationTest extends Unit
     public function testCalculableObjectIsExpandedWithTaxMetadataWhenRecalculateMethodIsCalled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([], false);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
         $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
         $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore()]);
-        $calculableObjectTransfer = $this->tester->haveQuoteTransfer(['items' => [[]]]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+
         $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $clientMock = $this->createMock(TaxAppClient::class);
+        $clientMock->expects($this->once())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
 
         $this->tester->mockOauthClient();
 
@@ -123,9 +220,11 @@ class TaxAppFacadeCalculationTest extends Unit
     {
         // Arrange
         $taxAppClientMock = $this->makeEmpty(TaxAppClientInterface::class);
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+        $taxAppClientMock->expects($this->once())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
         $this->tester->mockFactoryMethod('getTaxAppClient', $taxAppClientMock);
 
-        $storeTransfer = $this->tester->haveStore([], false);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
         $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
         $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore()]);
         $this->tester->setQuoteTaxMetadataExpanderPlugins();
@@ -149,9 +248,11 @@ class TaxAppFacadeCalculationTest extends Unit
     {
         // Arrange
         $taxAppClientMock = $this->makeEmpty(TaxAppClientInterface::class);
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+        $taxAppClientMock->expects($this->once())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
         $this->tester->mockFactoryMethod('getTaxAppClient', $taxAppClientMock);
 
-        $storeTransfer = $this->tester->haveStore([], false);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
         $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
         $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore()]);
         $this->tester->setQuoteTaxMetadataExpanderPlugins();
@@ -169,5 +270,119 @@ class TaxAppFacadeCalculationTest extends Unit
 
         // Act
         $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteHasCorrectGrandTotalWhenPriceModeIsNetAndRecalculateRequestsTaxFromExternalApiSuccessfully(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $this->tester->mockTaxAppClientWithTaxCalculationResponse($taxCalculationResponseTransfer);
+
+        $originalQuote = $calculableObjectTransfer->getOriginalQuote();
+
+        $calculationFacade = $this->tester->createCalculationFacade(
+            [
+                new GrandTotalCalculatorPlugin(),
+            ],
+        );
+        $calculationFacade->recalculateQuote($originalQuote);
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        // Assert
+        $this->tester->assertQuoteHasCorrectGrandTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteHasCorrectGrandTotalWhenPriceModeIsGrossAndRecalculateRequestsTaxFromExternalApiSuccessfully(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $this->tester->mockTaxAppClientWithTaxCalculationResponse($taxCalculationResponseTransfer);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+        $calculableObjectTransfer->setPriceMode('GROSS_MODE');
+
+        $originalQuote = $calculableObjectTransfer->getOriginalQuote();
+
+        $calculationFacade = $this->tester->createCalculationFacade(
+            [
+                new GrandTotalCalculatorPlugin(),
+            ],
+        );
+        $calculationFacade->recalculateQuote($originalQuote);
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        // Assert
+        $this->tester->assertQuoteHasCorrectGrandTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteHasHideTaxInCartFlagWhenTaxAppIsActive(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['fk_store' => $storeTransfer->getIdStore(), 'is_active' => true]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $clientMock = $this->createMock(TaxAppClient::class);
+        $clientMock->expects($this->once())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
+
+        $this->tester->mockOauthClient();
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        // Assert
+        $this->assertTrue($calculableObjectTransfer->getOriginalQuote()->getHideTaxInCart());
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteDoesNotHaveHideTaxInCartFlagWhenTaxAppIsNotActive(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['fk_store' => $storeTransfer->getIdStore(), 'is_active' => false]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        // Assert
+        $this->assertFalse($calculableObjectTransfer->getOriginalQuote()->getHideTaxInCart());
     }
 }

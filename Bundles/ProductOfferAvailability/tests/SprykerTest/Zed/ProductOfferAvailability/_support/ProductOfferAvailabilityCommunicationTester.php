@@ -137,6 +137,28 @@ class ProductOfferAvailabilityCommunicationTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array $items
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function haveOrderWithMultipleItems(
+        StoreTransfer $storeTransfer,
+        array $items
+    ): OrderTransfer {
+        return $this->haveOrderTransfer([
+            OrderTransfer::STORE => $storeTransfer->getName(),
+            OrderTransfer::ITEMS => array_map(function (array $item) {
+                return [
+                    ItemTransfer::PRODUCT_OFFER_REFERENCE => $item['product_offer']->getProductOfferReference(),
+                    ItemTransfer::SKU => $item['product_offer']->getConcreteSku(),
+                    ItemTransfer::QUANTITY => new Decimal($item['quantity']),
+                ];
+            }, $items),
+        ]);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $quantity
@@ -157,6 +179,28 @@ class ProductOfferAvailabilityCommunicationTester extends Actor
                     ItemTransfer::QUANTITY => new Decimal($quantity),
                 ],
             ],
+        ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array $items
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function haveQuoteWithMultipleItems(
+        StoreTransfer $storeTransfer,
+        array $items
+    ): CalculableObjectTransfer {
+        return $this->haveQuoteTransfer([
+            CalculableObjectTransfer::STORE => $storeTransfer,
+            CalculableObjectTransfer::ITEMS => array_map(function (array $item) {
+                return [
+                    ItemTransfer::PRODUCT_OFFER_REFERENCE => $item['product_offer']->getProductOfferReference(),
+                    ItemTransfer::SKU => $item['product_offer']->getConcreteSku(),
+                    ItemTransfer::QUANTITY => new Decimal($item['quantity']),
+                ];
+            }, $items),
         ]);
     }
 
@@ -265,21 +309,21 @@ class ProductOfferAvailabilityCommunicationTester extends Actor
         array $mockedMerchantStockAddressesAndQuantityToShip
     ): void {
         /** @var \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer */
-        $orderItemTransfer = $expandedOrderTransfer->getItems()->offsetGet(0);
+        foreach ($expandedOrderTransfer->getItems() as $itemIndex => $orderItemTransfer) {
+            foreach ($mockedMerchantStockAddressesAndQuantityToShip[$itemIndex] as $index => $mockedMerchantStockAddressAndQuantityToShip) {
+                [
+                    'stock_address' => $mockedMerchantStockAddress,
+                    'quantity_to_ship' => $quantityToShip,
+                ] = $mockedMerchantStockAddressAndQuantityToShip;
 
-        foreach ($mockedMerchantStockAddressesAndQuantityToShip as $index => $mockedMerchantStockAddressAndQuantityToShip) {
-            [
-                'stock_address' => $mockedMerchantStockAddress,
-                'quantity_to_ship' => $quantityToShip,
-            ] = $mockedMerchantStockAddressAndQuantityToShip;
+                $orderItemMerchantStockAddressTransfer = $orderItemTransfer->getMerchantStockAddresses()->offsetGet($index);
 
-            $orderItemMerchantStockAddressTransfer = $orderItemTransfer->getMerchantStockAddresses()->offsetGet($index);
-
-            $this->assertItemIsHydratedWithMerchantStockAddress(
-                $mockedMerchantStockAddress,
-                $orderItemMerchantStockAddressTransfer,
-                $quantityToShip,
-            );
+                $this->assertItemIsHydratedWithMerchantStockAddress(
+                    $mockedMerchantStockAddress,
+                    $orderItemMerchantStockAddressTransfer,
+                    $quantityToShip,
+                );
+            }
         }
     }
 
@@ -293,22 +337,22 @@ class ProductOfferAvailabilityCommunicationTester extends Actor
         CalculableObjectTransfer $expandedQuoteTransfer,
         array $mockedMerchantStockAddressesAndQuantityToShip
     ): void {
-        /** @var \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer */
-        $orderItemTransfer = $expandedQuoteTransfer->getItems()->offsetGet(0);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer */
+        foreach ($expandedQuoteTransfer->getItems() as $itemIndex => $quoteItemTransfer) {
+            foreach ($mockedMerchantStockAddressesAndQuantityToShip[$itemIndex] as $index => $mockedMerchantStockAddressAndQuantityToShip) {
+                [
+                    'stock_address' => $mockedMerchantStockAddress,
+                    'quantity_to_ship' => $quantityToShip,
+                ] = $mockedMerchantStockAddressAndQuantityToShip;
 
-        foreach ($mockedMerchantStockAddressesAndQuantityToShip as $index => $mockedMerchantStockAddressAndQuantityToShip) {
-            [
-                'stock_address' => $mockedMerchantStockAddress,
-                'quantity_to_ship' => $quantityToShip,
-            ] = $mockedMerchantStockAddressAndQuantityToShip;
+                $quoteItemMerchantStockAddressTransfer = $quoteItemTransfer->getMerchantStockAddresses()->offsetGet($index);
 
-            $orderItemMerchantStockAddressTransfer = $orderItemTransfer->getMerchantStockAddresses()->offsetGet($index);
-
-            $this->assertItemIsHydratedWithMerchantStockAddress(
-                $mockedMerchantStockAddress,
-                $orderItemMerchantStockAddressTransfer,
-                $quantityToShip,
-            );
+                $this->assertItemIsHydratedWithMerchantStockAddress(
+                    $mockedMerchantStockAddress,
+                    $quoteItemMerchantStockAddressTransfer,
+                    $quantityToShip,
+                );
+            }
         }
     }
 
@@ -374,8 +418,9 @@ class ProductOfferAvailabilityCommunicationTester extends Actor
             'The MerchantStockAddress must have its "zipCode" paramenter equals to the mocked one',
         );
 
-        $this->assertTrue(
-            $quantityToShip->equals($itemMerchantStockAddressTransfer->getQuantityToShip()),
+        $this->assertEquals(
+            $quantityToShip->toInt(),
+            $itemMerchantStockAddressTransfer->getQuantityToShip()->toInt(),
             'The quantity to ship in MerchantStockAddress is not the value expected.',
         );
     }

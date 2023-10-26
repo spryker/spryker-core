@@ -30,33 +30,38 @@
         <property name="taxMetadata" dataBuilderRule="ItemTaxMetadata" strict="true"/>
     </transfer>
 
-    <transfer name="TaxAppSale">
+    <transfer name="TaxAppSale" strict="true">
         <property name="transactionId" dataBuilderRule="lexify('??????????')"/>
         <property name="items" dataBuilderRule="TaxAppItem[]"/>
         <property name="shipments" dataBuilderRule="TaxAppShipment[]"/>
-        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+        <property name="taxTotal" dataBuilderRule="numberBetween(100, 1000)"/>
     </transfer>
 
-    <transfer name="TaxAppItem">
+    <transfer name="TaxAppItem" strict="true">
         <property name="id" dataBuilderRule="lexify('??????????')"/>
-        <property name="priceAmount" dataBuilderRule="lexify('??????????')"/>
-        <property name="discountAmount" dataBuilderRule="lexify('??????????')"/>
+        <property name="priceAmount" dataBuilderRule="numberBetween(100, 1000)"/>
+        <property name="discountAmount" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="quantity" dataBuilderRule="lexify('??????????')"/>
-        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+        <property name="taxTotal" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="shippingAddress" dataBuilderRule="TaxAppAddress"/>
         <property name="billingAddress" dataBuilderRule="TaxAppAddress"/>
         <property name="sellerAddress" dataBuilderRule="TaxAppAddress"/>
+        <property name="shippingWarehouses" dataBuilderRule="ShippingWarehouse"/>
+    </transfer>
+
+    <transfer name="ShippingWarehouse" strict="true">
+        <property name="quantity" dataBuilderRule="numberBetween(1, 9)"/>
         <property name="warehouseAddress" dataBuilderRule="TaxAppAddress"/>
     </transfer>
 
     <transfer name="TaxAppShipment" strict="true">
         <property name="id" dataBuilderRule="lexify('??????????')"/>
-        <property name="priceAmount" dataBuilderRule="lexify('??????????')"/>
-        <property name="discountAmount" dataBuilderRule="lexify('??????????')"/>
-        <property name="taxTotal" dataBuilderRule="lexify('??????????')"/>
+        <property name="priceAmount" dataBuilderRule="numberBetween(100, 1000)"/>
+        <property name="discountAmount" dataBuilderRule="numberBetween(100, 1000)"/>
+        <property name="taxTotal" dataBuilderRule="numberBetween(100, 1000)"/>
     </transfer>
 
-    <transfer name="TaxAppAddress">
+    <transfer name="TaxAppAddress" strict="true">
         <property name="address1" dataBuilderRule="lexify('??????????')"/>
         <property name="address2" dataBuilderRule="lexify('??????????')"/>
         <property name="city" dataBuilderRule="lexify('??????????')"/>

@@ -294,7 +294,7 @@ class TaxAppDataHelper extends Module
      */
     public function haveTaxAppSaleTransfer(array $seed = []): TaxAppSaleTransfer
     {
-        return (new TaxAppSaleBuilder())->seed($seed)->withItem()->withShipment()->build();
+        return (new TaxAppSaleBuilder())->seed($seed)->withItem()->withAnotherItem()->withShipment()->build();
     }
 
     /**
@@ -314,9 +314,25 @@ class TaxAppDataHelper extends Module
      */
     public function haveTaxCalculationResponseTransfer(array $seed = []): TaxCalculationResponseTransfer
     {
-        $saleTransfer = $this->haveTaxAppSaleTransfer();
-        $saleTransfer->setTaxTotal(12345);
+        $saleTransfer = $this->haveTaxAppSaleTransfer($seed);
+        $saleTransfer->setTaxTotal($this->getTaxAppItemsTaxTotals($saleTransfer->getItems()));
 
         return (new TaxCalculationResponseBuilder())->seed($seed)->withSale($saleTransfer->toArray())->build();
+    }
+
+    /**
+     * @param \ArrayObject $itemTransfers
+     *
+     * @return int
+     */
+    public function getTaxAppItemsTaxTotals(ArrayObject $itemTransfers): int
+    {
+        $itemsTaxTotal = 0;
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemsTaxTotal += $itemTransfer->getTaxTotal();
+        }
+
+        return $itemsTaxTotal;
     }
 }
