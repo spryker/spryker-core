@@ -7,40 +7,21 @@
 
 namespace Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer;
 
+use ArrayObject;
+
 interface ProductOfferShipmentTypeStorageWriterInterface
 {
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param list<int> $productOfferIds
      *
      * @return void
      */
-    public function writeCollectionByProductOfferShipmentTypeEvents(array $eventEntityTransfers): void;
+    public function writeProductOfferShipmentTypeStorageCollectionByProductOfferIds(array $productOfferIds): void;
 
     /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer> $productOfferShipmentTypeTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductOfferEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByProductOfferStoreEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByShipmentTypeEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByShipmentTypeStoreEvents(array $eventEntityTransfers): void;
+    public function writeProductOfferShipmentTypeStorageCollection(ArrayObject $productOfferShipmentTypeTransfers): void;
 }

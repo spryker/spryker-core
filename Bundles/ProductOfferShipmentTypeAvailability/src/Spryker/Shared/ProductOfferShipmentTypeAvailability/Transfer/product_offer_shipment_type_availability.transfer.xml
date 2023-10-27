@@ -65,43 +65,4 @@
         <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
-    <transfer name="ProductOfferServicePointAvailabilityConditions" strict="true">
-        <property name="shipmentTypeUuid" type="string"/>
-        <property name="storeName" type="string"/>
-    </transfer>
-
-    <transfer name="ProductOfferServicePointAvailabilityCollection" strict="true">
-        <property name="productOfferServicePointAvailabilityResponseItems" type="ProductOfferServicePointAvailabilityResponseItem[]" singular="productOfferServicePointAvailabilityResponseItem"/>
-    </transfer>
-
-    <transfer name="ProductOfferServicePointAvailabilityCriteria" strict="true">
-        <property name="productOfferServicePointAvailabilityConditions" type="ProductOfferServicePointAvailabilityConditions"/>
-    </transfer>
-
-    <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">
-        <property name="productOfferStorage" type="ProductOfferStorage"/>
-    </transfer>
-
-    <transfer name="ProductOfferStorage">
-        <property name="shipmentTypes" type="ShipmentTypeStorage[]" singular="shipmentType" strict="true"/>
-    </transfer>
-
-    <transfer name="ShipmentTypeStorage" strict="true">
-        <property name="uuid" type="string"/>
-        <property name="key" type="string"/>
-    </transfer>
-
-    <transfer name="ShipmentTypeStorageConditions" strict="true">
-        <property name="uuids" type="string[]" singular="uuid"/>
-        <property name="storeName" type="string"/>
-    </transfer>
-
-    <transfer name="ShipmentTypeStorageCriteria" strict="true">
-        <property name="shipmentTypeStorageConditions" type="ShipmentTypeStorageConditions"/>
-    </transfer>
-
-    <transfer name="ShipmentTypeStorageCollection" strict="true">
-        <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
-    </transfer>
-
 </transfers>

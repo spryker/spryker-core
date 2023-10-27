@@ -17,10 +17,13 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\ServicePointStorageCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointStorageTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToServicePointStorageClientInterface;
+use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToStoreClientInterface;
+use Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiDependencyProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -56,6 +59,11 @@ class ServicePointsRestApiTester extends Actor
      * @var string
      */
     protected const RESOURCE_CHECKOUT_DATA = 'checkout-data';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
 
     /**
      * @param list<\Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
@@ -99,6 +107,21 @@ class ServicePointsRestApiTester extends Actor
                 'getServicePointStorageCollection' => $servicePointStorageCollectionTransfer,
             ]),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function mockStoreClient(): void
+    {
+        $storeClientMock = Stub::makeEmpty(
+            ServicePointsRestApiToStoreClientInterface::class,
+            [
+                'getCurrentStore' => (new StoreTransfer())->setName(static::DEFAULT_STORE_NAME),
+            ],
+        );
+
+        $this->setDependency(ServicePointsRestApiDependencyProvider::CLIENT_STORE, $storeClientMock);
     }
 
     /**

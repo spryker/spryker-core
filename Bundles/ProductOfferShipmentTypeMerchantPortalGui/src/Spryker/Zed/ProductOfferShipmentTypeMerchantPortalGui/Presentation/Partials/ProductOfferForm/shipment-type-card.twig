@@ -4,6 +4,7 @@
     <web-spy-card
         cloak
         spy-title="{{ form.children.shipmentTypes.vars.label | trans }}"
+        class="{{ mainClass | default('mainClass') }}__card"
     >
         {{ form_row(form.children.shipmentTypes, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
     </web-spy-card>

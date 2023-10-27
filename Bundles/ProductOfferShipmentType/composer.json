@@ -7,8 +7,9 @@
         "php": ">=8.0",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-offer": "^1.9.0",
+        "spryker/product-offer": "^1.10.0",
         "spryker/product-offer-extension": "^1.0.0",
+        "spryker/propel-orm": "^1.0.0",
         "spryker/shipment-type": "^0.1.0",
         "spryker/transfer": "^3.27.0"
     },
@@ -16,7 +17,6 @@
         "spryker/code-sniffer": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
-        "spryker/propel-orm": "*",
         "spryker/testify": "*"
     },
     "autoload": {

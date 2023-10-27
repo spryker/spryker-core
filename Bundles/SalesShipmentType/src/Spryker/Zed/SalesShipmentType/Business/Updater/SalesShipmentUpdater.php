@@ -63,14 +63,14 @@ class SalesShipmentUpdater implements SalesShipmentUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function updateSalesShipmentsWithSalesShipmentType(
+    public function saveSalesShipmentsWithSalesShipmentType(
         SaveOrderTransfer $saveOrderTransfer
     ): SaveOrderTransfer {
         $shipmentTypeKeys = $this->getUniqueShipmentTypeKeysFromOrderItems($saveOrderTransfer);
         $salesShipmentTypeTransfers = $this->salesShipmentTypeRepository->getSalesShipmentTypesByKeys($shipmentTypeKeys);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($saveOrderTransfer, $salesShipmentTypeTransfers): void {
-            $this->executeUpdateSalesShipmentWithSalesShipmentTypeTransaction($saveOrderTransfer, $salesShipmentTypeTransfers);
+            $this->executeSaveSalesShipmentWithSalesShipmentTypeTransaction($saveOrderTransfer, $salesShipmentTypeTransfers);
         });
 
         return $saveOrderTransfer;
@@ -82,7 +82,7 @@ class SalesShipmentUpdater implements SalesShipmentUpdaterInterface
      *
      * @return void
      */
-    protected function executeUpdateSalesShipmentWithSalesShipmentTypeTransaction(
+    protected function executeSaveSalesShipmentWithSalesShipmentTypeTransaction(
         SaveOrderTransfer $saveOrderTransfer,
         array $salesShipmentTypeTransfers
     ): void {

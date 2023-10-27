@@ -14,7 +14,6 @@ use Spryker\Zed\SalesServicePoint\Business\Saver\SalesOrderItemServicePointsSave
 use Spryker\Zed\SalesServicePoint\Business\Saver\SalesOrderItemServicePointsSaverInterface;
 
 /**
- * @method \Spryker\Zed\SalesServicePoint\SalesServicePointConfig getConfig()
  * @method \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointRepositoryInterface getRepository()
  */

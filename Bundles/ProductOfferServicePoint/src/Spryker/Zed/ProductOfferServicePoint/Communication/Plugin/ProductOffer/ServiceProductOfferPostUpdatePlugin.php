@@ -21,18 +21,14 @@ class ServiceProductOfferPostUpdatePlugin extends AbstractPlugin implements Prod
 {
     /**
      * {@inheritDoc}
-     * - Requires `ProductOfferServiceCollectionRequestTransfer.productOffers` to be set.
-     * - Requires `ProductOfferServiceCollectionRequestTransfer.isTransactional` to be set.
      * - Requires `ProductOfferTransfer.productOfferReference` to be set.
      * - Requires `ProductOfferTransfer.services.uuid` to be set.
      * - Validates product offer reference existence using `ProductOfferTransfer.productOfferReference`.
      * - Validates service existence using `ProductOfferTransfer.services.uuid`.
      * - Validates service uniqueness in scope of request collection.
      * - Validates product offer has single service point.
-     * - Uses `ProductOfferServiceCollectionRequestTransfer.isTransactional` for transactional operation.
-     * - Throws {@link \Spryker\Zed\ProductOfferServicePoint\Business\Exception\ProductOfferValidationException} when `ProductOfferServiceCollectionRequestTransfer.throwExceptionOnValidation` enabled and validation fails.
-     * - Stores updated product offer service entities to persistence.
-     * - Returns `ProductOfferServiceCollectionResponseTransfer` with product offers and errors if any occurred.
+     * - Throws {@link \Spryker\Zed\ProductOfferServicePoint\Business\Exception\ProductOfferValidationException} when validation fails.
+     * - Stores valid product offer service entities to persistence.
      *
      * @api
      *

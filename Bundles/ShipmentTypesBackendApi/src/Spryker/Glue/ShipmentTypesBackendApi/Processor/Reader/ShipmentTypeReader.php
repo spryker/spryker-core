@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTypeConditionsTransfer;
@@ -79,7 +78,7 @@ class ShipmentTypeReader implements ShipmentTypeReaderInterface
         $shipmentTypeCollectionTransfer = $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
         if ($shipmentTypeCollectionTransfer->getShipmentTypes()->count() !== 1) {
             $errorTransfers = new ArrayObject();
-            $errorTransfers->append($this->createEntityNotFoundErrorTransfer());
+            $errorTransfers->append($this->shipmentTypeResponseBuilder->createEntityNotFoundErrorTransfer());
 
             return $this->shipmentTypeResponseBuilder->createErrorResponse(
                 $errorTransfers,
@@ -138,13 +137,5 @@ class ShipmentTypeReader implements ShipmentTypeReaderInterface
         }
 
         return $shipmentTypeConditionsTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ErrorTransfer
-     */
-    protected function createEntityNotFoundErrorTransfer(): ErrorTransfer
-    {
-        return (new ErrorTransfer())->setMessage(ShipmentTypesBackendApiConfig::GLOSSARY_KEY_VALIDATION_SHIPMENT_TYPE_ENTITY_NOT_FOUND);
     }
 }

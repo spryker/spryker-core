@@ -29,8 +29,8 @@ class ProductOfferShipmentTypeStorageFacade extends AbstractFacade implements Pr
     public function writeCollectionByProductOfferShipmentTypeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductOfferShipmentTypeStorageWriter()
-            ->writeCollectionByProductOfferShipmentTypeEvents($eventEntityTransfers);
+            ->createProductOfferShipmentTypeEventsWriter()
+            ->writeProductOfferShipmentTypeStorageCollectionByProductOfferShipmentTypeEvents($eventEntityTransfers);
     }
 
     /**
@@ -45,8 +45,8 @@ class ProductOfferShipmentTypeStorageFacade extends AbstractFacade implements Pr
     public function writeCollectionByProductOfferEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductOfferShipmentTypeStorageWriter()
-            ->writeCollectionByProductOfferEvents($eventEntityTransfers);
+            ->createProductOfferEventsWriter()
+            ->writeProductOfferShipmentTypeStorageCollectionByProductOfferEvents($eventEntityTransfers);
     }
 
     /**
@@ -61,8 +61,8 @@ class ProductOfferShipmentTypeStorageFacade extends AbstractFacade implements Pr
     public function writeCollectionByProductOfferStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductOfferShipmentTypeStorageWriter()
-            ->writeCollectionByProductOfferStoreEvents($eventEntityTransfers);
+            ->createProductOfferEventsWriter()
+            ->writeProductOfferShipmentTypeStorageCollectionByProductOfferStoreEvents($eventEntityTransfers);
     }
 
     /**
@@ -77,8 +77,8 @@ class ProductOfferShipmentTypeStorageFacade extends AbstractFacade implements Pr
     public function writeCollectionByShipmentTypeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductOfferShipmentTypeStorageWriter()
-            ->writeCollectionByShipmentTypeEvents($eventEntityTransfers);
+            ->createShipmentTypeEventsWriter()
+            ->writeProductOfferShipmentTypeStorageCollectionByShipmentTypeEvents($eventEntityTransfers);
     }
 
     /**
@@ -93,8 +93,8 @@ class ProductOfferShipmentTypeStorageFacade extends AbstractFacade implements Pr
     public function writeCollectionByShipmentTypeStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductOfferShipmentTypeStorageWriter()
-            ->writeCollectionByShipmentTypeStoreEvents($eventEntityTransfers);
+            ->createShipmentTypeEventsWriter()
+            ->writeProductOfferShipmentTypeStorageCollectionByShipmentTypeStoreEvents($eventEntityTransfers);
     }
 
     /**

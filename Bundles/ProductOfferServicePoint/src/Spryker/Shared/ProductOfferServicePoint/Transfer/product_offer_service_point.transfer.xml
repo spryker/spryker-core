@@ -97,7 +97,6 @@
 
     <transfer name="ProductOfferCriteria">
         <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
-        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
         <property name="isActive" type="bool"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>

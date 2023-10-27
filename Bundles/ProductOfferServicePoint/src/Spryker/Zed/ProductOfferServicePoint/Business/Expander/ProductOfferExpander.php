@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Persistence\ProductOfferServicePointRepositoryInterface;
@@ -49,24 +50,32 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     protected ProductOfferReaderInterface $productOfferReader;
 
     /**
+     * @var \Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface
+     */
+    protected ServiceIndexerInterface $serviceIndexer;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePoint\Persistence\ProductOfferServicePointRepositoryInterface $productOfferServicePointRepository
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface $serviceReader
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface $productOfferServiceExtractor
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferExtractorInterface $productOfferExtractor
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface $productOfferReader
+     * @param \Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface $serviceIndexer
      */
     public function __construct(
         ProductOfferServicePointRepositoryInterface $productOfferServicePointRepository,
         ServiceReaderInterface $serviceReader,
         ProductOfferServiceExtractorInterface $productOfferServiceExtractor,
         ProductOfferExtractorInterface $productOfferExtractor,
-        ProductOfferReaderInterface $productOfferReader
+        ProductOfferReaderInterface $productOfferReader,
+        ServiceIndexerInterface $serviceIndexer
     ) {
         $this->productOfferServicePointRepository = $productOfferServicePointRepository;
         $this->serviceReader = $serviceReader;
         $this->productOfferServiceExtractor = $productOfferServiceExtractor;
         $this->productOfferExtractor = $productOfferExtractor;
         $this->productOfferReader = $productOfferReader;
+        $this->serviceIndexer = $serviceIndexer;
     }
 
     /**
@@ -188,7 +197,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
         $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByServiceIds(
             $this->productOfferServiceExtractor->extractServiceIdsFromProductOfferServiceCollectionTransfer($productOfferServiceCollectionTransfer),
         );
-        $serviceTransfersIndexedByIdService = $this->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
+        $serviceTransfersIndexedByIdService = $this->serviceIndexer->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
         $serviceTransfersIndexedByIdProductOffer = [];
 
         foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
@@ -216,21 +225,6 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
         }
 
         return $serviceTransfersIndexedByServiceUuid;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
-     *
-     * @return array<int, \Generated\Shared\Transfer\ServiceTransfer>
-     */
-    protected function getServiceTransfersIndexedByIdService(ServiceCollectionTransfer $serviceCollectionTransfer): array
-    {
-        $serviceTransfersIndexedByIdService = [];
-        foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
-            $serviceTransfersIndexedByIdService[$serviceTransfer->getIdServiceOrFail()] = $serviceTransfer;
-        }
-
-        return $serviceTransfersIndexedByIdService;
     }
 
     /**

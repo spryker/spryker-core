@@ -21,7 +21,7 @@ class ProductOfferShipmentTypeWritePublisherPlugin extends AbstractPlugin implem
     /**
      * {@inheritDoc}
      * - Publishes product offer shipment type data by `SpyProductOfferShipmentType` entity events and product offer shipment type publish event.
-     * - - Uses product offer IDs provided in `EventEntityTransfers.foreignKeys` to publish storage data.
+     * - Uses product offer IDs provided in `EventEntityTransfers.foreignKeys` to publish storage data.
      * - If product offer IDs are not provided, uses `idProductOfferShipmenType` provided in `EventEntityTransfers.id` to publish storage data.
      * - Executes {@link \Spryker\Zed\ProductOfferShipmentTypeStorageExtension\Dependency\Plugin\ProductOfferShipmentTypeStorageFilterPluginInterface} plugin stack.
      * - Stores data in storage table.

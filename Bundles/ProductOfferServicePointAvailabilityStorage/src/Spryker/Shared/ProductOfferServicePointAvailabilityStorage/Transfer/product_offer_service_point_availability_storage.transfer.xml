@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ProductOfferServicePointAvailabilityRequestItem" strict="true">
+        <property name="productConcreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityConditions" strict="true">
+        <property name="storeName" type="string"/>
+        <property name="serviceTypeUuid" type="string"/>
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="productOfferServicePointAvailabilityRequestItems" type="ProductOfferServicePointAvailabilityRequestItem[]" singular="productOfferServicePointAvailabilityRequestItem"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityCriteria" strict="true">
+        <property name="productOfferServicePointAvailabilityConditions" type="ProductOfferServicePointAvailabilityConditions"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityResponseItem" strict="true">
+        <property name="productConcreteSku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="productOfferStorage" type="ProductOfferStorage"/>
+        <property name="servicePointUuid" type="string"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferServicePointAvailabilityCollection" strict="true">
+        <property name="productOfferServicePointAvailabilityResponseItems" type="ProductOfferServicePointAvailabilityResponseItem[]" singular="productOfferServicePointAvailabilityResponseItem"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="productOfferReference" type="string"/>
+        <property name="services" type="ServiceStorage[]" singular="service"/>
+        <property name="productConcreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="ServiceStorage" strict="true">
+        <property name="servicePoint" type="ServicePointStorage"/>
+        <property name="serviceType" type="ServiceTypeStorage"/>
+    </transfer>
+
+    <transfer name="ServiceTypeStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferAvailabilityStorage">
+        <property name="productOfferReference" type="string"/>
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+    </transfer>
+
+    <transfer name="ServicePointStorage" strict="true">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+</transfers>

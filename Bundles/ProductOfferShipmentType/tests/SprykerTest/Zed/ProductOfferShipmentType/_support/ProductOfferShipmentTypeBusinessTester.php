@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentTypeQuery;
-use Propel\Runtime\Collection\Collection;
 
 /**
  * Inherited Methods
@@ -36,15 +35,31 @@ class ProductOfferShipmentTypeBusinessTester extends Actor
     use _generated\ProductOfferShipmentTypeBusinessTesterActions;
 
     /**
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductOfferShipmentType\Persistence\SpyProductOfferShipmentType>
+     * @return bool
      */
-    public function getProductOfferShipmentTypeEntitiesByIdProductOffer(int $idProductOffer): Collection
+    public function hasProductOfferShipmentType(
+        ProductOfferTransfer $productOfferTransfer,
+        ShipmentTypeTransfer $shipmentTypeTransfer
+    ): bool {
+        return $this->getProductOfferShipmentTypeQuery()
+            ->filterByFkProductOffer($productOfferTransfer->getIdProductOfferOrFail())
+            ->filterByFkShipmentType($shipmentTypeTransfer->getIdShipmentTypeOrFail())
+            ->exists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return int
+     */
+    public function getNumberOfPersistedProductOfferShipmentTypes(ProductOfferTransfer $productOfferTransfer): int
     {
         return $this->getProductOfferShipmentTypeQuery()
-            ->filterByFkProductOffer($idProductOffer)
-            ->find();
+            ->filterByFkProductOffer($productOfferTransfer->getIdProductOfferOrFail())
+            ->count();
     }
 
     /**

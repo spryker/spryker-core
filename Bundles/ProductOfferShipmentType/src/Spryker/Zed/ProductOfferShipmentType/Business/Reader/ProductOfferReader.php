@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferShipmentType\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorConditionsTransfer;
@@ -47,6 +48,21 @@ class ProductOfferReader implements ProductOfferReaderInterface
         $this->productOfferProductOfferShipmentTypeCollectionFilter = $productOfferProductOfferShipmentTypeCollectionFilter;
         $this->productOfferProductOfferShipmentTypeCollectionExpander = $productOfferProductOfferShipmentTypeCollectionExpander;
         $this->productOfferFacade = $productOfferFacade;
+    }
+
+    /**
+     * @param list<string> $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollectionByProductOfferReferences(array $productOfferReferences): ProductOfferCollectionTransfer
+    {
+        $productOfferConditionsTransfer = (new ProductOfferConditionsTransfer())
+            ->setProductOfferReferences($productOfferReferences);
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setProductOfferConditions($productOfferConditionsTransfer);
+
+        return $this->productOfferFacade->getProductOfferCollection($productOfferCriteriaTransfer);
     }
 
     /**
@@ -104,7 +120,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
         array $productOfferIds
     ): ProductOfferCollectionTransfer {
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
-            ->setProductOfferIds($productOfferIds)
+            ->setProductOfferConditions((new ProductOfferConditionsTransfer())->setProductOfferIds($productOfferIds))
             ->setIsActive($productOfferShipmentTypeIteratorConditionsTransfer->getIsActiveProductOffer())
             ->setIsActiveConcreteProduct($productOfferShipmentTypeIteratorConditionsTransfer->getIsActiveProductOfferConcreteProduct())
             ->setApprovalStatuses($productOfferShipmentTypeIteratorConditionsTransfer->getProductOfferApprovalStatuses());

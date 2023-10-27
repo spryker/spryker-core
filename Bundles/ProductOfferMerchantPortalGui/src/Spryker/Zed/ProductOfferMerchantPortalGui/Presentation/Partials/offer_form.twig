@@ -253,7 +253,7 @@
                     {% endblock %}
 
                     {% for productOfferFormView in productOfferFormViews %}
-                        {{ productOfferFormView.content | raw }}
+                        {{ productOfferFormView.content | replace({'mainClass': mainClass}) | raw }}
                     {% endfor %}
 
                 {{ form_end(form, { attr: { excludeFormTag: true } }) }}

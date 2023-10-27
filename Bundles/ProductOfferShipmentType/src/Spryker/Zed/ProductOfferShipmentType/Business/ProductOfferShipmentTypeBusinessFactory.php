@@ -8,16 +8,28 @@
 namespace Spryker\Zed\ProductOfferShipmentType\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOfferShipmentType\Business\Creator\ProductOfferShipmentTypeCreator;
-use Spryker\Zed\ProductOfferShipmentType\Business\Creator\ProductOfferShipmentTypeCreatorInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferExpanderInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferProductOfferShipmentTypeCollectionExpander;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferProductOfferShipmentTypeCollectionExpanderInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferProductOfferShipmentTypeCollectionRequestExpander;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferProductOfferShipmentTypeCollectionRequestExpanderInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferShipmentTypeCollectionRequestExpander;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferShipmentTypeCollectionRequestExpanderInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ShipmentTypeProductOfferShipmentTypeCollectionExpander;
 use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ShipmentTypeProductOfferShipmentTypeCollectionExpanderInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ShipmentTypeProductOfferShipmentTypeCollectionRequestExpander;
+use Spryker\Zed\ProductOfferShipmentType\Business\Expander\ShipmentTypeProductOfferShipmentTypeCollectionRequestExpanderInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ErrorExtractor;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ErrorExtractorInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferExtractor;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferExtractorInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferShipmentTypeExtractor;
+use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferShipmentTypeExtractorInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ShipmentTypeExtractor;
 use Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ShipmentTypeExtractorInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Filter\ProductOfferFilter;
+use Spryker\Zed\ProductOfferShipmentType\Business\Filter\ProductOfferFilterInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Filter\ProductOfferProductOfferShipmentTypeCollectionFilter;
 use Spryker\Zed\ProductOfferShipmentType\Business\Filter\ProductOfferProductOfferShipmentTypeCollectionFilterInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Filter\ShipmentTypeProductOfferShipmentTypeCollectionFilter;
@@ -32,8 +44,17 @@ use Spryker\Zed\ProductOfferShipmentType\Business\Reader\ProductOfferShipmentTyp
 use Spryker\Zed\ProductOfferShipmentType\Business\Reader\ProductOfferShipmentTypeReaderInterface;
 use Spryker\Zed\ProductOfferShipmentType\Business\Reader\ShipmentTypeReader;
 use Spryker\Zed\ProductOfferShipmentType\Business\Reader\ShipmentTypeReaderInterface;
-use Spryker\Zed\ProductOfferShipmentType\Business\Updater\ProductOfferShipmentTypeUpdater;
-use Spryker\Zed\ProductOfferShipmentType\Business\Updater\ProductOfferShipmentTypeUpdaterInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Saver\ProductOfferShipmentTypeSaver;
+use Spryker\Zed\ProductOfferShipmentType\Business\Saver\ProductOfferShipmentTypeSaverInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\ProductOfferValidator;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\ProductOfferValidatorInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferExistsProductOfferValidatorRule;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferUniquenessValidatorRule;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ShipmentTypeExistsProductOfferValidatorRule;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ShipmentTypeUniquenessProductOfferValidatorRule;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Util\ErrorAdder;
+use Spryker\Zed\ProductOfferShipmentType\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\ProductOfferShipmentType\Dependency\Facade\ProductOfferShipmentTypeToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentType\Dependency\Facade\ProductOfferShipmentTypeToShipmentTypeFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentType\ProductOfferShipmentTypeDependencyProvider;
@@ -52,29 +73,25 @@ class ProductOfferShipmentTypeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferExpander(
             $this->getRepository(),
-            $this->getShipmentTypeFacade(),
+            $this->createProductOfferExtractor(),
+            $this->createProductOfferShipmentTypeExtractor(),
+            $this->createShipmentTypeReader(),
+            $this->createShipmentTypeIndexer(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Creator\ProductOfferShipmentTypeCreatorInterface
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Saver\ProductOfferShipmentTypeSaverInterface
      */
-    public function createProductOfferShipmentTypeCreator(): ProductOfferShipmentTypeCreatorInterface
+    public function createProductOfferShipmentTypeSaver(): ProductOfferShipmentTypeSaverInterface
     {
-        return new ProductOfferShipmentTypeCreator(
+        return new ProductOfferShipmentTypeSaver(
             $this->getEntityManager(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Updater\ProductOfferShipmentTypeUpdaterInterface
-     */
-    public function createProductOfferShipmentTypeUpdater(): ProductOfferShipmentTypeUpdaterInterface
-    {
-        return new ProductOfferShipmentTypeUpdater(
-            $this->getEntityManager(),
+            $this->createProductOfferValidator(),
+            $this->createProductOfferFilter(),
             $this->getRepository(),
-            $this->createShipmentTypeExtractor(),
+            $this->createProductOfferShipmentTypeCollectionRequestExpander(),
+            $this->createProductOfferExtractor(),
         );
     }
 
@@ -158,6 +175,39 @@ class ProductOfferShipmentTypeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferShipmentTypeCollectionRequestExpanderInterface
+     */
+    public function createProductOfferShipmentTypeCollectionRequestExpander(): ProductOfferShipmentTypeCollectionRequestExpanderInterface
+    {
+        return new ProductOfferShipmentTypeCollectionRequestExpander(
+            $this->createProductOfferProductOfferShipmentTypeCollectionRequestExpander(),
+            $this->createShipmentTypeProductOfferShipmentTypeCollectionRequestExpander(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Expander\ProductOfferProductOfferShipmentTypeCollectionRequestExpanderInterface
+     */
+    public function createProductOfferProductOfferShipmentTypeCollectionRequestExpander(): ProductOfferProductOfferShipmentTypeCollectionRequestExpanderInterface
+    {
+        return new ProductOfferProductOfferShipmentTypeCollectionRequestExpander(
+            $this->createProductOfferExtractor(),
+            $this->createProductOfferReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Expander\ShipmentTypeProductOfferShipmentTypeCollectionRequestExpanderInterface
+     */
+    public function createShipmentTypeProductOfferShipmentTypeCollectionRequestExpander(): ShipmentTypeProductOfferShipmentTypeCollectionRequestExpanderInterface
+    {
+        return new ShipmentTypeProductOfferShipmentTypeCollectionRequestExpander(
+            $this->createProductOfferExtractor(),
+            $this->createShipmentTypeReader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferShipmentType\Business\Indexer\ProductOfferIndexerInterface
      */
     public function createProductOfferIndexer(): ProductOfferIndexerInterface
@@ -179,6 +229,110 @@ class ProductOfferShipmentTypeBusinessFactory extends AbstractBusinessFactory
     public function createShipmentTypeExtractor(): ShipmentTypeExtractorInterface
     {
         return new ShipmentTypeExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Filter\ProductOfferFilterInterface
+     */
+    public function createProductOfferFilter(): ProductOfferFilterInterface
+    {
+        return new ProductOfferFilter($this->createErrorExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferExtractorInterface
+     */
+    public function createProductOfferExtractor(): ProductOfferExtractorInterface
+    {
+        return new ProductOfferExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ErrorExtractorInterface
+     */
+    public function createErrorExtractor(): ErrorExtractorInterface
+    {
+        return new ErrorExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Extractor\ProductOfferShipmentTypeExtractorInterface
+     */
+    public function createProductOfferShipmentTypeExtractor(): ProductOfferShipmentTypeExtractorInterface
+    {
+        return new ProductOfferShipmentTypeExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\ProductOfferValidatorInterface
+     */
+    public function createProductOfferValidator(): ProductOfferValidatorInterface
+    {
+        return new ProductOfferValidator($this->getProductOfferValidatorRules());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface>
+     */
+    public function getProductOfferValidatorRules(): array
+    {
+        return [
+            $this->createProductOfferExistsProductOfferValidatorRule(),
+            $this->createShipmentTypeExistsProductOfferValidatorRule(),
+            $this->createShipmentTypeUniquenessProductOfferValidatorRule(),
+            $this->createProductOfferUniquenessValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface
+     */
+    public function createProductOfferExistsProductOfferValidatorRule(): ProductOfferValidatorRuleInterface
+    {
+        return new ProductOfferExistsProductOfferValidatorRule(
+            $this->createErrorAdder(),
+            $this->createProductOfferReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface
+     */
+    public function createShipmentTypeExistsProductOfferValidatorRule(): ProductOfferValidatorRuleInterface
+    {
+        return new ShipmentTypeExistsProductOfferValidatorRule(
+            $this->createProductOfferExtractor(),
+            $this->createShipmentTypeExtractor(),
+            $this->createShipmentTypeReader(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface
+     */
+    public function createShipmentTypeUniquenessProductOfferValidatorRule(): ProductOfferValidatorRuleInterface
+    {
+        return new ShipmentTypeUniquenessProductOfferValidatorRule(
+            $this->createErrorAdder(),
+            $this->createShipmentTypeExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\Rule\ProductOffer\ProductOfferValidatorRuleInterface
+     */
+    public function createProductOfferUniquenessValidatorRule(): ProductOfferValidatorRuleInterface
+    {
+        return new ProductOfferUniquenessValidatorRule($this->createErrorAdder());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentType\Business\Validator\Util\ErrorAdderInterface
+     */
+    public function createErrorAdder(): ErrorAdderInterface
+    {
+        return new ErrorAdder();
     }
 
     /**

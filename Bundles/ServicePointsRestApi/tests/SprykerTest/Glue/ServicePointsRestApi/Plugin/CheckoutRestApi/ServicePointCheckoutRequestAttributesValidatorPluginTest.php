@@ -51,6 +51,16 @@ class ServicePointCheckoutRequestAttributesValidatorPluginTest extends Unit
     /**
      * @return void
      */
+    protected function _before(): void
+    {
+        parent::_before();
+
+        $this->tester->mockStoreClient();
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateAttributesReturnsNoErrorsWhenNoServicePointsAreProvided(): void
     {
         // Arrange

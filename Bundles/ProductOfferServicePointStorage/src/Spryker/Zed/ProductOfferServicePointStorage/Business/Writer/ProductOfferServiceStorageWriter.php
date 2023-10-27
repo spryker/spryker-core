@@ -60,12 +60,18 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
     protected array $productOfferServiceStorageFilterPlugins;
 
     /**
+     * @var list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface>
+     */
+    protected array $productOfferServiceCollectionStorageFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePointStorage\Dependency\Facade\ProductOfferServicePointStorageToProductOfferServicePointFacadeInterface $productOfferServicePointFacade
      * @param \Spryker\Zed\ProductOfferServicePointStorage\Dependency\Facade\ProductOfferServicePointStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOfferServicePointStorage\Persistence\ProductOfferServicePointStorageEntityManagerInterface $productOfferServicePointStorageEntityManager
      * @param \Spryker\Zed\ProductOfferServicePointStorage\Business\Mapper\ProductOfferServiceMapperInterface $productOfferServiceMapper
      * @param \Spryker\Zed\ProductOfferServicePointStorage\Business\Reader\ProductOfferReaderInterface $productOfferReader
      * @param list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependeency\Plugin\ProductOfferServiceStorageFilterPluginInterface> $productOfferServiceStorageFilterPlugins
+     * @param list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface> $productOfferServiceCollectionStorageFilterPlugins
      */
     public function __construct(
         ProductOfferServicePointStorageToProductOfferServicePointFacadeInterface $productOfferServicePointFacade,
@@ -73,7 +79,8 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
         ProductOfferServicePointStorageEntityManagerInterface $productOfferServicePointStorageEntityManager,
         ProductOfferServiceMapperInterface $productOfferServiceMapper,
         ProductOfferReaderInterface $productOfferReader,
-        array $productOfferServiceStorageFilterPlugins
+        array $productOfferServiceStorageFilterPlugins,
+        array $productOfferServiceCollectionStorageFilterPlugins
     ) {
         $this->productOfferServicePointFacade = $productOfferServicePointFacade;
         $this->storeFacade = $storeFacade;
@@ -81,6 +88,7 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
         $this->productOfferServiceMapper = $productOfferServiceMapper;
         $this->productOfferReader = $productOfferReader;
         $this->productOfferServiceStorageFilterPlugins = $productOfferServiceStorageFilterPlugins;
+        $this->productOfferServiceCollectionStorageFilterPlugins = $productOfferServiceCollectionStorageFilterPlugins;
     }
 
     /**
@@ -116,6 +124,7 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
         $processedProductOfferIds = [];
         foreach ($productOfferServicesIterator as $productOfferServicesTransfers) {
             $productOfferServicesTransfers = $this->executeProductOfferServiceStorageFilterPlugins($productOfferServicesTransfers);
+            $productOfferServicesTransfers = $this->executeProductOfferServiceCollectionStorageFilterPlugins($productOfferServicesTransfers);
 
             $processedProductOfferIds += $this->writeCollectionPerStore($productOfferServicesTransfers, $storeTransfers);
         }
@@ -225,6 +234,8 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorage\Business\Writer\ProductOfferServiceStorageWriter::executeProductOfferServiceCollectionStorageFilterPlugins()} instead.
+     *
      * @param list<\Generated\Shared\Transfer\ProductOfferServicesTransfer> $productOfferServicesTransfers
      *
      * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
@@ -233,6 +244,20 @@ class ProductOfferServiceStorageWriter implements ProductOfferServiceStorageWrit
     {
         foreach ($this->productOfferServiceStorageFilterPlugins as $productOfferServiceStorageFilterPlugin) {
             $productOfferServicesTransfers = $productOfferServiceStorageFilterPlugin->filterProductOfferServices($productOfferServicesTransfers);
+        }
+
+        return $productOfferServicesTransfers;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicesTransfer> $productOfferServicesTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
+     */
+    protected function executeProductOfferServiceCollectionStorageFilterPlugins(array $productOfferServicesTransfers): array
+    {
+        foreach ($this->productOfferServiceCollectionStorageFilterPlugins as $productOfferServiceCollectionStorageFilterPlugin) {
+            $productOfferServicesTransfers = $productOfferServiceCollectionStorageFilterPlugin->filterProductOfferServices($productOfferServicesTransfers);
         }
 
         return $productOfferServicesTransfers;

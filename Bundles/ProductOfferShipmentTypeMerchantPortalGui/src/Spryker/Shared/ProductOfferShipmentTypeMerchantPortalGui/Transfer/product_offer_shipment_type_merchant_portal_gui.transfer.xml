@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="ShipmentType" strict="true">
-        <property name="idShipmentType" type="int"/>
+        <property name="uuid" type="string"/>
         <property name="key" type="string"/>
         <property name="name" type="string"/>
     </transfer>

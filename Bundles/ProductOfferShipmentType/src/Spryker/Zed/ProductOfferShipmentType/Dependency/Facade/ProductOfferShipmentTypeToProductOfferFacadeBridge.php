@@ -26,6 +26,16 @@ class ProductOfferShipmentTypeToProductOfferFacadeBridge implements ProductOffer
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
+    {
+        return $this->productOfferFacade->getProductOfferCollection($productOfferCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer

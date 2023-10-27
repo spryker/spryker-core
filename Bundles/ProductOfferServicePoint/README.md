@@ -2,7 +2,7 @@
 [![Latest Stable Version](https://poser.pugx.org/spryker/product-offer-service-point/v/stable.svg)](https://packagist.org/packages/spryker/product-offer-service-point)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 
-ProductOfferServicePoint module provides base infrastructure for the product offer services functionality.
+ProductOfferServicePoint module provides base infrastructure for the product offer service points functionality.
 
 ## Installation
 

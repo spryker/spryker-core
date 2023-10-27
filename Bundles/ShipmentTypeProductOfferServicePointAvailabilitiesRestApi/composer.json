@@ -5,8 +5,8 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker/product-offer-service-point-availabilities-rest-api": "^0.1.0",
-        "spryker/product-offer-service-point-availability-calculator": "^0.1.0",
+        "spryker/product-offer-service-point-availabilities-rest-api": "^0.2.0",
+        "spryker/product-offer-service-point-availability-calculator-storage": "^0.1.0",
         "spryker/shipment-type": "^0.1.0",
         "spryker/transfer": "^3.27.0"
     },

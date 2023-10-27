@@ -26,7 +26,9 @@ class ProductOfferServicePointAclEntityConfigurationExpanderPlugin extends Abstr
      *
      * @api
      *
-     * @inheritDoc
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
     public function expand(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclEntityMetadataConfigTransfer
     {

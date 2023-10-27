@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\Updater;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTypeCollectionRequestTransfer;
@@ -19,7 +18,6 @@ use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Spryker\Glue\ShipmentTypesBackendApi\Dependency\Facade\ShipmentTypesBackendApiToShipmentTypeFacadeInterface;
 use Spryker\Glue\ShipmentTypesBackendApi\Processor\Mapper\ShipmentTypeMapperInterface;
 use Spryker\Glue\ShipmentTypesBackendApi\Processor\ResponseBuilder\ShipmentTypeResponseBuilderInterface;
-use Spryker\Glue\ShipmentTypesBackendApi\ShipmentTypesBackendApiConfig;
 
 class ShipmentTypeUpdater implements ShipmentTypeUpdaterInterface
 {
@@ -66,7 +64,7 @@ class ShipmentTypeUpdater implements ShipmentTypeUpdaterInterface
         $shipmentTypeTransfer = $this->findShipmentType($glueRequestTransfer->getResourceOrFail()->getIdOrFail());
         if ($shipmentTypeTransfer === null) {
             $errorTransfers = new ArrayObject();
-            $errorTransfers->append($this->createEntityNotFoundErrorTransfer());
+            $errorTransfers->append($this->shipmentTypeResponseBuilder->createEntityNotFoundErrorTransfer());
 
             return $this->shipmentTypeResponseBuilder->createErrorResponse(
                 $errorTransfers,
@@ -133,13 +131,5 @@ class ShipmentTypeUpdater implements ShipmentTypeUpdaterInterface
         return (new ShipmentTypeCollectionRequestTransfer())
             ->addShipmentType($shipmentTypeTransfer)
             ->setIsTransactional(true);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ErrorTransfer
-     */
-    protected function createEntityNotFoundErrorTransfer(): ErrorTransfer
-    {
-        return (new ErrorTransfer())->setMessage(ShipmentTypesBackendApiConfig::GLOSSARY_KEY_VALIDATION_SHIPMENT_TYPE_ENTITY_NOT_FOUND);
     }
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\SalesServicePoint\Persistence\Propel\Mapper\SalesServicePointMap
 /**
  * @method \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointRepositoryInterface getRepository()
  * @method \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\SalesServicePoint\SalesServicePointConfig getConfig()
  */
 class SalesServicePointPersistenceFactory extends AbstractPersistenceFactory
 {

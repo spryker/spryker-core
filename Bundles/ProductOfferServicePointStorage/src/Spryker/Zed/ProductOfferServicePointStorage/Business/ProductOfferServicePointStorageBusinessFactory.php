@@ -85,6 +85,7 @@ class ProductOfferServicePointStorageBusinessFactory extends AbstractBusinessFac
             $this->createProductOfferServiceMapper(),
             $this->createProductOfferReader(),
             $this->getProductOfferServiceStorageFilterPlugins(),
+            $this->getProductOfferServiceCollectionStorageFilterPlugins(),
         );
     }
 
@@ -157,10 +158,20 @@ class ProductOfferServicePointStorageBusinessFactory extends AbstractBusinessFac
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorage\Business\ProductOfferServicePointStorageBusinessFactory::getProductOfferServiceCollectionStorageFilterPlugins()} instead.
+     *
      * @return list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependeency\Plugin\ProductOfferServiceStorageFilterPluginInterface>
      */
     public function getProductOfferServiceStorageFilterPlugins(): array
     {
         return $this->getProvidedDependency(ProductOfferServicePointStorageDependencyProvider::PLUGINS_PRODUCT_OFFER_SERVICE_STORAGE_FILTER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface>
+     */
+    public function getProductOfferServiceCollectionStorageFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferServicePointStorageDependencyProvider::PLUGINS_PRODUCT_OFFER_SERVICE_COLLECTION_STORAGE_FILTER);
     }
 }

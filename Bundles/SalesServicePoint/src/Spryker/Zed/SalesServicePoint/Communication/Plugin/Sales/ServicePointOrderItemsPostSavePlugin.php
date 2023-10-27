@@ -14,8 +14,6 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterfa
 
 /**
  * @method \Spryker\Zed\SalesServicePoint\Business\SalesServicePointFacadeInterface getFacade()
- * @method \Spryker\Zed\SalesServicePoint\Persistence\SalesServicePointQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\SalesServicePoint\SalesServicePointConfig getConfig()
  */
 class ServicePointOrderItemsPostSavePlugin extends AbstractPlugin implements OrderItemsPostSavePluginInterface
 {

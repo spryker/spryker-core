@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/product-offer-shipment-type-availability": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

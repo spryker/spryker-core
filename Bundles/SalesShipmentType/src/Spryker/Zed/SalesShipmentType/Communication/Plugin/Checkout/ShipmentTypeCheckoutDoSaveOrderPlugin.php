@@ -35,6 +35,6 @@ class ShipmentTypeCheckoutDoSaveOrderPlugin extends AbstractPlugin implements Ch
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): SaveOrderTransfer
     {
-        return $this->getFacade()->updateSalesShipmentsWithSalesShipmentType($quoteTransfer, $saveOrderTransfer);
+        return $this->getFacade()->saveSalesShipmentsWithSalesShipmentType($quoteTransfer, $saveOrderTransfer);
     }
 }

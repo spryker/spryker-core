@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransf
 use Generated\Shared\Transfer\RestProductOfferServicePointAvailabilitiesRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface;
+use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface;
 use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Builder\ProductOfferServicePointAvailabilityResponseBuilderInterface;
 use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Mapper\ProductOfferServicePointAvailabilityMapperInterface;
 
@@ -23,9 +23,9 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
     protected ProductOfferServicePointAvailabilityMapperInterface $productOfferServicePointAvailabilityMapper;
 
     /**
-     * @var \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface
+     * @var \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
      */
-    protected ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient;
+    protected ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient;
 
     /**
      * @var \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Builder\ProductOfferServicePointAvailabilityResponseBuilderInterface
@@ -34,16 +34,16 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
 
     /**
      * @param \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Mapper\ProductOfferServicePointAvailabilityMapperInterface $productOfferServicePointAvailabilityMapper
-     * @param \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient
+     * @param \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient
      * @param \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Builder\ProductOfferServicePointAvailabilityResponseBuilderInterface $productOfferServicePointAvailabilityResponseBuilder
      */
     public function __construct(
         ProductOfferServicePointAvailabilityMapperInterface $productOfferServicePointAvailabilityMapper,
-        ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface $productOfferServicePointAvailabilityCalculatorClient,
+        ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface $productOfferServicePointAvailabilityCalculatorStorageClient,
         ProductOfferServicePointAvailabilityResponseBuilderInterface $productOfferServicePointAvailabilityResponseBuilder
     ) {
         $this->productOfferServicePointAvailabilityMapper = $productOfferServicePointAvailabilityMapper;
-        $this->productOfferServicePointAvailabilityCalculatorClient = $productOfferServicePointAvailabilityCalculatorClient;
+        $this->productOfferServicePointAvailabilityCalculatorStorageClient = $productOfferServicePointAvailabilityCalculatorStorageClient;
         $this->productOfferServicePointAvailabilityResponseBuilder = $productOfferServicePointAvailabilityResponseBuilder;
     }
 
@@ -63,7 +63,7 @@ class ProductOfferServicePointAvailabilityReader implements ProductOfferServiceP
                 (new ProductOfferServicePointAvailabilityCriteriaTransfer()),
             );
 
-        $productOfferServicePointAvailabilities = $this->productOfferServicePointAvailabilityCalculatorClient
+        $productOfferServicePointAvailabilities = $this->productOfferServicePointAvailabilityCalculatorStorageClient
             ->calculateProductOfferServicePointAvailabilities(
                 $productOfferServicePointAvailabilityCriteriaTransfer,
             );

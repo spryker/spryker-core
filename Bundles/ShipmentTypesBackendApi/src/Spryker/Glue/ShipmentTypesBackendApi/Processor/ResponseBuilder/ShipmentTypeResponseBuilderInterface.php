@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
@@ -31,4 +32,9 @@ interface ShipmentTypeResponseBuilderInterface
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function createErrorResponse(ArrayObject $errorTransfers, ?string $localeName = null): GlueResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ErrorTransfer
+     */
+    public function createEntityNotFoundErrorTransfer(): ErrorTransfer;
 }

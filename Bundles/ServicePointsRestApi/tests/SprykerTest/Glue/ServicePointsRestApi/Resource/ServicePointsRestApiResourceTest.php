@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ServiceTypeResourceCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeStorageCollectionTransfer;
 use Generated\Shared\Transfer\ServiceTypeStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceTypeStorageTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\ServicePointsRestApi\Dependency\Client\ServicePointsRestApiToServicePointStorageClientInterface;
 use Spryker\Glue\ServicePointsRestApi\ServicePointsRestApiDependencyProvider;
 use SprykerTest\Glue\ServicePointsRestApi\ServicePointsRestApiResourceTester;
@@ -35,6 +36,13 @@ use SprykerTest\Glue\ServicePointsRestApi\ServicePointsRestApiResourceTester;
 class ServicePointsRestApiResourceTest extends Unit
 {
     /**
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     *
+     * @var string
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
+    /**
      * @var string
      */
     protected const TEST_SERVICE_TYPE_UUID_1 = 'service-type-uuid-1';
@@ -48,6 +56,19 @@ class ServicePointsRestApiResourceTest extends Unit
      * @var \SprykerTest\Glue\ServicePointsRestApi\ServicePointsRestApiResourceTester
      */
     protected ServicePointsRestApiResourceTester $tester;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        parent::_before();
+
+        $this->tester->getContainer()->set(
+            static::SERVICE_RESOURCE_BUILDER,
+            new RestResourceBuilder(),
+        );
+    }
 
     /**
      * @return void

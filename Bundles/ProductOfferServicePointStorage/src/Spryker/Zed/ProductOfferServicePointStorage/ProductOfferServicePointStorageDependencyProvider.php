@@ -46,9 +46,16 @@ class ProductOfferServicePointStorageDependencyProvider extends AbstractBundleDe
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageDependencyProvider::PLUGINS_PRODUCT_OFFER_SERVICE_COLLECTION_STORAGE_FILTER} instead.
+     *
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_SERVICE_STORAGE_FILTER = 'PLUGINS_PRODUCT_OFFER_SERVICE_STORAGE_FILTER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_OFFER_SERVICE_COLLECTION_STORAGE_FILTER = 'PLUGINS_PRODUCT_OFFER_SERVICE_COLLECTION_STORAGE_FILTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -65,6 +72,7 @@ class ProductOfferServicePointStorageDependencyProvider extends AbstractBundleDe
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addProductOfferServiceStorageFilterPlugins($container);
+        $container = $this->addProductOfferServiceCollectionStorageFilterPlugins($container);
 
         return $container;
     }
@@ -164,6 +172,8 @@ class ProductOfferServicePointStorageDependencyProvider extends AbstractBundleDe
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageDependencyProvider::addProductOfferServiceCollectionStorageFilterPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -178,9 +188,33 @@ class ProductOfferServicePointStorageDependencyProvider extends AbstractBundleDe
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferServiceCollectionStorageFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OFFER_SERVICE_COLLECTION_STORAGE_FILTER, function () {
+            return $this->getProductOfferServiceCollectionStorageFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageDependencyProvider::getProductOfferServiceCollectionStorageFilterPlugins()} instead.
+     *
      * @return list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependeency\Plugin\ProductOfferServiceStorageFilterPluginInterface>
      */
     protected function getProductOfferServiceStorageFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface>
+     */
+    protected function getProductOfferServiceCollectionStorageFilterPlugins(): array
     {
         return [];
     }

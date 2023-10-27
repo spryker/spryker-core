@@ -22,6 +22,8 @@ use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ServiceExtractor;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ServiceExtractorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Filter\ProductOfferFilter;
 use Spryker\Zed\ProductOfferServicePoint\Business\Filter\ProductOfferFilterInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexer;
+use Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Iterator\ProductOfferServiceIterator;
 use Spryker\Zed\ProductOfferServicePoint\Business\Iterator\ProductOfferServiceIteratorInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Mapper\ProductOfferServiceMapper;
@@ -66,6 +68,7 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
             $this->createProductOfferServiceExtractor(),
             $this->createProductOfferExtractor(),
             $this->createProductOfferReader(),
+            $this->createServiceIndexer(),
         );
     }
 
@@ -78,6 +81,7 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
             $this->createProductOfferServiceExtractor(),
             $this->createProductOfferReader(),
             $this->createServiceReader(),
+            $this->createServiceIndexer(),
         );
     }
 
@@ -277,6 +281,14 @@ class ProductOfferServicePointBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferServiceExtractor(): ProductOfferServiceExtractorInterface
     {
         return new ProductOfferServiceExtractor();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface
+     */
+    public function createServiceIndexer(): ServiceIndexerInterface
+    {
+        return new ServiceIndexer();
     }
 
     /**

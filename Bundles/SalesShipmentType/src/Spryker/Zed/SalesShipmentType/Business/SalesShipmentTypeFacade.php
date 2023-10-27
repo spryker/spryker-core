@@ -28,12 +28,12 @@ class SalesShipmentTypeFacade extends AbstractFacade implements SalesShipmentTyp
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function updateSalesShipmentsWithSalesShipmentType(
+    public function saveSalesShipmentsWithSalesShipmentType(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): SaveOrderTransfer {
         return $this->getFactory()
             ->createSalesShipmentUpdater()
-            ->updateSalesShipmentsWithSalesShipmentType($saveOrderTransfer);
+            ->saveSalesShipmentsWithSalesShipmentType($saveOrderTransfer);
     }
 }

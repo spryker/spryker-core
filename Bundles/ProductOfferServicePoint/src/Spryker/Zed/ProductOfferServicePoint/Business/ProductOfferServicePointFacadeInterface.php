@@ -42,7 +42,7 @@ interface ProductOfferServicePointFacadeInterface
      * - Validates product offer has single service point.
      * - Uses `ProductOfferServiceCollectionRequestTransfer.isTransactional` for transactional operation.
      * - Throws {@link \Spryker\Zed\ProductOfferServicePoint\Business\Exception\ProductOfferValidationException} when `ProductOfferServiceCollectionRequestTransfer.throwExceptionOnValidation` enabled and validation fails.
-     * - Stores updated product offer service entities to persistence.
+     * - Stores valid product offer service entities to persistence.
      * - Returns `ProductOfferServiceCollectionResponseTransfer` with product offers and errors if any occurred.
      *
      * @api

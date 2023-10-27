@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface;
+use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface;
 use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Builder\ProductOfferServicePointAvailabilityResponseBuilder;
 use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Builder\ProductOfferServicePointAvailabilityResponseBuilderInterface;
 use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Processor\Mapper\ProductOfferServicePointAvailabilityMapper;
@@ -47,16 +47,16 @@ class ProductOfferServicePointAvailabilitiesRestApiFactory extends AbstractFacto
     {
         return new ProductOfferServicePointAvailabilityReader(
             $this->createProductOfferServicePointAvailabilityMapper(),
-            $this->getProductOfferServicePointAvailabilityCalculatorClient(),
+            $this->getProductOfferServicePointAvailabilityCalculatorStorageClient(),
             $this->createProductOfferServicePointAvailabilityResponseBuilder(),
         );
     }
 
     /**
-     * @return \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface
+     * @return \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
      */
-    public function getProductOfferServicePointAvailabilityCalculatorClient(): ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientInterface
+    public function getProductOfferServicePointAvailabilityCalculatorStorageClient(): ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOfferServicePointAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR);
+        return $this->getProvidedDependency(ProductOfferServicePointAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR_STORAGE);
     }
 }

@@ -60,6 +60,34 @@ class ShipmentTypeReader implements ShipmentTypeReaderInterface
     }
 
     /**
+     * @param list<string> $shipmentTypeUuids
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getShipmentTypeCollectionByShipmentTypeUuids(array $shipmentTypeUuids): ShipmentTypeCollectionTransfer
+    {
+        $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())->setUuids($shipmentTypeUuids);
+        $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
+            ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+
+        return $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
+    }
+
+    /**
+     * @param list<int> $shipmentTypeIds
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getShipmentTypeCollectionByShipmentTypeIds(array $shipmentTypeIds): ShipmentTypeCollectionTransfer
+    {
+        $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())->setShipmentTypeIds($shipmentTypeIds);
+        $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())
+            ->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+
+        return $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
      * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer $productOfferShipmentTypeIteratorCriteriaTransfer
      *

@@ -18,8 +18,14 @@ use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Reader\ProductOfferShip
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Reader\ProductOfferShipmentTypeReaderInterface;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Reader\ProductOfferShipmentTypeStorageReader;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Reader\ProductOfferShipmentTypeStorageReaderInterface;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferEventsWriter;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferEventsWriterInterface;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferShipmentTypeEventsWriter;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferShipmentTypeEventsWriterInterface;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferShipmentTypeStorageWriter;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferShipmentTypeStorageWriterInterface;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ShipmentTypeEventsWriter;
+use Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ShipmentTypeEventsWriterInterface;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Dependency\Facade\ProductOfferShipmentTypeStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Dependency\Facade\ProductOfferShipmentTypeStorageToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferShipmentTypeStorage\Dependency\Facade\ProductOfferShipmentTypeStorageToProductOfferShipmentTypeFacadeInterface;
@@ -44,7 +50,41 @@ class ProductOfferShipmentTypeStorageBusinessFactory extends AbstractBusinessFac
             $this->getEntityManager(),
             $this->createProductOfferShipmentTypeExtractor(),
             $this->getStoreFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferEventsWriterInterface
+     */
+    public function createProductOfferEventsWriter(): ProductOfferEventsWriterInterface
+    {
+        return new ProductOfferEventsWriter(
             $this->getEventBehaviorFacade(),
+            $this->createProductOfferShipmentTypeStorageWriter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ProductOfferShipmentTypeEventsWriterInterface
+     */
+    public function createProductOfferShipmentTypeEventsWriter(): ProductOfferShipmentTypeEventsWriterInterface
+    {
+        return new ProductOfferShipmentTypeEventsWriter(
+            $this->createProductOfferShipmentTypeReader(),
+            $this->getEventBehaviorFacade(),
+            $this->createProductOfferShipmentTypeStorageWriter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShipmentTypeStorage\Business\Writer\ShipmentTypeEventsWriterInterface
+     */
+    public function createShipmentTypeEventsWriter(): ShipmentTypeEventsWriterInterface
+    {
+        return new ShipmentTypeEventsWriter(
+            $this->createProductOfferShipmentTypeReader(),
+            $this->getEventBehaviorFacade(),
+            $this->createProductOfferShipmentTypeStorageWriter(),
         );
     }
 

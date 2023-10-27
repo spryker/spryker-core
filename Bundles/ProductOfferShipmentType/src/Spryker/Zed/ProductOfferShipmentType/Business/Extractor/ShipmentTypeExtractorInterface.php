@@ -14,6 +14,13 @@ interface ShipmentTypeExtractorInterface
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
      *
+     * @return list<string>
+     */
+    public function extractShipmentTypeUuidsFromShipmentTypeTransfers(ArrayObject $shipmentTypeTransfers): array;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     *
      * @return list<int>
      */
     public function extractShipmentTypeIdsFromShipmentTypeTransfers(ArrayObject $shipmentTypeTransfers): array;

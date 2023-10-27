@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Communication\Plugin\ProductOffer;
 
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface;
@@ -19,10 +20,14 @@ class ShipmentTypeProductOfferPostCreatePlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
-     * - Requires `ShipmentTypeTransfer.idShipmentType` to be set for each `ShipmentTypeTransfer` in `ProductOfferTransfer.shipmentTypes` collection.
-     * - Iterates over `ProductOfferTransfer.shipmentTypes`.
-     * - Persists product offer shipment types to persistence.
+     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferTransfer.shipmentTypes.uuid` to be set.
+     * - Validates product offer reference existence using `ProductOfferTransfer.productOfferReference`.
+     * - Validates product offer reference uniqueness in scope of request collection.
+     * - Validates shipment type existence using `ProductOfferTransfer.shipmentTypes.uuid`.
+     * - Validates shipment type uniqueness for each `ProductOfferShipmentTypeCollectionRequestTransfer.productOffers`.
+     * - Throws {@link \Spryker\Zed\ProductOfferShipmentType\Business\Exception\ProductOfferValidationException} when validation fails.
+     * - Stores valid product offer shipment type entities to persistence.
      *
      * @api
      *
@@ -32,6 +37,15 @@ class ShipmentTypeProductOfferPostCreatePlugin extends AbstractPlugin implements
      */
     public function execute(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFacade()->createProductOfferShipmentTypes($productOfferTransfer);
+        $productOfferServiceCollectionRequestTransfer = (new ProductOfferShipmentTypeCollectionRequestTransfer())
+            ->addProductOffer($productOfferTransfer)
+            ->setIsTransactional(true)
+            ->setThrowExceptionOnValidation(true);
+        $productOfferShipmentTypeCollectionResponseTransfer = $this->getFacade()->saveProductOfferShipmentTypes($productOfferServiceCollectionRequestTransfer);
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
+        $productOfferTransfers = $productOfferShipmentTypeCollectionResponseTransfer->getProductOffers();
+
+        return $productOfferTransfers->getIterator()->current();
     }
 }

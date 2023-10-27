@@ -5,6 +5,8 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/merchant": "^3.0.0",
+        "spryker/product-offer-service-point-availability": "^0.2.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

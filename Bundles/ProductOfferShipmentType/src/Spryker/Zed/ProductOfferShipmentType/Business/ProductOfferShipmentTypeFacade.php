@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business;
 
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,15 +27,16 @@ class ProductOfferShipmentTypeFacade extends AbstractFacade implements ProductOf
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function expandProductOfferWithShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
-    {
+    public function expandProductOfferCollectionWithShipmentTypes(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): ProductOfferCollectionTransfer {
         return $this->getFactory()
             ->createProductOfferExpander()
-            ->expandProductOfferWithShipmentTypes($productOfferTransfer);
+            ->expandProductOfferCollectionWithShipmentTypes($productOfferCollectionTransfer);
     }
 
     /**
@@ -41,31 +44,16 @@ class ProductOfferShipmentTypeFacade extends AbstractFacade implements ProductOf
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionRequestTransfer $productOfferShipmentTypeCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionResponseTransfer
      */
-    public function createProductOfferShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
-    {
+    public function saveProductOfferShipmentTypes(
+        ProductOfferShipmentTypeCollectionRequestTransfer $productOfferShipmentTypeCollectionRequestTransfer
+    ): ProductOfferShipmentTypeCollectionResponseTransfer {
         return $this->getFactory()
-            ->createProductOfferShipmentTypeCreator()
-            ->createProductOfferShipmentTypes($productOfferTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    public function updateProductOfferShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
-    {
-        return $this->getFactory()
-            ->createProductOfferShipmentTypeUpdater()
-            ->updateProductOfferShipmentTypes($productOfferTransfer);
+            ->createProductOfferShipmentTypeSaver()
+            ->saveProductOfferShipmentTypes($productOfferShipmentTypeCollectionRequestTransfer);
     }
 
     /**

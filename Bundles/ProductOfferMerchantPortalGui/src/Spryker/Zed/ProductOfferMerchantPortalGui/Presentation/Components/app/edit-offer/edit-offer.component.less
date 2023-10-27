@@ -7,6 +7,15 @@
 @edit-offer-common-blocks-indent: var(--spy-edit-offer-common-blocks-indent, 7px);
 @edit-offer-header-padding: var(--spy-edit-offer-header-padding, 15px @edit-offer-indent-big);
 @edit-offer-header-title-line-height: var(--spy-edit-offer-header-title-line-height, 2);
+@edit-offer-card-padding-top: var(
+    --spy-edit-offer-card-padding-top,
+    calc(@edit-offer-indent-big - @edit-offer-indent-small)
+);
+
+/**
+ * @deprecated variable @edit-offer-card-padding-bottom is deprecated: use @edit-offer-card-padding-top instead.
+ * @deprecated variable --spy-edit-offer-card-padding-bottom is deprecated: use --spy-edit-offer-card-padding-top instead.
+ */
 @edit-offer-card-padding-bottom: var(
     --spy-edit-offer-card-padding-bottom,
     calc(@edit-offer-indent-big - @edit-offer-indent-small)
@@ -134,7 +143,10 @@
 
     &__card {
         display: block;
-        padding-bottom: @edit-offer-card-padding-bottom;
+
+        &:not(:first-child) {
+            padding-top: @edit-offer-card-padding-top;
+        }
 
         .@{table-prefix-cls},
         .@{table-filters-feature-prefix-cls} {

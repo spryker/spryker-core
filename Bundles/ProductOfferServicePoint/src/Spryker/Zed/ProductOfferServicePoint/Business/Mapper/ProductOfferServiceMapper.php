@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferServicePoint\Business\Mapper;
 
 use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Generated\Shared\Transfer\ServiceCriteriaTransfer;
@@ -48,7 +49,7 @@ class ProductOfferServiceMapper implements ProductOfferServiceMapperInterface
         $iterableProductOfferServicesConditionsTransfer = $iterableProductOfferServicesCriteriaTransfer->getIterableProductOfferServicesConditionsOrFail();
 
         return $productOfferCriteriaTransfer
-            ->setProductOfferIds($iterableProductOfferServicesConditionsTransfer->getProductOfferIds())
+            ->setProductOfferConditions((new ProductOfferConditionsTransfer())->setProductOfferIds($iterableProductOfferServicesConditionsTransfer->getProductOfferIds()))
             ->setIsActive($iterableProductOfferServicesConditionsTransfer->getIsActiveProductOffer())
             ->setIsActiveConcreteProduct($iterableProductOfferServicesConditionsTransfer->getIsActiveConcreteProduct())
             ->setApprovalStatuses($iterableProductOfferServicesConditionsTransfer->getProductOfferApprovalStatuses());

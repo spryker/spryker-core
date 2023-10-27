@@ -483,8 +483,6 @@ class SaveProductOfferServicesTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testShouldExpandProductOfferWithIdProductOfferWhenIdProductOfferIsMissing(): void

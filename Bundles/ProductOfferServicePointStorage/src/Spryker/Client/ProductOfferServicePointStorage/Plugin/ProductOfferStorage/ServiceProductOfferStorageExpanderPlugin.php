@@ -20,8 +20,8 @@ class ServiceProductOfferStorageExpanderPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Requires `ProductOfferStorageCollectionTransfer.productOffers.productOfferReference` to be set.
-     * - Expands product offer storage transfers with services from storage.
+     * - Requires `ProductOfferStorageTransfer.productOfferReference` to be set.
+     * - Expands provided product offer storage transfer with services from storage.
      *
      * @api
      *

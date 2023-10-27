@@ -7,55 +7,55 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business;
 
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferShipmentTypeFacadeInterface
 {
     /**
      * Specification:
-     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
-     * - Expands `ProductOfferTransfer` with related shipment types.
+     * - Requires `ProductOfferCollectionTransfer.productOffer.idProductOffer` to be set.
+     * - Expects `ProductOfferCollectionTransfer.productOffers` to be provided.
+     * - Expands `ProductOfferTransfer.shipmentTypes` with related shipment types from persistence.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function expandProductOfferWithShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function expandProductOfferCollectionWithShipmentTypes(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): ProductOfferCollectionTransfer;
 
     /**
      * Specification:
-     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
-     * - Requires `ShipmentTypeTransfer.idShipmentType` to be set for each `ShipmentTypeTransfer` in `ProductOfferTransfer.shipmentTypes` collection.
-     * - Iterates over `ProductOfferTransfer.shipmentTypes`.
-     * - Persists product offer shipment types to persistence.
+     * - Requires `ProductOfferShipmentTypeCollectionRequestTransfer.productOffers` to be set.
+     * - Requires `ProductOfferShipmentTypeCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ProductOfferTransfer.productOfferReference` to be set.
+     * - Requires `ProductOfferTransfer.shipmentTypes.uuid` to be set.
+     * - Validates product offer reference existence using `ProductOfferTransfer.productOfferReference`.
+     * - Validates product offer reference uniqueness in scope of request collection.
+     * - Validates shipment type existence using `ProductOfferTransfer.shipmentTypes.uuid`.
+     * - Validates shipment type uniqueness for each `ProductOfferShipmentTypeCollectionRequestTransfer.productOffers`.
+     * - Uses `ProductOfferShipmentTypeCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Throws {@link \Spryker\Zed\ProductOfferShipmentType\Business\Exception\ProductOfferValidationException} when `ProductOfferShipmentTypeCollectionRequestTransfer.throwExceptionOnValidation` enabled and validation fails.
+     * - Stores valid product offer shipment type entities to persistence.
+     * - Returns `ProductOfferShipmentTypeCollectionResponseTransfer` with product offers and errors if any occurred.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionRequestTransfer $productOfferShipmentTypeCollectionRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionResponseTransfer
      */
-    public function createProductOfferShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
-
-    /**
-     * Specification:
-     * - Requires `ProductOfferTransfer.idProductOffer` to be set.
-     * - Requires `ShipmentTypeTransfer.idShipmentType` to be set for each `ShipmentTypeTransfer` in `ProductOfferTransfer.shipmentTypes` collection.
-     * - Deletes redundant product offer shipment types from Persistence.
-     * - Persists missed product offer shipment types to Persistence.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    public function updateProductOfferShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function saveProductOfferShipmentTypes(
+        ProductOfferShipmentTypeCollectionRequestTransfer $productOfferShipmentTypeCollectionRequestTransfer
+    ): ProductOfferShipmentTypeCollectionResponseTransfer;
 
     /**
      * Specification:

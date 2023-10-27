@@ -40,6 +40,7 @@
     <transfer name="ProductOffer">
         <property name="shipmentTypes" type="ShipmentType[]" singular="shipmentType" strict="true"/>
         <property name="idProductOffer" type="int"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="ShipmentTypeCollection" strict="true">
@@ -48,6 +49,7 @@
 
     <transfer name="ShipmentType" strict="true">
         <property name="idShipmentType" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="ShipmentTypeCriteria" strict="true">
@@ -56,6 +58,7 @@
 
     <transfer name="ShipmentTypeConditions" strict="true">
         <property name="shipmentTypeIds" type="int[]" singular="idShipmentType"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
         <property name="isActive" type="bool"/>
         <property name="withStoreRelations" type="bool"/>
     </transfer>
@@ -84,6 +87,12 @@
         <property name="isActive" type="bool"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -106,6 +115,27 @@
 
     <transfer name="AclEntityParentMetadata">
         <property name="entityName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentTypeCollectionRequest" strict="true">
+        <property name="throwExceptionOnValidation" type="bool"/>
+        <property name="isTransactional" type="bool"/>
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOfferShipmentTypeCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
 </transfers>

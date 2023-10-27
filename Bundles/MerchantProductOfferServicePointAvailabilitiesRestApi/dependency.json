@@ -1,8 +1,9 @@
 {
     "include": {
         "spryker/merchant": "Defined for forward-compatibility reasons.",
+        "spryker/merchant-product-offer-service-point-availability": "Defined for forward-compatibility reasons.",
         "spryker/product-offer-service-point-availabilities-rest-api": "Defined for forward-compatibility reasons.",
-        "spryker/product-offer-service-point-availability-calculator": "Defined for forward-compatibility reasons.",
+        "spryker/product-offer-service-point-availability-calculator-storage": "Defined for forward-compatibility reasons.",
         "spryker/transfer": "Provides transfer objects definition with strict types."
     }
 }

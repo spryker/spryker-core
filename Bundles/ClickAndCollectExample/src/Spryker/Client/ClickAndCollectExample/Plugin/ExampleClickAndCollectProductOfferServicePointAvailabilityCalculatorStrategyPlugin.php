@@ -10,7 +10,7 @@ namespace Spryker\Client\ClickAndCollectExample\Plugin;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductOfferServicePointAvailabilityCalculatorExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface;
+use Spryker\Client\ProductOfferServicePointAvailabilityCalculatorStorageExtension\Dependency\Plugin\ProductOfferServicePointAvailabilityCalculatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Client\ClickAndCollectExample\ClickAndCollectExampleFactory getFactory()

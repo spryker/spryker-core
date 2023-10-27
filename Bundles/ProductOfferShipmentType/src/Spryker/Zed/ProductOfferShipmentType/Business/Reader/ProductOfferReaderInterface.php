@@ -7,11 +7,19 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business\Reader;
 
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer;
 
 interface ProductOfferReaderInterface
 {
+    /**
+     * @param list<string> $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollectionByProductOfferReferences(array $productOfferReferences): ProductOfferCollectionTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer $productOfferShipmentTypeCollectionTransfer
      * @param \Generated\Shared\Transfer\ProductOfferShipmentTypeIteratorCriteriaTransfer $productOfferShipmentTypeIteratorCriteriaTransfer

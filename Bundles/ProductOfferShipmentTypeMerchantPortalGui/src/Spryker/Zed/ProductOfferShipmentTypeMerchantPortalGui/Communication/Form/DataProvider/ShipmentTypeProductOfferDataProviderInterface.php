@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferShipmentTypeMerchantPortalGui\Communication\Fo
 interface ShipmentTypeProductOfferDataProviderInterface
 {
     /**
-     * @return array<string, int>
+     * @return array<string, string>
      */
     public function getShipmentTypeChoices(): array;
 }

@@ -12,9 +12,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferServicePointAvailability\Dependency\Facade\ProductOfferServicePointAvailabilityToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferServicePointAvailability\Dependency\Facade\ProductOfferServicePointAvailabilityToProductOfferServicePointFacadeBridge;
 
-/**
- * @method \Spryker\Zed\ProductOfferServicePointAvailability\ProductOfferServicePointAvailabilityConfig getConfig()
- */
 class ProductOfferServicePointAvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

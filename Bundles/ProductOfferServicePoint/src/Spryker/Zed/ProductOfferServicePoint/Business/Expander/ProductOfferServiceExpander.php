@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\IterableProductOfferServicesCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferServicesTransfer;
-use Generated\Shared\Transfer\ServiceCollectionTransfer;
 use Generated\Shared\Transfer\ServiceConditionsTransfer;
 use Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface;
+use Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface;
 
@@ -36,18 +36,26 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
     protected ServiceReaderInterface $serviceReader;
 
     /**
+     * @var \Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface
+     */
+    protected ServiceIndexerInterface $serviceIndexer;
+
+    /**
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Extractor\ProductOfferServiceExtractorInterface $productOfferServiceExtractor
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ProductOfferReaderInterface $productOfferReader
      * @param \Spryker\Zed\ProductOfferServicePoint\Business\Reader\ServiceReaderInterface $serviceReader
+     * @param \Spryker\Zed\ProductOfferServicePoint\Business\Indexer\ServiceIndexerInterface $serviceIndexer
      */
     public function __construct(
         ProductOfferServiceExtractorInterface $productOfferServiceExtractor,
         ProductOfferReaderInterface $productOfferReader,
-        ServiceReaderInterface $serviceReader
+        ServiceReaderInterface $serviceReader,
+        ServiceIndexerInterface $serviceIndexer
     ) {
         $this->productOfferServiceExtractor = $productOfferServiceExtractor;
         $this->productOfferReader = $productOfferReader;
         $this->serviceReader = $serviceReader;
+        $this->serviceIndexer = $serviceIndexer;
     }
 
     /**
@@ -64,7 +72,7 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
                 ->setServiceIds($serviceIds)
                 ->setWithServicePointRelations(true),
         );
-        $serviceTransfersIndexedByIdService = $this->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
+        $serviceTransfersIndexedByIdService = $this->serviceIndexer->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
 
         foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
             $this->expandProductOfferServicesTransferWithServicePoints(
@@ -125,7 +133,7 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
         $iterableProductOfferServicesCriteriaTransfer->getIterableProductOfferServicesConditionsOrFail()->setServiceIds($serviceIds);
 
         $serviceCollectionTransfer = $this->serviceReader->getServiceCollectionByIterableProductOfferServicesCriteria($iterableProductOfferServicesCriteriaTransfer);
-        $serviceTransfersIndexedByIdService = $this->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
+        $serviceTransfersIndexedByIdService = $this->serviceIndexer->getServiceTransfersIndexedByIdService($serviceCollectionTransfer);
 
         $productOfferServicesTransfers = [];
         foreach ($productOfferServiceCollectionTransfer->getProductOfferServices() as $productOfferServicesTransfer) {
@@ -170,21 +178,6 @@ class ProductOfferServiceExpander implements ProductOfferServiceExpanderInterfac
         }
 
         return $productOfferTransfersIndexedByIdProductOffer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ServiceCollectionTransfer $serviceCollectionTransfer
-     *
-     * @return array<int, \Generated\Shared\Transfer\ServiceTransfer>
-     */
-    protected function getServiceTransfersIndexedByIdService(ServiceCollectionTransfer $serviceCollectionTransfer): array
-    {
-        $serviceTransfersIndexedByIdService = [];
-        foreach ($serviceCollectionTransfer->getServices() as $serviceTransfer) {
-            $serviceTransfersIndexedByIdService[$serviceTransfer->getIdServiceOrFail()] = $serviceTransfer;
-        }
-
-        return $serviceTransfersIndexedByIdService;
     }
 
     /**

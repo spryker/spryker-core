@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientBridge;
+use Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\Dependency\Client\ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\ProductOfferServicePointAvailabilitiesRestApi\ProductOfferServicePointAvailabilitiesRestApiConfig getConfig()
@@ -19,7 +19,7 @@ class ProductOfferServicePointAvailabilitiesRestApiDependencyProvider extends Ab
     /**
      * @var string
      */
-    public const CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR = 'CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR';
+    public const CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR_STORAGE = 'CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,7 +30,7 @@ class ProductOfferServicePointAvailabilitiesRestApiDependencyProvider extends Ab
     {
         $container = parent::provideDependencies($container);
 
-        $container = $this->addProductOfferServicePointAvailabilityCalculatorClient($container);
+        $container = $this->addProductOfferServicePointAvailabilityCalculatorStorageClient($container);
 
         return $container;
     }
@@ -40,11 +40,11 @@ class ProductOfferServicePointAvailabilitiesRestApiDependencyProvider extends Ab
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductOfferServicePointAvailabilityCalculatorClient(Container $container): Container
+    protected function addProductOfferServicePointAvailabilityCalculatorStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR, function (Container $container) {
-            return new ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorClientBridge(
-                $container->getLocator()->productOfferServicePointAvailabilityCalculator()->client(),
+        $container->set(static::CLIENT_PRODUCT_OFFER_SERVICE_POINT_AVAILABILITY_CALCULATOR_STORAGE, function (Container $container) {
+            return new ProductOfferServicePointAvailabilitiesRestApiToProductOfferServicePointAvailabilityCalculatorStorageClientBridge(
+                $container->getLocator()->productOfferServicePointAvailabilityCalculatorStorage()->client(),
             );
         });
 

@@ -27,7 +27,7 @@ interface SalesShipmentTypeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function updateSalesShipmentsWithSalesShipmentType(
+    public function saveSalesShipmentsWithSalesShipmentType(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): SaveOrderTransfer;

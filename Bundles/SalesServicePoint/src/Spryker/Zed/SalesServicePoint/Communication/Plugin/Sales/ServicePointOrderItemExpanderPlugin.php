@@ -11,9 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\SalesServicePoint\Communication\SalesServicePointCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesServicePoint\Business\SalesServicePointFacadeInterface getFacade()
- * @method \Spryker\Zed\SalesServicePoint\SalesServicePointConfig getConfig()
  */
 class ServicePointOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {

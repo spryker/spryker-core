@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Communication\Plugin\ProductOffer;
 
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface;
@@ -30,6 +31,13 @@ class ShipmentTypeProductOfferExpanderPlugin extends AbstractPlugin implements P
      */
     public function expand(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFacade()->expandProductOfferWithShipmentTypes($productOfferTransfer);
+        $productOfferCollectionTransfer = $this->getFacade()->expandProductOfferCollectionWithShipmentTypes(
+            (new ProductOfferCollectionTransfer())->addProductOffer($productOfferTransfer),
+        );
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers */
+        $productOfferTransfers = $productOfferCollectionTransfer->getProductOffers();
+
+        return $productOfferTransfers->getIterator()->current();
     }
 }

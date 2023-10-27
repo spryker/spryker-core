@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ShipmentTypesBackendApi\Processor\ResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -90,6 +91,14 @@ class ShipmentTypeResponseBuilder implements ShipmentTypeResponseBuilderInterfac
         );
 
         return $this->createGlueResponseTransferWithErrors($errorTransfers, $translations, $errorDataIndexedByGlossaryKey);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ErrorTransfer
+     */
+    public function createEntityNotFoundErrorTransfer(): ErrorTransfer
+    {
+        return (new ErrorTransfer())->setMessage(ShipmentTypesBackendApiConfig::GLOSSARY_KEY_VALIDATION_SHIPMENT_TYPE_ENTITY_NOT_FOUND);
     }
 
     /**

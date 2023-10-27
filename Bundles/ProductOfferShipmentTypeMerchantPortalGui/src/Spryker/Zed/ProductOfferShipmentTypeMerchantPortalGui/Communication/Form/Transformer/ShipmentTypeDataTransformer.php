@@ -24,12 +24,12 @@ class ShipmentTypeDataTransformer implements DataTransformerInterface
             return null;
         }
 
-        $shipmentTypeIds = [];
+        $shipmentTypeUuids = [];
         foreach ($value as $shipmentTypeTransfer) {
-            $shipmentTypeIds[] = $shipmentTypeTransfer->getIdShipmentTypeOrFail();
+            $shipmentTypeUuids[] = $shipmentTypeTransfer->getUuidOrFail();
         }
 
-        return $shipmentTypeIds;
+        return $shipmentTypeUuids;
     }
 
     /**
@@ -44,9 +44,9 @@ class ShipmentTypeDataTransformer implements DataTransformerInterface
         }
 
         $shipmentTypeTransfers = new ArrayObject();
-        foreach ($value as $idShipmentType) {
+        foreach ($value as $shipmentTypeUuid) {
             $shipmentTypeTransfers->append(
-                (new ShipmentTypeTransfer())->setIdShipmentType($idShipmentType),
+                (new ShipmentTypeTransfer())->setUuid($shipmentTypeUuid),
             );
         }
 

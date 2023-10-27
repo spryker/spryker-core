@@ -8,7 +8,7 @@
         "spryker/event-behavior": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer": "^1.9.0",
-        "spryker/product-offer-shipment-type": "^0.2.0",
+        "spryker/product-offer-shipment-type": "^0.3.0",
         "spryker/product-offer-shipment-type-storage-extension": "^1.0.0",
         "spryker/product-offer-storage-extension": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",

@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\ProductOfferShipmentType\Business\Expander;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 
 interface ProductOfferExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function expandProductOfferWithShipmentTypes(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function expandProductOfferCollectionWithShipmentTypes(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): ProductOfferCollectionTransfer;
 }

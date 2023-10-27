@@ -33,7 +33,7 @@ class ShipmentTypeProductOfferDataProvider implements ShipmentTypeProductOfferDa
     }
 
     /**
-     * @return array<string, int>
+     * @return array<string, string>
      */
     public function getShipmentTypeChoices(): array
     {
@@ -41,7 +41,7 @@ class ShipmentTypeProductOfferDataProvider implements ShipmentTypeProductOfferDa
 
         $shipmentTypeChoices = [];
         foreach ($shipmentTypeCollectionTransfer->getShipmentTypes() as $shipmentTypeTransfer) {
-            $shipmentTypeChoices[$this->getShipmentTypeChoiceName($shipmentTypeTransfer)] = $shipmentTypeTransfer->getIdShipmentTypeOrFail();
+            $shipmentTypeChoices[$this->getShipmentTypeChoiceName($shipmentTypeTransfer)] = $shipmentTypeTransfer->getUuidOrFail();
         }
 
         return $shipmentTypeChoices;

@@ -14,6 +14,21 @@ class ShipmentTypeExtractor implements ShipmentTypeExtractorInterface
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
      *
+     * @return list<string>
+     */
+    public function extractShipmentTypeUuidsFromShipmentTypeTransfers(ArrayObject $shipmentTypeTransfers): array
+    {
+        $shipmentTypeUuids = [];
+        foreach ($shipmentTypeTransfers as $shipmentTypeTransfer) {
+            $shipmentTypeUuids[] = $shipmentTypeTransfer->getUuidOrFail();
+        }
+
+        return $shipmentTypeUuids;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ShipmentTypeTransfer> $shipmentTypeTransfers
+     *
      * @return list<int>
      */
     public function extractShipmentTypeIdsFromShipmentTypeTransfers(ArrayObject $shipmentTypeTransfers): array

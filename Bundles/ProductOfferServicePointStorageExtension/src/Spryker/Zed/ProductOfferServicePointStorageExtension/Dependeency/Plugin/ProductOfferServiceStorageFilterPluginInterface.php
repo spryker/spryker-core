@@ -7,21 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferServicePointStorageExtension\Dependeency\Plugin;
 
+use Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface;
+
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductOfferServicePointStorageExtension\Dependency\Plugin\ProductOfferServiceCollectionStorageFilterPluginInterface} instead.
+ *
  * Provides ability to filter product offer services collection by provided criteria.
  * This plugin stack gets executed after a list of `ProductOfferServicesTransfer` for publishing is retrieved from Persistence.
  */
-interface ProductOfferServiceStorageFilterPluginInterface
+interface ProductOfferServiceStorageFilterPluginInterface extends ProductOfferServiceCollectionStorageFilterPluginInterface
 {
-    /**
-     * Specification:
-     * - Filters product offer services collection.
-     *
-     * @api
-     *
-     * @param list<\Generated\Shared\Transfer\ProductOfferServicesTransfer> $productOfferServicesTransfers
-     *
-     * @return list<\Generated\Shared\Transfer\ProductOfferServicesTransfer>
-     */
-    public function filterProductOfferServices(array $productOfferServicesTransfers): array;
 }
