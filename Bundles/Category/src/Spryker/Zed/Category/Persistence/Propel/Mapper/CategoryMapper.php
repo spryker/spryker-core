@@ -119,23 +119,6 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $nodeEntities
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
-        ObjectCollection $nodeEntities,
-        NodeCollectionTransfer $nodeCollectionTransfer
-    ): NodeCollectionTransfer {
-        foreach ($nodeEntities as $nodeEntity) {
-            $nodeCollectionTransfer->addNode($this->mapCategoryNodeEntityToNodeTransferWithCategoryRelation($nodeEntity, new NodeTransfer()));
-        }
-
-        return $nodeCollectionTransfer;
-    }
-
-    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *

@@ -29,7 +29,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Category\PHPMD)
  */
 class CategoryBusinessTester extends Actor
 {
@@ -39,6 +39,14 @@ class CategoryBusinessTester extends Actor
      * @var string
      */
     protected const COL_DEPTH = 'depth';
+
+    /**
+     * @var list<string>
+     */
+    protected const LOCALES = [
+        'en_US',
+        'de_DE',
+    ];
 
     /**
      * @param int $idCategory
@@ -114,6 +122,30 @@ class CategoryBusinessTester extends Actor
             ->filterByFkCategoryNodeDescendant($idCategoryNodeDescendant)
             ->select(static::COL_DEPTH)
             ->findOne();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function createCategoryTransferWithLocalizedAttributes(): CategoryTransfer
+    {
+        $categoryTransfer = $this->haveCategory();
+
+        foreach (static::LOCALES as $localeName) {
+            $localeTransfer = $this->haveLocale([
+                LocaleTransfer::LOCALE_NAME => $localeName,
+                LocaleTransfer::IS_ACTIVE => true,
+            ]);
+
+            $categoryLocalizedAttributeTransfer = $this->haveCategoryLocalizedAttributeForCategory(
+                $categoryTransfer->getIdCategory(),
+                [LocalizedAttributesTransfer::LOCALE => $localeTransfer] + (new CategoryLocalizedAttributesBuilder())->build()->toArray(),
+            );
+
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributeTransfer);
+        }
+
+        return $categoryTransfer;
     }
 
     /**

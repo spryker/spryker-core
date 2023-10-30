@@ -728,20 +728,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->leftJoinWithCategory()
             ->useCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCategoryTemplate()
-                ->leftJoinWithAttribute()
-                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithLocale()
-                ->endUse()
-                ->leftJoinSpyCategoryStore()
-                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithSpyStore()
-                ->endUse()
             ->endUse();
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
-                $categoryNodeQuery->find(),
+            ->mapCategoryNodeEntitiesToNodeCollectionTransfer(
+                $categoryNodeQuery->find()->toKeyIndex(),
                 new NodeCollectionTransfer(),
             );
     }

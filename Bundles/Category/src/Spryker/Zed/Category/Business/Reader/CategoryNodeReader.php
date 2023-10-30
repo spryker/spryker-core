@@ -65,4 +65,21 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
 
         return $categoryNodeCollectionTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodeCollection(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): NodeCollectionTransfer {
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodes($categoryNodeCriteriaTransfer);
+
+        if (!$categoryNodeCriteriaTransfer->getWithRelations()) {
+            return $nodeCollectionTransfer;
+        }
+
+        return $this->categoryNodeRelationExpander->expandNodeCollectionWithRelations($nodeCollectionTransfer);
+    }
 }

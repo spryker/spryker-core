@@ -296,7 +296,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category nodes by criteria.
+     * - Retrieves category node entities filtered by criteria from Persistence.
+     * - Uses `CategoryNodeCriteriaTransfer.categoryNodeIds` to filter by category nodes ids.
+     * - Uses `CategoryNodeCriteriaTransfer.isActive` to filter by category is active.
+     * - Uses `CategoryNodeCriteriaTransfer.categoryTemplateIds` to filter by category template ids.
+     * - Uses `CategoryNodeCriteriaTransfer.isRoot` to filter by category node is root.
+     * - Uses `CategoryNodeCriteriaTransfer.categoryIds` to filter by category ids.
+     * - Uses `CategoryNodeCriteriaTransfer.isMain` to filter by category node is main.
+     * - Uses `CategoryNodeCriteriaTransfer.filter.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `CategoryNodeCriteriaTransfer.filter.orderBy` to set the 'order by' field.
+     * - Uses `CategoryNodeCriteriaTransfer.filter.orderDirection` to set ascending/descending order.
+     * - Uses `CategoryNodeCriteriaTransfer.withRelations` to decide to expand category nodes with further information.
+     * - Expands category nodes with url and category including template, localized attributes and store relations.
+     * - Returns `NodeCollectionTransfer` filled with found category nodes.
      *
      * @api
      *
