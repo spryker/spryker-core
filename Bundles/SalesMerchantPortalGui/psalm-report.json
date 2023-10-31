@@ -62,6 +62,19 @@
             "shortcode": 129
         }
     ],
-    "deprecation": [],
-    "count": 5
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 160,
+            "line_to": 160,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\MerchantOrderCountsTransfer::addTotalPerStore has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
+            "snippet": "            $merchantOrderCountsTransfer->addTotalPerStore(",
+            "selected_text": "addTotalPerStore",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 6
 }

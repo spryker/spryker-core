@@ -122,7 +122,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
-                    ->setCustomerReference($orderTransfer->getCustomerReferenceOrFail())
+                    ->setCustomerReference($orderTransfer->getCustomerReference())
                     ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             );
     }
