@@ -9,8 +9,14 @@ namespace Spryker\Glue\ProductImageSetsBackendApi;
 
 use Spryker\Glue\Kernel\Backend\AbstractFactory;
 use Spryker\Glue\ProductImageSetsBackendApi\Dependency\Facade\ProductImageSetsBackendApiToProductImageFacadeInterface;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Expander\ProductConcreteProductImageSetResourceRelationshipExpander;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Expander\ProductConcreteProductImageSetResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Filter\ConcreteProductsResourceFilter;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Filter\ConcreteProductsResourceFilterInterface;
 use Spryker\Glue\ProductImageSetsBackendApi\Processor\Mapper\ProductImageSetResourceMapper;
 use Spryker\Glue\ProductImageSetsBackendApi\Processor\Mapper\ProductImageSetResourceMapperInterface;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Reader\ProductConcreteProductImageSetResourceRelationshipReader;
+use Spryker\Glue\ProductImageSetsBackendApi\Processor\Reader\ProductConcreteProductImageSetResourceRelationshipReaderInterface;
 use Spryker\Glue\ProductImageSetsBackendApi\Processor\Reader\ProductImageSetResourceReader;
 use Spryker\Glue\ProductImageSetsBackendApi\Processor\Reader\ProductImageSetResourceReaderInterface;
 
@@ -28,6 +34,35 @@ class ProductImageSetsBackendApiFactory extends AbstractFactory
             $this->getProductImageFacade(),
             $this->createProductImageSetResourceMapper(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductImageSetsBackendApi\Processor\Expander\ProductConcreteProductImageSetResourceRelationshipExpanderInterface
+     */
+    public function createProductConcreteProductImageSetResourceRelationshipExpander(): ProductConcreteProductImageSetResourceRelationshipExpanderInterface
+    {
+        return new ProductConcreteProductImageSetResourceRelationshipExpander(
+            $this->createProductConcreteProductImageSetResourceRelationshipReader(),
+            $this->createConcreteProductsResourceFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductImageSetsBackendApi\Processor\Reader\ProductConcreteProductImageSetResourceRelationshipReaderInterface
+     */
+    public function createProductConcreteProductImageSetResourceRelationshipReader(): ProductConcreteProductImageSetResourceRelationshipReaderInterface
+    {
+        return new ProductConcreteProductImageSetResourceRelationshipReader(
+            $this->createProductImageSetResourceReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductImageSetsBackendApi\Processor\Filter\ConcreteProductsResourceFilterInterface
+     */
+    public function createConcreteProductsResourceFilter(): ConcreteProductsResourceFilterInterface
+    {
+        return new ConcreteProductsResourceFilter();
     }
 
     /**

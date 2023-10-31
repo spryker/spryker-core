@@ -5,13 +5,16 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.66.0",
         "spryker/product-image": "^3.16.0",
-        "spryker/transfer": "^3.31.0"
+        "spryker/transfer": "^3.31.0",
+        "spryker/uuid-behavior": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/locale": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/store": "*",

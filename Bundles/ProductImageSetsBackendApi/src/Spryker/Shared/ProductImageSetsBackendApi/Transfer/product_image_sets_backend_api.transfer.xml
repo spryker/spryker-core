@@ -43,6 +43,7 @@
         <property name="type" type="string"/>
         <property name="id" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
     </transfer>
 
     <transfer name="ProductImage">
@@ -50,6 +51,14 @@
 
     <transfer name="Locale">
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRelationship">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="locale" type="string"/>
     </transfer>
 
 </transfers>

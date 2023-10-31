@@ -8,7 +8,9 @@
 namespace SprykerTest\Glue\ProductImageSetsBackendApi;
 
 use Codeception\Actor;
-use Spryker\Glue\ProductImageSetsBackendApi\ProductImageSetsBackendApiResourceInterface;
+use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ProductConcretesBackendApiAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 /**
  * Inherited Methods
@@ -31,10 +33,25 @@ class ProductImageSetsBackendApiTester extends Actor
     use _generated\ProductImageSetsBackendApiTesterActions;
 
     /**
-     * @return \Spryker\Glue\ProductImageSetsBackendApi\ProductImageSetsBackendApiResourceInterface
+     * @uses \Spryker\Glue\ProductsBackendApi\ProductsBackendApiConfig::RESOURCE_CONCRETE_PRODUCTS
+     *
+     * @var string
      */
-    public function getResource(): ProductImageSetsBackendApiResourceInterface
-    {
-        return $this->getLocator()->productImageSetsBackendApi()->resource();
+    protected const RESOURCE_CONCRETE_PRODUCTS = 'concrete-products';
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResourceTransfer
+     */
+    public function createProductConcreteResource(
+        ProductConcreteTransfer $productConcreteTransfer
+    ): GlueResourceTransfer {
+        return (new GlueResourceTransfer())
+            ->setId($productConcreteTransfer->getSku())
+            ->setType(static::RESOURCE_CONCRETE_PRODUCTS)
+            ->setAttributes(
+                (new ProductConcretesBackendApiAttributesTransfer())->fromArray($productConcreteTransfer->toArray(), true),
+            );
     }
 }
