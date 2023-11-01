@@ -8,7 +8,7 @@
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer-gui-extension": "^1.0.0",
-        "spryker/product-offer-shipment-type": "^0.3.0",
+        "spryker/product-offer-shipment-type": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

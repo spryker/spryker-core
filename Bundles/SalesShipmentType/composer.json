@@ -10,7 +10,7 @@
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales": "^11.0.0",
         "spryker/shipment": "^8.0.0",
-        "spryker/shipment-type": "^0.1.0",
+        "spryker/shipment-type": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

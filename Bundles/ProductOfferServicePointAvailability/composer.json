@@ -10,7 +10,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer": "^1.8.0",
         "spryker/product-offer-availability": "^1.0.0",
-        "spryker/product-offer-service-point": "^0.3.0",
+        "spryker/product-offer-service-point": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

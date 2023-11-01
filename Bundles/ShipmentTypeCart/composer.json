@@ -10,7 +10,7 @@
         "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/quote-extension": "^1.2.0",
-        "spryker/shipment-type": "^0.1.0",
+        "spryker/shipment-type": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

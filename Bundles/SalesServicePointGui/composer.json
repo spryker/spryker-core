@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker/gui": "^3.49.0",
-        "spryker/sales-service-point": "^0.2.0",
+        "spryker/sales-service-point": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

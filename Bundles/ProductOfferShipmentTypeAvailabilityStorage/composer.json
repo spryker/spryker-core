@@ -6,9 +6,9 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-offer-service-point-availability-storage-extension": "^0.1.0",
-        "spryker/product-offer-shipment-type-availability": "^0.3.0",
-        "spryker/shipment-type-storage": "^0.2.0",
+        "spryker/product-offer-service-point-availability-storage-extension": "^1.0.0",
+        "spryker/product-offer-shipment-type-availability": "^1.0.0",
+        "spryker/shipment-type-storage": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
