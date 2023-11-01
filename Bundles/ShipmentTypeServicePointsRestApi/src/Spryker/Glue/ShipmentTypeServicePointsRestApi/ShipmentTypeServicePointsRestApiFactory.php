@@ -188,6 +188,8 @@ class ShipmentTypeServicePointsRestApiFactory extends AbstractFactory
     {
         return new SingleShipmentServicePointShipmentTypeServicePointValidatorRule(
             $this->createRestErrorMessageCreator(),
+            $this->createShipmentTypeStorageReader(),
+            $this->createRestCheckoutRequestAttributesExtractor(),
         );
     }
 

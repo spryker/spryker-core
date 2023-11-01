@@ -23,4 +23,16 @@ interface RestCheckoutRequestAttributesExtractorInterface
     public function extractShipmentMethodIdsFromRestCheckoutRequestAttributesTransfer(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): array;
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *             Use {@link \Spryker\Glue\ShipmentTypeServicePointsRestApi\Processor\Extractor\RestCheckoutRequestAttributesExtractorInterface::extractShipmentMethodIdsFromRestCheckoutRequestAttributesTransfer} instead.
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return int
+     */
+    public function extractShipmentMethodIdFromRestCheckoutRequestAttributesTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): int;
 }

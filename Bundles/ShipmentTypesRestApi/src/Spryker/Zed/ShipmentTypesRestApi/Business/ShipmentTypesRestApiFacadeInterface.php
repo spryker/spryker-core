@@ -18,7 +18,9 @@ interface ShipmentTypesRestApiFacadeInterface
      * - Does nothing if `Shipment.method` is empty for each element in `QuoteTransfer.items`.
      * - Expects QuoteTransfer.items.shipment.method.idShipmentMethod to be set.
      * - Gets available shipment methods for the provided quote.
-     * - Maps shipment types taken from shipment methods to `Quote.items.shipmentType`.
+     * - Expands items with shipment types taken from shipment methods to `Quote.items.shipmentType`.
+     * - Expands `Quote.items.shipment.shipmentTypeUuid` from `Quote.items.shipmentType.uuid`.
+     * - Expands `Quote.expenses.shipment.shipmentTypeUuid` from `Quote.expenses.shipment.method.shipmentType.uuid`.
      *
      * @api
      *
@@ -26,7 +28,7 @@ interface ShipmentTypesRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapShipmentTypeToQuoteItem(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function expandQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
- * @deprecated Use {@link Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface} instead.
+ * @deprecated Use {@link \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface} instead.
  */
 interface AvailabilityStrategyPluginInterface
 {

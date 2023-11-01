@@ -7,25 +7,47 @@
 
 namespace Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementFinder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\SellableItemRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\ProductOfferReplacementCheckerInterface;
+use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeInterface;
+use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToStoreFacadeInterface;
 
 class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInterface
 {
+    /**
+     * @var \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToStoreFacadeInterface
+     */
+    protected ClickAndCollectExampleToStoreFacadeInterface $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeInterface
+     */
+    protected ClickAndCollectExampleToAvailabilityFacadeInterface $availabilityFacade;
+
     /**
      * @var \Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\ProductOfferReplacementCheckerInterface
      */
     protected ProductOfferReplacementCheckerInterface $productOfferReplacementChecker;
 
     /**
+     * @param \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\ProductOfferReplacementCheckerInterface $productOfferReplacementChecker
      */
     public function __construct(
+        ClickAndCollectExampleToStoreFacadeInterface $storeFacade,
+        ClickAndCollectExampleToAvailabilityFacadeInterface $availabilityFacade,
         ProductOfferReplacementCheckerInterface $productOfferReplacementChecker
     ) {
         $this->productOfferReplacementChecker = $productOfferReplacementChecker;
+        $this->availabilityFacade = $availabilityFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -36,6 +58,20 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
      */
     public function findSuitableProductOffer(ItemTransfer $itemTransfer, array $productOfferServicePointTransfers): ?ProductOfferTransfer
     {
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer(
+            $itemTransfer,
+            $productOfferServicePointTransfers,
+        );
+
+        $sellableItemsResponseTransfer = $this->availabilityFacade->areProductsSellableForStore($sellableItemsRequestTransfer);
+        $sellableItemResponseTransfersIndexedByProductOfferReference = $this->getSellableItemResponseTransfersIndexedByProductOfferReference(
+            $sellableItemsResponseTransfer->getSellableItemResponses(),
+        );
+        $productOfferServicePointTransfers = $this->syncProductOfferStockQuantities(
+            $productOfferServicePointTransfers,
+            $sellableItemResponseTransfersIndexedByProductOfferReference,
+        );
+
         $productOfferServicePointReplacementCandidates = [];
         foreach ($productOfferServicePointTransfers as $productOfferServicePointTransfer) {
             if (!$this->productOfferReplacementChecker->isProductOfferServicePointReplaceable($itemTransfer, $productOfferServicePointTransfer)) {
@@ -50,6 +86,27 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
         }
 
         return $this->findBestPriceProductOffer($productOfferServicePointReplacementCandidates);
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SellableItemResponseTransfer> $sellableItemResponseTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\SellableItemResponseTransfer>
+     */
+    protected function getSellableItemResponseTransfersIndexedByProductOfferReference(
+        ArrayObject $sellableItemResponseTransfers
+    ): array {
+        $indexedSellableItemResponseTransfers = [];
+
+        foreach ($sellableItemResponseTransfers as $sellableItemResponseTransfer) {
+            $productOfferReference = $sellableItemResponseTransfer
+                ->getProductAvailabilityCriteriaOrFail()
+                ->getProductOfferReferenceOrFail();
+
+            $indexedSellableItemResponseTransfers[$productOfferReference] = $sellableItemResponseTransfer;
+        }
+
+        return $indexedSellableItemResponseTransfers;
     }
 
     /**
@@ -80,6 +137,64 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
         $productOfferStockTransfer->setQuantity($productOfferStockQuantity - $itemQuantity);
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicePointTransfer> $productOfferServicePointTransfers
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
+     */
+    protected function createSellableItemsRequestTransfer(
+        ItemTransfer $itemTransfer,
+        array $productOfferServicePointTransfers
+    ): SellableItemsRequestTransfer {
+        $sellableItemsRequestTransfer = (new SellableItemsRequestTransfer())->setStore(
+            $this->storeFacade->getCurrentStore(),
+        );
+
+        foreach ($productOfferServicePointTransfers as $productOfferServicePointTransfer) {
+            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+                ->fromArray($itemTransfer->toArray(), true)
+                ->setProductOfferReference($productOfferServicePointTransfer->getProductOfferOrFail()->getProductOfferReferenceOrFail());
+
+            $sellableItemRequestTransfer = (new SellableItemRequestTransfer())
+                ->setProductAvailabilityCriteria($productAvailabilityCriteriaTransfer)
+                ->setQuantity($itemTransfer->getQuantityOrFail())
+                ->setSku($itemTransfer->getSkuOrFail());
+
+            $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
+        }
+
+        return $sellableItemsRequestTransfer;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ProductOfferServicePointTransfer> $productOfferServicePointTransfers
+     * @param array<string, \Generated\Shared\Transfer\SellableItemResponseTransfer> $sellableItemResponseTransfersIndexedByProductOfferReference
+     *
+     * @return list<\Generated\Shared\Transfer\ProductOfferServicePointTransfer>
+     */
+    protected function syncProductOfferStockQuantities(
+        array $productOfferServicePointTransfers,
+        array $sellableItemResponseTransfersIndexedByProductOfferReference
+    ): array {
+        foreach ($productOfferServicePointTransfers as $productOfferServicePointTransfer) {
+            $productOfferReference = $productOfferServicePointTransfer->getProductOfferOrFail()->getProductOfferReferenceOrFail();
+            $sellableItemResponseTransfer = $sellableItemResponseTransfersIndexedByProductOfferReference[$productOfferReference] ?? null;
+
+            if (!$sellableItemResponseTransfer || !$sellableItemResponseTransfer->getIsSellable()) {
+                $productOfferServicePointTransfer->setProductOfferStock(null);
+
+                continue;
+            }
+
+            $productOfferServicePointTransfer->getProductOfferStockOrFail()->setQuantity(
+                $sellableItemResponseTransfer->getAvailableQuantityOrFail(),
+            );
+        }
+
+        return $productOfferServicePointTransfers;
     }
 
     /**

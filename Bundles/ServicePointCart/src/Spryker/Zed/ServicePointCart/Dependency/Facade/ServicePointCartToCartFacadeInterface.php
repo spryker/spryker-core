@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ServicePointCartToCartFacadeInterface
@@ -14,7 +15,7 @@ interface ServicePointCartToCartFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

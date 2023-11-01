@@ -4,7 +4,7 @@
     <transfer name="Quote">
     </transfer>
 
-    <transfer name="QuoteResponse">
+    <transfer name="QuoteReplacementResponse" strict="true">
     </transfer>
 
 </transfers>

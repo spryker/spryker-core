@@ -230,7 +230,7 @@ class Sellable implements SellableInterface
             );
             $sellableItemRequestTransfer->setIsProcessed(true);
 
-            return $sellableItemResponseTransfer;
+            return $sellableItemResponseTransfer->setProductAvailabilityCriteria($productAvailabilityCriteriaTransfer);
         }
 
         return null;

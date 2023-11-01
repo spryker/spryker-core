@@ -65,6 +65,7 @@
     <transfer name="Shipment">
         <property name="idShipmentMethod" type="int"/>
         <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentTypeUuid" type="string" strict="true"/>
     </transfer>
 
     <transfer name="ShipmentTypeStorageCollection" strict="true">

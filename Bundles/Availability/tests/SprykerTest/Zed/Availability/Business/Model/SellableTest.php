@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
 use Generated\Shared\Transfer\SellableItemsRequestTransfer;
@@ -19,6 +20,7 @@ use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
+use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -42,6 +44,11 @@ class SellableTest extends Unit
      * @var string
      */
     public const SKU_PRODUCT_SECOND = 'sku-123-222';
+
+    /**
+     * @var string
+     */
+    protected const PRODUCT_OFFER_REFERENCE = 'offer0';
 
     /**
      * @dataProvider isProductSellableStoresDataProvider
@@ -284,6 +291,54 @@ class SellableTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAreProductsSellableForStoreReturnsCriteriaInResponse(): void
+    {
+        // Arrange
+        $storeTransfer = $this->createStoreTransfer();
+        $batchRequestData = [
+            [
+                'sku' => static::SKU_PRODUCT,
+                'quantity' => 1,
+            ],
+        ];
+
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
+        $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemsRequestTransfer,
+            $batchRequestData,
+        );
+
+        $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+            ->setProductOfferReference(static::PRODUCT_OFFER_REFERENCE);
+
+        $sellableItemsRequestTransfer
+            ->getSellableItemRequests()
+            ->offsetGet(0)
+            ->setProductAvailabilityCriteria($productAvailabilityCriteriaTransfer);
+
+        $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
+            ->setSku(static::SKU_PRODUCT)
+            ->setAvailability(1)
+            ->setIsNeverOutOfStock(true);
+
+        $availabilityStrategyPlugins = [$this->createAvailabilityStrategyPluginMock($productConcreteAvailabilityTransfer)];
+        $sellable = $this->createSellable(null, null, null, $availabilityStrategyPlugins);
+
+        // Act
+        $sellableItemsResponseTransfer = $sellable->areProductsSellableForStore(
+            $sellableItemsRequestTransfer,
+        );
+
+        // Assert
+        $this->assertSame(
+            $productAvailabilityCriteriaTransfer,
+            $sellableItemsResponseTransfer->getSellableItemResponses()->offsetGet(0)->getProductAvailabilityCriteria(),
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
      * @return array<\Generated\Shared\Transfer\SellableItemResponseTransfer>
@@ -343,13 +398,15 @@ class SellableTest extends Unit
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface|null $availabilityRepositoryMock
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface|null $availabilityHandlerMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $storeFacade
+     * @param list<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface> $availabilityStrategyPlugins
      *
      * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected function createSellable(
         ?AvailabilityRepositoryInterface $availabilityRepositoryMock = null,
         ?AvailabilityHandlerInterface $availabilityHandlerMock = null,
-        ?AvailabilityToStoreFacadeInterface $storeFacade = null
+        ?AvailabilityToStoreFacadeInterface $storeFacade = null,
+        array $availabilityStrategyPlugins = []
     ): SellableInterface {
         if ($availabilityRepositoryMock === null) {
             $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
@@ -368,7 +425,28 @@ class SellableTest extends Unit
                 ->willReturn($this->createStoreTransfer());
         }
 
-        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade, [], []);
+        return new Sellable(
+            $availabilityRepositoryMock,
+            $availabilityHandlerMock,
+            $storeFacade,
+            $availabilityStrategyPlugins,
+            [],
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return \SprykerTest\Zed\Availability\Business\Model\MockObject|\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface
+     */
+    protected function createAvailabilityStrategyPluginMock(
+        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+    ): AvailabilityStrategyPluginInterface {
+        $availabilityStrategyPluginMock = $this->getMockBuilder(AvailabilityStrategyPluginInterface::class)->getMock();
+        $availabilityStrategyPluginMock->method('isApplicable')->willReturn(true);
+        $availabilityStrategyPluginMock->method('findProductConcreteAvailabilityForStore')->willReturn($productConcreteAvailabilityTransfer);
+
+        return $availabilityStrategyPluginMock;
     }
 
     /**

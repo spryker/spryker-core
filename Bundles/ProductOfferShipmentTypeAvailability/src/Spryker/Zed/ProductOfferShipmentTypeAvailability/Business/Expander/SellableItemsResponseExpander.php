@@ -61,6 +61,7 @@ class SellableItemsResponseExpander implements SellableItemsResponseExpanderInte
     {
         return (new SellableItemResponseTransfer())
             ->setSku($sellableItemRequestTransfer->getSkuOrFail())
+            ->setProductAvailabilityCriteria($sellableItemRequestTransfer->getProductAvailabilityCriteriaOrFail())
             ->setAvailableQuantity(0)
             ->setIsSellable(false);
     }

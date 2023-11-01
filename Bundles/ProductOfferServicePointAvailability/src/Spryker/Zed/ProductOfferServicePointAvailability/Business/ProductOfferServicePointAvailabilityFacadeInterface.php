@@ -16,6 +16,7 @@ interface ProductOfferServicePointAvailabilityFacadeInterface
      * Specification:
      * - Filters out sellable item requests without product offer reference or service point.
      * - Checks if sellable item request has valid service point for the provided product offer reference.
+     * - Creates `SellableItemRequestTransfer` objects for non-sellable items filled with `productAvailabilityCriteria` property for mapping purposes.
      * - Returns `SellableItemsResponseTransfer` filled with not valid sellable item responses.
      *
      * @api

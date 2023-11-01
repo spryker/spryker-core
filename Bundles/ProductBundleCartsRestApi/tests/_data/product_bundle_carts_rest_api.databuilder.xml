@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="Shipment">
+        <property name="shipmentSelection" dataBuilderRule="unique()->isbn10()"/>
+        <property name="requestedDeliveryDate" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" dataBuilderRule="firstName()"/>
+        <property name="lastName" dataBuilderRule="lastName()"/>
+        <property name="address1" dataBuilderRule="address()"/>
+        <property name="company" dataBuilderRule="company()"/>
+        <property name="city" dataBuilderRule="city()"/>
+        <property name="zipCode" dataBuilderRule="postcode()"/>
+        <property name="state" dataBuilderRule="country()"/>
+        <property name="iso2Code" dataBuilderRule="=DE"/>
+    </transfer>
+
+</transfers>

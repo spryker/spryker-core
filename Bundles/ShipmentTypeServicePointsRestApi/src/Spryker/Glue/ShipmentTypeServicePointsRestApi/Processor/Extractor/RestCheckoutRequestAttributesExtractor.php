@@ -26,4 +26,18 @@ class RestCheckoutRequestAttributesExtractor implements RestCheckoutRequestAttri
 
         return array_unique($shipmentMethodIds);
     }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *             Use {@link \Spryker\Glue\ShipmentTypeServicePointsRestApi\Processor\Extractor\RestCheckoutRequestAttributesExtractor::extractShipmentMethodIdsFromRestCheckoutRequestAttributesTransfer} instead.
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return int
+     */
+    public function extractShipmentMethodIdFromRestCheckoutRequestAttributesTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): int {
+        return $restCheckoutRequestAttributesTransfer->getShipmentOrFail()->getIdShipmentMethodOrFail();
+    }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCartExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -30,13 +30,13 @@ interface ServicePointQuoteItemReplaceStrategyPluginInterface
     /**
      * Specification:
      * - Executes replacement strategy.
-     * - Returns back `QuoteResponseTransfer` with modified quote inside.
+     * - Returns back `QuoteReplacementResponseTransfer` with modified quote inside.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function execute(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer;
 }

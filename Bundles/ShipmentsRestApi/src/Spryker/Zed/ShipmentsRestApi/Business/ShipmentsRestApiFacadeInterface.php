@@ -19,6 +19,7 @@ interface ShipmentsRestApiFacadeInterface
      * Specification:
      * - Maps rest request shipment to quote.
      * - Finds shipment method by shipmentSelection from request.
+     * - Executes {@link \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface} plugin stack.
      * - Set new quote expense of type `ShipmentsRestApiConfig::SHIPMENT_EXPENSE_TYPE` based on found shipment method data.
      *
      * @api
@@ -50,6 +51,7 @@ interface ShipmentsRestApiFacadeInterface
      * Specification:
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.items[*].shipment`.
      * - Maps `RestCheckoutRequestAttributesTransfer.shipments` to `QuoteTransfer.bundleItems[*].shipment`.
+     * - Executes {@link \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface} plugin stack.
      * - Expands quote expenses with shipment expenses.
      *
      * @api

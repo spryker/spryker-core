@@ -25,6 +25,35 @@ class RestErrorMessageCreator implements RestErrorMessageCreatorInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    public function createServicePointShouldNotBeProvidedErrorMessage(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_CODE_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_DETAIL_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED);
+    }
+
+    /**
+     * @param string $itemGroupKey
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    public function createServicePointForItemShouldNotBeProvidedErrorMessage(string $itemGroupKey): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_CODE_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(
+                sprintf(
+                    ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_DETAIL_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED,
+                    $itemGroupKey,
+                ),
+            );
+    }
+
+    /**
      * @param string $servicePointUuid
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer

@@ -10,8 +10,7 @@ namespace Spryker\Zed\ShipmentTypesRestApi\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentTypesRestApi\Business\ErrorCreator\ShipmentTypeCheckoutErrorCreator;
 use Spryker\Zed\ShipmentTypesRestApi\Business\ErrorCreator\ShipmentTypeCheckoutErrorCreatorInterface;
-use Spryker\Zed\ShipmentTypesRestApi\Business\Mapper\QuoteItemMapper;
-use Spryker\Zed\ShipmentTypesRestApi\Business\Mapper\QuoteItemMapperInterface;
+use Spryker\Zed\ShipmentTypesRestApi\Business\Expander\QuoteItemExpander;
 use Spryker\Zed\ShipmentTypesRestApi\Business\Reader\ShipmentMethodReader;
 use Spryker\Zed\ShipmentTypesRestApi\Business\Reader\ShipmentMethodReaderInterface;
 use Spryker\Zed\ShipmentTypesRestApi\Business\StrategyResolver\ShipmentTypeCheckoutDataValidatorStrategyResolver;
@@ -25,11 +24,11 @@ use Spryker\Zed\ShipmentTypesRestApi\ShipmentTypesRestApiDependencyProvider;
 class ShipmentTypesRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ShipmentTypesRestApi\Business\Mapper\QuoteItemMapperInterface
+     * @return \Spryker\Zed\ShipmentTypesRestApi\Business\Expander\QuoteItemExpander
      */
-    public function createQuoteItemMapper(): QuoteItemMapperInterface
+    public function createQuoteItemExpander(): QuoteItemExpander
     {
-        return new QuoteItemMapper(
+        return new QuoteItemExpander(
             $this->getShipmentFacade(),
         );
     }

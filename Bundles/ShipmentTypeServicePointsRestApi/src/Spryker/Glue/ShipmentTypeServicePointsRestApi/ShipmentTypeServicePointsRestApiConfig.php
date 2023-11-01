@@ -63,7 +63,35 @@ class ShipmentTypeServicePointsRestApiConfig extends AbstractBundleConfig
      *
      * @var string
      */
+    public const ERROR_RESPONSE_CODE_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED = '5606';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_RESPONSE_CODE_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED = '5607';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
     public const ERROR_RESPONSE_DETAIL_SERVICE_POINT_NOT_PROVIDED = 'Please select service point.';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_RESPONSE_DETAIL_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED = 'Service Point can not be included for this type of delivery.';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_RESPONSE_DETAIL_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED = 'Service Point for item "%s" can not be included with this type of delivery.';
 
     /**
      * @api

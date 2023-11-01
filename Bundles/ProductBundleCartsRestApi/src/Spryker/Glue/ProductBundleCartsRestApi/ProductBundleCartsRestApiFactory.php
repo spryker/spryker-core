@@ -14,6 +14,8 @@ use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\BundledItemExpande
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\BundledItemExpanderInterface;
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\BundleItemExpander;
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\BundleItemExpanderInterface;
+use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\QuoteBundleItemExpander;
+use Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\QuoteBundleItemExpanderInterface;
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\Filter\BundleItemFilter;
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\Filter\BundleItemFilterInterface;
 use Spryker\Glue\ProductBundleCartsRestApi\Processor\RestResponseBuilder\BundleItemRestResponseBuilder;
@@ -59,6 +61,14 @@ class ProductBundleCartsRestApiFactory extends AbstractFactory
     public function createBundleItemFilter(): BundleItemFilterInterface
     {
         return new BundleItemFilter($this->getProductBundleClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductBundleCartsRestApi\Processor\Expander\QuoteBundleItemExpanderInterface
+     */
+    public function createQuoteBundleItemExpander(): QuoteBundleItemExpanderInterface
+    {
+        return new QuoteBundleItemExpander();
     }
 
     /**

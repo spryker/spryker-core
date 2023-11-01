@@ -50,14 +50,7 @@ abstract class AbstractShipmentTypeServicePointValidator implements ShipmentType
     public function validate(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        $applicableShipmentTypeStorageTransfers = $this
-            ->shipmentTypeStorageReader
-            ->getApplicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod(
-                $this->extractShipmentMethodIds($restCheckoutRequestAttributesTransfer),
-            );
-        if ($applicableShipmentTypeStorageTransfers === []) {
-            return $restErrorCollectionTransfer;
-        }
+
         foreach ($this->shipmentTypeServicePointValidatorRules as $shipmentTypeServicePointValidatorRule) {
             $restErrorCollectionTransfer = $this->expandRestErrorCollection(
                 $restErrorCollectionTransfer,

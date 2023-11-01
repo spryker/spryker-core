@@ -486,6 +486,8 @@ class PriceProductOfferFacadeTest extends Unit
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $productOfferIds[] = $priceProductTransfer->getPriceDimensionOrFail()->getIdProductOfferOrFail();
         }
+        sort($expectedProductOfferIds);
+        sort($productOfferIds);
 
         // Assert
         $this->assertCount(2, $priceProductTransfers);

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -19,9 +19,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    public function replaceQuoteItemsAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function replaceQuoteItemsAction(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer
     {
         return $this->getFacade()->replaceQuoteItems($quoteTransfer);
     }

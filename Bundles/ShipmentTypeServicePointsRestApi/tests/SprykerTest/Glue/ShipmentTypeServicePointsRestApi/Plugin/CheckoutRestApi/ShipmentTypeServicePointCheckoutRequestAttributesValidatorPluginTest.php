@@ -78,6 +78,41 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
+    public function testReturnsErrorWhenServicePointIsProvidedForNotApplicableShipmentTypeAndMultiShipmentRequestGiven(): void
+    {
+        // Arrange
+        $this->tester->mockShipmentTypeStorageClient([]);
+
+        $restCheckoutRequestAttributesTransfer = $this->tester
+            ->createMultiShipmentRestCheckoutRequestAttributesTransferWithValidAttributesAndNonApplicableShipmentMethod();
+
+        // Act
+        $restErrorCollectionTransfer = (new ShipmentTypeServicePointCheckoutRequestAttributesValidatorPlugin())
+            ->setFactory($this->tester->getFactory())
+            ->validateAttributes($restCheckoutRequestAttributesTransfer);
+
+        // Assert
+        $this->assertNotEmpty($restErrorCollectionTransfer->getRestErrors());
+        $this->assertEquals(
+            sprintf(
+                ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_DETAIL_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED,
+                ShipmentTypeServicePointsRestApiTester::ITEM_GROUP_KEY_1,
+            ),
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getDetail(),
+        );
+        $this->assertEquals(
+            ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_CODE_SERVICE_POINT_FOR_ITEM_SHOULD_NOT_BE_PROVIDED,
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getCode(),
+        );
+        $this->assertEquals(
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getStatus(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsErrorWhenServicePointHasNoAddressAndMultiShipmentRequestGiven(): void
     {
         // Arrange
@@ -277,6 +312,39 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
         );
         $this->assertEquals(
             ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_CODE_SERVICE_POINT_NOT_PROVIDED,
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getCode(),
+        );
+        $this->assertEquals(
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getStatus(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsErrorWhenServicePointIsProvidedForNotApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
+    {
+        // Arrange
+        $this->tester->mockShipmentTypeStorageClient([]);
+
+        $restCheckoutRequestAttributesTransfer = $this
+            ->tester
+            ->createSingleShipmentRestCheckoutRequestAttributesTransferWithValidAttributesAndNonApplicableShipmentMethod();
+
+        // Act
+        $restErrorCollectionTransfer = (new ShipmentTypeServicePointCheckoutRequestAttributesValidatorPlugin())
+            ->setFactory($this->tester->getFactory())
+            ->validateAttributes($restCheckoutRequestAttributesTransfer);
+
+        // Assert
+        $this->assertNotEmpty($restErrorCollectionTransfer->getRestErrors());
+        $this->assertEquals(
+            ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_DETAIL_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED,
+            $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getDetail(),
+        );
+        $this->assertEquals(
+            ShipmentTypeServicePointsRestApiConfig::ERROR_RESPONSE_CODE_SERVICE_POINT_SHOULD_NOT_BE_PROVIDED,
             $restErrorCollectionTransfer->getRestErrors()->getIterator()->current()->getCode(),
         );
         $this->assertEquals(

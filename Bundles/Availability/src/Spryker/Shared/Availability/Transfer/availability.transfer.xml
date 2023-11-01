@@ -18,6 +18,7 @@
         <property name="sku" type="string"/>
         <property name="isSellable" type="bool"/>
         <property name="availableQuantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria" strict="true"/>
     </transfer>
 
     <transfer name="SellableItemsRequest">

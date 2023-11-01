@@ -24,7 +24,7 @@ use Codeception\Actor;
  * @method void pause()
  * @method \Spryker\Zed\ProductBundleCartsRestApi\Business\ProductBundleCartsRestApiFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductBundleCartsRestApi\PHPMD)
  */
 class ProductBundleCartsRestApiBusinessTester extends Actor
 {

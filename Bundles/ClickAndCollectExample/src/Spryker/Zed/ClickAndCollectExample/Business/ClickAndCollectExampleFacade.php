@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ClickAndCollectExample\Business;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -24,11 +26,11 @@ class ClickAndCollectExampleFacade extends AbstractFacade implements ClickAndCol
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    public function replacePickupQuoteItemProductOffers(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function replaceQuoteItemProductOffers(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer
     {
-        return $this->getFactory()->createPickupQuoteItemReplacer()->replaceQuoteItemProductOffers($quoteTransfer);
+        return $this->getFactory()->createQuoteProductOfferReplacer()->replaceQuoteItemProductOffers($quoteTransfer);
     }
 
     /**
@@ -36,12 +38,12 @@ class ClickAndCollectExampleFacade extends AbstractFacade implements ClickAndCol
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function replaceDeliveryQuoteItemProductOffers(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function validateQuoteItemProductOfferReplacement(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
-        return $this->getFactory()->createDeliveryQuoteItemReplacer()->replaceQuoteItemProductOffers($quoteTransfer);
+        return $this->getFactory()->createQuoteItemProductOfferReplacementValidator()->validate($checkoutDataTransfer);
     }
 }

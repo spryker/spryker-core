@@ -134,6 +134,10 @@ class GetItemsAvailabilityForStoreTest extends Unit
         $this->assertSame(static::PRODUCT_SKU, $sellableItemResponseTransfer->getSkuOrFail());
         $this->assertFalse($sellableItemResponseTransfer->getIsSellableOrFail());
         $this->assertSame(0, $sellableItemResponseTransfer->getAvailableQuantityOrFail()->toInt());
+        $this->assertSame(
+            $productAvailabilityCriteriaTransfer,
+            $sellableItemResponseTransfer->getProductAvailabilityCriteria(),
+        );
     }
 
     /**

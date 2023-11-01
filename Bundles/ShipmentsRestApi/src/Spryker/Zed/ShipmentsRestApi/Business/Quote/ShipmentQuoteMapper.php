@@ -30,12 +30,20 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     protected ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade;
 
     /**
+     * @var \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface[]
+     */
+    protected array $quoteItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+     * @param list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface> $quoteItemExpanderPlugins
      */
     public function __construct(
-        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
+        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
+        array $quoteItemExpanderPlugins
     ) {
         $this->shipmentFacade = $shipmentFacade;
+        $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
     }
 
     /**
@@ -70,9 +78,24 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             ->setShippingAddress($quoteTransfer->getShippingAddress());
 
         $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
+        $quoteTransfer = $this->executeQuoteItemExpanderPlugins($quoteTransfer);
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer, $quoteTransfer);
 
         return $this->setShipmentExpense($quoteTransfer, $expenseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuoteItemExpanderPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteItemExpanderPlugins as $quoteShipmentExpanderPlugin) {
+            $quoteTransfer = $quoteShipmentExpanderPlugin->expandQuoteItems($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**

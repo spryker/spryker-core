@@ -24,23 +24,31 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     /**
      * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface
      */
-    protected $shipmentFacade;
+    protected ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade;
 
     /**
-     * @var array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
+     * @var list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
      */
-    protected $addressProviderStrategyPlugins;
+    protected array $addressProviderStrategyPlugins;
+
+    /**
+     * @var list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface>
+     */
+    protected array $quoteItemExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
-     * @param array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface> $addressProviderStrategyPlugins
+     * @param list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface> $addressProviderStrategyPlugins
+     * @param list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface> $quoteItemExpanderPlugins
      */
     public function __construct(
         ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
-        array $addressProviderStrategyPlugins
+        array $addressProviderStrategyPlugins,
+        array $quoteItemExpanderPlugins
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->addressProviderStrategyPlugins = $addressProviderStrategyPlugins;
+        $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
     }
 
     /**
@@ -87,8 +95,23 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             );
         }
 
+        $quoteTransfer = $this->executeQuoteItemExpanderPlugins($quoteTransfer);
         $quoteTransfer = $this->setNoShipmentForGiftCards($quoteTransfer);
         $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuoteItemExpanderPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteItemExpanderPlugins as $quoteShipmentExpanderPlugin) {
+            $quoteTransfer = $quoteShipmentExpanderPlugin->expandQuoteItems($quoteTransfer);
+        }
 
         return $quoteTransfer;
     }

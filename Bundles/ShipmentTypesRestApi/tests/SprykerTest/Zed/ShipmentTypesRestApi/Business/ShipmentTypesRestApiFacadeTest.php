@@ -62,7 +62,7 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         $this->tester->mockGetAvailableMethodsByShipment([$shipmentMethodTransfer]);
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->mapShipmentTypeToQuoteItem($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()->expandQuoteItems($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -70,6 +70,10 @@ class ShipmentTypesRestApiFacadeTest extends Unit
             $this->assertSame(
                 $itemTransfer->getShipmentTypeOrFail()->getIdShipmentType(),
                 $shipmentMethodTransfer->getShipmentTypeOrFail()->getIdShipmentType(),
+            );
+            $this->assertSame(
+                $itemTransfer->getShipmentOrFail()->getShipmentTypeUuidOrFail(),
+                $shipmentMethodTransfer->getShipmentTypeOrFail()->getUuidOrFail(),
             );
         }
     }
@@ -101,7 +105,7 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         $this->tester->mockGetAvailableMethodsByShipment([$shipmentMethodTransfer1, $shipmentMethodTransfer2]);
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->mapShipmentTypeToQuoteItem($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()->expandQuoteItems($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -109,6 +113,10 @@ class ShipmentTypesRestApiFacadeTest extends Unit
             $this->assertSame(
                 $itemTransfer->getShipmentTypeOrFail()->getIdShipmentType(),
                 $shipmentTypeTransfer->getIdShipmentType(),
+            );
+            $this->assertSame(
+                $itemTransfer->getShipmentOrFail()->getShipmentTypeUuidOrFail(),
+                $shipmentTypeTransfer->getUuidOrFail(),
             );
         }
     }
@@ -141,7 +149,7 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         $this->tester->mockGetAvailableMethodsByShipment([$shipmentMethodTransfer1, $shipmentMethodTransfer2]);
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->mapShipmentTypeToQuoteItem($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()->expandQuoteItems($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -149,6 +157,8 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         }
         $this->assertSame($quoteTransfer->getItems()[0]->getShipmentTypeOrFail()->getIdShipmentType(), $shipmentTypeTransfer1->getIdShipmentType());
         $this->assertSame($quoteTransfer->getItems()[1]->getShipmentTypeOrFail()->getIdShipmentType(), $shipmentTypeTransfer2->getIdShipmentType());
+        $this->assertSame($quoteTransfer->getItems()[0]->getShipmentOrFail()->getShipmentTypeUuidOrFail(), $shipmentTypeTransfer1->getUuidOrFail());
+        $this->assertSame($quoteTransfer->getItems()[1]->getShipmentOrFail()->getShipmentTypeUuidOrFail(), $shipmentTypeTransfer2->getUuidOrFail());
     }
 
     /**
@@ -166,7 +176,7 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         $this->tester->mockGetAvailableMethodsByShipment([$shipmentMethodTransfer]);
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->mapShipmentTypeToQuoteItem($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()->expandQuoteItems($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -193,7 +203,7 @@ class ShipmentTypesRestApiFacadeTest extends Unit
         $this->tester->mockGetAvailableMethodsByShipment([]);
 
         // Act
-        $quoteTransfer = $this->tester->getFacade()->mapShipmentTypeToQuoteItem($quoteTransfer);
+        $quoteTransfer = $this->tester->getFacade()->expandQuoteItems($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

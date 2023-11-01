@@ -26,11 +26,11 @@ class ShipmentTypesRestApiFacade extends AbstractFacade implements ShipmentTypes
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapShipmentTypeToQuoteItem(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createQuoteItemMapper()
-            ->mapShipmentTypesToQuoteItems($quoteTransfer);
+            ->createQuoteItemExpander()
+            ->expandQuoteItems($quoteTransfer);
     }
 
     /**

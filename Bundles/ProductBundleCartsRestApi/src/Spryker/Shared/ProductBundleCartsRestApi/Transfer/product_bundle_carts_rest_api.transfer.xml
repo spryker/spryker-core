@@ -49,10 +49,29 @@
 
     <transfer name="Item">
         <property name="groupKey" type="string"/>
+        <property name="bundleItemIdentifier" type="string"/>
+        <property name="shipment" type="Shipment"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartItemRequest">
         <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shipmentSelection" type="string"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="company" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="state" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
 </transfers>

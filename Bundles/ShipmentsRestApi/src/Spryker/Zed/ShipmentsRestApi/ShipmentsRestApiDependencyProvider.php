@@ -27,6 +27,11 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGINS_ADDRESS_PROVIDER_STRATEGY = 'PLUGINS_ADDRESS_PROVIDER_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -36,6 +41,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addShipmentFacade($container);
         $container = $this->addAddressProviderStrategyPlugins($container);
+        $container = $this->addQuoteItemExpanderPlugins($container);
 
         return $container;
     }
@@ -69,9 +75,31 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteItemExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_ITEM_EXPANDER, function () {
+            return $this->getQuoteItemExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
      */
     protected function getAddressProviderStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface>
+     */
+    protected function getQuoteItemExpanderPlugins(): array
     {
         return [];
     }

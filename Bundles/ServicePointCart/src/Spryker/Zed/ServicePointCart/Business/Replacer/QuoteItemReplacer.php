@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Business\Replacer;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ServicePointCart\Dependency\Facade\ServicePointCartToCartFacadeInterface;
 
@@ -39,56 +38,39 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer
     {
-        $quoteResponseTransfer = $this->executeStrategyPlugins($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $quoteTransfer = $this->cartFacade->reloadItems($quoteResponseTransfer->getQuoteTransferOrFail());
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteReplacementResponseTransfer = $this->executeReplaceStrategyPlugin($quoteTransfer);
+
+        $replacedQuoteTransfer = (new QuoteTransfer())->fromArray($quoteReplacementResponseTransfer->getQuoteOrFail()->toArray(), true);
+        $quoteResponseTransfer = $this->cartFacade->reloadItemsInQuote($quoteReplacementResponseTransfer->getQuoteOrFail());
+        if (!$quoteResponseTransfer->getIsSuccessfulOrFail()) {
+            return $quoteReplacementResponseTransfer->setQuote($replacedQuoteTransfer);
         }
 
-        return $quoteResponseTransfer;
+        return $quoteReplacementResponseTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    protected function executeStrategyPlugins(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function executeReplaceStrategyPlugin(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer
     {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-        ->setQuoteTransfer($quoteTransfer)
-        ->setIsSuccessful(true);
+        $quoteReplacementResponseTransfer = (new QuoteReplacementResponseTransfer())
+            ->setQuote($quoteTransfer);
 
-        $combinedQuoteErrorTransfers = [];
         foreach ($this->servicePointQuoteItemReplaceStrategyPlugins as $servicePointQuoteItemReplaceStrategyPlugin) {
             if (!$servicePointQuoteItemReplaceStrategyPlugin->isApplicable($quoteTransfer)) {
                 continue;
             }
 
-            $quoteResponseTransfer = $servicePointQuoteItemReplaceStrategyPlugin->execute($quoteTransfer);
-            $combinedQuoteErrorTransfers[] = $quoteResponseTransfer->getErrors()->getArrayCopy();
-            if (!$quoteResponseTransfer->getIsSuccessfulOrFail()) {
-                return $quoteResponseTransfer->setErrors($this->mergeQuoteErrors($combinedQuoteErrorTransfers));
-            }
+            return $servicePointQuoteItemReplaceStrategyPlugin->execute($quoteTransfer);
         }
 
-        return $quoteResponseTransfer->setErrors($this->mergeQuoteErrors($combinedQuoteErrorTransfers));
-    }
-
-    /**
-     * @param list<list<\Generated\Shared\Transfer\QuoteErrorTransfer>> $combinedQuoteErrorTransfers
-     *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer>
-     */
-    protected function mergeQuoteErrors(
-        array $combinedQuoteErrorTransfers
-    ): ArrayObject {
-        $mergedQuoteErrorTransfers = array_merge(...$combinedQuoteErrorTransfers);
-
-        return new ArrayObject($mergedQuoteErrorTransfers);
+        return $quoteReplacementResponseTransfer;
     }
 }

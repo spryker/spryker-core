@@ -26,9 +26,12 @@ interface AvailabilityFacadeInterface
 {
     /**
      * Specification:
-     *  - Checks if product is never out of stock for given store.
-     *  - Checks if product has stock in stock table.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     * - Checks if product is never out of stock for given store.
+     * - Checks if product has stock in stock table.
+     * - Checks if any placed orders exist with the same items having state machine state flagged as reserved.
+     * - Executes {@link \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface} plugin stack.
+     * - Returns response transfers with `SellableItemResponseTransfer.productAvailabilityCriteria` set for mapping purposes.
      *
      * @api
      *

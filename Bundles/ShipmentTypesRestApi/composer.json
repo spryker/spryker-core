@@ -12,6 +12,7 @@
         "spryker/kernel": "^3.66.0",
         "spryker/shipment": "^8.16.0",
         "spryker/shipment-type-storage": "^0.2.0",
+        "spryker/shipments-rest-api-extension": "^1.2.0",
         "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0"

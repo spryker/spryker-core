@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ServicePointCart\Business\Replacer;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteItemReplacerInterface
@@ -15,7 +15,7 @@ interface QuoteItemReplacerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
      */
-    public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function replaceQuoteItems(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer;
 }

@@ -1,0 +1,21 @@
+namespace: SprykerTest\Glue\ProductBundleCartsRestApi
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Plugin:
+        path: Plugin
+        actor: ProductBundleCartsRestApiPluginTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Service\Container\Helper\ContainerHelper

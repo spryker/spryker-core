@@ -63,6 +63,11 @@ class ClickAndCollectExampleBusinessTester extends Actor
     /**
      * @var string
      */
+    public const TEST_SHIPMENT_TYPE_KEY_FOREIGN = 'foreign';
+
+    /**
+     * @var string
+     */
     public const TEST_MERCHANT_REFERENCE_1 = 'merchant1';
 
     /**
@@ -140,13 +145,13 @@ class ClickAndCollectExampleBusinessTester extends Actor
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
         ]);
 
-        $this->haveProductOfferStock([
+        $productOfferStockTransfer = $this->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOfferOrFail(),
             ProductOfferStockTransfer::QUANTITY => $override[ProductOfferStockTransfer::QUANTITY] ?? 0,
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => $override[ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK] ?? true,
         ]);
 
-        return $productOfferTransfer;
+        return $productOfferTransfer->addProductOfferStock($productOfferStockTransfer);
     }
 
     /**

@@ -27,6 +27,7 @@ use Spryker\Zed\ShipmentTypesRestApi\Dependency\Facade\ShipmentTypesRestApiToShi
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause($vars = [])
+ * @method \Spryker\Zed\ShipmentTypesRestApi\Business\ShipmentTypesRestApiFacadeInterface getFacade()
  *
  * @SuppressWarnings(\SprykerTest\Zed\ShipmentTypesRestApi\PHPMD)
  */

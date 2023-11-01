@@ -19,11 +19,10 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPlugin extends A
 {
     /**
      * {@inheritDoc}
-     * - Does nothing if each element in `RestCheckoutRequestAttributesTransfer.shipments` has non-applicable shipment type for the multi-shipment request.
-     * - Does nothing if `RestCheckoutRequestAttributesTransfer.shipment` has non-applicable shipment type for the single-shipment request.
      * - Gets shipment type storage collection for the current store.
      * - Uses {@link \Spryker\Glue\ShipmentTypeServicePointsRestApi\ShipmentTypeServicePointsRestApiConfig::getApplicableShipmentTypeKeysForShippingAddress()} to determine which shipment types are applicable.
      * - Checks that service point is provided for each element in `RestCheckoutRequestAttributesTransfer.shipments` with applicable shipment type.
+     * - Checks that service point is not provided for each element in `RestCheckoutRequestAttributesTransfer.shipments` with not applicable shipment type.
      * - Checks that each element in `RestCheckoutRequestAttributesTransfer.servicePoints` has an address.
      * - Checks that `firstName`, `lastName` and `email` fields are provided for `RestCheckoutRequestAttributesTransfer.customer`.
      *

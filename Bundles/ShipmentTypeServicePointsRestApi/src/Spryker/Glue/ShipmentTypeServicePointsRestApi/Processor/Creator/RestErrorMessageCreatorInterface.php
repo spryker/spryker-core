@@ -17,6 +17,18 @@ interface RestErrorMessageCreatorInterface
     public function createServicePointNotProvidedErrorMessage(): RestErrorMessageTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    public function createServicePointShouldNotBeProvidedErrorMessage(): RestErrorMessageTransfer;
+
+    /**
+     * @param string $itemGroupKey
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    public function createServicePointForItemShouldNotBeProvidedErrorMessage(string $itemGroupKey): RestErrorMessageTransfer;
+
+    /**
      * @param string $servicePointUuid
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer

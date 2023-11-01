@@ -44,12 +44,6 @@
         <property name="priceMode" type="string"/>
     </transfer>
 
-    <transfer name="QuoteResponse">
-        <property name="errors" type="QuoteError[]" singular="error"/>
-        <property name="quoteTransfer" type="Quote"/>
-        <property name="isSuccessful" type="bool"/>
-    </transfer>
-
     <transfer name="QuoteError">
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
@@ -74,6 +68,7 @@
     </transfer>
 
     <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
     <transfer name="ProductOfferServicePoint" strict="true">
@@ -113,6 +108,63 @@
 
     <transfer name="ServicePoint" strict="true">
         <property name="idServicePoint" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="servicePoints" type="RestServicePoint[]" restRequestParameter="yes" singular="servicePoint" strict="true"/>
+        <property name="quote" type="Quote"/>
+        <property name="shipment" type="RestShipment"/>
+        <property name="shipments" type="RestShipments[]" singular="shipment"/>
+    </transfer>
+
+    <transfer name="RestServicePoint" strict="true">
+        <property name="idServicePoint" type="string" restRequestParameter="yes"/>
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="QuoteReplacementResponse" strict="true">
+        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quote" type="Quote"/>
+        <property name="failedReplacementItems" type="Item[]" singular="failedReplacementItem"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="shipmentType" type="ShipmentType" strict="true"/>
+        <property name="idShipmentMethod" type="int"/>
+    </transfer>
+
+    <transfer name="ServicePointConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServicePointCriteria" strict="true">
+        <property name="servicePointConditions" type="ServicePointConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointCollection" strict="true">
+        <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+    </transfer>
+
+    <transfer name="RestShipment">
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestShipments">
+        <property name="items" type="string[]" singular="item" restRequestParameter="yes"/>
+        <property name="idShipmentMethod" type="int" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
@@ -135,6 +187,43 @@
 
     <transfer name="ShipmentTypeStorageCollection" strict="true">
         <property name="shipmentTypeStorages" type="ShipmentTypeStorage[]" singular="shipmentTypeStorage"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodConditions" strict="true">
+        <property name="shipmentMethodIds" type="int[]" singular="idShipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodCriteria" strict="true">
+        <property name="shipmentMethodConditions" type="ShipmentMethodConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodCollection" strict="true">
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+    </transfer>
+
+    <transfer name="ProductAvailabilityCriteria">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="SellableItemRequest">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria"/>
+    </transfer>
+
+    <transfer name="SellableItemsRequest">
+        <property name="store" type="Store"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
+    </transfer>
+
+    <transfer name="SellableItemResponse">
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria" strict="true"/>
+        <property name="isSellable" type="bool"/>
+        <property name="availableQuantity" type="decimal"/>
     </transfer>
 
 </transfers>

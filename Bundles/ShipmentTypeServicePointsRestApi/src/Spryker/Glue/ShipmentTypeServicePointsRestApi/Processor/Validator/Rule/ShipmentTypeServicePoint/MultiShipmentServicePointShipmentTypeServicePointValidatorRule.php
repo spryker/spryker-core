@@ -94,13 +94,11 @@ class MultiShipmentServicePointShipmentTypeServicePointValidatorRule implements 
     ): RestErrorCollectionTransfer {
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
-            if (!$this->isApplicable($restShipmentsTransfer, $applicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod)) {
-                continue;
-            }
             $restErrorCollectionTransfer = $this->validateShipments(
                 $restShipmentsTransfer,
                 $restCheckoutRequestAttributesTransfer->getServicePoints(),
                 $restErrorCollectionTransfer,
+                $applicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod,
             );
         }
 
@@ -124,21 +122,33 @@ class MultiShipmentServicePointShipmentTypeServicePointValidatorRule implements 
      * @param \Generated\Shared\Transfer\RestShipmentsTransfer $restShipmentsTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\RestServicePointTransfer> $restServicePointTransfers
      * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
+     * @param array<int, \Generated\Shared\Transfer\ShipmentTypeStorageTransfer> $applicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
     protected function validateShipments(
         RestShipmentsTransfer $restShipmentsTransfer,
         ArrayObject $restServicePointTransfers,
-        RestErrorCollectionTransfer $restErrorCollectionTransfer
+        RestErrorCollectionTransfer $restErrorCollectionTransfer,
+        array $applicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod
     ): RestErrorCollectionTransfer {
         foreach ($restShipmentsTransfer->getItems() as $itemGroupKey) {
-            if ($this->hasServicePoint($itemGroupKey, $restServicePointTransfers)) {
+            $hasServicePoint = $this->hasServicePoint($itemGroupKey, $restServicePointTransfers);
+            $isApplicable = $this->isApplicable($restShipmentsTransfer, $applicableShipmentTypeStorageTransfersIndexedByIdShipmentMethod);
+
+            if ($isApplicable && !$hasServicePoint) {
+                $restErrorCollectionTransfer->addRestError(
+                    $this->restErrorMessageCreator->createServicePointNotProvidedErrorMessage(),
+                );
+
                 continue;
             }
-            $restErrorCollectionTransfer->addRestError(
-                $this->restErrorMessageCreator->createServicePointNotProvidedErrorMessage(),
-            );
+
+            if (!$isApplicable && $hasServicePoint) {
+                $restErrorCollectionTransfer->addRestError(
+                    $this->restErrorMessageCreator->createServicePointForItemShouldNotBeProvidedErrorMessage($itemGroupKey),
+                );
+            }
         }
 
         return $restErrorCollectionTransfer;

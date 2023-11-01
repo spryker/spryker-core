@@ -253,11 +253,16 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade'],
+            [
+                'getShipmentFacade',
+                'getQuoteItemExpanderPlugins',
+            ],
         );
 
         $mockFactory->method('getShipmentFacade')
             ->willReturn(new ShipmentsRestApiToShipmentFacadeAdapter($this->getMockShipmentFacade()));
+        $mockFactory->method('getQuoteItemExpanderPlugins')
+            ->willReturn([]);
 
         return $mockFactory;
     }
@@ -295,11 +300,16 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade'],
+            [
+                'getShipmentFacade',
+                'getQuoteItemExpanderPlugins',
+            ],
         );
 
         $mockFactory->method('getShipmentFacade')
             ->willReturn(new ShipmentsRestApiToShipmentFacadeAdapter($this->getMockShipmentFacadeWithShipmentNotFound()));
+        $mockFactory->method('getQuoteItemExpanderPlugins')
+            ->willReturn([]);
 
         return $mockFactory;
     }

@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferServicePointAvailabilityRequestItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Client/ClickAndCollectExample/Calculator/ProductOfferServicePointAvailabilityCalculator.php",
@@ -15,12 +15,12 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 74,
+            "line_to": 74,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferServicePointAvailabilityResponseItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Client/ClickAndCollectExample/Calculator/ProductOfferServicePointAvailabilityCalculator.php",
-            "snippet": "            $productOfferServicePointAvailabilityCollectionTransfer->getProductOfferServicePointAvailabilityResponseItems()->getArrayCopy(),",
+            "snippet": "                $productOfferServicePointAvailabilityCollectionTransfer->getProductOfferServicePointAvailabilityResponseItems()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
@@ -36,8 +36,80 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 2 of Spryker\\Zed\\ClickAndCollectExample\\Business\\ProductOfferReplacementFinder\\ProductOfferReplacementFinderInterface::findSuitableProductOffer expects list<Generated\\Shared\\Transfer\\ProductOfferServicePointTransfer>, but parent type array<int, Generated\\Shared\\Transfer\\ProductOfferServicePointTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Business/QuoteItemReplacer/DeliveryQuoteItemReplacer.php",
+            "snippet": "            $replacementProductOfferTransfer = $this->clickAndCollectExampleProductOfferReplacementFinder->findSuitableProductOffer($itemTransfer, $productOfferServicePointTransfers);",
+            "selected_text": "$productOfferServicePointTransfers",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 2 of Spryker\\Zed\\ClickAndCollectExample\\Business\\ProductOfferReplacementFinder\\ProductOfferReplacementFinderInterface::findSuitableProductOffer expects list<Generated\\Shared\\Transfer\\ProductOfferServicePointTransfer>, but parent type array<int, Generated\\Shared\\Transfer\\ProductOfferServicePointTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Business/QuoteItemReplacer/PickupQuoteItemReplacer.php",
+            "snippet": "                ->findSuitableProductOffer($itemTransfer, $productOfferServicePointTransfers);",
+            "selected_text": "$productOfferServicePointTransfers",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ClickAndCollectExample\\Persistence\\Propel\\Mapper\\ProductOfferMapper::mapProductOfferEntityCollectionToProductOfferServicePointTransfers expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Persistence/ClickAndCollectExampleRepository.php",
+            "snippet": "                $productOfferEntityCollection,",
+            "selected_text": "$productOfferEntityCollection",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ClickAndCollectExample\\Persistence\\Propel\\Mapper\\ProductOfferMapper::mapProductOfferEntityCollectionToProductOfferServicePointTransfers expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Persistence/ClickAndCollectExampleRepository.php",
+            "snippet": "                $productOfferEntityCollection,",
+            "selected_text": "$productOfferEntityCollection",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ClickAndCollectExample\\Persistence\\Propel\\Mapper\\ProductOfferStockMapper::mapProductOfferStockEntityCollectionToProductOfferStockTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Persistence/ClickAndCollectExampleRepository.php",
+            "snippet": "                $productOfferStockEntityCollection,",
+            "selected_text": "$productOfferStockEntityCollection",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ClickAndCollectExample\\Persistence\\Propel\\Mapper\\PriceProductOfferMapper::mapPriceProductOfferEntityCollectionToProductOfferPriceTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PriceProductOffer\\Persistence\\SpyPriceProductOffer>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PriceProductOffer\\Persistence\\SpyPriceProductOffer>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferStore> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ClickAndCollectExample/src/Spryker/Zed/ClickAndCollectExample/Persistence/ClickAndCollectExampleRepository.php",
+            "snippet": "                $priceProductOfferEntityCollection,",
+            "selected_text": "$priceProductOfferEntityCollection",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [],
-    "count": 3
+    "count": 9
 }

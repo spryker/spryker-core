@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
+use Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -177,6 +179,39 @@ class MapShipmentsToQuoteTest extends Unit
             $restCheckoutRequestAttributesTransfer->getShipments()->offsetGet(0)->getShippingAddress()->getAddress1(),
             $quoteTransfer->getItems()->offsetGet(0)->getShipment()->getShippingAddress()->getAddress1(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecutesQuoteItemExpanderPlugins(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->buildQuote();
+        $restCheckoutRequestAttributesTransfer = $this->buildRestCheckoutRequestAttributes($quoteTransfer);
+        $quoteItemExpanderPluginMock = $this->createQuoteItemExpanderPluginMock();
+
+        // Assert
+        $quoteItemExpanderPluginMock
+            ->expects($this->once())
+            ->method('expandQuoteItems')
+            ->willReturn($quoteTransfer);
+
+        $this->tester->setDependency(
+            ShipmentsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_EXPANDER,
+            [$quoteItemExpanderPluginMock],
+        );
+
+        // Act
+        $this->tester->getFacade()->mapShipmentsToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface
+     */
+    protected function createQuoteItemExpanderPluginMock(): QuoteItemExpanderPluginInterface
+    {
+        return $this->getMockBuilder(QuoteItemExpanderPluginInterface::class)->getMock();
     }
 
     /**
