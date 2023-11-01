@@ -575,6 +575,50 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
+    public function testPatchActionReturnsPersistedWarehouseUserAssignmentsResourceWhenAllPossibleDataProvided(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $stockTransfer = $this->tester->haveStock();
+        $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
+            $userTransfer,
+            $stockTransfer,
+            [WarehouseUserAssignmentTransfer::IS_ACTIVE => false],
+        );
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::WAREHOUSE => [
+                WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
+            ],
+        ]))->build();
+
+        $glueRequestTransfer = (new GlueRequestTransfer())
+            ->setResource((new GlueResourceTransfer())->setId($warehouseUserAssignmentTransfer->getUuidOrFail()))
+            ->setRequestUser((new GlueRequestUserTransfer())->setSurrogateIdentifier($userTransfer->getIdUserOrFail()));
+
+        // Act
+        $glueResponseTransfer = (new WarehouseUserAssignmentsResourceController())->patchAction(
+            $warehouseUserAssignmentsRestResourceAttributesTransfer,
+            $glueRequestTransfer,
+        );
+
+        // Assert
+        $this->assertCount(0, $glueResponseTransfer->getErrors());
+        $this->assertCount(1, $glueResponseTransfer->getResources());
+
+        $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
+        $this->assertNotNull($glueResourceTransfer->getId());
+        $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
+        $this->assertTrue($glueResourceTransfer->getAttributes()->getIsActive());
+        $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
+        $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());
+        $this->assertSame($stockTransfer->getUuid(), $glueResourceTransfer->getAttributes()->getWarehouse()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
     public function testPatchActionReturnsNotFoundErrorWhenWarehouseUserUpdatesWarehouseUserAssignmentOfAnotherUser(): void
     {
         // Arrange

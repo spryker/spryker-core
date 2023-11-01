@@ -45,17 +45,16 @@ class WarehouseUserAssignmentMapper implements WarehouseUserAssignmentMapperInte
         WarehouseUserAssignmentsBackendApiAttributesTransfer $warehouseUserAssignmentsBackendApiAttributesTransfer,
         WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer
     ): WarehouseUserAssignmentTransfer {
-        $warehouseUserAssignmentTransfer->fromArray($warehouseUserAssignmentsBackendApiAttributesTransfer->modifiedToArray(), true);
+        $stockTransfer = $warehouseUserAssignmentTransfer->getWarehouse();
         if ($warehouseUserAssignmentsBackendApiAttributesTransfer->getWarehouse()) {
-            $warehouseUserAssignmentTransfer->setWarehouse(
-                $this->mapWarehousesBackendApiAttributesTransferToStockTransfer(
-                    $warehouseUserAssignmentsBackendApiAttributesTransfer->getWarehouseOrFail(),
-                    new StockTransfer(),
-                ),
+            $stockTransfer = $this->mapWarehousesBackendApiAttributesTransferToStockTransfer(
+                $warehouseUserAssignmentsBackendApiAttributesTransfer->getWarehouseOrFail(),
+                $stockTransfer ?? new StockTransfer(),
             );
         }
+        $warehouseUserAssignmentTransfer->fromArray($warehouseUserAssignmentsBackendApiAttributesTransfer->modifiedToArray(), true);
 
-        return $warehouseUserAssignmentTransfer;
+        return $warehouseUserAssignmentTransfer->setWarehouse($stockTransfer);
     }
 
     /**
@@ -81,6 +80,6 @@ class WarehouseUserAssignmentMapper implements WarehouseUserAssignmentMapperInte
         WarehousesBackendApiAttributesTransfer $warehousesBackendApiAttributesTransfer,
         StockTransfer $stockTransfer
     ): StockTransfer {
-        return $stockTransfer->fromArray($warehousesBackendApiAttributesTransfer->toArray(), true);
+        return $stockTransfer->fromArray($warehousesBackendApiAttributesTransfer->modifiedToArray(), true);
     }
 }
