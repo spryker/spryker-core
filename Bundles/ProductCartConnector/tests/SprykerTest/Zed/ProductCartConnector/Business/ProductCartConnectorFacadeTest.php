@@ -273,4 +273,36 @@ class ProductCartConnectorFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->validateCheckoutQuoteItems($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testFilterInactiveItemsRemovesAllDeactivatedItemsFromQuote(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->getAllowedStore();
+        $productConcreteTransfer1 = $this->tester->haveFullProduct([
+            ProductConcreteTransfer::IS_ACTIVE => false,
+        ]);
+        $productConcreteTransfer2 = $this->tester->haveFullProduct([
+            ProductConcreteTransfer::IS_ACTIVE => false,
+        ]);
+        $productConcreteTransfer3 = $this->tester->haveFullProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+        $quoteTransfer = (new QuoteBuilder())
+            ->withStore($storeTransfer->toArray())
+            ->withItem([ItemTransfer::SKU => $productConcreteTransfer1->getSku()])
+            ->withAnotherItem([ItemTransfer::SKU => $productConcreteTransfer2->getSku()])
+            ->withAnotherItem([ItemTransfer::SKU => $productConcreteTransfer3->getSku()])
+            ->build();
+
+        // Act
+        $quoteTransfer = $this->tester->getFacade()->filterInactiveItems($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        $itemTransfer = $quoteTransfer->getItems()->getIterator()->current();
+        $this->assertSame($productConcreteTransfer3->getSku(), $itemTransfer->getSku());
+    }
 }

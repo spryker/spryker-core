@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -79,14 +80,18 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
         $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
         $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
 
+        $filteredItemTransfers = new ArrayObject();
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             if (!isset($indexedProductConcreteTransfers[$itemTransfer->getSku()])) {
-                $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
+
+                continue;
             }
+
+            $filteredItemTransfers->offsetSet($key, $itemTransfer);
         }
 
-        return $quoteTransfer;
+        return $quoteTransfer->setItems($filteredItemTransfers);
     }
 
     /**
