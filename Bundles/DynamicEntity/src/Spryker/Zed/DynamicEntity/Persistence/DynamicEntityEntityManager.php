@@ -341,7 +341,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         }
 
         $dynamicEntityTransfer = $this->buildDynamicEntityFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
-        $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
+        $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord, $dynamicEntityConfigurationTransfer);
 
         $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
 
@@ -453,13 +453,17 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     protected function addIdentifierToFields(
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
-        ActiveRecordInterface $activeRecord
+        ActiveRecordInterface $activeRecord,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): DynamicEntityTransfer {
         $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+
+        $identifierVisibleName = $this->getIdentifierVisibleName($identifier, $dynamicEntityConfigurationTransfer);
+        
         $identifierValue = $activeRecord->getByName($identifier);
         $dynamicEntityTransfer->setFields(array_merge(
             $dynamicEntityTransfer->getFields(),
-            [$identifier => $identifierValue],
+            [$identifierVisibleName => $identifierValue],
         ));
         $dynamicEntityTransfer->setIdentifier($identifierValue);
 

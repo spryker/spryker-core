@@ -95,6 +95,16 @@ class DynamicEntityFacadeTest extends Unit
     protected const FOO_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"id_dynamic_entity_configuration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isEditable":false,"isCreatable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
 
     /**
+     * @var string
+     */
+    protected const IDENTIFIER_TEST_TABLE_ALIAS = 'test_identifiers';
+
+    /**
+     * @var string
+     */
+    protected const IDENTIFIER_TEST_DIFFERENT_VISIBLE_NAME_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"idDynamicEntityConfiguration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isEditable":false,"isCreatable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
+
+    /**
      * @var \Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface
      */
     protected $dynamicEntityFacade;
@@ -618,6 +628,41 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateDynamicEntityCollectionUpdatesTheRecordWithNonDefaultIdentifierVisibleName(): void
+    {
+        //Arrange
+        $this->createIdentifierInCamelCaseEntity();
+        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableAlias(static::IDENTIFIER_TEST_TABLE_ALIAS)
+            ->find()
+            ->getData()[0];
+
+        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer(static::IDENTIFIER_TEST_TABLE_ALIAS);
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'idDynamicEntityConfiguration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'table_name' => 'newid',
+                ]),
+        );
+
+        //Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        //Assert
+        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
+            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
+            ->find()
+            ->getData()[0];
+        $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertNotEquals($fooEntity->getTableName(), $updatedFooEntity->getTableName());
+        $this->assertEquals('newid', $updatedFooEntity->getTableName());
+        $this->assertEquals($updatedFooEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateDynamicEntityConfigurationCollectionWillReturnCollectionWithoutErrors(): void
     {
         // Arrange
@@ -730,6 +775,19 @@ class DynamicEntityFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    protected function createIdentifierInCamelCaseEntity(): void
+    {
+        (new SpyDynamicEntityConfiguration())
+            ->setIsActive(true)
+            ->setTableAlias(static::IDENTIFIER_TEST_TABLE_ALIAS)
+            ->setTableName(static::TABLE_NAME)
+            ->setDefinition(static::IDENTIFIER_TEST_DIFFERENT_VISIBLE_NAME_DEFINITION)
+            ->save();
+    }
+
+    /**
      * @param string $tableAlias
      * @param string|null $filterCondition
      *
@@ -755,12 +813,14 @@ class DynamicEntityFacadeTest extends Unit
     }
 
     /**
+     * @param string $tableAlias
+     *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
      */
-    protected function createDynamicEntityCollectionRequestTransfer(): DynamicEntityCollectionRequestTransfer
+    protected function createDynamicEntityCollectionRequestTransfer(string $tableAlias = self::FOO_TABLE_ALIAS_1): DynamicEntityCollectionRequestTransfer
     {
         $dynamicEntityCollectionRequestTransfer = new DynamicEntityCollectionRequestTransfer();
-        $dynamicEntityCollectionRequestTransfer->setTableAlias(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCollectionRequestTransfer->setTableAlias($tableAlias);
 
         return $dynamicEntityCollectionRequestTransfer;
     }
