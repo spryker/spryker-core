@@ -34,13 +34,11 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
-     * @return $this
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addLabelSelectField($builder, $options);
-
-        return $this;
     }
 
     /**
@@ -48,7 +46,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setRequired(static::OPTION_VALUES_LABEL_CHOICES);

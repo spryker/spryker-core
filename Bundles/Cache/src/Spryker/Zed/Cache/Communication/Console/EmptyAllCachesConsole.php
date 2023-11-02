@@ -25,7 +25,7 @@ class EmptyAllCachesConsole extends Console
     /**
      * @return void
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Remove all contents from cache directories');

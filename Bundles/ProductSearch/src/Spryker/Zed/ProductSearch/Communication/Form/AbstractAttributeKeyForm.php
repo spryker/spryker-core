@@ -54,7 +54,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             static::OPTION_IS_UPDATE => false,

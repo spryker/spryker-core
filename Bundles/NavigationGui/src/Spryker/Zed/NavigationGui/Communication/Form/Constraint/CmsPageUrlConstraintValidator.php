@@ -25,7 +25,7 @@ class CmsPageUrlConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof CmsPageUrlConstraint) {
             throw new UnexpectedTypeException($constraint, CmsPageUrlConstraint::class);

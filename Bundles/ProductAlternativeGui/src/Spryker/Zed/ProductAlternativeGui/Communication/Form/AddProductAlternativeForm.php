@@ -37,7 +37,7 @@ class AddProductAlternativeForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addProductAlternativeSearchField($builder);
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getProductAlternativeSearchPreSubmitCallback());

@@ -4,7 +4,7 @@
     "description": "ProductReviewStorage module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-review": "^1.1.0 || ^2.0.0",

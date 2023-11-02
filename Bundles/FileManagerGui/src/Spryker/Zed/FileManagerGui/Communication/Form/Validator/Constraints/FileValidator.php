@@ -20,7 +20,7 @@ class FileValidator extends ValidatorFileValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         parent::validate($this->createSymfonyUploadedFileFromTransfer($value), $constraint);
     }

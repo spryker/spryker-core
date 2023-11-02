@@ -93,7 +93,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $eventSubscriber = $this->createFormEventSubscriber();
 
@@ -111,7 +111,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if ($view->parent || !$form->isRoot()) {
             return;
@@ -138,7 +138,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

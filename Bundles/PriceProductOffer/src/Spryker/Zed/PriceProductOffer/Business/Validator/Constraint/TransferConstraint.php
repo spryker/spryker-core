@@ -46,7 +46,7 @@ class TransferConstraint extends Composite
      *
      * @return void
      */
-    protected function initializeNestedConstraints()
+    protected function initializeNestedConstraints(): void
     {
         parent::initializeNestedConstraints();
 

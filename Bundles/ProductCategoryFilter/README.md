@@ -1,6 +1,6 @@
 # ProductCategoryFilter Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/product-category-filter/v/stable.svg)](https://packagist.org/packages/spryker/product-category-filter)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 ProductCategoryFilter module allows the manipulation of search filters in catalog page per product category.
 

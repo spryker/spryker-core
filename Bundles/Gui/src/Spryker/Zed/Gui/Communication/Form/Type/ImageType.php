@@ -46,7 +46,7 @@ class ImageType extends AbstractType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars[static::OPTION_IMAGE_WIDTH] = $options[static::OPTION_IMAGE_WIDTH];
         $view->vars[static::OPTION_IMAGE_HEIGHT] = $options[static::OPTION_IMAGE_HEIGHT];
@@ -59,7 +59,7 @@ class ImageType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             static::OPTION_IMAGE_WIDTH => null,

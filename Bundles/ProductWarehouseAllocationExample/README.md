@@ -1,6 +1,6 @@
 # ProductWarehouseAllocationExample Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/product-warehouse-allocation-example/v/stable.svg)](https://packagist.org/packages/spryker/product-warehouse-allocation-example)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 The strategy of this module is to simply find the first warehouse that has the required quantity of the items ordered. Based on the item stock, the warehouses are sorted in descending order. If the requested quantity of the item is available in the first warehouse, that is, the one holding the biggest stock of the item, this warehouse is assigned to fulfill the order item. The warehouse with the never out of stock item quantity is always assigned to the item.
 

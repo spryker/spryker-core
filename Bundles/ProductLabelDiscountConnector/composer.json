@@ -4,7 +4,7 @@
     "description": "ProductLabelDiscountConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/discount": "^4.7.0 || ^5.3.0 || ^6.5.0 || ^7.6.0 || ^9.30.0",
         "spryker/discount-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",

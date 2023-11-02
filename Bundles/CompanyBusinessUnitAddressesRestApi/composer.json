@@ -4,7 +4,7 @@
     "description": "CompanyBusinessUnitAddressesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/checkout-rest-api-extension": "^1.5.0",
         "spryker/company-business-units-rest-api-extension": "^1.0.0",
         "spryker/company-unit-address": "^1.8.0",

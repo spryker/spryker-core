@@ -1,4 +1,5 @@
 parameters:
     level: 8
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Method .+ should return .+Query but returns .+Criteria#'

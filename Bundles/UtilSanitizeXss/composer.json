@@ -4,7 +4,7 @@
     "description": "UtilSanitizeXss module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/kernel": "^3.33.0",
         "voku/anti-xss": "^4.1.20"
     },

@@ -21,7 +21,7 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $this->assertConstraintType($constraint);
         $this->assertValueType($value);

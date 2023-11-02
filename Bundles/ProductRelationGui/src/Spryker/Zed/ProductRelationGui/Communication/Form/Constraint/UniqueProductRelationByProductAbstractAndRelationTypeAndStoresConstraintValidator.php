@@ -39,7 +39,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$value) {
             return;

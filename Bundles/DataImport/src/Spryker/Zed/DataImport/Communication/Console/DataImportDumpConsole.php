@@ -21,7 +21,7 @@ class DataImportDumpConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('data:import:dump')
             ->setDescription('Dump all registered DataImportPlugins and DataImporter.');

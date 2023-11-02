@@ -4,7 +4,7 @@
     "description": "CartCodesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/cart-code": "^1.1.0",
         "spryker/cart-codes-rest-api-extension": "^1.0.0",
         "spryker/carts-rest-api": "^5.7.0",

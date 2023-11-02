@@ -188,11 +188,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @api
      *
-     * @return mixed
+     * @return void
      */
     public function save()
     {
-        return $this->getContainer()->save();
+        $this->getContainer()->save();
     }
 
     /**
@@ -244,11 +244,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      *
      * @api
      *
-     * @return mixed
+     * @return void
      */
     public function clear()
     {
-        return $this->getContainer()->clear();
+        $this->getContainer()->clear();
     }
 
     /**

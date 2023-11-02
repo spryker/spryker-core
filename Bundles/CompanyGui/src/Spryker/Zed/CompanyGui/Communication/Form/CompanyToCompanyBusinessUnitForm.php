@@ -43,7 +43,7 @@ class CompanyToCompanyBusinessUnitForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
     }

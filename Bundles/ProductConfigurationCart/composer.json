@@ -4,7 +4,7 @@
     "description": "ProductConfigurationCart module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/availability-cart-connector-extension": "^1.0.0",
         "spryker/availability-extension": "^1.1.0",
         "spryker/cart": "^7.8.0",

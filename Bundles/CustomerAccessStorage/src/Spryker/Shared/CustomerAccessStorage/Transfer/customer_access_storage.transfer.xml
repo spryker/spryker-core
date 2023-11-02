@@ -18,6 +18,7 @@
 
     <transfer name="ContentTypeAccess">
         <property name="isRestricted" type="bool"/>
+        <property name="idUnauthenticatedCustomerAccess" type="int"/>
     </transfer>
 
 </transfers>

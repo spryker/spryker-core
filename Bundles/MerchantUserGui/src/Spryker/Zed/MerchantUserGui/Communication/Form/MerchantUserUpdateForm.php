@@ -27,7 +27,7 @@ class MerchantUserUpdateForm extends MerchantUserCreateForm
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setRequired(static::OPTION_STATUS_CHOICES);
@@ -39,7 +39,7 @@ class MerchantUserUpdateForm extends MerchantUserCreateForm
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 

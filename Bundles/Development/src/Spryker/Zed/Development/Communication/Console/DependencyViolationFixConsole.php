@@ -42,7 +42,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

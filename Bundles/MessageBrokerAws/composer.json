@@ -8,7 +8,7 @@
         "async-aws/sns": "^1.0.0",
         "async-aws/sqs": "^1.0.0",
         "aws/aws-sdk-php": "^3.263.14",
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/guzzle": "^2.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",

@@ -56,7 +56,7 @@ class StockSubForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addQuantityField($builder, $options)
             ->addStockTypeField($builder)
@@ -141,7 +141,7 @@ class StockSubForm extends AbstractType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer */
         $stockProductTransfer = $form->getViewData();

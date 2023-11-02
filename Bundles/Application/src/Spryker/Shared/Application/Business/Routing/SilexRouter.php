@@ -52,7 +52,7 @@ class SilexRouter implements RouterInterface
      *
      * @return void
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }

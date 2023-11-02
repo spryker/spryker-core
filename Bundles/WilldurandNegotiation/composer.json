@@ -4,7 +4,7 @@
     "description": "WilldurandNegotiation module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "willdurand/negotiation": "^2.3.0 || ^3.0.0"
     },
     "minimum-stability": "dev",

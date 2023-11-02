@@ -57,7 +57,7 @@ class CustomerGroupForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(static::ID_CUSTOMER_GROUP);
         $resolver->setDefaults([
@@ -71,7 +71,7 @@ class CustomerGroupForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdCustomerGroupField($builder)

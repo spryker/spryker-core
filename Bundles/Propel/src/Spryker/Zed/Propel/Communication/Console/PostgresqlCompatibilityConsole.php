@@ -34,7 +34,7 @@ class PostgresqlCompatibilityConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Adjust core schema files too');

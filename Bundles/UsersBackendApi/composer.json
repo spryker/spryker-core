@@ -4,7 +4,7 @@
     "description": "UsersBackendApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/transfer": "^3.31.0",

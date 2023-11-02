@@ -136,6 +136,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
      *
      * @return string|null
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId): ?string
     {
         $key = $this->keyPrefix . $sessionId;
@@ -189,6 +190,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifetime): bool
     {
         return true;

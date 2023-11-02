@@ -25,7 +25,7 @@ class SchemaCopyConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Copy schema files from packages to generated folder');

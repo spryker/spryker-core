@@ -4,7 +4,7 @@
     "description": "ShoppingListsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/glossary-storage": "^1.5.0",
         "spryker/glue-application": "^1.9.0",
         "spryker/glue-application-extension": "^1.0.0",

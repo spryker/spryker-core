@@ -26,6 +26,8 @@
         <property name="storeRelation" type="StoreRelation"/>
         <property name="productLabelProductAbstracts" type="ProductLabelProductAbstract[]" singular="productLabelProductAbstract"/>
         <property name="idProductLabel" type="int"/>
+        <property name="isExclusive" type="bool"/>
+        <property name="position" type="int"/>
     </transfer>
 
     <transfer name="ProductLabelCriteria">

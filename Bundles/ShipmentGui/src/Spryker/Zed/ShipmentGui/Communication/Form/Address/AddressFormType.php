@@ -160,7 +160,7 @@ class AddressFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::OPTION_SALUTATION_CHOICES)
@@ -176,7 +176,7 @@ class AddressFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addSalutationField($builder, $options)

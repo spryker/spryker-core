@@ -4,7 +4,7 @@
     "description": "ProductAvailabilitiesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/availability": "^9.9.0",
         "spryker/availability-storage": "^2.2.0",
         "spryker/glue-application": "^1.8.0",

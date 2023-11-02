@@ -1,6 +1,6 @@
 # ShoppingListSession Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/shopping-list-session/v/stable.svg)](https://packagist.org/packages/spryker/shopping-list-session)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 Module provides functionality to store customer shopping lists in session.
 

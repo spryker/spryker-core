@@ -90,7 +90,7 @@ class AttributeForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             static::OPTION_ATTRIBUTE_TYPE_CHOICES,
@@ -127,7 +127,7 @@ class AttributeForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdProductManagementAttribute($builder)

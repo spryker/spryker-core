@@ -84,7 +84,7 @@ class RunnerConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('This command will execute \'npm run\' with the specified task');

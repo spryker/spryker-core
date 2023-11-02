@@ -8,28 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/Api/Business/Router/ApiRouter.php",
-        "description": "Method `Spryker\\Zed\\Api\\Business\\Router\\ApiRouter::getContext()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Api/Business/Router/ApiRouter.php",
-        "description": "Method `Spryker\\Zed\\Api\\Business\\Router\\ApiRouter::getRouteCollection()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Api/Business/Router/ApiRouter.php",
-        "description": "Method `Spryker\\Zed\\Api\\Business\\Router\\ApiRouter::generate()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Api/Business/Router/ApiRouter.php",
-        "description": "Method `Spryker\\Zed\\Api\\Business\\Router\\ApiRouter::match()` must have return type.",
+        "description": "Method `Spryker\\Zed\\Api\\Business\\Router\\ApiRouter::setContext()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"

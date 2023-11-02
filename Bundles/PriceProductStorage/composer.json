@@ -4,7 +4,7 @@
     "description": "PriceProductStorage module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",

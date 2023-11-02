@@ -81,6 +81,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function open($savePath, $sessionName)
     {
         $this->connection = new Client($this->connectionParameters, $this->connectionOptions);
@@ -91,6 +92,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function close()
     {
         unset($this->connection);
@@ -103,6 +105,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return string|null
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId)
     {
         $key = $this->keyPrefix . $sessionId;
@@ -119,6 +122,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function write($sessionId, $sessionData)
     {
         $key = $this->keyPrefix . $sessionId;
@@ -139,6 +143,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function destroy($sessionId)
     {
         $key = $this->keyPrefix . $sessionId;
@@ -155,6 +160,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifetime)
     {
         return true;

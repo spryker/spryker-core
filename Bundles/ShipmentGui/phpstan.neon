@@ -1,6 +1,7 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Strict comparison using === between array and false will always evaluate to false.#'

@@ -17,6 +17,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function open(string $savePath, string $sessionName): bool
         {
             return $this->executeOpen($savePath, $sessionName);
@@ -27,6 +28,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return string
          */
+        #[\ReturnTypeWillChange]
         public function read(string $sessionId): string
         {
             return $this->executeRead($sessionId);
@@ -38,6 +40,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function write(string $sessionId, string $sessionData): bool
         {
             return $this->executeWrite($sessionId, $sessionData);
@@ -48,6 +51,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function destroy(string $sessionId): bool
         {
             return $this->executeDestroy($sessionId);
@@ -58,6 +62,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return int|false
          */
+        #[\ReturnTypeWillChange]
         public function gc(int $maxLifetime): int|false
         {
             return $this->executeGc($maxLifetime);
@@ -109,6 +114,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function open($savePath, $sessionName)
         {
             return $this->executeOpen($savePath, $sessionName);
@@ -119,6 +125,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return string
          */
+        #[\ReturnTypeWillChange]
         public function read(string $sessionId): string
         {
             return $this->executeRead($sessionId);
@@ -130,6 +137,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function write($sessionId, $sessionData)
         {
             return $this->executeWrite($sessionId, $sessionData);
@@ -140,6 +148,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return bool
          */
+        #[\ReturnTypeWillChange]
         public function destroy($sessionId)
         {
             return $this->executeDestroy($sessionId);
@@ -150,6 +159,7 @@ if (PHP_VERSION_ID >= 80200) {
          *
          * @return int|false
          */
+        #[\ReturnTypeWillChange]
         public function gc($maxLifetime)
         {
             return $this->executeGc($maxLifetime);

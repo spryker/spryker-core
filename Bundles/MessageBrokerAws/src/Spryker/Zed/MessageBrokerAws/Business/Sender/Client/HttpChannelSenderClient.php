@@ -67,6 +67,9 @@ class HttpChannelSenderClient implements SenderClientInterface
      */
     public function send(Envelope $envelope): Envelope
     {
+        /**
+         * @var \Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp|null $channelNameStamp
+         */
         $channelNameStamp = $envelope->last(MessageBrokerAwsConfig::HTTP_CHANNEL_STAMP_CLASS);
 
         if ($channelNameStamp === null) {

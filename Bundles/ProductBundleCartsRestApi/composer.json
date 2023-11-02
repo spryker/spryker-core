@@ -4,7 +4,7 @@
     "description": "ProductBundleCartsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/carts-rest-api": "^5.13.0",
         "spryker/carts-rest-api-extension": "^1.6.0",
         "spryker/glue-application": "^1.8.0",

@@ -4,7 +4,7 @@
     "description": "ProductBundle module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/availability": "^9.8.0",
         "spryker/calculation-extension": "^1.1.0",
         "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",

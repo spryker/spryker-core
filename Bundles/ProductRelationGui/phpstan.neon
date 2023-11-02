@@ -1,6 +1,7 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Call to an undefined method Orm\\.+\\SpyUserQuery::groupByIdProductRelation\(\)#'

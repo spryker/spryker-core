@@ -29,7 +29,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (in_array($value->getSku(), $this->validatedSkus)) {
             $this->addUniqueViolationMessage();

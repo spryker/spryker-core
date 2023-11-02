@@ -1,6 +1,7 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Cannot access offset .+ on .+SpyProductOptionValue.#'
         - '#Parameter \#2 \$callback of function usort expects callable\(.+ItemTransfer, .+ItemTransfer\): int, Closure\(.+ItemTransfer, .+ItemTransfer\): bool given.#'

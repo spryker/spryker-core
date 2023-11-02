@@ -24,7 +24,7 @@ class GreaterThanOrEqualDateValidator extends GreaterThanOrEqualValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $valueAsDateTime = DateTime::createFromFormat($constraint->format, $value);
 

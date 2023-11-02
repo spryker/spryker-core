@@ -76,7 +76,7 @@ class ApiRouter implements RouterInterface
      *
      * @return \Symfony\Component\Routing\RouteCollection A RouteCollection instance
      */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         return new RouteCollection();
     }

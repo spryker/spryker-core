@@ -73,7 +73,7 @@ class CategoryType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addWarningParagraphs($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
         $this->addCmsBlockFields($builder, $options);
@@ -84,7 +84,7 @@ class CategoryType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::OPTION_CMS_BLOCK_LIST)

@@ -49,7 +49,7 @@ class ItemFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS)
@@ -60,9 +60,9 @@ class ItemFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
-     * @return $this
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var array<int> $selectedItems */
         $selectedItems = $options[ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS];
@@ -83,7 +83,5 @@ class ItemFormType extends AbstractType
                 ],
             ]);
         });
-
-        return $this;
     }
 }

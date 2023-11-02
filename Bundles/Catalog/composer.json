@@ -4,7 +4,7 @@
     "description": "Catalog module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/catalog-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",

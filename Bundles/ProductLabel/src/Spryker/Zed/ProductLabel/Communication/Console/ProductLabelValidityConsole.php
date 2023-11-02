@@ -26,7 +26,7 @@ class ProductLabelValidityConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('(Un)Publish product labels based on validity date ranges');

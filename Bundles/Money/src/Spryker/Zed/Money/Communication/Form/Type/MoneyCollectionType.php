@@ -38,7 +38,7 @@ class MoneyCollectionType extends AbstractCollectionType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $options = $this->overwriteCollectionDefaultEntryType($options);
 
@@ -65,7 +65,7 @@ class MoneyCollectionType extends AbstractCollectionType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_AMOUNT_PER_STORE);
 
@@ -108,7 +108,7 @@ class MoneyCollectionType extends AbstractCollectionType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 

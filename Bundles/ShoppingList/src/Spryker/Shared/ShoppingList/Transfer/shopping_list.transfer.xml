@@ -250,9 +250,11 @@
     </transfer>
 
     <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
     </transfer>
 
 </transfers>

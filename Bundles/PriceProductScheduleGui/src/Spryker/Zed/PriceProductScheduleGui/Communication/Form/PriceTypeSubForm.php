@@ -30,7 +30,7 @@ class PriceTypeSubForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
@@ -48,7 +48,7 @@ class PriceTypeSubForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addFkPriceType($builder, $options);
     }

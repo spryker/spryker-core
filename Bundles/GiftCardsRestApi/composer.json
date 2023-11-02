@@ -4,7 +4,7 @@
     "description": "GiftCardsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/gift-card": "^1.5.1",
         "spryker/glue-application": "^1.9.0",
         "spryker/glue-application-extension": "^1.0.0",

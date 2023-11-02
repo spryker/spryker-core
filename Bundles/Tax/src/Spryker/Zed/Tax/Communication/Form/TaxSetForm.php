@@ -50,7 +50,7 @@ class TaxSetForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addName($builder)
             ->addTaxRates($builder);

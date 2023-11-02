@@ -1,4 +1,9 @@
 parameters:
     level: 8
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - message: '#Access to an undefined property Symfony\\Component\\Validator\\Constraint::.*#'
+        - message: '#Parameter \#5 \$filenameMaxLength of method Symfony\\Component\\Validator\\Constraints\\File*#'
+        - message: '#Parameter \#18 \$uploadExtensionErrorMessage of method Symfony\\Component\\Validator\\Constraints\\File#'
+        - message: '#Symfony\\Component\\Validator\\Constraints\\File::__construct\(\) invoked with 21 parameters, 0\-19 required#'
+        - message: '#Parameter \#18 \$groups of method Symfony\\Component\\Validator\\Constraints\\File::__construct\(\) expects#'

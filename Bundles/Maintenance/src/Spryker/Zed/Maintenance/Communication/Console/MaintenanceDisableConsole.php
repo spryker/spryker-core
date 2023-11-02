@@ -30,7 +30,7 @@ class MaintenanceDisableConsole extends AbstractMaintenanceConsole
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this

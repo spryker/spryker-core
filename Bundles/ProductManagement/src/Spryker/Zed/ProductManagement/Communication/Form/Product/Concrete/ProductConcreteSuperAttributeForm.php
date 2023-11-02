@@ -50,7 +50,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER);
     }
@@ -63,7 +63,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addDropdownField($builder, $options)->addCustomValueFields($builder, $options);
     }

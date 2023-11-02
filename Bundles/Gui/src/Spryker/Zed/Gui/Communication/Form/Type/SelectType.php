@@ -36,7 +36,7 @@ class SelectType extends AbstractType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars[static::URL] = $options[static::URL];
         $view->vars[static::PLACEHOLDER] = $options[static::PLACEHOLDER];
@@ -47,7 +47,7 @@ class SelectType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             static::URL => '',

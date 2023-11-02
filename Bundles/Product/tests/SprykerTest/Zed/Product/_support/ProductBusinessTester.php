@@ -201,22 +201,6 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return bool
-     */
-    public function isPhp8(): bool
-    {
-        return version_compare(PHP_VERSION, '8.0.0', '>=');
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPhp81(): bool
-    {
-        return PHP_VERSION_ID >= 80100;
-    }
-
-    /**
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

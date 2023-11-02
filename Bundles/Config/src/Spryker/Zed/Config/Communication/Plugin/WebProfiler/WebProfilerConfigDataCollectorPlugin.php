@@ -79,13 +79,11 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
      * @param \Symfony\Component\HttpFoundation\Response $response
      * @param \Throwable|null $exception
      *
-     * @return array
+     * @return void
      */
-    public function collect(Request $request, Response $response, ?Throwable $exception = null)
+    public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = $this->getFacade()->getProfileData();
-
-        return $this->data;
     }
 
     /**

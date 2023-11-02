@@ -45,7 +45,7 @@ class MerchantUpdateForm extends MerchantCreateForm
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         foreach ($this->getFactory()->getMerchantUpdateFormViewExpanderPlugins() as $formViewExpanderPlugin) {
             $view = $formViewExpanderPlugin->expand($view, $form, $options);

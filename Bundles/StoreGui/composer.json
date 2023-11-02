@@ -4,7 +4,7 @@
     "description": "StoreGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/gui": "^3.38.0",
         "spryker/kernel": "^3.33.0",
         "spryker/product-category-filter-gui-extension": "^1.0.0",

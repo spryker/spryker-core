@@ -30,13 +30,12 @@ class MerchantRelationshipChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
-     * @return $this
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addFkMerchantRelationshipField($builder, $options);
 
-        return $this;
     }
 
     /**

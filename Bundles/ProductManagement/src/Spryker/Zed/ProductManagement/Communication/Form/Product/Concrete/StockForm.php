@@ -63,7 +63,7 @@ class StockForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addStockIdHiddenField($builder, $options)
@@ -176,7 +176,7 @@ class StockForm extends AbstractType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $stockProduct = $form->getViewData();
         $stockType = $stockProduct[static::FIELD_TYPE];

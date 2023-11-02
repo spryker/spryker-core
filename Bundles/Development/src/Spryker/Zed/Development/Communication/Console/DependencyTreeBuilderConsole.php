@@ -43,7 +43,7 @@ class DependencyTreeBuilderConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

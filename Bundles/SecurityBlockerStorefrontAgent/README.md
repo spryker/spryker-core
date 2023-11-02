@@ -1,6 +1,6 @@
 # SecurityBlockerStorefrontAgent Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/security-blocker-storefront-agent/v/stable.svg)](https://packagist.org/packages/spryker/security-blocker-storefront-agent)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 Module provides functionality to secure storefront agent authentication process.
 

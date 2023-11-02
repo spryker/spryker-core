@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "ext-libxml": "*",
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/cms-block-gui-extension": "^1.0.0",
         "spryker/cms-gui-extension": "^1.0.0",
         "spryker/content": "^2.0.0",

@@ -19,7 +19,7 @@ class ProductAttributesNotBlankValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if ($value === null || $value === '') {
             return;

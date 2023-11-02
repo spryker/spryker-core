@@ -4,7 +4,7 @@
     "description": "Comment module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/comment-extension": "^1.0.0",
         "spryker/customer": "^7.0.0",

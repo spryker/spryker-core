@@ -94,27 +94,53 @@ class File extends SymfonyFile
         ?bool $isEmptyTypesValidationEnabled = null,
         ?string $emptyTypesMessage = null
     ) {
-        parent::__construct(
-            $options,
-            $maxSize,
-            $binaryFormat,
-            $mimeTypes,
-            $notFoundMessage,
-            $notReadableMessage,
-            $maxSizeMessage,
-            $mimeTypesMessage,
-            $disallowEmptyMessage,
-            $uploadIniSizeErrorMessage,
-            $uploadFormSizeErrorMessage,
-            $uploadPartialErrorMessage,
-            $uploadNoFileErrorMessage,
-            $uploadNoTmpDirErrorMessage,
-            $uploadCantWriteErrorMessage,
-            $uploadExtensionErrorMessage,
-            $uploadErrorMessage,
-            $groups,
-            $payload,
-        );
+        if (property_exists($this, 'filenameMaxLength')) {
+            parent::__construct(
+                $options,
+                $maxSize,
+                $binaryFormat,
+                $mimeTypes,
+                null,
+                $notFoundMessage,
+                $notReadableMessage,
+                $maxSizeMessage,
+                $mimeTypesMessage,
+                $disallowEmptyMessage,
+                null,
+                $uploadIniSizeErrorMessage,
+                $uploadFormSizeErrorMessage,
+                $uploadPartialErrorMessage,
+                $uploadNoFileErrorMessage,
+                $uploadNoTmpDirErrorMessage,
+                $uploadCantWriteErrorMessage,
+                $uploadExtensionErrorMessage,
+                $uploadErrorMessage,
+                $groups,
+                $payload,
+            );
+        } else {
+            parent::__construct(
+                $options,
+                $maxSize,
+                $binaryFormat,
+                $mimeTypes,
+                $notFoundMessage,
+                $notReadableMessage,
+                $maxSizeMessage,
+                $mimeTypesMessage,
+                $disallowEmptyMessage,
+                $uploadIniSizeErrorMessage,
+                $uploadFormSizeErrorMessage,
+                $uploadPartialErrorMessage,
+                $uploadNoFileErrorMessage,
+                $uploadNoTmpDirErrorMessage,
+                $uploadCantWriteErrorMessage,
+                $uploadExtensionErrorMessage,
+                $uploadErrorMessage,
+                $groups,
+                $payload,
+            );
+        }
 
         $this->extensions = $extensions ?? $this->extensions;
         $this->extensionsMessage = $extensionsMessage ?? $this->extensionsMessage;

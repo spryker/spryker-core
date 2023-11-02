@@ -227,9 +227,7 @@ class CsvReaderTest extends Unit
      */
     public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch(): void
     {
-        $exceptionClass = version_compare(PHP_VERSION, '8.0.0', '<')
-            ? DataSetWithHeaderCombineFailedException::class
-            : ValueError::class;
+        $exceptionClass = ValueError::class;
         $this->expectException($exceptionClass);
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');
 

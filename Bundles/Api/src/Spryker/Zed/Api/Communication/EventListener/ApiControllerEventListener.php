@@ -160,6 +160,9 @@ class ApiControllerEventListener implements ApiControllerEventListenerInterface
         $requestTransfer->setRequestUri($serverData[static::REQUEST_URI]);
 
         if (strpos((string)$request->headers->get(HttpConstants::HEADER_CONTENT_TYPE), 'application/json') === 0) {
+            /**
+             * @var string|resource $content
+             */
             $content = $request->getContent();
             if (is_resource($content)) {
                 $content = stream_get_contents($content);

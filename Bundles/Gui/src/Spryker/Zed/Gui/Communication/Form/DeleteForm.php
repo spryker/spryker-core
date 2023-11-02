@@ -24,7 +24,7 @@ class DeleteForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('action');
         $resolver->setRequired('fields');
@@ -54,7 +54,7 @@ class DeleteForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setAction($options['action']);
         $builder->setMethod(Request::METHOD_DELETE);

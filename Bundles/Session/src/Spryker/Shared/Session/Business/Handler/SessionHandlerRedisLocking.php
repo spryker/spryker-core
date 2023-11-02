@@ -75,6 +75,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function open($savePath, $sessionName)
     {
         return $this->redisClient->isConnected();
@@ -83,6 +84,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function close()
     {
         $this->locker->unlockCurrent();
@@ -97,6 +99,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return string
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId)
     {
         if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
@@ -148,6 +151,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function write($sessionId, $data)
     {
         $result = $this
@@ -162,6 +166,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function destroy($sessionId)
     {
         $this->redisClient->del([$this->keyGenerator->generateSessionKey($sessionId)]);
@@ -175,6 +180,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifeTime)
     {
         return true;

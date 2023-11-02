@@ -25,7 +25,7 @@ class TransferConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $abstractTransfer = $value;
         if (!$constraint instanceof TransferConstraint) {

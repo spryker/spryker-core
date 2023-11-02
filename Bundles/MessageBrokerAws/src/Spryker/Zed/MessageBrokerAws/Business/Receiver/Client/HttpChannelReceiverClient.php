@@ -102,6 +102,9 @@ class HttpChannelReceiverClient implements ReceiverClientInterface
     public function ack(Envelope $envelope): void
     {
         $messageId = $this->getEnvelopeMessageId($envelope);
+        /**
+         * @var \Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp|null $channelNameStamp
+         */
         $channelNameStamp = $envelope->last(MessageBrokerAwsConfig::HTTP_CHANNEL_STAMP_CLASS);
         if ($channelNameStamp === null) {
             throw new MessageValidationFailedException(

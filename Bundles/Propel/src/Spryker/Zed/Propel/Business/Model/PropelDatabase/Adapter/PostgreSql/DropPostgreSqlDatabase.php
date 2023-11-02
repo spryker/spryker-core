@@ -142,19 +142,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
-        if (!method_exists(Process::class, 'fromShellCommandline')) {
-            if (version_compare(PHP_VERSION, '8.0.0', '>=') === true) {
-                throw new UnsupportedVersionException('The minimum required version for symfony/process is 4.2.0 to work with PHP 8');
-            }
-
-            /**
-             * @phpstan-ignore-next-line
-             * @psalm-suppress InvalidArgument
-             */
-            return new Process($command);
-        }
-
         return Process::fromShellCommandline($command);
     }
 

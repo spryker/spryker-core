@@ -129,6 +129,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return string|null
      */
+    #[\ReturnTypeWillChange]
     public function read($sessionId): ?string
     {
         $key = $this->keyPrefix . $sessionId;
@@ -200,6 +201,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifetime): bool
     {
         return true;

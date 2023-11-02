@@ -1,6 +1,6 @@
 # StateMachine Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/state-machine/v/stable.svg)](https://packagist.org/packages/spryker/state-machine)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 StateMachine provides a generic state machine, that can be used to support complex processes such as implementing a checkout process.
 

@@ -4,7 +4,7 @@
     "description": "StoresApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/application-extension": "^1.0.0",
         "spryker/country": "^3.2.0 || ^4.0.0",
         "spryker/currency": "^3.2.0 || ^4.0.0",

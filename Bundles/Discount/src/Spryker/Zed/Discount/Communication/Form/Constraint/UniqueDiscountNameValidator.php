@@ -23,7 +23,7 @@ class UniqueDiscountNameValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueDiscountName) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueDiscountName');

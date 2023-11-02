@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "ext-intl": "*",
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/transfer": "^3.25.0"

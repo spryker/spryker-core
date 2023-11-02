@@ -4,7 +4,7 @@
     "description": "ShipmentTypesBackendApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "spryker/glossary-storage": "^1.5.0",
         "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.66.0",

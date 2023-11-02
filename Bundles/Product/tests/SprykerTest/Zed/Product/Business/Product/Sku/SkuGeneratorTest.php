@@ -43,12 +43,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductAbstractSku($productAbstractTransfer);
 
-        if ($this->tester->isPhp8() && !function_exists('iconv')) {
-            $this->assertSame('one-ONEONE-Lietuvikai', $sanitizedSku);
-
-            return;
-        }
-
         $this->assertSame('one-ONEONE-Lietuviskai', $sanitizedSku);
     }
 
@@ -69,12 +63,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
         ]);
 
         $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
-
-        if ($this->tester->isPhp8() && !function_exists('iconv')) {
-            $this->assertSame('one-ONEONE-Lietuvikai-key-value_key2-value2', $sanitizedSku);
-
-            return;
-        }
 
         $this->assertSame('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
     }

@@ -50,9 +50,11 @@ class MerchantSalesReturnCreateFormHandlerPlugin extends AbstractPlugin implemen
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $this->getFactory()
+        $this->getFactory()
             ->createMerchantSalesReturnCreateForm()
             ->buildForm($builder, $options);
+
+        return $builder;
     }
 
     /**

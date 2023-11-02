@@ -21,7 +21,7 @@ class CurrentPasswordValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof CurrentPassword) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Password');

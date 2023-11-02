@@ -1,6 +1,6 @@
 # ProductMeasurementUnitDataImport Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/product-measurement-unit-data-import/v/stable.svg)](https://packagist.org/packages/spryker/product-measurement-unit-data-import)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 
 DataImport for Product Measurement Unit
 

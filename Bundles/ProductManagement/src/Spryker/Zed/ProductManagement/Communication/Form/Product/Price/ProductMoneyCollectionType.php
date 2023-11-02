@@ -70,7 +70,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $defaultOptions = [
             'entry_options' => [
@@ -159,7 +159,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *
      * @return void
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $priceTypes = [
             $this->getGrossPriceModeIdentifier() => [],
