@@ -9,7 +9,6 @@ namespace Spryker\Zed\DynamicEntityGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * @method \Spryker\Zed\DynamicEntityGui\Communication\DynamicEntityGuiCommunicationFactory getFactory()
@@ -21,13 +20,6 @@ class DocumentationController extends AbstractController
      */
     public function downloadAction(): BinaryFileResponse
     {
-        $binaryFileResponse = new BinaryFileResponse(
-            $this->getFactory()->getConfig()->getBackendApiSchemaPath(),
-        );
-
-        return $binaryFileResponse->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $this->getFactory()->getConfig()->getDownloadFileName(),
-        );
+        return $this->getFactory()->createSchemaFileResponseBuilder()->createResponse();
     }
 }

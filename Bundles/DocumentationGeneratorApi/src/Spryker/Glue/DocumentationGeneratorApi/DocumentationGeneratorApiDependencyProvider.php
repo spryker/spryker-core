@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\DocumentationGeneratorApi;
 
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientBridge;
 use Spryker\Glue\DocumentationGeneratorApi\Dependency\External\DocumentationGeneratorApiToFilesystemAdapter;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceBridge;
 use Spryker\Glue\DocumentationGeneratorApi\Exception\MissingContentGeneratorStrategyException;
 use Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollection;
 use Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface;
@@ -51,6 +53,16 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
     public const PLUGINS_INVALIDATION_VOTER = 'PLUGINS_INVALIDATION_VOTER';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -64,6 +76,8 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addSchemaFormatterPlugins($container);
         $container = $this->addContentGeneratorStrategyPlugin($container);
         $container = $this->addInvalidationVoterPlugins($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -187,6 +201,20 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
+            return new DocumentationGeneratorApiToStorageClientBridge($container->getLocator()->storage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
      * @throws \Spryker\Glue\DocumentationGeneratorApi\Exception\MissingContentGeneratorStrategyException
      *
      * @return \Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGeneratorStrategyPluginInterface
@@ -201,5 +229,20 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
                 ContentGeneratorStrategyPluginInterface::class,
             ),
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new DocumentationGenerationApiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
     }
 }

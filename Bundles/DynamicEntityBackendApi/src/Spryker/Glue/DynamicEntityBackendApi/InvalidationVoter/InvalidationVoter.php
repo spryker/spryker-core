@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\DocumentationInvalidationVoterRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
 
 class InvalidationVoter implements InvalidationVoterInterface
 {
@@ -23,16 +25,38 @@ class InvalidationVoter implements InvalidationVoterInterface
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
+     * @var string
+     */
+    protected const CREATED_AT = 'created_at';
+
+    /**
      * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface
      */
     protected $dynamicEntityFacade;
 
     /**
-     * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade
+     * @var \Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig
      */
-    public function __construct(DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade)
-    {
+    protected DynamicEntityBackendApiConfig $dynamicEntityBackendApiConfig;
+
+    /**
+     * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface
+     */
+    protected DynamicEntityBackendApiToStorageFacadeInterface $storageFacade;
+
+    /**
+     * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade
+     * @param \Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig $dynamicEntityBackendApiConfig
+     * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface $storageFacade
+     */
+    public function __construct(
+        DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade,
+        DynamicEntityBackendApiConfig $dynamicEntityBackendApiConfig,
+        DynamicEntityBackendApiToStorageFacadeInterface $storageFacade,
+    ) {
         $this->dynamicEntityFacade = $dynamicEntityFacade;
+        $this->dynamicEntityBackendApiConfig = $dynamicEntityBackendApiConfig;
+        $this->storageFacade = $storageFacade;
     }
 
     /**
@@ -42,27 +66,70 @@ class InvalidationVoter implements InvalidationVoterInterface
      */
     public function isInvalidated(DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer): bool
     {
-        $dateInterval = DateInterval::createFromDateString($documentationInvalidationVoterRequestTransfer->getIntervalOrFail());
+        $fileCreatedDateTime = $this->resolveFileCreatedDateTime();
 
-        if (!$dateInterval) {
-            return false;
+        if ($fileCreatedDateTime === null) {
+            return true;
+        }
+        $dateTimeFromInterval = $this->resolveDateTimeFromInterval($documentationInvalidationVoterRequestTransfer);
+        $oldestDateTime = $fileCreatedDateTime;
+
+        if ($dateTimeFromInterval !== null) {
+            /** @var \DateTime $oldestDateTime */
+            $oldestDateTime = min($fileCreatedDateTime, $dateTimeFromInterval);
         }
 
-        $currentDateTime = (new DateTime())->sub($dateInterval);
-        $criteriaRangeFilterTransfer = (new CriteriaRangeFilterTransfer())->setFrom($currentDateTime->format(static::DATE_TIME_FORMAT));
+        return $this->hasUpdatedConfigurations($oldestDateTime);
+    }
 
-        $dynamicEntityConfigurationConditionsTransfer = (new DynamicEntityConfigurationConditionsTransfer())
-            ->setIsActive(true)
-            ->setFilterUpdatedAt($criteriaRangeFilterTransfer)
-            ->setFilterUpdatedAt($criteriaRangeFilterTransfer);
-
-        $dynamicEntityConfigurationCriteriaTransfer = new DynamicEntityConfigurationCriteriaTransfer();
-        $dynamicEntityConfigurationCriteriaTransfer->setDynamicEntityConfigurationConditions(
-            $dynamicEntityConfigurationConditionsTransfer,
+    /**
+     * @param \DateTime $dateTime
+     *
+     * @return bool
+     */
+    protected function hasUpdatedConfigurations(DateTime $dateTime): bool
+    {
+        $dynamicEntityConfigurationCriteriaTransfer = (new DynamicEntityConfigurationCriteriaTransfer())->setDynamicEntityConfigurationConditions(
+            (new DynamicEntityConfigurationConditionsTransfer())->setFilterUpdatedAt(
+                (new CriteriaRangeFilterTransfer())->setFrom($dateTime->format(static::DATE_TIME_FORMAT)),
+            ),
         );
 
-        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityConfigurationCollection($dynamicEntityConfigurationCriteriaTransfer);
+        return $this->dynamicEntityFacade
+                ->getDynamicEntityConfigurationCollection($dynamicEntityConfigurationCriteriaTransfer)
+                ->getDynamicEntityConfigurations()
+                ->count() > 0;
+    }
 
-        return $dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->count() > 0;
+    /**
+     * @return \DateTime|null
+     */
+    protected function resolveFileCreatedDateTime(): ?DateTime
+    {
+        $backendApiSchemaStorageKey = $this->dynamicEntityBackendApiConfig->getBackendApiSchemaStorageKey();
+        $backendApiSchemaData = $this->storageFacade->get($backendApiSchemaStorageKey);
+
+        if ($backendApiSchemaData === null) {
+            return null;
+        }
+
+        return (new DateTime())->setTimestamp($backendApiSchemaData[static::CREATED_AT]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer
+     *
+     * @return \DateTime|null
+     */
+    protected function resolveDateTimeFromInterval(DocumentationInvalidationVoterRequestTransfer $documentationInvalidationVoterRequestTransfer): ?DateTime
+    {
+        if ($documentationInvalidationVoterRequestTransfer->getInterval() === null) {
+            return null;
+        }
+
+        /** @var \DateInterval $dateInterval */
+        $dateInterval = DateInterval::createFromDateString($documentationInvalidationVoterRequestTransfer->getInterval());
+
+        return (new DateTime())->sub($dateInterval);
     }
 }

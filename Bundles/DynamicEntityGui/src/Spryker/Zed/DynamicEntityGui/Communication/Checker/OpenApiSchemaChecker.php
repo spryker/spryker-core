@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToDynamicEntityFacadeInterface;
+use Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToStorageFacadeInterface;
 use Spryker\Zed\DynamicEntityGui\DynamicEntityGuiConfig;
 
 class OpenApiSchemaChecker implements OpenApiSchemaCheckerInterface
@@ -19,6 +20,11 @@ class OpenApiSchemaChecker implements OpenApiSchemaCheckerInterface
      * @var string
      */
     protected const DATE_TIME_FROM_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @var string
+     */
+    protected const CREATED_AT = 'created_at';
 
     /**
      * @var \Spryker\Zed\DynamicEntityGui\DynamicEntityGuiConfig
@@ -31,15 +37,23 @@ class OpenApiSchemaChecker implements OpenApiSchemaCheckerInterface
     protected DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade;
 
     /**
+     * @var \Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToStorageFacadeInterface
+     */
+    protected DynamicEntityGuiToStorageFacadeInterface $storageFacade;
+
+    /**
      * @param \Spryker\Zed\DynamicEntityGui\DynamicEntityGuiConfig $config
      * @param \Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade
+     * @param \Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToStorageFacadeInterface $storageFacade
      */
     public function __construct(
         DynamicEntityGuiConfig $config,
-        DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade
+        DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade,
+        DynamicEntityGuiToStorageFacadeInterface $storageFacade
     ) {
         $this->config = $config;
         $this->dynamicEntityFacade = $dynamicEntityFacade;
+        $this->storageFacade = $storageFacade;
     }
 
     /**
@@ -47,19 +61,14 @@ class OpenApiSchemaChecker implements OpenApiSchemaCheckerInterface
      */
     public function isSchemaFileActual(): bool
     {
-        $schemaFilepath = $this->config->getBackendApiSchemaPath();
+        $backendApiSchemaStorageKey = $this->config->getBackendApiSchemaStorageKey();
+        $schemaData = $this->storageFacade->get($backendApiSchemaStorageKey);
 
-        if (!file_exists($schemaFilepath)) {
-            return false;
-        }
-        /** @var int $time */
-        $time = filemtime($schemaFilepath);
-
-        if ($this->hasUpdatedConfigurations($time) === true) {
+        if ($schemaData === null) {
             return false;
         }
 
-        return true;
+        return !$this->hasUpdatedConfigurations($schemaData[static::CREATED_AT]);
     }
 
     /**

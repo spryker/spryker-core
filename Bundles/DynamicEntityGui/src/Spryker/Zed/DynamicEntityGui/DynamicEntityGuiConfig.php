@@ -27,6 +27,13 @@ class DynamicEntityGuiConfig extends AbstractBundleConfig
     protected const BACKEND_API_SCHEMA_PATH = APPLICATION_SOURCE_DIR . '/Generated/GlueBackend/Specification/spryker_backend_api.schema.yml';
 
     /**
+     * @see \Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiConfig::API_SCHEMA_STORAGE_KEY_PATTERN
+     *
+     * @var string
+     */
+    protected const BACKEND_API_SCHEMA_STORAGE_KEY = 'documentation:api:backend.schema.yml';
+
+    /**
      * @var string
      */
     protected const TABLE_PREFIX_SPY = 'spy_';
@@ -82,11 +89,26 @@ class DynamicEntityGuiConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getBackendApiSchemaPath(): string
     {
         return static::BACKEND_API_SCHEMA_PATH;
+    }
+
+    /**
+     * Specification:
+     * - Returns a Storage key for the Backend API schema.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackendApiSchemaStorageKey(): string
+    {
+        return static::BACKEND_API_SCHEMA_STORAGE_KEY;
     }
 
     /**

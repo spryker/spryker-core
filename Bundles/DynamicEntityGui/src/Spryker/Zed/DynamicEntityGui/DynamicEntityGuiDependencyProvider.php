@@ -10,6 +10,7 @@ namespace Spryker\Zed\DynamicEntityGui;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Spryker\Zed\DynamicEntityGui\Dependency\External\DynamicEntityGuiToInflectorAdapter;
 use Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToDynamicEntityFacadeBridge;
+use Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToStorageFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -34,6 +35,11 @@ class DynamicEntityGuiDependencyProvider extends AbstractBundleDependencyProvide
     public const INFLECTOR = 'INFLECTOR';
 
     /**
+     * @var string
+     */
+    public const FACADE_STORAGE = 'FACADE_STORAGE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -45,6 +51,7 @@ class DynamicEntityGuiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addDynamicEntityPropelQuery($container);
         $container = $this->addDynamicEntityFacade($container);
         $container = $this->addInflector($container);
+        $container = $this->addStorageFacade($container);
 
         return $container;
     }
@@ -88,6 +95,22 @@ class DynamicEntityGuiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::INFLECTOR, function () {
             return new DynamicEntityGuiToInflectorAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStorageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORAGE, function (Container $container) {
+            return new DynamicEntityGuiToStorageFacadeBridge(
+                $container->getLocator()->storage()->facade(),
+            );
         });
 
         return $container;

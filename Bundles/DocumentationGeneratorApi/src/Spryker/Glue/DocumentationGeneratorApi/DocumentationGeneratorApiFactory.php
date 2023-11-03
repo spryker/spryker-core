@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\DocumentationGeneratorApi;
 
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface;
 use Spryker\Glue\DocumentationGeneratorApi\Dependency\External\DocumentationGeneratorApiToFilesystemInterface;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface;
 use Spryker\Glue\DocumentationGeneratorApi\Generator\DocumentationGenerator;
 use Spryker\Glue\DocumentationGeneratorApi\Generator\DocumentationGeneratorInterface;
@@ -65,6 +67,8 @@ class DocumentationGeneratorApiFactory extends AbstractFactory
             $this->getConfig(),
             $this->getSchemaFormatterPlugins(),
             $this->getContentGeneratorStrategyPlugin(),
+            $this->getStorageClient(),
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -94,5 +98,21 @@ class DocumentationGeneratorApiFactory extends AbstractFactory
     public function getInvalidationVoterPlugins(): array
     {
         return $this->getProvidedDependency(DocumentationGeneratorApiDependencyProvider::PLUGINS_INVALIDATION_VOTER);
+    }
+
+    /**
+     * @return \Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface
+     */
+    public function getStorageClient(): DocumentationGeneratorApiToStorageClientInterface
+    {
+        return $this->getProvidedDependency(DocumentationGeneratorApiDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): DocumentationGenerationApiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(DocumentationGeneratorApiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

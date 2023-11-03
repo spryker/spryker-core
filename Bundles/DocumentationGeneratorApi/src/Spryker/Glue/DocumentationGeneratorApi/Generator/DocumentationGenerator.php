@@ -8,7 +8,9 @@
 namespace Spryker\Glue\DocumentationGeneratorApi\Generator;
 
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface;
 use Spryker\Glue\DocumentationGeneratorApi\Dependency\External\DocumentationGeneratorApiToFilesystemInterface;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiConfig;
 use Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface;
 use Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ApiApplicationProviderPluginInterface;
@@ -16,6 +18,16 @@ use Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGen
 
 class DocumentationGenerator implements DocumentationGeneratorInterface
 {
+    /**
+     * @var string
+     */
+    protected const FILE_DATA = 'file_data';
+
+    /**
+     * @var string
+     */
+    protected const CREATED_AT = 'created_at';
+
     /**
      * @var array<\Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ApiApplicationProviderPluginInterface>
      */
@@ -47,12 +59,24 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
     protected $contentGeneratorStrategyPlugin;
 
     /**
+     * @var \Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface
+     */
+    protected DocumentationGeneratorApiToStorageClientInterface $storageClient;
+
+    /**
+     * @var \Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface
+     */
+    protected DocumentationGenerationApiToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
      * @param array<\Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ApiApplicationProviderPluginInterface> $apiApplicationProviderPlugins
      * @param \Spryker\Glue\DocumentationGeneratorApi\Expander\ContextExpanderCollectionInterface $contextExpanderCollection
      * @param \Spryker\Glue\DocumentationGeneratorApi\Dependency\External\DocumentationGeneratorApiToFilesystemInterface $filesystem
      * @param \Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiConfig $documentationGeneratorApiConfig
      * @param array<\Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\SchemaFormatterPluginInterface> $schemaFormatterPlugins
      * @param \Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGeneratorStrategyPluginInterface $contentGeneratorStrategyPlugin
+     * @param \Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface $storageClient
+     * @param \Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         array $apiApplicationProviderPlugins,
@@ -60,7 +84,9 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
         DocumentationGeneratorApiToFilesystemInterface $filesystem,
         DocumentationGeneratorApiConfig $documentationGeneratorApiConfig,
         array $schemaFormatterPlugins,
-        ContentGeneratorStrategyPluginInterface $contentGeneratorStrategyPlugin
+        ContentGeneratorStrategyPluginInterface $contentGeneratorStrategyPlugin,
+        DocumentationGeneratorApiToStorageClientInterface $storageClient,
+        DocumentationGenerationApiToUtilEncodingServiceInterface $utilEncodingService,
     ) {
         $this->apiApplicationProviderPlugins = $apiApplicationProviderPlugins;
         $this->contextExpanderCollection = $contextExpanderCollection;
@@ -68,6 +94,8 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
         $this->documentationGeneratorApiConfig = $documentationGeneratorApiConfig;
         $this->schemaFormatterPlugins = $schemaFormatterPlugins;
         $this->contentGeneratorStrategyPlugin = $contentGeneratorStrategyPlugin;
+        $this->storageClient = $storageClient;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -85,6 +113,23 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
                 $documentationContent = $this->contentGeneratorStrategyPlugin->generateContent($formattedData);
 
                 $this->filesystem->dumpFile($apiApplicationSchemaContextTransfer->getFileNameOrFail(), $documentationContent);
+                $time = filemtime($apiApplicationSchemaContextTransfer->getFileNameOrFail());
+
+                /** @var string $apiSchemaStorageData */
+                $apiSchemaStorageData = $this->utilEncodingService->encodeJson(
+                    [
+                        static::FILE_DATA => $documentationContent,
+                        static::CREATED_AT => $time,
+                    ],
+                );
+
+                $this->storageClient->set(
+                    sprintf(
+                        $this->documentationGeneratorApiConfig->getApiSchemaStorageKeyPattern(),
+                        strtolower($apiApplicationProviderPlugin->getName()),
+                    ),
+                    $apiSchemaStorageData,
+                );
             }
         }
     }

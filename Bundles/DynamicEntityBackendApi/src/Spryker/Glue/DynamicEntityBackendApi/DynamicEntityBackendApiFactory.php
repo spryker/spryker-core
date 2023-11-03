@@ -17,6 +17,7 @@ use Spryker\Glue\DynamicEntityBackendApi\Builder\Route\RouteBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DocumentationSchemaExpander;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DocumentationSchemaExpanderInterface;
@@ -276,6 +277,16 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     {
         return new InvalidationVoter(
             $this->getDynamicEntityFacade(),
+            $this->getConfig(),
+            $this->getStorageFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface
+     */
+    public function getStorageFacade(): DynamicEntityBackendApiToStorageFacadeInterface
+    {
+        return $this->getProvidedDependency(DynamicEntityBackendApiDependencyProvider::FACADE_STORAGE);
     }
 }

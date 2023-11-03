@@ -32,6 +32,13 @@ class DynamicEntityBackendApiConfig extends AbstractBundleConfig
     protected const LOG_FILE_PATH = '%s/data/dynamic-entity/logs/%s.log';
 
     /**
+     * @see \Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiConfig::API_SCHEMA_STORAGE_KEY_PATTERN
+     *
+     * @var string
+     */
+    protected const BACKEND_API_SCHEMA_STORAGE_KEY = 'documentation:api:backend.schema.yml';
+
+    /**
      * Specification:
      * - Returns a route prefix value for a dynamic entity.
      *
@@ -81,5 +88,18 @@ class DynamicEntityBackendApiConfig extends AbstractBundleConfig
     public function getDefaultPaginationLimit(): int
     {
         return 1000;
+    }
+
+    /**
+     * Specification:
+     * - Returns a Storage key for the Backend API schema.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackendApiSchemaStorageKey(): string
+    {
+        return static::BACKEND_API_SCHEMA_STORAGE_KEY;
     }
 }

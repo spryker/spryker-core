@@ -10,6 +10,7 @@
         "spryker/gui": "^3.38.0",
         "spryker/kernel": "^3.33.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/storage": "^3.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/util-text": "^1.1.0"

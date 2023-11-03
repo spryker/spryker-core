@@ -9,7 +9,9 @@ namespace Spryker\Glue\DynamicEntityBackendApi;
 
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientBridge;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToStorageClientBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeBridge;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Backend\Container;
@@ -23,6 +25,11 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_DYNAMIC_ENTITY = 'FACADE_DYNAMIC_ENTITY';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORAGE = 'FACADE_STORAGE';
 
     /**
      * @var string
@@ -51,6 +58,7 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
         $container = $this->addUtilEncodingService($container);
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addStorageFacade($container);
 
         return $container;
     }
@@ -114,6 +122,20 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
             return new DynamicEntityBackendApiToLocaleClientBridge(
                 $container->getLocator()->locale()->client(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    protected function addStorageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORAGE, function (Container $container) {
+            return new DynamicEntityBackendApiToStorageFacadeBridge($container->getLocator()->storage()->facade());
         });
 
         return $container;

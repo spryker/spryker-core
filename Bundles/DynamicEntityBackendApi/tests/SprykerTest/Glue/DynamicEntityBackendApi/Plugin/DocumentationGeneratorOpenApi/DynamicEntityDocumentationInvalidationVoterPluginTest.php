@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DocumentationInvalidationVoterRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Plugin\DocumentationGeneratorApi\DynamicEntityDocumentationInvalidationVoterPlugin;
 
 /**
@@ -42,18 +43,16 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
         $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
         $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(new ArrayObject([]));
 
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock->expects($this->once())
-            ->method('getDynamicEntityConfigurationCollection')
-            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createDynamicEntityBackendApiToDynamicEntityFacadeMock($dynamicEntityConfigurationCollectionTransfer);
 
         $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
 
-        $plugin = new DynamicEntityDocumentationInvalidationVoterPlugin();
-        $plugin->setFactory($this->tester->getFactory());
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
         $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('1min');
         // Act
-        $isInvalidated = $plugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $isInvalidated = $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
 
         // Assert
         $this->assertFalse($isInvalidated);
@@ -65,22 +64,18 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
     public function testIsInvalidatedWillReturnTrue(): void
     {
         // Arrange
-        $dynamicEntityConfigurationCollectionTransfer = (new DynamicEntityConfigurationCollectionTransfer())
-            ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-1'))
-            ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-2'));
+        $dynamicEntityConfigurationCollectionTransfer = $this->getDynamicEntityConfigurationCollectionTransfer();
 
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock->expects($this->once())
-            ->method('getDynamicEntityConfigurationCollection')
-            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createDynamicEntityBackendApiToDynamicEntityFacadeMock($dynamicEntityConfigurationCollectionTransfer);
 
         $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock());
 
-        $plugin = new DynamicEntityDocumentationInvalidationVoterPlugin();
-        $plugin->setFactory($this->tester->getFactory());
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
         $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('1min');
         // Act
-        $isInvalidated = $plugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $isInvalidated = $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
 
         // Assert
         $this->assertTrue($isInvalidated);
@@ -105,13 +100,14 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
             ->willReturn($dynamicEntityConfigurationCollectionTransfer);
 
         $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
 
-        $plugin = new DynamicEntityDocumentationInvalidationVoterPlugin();
-        $plugin->setFactory($this->tester->getFactory());
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
         $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('');
 
         // Act
-        $plugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
     }
 
     /**
@@ -133,12 +129,107 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
             ->willReturn($dynamicEntityConfigurationCollectionTransfer);
 
         $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
 
-        $plugin = new DynamicEntityDocumentationInvalidationVoterPlugin();
-        $plugin->setFactory($this->tester->getFactory());
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
         $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('9999999');
 
         // Act
-        $plugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsInvalidatedWithIntervalGreaterThanFileTime(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionTransfer = $this->getDynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createDynamicEntityBackendApiToDynamicEntityFacadeMock($dynamicEntityConfigurationCollectionTransfer);
+        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock());
+
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
+
+        $futureInterval = '1 year';
+        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval($futureInterval);
+
+        // Act
+        $isInvalidated = $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+
+        // Assert
+        $this->assertTrue($isInvalidated);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsInvalidatedWithNullInterval(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionTransfer = $this->getDynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createDynamicEntityBackendApiToDynamicEntityFacadeMock($dynamicEntityConfigurationCollectionTransfer);
+
+        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock());
+
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
+        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval(null);
+
+        // Act
+        $isInvalidated = $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+
+        // Assert
+        $this->assertTrue($isInvalidated);
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Plugin\DocumentationGeneratorApi\DynamicEntityDocumentationInvalidationVoterPlugin
+     */
+    protected function createDynamicEntityDocumentationInvalidationVoterPlugin(): DynamicEntityDocumentationInvalidationVoterPlugin
+    {
+        return new DynamicEntityDocumentationInvalidationVoterPlugin();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface
+     */
+    protected function createDynamicEntityBackendApiToDynamicEntityFacadeMock(
+        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+    ): DynamicEntityBackendApiToDynamicEntityFacadeInterface {
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock
+            ->method('getDynamicEntityConfigurationCollection')
+            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+
+        return $dynamicEntityBackendApiToDynamicEntityFacadeMock;
+    }
+
+    /**
+     * @param array|null
+     *
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface
+     */
+    protected function createStorageFacadeMock(?array $data = null): DynamicEntityBackendApiToStorageFacadeInterface
+    {
+        $storageFacadeMock = $this->createMock(DynamicEntityBackendApiToStorageFacadeInterface::class);
+        $storageFacadeMock->method('get')->willReturn($data);
+
+        return $storageFacadeMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    protected function getDynamicEntityConfigurationCollectionTransfer(): DynamicEntityConfigurationCollectionTransfer
+    {
+        return (new DynamicEntityConfigurationCollectionTransfer())
+            ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-1'))
+            ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-2'));
     }
 }

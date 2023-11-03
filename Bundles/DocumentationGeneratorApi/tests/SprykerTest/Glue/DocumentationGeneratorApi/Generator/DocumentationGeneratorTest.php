@@ -8,6 +8,8 @@
 namespace SprykerTest\Glue\DocumentationGeneratorApi\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Client\DocumentationGeneratorApiToStorageClientInterface;
+use Spryker\Glue\DocumentationGeneratorApi\Dependency\Service\DocumentationGenerationApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DocumentationGeneratorApi\DocumentationGeneratorApiDependencyProvider;
 use Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ApiApplicationProviderPluginInterface;
 use Spryker\Glue\DocumentationGeneratorApiExtension\Dependency\Plugin\ContentGeneratorStrategyPluginInterface;
@@ -68,7 +70,7 @@ class DocumentationGeneratorTest extends Unit
     {
         //Arrange
         $apiApplicationProviderPluginInterfaceMock = $this->createMock(ApiApplicationProviderPluginInterface::class);
-        $apiApplicationProviderPluginInterfaceMock->expects($this->exactly(2))
+        $apiApplicationProviderPluginInterfaceMock->expects($this->exactly(3))
             ->method('getName')
             ->willReturn('fakeApp');
         $this->tester->setDependency(
@@ -84,9 +86,21 @@ class DocumentationGeneratorTest extends Unit
         $contentGeneratorStrategyPluginMock->expects($this->once())
             ->method('generateContent')
             ->willReturn('fakeContent');
+        $storageClientMock = $this->createMock(DocumentationGeneratorApiToStorageClientInterface::class);
+        $utilEncodingService = $this->createMock(DocumentationGenerationApiToUtilEncodingServiceInterface::class);
+        $utilEncodingService->method('encodeJson')->willReturn('{}');
+
         $this->tester->setDependency(
             DocumentationGeneratorApiDependencyProvider::PLUGIN_CONTENT_GENERATOR_STRATEGY,
             $contentGeneratorStrategyPluginMock,
+        );
+        $this->tester->setDependency(
+            DocumentationGeneratorApiDependencyProvider::CLIENT_STORAGE,
+            $storageClientMock,
+        );
+        $this->tester->setDependency(
+            DocumentationGeneratorApiDependencyProvider::SERVICE_UTIL_ENCODING,
+            $utilEncodingService,
         );
 
         //Act
