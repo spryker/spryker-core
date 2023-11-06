@@ -68,7 +68,7 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
             $sellableItemsResponseTransfer->getSellableItemResponses(),
         );
         $productOfferServicePointTransfers = $this->syncProductOfferStockQuantities(
-            $productOfferServicePointTransfers,
+            $this->cloneProductOfferServicePointTransfers($productOfferServicePointTransfers),
             $sellableItemResponseTransfersIndexedByProductOfferReference,
         );
 
@@ -220,5 +220,21 @@ class ProductOfferReplacementFinder implements ProductOfferReplacementFinderInte
         }
 
         return $bestPriceProductOfferServicePointTransfer->getProductOfferOrFail();
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductOfferServicePointTransfer> $productOfferServicePointTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductOfferServicePointTransfer>
+     */
+    protected function cloneProductOfferServicePointTransfers(array $productOfferServicePointTransfers): array
+    {
+        $clonedProductOfferServicePointTransfers = [];
+        foreach ($productOfferServicePointTransfers as $key => $productOfferServicePointTransfer) {
+            $clonedProductOfferServicePointTransfers[$key] = (new ProductOfferServicePointTransfer())
+                ->fromArray($productOfferServicePointTransfer->toArray());
+        }
+
+        return $clonedProductOfferServicePointTransfers;
     }
 }
