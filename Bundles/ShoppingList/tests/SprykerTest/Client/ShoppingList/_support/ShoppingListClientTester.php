@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Client\ShoppingList\ShoppingListClientInterface getClient()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ShoppingList\PHPMD)
  */
 class ShoppingListClientTester extends Actor
 {

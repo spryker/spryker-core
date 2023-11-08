@@ -322,7 +322,8 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
-            ->deleteAll();
+            ->find()
+            ->delete();
     }
 
     /**

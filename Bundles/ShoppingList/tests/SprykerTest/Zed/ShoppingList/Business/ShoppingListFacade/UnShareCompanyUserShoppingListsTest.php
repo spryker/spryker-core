@@ -33,7 +33,7 @@ class UnShareCompanyUserShoppingListsTest extends Unit
     /**
      * @return void
      */
-    public function testUnShareCompanyUserShoppingListDeletesAllCompanyBusinessUnitBlacklistsAndSharedShoppingLists()
+    public function testUnShareCompanyUserShoppingListDeletesAllCompanyBusinessUnitBlacklistsAndSharedShoppingLists(): void
     {
         // Arrange
         $companyUserTransfer1 = $this->tester->createCompanyUserForBusinessUnit();
@@ -49,8 +49,8 @@ class UnShareCompanyUserShoppingListsTest extends Unit
             ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer2->getIdCompanyUser(),
         ]);
 
-        $this->tester->shareShopppingListWithCompanyUser($shoppingListTransfer1, $companyUserTransfer3);
-        $this->tester->shareShopppingListWithCompanyUser($shoppingListTransfer2, $companyUserTransfer3);
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer1, $companyUserTransfer3);
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer2, $companyUserTransfer3);
 
         $shoppingListCompanyBusinessUnitBlacklistTransfer1 = $this->tester
             ->createShoppingListCompanyBusinessUnitBlacklist(
@@ -76,23 +76,23 @@ class UnShareCompanyUserShoppingListsTest extends Unit
                 $shoppingListCompanyBusinessUnitBlacklistTransfer2->getIdShoppingListCompanyBusinessUnitBlacklistOrFail(),
             ],
         );
-        $shopppingListCompanyUserCollectionTransfer = $this->tester->findShoppingListCompanyUsers(
+        $shoppingListCompanyUserCollectionTransfer = $this->tester->findShoppingListCompanyUsers(
             $companyUserTransfer3->getIdCompanyUserOrFail(),
         );
         $persistedShoppingListTransfer1 = $this->tester->findShoppingList($shoppingListTransfer1);
         $persistedShoppingListTransfer2 = $this->tester->findShoppingList($shoppingListTransfer2);
 
-        // Accert
+        // Assert
         $this->assertEmpty($shoppingListCompanyBusinessUnitBlacklistTransfers);
-        $this->assertEmpty($shopppingListCompanyUserCollectionTransfer->getShoppingListCompanyUsers());
+        $this->assertEmpty($shoppingListCompanyUserCollectionTransfer->getShoppingListCompanyUsers());
         $this->assertNotNull($persistedShoppingListTransfer1);
-        $this->assertNotNull($persistedShoppingListTransfer1);
+        $this->assertNotNull($persistedShoppingListTransfer2);
     }
 
     /**
      * @return void
      */
-    public function testUnShareCompanyUserShoppingListDeletesSharedShoppingListsButNotCompanyBusinessUnitBlacklists()
+    public function testUnShareCompanyUserShoppingListDeletesSharedShoppingListsButNotCompanyBusinessUnitBlacklists(): void
     {
         // Arrange
         $companyUserTransfer1 = $this->tester->createCompanyUserForBusinessUnit();
@@ -108,8 +108,8 @@ class UnShareCompanyUserShoppingListsTest extends Unit
             ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer2->getIdCompanyUser(),
         ]);
 
-        $this->tester->shareShopppingListWithCompanyUser($shoppingListTransfer1, $companyUserTransfer3);
-        $this->tester->shareShopppingListWithCompanyUser($shoppingListTransfer2, $companyUserTransfer3);
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer1, $companyUserTransfer3);
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer2, $companyUserTransfer3);
 
         $shoppingListCompanyBusinessUnitBlacklistTransfer1 = $this->tester
             ->createShoppingListCompanyBusinessUnitBlacklist(
@@ -140,13 +140,49 @@ class UnShareCompanyUserShoppingListsTest extends Unit
         $persistedShoppingListTransfer1 = $this->tester->findShoppingList($shoppingListTransfer1);
         $persistedShoppingListTransfer2 = $this->tester->findShoppingList($shoppingListTransfer2);
 
-        // Accert
+        // Assert
         $this->assertEquals(
             [$shoppingListCompanyBusinessUnitBlacklistTransfer1, $shoppingListCompanyBusinessUnitBlacklistTransfer2],
             $shoppingListCompanyBusinessUnitBlacklistTransfers,
         );
         $this->assertEmpty($shopppingListCompanyUserCollectionTransfer->getShoppingListCompanyUsers());
         $this->assertNotNull($persistedShoppingListTransfer1);
-        $this->assertNotNull($persistedShoppingListTransfer1);
+        $this->assertNotNull($persistedShoppingListTransfer2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnShareCompanyUserShoppingListShouldUnShareShoppingListOnlyForRequestedUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserForBusinessUnit();
+        $companyUserTransfer2 = $this->tester->createCompanyUserForBusinessUnit();
+        $companyUserTransfer3 = $this->tester->createCompanyUserForBusinessUnit();
+
+        $shoppingListTransfer = $this->tester->haveShoppingList([
+            ShoppingListTransfer::CUSTOMER_REFERENCE => $companyUserTransfer->getCustomerOrFail()->getCustomerReference(),
+            ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+        ]);
+
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer, $companyUserTransfer2);
+        $this->tester->shareShoppingListWithCompanyUser($shoppingListTransfer, $companyUserTransfer3);
+
+        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
+            ->setIdCompanyUser($companyUserTransfer3->getIdCompanyUser());
+
+        // Act
+        $this->tester->getFacade()->unShareCompanyUserShoppingLists($shoppingListShareRequestTransfer);
+
+        $shoppingListCompanyUserCollectionTransfer2 = $this->tester->findShoppingListCompanyUsers(
+            $companyUserTransfer2->getIdCompanyUserOrFail(),
+        );
+        $shoppingListCompanyUserCollectionTransfer3 = $this->tester->findShoppingListCompanyUsers(
+            $companyUserTransfer3->getIdCompanyUserOrFail(),
+        );
+
+        // Assert
+        $this->assertCount(1, $shoppingListCompanyUserCollectionTransfer2->getShoppingListCompanyUsers());
+        $this->assertCount(0, $shoppingListCompanyUserCollectionTransfer3->getShoppingListCompanyUsers());
     }
 }

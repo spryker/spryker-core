@@ -40,7 +40,7 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShoppingList\PHPMD)
  */
 class ShoppingListBusinessTester extends Actor
 {
@@ -192,7 +192,7 @@ class ShoppingListBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function shareShopppingListWithCompanyUser(
+    public function shareShoppingListWithCompanyUser(
         ShoppingListTransfer $shoppingListTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): ShoppingListCompanyUserTransfer {
@@ -280,6 +280,7 @@ class ShoppingListBusinessTester extends Actor
             $shoppingListCompanyUserCollectionTransfer->addShoppingListCompanyUser(
                 (new ShoppingListCompanyUserTransfer())->fromArray(
                     $shoppingListCompanyUserEntity->toArray(),
+                    true,
                 ),
             );
         }
