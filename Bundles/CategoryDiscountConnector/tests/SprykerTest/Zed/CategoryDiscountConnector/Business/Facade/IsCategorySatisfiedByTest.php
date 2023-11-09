@@ -9,7 +9,12 @@ namespace SprykerTest\Zed\CategoryDiscountConnector\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use Spryker\Zed\CategoryDiscountConnector\CategoryDiscountConnectorDependencyProvider;
+use Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToCategoryFacadeInterface;
+use Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToProductCategoryFacadeInterface;
+use SprykerTest\Zed\CategoryDiscountConnector\CategoryDiscountConnectorBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +33,11 @@ class IsCategorySatisfiedByTest extends Unit
      * @var string
      */
     protected const CATEGORY_KEY = 'category-key';
+
+    /**
+     * @var string
+     */
+    protected const CATEGORY_KEY_2 = 'category-key-2';
 
     /**
      * @var string
@@ -51,7 +61,7 @@ class IsCategorySatisfiedByTest extends Unit
     /**
      * @var \SprykerTest\Zed\CategoryDiscountConnector\CategoryDiscountConnectorBusinessTester
      */
-    protected $tester;
+    protected CategoryDiscountConnectorBusinessTester $tester;
 
     /**
      * @return void
@@ -201,5 +211,101 @@ class IsCategorySatisfiedByTest extends Unit
                 $quoteTransfer->getItems()->getIterator()->current(),
                 $this->tester->createClauseTransfer(static::IS_IN_EXPRESSION, [$categoryTransfer]),
             );
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotCacheProductCategoriesWhenDifferentProductsAreVerified(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveLocalizedCategory([CategoryTransfer::CATEGORY_KEY => static::CATEGORY_KEY]);
+        $quoteTransfer = $this->tester->createQuoteTransfer($categoryTransfer);
+
+        $categoryTransfer2 = $this->tester->haveLocalizedCategory([CategoryTransfer::CATEGORY_KEY => static::CATEGORY_KEY_2]);
+        $quoteTransfer2 = $this->tester->createQuoteTransfer($categoryTransfer2);
+
+        // Act
+        $isCategorySatisfied = $this->tester->getFacade()->isCategorySatisfiedBy(
+            $quoteTransfer,
+            $quoteTransfer->getItems()->getIterator()->current(),
+            $this->tester->createClauseTransfer(static::IS_IN_EXPRESSION, [$categoryTransfer]),
+        );
+
+        $isCategorySatisfied2 = $this->tester->getFacade()->isCategorySatisfiedBy(
+            $quoteTransfer2,
+            $quoteTransfer2->getItems()->getIterator()->current(),
+            $this->tester->createClauseTransfer(static::IS_IN_EXPRESSION, [$categoryTransfer2]),
+        );
+
+        // Assert
+        $this->assertTrue($isCategorySatisfied);
+        $this->assertTrue($isCategorySatisfied2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldCacheProductCategoriesWhenTheSameProductIsVerified(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveLocalizedCategory([CategoryTransfer::CATEGORY_KEY => static::CATEGORY_KEY]);
+        $quoteTransfer = $this->tester->createQuoteTransfer($categoryTransfer);
+
+        $productCategoryFacadeMock = $this->createProductCategoryFacadeMock($this->tester->createProductCategoryCollectionTransfer($categoryTransfer, $quoteTransfer));
+        $this->tester->setDependency(CategoryDiscountConnectorDependencyProvider::FACADE_PRODUCT_CATEGORY, $productCategoryFacadeMock);
+
+        $categoryFacadeMock = $this->createCategoryFacadeMock($categoryTransfer);
+        $this->tester->setDependency(CategoryDiscountConnectorDependencyProvider::FACADE_CATEGORY, $categoryFacadeMock);
+
+        // Assert
+        $productCategoryFacadeMock->expects($this->once())->method('getProductCategoryCollection');
+        $categoryFacadeMock->expects($this->once())->method('getAscendantCategoryKeysGroupedByIdCategoryNode');
+
+        // Act
+        $this->tester->getFacade()->isCategorySatisfiedBy(
+            $quoteTransfer,
+            $quoteTransfer->getItems()->getIterator()->current(),
+            $this->tester->createClauseTransfer(static::IS_IN_EXPRESSION, [$categoryTransfer]),
+        );
+
+        $this->tester->getFacade()->isCategorySatisfiedBy(
+            $quoteTransfer,
+            $quoteTransfer->getItems()->getIterator()->current(),
+            $this->tester->createClauseTransfer(static::IS_IN_EXPRESSION, [$categoryTransfer]),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
+     *
+     * @return \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToProductCategoryFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createProductCategoryFacadeMock(
+        ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
+    ): CategoryDiscountConnectorToProductCategoryFacadeInterface {
+        $productCategoryFacadeMock = $this->getMockBuilder(CategoryDiscountConnectorToProductCategoryFacadeInterface::class)
+            ->getMock();
+
+        $productCategoryFacadeMock->method('getProductCategoryCollection')->willReturn($productCategoryCollectionTransfer);
+
+        return $productCategoryFacadeMock;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToCategoryFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createCategoryFacadeMock(CategoryTransfer $categoryTransfer): CategoryDiscountConnectorToCategoryFacadeInterface
+    {
+        $categoryFacadeMock = $this->getMockBuilder(CategoryDiscountConnectorToCategoryFacadeInterface::class)
+            ->getMock();
+
+        $categoryFacadeMock->method('getAscendantCategoryKeysGroupedByIdCategoryNode')->willReturn([
+            $categoryTransfer->getCategoryNode()->getIdCategoryNode() => [$categoryTransfer->getCategoryKey()],
+        ]);
+
+        return $categoryFacadeMock;
     }
 }

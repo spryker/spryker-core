@@ -14,7 +14,7 @@ interface ProductCategoryReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>>
+     * @return array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>>
      */
     public function getProductCategoriesGroupedByIdProductAbstract(QuoteTransfer $quoteTransfer): array;
 }

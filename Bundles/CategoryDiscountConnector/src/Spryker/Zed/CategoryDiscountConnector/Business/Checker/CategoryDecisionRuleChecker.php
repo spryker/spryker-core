@@ -24,29 +24,19 @@ class CategoryDecisionRuleChecker implements CategoryDecisionRuleCheckerInterfac
     protected const LIST_DELIMITER = ';';
 
     /**
-     * @var array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>>
-     */
-    protected static $groupedProductCategoryTransfers = [];
-
-    /**
-     * @var array<int, array<string>>
-     */
-    protected static $groupedCategoryKeys = [];
-
-    /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToDiscountFacadeInterface
      */
-    protected $discountFacade;
+    protected CategoryDiscountConnectorToDiscountFacadeInterface $discountFacade;
 
     /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Business\Reader\ProductCategoryReaderInterface
      */
-    protected $productCategoryReader;
+    protected ProductCategoryReaderInterface $productCategoryReader;
 
     /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Business\Reader\CategoryReaderInterface
      */
-    protected $categoryReader;
+    protected CategoryReaderInterface $categoryReader;
 
     /**
      * @param \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToDiscountFacadeInterface $discountFacade
@@ -72,15 +62,15 @@ class CategoryDecisionRuleChecker implements CategoryDecisionRuleCheckerInterfac
      */
     public function isCategorySatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        $groupedProductCategoryTransfers = $this->getProductCategoriesGroupedByIdProductAbstract($quoteTransfer);
-        $groupedCategoryKeys = $this->getCategoryKeysGroupedByIdCategoryNode($groupedProductCategoryTransfers);
+        $productCategoryTransfersGroupedByIdProductAbstract = $this->productCategoryReader->getProductCategoriesGroupedByIdProductAbstract($quoteTransfer);
+        $categoryKeysGroupedByIdCategoryNode = $this->categoryReader->getCategoryKeysGroupedByIdCategoryNode($productCategoryTransfersGroupedByIdProductAbstract);
 
-        $productCategoryTransfers = $groupedProductCategoryTransfers[$itemTransfer->getIdProductAbstractOrFail()] ?? [];
+        $productCategoryTransfers = $productCategoryTransfersGroupedByIdProductAbstract[$itemTransfer->getIdProductAbstractOrFail()] ?? [];
 
         $categoryKeys = [];
         foreach ($productCategoryTransfers as $productCategoryTransfer) {
             $categoryTransfer = $productCategoryTransfer->getCategoryOrFail();
-            $categoryKeys[] = $groupedCategoryKeys[$categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail()]
+            $categoryKeys[] = $categoryKeysGroupedByIdCategoryNode[$categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail()]
                 ?? [$categoryTransfer->getCategoryKeyOrFail()];
         }
 
@@ -102,39 +92,5 @@ class CategoryDecisionRuleChecker implements CategoryDecisionRuleCheckerInterfac
             ->setValue(implode(static::LIST_DELIMITER, $ascendantCategoryKeys));
 
         return $this->discountFacade->queryStringCompare($invertedClause, $clauseTransfer->getValueOrFail());
-    }
-
-    /**
-     * @param array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>> $groupedProductCategoryTransfers
-     *
-     * @return array<int, array<string>>
-     */
-    protected function getCategoryKeysGroupedByIdCategoryNode(array $groupedProductCategoryTransfers): array
-    {
-        if (static::$groupedCategoryKeys) {
-            return static::$groupedCategoryKeys;
-        }
-
-        static::$groupedCategoryKeys = $this->categoryReader
-            ->getCategoryKeysGroupedByIdCategoryNode($groupedProductCategoryTransfers);
-
-        return static::$groupedCategoryKeys;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>>
-     */
-    protected function getProductCategoriesGroupedByIdProductAbstract(QuoteTransfer $quoteTransfer): array
-    {
-        if (static::$groupedProductCategoryTransfers) {
-            return static::$groupedProductCategoryTransfers;
-        }
-
-        static::$groupedProductCategoryTransfers = $this->productCategoryReader
-            ->getProductCategoriesGroupedByIdProductAbstract($quoteTransfer);
-
-        return static::$groupedProductCategoryTransfers;
     }
 }

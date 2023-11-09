@@ -17,14 +17,19 @@ use Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConn
 class ProductCategoryReader implements ProductCategoryReaderInterface
 {
     /**
+     * @var array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>>
+     */
+    protected static array $productCategoryTransfersGroupedByIdProductAbstract = [];
+
+    /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToProductCategoryFacadeInterface
      */
-    protected $productCategoryFacade;
+    protected CategoryDiscountConnectorToProductCategoryFacadeInterface $productCategoryFacade;
 
     /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected CategoryDiscountConnectorToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToProductCategoryFacadeInterface $productCategoryFacade
@@ -41,29 +46,34 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>>
+     * @return array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>>
      */
     public function getProductCategoriesGroupedByIdProductAbstract(QuoteTransfer $quoteTransfer): array
     {
-        $groupedProductCategoryTransfers = [];
-        $productCategoryCollectionTransfer = $this->getProductCategoryCollectionForCurrentLocale($quoteTransfer);
-
-        foreach ($productCategoryCollectionTransfer->getProductCategories() as $productCategoryTransfer) {
-            $groupedProductCategoryTransfers[$productCategoryTransfer->getFkProductAbstractOrFail()][] = $productCategoryTransfer;
+        $productAbstractIds = $this->extractProductAbstractIdsFromQuote($quoteTransfer);
+        $productAbstractIds = array_diff($productAbstractIds, array_keys(static::$productCategoryTransfersGroupedByIdProductAbstract));
+        if (!$productAbstractIds) {
+            return static::$productCategoryTransfersGroupedByIdProductAbstract;
         }
 
-        return $groupedProductCategoryTransfers;
+        $productCategoryCollectionTransfer = $this->getProductCategoryCollectionForCurrentLocale($productAbstractIds);
+
+        foreach ($productCategoryCollectionTransfer->getProductCategories() as $productCategoryTransfer) {
+            static::$productCategoryTransfersGroupedByIdProductAbstract[$productCategoryTransfer->getFkProductAbstractOrFail()][] = $productCategoryTransfer;
+        }
+
+        return static::$productCategoryTransfersGroupedByIdProductAbstract;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param list<int> $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
-    protected function getProductCategoryCollectionForCurrentLocale(QuoteTransfer $quoteTransfer): ProductCategoryCollectionTransfer
+    protected function getProductCategoryCollectionForCurrentLocale(array $productAbstractIds): ProductCategoryCollectionTransfer
     {
         $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
-            ->setProductAbstractIds($this->extractProductAbstractIdsFromQuote($quoteTransfer))
+            ->setProductAbstractIds($productAbstractIds)
             ->addIdLocale($this->localeFacade->getCurrentLocale()->getIdLocaleOrFail());
 
         $productCategoryCriteriaTransfer = (new ProductCategoryCriteriaTransfer())

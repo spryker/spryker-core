@@ -17,14 +17,19 @@ use Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConn
 class CategoryReader implements CategoryReaderInterface
 {
     /**
+     * @var array<int, list<string>>
+     */
+    protected static array $categoryKeysGroupedByIdCategoryNode = [];
+
+    /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToCategoryFacadeInterface
      */
-    protected $categoryFacade;
+    protected CategoryDiscountConnectorToCategoryFacadeInterface $categoryFacade;
 
     /**
      * @var \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected CategoryDiscountConnectorToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToCategoryFacadeInterface $categoryFacade
@@ -54,17 +59,25 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>> $groupedProductCategoryTransfers
+     * @param array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>> $productCategoryTransfersGroupedByIdProductAbstract
      *
-     * @return array<int, array<string>>
+     * @return array<int, list<string>>
      */
-    public function getCategoryKeysGroupedByIdCategoryNode(array $groupedProductCategoryTransfers): array
+    public function getCategoryKeysGroupedByIdCategoryNode(array $productCategoryTransfersGroupedByIdProductAbstract): array
     {
-        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
-            ->setCategoryNodeIds($this->extractCategoryNodeIds($groupedProductCategoryTransfers));
+        $categoryNodeIds = $this->extractCategoryNodeIds($productCategoryTransfersGroupedByIdProductAbstract);
+        $categoryNodeIds = array_diff($categoryNodeIds, array_keys(static::$categoryKeysGroupedByIdCategoryNode));
+        if (!$categoryNodeIds) {
+            return static::$categoryKeysGroupedByIdCategoryNode;
+        }
 
-        return $this->categoryFacade
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->setCategoryNodeIds($categoryNodeIds);
+
+        static::$categoryKeysGroupedByIdCategoryNode += $this->categoryFacade
             ->getAscendantCategoryKeysGroupedByIdCategoryNode($categoryNodeCriteriaTransfer);
+
+        return static::$categoryKeysGroupedByIdCategoryNode;
     }
 
     /**
@@ -82,15 +95,15 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>> $groupedProductCategoryTransfers
+     * @param array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>> $productCategoryTransfersGroupedByIdProductAbstract
      *
-     * @return array<int>
+     * @return list<int>
      */
-    protected function extractCategoryNodeIds(array $groupedProductCategoryTransfers): array
+    protected function extractCategoryNodeIds(array $productCategoryTransfersGroupedByIdProductAbstract): array
     {
         $categoryNodeIds = [];
 
-        foreach ($groupedProductCategoryTransfers as $productCategoryTransfers) {
+        foreach ($productCategoryTransfersGroupedByIdProductAbstract as $productCategoryTransfers) {
             foreach ($productCategoryTransfers as $productCategoryTransfer) {
                 $categoryNodeIds[] = $productCategoryTransfer->getCategoryOrFail()->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
             }

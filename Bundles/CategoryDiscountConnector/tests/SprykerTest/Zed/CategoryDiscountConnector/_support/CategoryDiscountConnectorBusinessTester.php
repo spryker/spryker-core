@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use ReflectionClass;
-use Spryker\Zed\CategoryDiscountConnector\Business\Checker\CategoryDecisionRuleChecker;
+use Spryker\Zed\CategoryDiscountConnector\Business\Reader\CategoryReader;
+use Spryker\Zed\CategoryDiscountConnector\Business\Reader\ProductCategoryReader;
 
 /**
  * @method void wantToTest($text)
@@ -30,7 +33,7 @@ use Spryker\Zed\CategoryDiscountConnector\Business\Checker\CategoryDecisionRuleC
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CategoryDiscountConnector\Business\CategoryDiscountConnectorFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CategoryDiscountConnector\PHPMD)
  */
 class CategoryDiscountConnectorBusinessTester extends Actor
 {
@@ -107,14 +110,36 @@ class CategoryDiscountConnectorBusinessTester extends Actor
      */
     public function cleanRuleCheckerStaticProperties(): void
     {
-        $reflectedClass = new ReflectionClass(CategoryDecisionRuleChecker::class);
+        $reflectedClass = new ReflectionClass(ProductCategoryReader::class);
 
-        $groupedProductCategoryTransfers = $reflectedClass->getProperty('groupedProductCategoryTransfers');
-        $groupedProductCategoryTransfers->setAccessible(true);
-        $groupedProductCategoryTransfers->setValue(null);
+        $productCategoryTransfersGroupedByIdProductAbstract = $reflectedClass->getProperty('productCategoryTransfersGroupedByIdProductAbstract');
+        $productCategoryTransfersGroupedByIdProductAbstract->setAccessible(true);
+        $productCategoryTransfersGroupedByIdProductAbstract->setValue([]);
 
-        $groupedCategoryKeys = $reflectedClass->getProperty('groupedCategoryKeys');
-        $groupedCategoryKeys->setAccessible(true);
-        $groupedCategoryKeys->setValue(null);
+        $reflectedClass = new ReflectionClass(CategoryReader::class);
+        $categoryKeysGroupedByIdCategoryNode = $reflectedClass->getProperty('categoryKeysGroupedByIdCategoryNode');
+        $categoryKeysGroupedByIdCategoryNode->setAccessible(true);
+        $categoryKeysGroupedByIdCategoryNode->setValue([]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function createProductCategoryCollectionTransfer(CategoryTransfer $categoryTransfer, QuoteTransfer $quoteTransfer): ProductCategoryCollectionTransfer
+    {
+        $productCategoryCollectionTransfer = new ProductCategoryCollectionTransfer();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productCategoryCollectionTransfer->addProductCategory(
+                (new ProductCategoryTransfer())
+                    ->setCategory($categoryTransfer)
+                    ->setFkCategory($categoryTransfer->getIdCategory())
+                    ->setFkProductAbstract($itemTransfer->getIdProductAbstract()),
+            );
+        }
+
+        return $productCategoryCollectionTransfer;
     }
 }

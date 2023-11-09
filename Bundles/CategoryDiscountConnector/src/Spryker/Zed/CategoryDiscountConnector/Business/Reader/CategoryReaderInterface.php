@@ -15,9 +15,9 @@ interface CategoryReaderInterface
     public function getCategoryNamesIndexedByCategoryKey(): array;
 
     /**
-     * @param array<int, array<\Generated\Shared\Transfer\ProductCategoryTransfer>> $groupedProductCategoryTransfers
+     * @param array<int, list<\Generated\Shared\Transfer\ProductCategoryTransfer>> $productCategoryTransfersGroupedByIdProductAbstract
      *
-     * @return array<int, array<string>>
+     * @return array<int, list<string>>
      */
-    public function getCategoryKeysGroupedByIdCategoryNode(array $groupedProductCategoryTransfers): array;
+    public function getCategoryKeysGroupedByIdCategoryNode(array $productCategoryTransfersGroupedByIdProductAbstract): array;
 }
