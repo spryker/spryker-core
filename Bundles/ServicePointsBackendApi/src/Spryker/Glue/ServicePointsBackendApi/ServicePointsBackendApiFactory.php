@@ -159,6 +159,7 @@ class ServicePointsBackendApiFactory extends AbstractFactory
         return new ServicePointAddressReader(
             $this->getServicePointFacade(),
             $this->createServicePointAddressResponseBuilder(),
+            $this->createErrorResponseBuilder(),
         );
     }
 

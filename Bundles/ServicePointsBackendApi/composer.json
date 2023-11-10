@@ -18,6 +18,7 @@
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
         "spryker/container": "*",
+        "spryker/country": "*",
         "spryker/glue-application": "*",
         "spryker/glue-backend-api-application": "*",
         "spryker/propel": "*",
