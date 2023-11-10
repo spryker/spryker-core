@@ -48,6 +48,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
             $this->getProductOfferStorageFacade(),
+            $this->getConfig(),
         );
     }
 

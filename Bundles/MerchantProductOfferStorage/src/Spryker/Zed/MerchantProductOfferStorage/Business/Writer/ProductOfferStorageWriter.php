@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferStorageFacadeInterface;
+use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
 /**
@@ -18,6 +19,11 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
  */
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
+    /**
+     * @var int
+     */
+    protected const MIN_ID_PRODUCT_OFFER = 0;
+
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface
      */
@@ -34,18 +40,26 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferStorageFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig
+     */
+    protected MerchantProductOfferStorageConfig $merchantProductOfferStorageConfig;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferStorageFacadeInterface $productOfferStorageFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig $merchantProductOfferStorageConfig
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
-        MerchantProductOfferStorageToProductOfferStorageFacadeInterface $productOfferStorageFacade
+        MerchantProductOfferStorageToProductOfferStorageFacadeInterface $productOfferStorageFacade,
+        MerchantProductOfferStorageConfig $merchantProductOfferStorageConfig
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productOfferStorageFacade = $productOfferStorageFacade;
+        $this->merchantProductOfferStorageConfig = $merchantProductOfferStorageConfig;
     }
 
     /**
@@ -56,20 +70,23 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
         if (!$merchantIds) {
             return;
         }
 
-        $eventTransfers = [];
-
-        foreach ($this->merchantProductOfferStorageRepository->iterateProductOfferReferencesByMerchantIds($merchantIds) as $productOfferReferences) {
+        $productOfferReferenceIterator = $this->merchantProductOfferStorageRepository->iterateProductOfferReferencesByMerchantIds(
+            $merchantIds,
+            static::MIN_ID_PRODUCT_OFFER,
+            $this->merchantProductOfferStorageConfig->getWriteCollectionByMerchantEventsBatchSize(),
+        );
+        foreach ($productOfferReferenceIterator as $productOfferReferences) {
+            $eventTransfers = [];
             foreach ($productOfferReferences as $productOfferReference) {
                 $eventTransfers[] = (new EventEntityTransfer())
                     ->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferReference]);
             }
-        }
 
-        $this->productOfferStorageFacade->writeProductOfferStorageCollectionByProductOfferEvents($eventTransfers);
+            $this->productOfferStorageFacade->writeProductOfferStorageCollectionByProductOfferEvents($eventTransfers);
+        }
     }
 }
