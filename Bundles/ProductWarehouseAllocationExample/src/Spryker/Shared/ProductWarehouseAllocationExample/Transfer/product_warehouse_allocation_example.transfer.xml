@@ -32,7 +32,6 @@
     <transfer name="ProductWarehouseCriteria">
         <property name="storeName" type="string"/>
         <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Store">

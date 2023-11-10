@@ -28,7 +28,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductWarehouseAllocationExample\PHPMD)
  *
  * @method \Spryker\Zed\ProductWarehouseAllocationExample\Business\ProductWarehouseAllocationExampleFacadeInterface getFacade(?string $moduleName = null)
  */

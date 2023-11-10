@@ -15,7 +15,6 @@ interface ProductWarehouseAllocationExampleFacadeInterface
      * Specification:
      * - Requires `OrderTransfer.store` to be set.
      * - Requires `ItemTransfer.sku` for each item in `OrderTransfer` to be set.
-     * - Requires `ItemTransfer.quantity` for each item in `OrderTransfer` to be set.
      * - Iterates over `OrderTransfer.items`.
      * - Does nothing if `ItemTransfer.warehouse.idStock` is set.
      * - Finds the first warehouse by provided `ItemTransfer.sku`, `ItemTransfer.quantity` and `OrderTransfer.store`

@@ -142,12 +142,12 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
     public function testAllocateSalesOrderWarehouseDoesNotAssignWarehouseWhenProductOfferIsNotProvided(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $this->productOffer->getIdProductOffer(),
-            ProductOfferStockTransfer::STOCK => $stockTransfer1->toArray(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::QUANTITY => 4,
         ]);
@@ -167,12 +167,12 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
     public function testAllocateSalesOrderWarehouseDoesNotAssignNewWarehouseWhenWarehouseIdIsProvided(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $this->productOffer->getIdProductOffer(),
-            ProductOfferStockTransfer::STOCK => $stockTransfer1->toArray(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::QUANTITY => 4,
         ]);
@@ -199,12 +199,12 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
     public function testAllocateSalesOrderWarehouseDoesNotAssignWrongWarehouseWhenProductOfferStockNotFound(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $this->productOffer->getIdProductOffer(),
-            ProductOfferStockTransfer::STOCK => $stockTransfer1->toArray(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::QUANTITY => 4,
         ]);
@@ -223,15 +223,15 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAllocateSalesOrderWarehouseDoesNotAssignWrongWarehouseWhenQuantityIsNotEnough(): void
+    public function testAllocateSalesOrderWarehouseAssignsWarehouseWhenQuantityIsNotEnough(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $this->productOffer->getIdProductOffer(),
-            ProductOfferStockTransfer::STOCK => $stockTransfer1->toArray(),
+            ProductOfferStockTransfer::STOCK => $stockTransfer->toArray(),
             ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK => false,
             ProductOfferStockTransfer::QUANTITY => 1,
         ]);
@@ -244,7 +244,10 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
         $orderTransfer = $this->tester->getFacade()->allocateSalesOrderWarehouse($orderTransfer);
 
         // Assert
-        $this->assertNull($orderTransfer->getItems()->offsetGet(0)->getWarehouse());
+        $this->assertSame(
+            $stockTransfer->getIdStockOrFail(),
+            $orderTransfer->getItems()->offsetGet(0)->getWarehouse()->getIdStock(),
+        );
     }
 
     /**
@@ -257,25 +260,6 @@ class ProductOfferWarehouseAllocationExampleFacadeTest extends Unit
             null,
             $this->productOffer->getProductOfferReference(),
         );
-
-        // Assert
-        $this->expectException(NullValueException::class);
-
-        // Act
-        $this->tester->getFacade()->allocateSalesOrderWarehouse($orderTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAllocateSalesOrderWarehouseThrowsExceptionWhenItemQuantityIsNotSetToOrderTransfer(): void
-    {
-        // Arrange
-        $orderTransfer = $this->tester->createOrderTransfer(
-            $this->store->getName(),
-            $this->productOffer->getProductOfferReference(),
-        );
-        $orderTransfer->getItems()->offsetGet(0)->setQuantity(null);
 
         // Assert
         $this->expectException(NullValueException::class);

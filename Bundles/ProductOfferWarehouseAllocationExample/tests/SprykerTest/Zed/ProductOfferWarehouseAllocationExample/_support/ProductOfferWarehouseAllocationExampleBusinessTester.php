@@ -27,7 +27,7 @@ use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
  * @method void pause($vars = [])
  * @method \Spryker\Zed\ProductOfferWarehouseAllocationExample\Business\ProductOfferWarehouseAllocationExampleFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductOfferWarehouseAllocationExample\PHPMD)
  */
 class ProductOfferWarehouseAllocationExampleBusinessTester extends Actor
 {

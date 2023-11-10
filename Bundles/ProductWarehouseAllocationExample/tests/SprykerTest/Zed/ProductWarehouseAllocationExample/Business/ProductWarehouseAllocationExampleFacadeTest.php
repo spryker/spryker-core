@@ -124,10 +124,10 @@ class ProductWarehouseAllocationExampleFacadeTest extends Unit
     public function testAllocateSalesOrderWarehouseDoesNotAssignNewWarehouseWhenWarehouseUuidIsProvided(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
-        $this->tester->addStockProduct($this->stockProduct, $stockTransfer1);
+        $this->tester->addStockProduct($this->stockProduct, $stockTransfer);
 
         $orderTransfer = $this->tester->createOrderTransfer($this->store->getName(), $this->stockProduct->getSku());
         $orderTransfer->getItems()->offsetGet(0)->setWarehouse((new StockTransfer())->setIdStock(1));
@@ -148,10 +148,10 @@ class ProductWarehouseAllocationExampleFacadeTest extends Unit
     public function testAllocateSalesOrderWarehouseDoesNotAssignWrongWarehouseWhenStockProductNotFound(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
-        $this->tester->addStockProduct($this->stockProduct, $stockTransfer1);
+        $this->tester->addStockProduct($this->stockProduct, $stockTransfer);
         $orderTransfer = $this->tester->createOrderTransfer(
             $this->store->getName(),
             $this->stockProduct->getSku() . '_test',
@@ -167,13 +167,13 @@ class ProductWarehouseAllocationExampleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAllocateSalesOrderWarehouseDoesNotAssignWrongWarehouseWhenQuantityIsNotEnough(): void
+    public function testAllocateSalesOrderWarehouseAssignsWarehouseWhenQuantityIsNotEnough(): void
     {
         // Arrange
-        $stockTransfer1 = $this->tester->haveStock([
+        $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$this->store->getIdStore()]],
         ]);
-        $this->tester->addStockProduct($this->stockProduct, $stockTransfer1, false, 1);
+        $this->tester->addStockProduct($this->stockProduct, $stockTransfer, false, 1);
         $orderTransfer = $this->tester->createOrderTransfer(
             $this->store->getName(),
             $this->stockProduct->getSku(),
@@ -184,7 +184,10 @@ class ProductWarehouseAllocationExampleFacadeTest extends Unit
         $orderTransfer = $this->tester->getFacade()->allocateSalesOrderWarehouse($orderTransfer);
 
         // Assert
-        $this->assertNull($orderTransfer->getItems()->offsetGet(0)->getWarehouse());
+        $this->assertSame(
+            $stockTransfer->getIdStockOrFail(),
+            $orderTransfer->getItems()->offsetGet(0)->getWarehouse()->getIdStock(),
+        );
     }
 
     /**
@@ -194,21 +197,6 @@ class ProductWarehouseAllocationExampleFacadeTest extends Unit
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderTransfer(null, $this->stockProduct->getSku());
-
-        // Assert
-        $this->expectException(NullValueException::class);
-
-        // Act
-        $this->tester->getFacade()->allocateSalesOrderWarehouse($orderTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAllocateSalesOrderWarehouseThrowsExceptionWhenItemQuantityIsNotSetToOrderTransfer(): void
-    {
-        // Arrange
-        $orderTransfer = $this->tester->createOrderTransfer($this->store->getName(), $this->stockProduct->getSku(), null);
 
         // Assert
         $this->expectException(NullValueException::class);

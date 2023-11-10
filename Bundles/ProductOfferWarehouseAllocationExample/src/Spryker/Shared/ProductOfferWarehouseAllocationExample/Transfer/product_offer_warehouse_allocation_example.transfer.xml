@@ -4,7 +4,6 @@
     <transfer name="ProductOfferWarehouseCriteria">
         <property name="store" type="string"/>
         <property name="productOfferReference" type="string"/>
-        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Order">

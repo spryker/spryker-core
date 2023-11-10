@@ -86,7 +86,6 @@ class WarehouseAllocator implements WarehouseAllocatorInterface
     ): ProductOfferWarehouseCriteriaTransfer {
         return (new ProductOfferWarehouseCriteriaTransfer())
             ->setProductOfferReference($itemTransfer->getProductOfferReferenceOrFail())
-            ->setQuantity($itemTransfer->getQuantityOrFail())
             ->setStore($orderTransfer->getStoreOrFail());
     }
 }

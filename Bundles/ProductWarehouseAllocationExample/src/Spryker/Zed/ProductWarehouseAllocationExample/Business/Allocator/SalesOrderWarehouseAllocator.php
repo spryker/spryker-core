@@ -86,7 +86,6 @@ class SalesOrderWarehouseAllocator implements SalesOrderWarehouseAllocatorInterf
     ): ProductWarehouseCriteriaTransfer {
         return (new ProductWarehouseCriteriaTransfer())
             ->setSku($itemTransfer->getSkuOrFail())
-            ->setStoreName($orderTransfer->getStoreOrFail())
-            ->setQuantity($itemTransfer->getQuantityOrFail());
+            ->setStoreName($orderTransfer->getStoreOrFail());
     }
 }

@@ -19,6 +19,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductWarehouseAllocationExampleRepository extends AbstractRepository implements ProductWarehouseAllocationExampleRepositoryInterface
 {
     /**
+     * @var int
+     */
+    protected const MINIMAL_QUANTITY = 1;
+
+    /**
      * @module Product
      * @module Stock
      * @module Store
@@ -29,12 +34,12 @@ class ProductWarehouseAllocationExampleRepository extends AbstractRepository imp
      */
     public function findProductWarehouse(ProductWarehouseCriteriaTransfer $productWarehouseCriteriaTransfer): ?StockTransfer
     {
-        /** @var literal-string $whereMaxQuantity */
-        $whereMaxQuantity = sprintf(
+        /** @var literal-string $whereQuantityClause */
+        $whereQuantityClause = sprintf(
             '%s %s %d',
             SpyStockProductTableMap::COL_QUANTITY,
             Criteria::GREATER_EQUAL,
-            (int)$productWarehouseCriteriaTransfer->getQuantityOrFail(),
+            static::MINIMAL_QUANTITY,
         );
 
         $stockProductEntity = $this->getFactory()
@@ -51,7 +56,7 @@ class ProductWarehouseAllocationExampleRepository extends AbstractRepository imp
             ->endUse()
             ->where(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK)
             ->_or()
-            ->where($whereMaxQuantity)
+            ->where($whereQuantityClause)
             ->orderBy(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, Criteria::DESC)
             ->orderBy(SpyStockProductTableMap::COL_QUANTITY, Criteria::DESC)
             ->findOne();
