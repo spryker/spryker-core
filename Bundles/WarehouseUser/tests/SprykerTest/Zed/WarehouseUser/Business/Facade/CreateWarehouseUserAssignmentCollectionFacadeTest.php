@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\WarehouseUser\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\WarehouseUserAssignmentBuilder;
+use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use SprykerTest\Zed\WarehouseUser\WarehouseUserBusinessTester;
@@ -71,7 +72,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testPersistsWarehouseUserAssignment(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder())->build()
             ->setWarehouse($stockTransfer)
@@ -143,10 +144,38 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testShouldReturnErrorWhileUserIsNotAWarehouseUser(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => false]);
+        $stockTransfer = $this->tester->haveStock();
+
+        $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder())->build()
+            ->setWarehouse($stockTransfer)
+            ->setUserUuid($userTransfer->getUuidOrFail());
+
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())
+            ->addWarehouseUserAssignment($warehouseUserAssignmentTransfer);
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()
+            ->createWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
+
+        $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
+        $this->assertSame(static::GLOSSARY_KEY_VALIDATION_USER_NOT_FOUND, $errorTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsErrorWhenWarehouseNotExist(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->getNotExistingStockTransfer();
         $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder())->build()
             ->setWarehouse($stockTransfer)
@@ -170,7 +199,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenWarehouseWithIncorrectUuidWithoutIdStockIsProvided(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->getNotExistingStockTransfer();
         $stockTransfer->setIdStock(null);
 
@@ -196,7 +225,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenRequestContainsMoreThanOneActiveWarehouseUserAssignment(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer1 = $this->tester->haveStock();
         $stockTransfer2 = $this->tester->haveStock();
 
@@ -233,7 +262,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenWarehouseUserAssignmentAlreadyExists(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -263,7 +292,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testDeactivatesCurrentlyActiveWarehouseUserAssignmentWhenCreatingActiveWarehouseUserAssignment(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -299,7 +328,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testShouldNotReturnErrorWhenIsActiveIsNotProvided(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
             $this->tester->haveStock(),

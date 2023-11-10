@@ -96,7 +96,7 @@ class UserExistsValidatorRule implements WarehouseUserAssignmentValidatorRuleInt
         UserCollectionTransfer $userCollectionTransfer,
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        $indexedUserTransfers = $this->getUserTransfersIndexedByUuid($userCollectionTransfer);
+        $indexedUserTransfers = $this->getUserTransfersWithWarehouseUserIndexedByUuid($userCollectionTransfer);
         /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer */
         foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
             if ($warehouseUserAssignmentTransfer->getUserUuid() && !isset($indexedUserTransfers[$warehouseUserAssignmentTransfer->getUserUuidOrFail()])) {
@@ -117,11 +117,13 @@ class UserExistsValidatorRule implements WarehouseUserAssignmentValidatorRuleInt
      *
      * @return array<string, \Generated\Shared\Transfer\UserTransfer>
      */
-    protected function getUserTransfersIndexedByUuid(UserCollectionTransfer $userCollectionTransfer): array
+    protected function getUserTransfersWithWarehouseUserIndexedByUuid(UserCollectionTransfer $userCollectionTransfer): array
     {
         $indexedUserTransfers = [];
         foreach ($userCollectionTransfer->getUsers() as $userTransfer) {
-            $indexedUserTransfers[$userTransfer->getUuidOrFail()] = $userTransfer;
+            if ($userTransfer->getIsWarehouseUser()) {
+                $indexedUserTransfers[$userTransfer->getUuidOrFail()] = $userTransfer;
+            }
         }
 
         return $indexedUserTransfers;

@@ -37,6 +37,6 @@ class WarehouseUserAssignmentValidator implements WarehouseUserAssignmentValidat
     ): bool {
         $userTransfer = $this->userReader->findUserTransferById($glueRequestTransfer->getRequestUserOrFail()->getSurrogateIdentifierOrFail());
 
-        return !$userTransfer || !$userTransfer->getIsWarehouseUser() || $userTransfer->getUuidOrFail() === $warehouseUserAssignmentUserUuid;
+        return $userTransfer && (!$userTransfer->getIsWarehouseUser() || $userTransfer->getUuidOrFail() === $warehouseUserAssignmentUserUuid);
     }
 }

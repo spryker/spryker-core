@@ -57,6 +57,13 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     protected const ERROR_MESSAGE_WAREHOUSE_USER_ASSIGNMENT_OPERATION_FORBIDDEN = 'Operation is forbidden.';
 
     /**
+     * @uses \Spryker\Glue\WarehouseUsersBackendApi\WarehouseUsersBackendApiConfig::RESPONSE_DETAILS_USER_NOT_FOUND
+     *
+     * @var string
+     */
+    protected const ERROR_MESSAGE_WAREHOUSE_USER_NOT_FOUND = 'User not found.';
+
+    /**
      * @return void
      */
     public function testGetCollectionActionReturnsCollectionOfAllWarehouseUserAssignmentsForAdminUser(): void
@@ -427,7 +434,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testPostActionReturnsPersistedWarehouseUserAssignmentsResource(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
             WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
@@ -464,18 +471,18 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testPostActionReturnsNotFoundErrorWhenWarehouseUserCreatesWarehouseUserAssignmentForAnotherUser(): void
     {
         // Arrange
+        $requestUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
-        $userTransfer = $this->tester->haveUser();
-        $stockTransfer = $this->tester->haveStock();
+
         $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
-            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $warehouseUserTransfer->getUuidOrFail(),
             WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->withWarehouse([
-            WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
+            WarehousesBackendApiAttributesTransfer::UUID => $this->tester->haveStock()->getUuidOrFail(),
         ])->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
-            (new GlueRequestUserTransfer())->setSurrogateIdentifier($warehouseUserTransfer->getIdUserOrFail()),
+            (new GlueRequestUserTransfer())->setSurrogateIdentifier($requestUserTransfer->getIdUserOrFail()),
         );
 
         // Act
@@ -500,18 +507,18 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testPostActionReturnsPersistedWarehouseUserAssignmentWhenAdminUserCreatesWarehouseUserAssignmentForAnotherUser(): void
     {
         // Arrange
-        $adminUserTransfer = $this->tester->haveUser();
-        $userTransfer = $this->tester->haveUser();
+        $requestUserTransfer = $this->tester->haveUser();
+        $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
-            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $warehouseUserTransfer->getUuidOrFail(),
             WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
         ]))->withWarehouse([
             WarehousesBackendApiAttributesTransfer::UUID => $stockTransfer->getUuidOrFail(),
         ])->build();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
-            (new GlueRequestUserTransfer())->setSurrogateIdentifier($adminUserTransfer->getIdUserOrFail()),
+            (new GlueRequestUserTransfer())->setSurrogateIdentifier($requestUserTransfer->getIdUserOrFail()),
         );
 
         // Act
@@ -527,9 +534,44 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
         $glueResourceTransfer = $glueResponseTransfer->getResources()->getIterator()->current();
         $this->assertNotNull($glueResourceTransfer->getId());
         $this->assertInstanceOf(WarehouseUserAssignmentsBackendApiAttributesTransfer::class, $glueResourceTransfer->getAttributes());
-        $this->assertSame($userTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
+        $this->assertSame($warehouseUserTransfer->getUuidOrFail(), $glueResourceTransfer->getAttributes()->getUserUuid());
         $this->assertNotNull($glueResourceTransfer->getAttributes()->getWarehouse());
         $this->assertSame($stockTransfer->getUuid(), $glueResourceTransfer->getAttributes()->getWarehouse()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostActionReturnsUserNotFoundErrorWhenAdminUserCreatesWarehouseUserAssignmentForNonWarehouseUser(): void
+    {
+        // Arrange
+        $adminUserTransfer = $this->tester->haveUser();
+        $nonWarehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => false]);
+
+        $warehouseUserAssignmentsRestResourceAttributesTransfer = (new WarehouseUserAssignmentsBackendApiAttributesBuilder([
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::USER_UUID => $nonWarehouseUserTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentsBackendApiAttributesTransfer::IS_ACTIVE => true,
+        ]))->withWarehouse([
+            WarehousesBackendApiAttributesTransfer::UUID => $this->tester->haveStock()->getUuidOrFail(),
+        ])->build();
+
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier($adminUserTransfer->getIdUserOrFail());
+        $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser($glueRequestUserTransfer);
+
+        // Act
+        $glueResponseTransfer = (new WarehouseUserAssignmentsResourceController())->postAction(
+            $warehouseUserAssignmentsRestResourceAttributesTransfer,
+            $glueRequestTransfer,
+        );
+
+        // Assert
+        $this->assertCount(1, $glueResponseTransfer->getErrors());
+        $this->assertCount(0, $glueResponseTransfer->getResources());
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getHttpStatus());
+
+        $glueErrorTransfer = $glueResponseTransfer->getErrors()->getIterator()->current();
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $glueErrorTransfer->getStatus());
+        $this->assertSame(static::ERROR_MESSAGE_WAREHOUSE_USER_NOT_FOUND, $glueErrorTransfer->getMessage());
     }
 
     /**
@@ -538,7 +580,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testPatchActionReturnsPersistedWarehouseUserAssignmentsResource(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -578,7 +620,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testPatchActionReturnsPersistedWarehouseUserAssignmentsResourceWhenAllPossibleDataProvided(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -661,7 +703,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     {
         // Arrange
         $adminUserTransfer = $this->tester->haveUser();
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -728,16 +770,15 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     public function testDeleteActionDeletesWarehouseUserAssignmentFromDatabaseWhenAdminUserDeletesAnotherUsersWarehouseUserAssignment(): void
     {
         // Arrange
-        $adminUserTransfer = $this->tester->haveUser();
         $userTransfer = $this->tester->haveUser();
-        $stockTransfer = $this->tester->haveStock();
+
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
-            $userTransfer,
-            $stockTransfer,
+            $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]),
+            $this->tester->haveStock(),
         );
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
-            (new GlueRequestUserTransfer())->setSurrogateIdentifier($adminUserTransfer->getIdUserOrFail()),
+            (new GlueRequestUserTransfer())->setSurrogateIdentifier($userTransfer->getIdUserOrFail()),
         )->setResource(
             (new GlueResourceTransfer())->setId($warehouseUserAssignmentTransfer->getUuidOrFail()),
         );
@@ -757,15 +798,15 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     {
         // Arrange
         $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
-        $userTransfer = $this->tester->haveUser();
-        $stockTransfer = $this->tester->haveStock();
+        $requestUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
+
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
-            $userTransfer,
-            $stockTransfer,
+            $warehouseUserTransfer,
+            $this->tester->haveStock(),
         );
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
-            (new GlueRequestUserTransfer())->setSurrogateIdentifier($warehouseUserTransfer->getIdUserOrFail()),
+            (new GlueRequestUserTransfer())->setSurrogateIdentifier($requestUserTransfer->getIdUserOrFail()),
         )->setResource(
             (new GlueResourceTransfer())->setId($warehouseUserAssignmentTransfer->getUuidOrFail()),
         );

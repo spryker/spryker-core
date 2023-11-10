@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\WarehouseUser\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionRequestTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use SprykerTest\Zed\WarehouseUser\WarehouseUserBusinessTester;
@@ -77,7 +78,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testPersistsWarehouseUserAssignment(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -162,7 +163,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenWarehouseDoesNotExist(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -188,7 +189,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenWarehouseWithIncorrectUuidWithoutIdStockIsProvided(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -214,7 +215,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsNoErrorsWhenActiveWarehouseUserAssignmentNotChanged(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $stockTransfer = $this->tester->haveStock();
         $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
@@ -237,7 +238,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsNoErrorsWhenActiveWarehouseUserAssignmentChanged(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
             $this->tester->haveStock(),
@@ -266,7 +267,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testReturnsErrorWhenRequestContainsMoreThanOneActiveWarehouseUserAssignment(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
             $this->tester->haveStock(),
@@ -302,7 +303,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testDeactivatesCurrentlyActiveWarehouseUserAssignmentWhenUpdatedWarehouseUserAssignmentIsActive(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
             $this->tester->haveStock(),
@@ -340,7 +341,7 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     public function testShouldNotReturnErrorWhenIsActiveIsNotProvided(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveUser();
+        $userTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
         $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
             $userTransfer,
             $this->tester->haveStock(),

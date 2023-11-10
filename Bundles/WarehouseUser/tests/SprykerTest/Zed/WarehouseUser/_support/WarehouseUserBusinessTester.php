@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\DataBuilder\WarehouseUserAssignmentBuilder;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentTransfer;
 use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignment;
 use Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery;
@@ -91,7 +92,7 @@ class WarehouseUserBusinessTester extends Actor
     public function getNotExistingWarehouseUserAssignmentTransfer(): WarehouseUserAssignmentTransfer
     {
         $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder([
-            WarehouseUserAssignmentTransfer::USER_UUID => $this->haveUser()->getUuidOrFail(),
+            WarehouseUserAssignmentTransfer::USER_UUID => $this->haveUser([UserTransfer::IS_WAREHOUSE_USER => true])->getUuidOrFail(),
             WarehouseUserAssignmentTransfer::UUID => static::NON_EXISTING_WAREHOUSE_USER_ASSIGNMENT_UUID,
             WarehouseUserAssignmentTransfer::ID_WAREHOUSE_USER_ASSIGNMENT => static::NON_EXISTING_WAREHOUSE_USER_ASSIGNMENT_ID,
         ]))->build();
