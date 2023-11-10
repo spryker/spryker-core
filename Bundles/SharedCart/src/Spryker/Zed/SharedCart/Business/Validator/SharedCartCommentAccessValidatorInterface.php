@@ -10,10 +10,7 @@ namespace Spryker\Zed\SharedCart\Business\Validator;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-interface SharedCartCommentValidatorInterface
+interface SharedCartCommentAccessValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer

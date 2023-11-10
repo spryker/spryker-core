@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Quote\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class QuoteCommentValidator implements QuoteCommentValidatorInterface
 {
     /**

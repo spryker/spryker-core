@@ -143,6 +143,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Quote\Business\Validator\QuoteCommentValidatorInterface
      */
     public function createQuoteCommentValidator(): QuoteCommentValidatorInterface

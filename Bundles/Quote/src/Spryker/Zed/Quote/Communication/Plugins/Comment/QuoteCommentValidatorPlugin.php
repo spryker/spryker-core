@@ -13,6 +13,8 @@ use Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SharedCart\Communication\Plugin\Comment\SharedCartAccessCommentValidatorPlugin} instead.
+ *
  * @method \Spryker\Zed\Quote\QuoteConfig getConfig()
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  */

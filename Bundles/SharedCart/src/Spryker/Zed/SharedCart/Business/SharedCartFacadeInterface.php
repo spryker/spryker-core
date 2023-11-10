@@ -355,12 +355,36 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface::validateSharedCartCommentAccess()} instead.
+     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
      */
     public function validateSharedCartComment(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CommentRequestTransfer.ownerId`, `CommentRequestTransfer.ownerType`, `CommentRequestTransfer.comment` to be set.
+     * - Requires `CommentRequestTransfer.comment.customer.customerReference` to be set.
+     * - Verifies the ownership of the quote by matching it to the respective customer.
+     * - Bypasses the shared cart validation if the customer is confirmed as the owner.
+     * - Expects `CommentRequestTransfer.comment.customer.companyUserTransfer.idCompanyUser` to be set.
+     * - Checks if provided company user has access to comment owner shared cart.
+     * - Returns error message when validation failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateSharedCartCommentAccess(
         CommentRequestTransfer $commentRequestTransfer,
         CommentValidationResponseTransfer $commentValidationResponseTransfer
     ): CommentValidationResponseTransfer;

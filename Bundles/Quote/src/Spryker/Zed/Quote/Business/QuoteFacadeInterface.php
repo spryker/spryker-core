@@ -232,6 +232,8 @@ interface QuoteFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface::validateSharedCartCommentAccess()} instead.
+     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
      *

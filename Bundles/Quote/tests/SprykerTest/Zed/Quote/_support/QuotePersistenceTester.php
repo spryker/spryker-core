@@ -32,7 +32,7 @@ use Orm\Zed\Quote\Persistence\SpyQuote;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Quote\PHPMD)
  */
 class QuotePersistenceTester extends Actor
 {

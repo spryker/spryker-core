@@ -27,7 +27,7 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SharedCart\PHPMD)
  */
 class SharedCartPersistenceTester extends Actor
 {

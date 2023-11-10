@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SharedCartCommentValidator implements SharedCartCommentValidatorInterface
 {
     /**

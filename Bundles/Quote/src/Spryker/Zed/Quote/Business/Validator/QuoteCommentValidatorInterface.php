@@ -10,6 +10,9 @@ namespace Spryker\Zed\Quote\Business\Validator;
 use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface QuoteCommentValidatorInterface
 {
     /**

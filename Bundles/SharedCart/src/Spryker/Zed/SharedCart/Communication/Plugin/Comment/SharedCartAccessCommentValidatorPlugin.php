@@ -13,22 +13,20 @@ use Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SharedCart\Communication\Plugin\Comment\SharedCartAccessCommentValidatorPlugin} instead.
- *
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class SharedCartCommentValidatorPlugin extends AbstractPlugin implements CommentValidatorPluginInterface
+class SharedCartAccessCommentValidatorPlugin extends AbstractPlugin implements CommentValidatorPluginInterface
 {
     /**
      * @var string
      */
-    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'sales_order';
+    protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
      * {@inheritDoc}
-     * - Checks if `CommentRequestTransfer.ownerType` is "sales_order".
+     * - Checks if `CommentRequestTransfer.ownerType` is "quote".
      *
      * @api
      *
@@ -43,8 +41,11 @@ class SharedCartCommentValidatorPlugin extends AbstractPlugin implements Comment
 
     /**
      * {@inheritDoc}
-     * - Requires 'CommentRequestTransfer.ownerId', `CommentRequestTransfer.comment`, `CommentRequestTransfer.comment.customer`,
-     *   `CommentRequestTransfer.comment.customer.companyUserTransfer`, `CommentRequestTransfer.comment.customer.companyUserTransfer.idCompanyUser` transfer properties to be set.
+     * - Requires `CommentRequestTransfer.ownerId`, `CommentRequestTransfer.ownerType`, `CommentRequestTransfer.comment` to be set.
+     * - Requires `CommentRequestTransfer.comment.customer.customerReference` to be set.
+     * - Verifies the ownership of the quote by matching it to the respective customer.
+     * - Bypasses the shared cart validation if the customer is confirmed as the owner.
+     * - Expects `CommentRequestTransfer.comment.customer.companyUserTransfer.idCompanyUser` to be set.
      * - Checks if provided company user has access to comment owner shared cart.
      * - Returns error message when validation failed.
      *
@@ -59,6 +60,6 @@ class SharedCartCommentValidatorPlugin extends AbstractPlugin implements Comment
         CommentRequestTransfer $commentRequestTransfer,
         CommentValidationResponseTransfer $commentValidationResponseTransfer
     ): CommentValidationResponseTransfer {
-        return $this->getFacade()->validateSharedCartComment($commentRequestTransfer, $commentValidationResponseTransfer);
+        return $this->getFacade()->validateSharedCartCommentAccess($commentRequestTransfer, $commentValidationResponseTransfer);
     }
 }

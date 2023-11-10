@@ -26,7 +26,7 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Quote\PHPMD)
  */
 class QuoteBusinessTester extends Actor
 {

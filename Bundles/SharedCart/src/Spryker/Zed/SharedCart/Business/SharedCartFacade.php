@@ -411,6 +411,8 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SharedCart\Business\SharedCartFacade::validateSharedCartCommentAccess()} instead.
+     *
      * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
      * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
      *
@@ -422,6 +424,25 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     ): CommentValidationResponseTransfer {
         return $this->getFactory()
             ->createSharedCartCommentValidator()
+            ->validate($commentRequestTransfer, $commentValidationResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateSharedCartCommentAccess(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer {
+        return $this->getFactory()
+            ->createSharedCartCommentAccessValidator()
             ->validate($commentRequestTransfer, $commentValidationResponseTransfer);
     }
 }
