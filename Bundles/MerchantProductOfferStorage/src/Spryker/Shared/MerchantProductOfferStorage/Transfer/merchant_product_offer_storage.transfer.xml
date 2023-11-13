@@ -3,10 +3,12 @@
     <transfer name="ProductOffer">
         <property name="fkMerchant" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="merchantSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
         <property name="idMerchant" type="int"/>
+        <property name="merchantSku" type="string" strict="true"/>
     </transfer>
 
     <transfer name="EventEntity">

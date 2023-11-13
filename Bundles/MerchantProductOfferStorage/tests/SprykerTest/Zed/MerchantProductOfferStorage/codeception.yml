@@ -32,3 +32,9 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+    Communication:
+        path: Communication
+        actor: MerchantProductOfferStorageCommunicationTester
+        modules:
+            enabled:
+                - Asserts

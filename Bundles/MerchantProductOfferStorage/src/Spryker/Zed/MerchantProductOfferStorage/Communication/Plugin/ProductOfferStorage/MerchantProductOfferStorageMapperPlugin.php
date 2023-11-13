@@ -21,7 +21,8 @@ class MerchantProductOfferStorageMapperPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Maps Merchant foreign key of `ProductOffer` transfer object to Merchant Id `ProductOfferStorage` transfer object.
+     * - Maps `ProductOfferTransfer.fkMerchant` to `ProductOfferStorageTransfer.idMerchant`.
+     * - Maps `ProductOfferTransfer.merchantSku` to `ProductOfferStorageTransfer.merchantSku`.
      *
      * @api
      *
@@ -35,6 +36,7 @@ class MerchantProductOfferStorageMapperPlugin extends AbstractPlugin implements 
         ProductOfferStorageTransfer $productOfferStorageTransfer
     ): ProductOfferStorageTransfer {
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
+        $productOfferStorageTransfer->setMerchantSku($productOfferTransfer->getMerchantSku());
 
         return $productOfferStorageTransfer;
     }
