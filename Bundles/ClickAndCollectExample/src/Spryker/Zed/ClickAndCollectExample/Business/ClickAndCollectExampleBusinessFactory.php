@@ -13,6 +13,8 @@ use Spryker\Zed\ClickAndCollectExample\Business\Expander\ItemExpander;
 use Spryker\Zed\ClickAndCollectExample\Business\Expander\ItemExpanderInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\Expander\ProductOfferServicePointExpander;
 use Spryker\Zed\ClickAndCollectExample\Business\Expander\ProductOfferServicePointExpanderInterface;
+use Spryker\Zed\ClickAndCollectExample\Business\Merger\ItemMerger;
+use Spryker\Zed\ClickAndCollectExample\Business\Merger\ItemMergerInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\DeliveryProductOfferReplacementChecker;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\PickupProductOfferReplacementChecker;
 use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementChecker\ProductOfferReplacementCheckerInterface;
@@ -49,6 +51,7 @@ class ClickAndCollectExampleBusinessFactory extends AbstractBusinessFactory
             $this->createProductOfferServicePointReader(),
             $this->createPickupProductOfferReplacementFinder(),
             $this->createQuoteReplacementResponseErrorAdder(),
+            $this->createItemMerger(),
             $this->getConfig(),
         );
     }
@@ -62,6 +65,7 @@ class ClickAndCollectExampleBusinessFactory extends AbstractBusinessFactory
             $this->createProductOfferServicePointReader(),
             $this->createDeliveryProductOfferReplacementFinder(),
             $this->createQuoteReplacementResponseErrorAdder(),
+            $this->createItemMerger(),
             $this->getConfig(),
         );
     }
@@ -176,6 +180,14 @@ class ClickAndCollectExampleBusinessFactory extends AbstractBusinessFactory
             $this->getServicePointFacade(),
             $this->getShipmentFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ClickAndCollectExample\Business\Merger\ItemMergerInterface
+     */
+    public function createItemMerger(): ItemMergerInterface
+    {
+        return new ItemMerger();
     }
 
     /**

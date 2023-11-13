@@ -35,16 +35,19 @@ class ClickAndCollectExampleFacadeMocks extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param list<\Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      *
      * @return void
      */
-    protected function mockAvailabilityFacade(ProductOfferTransfer $productOfferTransfer): void
+    protected function mockAvailabilityFacade(array $productOfferTransfers): void
     {
-        $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer($productOfferTransfer);
+        $sellableItemsResponseTransfers = [];
+        foreach ($productOfferTransfers as $productOfferTransfer) {
+            $sellableItemsResponseTransfers[] = $this->createSellableItemsResponseTransfer($productOfferTransfer);
+        }
 
-        $this->tester->mockFactoryMethod('getAvailabilityFacade', function () use ($sellableItemsResponseTransfer) {
-            return $this->getAvailabilityFacadeMock($sellableItemsResponseTransfer);
+        $this->tester->mockFactoryMethod('getAvailabilityFacade', function () use ($sellableItemsResponseTransfers) {
+            return $this->getAvailabilityFacadeMock($sellableItemsResponseTransfers);
         });
     }
 
@@ -57,7 +60,7 @@ class ClickAndCollectExampleFacadeMocks extends Unit
     {
         /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
         $productOfferStockTransfer = $productOfferTransfer->getProductOfferStocks()->getIterator()->current();
-        $isSellable = $productOfferStockTransfer->getIsNeverOutOfStock() || $productOfferStockTransfer->getQuantity() > 0;
+        $isSellable = $productOfferStockTransfer->getIsNeverOutOfStock() || $productOfferStockTransfer->getQuantity()->toInt() > 0;
         $sellableItemResponseTransfer = (new SellableItemResponseTransfer())
             ->setIsSellable($isSellable)
             ->setAvailableQuantity($productOfferStockTransfer->getQuantity())
@@ -69,16 +72,16 @@ class ClickAndCollectExampleFacadeMocks extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     * @param list<\Generated\Shared\Transfer\SellableItemsResponseTransfer> $sellableItemsResponseTransfers
      *
      * @return \SprykerTest\Zed\ClickAndCollectExample\Business\Facade\MockObject|\Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeInterface
      */
     protected function getAvailabilityFacadeMock(
-        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+        array $sellableItemsResponseTransfers
     ): ClickAndCollectExampleToAvailabilityFacadeInterface {
         $availabilityFacadeMock = $this->getMockBuilder(AvailabilityFacadeInterface::class)->getMock();
-        $availabilityFacadeMock->method('areProductsSellableForStore')->willReturn(
-            $sellableItemsResponseTransfer,
+        $availabilityFacadeMock->method('areProductsSellableForStore')->willReturnOnConsecutiveCalls(
+            ...$sellableItemsResponseTransfers,
         );
 
         return new ClickAndCollectExampleToAvailabilityFacadeBridge($availabilityFacadeMock);

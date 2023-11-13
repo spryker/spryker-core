@@ -28,6 +28,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/decimal-object": "*",
         "spryker/price-product": "*",
         "spryker/product": "*",
         "spryker/propel": "*",

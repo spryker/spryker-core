@@ -23,10 +23,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\ServiceTransfer;
-use Generated\Shared\Transfer\ServiceTypeTransfer;
-use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery;
 use Spryker\Zed\ClickAndCollectExample\ClickAndCollectExampleConfig;
 
 /**
@@ -141,6 +138,7 @@ class ClickAndCollectExampleBusinessTester extends Actor
         ]);
         $this->havePriceProductOffer([
             PriceProductOfferTransfer::FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE => $override[PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE] ?? null,
             PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
         ]);
@@ -193,7 +191,7 @@ class ClickAndCollectExampleBusinessTester extends Actor
             ], $override),
         );
 
-        $this->createShipmentTypeServiceType($shipmentTypeTransfer, $serviceTransfer->getServiceTypeOrFail());
+        $this->haveShipmentTypeServiceTypeRelation($shipmentTypeTransfer, $serviceTransfer->getServiceTypeOrFail());
         $shipmentTypeTransfer->setServiceType($serviceTransfer->getServiceTypeOrFail());
 
         return $serviceTransfer;
@@ -213,30 +211,5 @@ class ClickAndCollectExampleBusinessTester extends Actor
         );
 
         $this->mockFactoryMethod('getConfig', $clickAndCollectExampleConfigMock);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTypeTransfer $shipmentTypeTransfer
-     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
-     *
-     * @return void
-     */
-    protected function createShipmentTypeServiceType(
-        ShipmentTypeTransfer $shipmentTypeTransfer,
-        ServiceTypeTransfer $serviceTypeTransfer
-    ): void {
-        $this->getShipmentTypeServiceTypeQuery()
-            ->filterByFkShipmentType($shipmentTypeTransfer->getIdShipmentTypeOrFail())
-            ->filterByFkServiceType($serviceTypeTransfer->getIdServiceTypeOrFail())
-            ->findOneOrCreate()
-            ->save();
-    }
-
-    /**
-     * @return \Orm\Zed\ShipmentTypeServicePoint\Persistence\SpyShipmentTypeServiceTypeQuery
-     */
-    protected function getShipmentTypeServiceTypeQuery(): SpyShipmentTypeServiceTypeQuery
-    {
-        return SpyShipmentTypeServiceTypeQuery::create();
     }
 }

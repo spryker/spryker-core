@@ -44,6 +44,7 @@ class ClickAndCollectExampleServicePointQuoteItemReplaceStrategyPlugin extends A
      * - Requires `ItemTransfer.quantity` for each `QuoteTransfer.item` to be set.
      * - Requires `ItemTransfer.servicePoint.IdServicePoint` for each `QuoteTransfer.item` to be set in case pickup shipment type.
      * - Filters applicable `QuoteTransfer.items` for product offer replacement.
+     * - Merges filtered items quantity by sku and merchant reference.
      * - Fetches available replacement product offers from Persistence.
      * - Replaces filtered product offers with suitable product offers from Persistence.
      * - Returns `QuoteReplacementResponseTransfer` with modified `QuoteTransfer.items` if replacements take place.

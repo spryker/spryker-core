@@ -11,83 +11,22 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ClickAndCollectExample\Business\ErrorAdder\QuoteReplacementResponseErrorAdderInterface;
-use Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementFinder\ProductOfferReplacementFinderInterface;
-use Spryker\Zed\ClickAndCollectExample\Business\Reader\ProductOfferServicePointReaderInterface;
-use Spryker\Zed\ClickAndCollectExample\ClickAndCollectExampleConfig;
 
-class DeliveryItemProductOfferReplacer implements ItemProductOfferReplacerInterface
+class DeliveryItemProductOfferReplacer extends AbstractItemProductOfferReplacer
 {
     /**
-     * @var \Spryker\Zed\ClickAndCollectExample\Business\Reader\ProductOfferServicePointReaderInterface
-     */
-    protected ProductOfferServicePointReaderInterface $clickAndCollectExampleProductOfferServicePointReader;
-
-    /**
-     * @var \Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementFinder\ProductOfferReplacementFinderInterface
-     */
-    protected ProductOfferReplacementFinderInterface $clickAndCollectExampleProductOfferReplacementFinder;
-
-    /**
-     * @var \Spryker\Zed\ClickAndCollectExample\Business\ErrorAdder\QuoteReplacementResponseErrorAdderInterface
-     */
-    protected QuoteReplacementResponseErrorAdderInterface $quoteReplacementResponseErrorAdder;
-
-    /**
-     * @var \Spryker\Zed\ClickAndCollectExample\ClickAndCollectExampleConfig
-     */
-    protected ClickAndCollectExampleConfig $clickAndCollectExampleConfig;
-
-    /**
-     * @param \Spryker\Zed\ClickAndCollectExample\Business\Reader\ProductOfferServicePointReaderInterface $clickAndCollectExampleProductOfferServicePointReader
-     * @param \Spryker\Zed\ClickAndCollectExample\Business\ProductOfferReplacementFinder\ProductOfferReplacementFinderInterface $clickAndCollectExampleProductOfferReplacementFinder
-     * @param \Spryker\Zed\ClickAndCollectExample\Business\ErrorAdder\QuoteReplacementResponseErrorAdderInterface $quoteReplacementResponseErrorAdder
-     * @param \Spryker\Zed\ClickAndCollectExample\ClickAndCollectExampleConfig $clickAndCollectExampleConfig
-     */
-    public function __construct(
-        ProductOfferServicePointReaderInterface $clickAndCollectExampleProductOfferServicePointReader,
-        ProductOfferReplacementFinderInterface $clickAndCollectExampleProductOfferReplacementFinder,
-        QuoteReplacementResponseErrorAdderInterface $quoteReplacementResponseErrorAdder,
-        ClickAndCollectExampleConfig $clickAndCollectExampleConfig
-    ) {
-        $this->clickAndCollectExampleProductOfferServicePointReader = $clickAndCollectExampleProductOfferServicePointReader;
-        $this->clickAndCollectExampleProductOfferReplacementFinder = $clickAndCollectExampleProductOfferReplacementFinder;
-        $this->quoteReplacementResponseErrorAdder = $quoteReplacementResponseErrorAdder;
-        $this->clickAndCollectExampleConfig = $clickAndCollectExampleConfig;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, \Generated\Shared\Transfer\ItemTransfer> $itemTransfersForReplacement
      *
-     * @return \Generated\Shared\Transfer\QuoteReplacementResponseTransfer
+     * @return array<int, \Generated\Shared\Transfer\ProductOfferServicePointTransfer>
      */
-    public function replaceQuoteItemProductOffers(QuoteTransfer $quoteTransfer): QuoteReplacementResponseTransfer
+    protected function getProductOfferServicePointTransfers(QuoteTransfer $quoteTransfer, array $itemTransfersForReplacement): array
     {
-        $quoteReplacementResponseTransfer = (new QuoteReplacementResponseTransfer())->setQuote($quoteTransfer);
-        $itemTransfersForReplacement = $this->getQuoteItemsAvailableForReplacement($quoteReplacementResponseTransfer);
-        if (count($itemTransfersForReplacement) === 0) {
-            return $quoteReplacementResponseTransfer;
-        }
         $productOfferServicePointCriteriaTransfer = $this
             ->createProductOfferServicePointCriteriaTransfer($quoteTransfer, $itemTransfersForReplacement);
 
-        $productOfferServicePointTransfers = $this->clickAndCollectExampleProductOfferServicePointReader
+        return $this->productOfferServicePointReader
             ->getDeliveryProductOfferServicePoints($productOfferServicePointCriteriaTransfer);
-
-        foreach ($itemTransfersForReplacement as $itemTransfer) {
-            $replacementProductOfferTransfer = $this->clickAndCollectExampleProductOfferReplacementFinder->findSuitableProductOffer($itemTransfer, $productOfferServicePointTransfers);
-            if (!$replacementProductOfferTransfer) {
-                $quoteReplacementResponseTransfer->addFailedReplacementItem($itemTransfer);
-                $this->quoteReplacementResponseErrorAdder->addError($quoteReplacementResponseTransfer, $itemTransfer);
-
-                continue;
-            }
-
-            $itemTransfer->setProductOfferReference($replacementProductOfferTransfer->getProductOfferReference());
-            $itemTransfer->setGroupKey(null);
-        }
-
-        return $quoteReplacementResponseTransfer;
     }
 
     /**
@@ -123,8 +62,18 @@ class DeliveryItemProductOfferReplacer implements ItemProductOfferReplacerInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemProductBundle(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param list<\Generated\Shared\Transfer\ItemTransfer> $quoteItemTransfersForReplacement
+     * @param array<string, \Generated\Shared\Transfer\ItemTransfer> $quoteItemTransfersForReplacement
      *
      * @return \Generated\Shared\Transfer\ProductOfferServicePointCriteriaTransfer
      */
@@ -144,15 +93,5 @@ class DeliveryItemProductOfferReplacer implements ItemProductOfferReplacerInterf
         }
 
         return $productOfferServicePointCriteriaTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isItemProductBundle(ItemTransfer $itemTransfer): bool
-    {
-        return $itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier();
     }
 }

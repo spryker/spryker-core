@@ -109,6 +109,7 @@
     <transfer name="ServicePoint" strict="true">
         <property name="idServicePoint" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
