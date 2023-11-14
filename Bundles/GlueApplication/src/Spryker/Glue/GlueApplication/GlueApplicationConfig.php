@@ -396,6 +396,19 @@ class GlueApplicationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns a list of route patterns for which cache warmup is allowed if the route is not found in the cache.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getRoutePatternsAllowedForCacheWarmUp(): array
+    {
+        return [];
+    }
+
+    /**
+     * Specification:
      * - Returns the default response format `application/json` that will be used if none could be negotiated.
      *
      * @api

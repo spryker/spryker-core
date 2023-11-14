@@ -9,6 +9,7 @@ namespace Spryker\Glue\GlueApplication\Router\CustomRouteRouter;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use ReflectionClass;
 use Symfony\Component\Config\ConfigCacheFactory;
 use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
@@ -79,9 +80,24 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
      */
     public function warmUp(string $cacheDir): array
     {
+        $this->clearRouterStaticCache();
+
         $this->getGenerator();
         $this->getMatcher();
 
         return [];
+    }
+
+    /**
+     * Clears cache in private static parent class property {@link \Symfony\Component\Routing\Router::$cache}
+     *
+     * @return void
+     */
+    protected function clearRouterStaticCache(): void
+    {
+        $routerReflectionClass = new ReflectionClass(SymfonyRouter::class);
+        $cacheProperty = $routerReflectionClass->getProperty('cache');
+        $cacheProperty->setAccessible(true);
+        $cacheProperty->setValue(null, null);
     }
 }

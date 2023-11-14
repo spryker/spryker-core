@@ -53,12 +53,8 @@ class RouteMatcherCollection implements RouteMatcherInterface
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
      */
-    public function route(GlueRequestTransfer $glueRequestTransfer): ResourceInterface
+    public function route(GlueRequestTransfer $glueRequestTransfer, bool $cacheAlreadyWarmed = false): ResourceInterface
     {
-        if ($this->glueApplicationConfig->isDevelopmentMode()) {
-            $this->routerCacheCollector->warmUp([$glueRequestTransfer->getApplication()]);
-        }
-
         foreach ($this->routeMatchers as $routeMatcherType => $routeMatcher) {
             if (!in_array($routeMatcherType, $this->glueApplicationConfig->getRouteMatchers())) {
                 continue;
@@ -82,9 +78,35 @@ class RouteMatcherCollection implements RouteMatcherInterface
             }
         }
 
+        if ($this->isCacheWarmUpAllowed($glueRequestTransfer) && $cacheAlreadyWarmed === false) {
+            $this->routerCacheCollector->warmUp([$glueRequestTransfer->getApplication()]);
+
+            return $this->route($glueRequestTransfer, true);
+        }
+
         return new MissingResource(
             GlueApplicationConfig::ERROR_CODE_RESOURCE_NOT_FOUND,
             GlueApplicationConfig::ERROR_MESSAGE_RESOURCE_NOT_FOUND,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isCacheWarmUpAllowed(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        if ($this->glueApplicationConfig->isDevelopmentMode()) {
+            return true;
+        }
+
+        foreach ($this->glueApplicationConfig->getRoutePatternsAllowedForCacheWarmUp() as $routePattern) {
+            if (preg_match($routePattern, $glueRequestTransfer->getPath())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
