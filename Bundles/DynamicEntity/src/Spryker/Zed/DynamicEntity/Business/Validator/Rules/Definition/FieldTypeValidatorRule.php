@@ -71,7 +71,7 @@ class FieldTypeValidatorRule implements ValidatorRuleInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getFieldTypes(): array
     {

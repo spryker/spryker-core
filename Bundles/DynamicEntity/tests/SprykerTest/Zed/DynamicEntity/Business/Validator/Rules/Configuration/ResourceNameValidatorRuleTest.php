@@ -69,7 +69,7 @@ class ResourceNameValidatorRuleTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     protected function tableAliasesDataProvider(): array
     {

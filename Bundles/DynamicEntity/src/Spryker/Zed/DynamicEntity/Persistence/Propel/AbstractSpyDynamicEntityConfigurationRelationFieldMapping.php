@@ -20,5 +20,4 @@ use Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfigurationRelation
  */
 class AbstractSpyDynamicEntityConfigurationRelationFieldMapping extends BaseSpyDynamicEntityConfigurationRelationFieldMapping
 {
-
 }

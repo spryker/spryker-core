@@ -10,8 +10,6 @@ namespace Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration;
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
-use Spryker\Zed\DynamicEntity\Business\Reader\AllowedTablesReaderInterface;
-use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\ValidatorRuleInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
@@ -45,6 +43,7 @@ class AllowedTablesValidatorRule implements ValidatorRuleInterface
 
     /**
      * @param \Spryker\Zed\DynamicEntity\DynamicEntityConfig $dynamicEntityConfig
+     * @param \Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface $disallowedTablesReader
      */
     public function __construct(DynamicEntityConfig $dynamicEntityConfig, DisallowedTablesReaderInterface $disallowedTablesReader)
     {

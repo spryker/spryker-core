@@ -149,7 +149,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             );
 
             $dynamicEntityCollectionResponseTransfer = $this->processActiveRecordSaving(
-                $dynamicEntityCollectionRequestTransfer,
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityConfigurationTransfer,
                 $dynamicEntityTransfer,
@@ -258,7 +257,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             );
 
             $dynamicEntityCollectionResponseTransfer = $this->processActiveRecordSaving(
-                $dynamicEntityCollectionRequestTransfer,
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityConfigurationTransfer,
                 $dynamicEntityTransfer,
@@ -303,7 +301,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
@@ -314,7 +311,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     protected function processActiveRecordSaving(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
@@ -447,6 +443,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityTransfer
      */
@@ -459,7 +456,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
 
         $identifierVisibleName = $this->getIdentifierVisibleName($identifier, $dynamicEntityConfigurationTransfer);
-        
+
         $identifierValue = $activeRecord->getByName($identifier);
         $dynamicEntityTransfer->setFields(array_merge(
             $dynamicEntityTransfer->getFields(),
@@ -482,11 +479,12 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
         ActiveRecordInterface $activeRecord
     ): DynamicEntityTransfer {
+        $activeRecord = $activeRecord->toArray();
         $entityFields = [];
         foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
             $fieldName = $fieldDefinitionTransfer->getFieldNameOrFail();
             $fieldVisibleName = $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
-            $fieldValue = $activeRecord->getByName($fieldName);
+            $fieldValue = $activeRecord[$fieldName];
             $entityFields[$fieldVisibleName] = $fieldValue;
         }
 
