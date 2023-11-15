@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsGui\Communication;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
@@ -44,7 +46,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsPageTable()
     {
         return new CmsPageTable(
-            $this->getCmsQueryContainer(),
+            $this->getCmsPageLocalizedAttributesQuery(),
+            $this->getCmsPageQuery(),
             $this->getLocaleFacade(),
             $this->getConfig(),
             $this->getCmsFacade(),
@@ -360,5 +363,21 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsGlossaryBeforeSavePlugins(): array
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE);
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery
+     */
+    public function getCmsPageLocalizedAttributesQuery(): SpyCmsPageLocalizedAttributesQuery
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PROPEL_QUERY_CMS_PAGE_LOCALIZED_ATTRIBUTES);
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery
+     */
+    public function getCmsPageQuery(): SpyCmsPageQuery
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PROPEL_QUERY_CMS_PAGE);
     }
 }

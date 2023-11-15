@@ -8,14 +8,17 @@
 namespace Spryker\Zed\CmsGui\Communication\Table;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\PublishVersionPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\ToggleActiveCmsPageForm;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -25,11 +28,6 @@ class CmsPageTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_LABEL_EDIT = 'Edit';
-
-    /**
-     * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
-     */
-    protected $cmsQueryContainer;
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface
@@ -52,20 +50,33 @@ class CmsPageTable extends AbstractTable
     protected $cmsPageTableExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery
+     */
+    protected SpyCmsPageLocalizedAttributesQuery $cmsPageLocalizedAttributesQuery;
+
+    /**
+     * @var \Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery
+     */
+    protected SpyCmsPageQuery $cmsPageQuery;
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery $cmsPageLocalizedAttributesQuery
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery $cmsPageQuery
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\CmsGui\CmsGuiConfig $cmsGuiConfig
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
      * @param array<\Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface> $cmsPageTableExpanderPlugins
      */
     public function __construct(
-        CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
+        SpyCmsPageLocalizedAttributesQuery $cmsPageLocalizedAttributesQuery,
+        SpyCmsPageQuery $cmsPageQuery,
         CmsGuiToLocaleInterface $localeFacade,
         CmsGuiConfig $cmsGuiConfig,
         CmsGuiToCmsInterface $cmsFacade,
         array $cmsPageTableExpanderPlugins
     ) {
-        $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->cmsPageLocalizedAttributesQuery = $cmsPageLocalizedAttributesQuery;
+        $this->cmsPageQuery = $cmsPageQuery;
         $this->localeFacade = $localeFacade;
         $this->cmsGuiConfig = $cmsGuiConfig;
         $this->cmsFacade = $cmsFacade;
@@ -101,9 +112,11 @@ class CmsPageTable extends AbstractTable
         $cmsPageAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
 
         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
-        $query = $this->cmsQueryContainer->queryLocalizedPagesWithTemplates();
+        $query = $this->prepareQuery();
 
+        /** @var list<array<string, mixed>> $queryResults */
         $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->expandCmsPageDataCollectionWithLocalizedData($queryResults, $localeTransfer);
 
         $results = [];
         foreach ($queryResults as $item) {
@@ -111,6 +124,58 @@ class CmsPageTable extends AbstractTable
         }
 
         return $results;
+    }
+
+    /**
+     * @param list<array<string, mixed>> $cmsPageDataCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function expandCmsPageDataCollectionWithLocalizedData(array $cmsPageDataCollection, LocaleTransfer $localeTransfer): array
+    {
+        $cmsPageNamesIndexedByIdCmsPage = $this->cmsPageLocalizedAttributesQuery
+            ->filterByFkCmsPage_In($this->extractCmsPageIdsFromCmsPageData($cmsPageDataCollection))
+            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->select([
+                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME,
+                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_ATTRIBUTES_TABLE_FK_CMS_PAGE,
+            ])
+            ->find()
+            ->toKeyValue(
+                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_ATTRIBUTES_TABLE_FK_CMS_PAGE,
+                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME,
+            );
+
+        foreach ($cmsPageDataCollection as $key => $cmsPageData) {
+            $cmsPageDataCollection[$key][CmsPageTableConstants::COL_NAME]
+                = $cmsPageNamesIndexedByIdCmsPage[$cmsPageData[CmsPageTableConstants::COL_ID_CMS_PAGE]];
+        }
+
+        return array_values($cmsPageDataCollection);
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    protected function prepareQuery(): SpyCmsPageQuery
+    {
+        return $this->cmsPageQuery
+            ->leftJoinCmsTemplate()
+            ->withColumn(CmsPageTableConstants::COL_CMS_TEMPLATE_TABLE_TEMPLATE_NAME, CmsPageTableConstants::COL_TEMPLATE)
+            ->addJoin(
+                CmsPageTableConstants::COL_CMS_PAGE_TABLE_ID_CMS_PAGE,
+                CmsPageTableConstants::COL_URL_TABLE_FK_RESOURCE_PAGE,
+                Criteria::LEFT_JOIN,
+            )
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', CmsPageTableConstants::COL_URL_TABLE_URL), CmsPageTableConstants::COL_CMS_URLS)
+            ->addJoin(
+                CmsPageTableConstants::COL_CMS_PAGE_TABLE_ID_CMS_PAGE,
+                CmsPageTableConstants::COL_VERSION_TABLE_FK_CMS_PAGE,
+                Criteria::LEFT_JOIN,
+            )
+            ->withColumn(sprintf('COUNT(DISTINCT %s)', CmsPageTableConstants::COL_VERSION_TABLE_VERSION), CmsPageTableConstants::COL_CMS_VERSION_COUNT)
+            ->groupByIdCmsPage();
     }
 
     /**
@@ -531,36 +596,13 @@ class CmsPageTable extends AbstractTable
 
         return [
             CmsPageTableConstants::COL_ID_CMS_PAGE => $this->formatInt($item[CmsPageTableConstants::COL_ID_CMS_PAGE]),
-            CmsPageTableConstants::COL_NAME => $this->buildCmsPageName($item),
+            CmsPageTableConstants::COL_NAME => $item[CmsPageTableConstants::COL_NAME],
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],
             CmsPageTableConstants::COL_STATUS => $this->getStatusLabel($item),
             CmsPageTableConstants::COL_STORE_RELATION => $this->getStoreNames($item[CmsPageTableConstants::COL_ID_CMS_PAGE]),
             CmsPageTableConstants::ACTIONS => $actions,
         ];
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
-    protected function buildCmsPageName(array $item): string
-    {
-        $cmsNames = $this->extractNames($item);
-
-        /** @var string */
-        return reset($cmsNames);
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return array<string>
-     */
-    protected function extractNames(array $item): array
-    {
-        return explode(',', $item[CmsPageTableConstants::COL_NAME]);
     }
 
     /**
@@ -592,7 +634,11 @@ class CmsPageTable extends AbstractTable
     {
         $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
-        return $this->formatStoreNames($cmsPageTransfer->getStoreRelation());
+        if (!$cmsPageTransfer) {
+            return '';
+        }
+
+        return $this->formatStoreNames($cmsPageTransfer->getStoreRelationOrFail());
     }
 
     /**
@@ -616,5 +662,20 @@ class CmsPageTable extends AbstractTable
         }
 
         return implode(' ', $storeNames);
+    }
+
+    /**
+     * @param list<array<string, mixed>> $cmsPageDataCollection
+     *
+     * @return list<int>
+     */
+    protected function extractCmsPageIdsFromCmsPageData(array $cmsPageDataCollection): array
+    {
+        $cmsPageIds = [];
+        foreach ($cmsPageDataCollection as $cmsPageData) {
+            $cmsPageIds[] = (int)$cmsPageData[CmsPageTableConstants::COL_ID_CMS_PAGE];
+        }
+
+        return $cmsPageIds;
     }
 }

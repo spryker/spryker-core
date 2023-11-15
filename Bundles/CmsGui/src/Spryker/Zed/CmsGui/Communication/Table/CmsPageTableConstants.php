@@ -31,9 +31,71 @@ interface CmsPageTableConstants
      */
     public const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';
 
+    /**
+     * @var string
+     */
     public const COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
 
+    /**
+     * @var string
+     */
     public const COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
+
+    /**
+     * @uses \Orm\Zed\Url\Persistence\Map\SpyUrlTableMap::COL_FK_RESOURCE_PAGE
+     *
+     * @var string
+     */
+    public const COL_URL_TABLE_FK_RESOURCE_PAGE = 'spy_url.fk_resource_page';
+
+    /**
+     * @uses \Orm\Zed\Url\Persistence\Map\SpyUrlTableMap::COL_URL
+     *
+     * @var string
+     */
+    public const COL_URL_TABLE_URL = 'spy_url.url';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap::COL_FK_CMS_PAGE
+     *
+     * @var string
+     */
+    public const COL_VERSION_TABLE_FK_CMS_PAGE = 'spy_cms_version.fk_cms_page';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap::COL_VERSION
+     *
+     * @var string
+     */
+    public const COL_VERSION_TABLE_VERSION = 'spy_cms_version.version';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap::COL_ID_CMS_PAGE
+     *
+     * @var string
+     */
+    public const COL_CMS_PAGE_TABLE_ID_CMS_PAGE = 'spy_cms_page.id_cms_page';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap::COL_TEMPLATE_NAME
+     *
+     * @var string
+     */
+    public const COL_CMS_TEMPLATE_TABLE_TEMPLATE_NAME = 'spy_cms_template.template_name';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap::COL_NAME
+     *
+     * @var string
+     */
+    public const COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME = 'spy_cms_page_localized_attributes.name';
+
+    /**
+     * @uses \Orm\Zed\Cms\Persistence\Map\SpyCmsPageLocalizedAttributesTableMap::COL_FK_CMS_PAGE
+     *
+     * @var string
+     */
+    public const COL_CMS_PAGE_LOCALIZED_ATTRIBUTES_TABLE_FK_CMS_PAGE = 'spy_cms_page_localized_attributes.fk_cms_page';
 
     /**
      * @var string

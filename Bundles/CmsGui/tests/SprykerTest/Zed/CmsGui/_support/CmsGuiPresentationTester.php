@@ -22,7 +22,7 @@ use Codeception\Scenario;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CmsGui\PHPMD)
  */
 class CmsGuiPresentationTester extends Actor
 {

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-
 class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterface
 {
     /**
@@ -110,13 +108,5 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
     public function queryCmsPageLocalizedAttributes()
     {
         return $this->cmsQueryContainer->queryCmsPageLocalizedAttributes();
-    }
-
-    /**
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
-     */
-    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery
-    {
-        return $this->cmsQueryContainer->queryLocalizedPagesWithTemplates();
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsGui;
 
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageLocalizedAttributesQuery;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery;
 use Spryker\Zed\CmsGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeBridge;
@@ -74,6 +76,16 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PROPEL_QUERY_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_CMS_PAGE_LOCALIZED_ATTRIBUTES';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_CMS_PAGE = 'PROPEL_QUERY_CMS_PAGE';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
 
     /**
@@ -136,6 +148,36 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addCmsGlossaryBeforeSavePlugins($container);
         $container = $this->addCmsGlossaryAfterFindPlugins($container);
+        $container = $this->addCmsPagePropelQuery($container);
+        $container = $this->addCmsPageLocalizedAttributesPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsPagePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CMS_PAGE, $container->factory(function () {
+            return SpyCmsPageQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsPageLocalizedAttributesPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CMS_PAGE_LOCALIZED_ATTRIBUTES, $container->factory(function () {
+            return SpyCmsPageLocalizedAttributesQuery::create();
+        }));
 
         return $container;
     }
