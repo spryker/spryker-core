@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
@@ -98,9 +99,16 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
             return $this->productOfferPriceRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
         }
 
+        $productOfferStorageTransfers = $this->productOfferStorageClient->getProductOfferStoragesByReferences([$productOfferRestResource->getId()]);
+
+        if (!$productOfferStorageTransfers) {
+            return $this->productOfferPriceRestResponseBuilder->createProductOfferNotFoundErrorResponse();
+        }
+
         $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
             [$productOfferRestResource->getId()],
             $restRequest->getMetadata()->getLocale(),
+            reset($productOfferStorageTransfers),
         );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
@@ -114,12 +122,18 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     /**
      * @param array<string> $productOfferReferences
      * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer|null $productOfferStorageTransfer
      *
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
-    public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array
-    {
-        $productOfferStorageTransfers = $this->productOfferStorageClient->getProductOfferStoragesByReferences($productOfferReferences);
+    public function getProductOfferPriceRestResources(
+        array $productOfferReferences,
+        string $localeName,
+        ?ProductOfferStorageTransfer $productOfferStorageTransfer = null
+    ): array {
+        $productOfferStorageTransfers = $productOfferStorageTransfer ?
+            [$productOfferStorageTransfer] :
+            $this->productOfferStorageClient->getProductOfferStoragesByReferences($productOfferReferences);
 
         $productConcreteSkus = $this->getProductConcreteSkus($productOfferStorageTransfers);
 

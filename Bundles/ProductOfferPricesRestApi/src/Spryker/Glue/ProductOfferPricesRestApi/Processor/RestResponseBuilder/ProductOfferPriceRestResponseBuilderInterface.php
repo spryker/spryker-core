@@ -40,4 +40,9 @@ interface ProductOfferPriceRestResponseBuilderInterface
         CurrentProductPriceTransfer $currentProductPriceTransfer,
         string $productOfferReference
     ): RestResourceInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferNotFoundErrorResponse(): RestResponseInterface;
 }

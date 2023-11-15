@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -22,8 +23,13 @@ interface ProductOfferPriceReaderInterface
     /**
      * @param array<string> $productOfferReferences
      * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer|null $productOfferStorageTransfer
      *
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
-    public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array;
+    public function getProductOfferPriceRestResources(
+        array $productOfferReferences,
+        string $localeName,
+        ?ProductOfferStorageTransfer $productOfferStorageTransfer = null
+    ): array;
 }

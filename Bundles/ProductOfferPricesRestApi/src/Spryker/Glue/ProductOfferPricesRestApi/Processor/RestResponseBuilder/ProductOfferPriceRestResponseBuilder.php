@@ -107,4 +107,17 @@ class ProductOfferPriceRestResponseBuilder implements ProductOfferPriceRestRespo
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductOfferPricesRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_NOT_FOUND)
+            ->setDetail(ProductOfferPricesRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
 }
