@@ -27,10 +27,13 @@ use Spryker\Zed\ClickAndCollectExample\Business\Replacer\ItemProductOfferReplace
 use Spryker\Zed\ClickAndCollectExample\Business\Replacer\PickupItemProductOfferReplacer;
 use Spryker\Zed\ClickAndCollectExample\Business\Replacer\QuoteProductOfferReplacer;
 use Spryker\Zed\ClickAndCollectExample\Business\Replacer\QuoteProductOfferReplacerInterface;
+use Spryker\Zed\ClickAndCollectExample\Business\Validator\AuthorizationValidator;
+use Spryker\Zed\ClickAndCollectExample\Business\Validator\AuthorizationValidatorInterface;
 use Spryker\Zed\ClickAndCollectExample\Business\Validator\QuoteItemProductOfferReplacementValidator;
 use Spryker\Zed\ClickAndCollectExample\Business\Validator\QuoteItemProductOfferReplacementValidatorInterface;
 use Spryker\Zed\ClickAndCollectExample\ClickAndCollectExampleDependencyProvider;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeInterface;
+use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToMerchantUserFacadeInterface;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToServicePointFacadeInterface;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToShipmentFacadeInterface;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToStoreFacadeInterface;
@@ -191,6 +194,16 @@ class ClickAndCollectExampleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ClickAndCollectExample\Business\Validator\AuthorizationValidatorInterface
+     */
+    public function createAuthorizationValidator(): AuthorizationValidatorInterface
+    {
+        return new AuthorizationValidator(
+            $this->getMerchantUserFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToServicePointFacadeInterface
      */
     public function getServicePointFacade(): ClickAndCollectExampleToServicePointFacadeInterface
@@ -220,5 +233,13 @@ class ClickAndCollectExampleBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityFacade(): ClickAndCollectExampleToAvailabilityFacadeInterface
     {
         return $this->getProvidedDependency(ClickAndCollectExampleDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToMerchantUserFacadeInterface
+     */
+    public function getMerchantUserFacade(): ClickAndCollectExampleToMerchantUserFacadeInterface
+    {
+        return $this->getProvidedDependency(ClickAndCollectExampleDependencyProvider::FACADE_MERCHANT_USER);
     }
 }

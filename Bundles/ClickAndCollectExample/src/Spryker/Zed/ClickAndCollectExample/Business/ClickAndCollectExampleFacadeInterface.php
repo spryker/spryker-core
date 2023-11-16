@@ -9,8 +9,11 @@ namespace Spryker\Zed\ClickAndCollectExample\Business;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
 interface ClickAndCollectExampleFacadeInterface
 {
@@ -54,4 +57,20 @@ interface ClickAndCollectExampleFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function validateQuoteItemProductOfferReplacement(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
+
+    /**
+     *  Specification:
+     * - Expects `GlueRequestTransfer.requestUser`, `GlueRequestTransfer.requestUser.surrogateIdentifier.` to be set.
+     * - Retrieves merchant user from Persistence by `GlueRequestTransfer.requestUser.surrogateIdentifier`.
+     * - Allows access to resource if merchant user is not found.
+     * - Adds validation error to `GlueRequestValidationTransfer` if merchant user is found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     *
+     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
+     */
+    public function validateProtectedGlueRequest(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer;
 }

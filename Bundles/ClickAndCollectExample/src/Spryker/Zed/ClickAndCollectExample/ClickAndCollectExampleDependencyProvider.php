@@ -11,6 +11,7 @@ use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToAvailabilityFacadeBridge;
+use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToMerchantUserFacadeBridge;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToServicePointFacadeBridge;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToShipmentFacadeBridge;
 use Spryker\Zed\ClickAndCollectExample\Dependency\Facade\ClickAndCollectExampleToStoreFacadeBridge;
@@ -58,6 +59,11 @@ class ClickAndCollectExampleDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     /**
+     * @var string
+     */
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -70,6 +76,7 @@ class ClickAndCollectExampleDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addShipmentFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addAvailabilityFacade($container);
+        $container = $this->addMerchantUserFacade($container);
 
         return $container;
     }
@@ -155,6 +162,20 @@ class ClickAndCollectExampleDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new ClickAndCollectExampleToAvailabilityFacadeBridge($container->getLocator()->availability()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
+            return new ClickAndCollectExampleToMerchantUserFacadeBridge($container->getLocator()->merchantUser()->facade());
         });
 
         return $container;

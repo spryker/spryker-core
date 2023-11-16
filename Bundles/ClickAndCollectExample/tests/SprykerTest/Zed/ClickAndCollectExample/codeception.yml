@@ -39,3 +39,6 @@ suites:
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
                 - \SprykerTest\Shared\ShipmentTypeServicePoint\Helper\ShipmentTypeServicePointHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\User\Helper\UserDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\MerchantUser\Helper\MerchantUserHelper

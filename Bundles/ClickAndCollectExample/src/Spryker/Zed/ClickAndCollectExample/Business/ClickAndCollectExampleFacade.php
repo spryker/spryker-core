@@ -9,8 +9,11 @@ namespace Spryker\Zed\ClickAndCollectExample\Business;
 
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\QuoteReplacementResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -45,5 +48,20 @@ class ClickAndCollectExampleFacade extends AbstractFacade implements ClickAndCol
     public function validateQuoteItemProductOfferReplacement(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFactory()->createQuoteItemProductOfferReplacementValidator()->validate($checkoutDataTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     *
+     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
+     */
+    public function validateProtectedGlueRequest(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer
+    {
+        return $this->getFactory()->createAuthorizationValidator()->validate($glueRequestTransfer, $resource);
     }
 }

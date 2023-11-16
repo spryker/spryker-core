@@ -227,4 +227,32 @@
         <property name="availableQuantity" type="decimal"/>
     </transfer>
 
+    <transfer name="GlueRequest">
+        <property name="requestUser" type="GlueRequestUser"/>
+    </transfer>
+
+    <transfer name="GlueRequestValidation">
+        <property name="isValid" type="bool"/>
+        <property name="validationError" type="string"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantUserCriteria">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="GlueError">
+        <property name="status" type="int"/>
+        <property name="message" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+    </transfer>
+
+    <transfer name="GlueRequestUser">
+        <property name="surrogateIdentifier" type="int"/>
+    </transfer>
+
 </transfers>
