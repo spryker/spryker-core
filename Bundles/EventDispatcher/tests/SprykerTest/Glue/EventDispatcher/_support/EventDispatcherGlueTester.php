@@ -9,9 +9,14 @@ namespace SprykerTest\Glue\EventDispatcher;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Spryker\Glue\Kernel\Container;
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
+use SprykerTest\Glue\EventDispatcher\Plugin\Application\EventDispatcherApplicationPluginTest;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -27,7 +32,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Glue\EventDispatcher\PHPMD)
  */
 class EventDispatcherGlueTester extends Actor
 {
@@ -36,12 +41,17 @@ class EventDispatcherGlueTester extends Actor
     /**
      * @var string
      */
-    protected const SERVICE_DISPATCHER = 'dispatcher';
+    public const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * @var string
      */
-    protected const SERVICE_STOPWATCH = 'stopwatch';
+    public const SERVICE_STOPWATCH = 'stopwatch';
+
+    /**
+     * @var string
+     */
+    public const FOO_LISTENER = 'foo';
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
@@ -72,7 +82,7 @@ class EventDispatcherGlueTester extends Actor
         /** @var \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface $eventDispatcherPluginMock */
         $eventDispatcherPluginMock = Stub::makeEmpty(EventDispatcherPluginInterface::class, [
             'extend' => function (EventDispatcher $eventDispatcher) {
-                $eventDispatcher->addListener('foo', function () {
+                $eventDispatcher->addListener(static::FOO_LISTENER, function () {
                     return 'bar';
                 });
 
@@ -81,5 +91,57 @@ class EventDispatcherGlueTester extends Actor
         ]);
 
         return $eventDispatcherPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function createContainer(): ContainerInterface
+    {
+        return new Container();
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createDummyEventSubscriber(): EventSubscriberInterface
+    {
+        return new class implements EventSubscriberInterface
+        {
+            /**
+             * @return array
+             */
+            public static function getSubscribedEvents(): array
+            {
+                return [
+                    EventDispatcherApplicationPluginTest::DUMMY_EVENT => 'onDummyEvent',
+                ];
+            }
+
+            /**
+             * @return void
+             */
+            public function onDummyEvent(): void
+            {
+            }
+        };
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     */
+    public function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
+    {
+        return $container->get(static::SERVICE_DISPATCHER);
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    public function createOldEventDispatcher()
+    {
+        return new SymfonyEventDispatcher();
     }
 }

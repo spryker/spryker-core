@@ -27,7 +27,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\EventDispatcher\PHPMD)
  */
 class EventDispatcherCommunicationTester extends Actor
 {
