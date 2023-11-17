@@ -27,6 +27,10 @@ class FileValidator extends SymfonyFileValidator
     {
         parent::validate($value, $constraint);
 
+        if ($value === null || $value === '') {
+            return;
+        }
+
         $path = $value instanceof FileObject ? $value->getPathname() : (string)$value;
         $basename = $value instanceof UploadedFile ? $value->getClientOriginalName() : basename($path);
         $mimeTypes = (array)$constraint->mimeTypes;
