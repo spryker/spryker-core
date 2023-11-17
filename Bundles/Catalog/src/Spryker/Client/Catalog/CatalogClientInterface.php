@@ -88,7 +88,7 @@ interface CatalogClientInterface
      * Specification:
      * - Finds concrete products at Elasticsearch by full-text.
      * - Filters results by searchString and locale.
-     * - Limit and offset can be specified.
+     * - Limit can be specified.
      *
      * @api
      *

@@ -162,7 +162,11 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     {
         $searchQuery = $this->getFactory()->createProductConcreteCatalogSearchQuery((string)$productConcreteCriteriaFilterTransfer->getSearchString());
         $requestParameters = $productConcreteCriteriaFilterTransfer->getRequestParams();
-        $requestParameters[$this->getFactory()->getConfig()->getItemsPerPageParameterName()] = $productConcreteCriteriaFilterTransfer->getLimit();
+
+        if ($productConcreteCriteriaFilterTransfer->getLimit() !== null) {
+            $requestParameters[$this->getFactory()->getConfig()->getItemsPerPageParameterName()] = $productConcreteCriteriaFilterTransfer->getLimit();
+        }
+
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
