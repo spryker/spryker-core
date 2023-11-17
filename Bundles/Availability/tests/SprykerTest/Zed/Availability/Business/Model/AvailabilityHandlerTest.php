@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
@@ -76,7 +75,7 @@ class AvailabilityHandlerTest extends Unit
 
         $stockFacadeMock = $this->createAvailabilityToStockFacadeMock();
         $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
-            ->willReturn([$this->createStoreTransfer()]);
+            ->willReturn([$this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])]);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -112,7 +111,7 @@ class AvailabilityHandlerTest extends Unit
 
         $stockFacadeMock = $this->createAvailabilityToStockFacadeMock();
         $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
-            ->willReturn([$this->createStoreTransfer()]);
+            ->willReturn([$this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])]);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -235,15 +234,5 @@ class AvailabilityHandlerTest extends Unit
     {
         return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
             ->getMock();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function createStoreTransfer(): StoreTransfer
-    {
-        return (new StoreBuilder([
-            StoreTransfer::NAME => static::STORE_NAME,
-        ]))->build();
     }
 }

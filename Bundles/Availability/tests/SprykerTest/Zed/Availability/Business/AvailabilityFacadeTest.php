@@ -403,6 +403,52 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateAvailabilityShouldStoreEmptyQuantityWhenStockProductDoesNotHaveRelationToSameStore(): void
+    {
+        // Arrange
+        $storeDeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], false);
+        $storeAtTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStockForStore($storeDeTransfer, [
+            StockProductTransfer::SKU => $productTransfer->getSku(),
+            StockProductTransfer::QUANTITY => 10,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
+        ]);
+        $this->createProductAvailability(
+            $productTransfer->getAbstractSkuOrFail(),
+            $productTransfer->getSkuOrFail(),
+            new Decimal(10),
+            $storeDeTransfer,
+        );
+        $this->createProductAvailability(
+            $productTransfer->getAbstractSkuOrFail(),
+            $productTransfer->getSkuOrFail(),
+            new Decimal(10),
+            $storeAtTransfer,
+        );
+
+        // Act
+        $this->getAvailabilityFacade()->updateAvailability($productTransfer->getSku());
+
+        // Assert
+        $availabilityDeEntity = $this->tester->findAvailabilityConcreteForStore(
+            $productTransfer->getSkuOrFail(),
+            $storeDeTransfer->getIdStoreOrFail(),
+        );
+        $this->assertNotNull($availabilityDeEntity);
+        $this->assertTrue((new Decimal(10))->equals($availabilityDeEntity->getQuantity()));
+
+        $availabilityAtEntity = $this->tester->findAvailabilityConcreteForStore(
+            $productTransfer->getSkuOrFail(),
+            $storeAtTransfer->getIdStoreOrFail(),
+        );
+        $this->assertNotNull($availabilityAtEntity);
+        $this->assertTrue((new Decimal(0))->equals($availabilityAtEntity->getQuantity()));
+    }
+
+    /**
+     * @return void
+     */
     public function testFindProductAbstractAvailabilityForStoreWithCachedAvailability(): void
     {
         // Arrange

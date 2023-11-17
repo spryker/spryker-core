@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Availability;
 
 use Codeception\Actor;
+use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 
@@ -29,6 +30,20 @@ use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 class AvailabilityBusinessTester extends Actor
 {
     use _generated\AvailabilityBusinessTesterActions;
+
+    /**
+     * @param string $productSku
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
+     */
+    public function findAvailabilityConcreteForStore(string $productSku, int $idStore): ?SpyAvailability
+    {
+        return $this->getAvailabilityQuery()
+            ->filterBySku($productSku)
+            ->filterByFkStore($idStore)
+            ->findOne();
+    }
 
     /**
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery

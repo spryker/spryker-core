@@ -115,14 +115,21 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($concreteSku)
     {
-        $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($concreteSku);
-        if ($storeTransfers === []) {
-            $this->updateProductAvailabilityForProductWithNotDefinedStock($concreteSku);
+        $storeTransfersRelatedToProductAvailability = $this->availabilityRepository->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+        $storeTransfersRelatedToProductStock = $this->stockFacade->getStoresWhereProductStockIsDefined($concreteSku);
 
-            return;
+        $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation = $this->getStoreTransfersRelatedToProductAvailabilityWithoutProductStockRelation(
+            $storeTransfersRelatedToProductAvailability,
+            $storeTransfersRelatedToProductStock,
+        );
+        if ($storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation !== []) {
+            $this->updateProductAvailabilityForProductWithNotDefinedStock(
+                $concreteSku,
+                $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation,
+            );
         }
 
-        foreach ($storeTransfers as $storeTransfer) {
+        foreach ($storeTransfersRelatedToProductStock as $storeTransfer) {
             $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
         }
     }
@@ -287,12 +294,12 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $concreteSku
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
      * @return void
      */
-    protected function updateProductAvailabilityForProductWithNotDefinedStock(string $concreteSku): void
+    protected function updateProductAvailabilityForProductWithNotDefinedStock(string $concreteSku, array $storeTransfers): void
     {
-        $storeTransfers = $this->availabilityRepository->getStoresWhereProductAvailabilityIsDefined($concreteSku);
         foreach ($storeTransfers as $storeTransfer) {
             $this->saveAndTouchAvailability($concreteSku, new Decimal(0), $storeTransfer);
         }
@@ -380,5 +387,43 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected function createDynamicEntityPostEditResponseTransfer(): DynamicEntityPostEditResponseTransfer
     {
         return new DynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfersRelatedToProductAvailability
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfersRelatedToProductStock
+     *
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getStoreTransfersRelatedToProductAvailabilityWithoutProductStockRelation(
+        array $storeTransfersRelatedToProductAvailability,
+        array $storeTransfersRelatedToProductStock
+    ): array {
+        $storeTransfersRelatedToProductStockIndexedByIdStore = $this->getStoreTransfersIndexedByIdStore($storeTransfersRelatedToProductStock);
+        $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation = [];
+        foreach ($storeTransfersRelatedToProductAvailability as $storeTransfer) {
+            if (isset($storeTransfersRelatedToProductStockIndexedByIdStore[$storeTransfer->getIdStoreOrFail()])) {
+                continue;
+            }
+
+            $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation[] = $storeTransfer;
+        }
+
+        return $storeTransfersRelatedToProductAvailabilityWithoutProductStockRelation;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getStoreTransfersIndexedByIdStore(array $storeTransfers): array
+    {
+        $storeTransfersIndexedByIdStore = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeTransfersIndexedByIdStore[$storeTransfer->getIdStoreOrFail()] = $storeTransfer;
+        }
+
+        return $storeTransfersIndexedByIdStore;
     }
 }
