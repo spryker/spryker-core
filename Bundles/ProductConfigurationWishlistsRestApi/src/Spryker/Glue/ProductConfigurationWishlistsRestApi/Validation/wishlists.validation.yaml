@@ -32,10 +32,14 @@ wishlist-items:
                                                                       - NotBlank
                                                                       - Type:
                                                                             type: numeric
+                                                                      - GreaterThanOrEqual:
+                                                                            value: 0
                                                                   grossAmount:
                                                                       - NotBlank
                                                                       - Type:
                                                                             type: numeric
+                                                                      - GreaterThanOrEqual:
+                                                                            value: 0
                                                                   currency:
                                                                       - Collection:
                                                                             fields:
@@ -55,9 +59,13 @@ wishlist-items:
                                                                                                     netAmount:
                                                                                                         - Type:
                                                                                                               type: numeric
+                                                                                                        - GreaterThanOrEqual:
+                                                                                                              value: 0
                                                                                                     grossAmount:
                                                                                                         - Type:
                                                                                                               type: numeric
+                                                                                                        - GreaterThanOrEqual:
+                                                                                                              value: 0
                                                                                                     quantity:
                                                                                                         - NotBlank
                                                                                                         - Type:
@@ -95,10 +103,14 @@ wishlist-items:
                                                                       - NotBlank
                                                                       - Type:
                                                                             type: numeric
+                                                                      - GreaterThanOrEqual:
+                                                                            value: 0
                                                                   grossAmount:
                                                                       - NotBlank
                                                                       - Type:
                                                                             type: numeric
+                                                                      - GreaterThanOrEqual:
+                                                                            value: 0
                                                                   currency:
                                                                       - Collection:
                                                                             fields:
@@ -118,9 +130,13 @@ wishlist-items:
                                                                                                     netAmount:
                                                                                                         - Type:
                                                                                                               type: numeric
+                                                                                                        - GreaterThanOrEqual:
+                                                                                                              value: 0
                                                                                                     grossAmount:
                                                                                                         - Type:
                                                                                                               type: numeric
+                                                                                                        - GreaterThanOrEqual:
+                                                                                                              value: 0
                                                                                                     quantity:
                                                                                                         - NotBlank
                                                                                                         - Type:
