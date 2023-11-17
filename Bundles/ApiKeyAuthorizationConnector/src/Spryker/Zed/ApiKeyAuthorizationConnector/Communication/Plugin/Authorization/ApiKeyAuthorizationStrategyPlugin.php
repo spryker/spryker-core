@@ -9,13 +9,14 @@ namespace Spryker\Zed\ApiKeyAuthorizationConnector\Communication\Plugin\Authoriz
 
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\DetachedAuthorizationStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ApiKeyAuthorizationConnector\Business\ApiKeyAuthorizationConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ApiKeyAuthorizationConnector\ApiKeyAuthorizationConnectorConfig getConfig()
  */
-class ApiKeyAuthorizationStrategyPlugin extends AbstractPlugin implements AuthorizationStrategyPluginInterface
+class ApiKeyAuthorizationStrategyPlugin extends AbstractPlugin implements AuthorizationStrategyPluginInterface, DetachedAuthorizationStrategyPluginInterface
 {
     /**
      * @var string

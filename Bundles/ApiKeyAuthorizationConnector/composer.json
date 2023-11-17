@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.1",
         "spryker/api-key": "^2.0.0",
-        "spryker/authorization-extension": "^1.0.0",
+        "spryker/authorization-extension": "^1.2.0",
         "spryker/glue-backend-api-application-authorization-connector-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.7.0",

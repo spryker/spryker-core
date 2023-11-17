@@ -9,29 +9,27 @@ namespace Spryker\Zed\Authorization\Business\Authorization;
 
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Generated\Shared\Transfer\AuthorizationResponseTransfer;
-use Spryker\Zed\Authorization\AuthorizationConfig;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\DetachedAuthorizationStrategyPluginInterface;
 use Spryker\Zed\Authorization\Business\Exception\AuthorizationStrategyNotFoundException;
 
 class AuthorizationChecker implements AuthorizationCheckerInterface
 {
+    /**
+     * @var string
+     */
+    protected const MESSAGE_STRATEGY_NOT_FOUND = 'Authorization strategy `%s` not found.';
+
     /**
      * @var \Spryker\Zed\Authorization\Business\Authorization\AuthorizationStrategyCollectionInterface
      */
     protected AuthorizationStrategyCollectionInterface $authorizationStrategyCollection;
 
     /**
-     * @var \Spryker\Zed\Authorization\AuthorizationConfig
-     */
-    protected AuthorizationConfig $authorizationConfig;
-
-    /**
      * @param \Spryker\Zed\Authorization\Business\Authorization\AuthorizationStrategyCollectionInterface $authorizationStrategyCollection
-     * @param \Spryker\Zed\Authorization\AuthorizationConfig $authorizationConfig
      */
-    public function __construct(AuthorizationStrategyCollectionInterface $authorizationStrategyCollection, AuthorizationConfig $authorizationConfig)
+    public function __construct(AuthorizationStrategyCollectionInterface $authorizationStrategyCollection)
     {
         $this->authorizationStrategyCollection = $authorizationStrategyCollection;
-        $this->authorizationConfig = $authorizationConfig;
     }
 
     /**
@@ -51,26 +49,84 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
             return $authorizationResponseTransfer->setIsAuthorized(true);
         }
 
+        $detachedStrategies = [];
+        $strategies = [];
         foreach ($authorizationRequestTransfer->getStrategies() as $strategy) {
             if (!$this->authorizationStrategyCollection->has($strategy)) {
                 throw new AuthorizationStrategyNotFoundException(sprintf(
-                    'Authorization strategy `%s` not found.',
+                    static::MESSAGE_STRATEGY_NOT_FOUND,
                     $strategy,
                 ));
             }
-            $isAuthorized = $this->authorizationStrategyCollection
-                ->get($strategy)
-                ->authorize($authorizationRequestTransfer);
 
-            $authorizationResponseTransfer->setIsAuthorized($isAuthorized);
+            $authorizationStrategy = $this->authorizationStrategyCollection->get($strategy);
 
-            if ($isAuthorized) {
-                return $authorizationResponseTransfer;
+            if ($authorizationStrategy instanceof DetachedAuthorizationStrategyPluginInterface) {
+                $detachedStrategies[$strategy] = $authorizationStrategy;
+
+                continue;
+            }
+
+            $strategies[$strategy] = $authorizationStrategy;
+        }
+
+        $authorizationResponseTransfer = $this->authorizeDetachedStrategies($detachedStrategies, $authorizationRequestTransfer, $authorizationResponseTransfer);
+        if ($authorizationResponseTransfer->getIsAuthorized() === true) {
+            return $authorizationResponseTransfer;
+        }
+
+        return $this->authorizeStrategies($strategies, $authorizationRequestTransfer, $authorizationResponseTransfer);
+    }
+
+    /**
+     * @param array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $strategies
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\AuthorizationResponseTransfer
+     */
+    protected function authorizeDetachedStrategies(
+        array $strategies,
+        AuthorizationRequestTransfer $authorizationRequestTransfer,
+        AuthorizationResponseTransfer $authorizationResponseTransfer
+    ): AuthorizationResponseTransfer {
+        foreach ($strategies as $strategy => $authorizationStrategy) {
+            $isAuthorized = $authorizationStrategy->authorize($authorizationRequestTransfer);
+
+            if ($isAuthorized === true) {
+                return $authorizationResponseTransfer->setIsAuthorized(true);
             }
 
             $authorizationResponseTransfer->setFailedStrategy($strategy);
+        }
 
-            if (!$this->authorizationConfig->isMultistrategyAuthorizationAllowed()) {
+        return $authorizationResponseTransfer;
+    }
+
+    /**
+     * @param array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $strategies
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
+     * @return \Generated\Shared\Transfer\AuthorizationResponseTransfer
+     */
+    protected function authorizeStrategies(
+        array $strategies,
+        AuthorizationRequestTransfer $authorizationRequestTransfer,
+        AuthorizationResponseTransfer $authorizationResponseTransfer
+    ): AuthorizationResponseTransfer {
+        if ($strategies !== []) {
+            $authorizationResponseTransfer
+                ->setFailedStrategy(null)
+                ->setIsAuthorized(false);
+        }
+
+        foreach ($strategies as $strategy => $authorizationStrategy) {
+            $isAuthorized = $authorizationStrategy->authorize($authorizationRequestTransfer);
+            $authorizationResponseTransfer->setIsAuthorized($isAuthorized);
+
+            if ($isAuthorized === false) {
+                $authorizationResponseTransfer->setFailedStrategy($strategy);
+
                 return $authorizationResponseTransfer;
             }
         }

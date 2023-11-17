@@ -17,7 +17,7 @@ class AuthorizationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @deprecated Will be removed with next major. Multistrategy authorization will be enabled by default.
+     * @deprecated Will be removed with next major. Multistrategy authorization is not supported anymore.
      *
      * @return bool
      */
