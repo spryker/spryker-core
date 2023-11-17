@@ -210,7 +210,9 @@ class PriceProductDataHelper extends Module
             ->seed($priceProductOverride)
             ->build();
 
-        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::DEFAULT_CURRENT_STORE);
+        $storeTransfer =
+            $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::STORE]
+            ?? $this->getStoreFacade()->getStoreByName(static::DEFAULT_CURRENT_STORE);
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossPrice,

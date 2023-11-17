@@ -133,7 +133,7 @@ class PriceCartConnectorBusinessTester extends Actor
                     PriceProductTransfer::MONEY_VALUE => [
                         MoneyValueTransfer::NET_AMOUNT => $itemPrice,
                         MoneyValueTransfer::GROSS_AMOUNT => $itemPrice,
-                        MoneyValueTransfer::STORE => $storeTransfer->getName(),
+                        MoneyValueTransfer::STORE => $storeTransfer,
                         MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     ],
                 ]);

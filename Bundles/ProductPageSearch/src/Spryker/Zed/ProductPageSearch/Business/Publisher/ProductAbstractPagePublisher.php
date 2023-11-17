@@ -266,7 +266,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $isRefresh,
         );
         $productPageSearchTransfers = $this->executeProductPageSearchCollectionFilterPlugins($productPageSearchTransfers);
-        $indexedProductAbstractPageSearchTransfers = $this->indexProductPageSearchTransfersByLocaleAndIdProductAbstract(
+        $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract = $this->getProductPageSearchTransfersIndexedByLocaleAndIdProductAbstract(
             $productPageSearchTransfers,
         );
 
@@ -285,7 +285,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             }
 
             $idProductAbstract = $productAbstractLocalizedEntity['fk_product_abstract'];
-            $productPageSearchTransfer = $indexedProductAbstractPageSearchTransfers[$locale][$idProductAbstract] ?? null;
+            $productPageSearchTransfer = $this->findProductPageSearchTransferFromIndexedList(
+                $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract,
+                $idProductAbstract,
+                $locale,
+                $store,
+            );
 
             if ($productPageSearchTransfer === null) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
@@ -809,19 +814,45 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param array<\Generated\Shared\Transfer\ProductPageSearchTransfer> $productPageSearchTransfers
      *
-     * @return array<string, array<int, \Generated\Shared\Transfer\ProductPageSearchTransfer>>
+     * @return array<string, array<int, list<\Generated\Shared\Transfer\ProductPageSearchTransfer>>>
      */
-    protected function indexProductPageSearchTransfersByLocaleAndIdProductAbstract(array $productPageSearchTransfers): array
+    protected function getProductPageSearchTransfersIndexedByLocaleAndIdProductAbstract(array $productPageSearchTransfers): array
     {
-        $indexedProductPageSearchTransfers = [];
-
+        $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract = [];
         foreach ($productPageSearchTransfers as $productPageSearchTransfer) {
             $idProductAbstract = $productPageSearchTransfer->getIdProductAbstractOrFail();
             $locale = $productPageSearchTransfer->getLocaleOrFail();
-
-            $indexedProductPageSearchTransfers[$locale][$idProductAbstract] = $productPageSearchTransfer;
+            $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract[$locale][$idProductAbstract][] = $productPageSearchTransfer;
         }
 
-        return $indexedProductPageSearchTransfers;
+        return $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract;
+    }
+
+    /**
+     * @param array<string, array<int, list<\Generated\Shared\Transfer\ProductPageSearchTransfer>>> $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract
+     * @param int $idProductAbstract
+     * @param string $locale
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer|null
+     */
+    protected function findProductPageSearchTransferFromIndexedList(
+        array $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract,
+        int $idProductAbstract,
+        string $locale,
+        string $storeName
+    ): ?ProductPageSearchTransfer {
+        if (!isset($productPageSearchTransfersIndexedByLocaleAndIdProductAbstract[$locale][$idProductAbstract])) {
+            return null;
+        }
+
+        $productPageSearchTransfers = $productPageSearchTransfersIndexedByLocaleAndIdProductAbstract[$locale][$idProductAbstract];
+        foreach ($productPageSearchTransfers as $productPageSearchTransfer) {
+            if ($productPageSearchTransfer->getStore() === $storeName) {
+                return $productPageSearchTransfer;
+            }
+        }
+
+        return $productPageSearchTransfers[0] ?? null;
     }
 }
