@@ -30,7 +30,7 @@ use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\CategoryStorage\PHPMD)
  */
 class CategoryStorageClientTester extends Actor
 {

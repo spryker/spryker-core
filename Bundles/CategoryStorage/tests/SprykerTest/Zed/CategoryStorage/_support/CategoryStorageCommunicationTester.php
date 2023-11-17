@@ -26,7 +26,7 @@ use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CategoryStorage\PHPMD)
  */
 class CategoryStorageCommunicationTester extends Actor
 {

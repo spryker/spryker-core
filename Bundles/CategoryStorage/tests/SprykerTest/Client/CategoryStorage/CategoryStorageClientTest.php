@@ -290,6 +290,8 @@ class CategoryStorageClientTest extends Unit
     }
 
     /**
+     * @param array<string, string> $categoryStorageData
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface
      */
     protected function getStorageClientMock(array $categoryStorageData): CategoryStorageToStorageInterface

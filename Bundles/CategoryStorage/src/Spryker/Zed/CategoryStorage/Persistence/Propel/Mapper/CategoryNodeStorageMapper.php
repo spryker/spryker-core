@@ -57,9 +57,13 @@ class CategoryNodeStorageMapper
         CategoryNodeStorageTransfer $categoryNodeStorageTransfer,
         SpyCategoryNodeStorage $categoryNodeStorageEntity
     ): SpyCategoryNodeStorage {
-        return $categoryNodeStorageEntity->setData(
-            $this->utilSanitizeService->arrayFilterRecursive($categoryNodeStorageTransfer->toArray()),
+        $categoryNodeStorageEntityData = $this->utilSanitizeService->arrayFilterRecursive(
+            $categoryNodeStorageTransfer->toArray(),
         );
+
+        $categoryNodeStorageEntityData[CategoryNodeStorageTransfer::ORDER] = $categoryNodeStorageTransfer->getOrder();
+
+        return $categoryNodeStorageEntity->setData($categoryNodeStorageEntityData);
     }
 
     /**

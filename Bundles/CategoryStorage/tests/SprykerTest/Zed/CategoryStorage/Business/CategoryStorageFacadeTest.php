@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\CategoryStorage\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -89,6 +91,30 @@ class CategoryStorageFacadeTest extends Unit
     {
         // Arrange
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
+        $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory());
+
+        // Act
+        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryStorePublishEvents([$eventEntityTransfer]);
+
+        // Assert
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCategoryNodeStorageCollectionByCategoryStorePublishEventsWillWriteStorageDataWithZeroOrderProperty(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation(
+            [
+                CategoryTransfer::CATEGORY_NODE => [
+                    NodeTransfer::NODE_ORDER => 0,
+                ],
+            ],
+            $this->getStoreData(),
+        );
+
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory());
 
         // Act
@@ -490,6 +516,11 @@ class CategoryStorageFacadeTest extends Unit
             $categoryLocalizedAttributesTransfer->getName(),
             $data[static::KEY_NAME],
             'The name of the CategoryNodeStorageEntity does not equals to expected value.',
+        );
+
+        $this->assertSame(
+            $categoryTransfer->getCategoryNode()->getNodeOrder(),
+            $data[CategoryNodeStorageTransfer::ORDER],
         );
     }
 
