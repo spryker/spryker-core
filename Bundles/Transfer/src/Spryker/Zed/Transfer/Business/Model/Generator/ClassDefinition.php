@@ -430,7 +430,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+            return $this->buildCollectionDocTypeHint($property);
         }
 
         if ($this->isTypeTransferObject($property)) {
@@ -494,7 +494,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+            return $this->buildCollectionDocTypeHint($property);
         }
 
         if ($this->isTypeTransferObject($property)) {
@@ -761,7 +761,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+            return $this->buildCollectionDocTypeHint($property);
         }
 
         if ($this->isTypeTransferObject($property)) {
@@ -1714,5 +1714,15 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($property['type'] === 'AbstractAttributesTransfer[]') {
             throw new InvalidAbstractAttributesUsageException('AbstractAttributes type cannot be used as array.');
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildCollectionDocTypeHint(array $property): string
+    {
+        return sprintf('\ArrayObject<\Generated\Shared\Transfer\%s>', rtrim($property['type'], '[]'));
     }
 }

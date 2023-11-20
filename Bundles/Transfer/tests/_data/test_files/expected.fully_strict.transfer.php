@@ -87,7 +87,7 @@ class FullyStrictTransfer extends AbstractTransfer
     protected $propDummyItem;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer>
      */
     protected $propDummyItemCollection;
 
@@ -102,7 +102,7 @@ class FullyStrictTransfer extends AbstractTransfer
     protected $propTypedArrayAssoc = [];
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer>
      */
     protected $propDummyItemCollectionAssoc;
 
@@ -613,7 +613,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[] $propDummyItemCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer> $propDummyItemCollection
      *
      * @return $this
      */
@@ -639,7 +639,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer>
      */
     public function getPropDummyItemCollection(): ArrayObject
     {
@@ -830,7 +830,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[] $propDummyItemCollectionAssoc
+     * @param \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer> $propDummyItemCollectionAssoc
      *
      * @return $this
      */
@@ -856,7 +856,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\DummyItemTransfer>
      */
     public function getPropDummyItemCollectionAssoc(): ArrayObject
     {

@@ -66,7 +66,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $item;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected $items;
 
@@ -81,7 +81,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $typedAssociativeStringArray = [];
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected $typedAssociativeCollection;
 
@@ -369,7 +369,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return $this
      */
@@ -384,7 +384,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getItems()
     {
@@ -540,7 +540,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $typedAssociativeCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $typedAssociativeCollection
      *
      * @return $this
      */
@@ -555,7 +555,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getTypedAssociativeCollection()
     {

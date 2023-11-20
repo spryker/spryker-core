@@ -183,7 +183,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]');
+        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -271,7 +271,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false, false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>', null, 'ArrayObject', 'PROPERTY1', [], false, false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -293,11 +293,11 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false, false);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>', null, 'ArrayObject', 'PROPERTY1', $bundles, false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTY1', $bundles);
+        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>', null, 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
@@ -416,11 +416,11 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false, false);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>', null, 'ArrayObject', 'PROPERTIES', [], false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTIES');
+        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>', null, 'PROPERTIES');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];
@@ -651,7 +651,7 @@ class ClassDefinitionTest extends Unit
         $expected = [
             'property1' => [
                 'name' => 'property1',
-                'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                'type' => "\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>",
                 'is_array_collection' => false,
                 'bundles' => [],
                 'is_associative' => true,
@@ -678,7 +678,7 @@ class ClassDefinitionTest extends Unit
         $expected = [
             'property1' => [
                 'name' => 'property1',
-                'type' => "\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]",
+                'type' => "\ArrayObject<\Generated\Shared\Transfer\TypeTransfer>",
                 'is_array_collection' => false,
                 'bundles' => [],
                 'is_associative' => true,

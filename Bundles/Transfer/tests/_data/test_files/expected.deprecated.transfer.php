@@ -53,7 +53,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     protected $transferField;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\DeprecatedFooBarTransfer>
      */
     protected $transferCollectionField;
 
@@ -362,7 +362,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[] $transferCollectionField
+     * @param \ArrayObject<\Generated\Shared\Transfer\DeprecatedFooBarTransfer> $transferCollectionField
      *
      * @return $this
      */
@@ -379,7 +379,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\DeprecatedFooBarTransfer>
      */
     public function getTransferCollectionField()
     {

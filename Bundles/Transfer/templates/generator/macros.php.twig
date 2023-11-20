@@ -39,7 +39,7 @@
 {# property #}
 {% macro addProperty(property) %}
     /**
-     * @var {{ property.type }}
+     * @var {{ property.type|raw }}
      */
     protected ${{ property.name }}{% if property.is_array_collection %} = []{% endif %};
 {% endmacro %}
@@ -81,7 +81,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
+     * @param {{ method.var|raw  }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
@@ -144,7 +144,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
+     * @param {{ method.var|raw  }} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
@@ -173,7 +173,7 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
+     * @return {{ method.return|raw }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {

@@ -52,7 +52,7 @@ class FooBarTransfer extends AbstractTransfer
     protected $stock;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
+     * @var \ArrayObject<\Generated\Shared\Transfer\FooBarTransfer>
      */
     protected $selfReference;
 
@@ -351,7 +351,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test2
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[] $selfReference
+     * @param \ArrayObject<\Generated\Shared\Transfer\FooBarTransfer> $selfReference
      *
      * @return $this
      */
@@ -366,7 +366,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test2
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\FooBarTransfer>
      */
     public function getSelfReference()
     {
