@@ -39,6 +39,7 @@
 
     <transfer name="TaxAppItem" strict="true">
         <property name="id" dataBuilderRule="lexify('??????????')"/>
+        <property name="sku" dataBuilderRule="lexify('??????????')"/>
         <property name="priceAmount" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="discountAmount" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="quantity" dataBuilderRule="lexify('??????????')"/>

@@ -10,6 +10,8 @@ namespace Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Exception;
+use Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer;
+use Generated\Shared\Transfer\MessagePropertiesValidationResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use SprykerSdk\AsyncApi\AsyncApi\AsyncApiInterface;
@@ -196,18 +198,17 @@ class AsyncApiHelper extends Module
             $this->assertNotNull($asyncApiMessageChannel, sprintf('Expected channel by name "%s" was not found.', $channelNameToTest));
             $this->assertNotNull($asyncApiMessage, sprintf('Expected message by name "%s" was not found.', $messageNameToTest));
 
-            // Get emitted message from in memory
-            $this->getInMemoryMessageBrokerHelper()->assertMessageWasSentWithRequiredFields(
-                $messageTransfer,
-                $this->getRequiredAttributesForMessage($asyncApiMessage),
-            );
+            $this->getInMemoryMessageBrokerHelper()->assertMessageWasSent($messageTransfer::class);
+
+            $sentMessageTransfer = $this->getInMemoryMessageBrokerHelper()->getMessageTransferByMessageName($messageTransfer::class);
+
+            $this->assertMessageRequiredPropertiesValidationIsSuccessful($messageNameToTest, $sentMessageTransfer, $asyncApiMessage);
 
             // Callable can be passed from outside and must accept the Message that was expected to be sent e.g.
             // AsyncApiHelper::assertMessageWasEmittedOnChannel(\Generated\Shared\Transfer\SomethingHappenedTransfer, 'foo-events', function (\Generated\Shared\Transfer\SomethingHappenedTransfer $expectedMessageTransfer, \Generated\Shared\Transfer\SomethingHappenedTransfer $sentMessageTransfer) {
             //     // Do your assertions here
             // });
             if ($assertion) {
-                $sentMessageTransfer = $this->getInMemoryMessageBrokerHelper()->getMessageTransferByMessageName($messageTransfer::class);
                 $assertion($messageTransfer, $sentMessageTransfer);
             }
 
@@ -318,12 +319,7 @@ class AsyncApiHelper extends Module
             $this->assertNotNull($asyncApiMessageChannel, sprintf('Expected channel by name "%s" was not found.', $channelNameToTest));
             $this->assertNotNull($asyncApiMessage, sprintf('Expected message by name "%s" was not found.', $messageNameToTest));
 
-            $fields = $messageTransfer->modifiedToArray(true, true);
-            $requiredFields = $this->getRequiredAttributesForMessage($asyncApiMessage);
-
-            $diff = $this->diffRequiredFields($fields, $requiredFields);
-
-            $this->assertCount(0, $diff, sprintf('The message "%s" does not contain all required fields "%s". The following fields are missing "%s".', $messageNameToTest, implode(', ', $requiredFields), implode(', ', $diff)));
+            $this->assertMessageRequiredPropertiesValidationIsSuccessful($messageNameToTest, $messageTransfer, $asyncApiMessage);
         } catch (Throwable $e) {
             $this->hasFailed = true;
 
@@ -336,26 +332,90 @@ class AsyncApiHelper extends Module
     }
 
     /**
-     * @param array<string> $fields
-     * @param array<string> $requiredFields
+     * @param string $messageNameToTest
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $messageTransfer
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\AsyncApiMessageInterface $asyncApiMessage
      *
-     * @return array<string>
+     * @return void
      */
-    protected function diffRequiredFields(array $fields, array $requiredFields): array
-    {
+    protected function assertMessageRequiredPropertiesValidationIsSuccessful(
+        string $messageNameToTest,
+        AbstractTransfer $messageTransfer,
+        AsyncApiMessageInterface $asyncApiMessage
+    ): void {
+        $messagePropertiesValidationRequestTransfer = new MessagePropertiesValidationRequestTransfer();
+        $messagePropertiesValidationRequestTransfer->setMessageName($messageNameToTest);
+        $messagePropertiesValidationRequestTransfer = $this->prepareMessageForValidation($messagePropertiesValidationRequestTransfer, $messageTransfer, $asyncApiMessage);
+
+        $messagePropertiesValidationResponseTransfer = $this->validateMessage($messagePropertiesValidationRequestTransfer);
+
+        $this->assertTrue($messagePropertiesValidationResponseTransfer->getIsSuccessful(), $messagePropertiesValidationResponseTransfer->getErrorMessage() ?? '');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $messageTransfer
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\AsyncApiMessageInterface $asyncApiMessage
+     *
+     * @return \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer
+     */
+    protected function prepareMessageForValidation(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        AbstractTransfer $messageTransfer,
+        AsyncApiMessageInterface $asyncApiMessage
+    ): MessagePropertiesValidationRequestTransfer {
+        $messagePropertiesValidationRequestTransfer = $this->getRequiredAttributesForMessage($messagePropertiesValidationRequestTransfer, $asyncApiMessage);
+
+        $properties = $messageTransfer->modifiedToArray(true, true);
+        $messagePropertiesValidationRequestTransfer->setProperties($properties);
+
+        return $messagePropertiesValidationRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessagePropertiesValidationResponseTransfer
+     */
+    protected function validateMessage(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+    ): MessagePropertiesValidationResponseTransfer {
         $propertyAccessor = new PropertyAccessor();
 
         $missingProperties = [];
 
-        foreach ($requiredFields as $requiredField) {
-            $propertyPath = sprintf('[%s]', implode('][', explode('.', $requiredField)));
+        $messagePropertiesValidationResponseTransfer = new MessagePropertiesValidationResponseTransfer();
+        $messagePropertiesValidationResponseTransfer->setIsSuccessful(true);
 
-            if (!$propertyAccessor->isReadable($fields, $propertyPath) || !$propertyAccessor->getValue($fields, $propertyPath)) {
-                $missingProperties[] = $requiredField;
-            }
+        if (!$messagePropertiesValidationRequestTransfer->getRequiredProperties() && !$messagePropertiesValidationRequestTransfer->getRequiredArrayProperties()) {
+            return $messagePropertiesValidationResponseTransfer;
         }
 
-        return $missingProperties;
+        $missingProperties = $this->getMissingPropertiesFromRequiredProperties($messagePropertiesValidationRequestTransfer, $propertyAccessor, $missingProperties);
+
+        $missingProperties = $this->getMissingPropertiesFromRequiredArrayProperties($messagePropertiesValidationRequestTransfer, $propertyAccessor, $missingProperties);
+
+        if ($missingProperties) {
+            $messagePropertiesValidationResponseTransfer->setIsSuccessful(false);
+            $messagePropertiesValidationResponseTransfer->setErrorMessage($this->getValidationError($messagePropertiesValidationRequestTransfer, $missingProperties));
+        }
+
+        return $messagePropertiesValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     * @param array<int, string> $missingProperties
+     *
+     * @return string
+     */
+    protected function getValidationError(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        array $missingProperties
+    ): string {
+        $requiredProperties = array_merge($messagePropertiesValidationRequestTransfer->getRequiredProperties(), array_column($messagePropertiesValidationRequestTransfer->getRequiredArrayProperties(), 'path'));
+
+        return sprintf('The message "%s" does not contain all required properties "%s". The following properties are missing "%s".', $messagePropertiesValidationRequestTransfer->getMessageName(), implode(', ', $requiredProperties), implode(', ', $missingProperties));
     }
 
     /**
@@ -488,24 +548,26 @@ class AsyncApiHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
      * @param \SprykerSdk\AsyncApi\AsyncApi\Message\AsyncApiMessageInterface $message
      *
-     * @return array<string, string>
+     * @return \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer
      */
-    protected function getRequiredAttributesForMessage(AsyncApiMessageInterface $message): array
-    {
+    protected function getRequiredAttributesForMessage(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        AsyncApiMessageInterface $message
+    ): MessagePropertiesValidationRequestTransfer {
         /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface|null $payloadAttribute */
         $payloadAttribute = $message->getAttribute('payload');
 
         // In case we have a "marker" message without any payload then we can skip the required field validation.
         if (!$payloadAttribute) {
-            return [];
+            return $messagePropertiesValidationRequestTransfer;
         }
 
-        $requiredAttributes = [];
-        $this->getRequiredAttributes($payloadAttribute, $requiredAttributes);
+        $this->getRequiredAttributes($payloadAttribute, $messagePropertiesValidationRequestTransfer);
 
-        return $requiredAttributes;
+        return $messagePropertiesValidationRequestTransfer;
     }
 
     /**
@@ -551,33 +613,32 @@ class AsyncApiHelper extends Module
 
     /**
      * @param \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $attribute
-     * @param array<string, string> $requiredAttributes
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
      * @param string $currentKey
      *
      * @return void
      */
-    protected function getRequiredAttributes(AsyncApiMessageAttributeCollectionInterface $attribute, array &$requiredAttributes, string $currentKey = ''): void
-    {
+    protected function getRequiredAttributes(
+        AsyncApiMessageAttributeCollectionInterface $attribute,
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        string $currentKey = ''
+    ): void {
         /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $properties */
         $properties = $attribute->getAttribute('properties');
 
         /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface|null $required */
         $required = $attribute->getAttribute('required');
 
+        $isArray = $this->attributeIsArray($attribute);
+        if ($isArray && $attribute->getAttribute('items')) {
+            [$properties, $required] = $this->getPropertiesAndRequiredFromAttributeArray($attribute);
+        }
+
         if (!$required) {
             return;
         }
 
-        foreach ($required->getAttributes() as $attribute) {
-            /** @var string $attributeValue */
-            $attributeValue = $attribute->getValue();
-            $key = $currentKey ? sprintf('%s.%s', $currentKey, $attributeValue) : $attributeValue;
-            $requiredAttributes[$key] = $key;
-
-            if ($this->hasPropertiesCollectionProperty($properties, $attributeValue)) {
-                $this->getRequiredAttributes($this->getPropertiesCollectionProperty($properties, $attributeValue), $requiredAttributes, $key);
-            }
-        }
+        $this->collectRequiredProperties($required, $currentKey, $isArray, $messagePropertiesValidationRequestTransfer, $properties);
     }
 
     /**
@@ -595,5 +656,129 @@ class AsyncApiHelper extends Module
         $helper = $this->getModule('\\' . InMemoryMessageBrokerHelper::class);
 
         return $helper;
+    }
+
+    /**
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $attribute
+     *
+     * @return bool
+     */
+    protected function attributeIsArray(AsyncApiMessageAttributeCollectionInterface $attribute): bool
+    {
+        /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeInterface $attributeType */
+        $attributeType = $attribute->getAttribute('type');
+
+        return $attributeType !== null && $attributeType->getValue() === 'array';
+    }
+
+    /**
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $attribute
+     *
+     * @return array<int, mixed>
+     */
+    protected function getPropertiesAndRequiredFromAttributeArray(AsyncApiMessageAttributeCollectionInterface $attribute): array
+    {
+        /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $items */
+        $items = $attribute->getAttribute('items');
+
+        /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $properties */
+        $properties = $items->getAttribute('properties');
+
+        /** @var \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface|null $required */
+        $required = $items->getAttribute('required');
+
+        return [$properties, $required];
+    }
+
+    /**
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $required
+     * @param string $currentKey
+     * @param bool $isArray
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Message\Attributes\AsyncApiMessageAttributeCollectionInterface $properties
+     *
+     * @return void
+     */
+    protected function collectRequiredProperties(
+        AsyncApiMessageAttributeCollectionInterface $required,
+        string $currentKey,
+        bool $isArray,
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        AsyncApiMessageAttributeCollectionInterface $properties
+    ): void {
+        foreach ($required->getAttributes() as $requiredAttribute) {
+            /** @var string $attributeValue */
+            $attributeValue = $requiredAttribute->getValue();
+            $key = $currentKey ? sprintf('%s.%s', $currentKey, $attributeValue) : $attributeValue;
+
+            if ($isArray) {
+                $messagePropertiesValidationRequestTransfer->addRequiredArrayProperty([
+                    'parent' => $currentKey,
+                    'path' => $key,
+                    'property' => $attributeValue,
+                ]);
+
+                continue;
+            }
+
+            $messagePropertiesValidationRequestTransfer->addRequiredProperty($key);
+
+            if ($this->hasPropertiesCollectionProperty($properties, $attributeValue)) {
+                $this->getRequiredAttributes($this->getPropertiesCollectionProperty($properties, $attributeValue), $messagePropertiesValidationRequestTransfer, $key);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     * @param \Symfony\Component\PropertyAccess\PropertyAccessor $propertyAccessor
+     * @param array<int, string> $missingProperties
+     *
+     * @return array<int, string>
+     */
+    protected function getMissingPropertiesFromRequiredArrayProperties(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        PropertyAccessor $propertyAccessor,
+        array $missingProperties
+    ): array {
+        foreach ($messagePropertiesValidationRequestTransfer->getRequiredArrayProperties() as $requiredArrayProperty) {
+            $parentPath = sprintf('[%s]', implode('][', explode('.', $requiredArrayProperty['parent'])));
+            $items = $propertyAccessor->getValue($messagePropertiesValidationRequestTransfer->getProperties(), $parentPath);
+
+            if ($items === null) {
+                continue;
+            }
+
+            foreach ($items as $position => $value) {
+                if (!array_key_exists($requiredArrayProperty['property'], $value)) {
+                    $missingProperties[] = sprintf('%s[%s].%s', $requiredArrayProperty['parent'], $position, $requiredArrayProperty['property']);
+                }
+            }
+        }
+
+        return $missingProperties;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer
+     * @param \Symfony\Component\PropertyAccess\PropertyAccessor $propertyAccessor
+     * @param array<int, string> $missingProperties
+     *
+     * @return array<int, string>
+     */
+    protected function getMissingPropertiesFromRequiredProperties(
+        MessagePropertiesValidationRequestTransfer $messagePropertiesValidationRequestTransfer,
+        PropertyAccessor $propertyAccessor,
+        array $missingProperties
+    ): array {
+        foreach ($messagePropertiesValidationRequestTransfer->getRequiredProperties() as $requiredProperty) {
+            $propertyPath = sprintf('[%s]', implode('][', explode('.', $requiredProperty)));
+
+            if (!$propertyAccessor->isReadable($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath) || !$propertyAccessor->getValue($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath)) {
+                $missingProperties[] = $requiredProperty;
+            }
+        }
+
+        return $missingProperties;
     }
 }

@@ -27,5 +27,31 @@ components:
             properties:
                 bar:
                     type: string
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Item'
+                nested:
+                    $ref: '#/components/schemas/Nested'
+
             required:
                 - bar
+                - items
+                - nested
+        Item:
+            properties:
+                propA:
+                    type: string
+                propB:
+                    type: string
+            required:
+                - propA
+
+        Nested:
+            properties:
+                nestedPropA:
+                    type: string
+                nestedPropB:
+                    type: string
+            required:
+                - nestedPropA

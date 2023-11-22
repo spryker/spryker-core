@@ -8,6 +8,30 @@
     <transfer name="TestifyAsyncApiBar">
         <property name="bar" type="string"/>
         <property name="baz" type="string"/>
+        <property name="items" type="TestifyAsyncApiItem[]" singular="item"/>
+        <property name="nested" type="TestifyAsyncApiNested"/>
+    </transfer>
+
+    <transfer name="TestifyAsyncApiItem">
+        <property name="propA" type="string"/>
+        <property name="propB" type="string"/>
+    </transfer>
+
+    <transfer name="TestifyAsyncApiNested">
+        <property name="nestedPropA" type="string"/>
+        <property name="nestedPropB" type="string"/>
+    </transfer>
+
+    <transfer name="MessagePropertiesValidationRequest">
+        <property name="messageName" type="string"/>
+        <property name="properties" type="array" singular="property"/>
+        <property name="requiredProperties" type="array" singular="requiredProperty"/>
+        <property name="requiredArrayProperties" type="array" singular="requiredArrayProperty"/>
+    </transfer>
+
+    <transfer name="MessagePropertiesValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errorMessage" type="string"/>
     </transfer>
 
 </transfers>

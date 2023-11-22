@@ -122,7 +122,7 @@ class TaxAppBusinessAssertionHelper extends Module
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     protected function haveExpectedTaxQuotationRequestSaleItems(): array
     {

@@ -138,6 +138,8 @@ class InMemoryMessageBrokerHelper extends Module
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper::assertMessageWasEmittedOnChannel()} instead.
+     *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $expectedMessageTransfer
      * @param array<string, string|int|array<string, string|int>> $requiredFields
      *

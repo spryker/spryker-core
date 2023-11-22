@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CalculableObjectBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
+use Generated\Shared\DataBuilder\TaxAppAddressBuilder;
 use Generated\Shared\DataBuilder\TaxAppConfigBuilder;
 use Generated\Shared\DataBuilder\TaxAppConfigConditionsBuilder;
 use Generated\Shared\DataBuilder\TaxAppConfigCriteriaBuilder;
@@ -294,7 +295,9 @@ class TaxAppDataHelper extends Module
      */
     public function haveTaxAppSaleTransfer(array $seed = []): TaxAppSaleTransfer
     {
-        return (new TaxAppSaleBuilder())->seed($seed)->withItem()->withAnotherItem()->withShipment()->build();
+        $shippingAddress = (new TaxAppAddressBuilder())->build();
+
+        return (new TaxAppSaleBuilder())->seed($seed)->withItem(['shipping_address' => $shippingAddress])->withAnotherItem(['shipping_address' => $shippingAddress])->withShipment()->build();
     }
 
     /**

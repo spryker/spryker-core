@@ -8,8 +8,8 @@
 namespace SprykerTest\AsyncApi\TaxApp\TaxAppTests\TaxCommands;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer;
-use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use SprykerTest\AsyncApi\TaxApp\AsyncApiTester;
 
 /**
@@ -55,11 +55,16 @@ class SubmitPaymentTaxInvoiceTest extends Unit
         $orderTransfer = $this->tester->getOrderTransferForSubmitPaymentTaxInvoice();
         $this->tester->mockSalesFacadeFindOrderByIdSalesOrderMethod($orderTransfer);
 
+        $createdAt = DateTime::createFromFormat('Y-m-d H:i:s', $orderTransfer->getCreatedAt());
+
+        $taxAppSaleTransfer = $this->tester->haveTaxAppSaleTransfer([
+            'transaction_id' => $orderTransfer->getOrderReference(),
+            'document_number' => $orderTransfer->getOrderReference(),
+            'document_date' => $createdAt->format('Y-m-d'),
+        ]);
+
         $submitPaymentTaxInvoiceTransfer = (new SubmitPaymentTaxInvoiceTransfer())
-            ->setSale(
-                (new TaxAppSaleTransfer())
-                    ->setTransactionId($orderTransfer->getOrderReference()),
-            );
+            ->setSale($taxAppSaleTransfer);
 
         // Act
         $this->tester->getFacade()->sendSubmitPaymentTaxInvoiceMessage($orderTransfer);
@@ -67,6 +72,8 @@ class SubmitPaymentTaxInvoiceTest extends Unit
         // Assert
         $this->tester->assertMessageWasEmittedOnChannel($submitPaymentTaxInvoiceTransfer, 'payment-tax-invoice-commands', function (SubmitPaymentTaxInvoiceTransfer $expectedMessageTransfer, SubmitPaymentTaxInvoiceTransfer $sentMessageTransfer): void {
             $this->assertSame($expectedMessageTransfer->getSale()->getTransactionId(), $sentMessageTransfer->getSale()->getTransactionId());
+            $this->assertSame($expectedMessageTransfer->getSale()->getDocumentNumber(), $sentMessageTransfer->getSale()->getDocumentNumber());
+            $this->assertSame($expectedMessageTransfer->getSale()->getDocumentDate(), $sentMessageTransfer->getSale()->getDocumentDate());
         });
     }
 }
