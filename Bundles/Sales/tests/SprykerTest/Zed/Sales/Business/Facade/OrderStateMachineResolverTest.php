@@ -46,7 +46,7 @@ class OrderStateMachineResolverTest extends Unit
         );
 
         // Assert
-        $this->assertEquals('ForeignPaymentB2CStateMachine01', $paymentMethodStatemachine);
+        $this->assertEquals('ForeignPaymentStateMachine01', $paymentMethodStatemachine);
     }
 
     /**
