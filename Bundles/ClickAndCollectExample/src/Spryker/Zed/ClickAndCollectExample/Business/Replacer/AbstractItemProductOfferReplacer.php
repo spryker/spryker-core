@@ -135,7 +135,10 @@ abstract class AbstractItemProductOfferReplacer implements ItemProductOfferRepla
         array $originalItemTransfers
     ): void {
         foreach ($originalItemTransfers as $itemTransfer) {
-            if (!$this->itemMerger->isSameItemTransfer($itemTransfer, $mergedItemTransfer)) {
+            if (
+                !$this->itemMerger->isSameItemTransfer($itemTransfer, $mergedItemTransfer)
+                || $itemTransfer->getProductOfferReference() === $replacementProductOfferTransfer->getProductOfferReference()
+            ) {
                 continue;
             }
 

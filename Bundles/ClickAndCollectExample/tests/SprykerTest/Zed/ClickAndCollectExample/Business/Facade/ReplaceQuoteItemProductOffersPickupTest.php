@@ -255,6 +255,57 @@ class ReplaceQuoteItemProductOffersPickupTest extends ClickAndCollectExampleFaca
     /**
      * @return void
      */
+    public function testShouldNotReplaceWithTheSameOffer(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $servicePointTransfer = $this->tester->haveServicePoint([
+            ServicePointTransfer::IS_ACTIVE => true,
+            ServicePointTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+        ]);
+        $serviceTransfer = $this->tester->createServiceTransfer($servicePointTransfer, [
+            ShipmentTypeTransfer::KEY => ClickAndCollectExampleBusinessTester::TEST_SHIPMENT_TYPE_KEY_PICKUP,
+            ShipmentTypeTransfer::IS_ACTIVE => true,
+        ]);
+
+        $productOfferTransfer = $this->tester->createPickupReplacementProductOffer(
+            $productConcreteTransfer,
+            $serviceTransfer,
+            [
+                ShipmentTypeTransfer::KEY => ClickAndCollectExampleBusinessTester::TEST_SHIPMENT_TYPE_KEY_PICKUP,
+                ShipmentTypeTransfer::IS_ACTIVE => true,
+                ProductOfferTransfer::MERCHANT_REFERENCE => ClickAndCollectExampleBusinessTester::TEST_MERCHANT_REFERENCE_1,
+                ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+            ],
+        );
+
+        $this->mockAvailabilityFacade([$productOfferTransfer]);
+
+        $itemTransfer = $this->tester->createItemTransfer($productConcreteTransfer)
+            ->setServicePoint($servicePointTransfer)
+            ->setMerchantReference($productOfferTransfer->getMerchantReference())
+            ->setQuantity(1)
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setShipmentType((new ShipmentTypeTransfer())->setKey(ClickAndCollectExampleBusinessTester::TEST_SHIPMENT_TYPE_KEY_PICKUP));
+
+        $quoteTransfer = $this->tester->createQuoteTransfer($storeTransfer);
+        $quoteTransfer->addItem($itemTransfer);
+
+        // Act
+        $quoteReplacementResponseTransfer = $this->tester->getFacade()->replaceQuoteItemProductOffers($quoteTransfer);
+
+        // Assert
+        $quoteItemTransfer = $quoteReplacementResponseTransfer->getQuoteOrFail()->getItems()[0];
+        $this->assertSame($productOfferTransfer->getProductOfferReference(), $quoteItemTransfer->getProductOfferReference());
+        $this->assertNotNull($quoteItemTransfer->getGroupKey());
+        $this->assertEmpty($quoteReplacementResponseTransfer->getErrors());
+        $this->assertEmpty($quoteReplacementResponseTransfer->getFailedReplacementItems());
+    }
+
+    /**
+     * @return void
+     */
     public function testFailsWithSuitableProductOfferAndNotSuitableServicePoint(): void
     {
         // Arrange
