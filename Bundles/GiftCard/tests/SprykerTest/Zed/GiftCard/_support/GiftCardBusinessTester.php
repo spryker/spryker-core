@@ -27,7 +27,7 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainer;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\GiftCard\PHPMD)
  */
 class GiftCardBusinessTester extends Actor
 {
