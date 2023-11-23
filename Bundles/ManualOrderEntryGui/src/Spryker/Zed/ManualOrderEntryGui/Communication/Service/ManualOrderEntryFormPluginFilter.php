@@ -119,7 +119,7 @@ class ManualOrderEntryFormPluginFilter
      */
     protected function isShowNext(Request $request): bool
     {
-        return $request->request->get($this->nextStepName) !== null;
+        return $request->get($this->nextStepName) !== null;
     }
 
     /**
@@ -129,7 +129,7 @@ class ManualOrderEntryFormPluginFilter
      */
     protected function isShowPrevious(Request $request): bool
     {
-        return $request->request->get($this->previousStepName) !== null;
+        return $request->get($this->previousStepName) !== null;
     }
 
     /**
