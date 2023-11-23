@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Exporter;
 
 use Generated\Shared\Transfer\CsvFileTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Generator;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -64,40 +65,37 @@ class ProductListExporter implements ProductListExporterInterface
         $productsSku = $this->productFacade->getProductConcreteSkusByConcreteIds($productIds);
         $productsSku = array_keys($productsSku);
 
-        $productsSku = $this->prepareDataForExport($productsSku);
-        $csvFileTransfer = $this->createCsvFileTransfer($productListTransfer->getTitle(), $productsSku);
+        $productSkusDataGenerator = $this->getProductSkusDataGenerator($productsSku);
+        $csvFileTransfer = $this->createCsvFileTransfer($productListTransfer->getTitle(), [$productSkusDataGenerator]);
 
         return $this->csvService->exportFile($csvFileTransfer);
     }
 
     /**
      * @param string $title
-     * @param array<string, mixed> $data
+     * @param list<\Generator<list<string>>> $dataGenerators
      *
      * @return \Generated\Shared\Transfer\CsvFileTransfer
      */
-    protected function createCsvFileTransfer(string $title, array $data): CsvFileTransfer
+    protected function createCsvFileTransfer(string $title, array $dataGenerators): CsvFileTransfer
     {
         $csvFileTransfer = new CsvFileTransfer();
         $csvFileTransfer->setHeader([static::FILE_HEADER]);
         $csvFileTransfer->setFileName(sprintf(static::FORMAT_FILE_NAME, $title));
-        $csvFileTransfer->setData($data);
+        $csvFileTransfer->setDataGenerators($dataGenerators);
 
         return $csvFileTransfer;
     }
 
     /**
-     * @param array $productsSku
+     * @param list<string> $productsSku
      *
-     * @return array
+     * @return \Generator<list<string>>
      */
-    protected function prepareDataForExport(array $productsSku): array
+    protected function getProductSkusDataGenerator(array $productsSku): Generator
     {
-        return array_map(
-            function ($item) {
-                return [$item];
-            },
-            $productsSku,
-        );
+        foreach ($productsSku as $productSku) {
+            yield [$productSku];
+        }
     }
 }

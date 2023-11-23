@@ -15,6 +15,7 @@ interface DataExportFacadeInterface
      * Specification:
      * - Merges `DataExportConfigurationsTransfer` with the module's default configuration.
      * - Uses stack of `DataEntityExporterPluginInterface` plugins to export data.
+     * - Uses DataExportConfigurationsTransfer.throwException to throw exceptions instead of ignoring them.
      * - Returns a collection of `DataExportReportTransfer` collected from `DataEntityExporterPluginInterface` plugins execution results.
      *
      * @api

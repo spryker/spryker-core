@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generator;
 use Spryker\Service\DataExport\DataExportServiceInterface;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\DataExport\Business\Exception\DataExporterNotFoundException;
 use Spryker\Zed\DataExport\DataExportConfig;
 use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface;
@@ -20,6 +21,8 @@ use Throwable;
 
 class DataExportExecutor
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
@@ -98,6 +101,8 @@ class DataExportExecutor
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportDefaultsConfigurationTransfer
      *
+     * @throws \Throwable
+     *
      * @return \Generator<\Generated\Shared\Transfer\DataExportReportTransfer|null>
      */
     protected function createDataExportGenerator(
@@ -119,6 +124,11 @@ class DataExportExecutor
                 $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
             }
         } catch (Throwable $throwable) {
+            $this->getLogger()->error($throwable->getMessage(), ['exception' => $throwable]);
+
+            if ($dataExportConfigurationsTransfer->getThrowException()) {
+                throw $throwable;
+            }
         }
 
         return $dataExportResultTransfers;

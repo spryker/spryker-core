@@ -17,6 +17,7 @@
         <property name="version" type="int"/>
         <property name="defaults" type="DataExportConfiguration"/>
         <property name="actions" type="DataExportConfiguration[]" singular="action"/>
+        <property name="throwException" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="DataExportConfiguration">

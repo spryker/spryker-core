@@ -18,7 +18,8 @@
     <transfer name="CsvFile">
         <property name="header" type="array" singular="header"/>
         <property name="fileName" type="string"/>
-        <property name="data" type="array" singular="data"/>
+        <property name="data" type="array" singular="data" deprecated="Use CsvFile.dataGenerators instead."/>
+        <property name="dataGenerators" type="array" singular="dataGenerator" strict="true"/>
     </transfer>
 
     <transfer name="ProductListProductConcreteRelation">

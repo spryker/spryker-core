@@ -11,6 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\CsvFileTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generator;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -108,22 +109,22 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
     {
         $priceProductScheduleCollection = $this->priceProductScheduleFacade
             ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
-        $csvFileTransfer = $this->createCsvFileTransfer($this->prepareItemsForExport($priceProductScheduleCollection));
+        $csvFileTransfer = $this->createCsvFileTransfer([$this->getItemGenerator($priceProductScheduleCollection)]);
 
         return $this->utilCsvService->exportFile($csvFileTransfer);
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param list<\Generator<array<string, mixed>>> $dataGenerators
      *
      * @return \Generated\Shared\Transfer\CsvFileTransfer
      */
-    protected function createCsvFileTransfer(array $data): CsvFileTransfer
+    protected function createCsvFileTransfer(array $dataGenerators): CsvFileTransfer
     {
         $csvFileTransfer = new CsvFileTransfer();
         $csvFileTransfer = $this->setHeaders($csvFileTransfer);
         $csvFileTransfer->setFileName(sprintf(static::FORMAT_FILE_NAME, static::PARAM_FILE_NAME));
-        $csvFileTransfer->setData($data);
+        $csvFileTransfer->setDataGenerators($dataGenerators);
 
         return $csvFileTransfer;
     }
@@ -151,23 +152,19 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductScheduleTransfer> $priceProductScheduleTransferCollection
      *
-     * @return array
+     * @return \Generator<array<string, mixed>>
      */
-    protected function prepareItemsForExport(array $priceProductScheduleTransferCollection): array
+    protected function getItemGenerator(array $priceProductScheduleTransferCollection): Generator
     {
-        $dataForExport = [];
-
         foreach ($priceProductScheduleTransferCollection as $priceProductScheduleTransfer) {
-            $dataForExport[] = $this->generateItem($priceProductScheduleTransfer);
+             yield $this->generateItem($priceProductScheduleTransfer);
         }
-
-        return $dataForExport;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function generateItem(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {
