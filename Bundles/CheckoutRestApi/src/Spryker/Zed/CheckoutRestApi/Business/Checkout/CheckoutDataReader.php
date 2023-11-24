@@ -49,7 +49,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface $checkoutValidator
      * @param \Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface $checkoutExpander
      * @param \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig $checkoutRestApiConfig
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param list<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface> $quoteMapperPlugins
      */
     public function __construct(
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,
@@ -79,6 +79,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         $quoteTransfer = $restCheckoutDataResponseTransfer->getCheckoutData()->getQuote();
+        $quoteTransfer->setSkipRecalculation(!$this->checkoutRestApiConfig->isRecalculationEnabledForQuoteMapperPlugins());
         $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 

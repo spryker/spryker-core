@@ -91,6 +91,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
         $quoteTransfer = $restCheckoutResponseTransfer->getCheckoutData()->getQuote();
 
+        $quoteTransfer->setSkipRecalculation(!$this->config->isRecalculationEnabledForQuoteMapperPlugins());
         $quoteTransfer = $this->executeQuoteMapperPlugins($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer, $this->config->shouldExecuteQuotePostRecalculationPlugins());
 
