@@ -349,9 +349,11 @@ class ShipmentBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $shipmentData
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransfer(): QuoteTransfer
+    public function createQuoteTransfer(array $shipmentData = []): QuoteTransfer
     {
         return (new QuoteBuilder([
             QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
@@ -359,7 +361,7 @@ class ShipmentBusinessTester extends Actor
             ->withItem(
                 (new ItemBuilder())
                     ->withShipment(
-                        (new ShipmentBuilder())
+                        (new ShipmentBuilder($shipmentData))
                             ->withShippingAddress()
                             ->withMethod([
                                 ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
@@ -369,7 +371,7 @@ class ShipmentBusinessTester extends Actor
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withShipment(
-                        (new ShipmentBuilder())
+                        (new ShipmentBuilder($shipmentData))
                             ->withShippingAddress()
                             ->withMethod([
                                 ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),

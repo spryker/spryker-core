@@ -147,6 +147,7 @@
         <property name="priceMode" type="string"/>
         <property name="currency" type="Currency"/>
         <property name="store" type="Store"/>
+        <property name="skipRecalculation" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Item">

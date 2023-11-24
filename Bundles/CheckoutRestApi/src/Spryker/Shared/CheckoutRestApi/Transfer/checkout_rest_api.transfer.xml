@@ -184,6 +184,7 @@
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="store" type="Store"/>
+        <property name="skipRecalculation" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Item">

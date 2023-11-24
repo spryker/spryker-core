@@ -69,7 +69,8 @@
 
     <transfer name="CsvFile">
         <property name="fileName" type="string"/>
-        <property name="data" type="array" singular="data"/>
+        <property name="data" type="array" singular="data" deprecated="Use CsvFile.dataGenerators instead."/>
+        <property name="dataGenerators" type="array" singular="dataGenerator" strict="true"/>
         <property name="header" type="array" singular="header"/>
     </transfer>
 

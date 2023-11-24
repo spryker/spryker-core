@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\CheckoutRestApi;
+namespace SprykerTest\Zed\DataExport;
 
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,10 +20,11 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\DataExport\Business\DataExportFacadeInterface getFacade()
  *
- * @SuppressWarnings(\SprykerTest\Glue\CheckoutRestApi\PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\DataExport\PHPMD)
  */
-class CheckoutRestApiPluginTester extends Actor
+class DataExportBusinessTester extends Actor
 {
-    use _generated\CheckoutRestApiPluginTesterActions;
+    use _generated\DataExportBusinessTesterActions;
 }

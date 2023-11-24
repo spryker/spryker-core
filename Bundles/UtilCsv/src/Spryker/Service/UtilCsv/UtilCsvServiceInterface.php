@@ -29,6 +29,7 @@ interface UtilCsvServiceInterface
     /**
      * Specification:
      * - Generates csv file.
+     * - Uses `CsvFileTransfer.dataGenerators` to use generators as a data source for export file.
      * - Returns stream response with generated file. So customer can download csv file.
      *
      * @api

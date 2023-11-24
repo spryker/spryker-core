@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\CheckoutRestApi;
+namespace SprykerTest\Service\UtilCsv;
 
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -23,9 +21,9 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(\SprykerTest\Glue\CheckoutRestApi\PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\UtilCsv\PHPMD)
  */
-class CheckoutRestApiPluginTester extends Actor
+class UtilCsvServiceTester extends Actor
 {
-    use _generated\CheckoutRestApiPluginTesterActions;
+    use _generated\UtilCsvServiceTesterActions;
 }

@@ -23,7 +23,7 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\DataExport\PHPMD)
  */
 class DataExportServiceTester extends Actor
 {

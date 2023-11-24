@@ -38,13 +38,24 @@ class DataExportConsole extends Console
     protected const OPTION_SHORTCUT_CONFIG = 'c';
 
     /**
+     * @var string
+     */
+    public const OPTION_THROW_EXCEPTION = 'throw-exception';
+
+    /**
+     * @var string
+     */
+    public const OPTION_THROW_EXCEPTION_SHORT = 't';
+
+    /**
      * @return void
      */
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME)
             ->setDescription('This command executes your exporters (data export). Use the --config <export_configuration_file.yml> indicating your configuration YAML file for data export, located in /data/export/config folder.')
-            ->addOption(static::OPTION_CONFIG, static::OPTION_SHORTCUT_CONFIG, InputOption::VALUE_OPTIONAL, 'Define configuration file');
+            ->addOption(static::OPTION_CONFIG, static::OPTION_SHORTCUT_CONFIG, InputOption::VALUE_OPTIONAL, 'Define configuration file')
+            ->addOption(static::OPTION_THROW_EXCEPTION, static::OPTION_THROW_EXCEPTION_SHORT, InputOption::VALUE_OPTIONAL, 'Set this option to throw exceptions when they occur.');
 
         parent::configure();
     }
@@ -66,11 +77,15 @@ class DataExportConsole extends Console
         $exportConfigurationsPath = $this->getConfig()
                 ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $this->getConfigOption($input);
 
-        $exportConfigurations = $this->getFactory()
+        $dataExportConfigurationsTransfer = $this->getFactory()
             ->getDataExportService()
             ->parseConfiguration($exportConfigurationsPath);
 
-        $dataExportReportTransfers = $this->getFacade()->exportDataEntities($exportConfigurations);
+        if ($input->hasParameterOption('--' . static::OPTION_THROW_EXCEPTION) || $input->hasParameterOption('-' . static::OPTION_THROW_EXCEPTION_SHORT)) {
+            $dataExportConfigurationsTransfer->setThrowException(true);
+        }
+
+        $dataExportReportTransfers = $this->getFacade()->exportDataEntities($dataExportConfigurationsTransfer);
 
         return $this->printDataExportReport($output, $dataExportReportTransfers);
     }

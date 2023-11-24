@@ -1,5 +1,6 @@
 {
     "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types functionality.",
         "spryker/twig": "Provides `executeFilterIfExists` filter functionality."
     }
 }
