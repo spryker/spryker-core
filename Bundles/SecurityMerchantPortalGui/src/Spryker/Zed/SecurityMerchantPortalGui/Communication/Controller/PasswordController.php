@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordForm;
@@ -57,6 +58,58 @@ class PasswordController extends AbstractController
     protected const MESSAGE_INVALID_TOKEN_ERROR = 'Invalid request token!';
 
     /**
+     * @var string
+     */
+    protected const BLOCKER_IDENTIFIER = 'password-reset';
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function incrementPasswordResetBlocker(Request $request): void
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isMerchantPortalSecurityBlockerEnabled()) {
+            return;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getMerchantPortalSecurityBlockerEntityType());
+
+        $this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isPasswordResetBlocked(Request $request): bool
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isMerchantPortalSecurityBlockerEnabled()) {
+            return false;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getMerchantPortalSecurityBlockerEntityType());
+
+        return (bool)$this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->isAccountBlocked($securityCheckAuthContextTransfer)
+            ->getIsBlocked();
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<string, mixed>
@@ -65,6 +118,16 @@ class PasswordController extends AbstractController
     {
         $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
         $resetRequestForm->handleRequest($request);
+
+        if ($this->isPasswordResetBlocked($request)) {
+            return [
+                'form' => $resetRequestForm->createView(),
+            ];
+        }
+
+        if ($resetRequestForm->isSubmitted()) {
+            $this->incrementPasswordResetBlocker($request);
+        }
 
         if ($resetRequestForm->isSubmitted() && $resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();

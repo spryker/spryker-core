@@ -56,6 +56,45 @@ class SecurityGuiConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_USER_PASSWORD = 72;
 
     /**
+     * @uses \Spryker\Client\SecurityBlockerBackoffice\SecurityBlockerBackofficeConfig::BACKOFFICE_USER_SECURITY_BLOCKER_ENTITY_TYPE
+     *
+     * @var string
+     */
+    protected const BACKOFFICE_USER_SECURITY_BLOCKER_ENTITY_TYPE = 'back-office-user';
+
+    /**
+     * @var bool
+     */
+    protected const IS_BACKOFFICE_USER_SECURITY_BLOCKER_ENABLED = false;
+
+    /**
+     * Specification:
+     * - Checks if the security blocker is enabled.
+     * - It is disabled by default.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isBackofficeUserSecurityBlockerEnabled(): bool
+    {
+        return static::IS_BACKOFFICE_USER_SECURITY_BLOCKER_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns the entity identifier that is used to block the password resets.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackofficeUserSecurityBlockerEntityType(): string
+    {
+        return static::BACKOFFICE_USER_SECURITY_BLOCKER_ENTITY_TYPE;
+    }
+
+    /**
      * @api
      *
      * @return string

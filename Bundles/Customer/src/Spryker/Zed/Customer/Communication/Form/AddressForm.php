@@ -181,7 +181,7 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -331,8 +331,8 @@ class AddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     * @param array $preferredChoices
+     * @param array<mixed, mixed> $choices
+     * @param array<mixed, mixed> $preferredChoices
      *
      * @return $this
      */
@@ -444,7 +444,7 @@ class AddressForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'customer_address';
     }
@@ -454,7 +454,7 @@ class AddressForm extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\PHPMD)
  */
 class SecurityGuiCommunicationTester extends Actor
 {

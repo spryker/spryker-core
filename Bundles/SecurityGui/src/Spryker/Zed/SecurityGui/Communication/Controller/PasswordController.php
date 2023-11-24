@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityGui\Communication\Controller;
 
+use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordForm;
@@ -22,17 +23,89 @@ class PasswordController extends AbstractController
     /**
      * @var string
      */
+    protected const SUCCESS_MESSAGE_PASSWORD_RESET_EMAIL_SENT_MESSAGE = 'If there is an account associated with this email, you will receive an Email with further instructions.';
+
+    /**
+     * @var string
+     */
     public const PARAM_TOKEN = 'token';
+
+    /**
+     * @var string
+     */
+    protected const BLOCKER_IDENTIFIER = 'password-reset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return bool
+     */
+    protected function isPasswordResetBlocked(Request $request): bool
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isBackofficeUserSecurityBlockerEnabled()) {
+            return false;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getBackofficeUserSecurityBlockerEntityType());
+
+        return (bool)$this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->isAccountBlocked($securityCheckAuthContextTransfer)
+            ->getIsBlockedOrFail();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function incrementPasswordResetBlocker(Request $request): void
+    {
+        $config = $this->getFactory()->getConfig();
+        if (!$config->isBackofficeUserSecurityBlockerEnabled()) {
+            return;
+        }
+
+        $securityCheckAuthContextTransfer = (new SecurityCheckAuthContextTransfer())
+            ->setIp($request->getClientIp())
+            ->setAccount(static::BLOCKER_IDENTIFIER)
+            ->setType($config->getBackofficeUserSecurityBlockerEntityType());
+
+        $this
+            ->getFactory()
+            ->getSecurityBlockerClient()
+            ->incrementLoginAttemptCount($securityCheckAuthContextTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<string, mixed>
      */
     public function resetRequestAction(Request $request): array
     {
         $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
         $resetRequestForm->handleRequest($request);
+        $responseViewData = [
+            'form' => $resetRequestForm->createView(),
+        ];
+
+        if ($this->isPasswordResetBlocked($request)) {
+            $this->addSuccessMessage(
+                static::SUCCESS_MESSAGE_PASSWORD_RESET_EMAIL_SENT_MESSAGE,
+            );
+
+            return $this->viewResponse($responseViewData);
+        }
+
+        if ($resetRequestForm->isSubmitted()) {
+            $this->incrementPasswordResetBlocker($request);
+        }
 
         if ($resetRequestForm->isSubmitted() && $resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
@@ -44,19 +117,17 @@ class PasswordController extends AbstractController
                 );
 
             $this->addSuccessMessage(
-                'If there is an account associated with this email, you will receive an Email with further instructions.',
+                static::SUCCESS_MESSAGE_PASSWORD_RESET_EMAIL_SENT_MESSAGE,
             );
         }
 
-        return $this->viewResponse([
-            'form' => $resetRequestForm->createView(),
-        ]);
+        return $this->viewResponse($responseViewData);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function resetAction(Request $request)
     {
