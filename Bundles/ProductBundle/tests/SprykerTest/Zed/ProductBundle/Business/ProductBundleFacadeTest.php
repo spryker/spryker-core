@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
@@ -368,8 +369,15 @@ class ProductBundleFacadeTest extends Unit
     public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable(): void
     {
         // Arrange
-        $productConcreteTransferToAssign1 = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1, ProductBundleBusinessTester::SKU_BUNDLED_1);
-        $productConcreteTransferToAssign2 = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2, ProductBundleBusinessTester::SKU_BUNDLED_2);
+        $productConcreteTransferToAssign1 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+            ProductBundleBusinessTester::SKU_BUNDLED_1,
+            true,
+        );
+        $productConcreteTransferToAssign2 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            ProductBundleBusinessTester::SKU_BUNDLED_2,
+        );
 
         $this->tester->createProductBundle(
             ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
@@ -397,6 +405,90 @@ class ProductBundleFacadeTest extends Unit
 
         // Assert
         $this->assertSame('0.0000000000', $bundledProductAvailability->getAvailability()->toString());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAffectedBundleAvailabilityShouldMakeProductBundleSellableWhenAllBundleProductsAreActiveAndHaveStock(): void
+    {
+        // Arrange
+        $productConcreteTransferToAssign1 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+            ProductBundleBusinessTester::SKU_BUNDLED_1,
+            true,
+        );
+        $productConcreteTransferToAssign2 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            ProductBundleBusinessTester::SKU_BUNDLED_2,
+            true,
+        );
+
+        $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            false,
+            false,
+            [
+                $productConcreteTransferToAssign1,
+                $productConcreteTransferToAssign2,
+            ],
+            ProductBundleBusinessTester::BUNDLE_SKU_3,
+        );
+
+        // Act
+        $this->getProductBundleFacade()->updateAffectedBundlesAvailability($productConcreteTransferToAssign2->getSku());
+
+        $isSellable = $this->createAvailabilityFacade()->isProductSellableForStore(
+            ProductBundleBusinessTester::BUNDLE_SKU_3,
+            new Decimal(1),
+            (new StoreTransfer())->setIdStore(static::ID_STORE),
+        );
+
+        // Assert
+        $this->assertTrue($isSellable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAffectedBundleAvailabilityShouldCalculateCorrectlyWhenOneOfProductsHasNoStock(): void
+    {
+        // Arrange
+        $productConcreteTransferToAssign1 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+            ProductBundleBusinessTester::SKU_BUNDLED_1,
+            true,
+        );
+        $productConcreteTransferToAssign2 = $this->tester->createProduct(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            ProductBundleBusinessTester::SKU_BUNDLED_2,
+            true,
+            false,
+            0,
+        );
+
+        $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            false,
+            false,
+            [
+                $productConcreteTransferToAssign1,
+                $productConcreteTransferToAssign2,
+            ],
+            ProductBundleBusinessTester::BUNDLE_SKU_3,
+        );
+
+        // Act
+        $this->getProductBundleFacade()->updateAffectedBundlesAvailability($productConcreteTransferToAssign2->getSku());
+
+        $isSellable = $this->createAvailabilityFacade()->isProductSellableForStore(
+            ProductBundleBusinessTester::BUNDLE_SKU_3,
+            new Decimal(1),
+            (new StoreTransfer())->setIdStore(static::ID_STORE),
+        );
+
+        // Assert
+        $this->assertFalse($isSellable);
     }
 
     /**
