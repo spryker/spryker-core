@@ -48,6 +48,11 @@ class RecalculationTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
+     * @var string
+     */
+    protected const CURRENCY_CODE_EUR = 'EUR';
+
+    /**
      * @var \SprykerTest\Zed\GiftCard\GiftCardBusinessTester
      */
     protected GiftCardBusinessTester $tester;
@@ -65,7 +70,7 @@ class RecalculationTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatesActualAmountOfGiftCardPaymentWhenGiftCardActualAmountHasChanged(): void
+    public function testShouldUpdateActualAmountOfGiftCardPaymentWhenGiftCardActualAmountHasChanged(): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -84,7 +89,7 @@ class RecalculationTest extends Unit
         );
 
         $currencyTransfer = (new CurrencyBuilder())->seed([
-            CurrencyTransfer::CODE => 'EUR',
+            CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
         ])->build();
         $giftCardTransfer = $this->tester->haveGiftCard([
             GiftCardTransfer::IS_ACTIVE => true,
@@ -115,11 +120,11 @@ class RecalculationTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatesActualAmountOfGiftCardPaymentWhenGiftCardActualAmountEqualsItsValue(): void
+    public function testShouldUpdateActualAmountOfGiftCardPaymentWhenGiftCardActualAmountEqualsItsValue(): void
     {
         // Arrange
         $currencyTransfer = (new CurrencyBuilder())->seed([
-            CurrencyTransfer::CODE => 'EUR',
+            CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
         ])->build();
         $giftCardTransfer = $this->tester->haveGiftCard([
             GiftCardTransfer::IS_ACTIVE => true,
