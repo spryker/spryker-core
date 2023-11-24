@@ -808,14 +808,12 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_1,
                     true,
                     true,
-                    $currencyTransfer,
                 ),
                 $this->tester->createProduct(
                     ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
                     ProductBundleBusinessTester::SKU_BUNDLED_2,
                     true,
                     true,
-                    $currencyTransfer,
                 ),
             ],
         );
@@ -863,7 +861,6 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_1,
                     true,
                     true,
-                    $currencyTransfer,
                 ),
             ],
         );
@@ -878,7 +875,6 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_2,
                     true,
                     true,
-                    $currencyTransfer,
                 ),
             ],
             ProductBundleBusinessTester::SKU_BUNDLED_4,
