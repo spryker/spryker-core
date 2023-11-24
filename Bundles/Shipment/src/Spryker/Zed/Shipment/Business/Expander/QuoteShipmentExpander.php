@@ -101,6 +101,10 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer, $shipmentGroupCollection);
         $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer, $shipmentGroupCollection);
 
+        if ($quoteTransfer->getSkipRecalculation()) {
+            return $quoteTransfer;
+        }
+
         return $this->calculationFacade->recalculateQuote($quoteTransfer, $this->shipmentConfig->shouldExecuteQuotePostRecalculationPlugins());
     }
 

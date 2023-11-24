@@ -35,4 +35,19 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * Specification:
+     * - If set to `true`, quote recalculation in a stack of {@link \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface} will be enabled.
+     * - Impacts {@link \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade::getCheckoutData()} method.
+     * - Impacts {@link \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiFacade::placeOrder()} method.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isRecalculationEnabledForQuoteMapperPlugins(): bool
+    {
+        return true;
+    }
 }

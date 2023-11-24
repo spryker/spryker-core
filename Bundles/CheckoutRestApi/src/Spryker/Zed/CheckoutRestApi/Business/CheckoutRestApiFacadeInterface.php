@@ -17,6 +17,7 @@ interface CheckoutRestApiFacadeInterface
      * Specification:
      * - Provides checkout data based on data passed in RestCheckoutRequestAttributesTransfer.
      * - Checkout data will include available shipping methods, available payment methods and available customer addresses.
+     * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::isRecalculationEnabledForQuoteMapperPlugins()} method to determine if quote recalculation in a stack of quote mapper plugins should be enabled.
      * - Recalculates quote.
      * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::shouldExecuteQuotePostRecalculationPlugins()} method to determine if quote post recalculate plugins should be executed.
      * - Executes `ReadCheckoutDataValidatorPluginInterface` plugin stack.
@@ -35,6 +36,7 @@ interface CheckoutRestApiFacadeInterface
      * - Looks up the customer quote by uuid.
      * - Validates quote.
      * - Executes plugins that maps request data into QuoteTransfer.
+     * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::isRecalculationEnabledForQuoteMapperPlugins()} method to determine if quote recalculation in a stack of quote mapper plugins should be enabled.
      * - Recalculates quote.
      * - Uses {@link \Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig::shouldExecuteQuotePostRecalculationPlugins()} method to determine if quote post recalculate plugins should be executed.
      * - Places an order.
