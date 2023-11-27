@@ -864,6 +864,8 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_1,
                     true,
                     true,
+                    ProductBundleBusinessTester::DEFAULT_PRODUCT_AVAILABILITY,
+                    $currencyTransfer,
                 ),
             ],
         );
@@ -878,6 +880,8 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_2,
                     true,
                     true,
+                    ProductBundleBusinessTester::DEFAULT_PRODUCT_AVAILABILITY,
+                    $currencyTransfer,
                 ),
             ],
             ProductBundleBusinessTester::SKU_BUNDLED_4,
