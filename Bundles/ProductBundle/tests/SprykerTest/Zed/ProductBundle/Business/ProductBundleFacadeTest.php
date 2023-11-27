@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
@@ -808,12 +807,16 @@ class ProductBundleFacadeTest extends Unit
                     ProductBundleBusinessTester::SKU_BUNDLED_1,
                     true,
                     true,
+                    ProductBundleBusinessTester::DEFAULT_PRODUCT_AVAILABILITY,
+                    $currencyTransfer,
                 ),
                 $this->tester->createProduct(
                     ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
                     ProductBundleBusinessTester::SKU_BUNDLED_2,
                     true,
                     true,
+                    ProductBundleBusinessTester::DEFAULT_PRODUCT_AVAILABILITY,
+                    $currencyTransfer,
                 ),
             ],
         );

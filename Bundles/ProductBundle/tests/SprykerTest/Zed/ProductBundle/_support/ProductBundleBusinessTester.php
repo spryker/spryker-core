@@ -103,6 +103,11 @@ class ProductBundleBusinessTester extends Actor
     public const FAKE_CURRENCY_CODE = 'FAKE';
 
     /**
+     * @var int
+     */
+    public const DEFAULT_PRODUCT_AVAILABILITY = 10;
+
+    /**
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
@@ -175,7 +180,7 @@ class ProductBundleBusinessTester extends Actor
         string $sku,
         bool $isActive = false,
         bool $isNeverOutOfStock = false,
-        int $quantity = 10,
+        int $quantity = self::DEFAULT_PRODUCT_AVAILABILITY,
         ?CurrencyTransfer $currencyTransfer = null
     ): ProductConcreteTransfer {
         $productConcreteTransfer = $this->haveProduct([

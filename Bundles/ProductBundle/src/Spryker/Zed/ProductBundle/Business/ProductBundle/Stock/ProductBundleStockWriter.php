@@ -208,7 +208,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
                 $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
 
-                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
+                if ($this->isItemStockLowerThanBundleStock($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
                 }
 
@@ -217,8 +217,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 }
             }
 
+            $quantity = $bundleStock->floor()->toInt() === PHP_INT_MAX ? (new Decimal(0))->floor() : $bundleStock->floor();
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $bundleStock->floor()->toInt() == PHP_INT_MAX ? (new Decimal(0))->floor() : $bundleStock->floor(),
+                static::QUANTITY => $quantity,
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
@@ -233,13 +234,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      *
      * @return bool
      */
-    protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
+    protected function isItemStockLowerThanBundleStock(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
     {
-        if (($bundleStock->greaterThan($itemStock)) && !$isNeverOutOfStock) {
-            return true;
-        }
-
-        return false;
+        return $bundleStock->greaterThan($itemStock) && !$isNeverOutOfStock;
     }
 
     /**
