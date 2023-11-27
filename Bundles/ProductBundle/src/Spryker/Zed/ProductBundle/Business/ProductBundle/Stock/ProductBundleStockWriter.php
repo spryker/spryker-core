@@ -208,7 +208,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
                 $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
 
-                if ($this->isItemStockLowerThanBundleStock($bundleStock, $itemStock, $isNeverOutOfStock)) {
+                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
                 }
 
@@ -234,7 +234,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      *
      * @return bool
      */
-    protected function isItemStockLowerThanBundleStock(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
+    protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
     {
         return $bundleStock->greaterThan($itemStock) && !$isNeverOutOfStock;
     }
