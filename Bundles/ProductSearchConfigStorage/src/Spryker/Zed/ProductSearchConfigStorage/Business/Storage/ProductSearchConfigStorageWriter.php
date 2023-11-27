@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Business\Storage;
 
+use Generated\Shared\Transfer\ProductSearchAttributeConditionsTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\ProductSearchConfigStorageTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorage;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToProductSearchFacadeInterface;
@@ -62,9 +66,18 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     {
         $productSearchConfigStorageTransfer = new ProductSearchConfigStorageTransfer();
         $availableProductSearchFilterConfigs = $this->productSearchConfig->getAvailableProductSearchFilterConfigs();
-        $productSearchAttributeTransfers = $this->productSearchFacade->getProductSearchAttributeList();
 
-        foreach ($productSearchAttributeTransfers as $productSearchAttributeTransfer) {
+        $sortTransfer = (new SortTransfer())
+            ->setField(ProductSearchAttributeTransfer::POSITION)
+            ->setIsAscending(true);
+        $productSearchAttributeConditionsTransfer = (new ProductSearchAttributeConditionsTransfer())
+            ->setWithLocalizedAttributes(false);
+        $productSearchAttributeCriteriaTransfer = (new ProductSearchAttributeCriteriaTransfer())
+            ->addSort($sortTransfer)
+            ->setProductSearchAttributeConditions($productSearchAttributeConditionsTransfer);
+        $productSearchAttributeCollectionTransfer = $this->productSearchFacade->getProductSearchAttributeCollection($productSearchAttributeCriteriaTransfer);
+
+        foreach ($productSearchAttributeCollectionTransfer->getProductSearchAttributes() as $productSearchAttributeTransfer) {
             $facetConfigTransfer = clone $availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()];
 
             $facetConfigTransfer

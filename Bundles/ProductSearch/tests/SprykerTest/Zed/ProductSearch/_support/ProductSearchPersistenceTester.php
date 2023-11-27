@@ -23,7 +23,7 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductSearch\PHPMD)
  */
 class ProductSearchPersistenceTester extends Actor
 {

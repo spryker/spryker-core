@@ -24,7 +24,13 @@ class GlossaryMapper
         SpyGlossaryTranslation $glossaryTranslationEntity,
         TranslationTransfer $translationTransfer
     ): TranslationTransfer {
-        return $translationTransfer->fromArray($glossaryTranslationEntity->toArray(), true);
+        $glossaryKeyTransfer = $this->mapGlossaryKeyEntityToGlossaryKeyTransfer(
+            $glossaryTranslationEntity->getGlossaryKey(),
+            new GlossaryKeyTransfer(),
+        );
+
+        return $translationTransfer->fromArray($glossaryTranslationEntity->toArray(), true)
+            ->setGlossaryKey($glossaryKeyTransfer);
     }
 
     /**

@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductSearchAttributeConditionsTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,10 +32,19 @@ class FilterReorderController extends AbstractController
      */
     public function indexAction()
     {
-        $productSearchAttributes = $this->getFacade()->getProductSearchAttributeList();
+        $sortTransfer = (new SortTransfer())
+            ->setField(ProductSearchAttributeTransfer::POSITION)
+            ->setIsAscending(true);
+        $productSearchAttributeConditionsTransfer = (new ProductSearchAttributeConditionsTransfer())
+            ->setWithLocalizedAttributes(true);
+        $productSearchAttributeCriteriaTransfer = (new ProductSearchAttributeCriteriaTransfer())
+            ->addSort($sortTransfer)
+            ->setProductSearchAttributeConditions($productSearchAttributeConditionsTransfer);
+
+        $productSearchAttributeCollectionTransfer = $this->getFacade()->getProductSearchAttributeCollection($productSearchAttributeCriteriaTransfer);
 
         return $this->viewResponse([
-            'productSearchAttributes' => $productSearchAttributes,
+            'productSearchAttributes' => $productSearchAttributeCollectionTransfer->getProductSearchAttributes()->getArrayCopy(),
         ]);
     }
 

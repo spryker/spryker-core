@@ -9,4 +9,13 @@
         <property name="isSearchable" dataBuilderRule="=1"/>
     </transfer>
 
+    <transfer name="ProductAttributeKey">
+        <property name="key" dataBuilderRule="uuid()" type="string"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttribute">
+        <property name="position" dataBuilderRule="randomNumber(5)" type="int"/>
+        <property name="filterType" dataBuilderRule="=multi-select" type="string"/>
+    </transfer>
+
 </transfers>

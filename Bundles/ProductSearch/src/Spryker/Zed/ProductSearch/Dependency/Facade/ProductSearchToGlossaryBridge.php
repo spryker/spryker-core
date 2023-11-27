@@ -102,4 +102,15 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
     {
         return $this->glossaryFacade->createKey($keyName);
     }
+
+    /**
+     * @param list<string> $glossaryKeys
+     * @param list<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\TranslationTransfer>
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
+    }
 }

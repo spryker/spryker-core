@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
+namespace Spryker\Zed\ProductSearch\Business\Reader;
 
 use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
 
-interface ProductSearchConfigStorageToProductSearchFacadeInterface
+interface ProductSearchAttributeReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer

@@ -27,6 +27,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     {
         /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery */
         $glossaryTranslationQuery = $this->getFactory()->createGlossaryTranslationQuery()
+            ->joinWithGlossaryKey()
             ->useGlossaryKeyQuery()
                 ->filterByKey($glossaryKey)
             ->endUse();
@@ -55,6 +56,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     {
         /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery */
         $glossaryTranslationQuery = $this->getFactory()->createGlossaryTranslationQuery()
+            ->joinWithGlossaryKey()
             ->useGlossaryKeyQuery()
                 ->filterByKey_In($glossaryKeys)
             ->endUse();

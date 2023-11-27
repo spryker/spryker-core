@@ -16,6 +16,8 @@ use Spryker\Zed\ProductSearch\Business\Attribute\AttributeWriter;
 use Spryker\Zed\ProductSearch\Business\Collector\ProductSearchCollectorRunner;
 use Spryker\Zed\ProductSearch\Business\Collector\ProductSearchCollectorRunnerInterface;
 use Spryker\Zed\ProductSearch\Business\Collector\Storage\ProductSearchConfigExtensionCollector;
+use Spryker\Zed\ProductSearch\Business\Expander\LocalizedProductSearchAttributeKeyExpander;
+use Spryker\Zed\ProductSearch\Business\Expander\LocalizedProductSearchAttributeKeyExpanderInterface;
 use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeCollector;
 use Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollector;
 use Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper;
@@ -26,6 +28,8 @@ use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarker;
 use Spryker\Zed\ProductSearch\Business\Model\ProductAbstractSearchReader;
 use Spryker\Zed\ProductSearch\Business\Model\ProductConcreteSearchReader;
 use Spryker\Zed\ProductSearch\Business\Model\ProductSearchWriter;
+use Spryker\Zed\ProductSearch\Business\Reader\ProductSearchAttributeReader;
+use Spryker\Zed\ProductSearch\Business\Reader\ProductSearchAttributeReaderInterface;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductSearch\Persistence\Collector\Propel\ProductSearchConfigExtensionCollectorQuery;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
@@ -59,6 +63,29 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductSearchAttributeMapper()
     {
         return new ProductSearchAttributeMapper($this->getAttributeMapCollectors());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Expander\LocalizedProductSearchAttributeKeyExpanderInterface
+     */
+    public function createLocalizedProductSearchAttributeKeyExpander(): LocalizedProductSearchAttributeKeyExpanderInterface
+    {
+        return new LocalizedProductSearchAttributeKeyExpander(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createFilterGlossaryKeyBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSearch\Business\Reader\ProductSearchAttributeReaderInterface
+     */
+    public function createProductSearchAttributeReader(): ProductSearchAttributeReaderInterface
+    {
+        return new ProductSearchAttributeReader(
+            $this->getRepository(),
+            $this->createLocalizedProductSearchAttributeKeyExpander(),
+        );
     }
 
     /**

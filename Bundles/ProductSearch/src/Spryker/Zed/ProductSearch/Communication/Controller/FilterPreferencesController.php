@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductSearchAttributeConditionsTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,17 +170,22 @@ class FilterPreferencesController extends AbstractController
     public function viewAction(Request $request)
     {
         $idProductSearchAttribute = $this->castId($request->query->getInt(static::PARAM_ID));
+        $productSearchAttributeConditionsTransfer = (new ProductSearchAttributeConditionsTransfer())
+            ->setWithLocalizedAttributes(true)
+            ->addIdProductSearchAttribute($idProductSearchAttribute);
+        $productSearchAttributeCriteriaTransfer = (new ProductSearchAttributeCriteriaTransfer())
+            ->setProductSearchAttributeConditions($productSearchAttributeConditionsTransfer);
 
-        $attributeTransfer = $this->getFacade()->getProductSearchAttribute($idProductSearchAttribute);
+        $productSearchAttributeCollectionTransfer = $this->getFacade()->getProductSearchAttributeCollection($productSearchAttributeCriteriaTransfer);
 
-        if (!$attributeTransfer) {
+        if (!$productSearchAttributeCollectionTransfer->getProductSearchAttributes()->count()) {
             return $this->redirectResponse('/product-search/filter-preferences');
         }
 
         $deleteForm = $this->getFactory()->createDeleteFilterPreferencesForm();
 
         return $this->viewResponse([
-            'attributeTransfer' => $attributeTransfer,
+            'attributeTransfer' => $productSearchAttributeCollectionTransfer->getProductSearchAttributes()->getIterator()->current(),
             'locales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'deleteForm' => $deleteForm->createView(),
         ]);

@@ -24,7 +24,7 @@ use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductSearch\PHPMD)
  */
 class ProductSearchPresentationTester extends Actor
 {
