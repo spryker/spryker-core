@@ -192,51 +192,39 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param array $bundledItemStock
-     * @param array<int> $bundledItemQuantity
+     * @param array<int> $bundleItemQuantitiesIndexedByProductSku
      *
      * @return array
      */
-    protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundledItemQuantity)
+    protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundleItemQuantitiesIndexedByProductSku): array
     {
         $bundleTotalStockPerWarehouse = [];
-        foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = new Decimal(PHP_INT_MAX);
-            $isAllNeverOutOfStock = true;
-            foreach ($warehouseStock as $idProduct => $productStockQuantity) {
-                $bundleItemQuantity = $bundledItemQuantity[$idProduct];
-                $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
+        foreach ($bundledItemStock as $idStock => $stockIndexedByProductSku) {
+            $itemMaxQuantities = [];
 
-                if ($this->isItemStockLowerThanBundleStock($bundleStock, $itemStock, $isNeverOutOfStock)) {
-                    $bundleStock = $itemStock;
+            foreach ($bundleItemQuantitiesIndexedByProductSku as $productSku => $bundleQuantity) {
+                if (!isset($stockIndexedByProductSku[$productSku])) {
+                    $itemMaxQuantities[] = 0;
+
+                    continue;
                 }
 
-                if (!$isNeverOutOfStock) {
-                    $isAllNeverOutOfStock = false;
+                if ($stockIndexedByProductSku[$productSku][static::IS_NEVER_OUT_OF_STOCK]) {
+                    continue;
                 }
+
+                $itemMaxQuantities[] = (new Decimal($stockIndexedByProductSku[$productSku][static::QUANTITY]))
+                    ->divide($bundleQuantity, static::DIVISION_SCALE)->floor()->toInt();
             }
 
-            $quantity = $bundleStock->floor()->toInt() === PHP_INT_MAX ? (new Decimal(0))->floor() : $bundleStock->floor();
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $quantity,
-                static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
+                static::QUANTITY => $itemMaxQuantities ? new Decimal(min($itemMaxQuantities)) : 0,
+                static::IS_NEVER_OUT_OF_STOCK => empty($itemMaxQuantities),
             ];
         }
 
         return $bundleTotalStockPerWarehouse;
-    }
-
-    /**
-     * @param \Spryker\DecimalObject\Decimal $bundleStock
-     * @param \Spryker\DecimalObject\Decimal $itemStock
-     * @param bool $isNeverOutOfStock
-     *
-     * @return bool
-     */
-    protected function isItemStockLowerThanBundleStock(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
-    {
-        return $bundleStock->greaterThan($itemStock) && !$isNeverOutOfStock;
     }
 
     /**
