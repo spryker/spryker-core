@@ -419,7 +419,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function getFilteredPriceProductConcreteMerchantRelationships(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByFkProduct(null, Criteria::ISNOTNULL);
+            ->filterByFkProduct(null, Criteria::ISNOTNULL)
+            ->groupByIdPriceProductMerchantRelationship();
 
         $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)
@@ -440,7 +441,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public function getFilteredPriceProductAbstractMerchantRelationships(FilterTransfer $filterTransfer): array
     {
         $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
-            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL)
+            ->groupByIdPriceProductMerchantRelationship();
 
         $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)

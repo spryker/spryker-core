@@ -5,13 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PriceProductMerchantRelationship;
+declare(strict_types=1);
+
+namespace SprykerTest\Zed\PriceProductMerchantRelationshipStorage;
 
 use Codeception\Actor;
 
 /**
- * @method void wantToTest($text)
+ * Inherited Methods
+ *
  * @method void wantTo($text)
+ * @method void wantToTest($text)
  * @method void execute($callable)
  * @method void expectTo($prediction)
  * @method void expect($prediction)
@@ -19,13 +23,11 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
- *
- * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
+ * @SuppressWarnings(\SprykerTest\Zed\PriceProductMerchantRelationshipStorage\PHPMD)
  */
-class PriceProductMerchantRelationshipBusinessTester extends Actor
+class PriceProductMerchantRelationshipStorageCommunicationTester extends Actor
 {
-    use _generated\PriceProductMerchantRelationshipBusinessTesterActions;
+    use _generated\PriceProductMerchantRelationshipStorageCommunicationTesterActions;
 }
