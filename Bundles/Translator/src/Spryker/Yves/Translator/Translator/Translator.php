@@ -15,6 +15,11 @@ use Spryker\Yves\Translator\Dependency\Client\TranslatorToLocaleClientInterface;
 class Translator implements TranslatorInterface
 {
     /**
+     * @var string
+     */
+    protected const PARAMETER_FORWARD_COMPATIBILITY_TRANSLATION = '__forward_compatibility_translation';
+
+    /**
      * @var \Spryker\Yves\Translator\Dependency\Client\TranslatorToGlossaryStorageClientInterface
      */
     protected $glossaryClient;
@@ -53,7 +58,32 @@ class Translator implements TranslatorInterface
             $locale = $this->getLocaleName();
         }
 
+        $forwardCompatibilityTranslation = $parameters[static::PARAMETER_FORWARD_COMPATIBILITY_TRANSLATION] ?? null;
+
+        if (is_array($forwardCompatibilityTranslation)) {
+            $this->assertForwardCompatibilityArrayHasOneElement($forwardCompatibilityTranslation);
+
+            return $this->trans(...$forwardCompatibilityTranslation);
+        }
+
         return $this->glossaryClient->translate($id, $locale, $parameters);
+    }
+
+    /**
+     * @param array<mixed> $forwardCompatibilityTranslation
+     *
+     * @throws \InvalidArgumentException If the forward compatibility translation does not contain at least one element.
+     *
+     * @return void
+     */
+    protected function assertForwardCompatibilityArrayHasOneElement(array $forwardCompatibilityTranslation): void
+    {
+        if (count($forwardCompatibilityTranslation) === 0) {
+            throw new InvalidArgumentException(sprintf(
+                '%s must be an array with at least one element.',
+                static::PARAMETER_FORWARD_COMPATIBILITY_TRANSLATION,
+            ));
+        }
     }
 
     /**
