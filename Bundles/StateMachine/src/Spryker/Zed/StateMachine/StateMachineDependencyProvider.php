@@ -10,6 +10,7 @@ namespace Spryker\Zed\StateMachine;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\StateMachine\Dependency\Service\StateMachineToUtilSanitizeXssServiceBridge;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
@@ -30,6 +31,11 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_NETWORK = 'util network service';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,6 +68,24 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_STATE_MACHINE_HANDLERS, function () {
             return $this->getStateMachineHandlers();
+        });
+
+        $container = $this->addUtilSanitizeXssService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeXssService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
+            return new StateMachineToUtilSanitizeXssServiceBridge(
+                $container->getLocator()->utilSanitizeXss()->service(),
+            );
         });
 
         return $container;
