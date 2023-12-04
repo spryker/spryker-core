@@ -12,18 +12,12 @@ use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\TaxTotalTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -32,7 +26,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -49,6 +42,7 @@ use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Spryker\Zed\Store\Business\StoreFacade;
+use SprykerTest\Zed\Sales\SalesBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -67,6 +61,11 @@ class SalesFacadeSaveOrderTest extends Unit
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
     protected $salesFacade;
+
+    /**
+     * @var \SprykerTest\Zed\Sales\SalesBusinessTester
+     */
+    protected SalesBusinessTester $tester;
 
     /**
      * @return void
@@ -152,7 +151,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->filterByZipCode('1337')
             ->filterByCity('SpryHome');
 
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
 
         $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
@@ -181,79 +180,6 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    private function getValidBaseQuoteTransfer(): QuoteTransfer
-    {
-        $country = new SpyCountry();
-        $country->setIso2Code('ix');
-        $country->save();
-
-        $quoteTransfer = new QuoteTransfer();
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
-        $quoteTransfer->setCurrency($currencyTransfer);
-
-        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
-        $billingAddress = new AddressTransfer();
-
-        $billingAddress->setIso2Code('ix')
-            ->setAddress1('address-1-1-test')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setZipCode('1337')
-            ->setCity('SpryHome');
-
-        $shippingAddress = new AddressTransfer();
-        $shippingAddress->setIso2Code('ix')
-            ->setAddress1('address-1-2-test')
-            ->setFirstName('Max')
-            ->setLastName('Mustermann')
-            ->setZipCode('1337')
-            ->setCity('SpryHome');
-
-        $totals = new TotalsTransfer();
-        $totals->setGrandTotal(1337)
-            ->setSubtotal(337);
-
-        $totals->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
-
-        $quoteTransfer->setShippingAddress($shippingAddress)
-            ->setBillingAddress($billingAddress)
-            ->setTotals($totals);
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail('max@mustermann.de');
-        $customerTransfer->setFirstName('Max');
-        $customerTransfer->setLastName('Mustermann');
-
-        $quoteTransfer->setCustomer($customerTransfer);
-
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
-        $shipmentTransfer->setShippingAddress($shippingAddress);
-        $quoteTransfer->setShipment($shipmentTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setUnitPrice(1)
-            ->setUnitGrossPrice(1)
-            ->setSumGrossPrice(1)
-            ->setQuantity(1)
-            ->setName('test-name')
-            ->setSku('sku-test')
-            ->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-
-        $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection('dummyPaymentInvoice');
-
-        $quoteTransfer->setPayment($paymentTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
      * @return void
      */
     public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder(): void
@@ -264,7 +190,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->filterByLastName('Mustermann')
             ->filterByCity('SpryHome');
 
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
 
         $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
@@ -280,7 +206,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderAssignsSavedOrderId(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
@@ -292,7 +218,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesOrderAndSavesFieldsDeprecated(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
@@ -312,7 +238,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesOrderAndSavesFields(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $saveOrderTransfer = $this->createSaveOrderTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
@@ -332,7 +258,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
 
         $customerCreatedAt = new DateTime('Yesterday');
         $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
@@ -354,13 +280,8 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesAndFillsOrderItems(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
-        $omsConfig = new OmsConfig();
-
-        $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName($omsConfig->getInitialStatus())
-            ->findOneOrCreate();
-        $initialState->save();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $initialState = $this->tester->createInitialState();
 
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
@@ -424,7 +345,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderGeneratesOrderReference(): void
     {
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
@@ -436,7 +357,7 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testCreateSalesExpenseSavesExpense(): void
     {
         // Assign
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $saveOrderTransfer = $this->createSaveOrderTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
         $expenseTransfer = $this->createExpenseTransfer();
@@ -492,7 +413,7 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderCreatesOrderRawAndSavesFields(): void
     {
         //Arrange
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $saveOrderTransfer = $this->createSaveOrderTransfer();
 
         //Act
@@ -514,17 +435,13 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderRawCreatesAndFillsOrderItems(): void
     {
         //Arrange
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
-        $omsConfig = new OmsConfig();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $quoteTransfer = $this->getValidItemsQuoteTransfer($quoteTransfer);
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $saveOrderTransfer = $checkoutResponseTransfer->getSaveOrder();
 
         //Act
-        $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName($omsConfig->getInitialStatus())
-            ->findOneOrCreate();
-        $initialState->save();
+        $initialState = $this->tester->createInitialState();
 
         $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
         $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
@@ -563,7 +480,7 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderCreatesOrderRawAndSavesOrderTotals(): void
     {
         //Arrange
-        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
         $saveOrderTransfer = $this->createSaveOrderTransfer();
 
         //Act

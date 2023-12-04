@@ -10,13 +10,26 @@ namespace SprykerTest\Zed\Sales;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\OrderListRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Spryker\Shared\Price\PriceMode;
+use Spryker\Zed\Oms\OmsConfig;
 
 /**
  * @method void wantToTest($text)
@@ -31,7 +44,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Sales\PHPMD)
  */
 class SalesBusinessTester extends Actor
 {
@@ -142,5 +155,92 @@ class SalesBusinessTester extends Actor
         $salesOrderTotalsEntity->save();
 
         return $salesOrderTotalsEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState
+     */
+    public function createInitialState(): SpyOmsOrderItemState
+    {
+        $initialState = SpyOmsOrderItemStateQuery::create()
+            ->filterByName((new OmsConfig())->getInitialStatus())
+            ->findOneOrCreate();
+
+        $initialState->save();
+
+        return $initialState;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getValidBaseQuoteTransfer(): QuoteTransfer
+    {
+        $country = new SpyCountry();
+        $country->setIso2Code('ix');
+        $country->save();
+
+        $quoteTransfer = new QuoteTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
+
+        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
+        $billingAddress = new AddressTransfer();
+
+        $billingAddress->setIso2Code('ix')
+            ->setAddress1('address-1-1-test')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setZipCode('1337')
+            ->setCity('SpryHome');
+
+        $shippingAddress = new AddressTransfer();
+        $shippingAddress->setIso2Code('ix')
+            ->setAddress1('address-1-2-test')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setZipCode('1337')
+            ->setCity('SpryHome');
+
+        $totals = new TotalsTransfer();
+        $totals->setGrandTotal(1337)
+            ->setSubtotal(337);
+
+        $totals->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
+
+        $quoteTransfer->setShippingAddress($shippingAddress)
+            ->setBillingAddress($billingAddress)
+            ->setTotals($totals);
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail('max@mustermann.de');
+        $customerTransfer->setFirstName('Max');
+        $customerTransfer->setLastName('Mustermann');
+
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
+        $quoteTransfer->setShipment($shipmentTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer
+            ->setUnitPrice(1)
+            ->setUnitGrossPrice(1)
+            ->setSumGrossPrice(1)
+            ->setQuantity(1)
+            ->setName('test-name')
+            ->setSku('sku-test')
+            ->setShipment($shipmentTransfer);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPaymentSelection('dummyPaymentInvoice');
+
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
     }
 }

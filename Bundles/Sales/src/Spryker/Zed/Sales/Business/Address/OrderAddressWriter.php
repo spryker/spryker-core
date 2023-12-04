@@ -71,7 +71,6 @@ class OrderAddressWriter implements OrderAddressWriterInterface
             return false;
         }
 
-
         $this->entityManager->updateSalesOrderAddress($this->cleanUpAddressUuid($addressTransfer));
 
         return true;

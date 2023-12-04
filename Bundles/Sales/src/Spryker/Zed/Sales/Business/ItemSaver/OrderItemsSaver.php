@@ -114,7 +114,10 @@ class OrderItemsSaver implements OrderItemsSaverInterface
             $salesOrderItemEntityTransfer = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntityTransfer);
             $salesOrderItemEntityTransfer = $this->entityManager->saveSalesOrderItems($salesOrderItemEntityTransfer);
             $itemTransfer->fromArray($salesOrderItemEntityTransfer->toArray(), true);
-            $itemTransfer->setTaxRate($itemTransfer->getTaxRate()->toFloat());
+
+            if ($salesOrderItemEntityTransfer->getTaxRate()) {
+                $itemTransfer->setTaxRate($salesOrderItemEntityTransfer->getTaxRate()->toFloat());
+            }
         }
 
         $quoteTransfer->setItems($itemTransfers);
