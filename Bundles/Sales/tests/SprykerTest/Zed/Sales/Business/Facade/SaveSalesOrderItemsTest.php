@@ -51,14 +51,8 @@ class SaveSalesOrderItemsTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-
         $this->salesFacade = $this->tester->getFacade();
-
-        $businessFactory = new SalesBusinessFactory();
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn(BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
-        $businessFactory->setConfig($salesConfigMock);
-        $this->salesFacade->setFactory($businessFactory);
+        $this->mockSalesConfig();
     }
 
     /**
@@ -75,8 +69,9 @@ class SaveSalesOrderItemsTest extends Unit
             $itemTransfer->setTaxRate(static::TAX_RATE_DEFAULT);
         }
 
-        // Act
         $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+
+        // Act
         $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
 
         // Assert
@@ -95,9 +90,9 @@ class SaveSalesOrderItemsTest extends Unit
         $this->tester->createInitialState();
         $saveOrderTransfer = new SaveOrderTransfer();
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
 
         // Act
-        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
         $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
 
         // Assert
@@ -105,5 +100,19 @@ class SaveSalesOrderItemsTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertNull($itemTransfer->getTaxRate());
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockSalesConfig(): void
+    {
+        $businessFactory = new SalesBusinessFactory();
+
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn(BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
+        $businessFactory->setConfig($salesConfigMock);
+        $this->salesFacade->setFactory($businessFactory);
     }
 }

@@ -144,19 +144,23 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder(): void
     {
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
-            ->filterByAddress1('address-1-1-test')
-            ->filterByFirstName('Max')
-            ->filterByLastName('Mustermann')
-            ->filterByZipCode('1337')
-            ->filterByCity('SpryHome');
-
+        // Arrange
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $addressTransfer = $quoteTransfer->getBillingAddress();
+
+        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
+            ->filterByAddress1($addressTransfer->getAddress1())
+            ->filterByFirstName($addressTransfer->getFirstName())
+            ->filterByLastName($addressTransfer->getLastName())
+            ->filterByZipCode($addressTransfer->getZipCode())
+            ->filterByCity($addressTransfer->getCity());
 
         $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
+        // Act
         $addressEntity = $salesOrderAddressQuery->findOne();
 
+        // Assert
         $this->assertNotNull($addressEntity);
         $this->assertSame($addressEntity->getIdSalesOrderAddress(), $quoteTransfer->getBillingAddress()
             ->getIdSalesOrderAddress());
@@ -184,18 +188,23 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder(): void
     {
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
-            ->filterByAddress1('address-1-2-test')
-            ->filterByFirstName('Max')
-            ->filterByLastName('Mustermann')
-            ->filterByCity('SpryHome');
-
+        // Arrange
         $quoteTransfer = $this->tester->getValidBaseQuoteTransfer();
+        $addressTransfer = $quoteTransfer->getShippingAddress();
+
+        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
+            ->filterByAddress1($addressTransfer->getAddress1())
+            ->filterByFirstName($addressTransfer->getFirstName())
+            ->filterByLastName($addressTransfer->getLastName())
+            ->filterByZipCode($addressTransfer->getZipCode())
+            ->filterByCity($addressTransfer->getCity());
 
         $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
+        // Act
         $addressEntity = $salesOrderAddressQuery->findOne();
 
+        // Assert
         $this->assertNotNull($addressEntity);
         $this->assertSame($addressEntity->getIdSalesOrderAddress(), $quoteTransfer->getShippingAddress()
             ->getIdSalesOrderAddress());
@@ -228,9 +237,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
 
-        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
-        $this->assertSame('Max', $orderEntity->getFirstName());
-        $this->assertSame('Mustermann', $orderEntity->getLastName());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
     }
 
     /**
@@ -248,9 +257,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
 
-        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
-        $this->assertSame('Max', $orderEntity->getFirstName());
-        $this->assertSame('Mustermann', $orderEntity->getLastName());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
     }
 
     /**
@@ -424,9 +433,9 @@ class SalesFacadeSaveOrderTest extends Unit
 
         //Assert
         $this->assertNotNull($orderEntity);
-        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
-        $this->assertSame('Max', $orderEntity->getFirstName());
-        $this->assertSame('Mustermann', $orderEntity->getLastName());
+        $this->assertSame($quoteTransfer->getCustomer()->getEmail(), $orderEntity->getEmail());
+        $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $orderEntity->getFirstName());
+        $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $orderEntity->getLastName());
     }
 
     /**
