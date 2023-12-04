@@ -116,7 +116,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
             $itemTransfer->fromArray($salesOrderItemEntityTransfer->toArray(), true);
 
             if ($salesOrderItemEntityTransfer->getTaxRate()) {
-                $itemTransfer->setTaxRate($salesOrderItemEntityTransfer->getTaxRate()->toFloat());
+                $itemTransfer->setTaxRate($salesOrderItemEntityTransfer->getTaxRateOrFail()->toFloat());
             }
         }
 
