@@ -20,7 +20,7 @@ interface TaxAppFacadeInterface
      * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.applicationId.
      * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.apiUrl.
      * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.vendorCode.
-     * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.storeReference.
+     * - If TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.storeReference is not present, it updates all SpyTaxAppConfig for the provided vendorCode.
      *
      * @api
      *
@@ -34,7 +34,7 @@ interface TaxAppFacadeInterface
      * Specification:
      * - Deletes tax app config.
      * - Requires TaxAppConfigCriteriaTransfer.TaxAppConfigConditionsTransfer.vendorCode.
-     * - Requires TaxAppConfigCriteriaTransfer.TaxAppConfigConditionsTransfer.storeReference.
+     * - If TaxAppConfigCriteriaTransfer.TaxAppConfigConditionsTransfer.storeReference is not present, it deletes all SpyTaxAppConfig for the provided vendorCode.
      *
      * @api
      *

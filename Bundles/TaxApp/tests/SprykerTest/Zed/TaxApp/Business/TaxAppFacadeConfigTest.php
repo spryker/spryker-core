@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\TaxApp\Business;
 use Codeception\Stub;
 use Codeception\Test\Unit;
 use Exception;
+use Generated\Shared\Transfer\TaxAppConfigConditionsTransfer;
+use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\TaxApp\Business\Exception\TaxAppConfigurationCouldNotBeDeleted;
@@ -140,5 +142,67 @@ class TaxAppFacadeConfigTest extends Unit
 
         // Act
         $this->tester->getFacade()->saveTaxAppConfig((new TaxAppConfigTransfer())->setStoreReference('de-DE'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigDoesNotExistAndStoreReferenceIsNullSaveTaxAppConfigSuccessfullySavesConfig(): void
+    {
+        // Arrange
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['store_reference' => null]);
+
+        // Act
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenMultipleTaxAppConfigExistsAndStoreReferenceIsNullSaveTaxAppConfigSuccessfullyUpdatesAllConfigs(): void
+    {
+        // Arrange
+        $tenant = 'tenant1';
+        $vendorCode = Uuid::uuid4()->toString();
+        $newApiUrl = 'new-api-url';
+
+        $secondTenantConfig = $this->tester->haveTaxAppConfig(['store_reference' => null, 'tenant_identifier' => 'tenant-2', 'vendor_code' => $vendorCode]);
+        $this->tester->haveTaxAppConfig(['api_url' => '1', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
+        $this->tester->haveTaxAppConfig(['api_url' => '2', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
+        $this->tester->haveTaxAppConfig(['api_url' => '3', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
+
+        $taxAppConfigTransfer1 = $this->tester->createTaxAppConfigTransfer(['api_url' => $newApiUrl, 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
+
+        // Act
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer1);
+
+        // Assert
+        $this->tester->assertAllTaxAppConfigsForTenantHaveNewApiUrl($taxAppConfigTransfer1, $newApiUrl);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenMultipleTaxAppConfigExistsAndStoreReferenceIsNullDeleteTaxAppConfigSuccessfullyDeletesAllConfigsForTenant(): void
+    {
+        // Arrange
+        $deletedTenant = 'tenant1';
+        $notDeletedTenant = 'tenant2';
+        $vendorCode = Uuid::uuid4()->toString();
+
+        $this->tester->haveTaxAppConfig(['store_reference' => null, 'tenant_identifier' => $notDeletedTenant, 'vendor_code' => $vendorCode]);
+        $this->tester->haveTaxAppConfig(['store_reference' => null, 'tenant_identifier' => $deletedTenant, 'vendor_code' => $vendorCode]);
+        $this->tester->haveTaxAppConfig(['store_reference' => null, 'tenant_identifier' => $deletedTenant, 'vendor_code' => $vendorCode]);
+
+        $taxAppConfigCriteriaTransfer = (new TaxAppConfigCriteriaTransfer())->setTaxAppConfigConditions((new TaxAppConfigConditionsTransfer())->setVendorCodes([$vendorCode]));
+
+        // Act
+        $this->tester->getFacade()->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertAllTaxAppConfigsForTenantHaveBeenDeleted($vendorCode);
     }
 }
