@@ -26,12 +26,16 @@ components:
                 storeReference:
                     type: string
                     description: 'Identifier of the store for the triggered message.'
+                    deprecated: true
                 event:
                     type: string
                     description: 'Name of the current message.'
                 transferName:
                     type: string
                     description: 'Transfer name of the current message.'
+                actorId:
+                    type: string
+                    description: 'Identifier of the application that triggered the message.'
                 publisher:
                     type: object
                     properties:
@@ -44,3 +48,4 @@ components:
                         storeReference:
                             type: string
                             description: 'Identifier of the store that triggered the message.'
+                            deprecated: true

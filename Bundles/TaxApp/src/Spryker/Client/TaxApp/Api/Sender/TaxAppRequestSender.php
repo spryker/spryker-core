@@ -96,7 +96,7 @@ class TaxAppRequestSender implements TaxAppRequestSenderInterface
                 Request::METHOD_POST,
                 $taxAppConfigTransfer->getApiUrlOrFail(),
                 [
-                    RequestOptions::HEADERS => $this->taxAppHeaderBuilder->build($taxCalculationRequestTransfer, $storeTransfer),
+                    RequestOptions::HEADERS => $this->taxAppHeaderBuilder->build($taxCalculationRequestTransfer, $storeTransfer, $taxAppConfigTransfer),
                     RequestOptions::BODY => $requestBody,
                 ],
             );

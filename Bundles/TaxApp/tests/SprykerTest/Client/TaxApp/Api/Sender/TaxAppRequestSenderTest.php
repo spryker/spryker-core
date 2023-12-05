@@ -97,4 +97,63 @@ class TaxAppRequestSenderTest extends Unit
         $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
         $this->assertFalse($responseTransfer->getIsSuccessful());
     }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestSucceedsWhenTenantIdentifierIsPresent(): void
+    {
+        // Arrange
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['isActive' => true, 'tenant_identifier' => 'tenant-1']);
+        $this->tester->mockHttpClient($this->tester->haveValidResponse());
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = new StoreTransfer();
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->assertTrue($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestFailsWhenNeitherTenantIdentifierOrStoreArePresent(): void
+    {
+        // Arrange
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['is_active' => true, 'tenant_identifier' => null]);
+        $this->tester->mockHttpClient($this->tester->haveEmptyResponse());
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = new StoreTransfer();
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->assertFalse($responseTransfer->getIsSuccessful());
+        $this->assertStringContainsString('Tenant identifier or store reference or store name must be set.', $responseTransfer->getApiErrorMessages()[0]->getDetail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestSucceedsWhenTenantIdentifierIsNotPresentButStoreIsPresent(): void
+    {
+        // Arrange
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['is_active' => true, 'tenant_identifier' => null]);
+        $this->tester->mockHttpClient($this->tester->haveValidResponse());
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->assertTrue($responseTransfer->getIsSuccessful());
+    }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxApp\Business\Config;
 
 use Exception;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Spryker\Zed\TaxApp\Business\Exception\TaxAppConfigurationCouldNotBeSaved;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface;
@@ -51,7 +52,11 @@ class ConfigWriter implements ConfigWriterInterface
      */
     public function write(TaxAppConfigTransfer $taxAppConfigTransfer): void
     {
-        $storeTransfer = $this->storeFacade->getStoreByStoreReference($taxAppConfigTransfer->getStoreReferenceOrFail());
+        $storeTransfer = new StoreTransfer();
+
+        if ($taxAppConfigTransfer->getStoreReference() !== null) {
+            $storeTransfer = $this->storeFacade->getStoreByStoreReference($taxAppConfigTransfer->getStoreReference());
+        }
 
         try {
             $this->taxAppEntityManager->saveTaxAppConfig($taxAppConfigTransfer, $storeTransfer);
