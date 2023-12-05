@@ -1,0 +1,5 @@
+{
+    "include-dev": {
+        "symfony/dom-crawler": "Required if you want to use TableHelper."
+    }
+}

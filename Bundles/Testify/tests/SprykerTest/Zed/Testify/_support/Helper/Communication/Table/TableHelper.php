@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Testify\Helper\Communication\Table;
 use Codeception\Module;
 use Codeception\TestInterface;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TableHelper extends Module
 {
@@ -132,46 +133,35 @@ class TableHelper extends Module
      */
     public function clickDataTableButton(string $name, int $rowPosition = 0): void
     {
-        if (!isset($this->currentData['data'])) {
+        $dataSet = $this->currentData['data'] ?? null;
+        if (!$dataSet) {
             $this->fail('Data for table not set; Run successful ->listDataTable before');
         }
 
-        if (count($this->currentData['data']) < $rowPosition) {
+        if (!isset($dataSet[$rowPosition])) {
             $this->fail(sprintf(
-                'Current data set has only "%d" number of entries. The requested row "%d" doesn\'t exists.',
-                count($this->currentData['data']),
-                $rowPosition,
+                'Current data set has only "%d" entries. Requested row "%d" does not exist.',
+                count($dataSet),
+                $rowPosition
             ));
         }
 
-        $rowData = $this->currentData['data'][$rowPosition];
+        $rowData = $dataSet[$rowPosition];
+        $crawler = new Crawler('<html>' . implode('', array_reverse($rowData)) . '</html>');
+        $xpath = sprintf('//a[contains(., "%s")] | //button[contains(., "%s")]', $name, $name);
 
-        $rowData = array_reverse($rowData);
-
-        foreach ($rowData as $rowContent) {
-            $xhtml = sprintf('<html>%s</html>', $rowContent);
-            $xhtml = simplexml_load_string($xhtml);
-            $xpath = sprintf('//a[contains(., "%1$s")] | //button[contains(., "%1$s")]', $name);
-
-            $elements = $xhtml->xpath($xpath);
-            $link = null;
-            if ($elements) {
-                $element = current($xhtml->xpath($xpath));
-                /** @var \SimpleXMLElement $attributes */
-                $attributes = (array)$element->attributes();
-
-                $link = $attributes['@attributes']['href'];
-            }
-
-            if ($link !== null) {
-                $this->getApplicationHelper()->amOnPage($link);
-                $this->getApplicationHelper()->seeResponseCodeIs(200);
-
-                return;
-            }
+        $linkElement = $crawler->filterXPath($xpath)->first();
+        if ($linkElement->count() === 0) {
+            $this->fail(sprintf('Couldn\'t find "%s" link in row "%d"', $name, $rowPosition));
         }
 
-        $this->fail(sprintf('Couldn\'t find "%s" link in row "%d"', $name, $rowPosition));
+        $link = $linkElement->attr('href');
+        if ($link === null) {
+            $this->fail(sprintf('Found "%s" element does not have an "href" attribute in row "%d"', $name, $rowPosition));
+        }
+
+        $this->getApplicationHelper()->amOnPage($link);
+        $this->getApplicationHelper()->seeResponseCodeIs(200);
     }
 
     /**
