@@ -10,6 +10,7 @@
         <property name="apiUrl" dataBuilderRule="lexify('??????????')"/>
         <property name="vendorCode" dataBuilderRule="lexify('??????????')"/>
         <property name="storeReference" dataBuilderRule="=de-DE"/>
+        <property name="tenantIdentifier" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">
