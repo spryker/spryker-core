@@ -111,6 +111,8 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\Reorderer\CategoryNodeReorderer::reorderCategoryNodeCollection()} instead.
+     *
      * @param int $idCategoryNode
      * @param int $position
      *

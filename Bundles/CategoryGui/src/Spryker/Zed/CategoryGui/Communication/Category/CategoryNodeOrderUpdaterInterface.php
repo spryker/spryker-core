@@ -12,7 +12,7 @@ interface CategoryNodeOrderUpdaterInterface
     /**
      * @param string $categoryNodesData
      *
-     * @return void
+     * @return bool
      */
-    public function updateCategoryNodeOrder(string $categoryNodesData): void;
+    public function updateCategoryNodeOrder(string $categoryNodesData): bool;
 }

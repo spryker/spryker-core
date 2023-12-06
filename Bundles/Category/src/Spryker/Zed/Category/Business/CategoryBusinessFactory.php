@@ -43,6 +43,10 @@ use Spryker\Zed\Category\Business\Expander\CategoryLocalizedAttributesCategoryNo
 use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderComposite;
 use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface;
 use Spryker\Zed\Category\Business\Expander\StoreRelationCategoryNodeRelationExpander;
+use Spryker\Zed\Category\Business\Extractor\ErrorExtractor;
+use Spryker\Zed\Category\Business\Extractor\ErrorExtractorInterface;
+use Spryker\Zed\Category\Business\Filter\CategoryNodeFilter;
+use Spryker\Zed\Category\Business\Filter\CategoryNodeFilterInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydrator;
@@ -59,6 +63,8 @@ use Spryker\Zed\Category\Business\Reader\CategoryNodeReader;
 use Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryReader;
 use Spryker\Zed\Category\Business\Reader\CategoryReaderInterface;
+use Spryker\Zed\Category\Business\Reorderer\CategoryNodeReorderer;
+use Spryker\Zed\Category\Business\Reorderer\CategoryNodeReordererInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
 use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface;
@@ -76,6 +82,12 @@ use Spryker\Zed\Category\Business\Updater\CategoryUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface;
+use Spryker\Zed\Category\Business\Validator\CategoryNodeValidator;
+use Spryker\Zed\Category\Business\Validator\CategoryNodeValidatorInterface;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeExistsCategoryNodeValidationRule;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeValidatorRuleInterface;
+use Spryker\Zed\Category\Business\Validator\Util\ErrorAdder;
+use Spryker\Zed\Category\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
@@ -614,5 +626,72 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function getCategoryUpdateValidatorRules(): array
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Reorderer\CategoryNodeReordererInterface
+     */
+    public function createCategoryNodeReorderer(): CategoryNodeReordererInterface
+    {
+        return new CategoryNodeReorderer(
+            $this->createCategoryNodeValidator(),
+            $this->createCategoryNodeFilter(),
+            $this->createCategoryNodeReader(),
+            $this->getEntityManager(),
+            $this->getEventFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\CategoryNodeValidatorInterface
+     */
+    public function createCategoryNodeValidator(): CategoryNodeValidatorInterface
+    {
+        return new CategoryNodeValidator($this->getCategoryNodeValidatorRules());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeValidatorRuleInterface>
+     */
+    public function getCategoryNodeValidatorRules(): array
+    {
+        return [
+            $this->createCategoryNodeExistsCategoryNodeValidationRule(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeValidatorRuleInterface
+     */
+    public function createCategoryNodeExistsCategoryNodeValidationRule(): CategoryNodeValidatorRuleInterface
+    {
+        return new CategoryNodeExistsCategoryNodeValidationRule(
+            $this->createCategoryNodeReader(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Util\ErrorAdderInterface
+     */
+    public function createErrorAdder(): ErrorAdderInterface
+    {
+        return new ErrorAdder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Filter\CategoryNodeFilterInterface
+     */
+    public function createCategoryNodeFilter(): CategoryNodeFilterInterface
+    {
+        return new CategoryNodeFilter($this->createErrorExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Extractor\ErrorExtractorInterface
+     */
+    public function createErrorExtractor(): ErrorExtractorInterface
+    {
+        return new ErrorExtractor();
     }
 }

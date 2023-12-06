@@ -7,54 +7,65 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Category;
 
+use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
+use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapperInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface;
 
 class CategoryNodeOrderUpdater implements CategoryNodeOrderUpdaterInterface
 {
     /**
-     * @var string
-     */
-    protected const KEY_ID = 'id';
-
-    /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
-    protected $categoryFacade;
+    protected CategoryGuiToCategoryFacadeInterface $categoryFacade;
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected CategoryGuiToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
+     * @var \Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapperInterface
+     */
+    protected CategoryNodeMapperInterface $categoryNodeMapper;
 
     /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapperInterface $categoryNodeMapper
      */
     public function __construct(
         CategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CategoryGuiToUtilEncodingServiceInterface $utilEncodingService
+        CategoryGuiToUtilEncodingServiceInterface $utilEncodingService,
+        CategoryNodeMapperInterface $categoryNodeMapper
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->categoryNodeMapper = $categoryNodeMapper;
     }
 
     /**
      * @param string $categoryNodesData
      *
-     * @return void
+     * @return bool
      */
-    public function updateCategoryNodeOrder(string $categoryNodesData): void
+    public function updateCategoryNodeOrder(string $categoryNodesData): bool
     {
+        /** @var list<array<string, mixed>> $categoryNodesToReorder */
         $categoryNodesToReorder = $this->utilEncodingService->decodeJson($categoryNodesData, true) ?: [];
-
-        $positionCursor = count($categoryNodesToReorder);
-
-        foreach ($categoryNodesToReorder as $nodeData) {
-            $idCategoryNode = (int)$nodeData[static::KEY_ID];
-            $this->categoryFacade->updateCategoryNodeOrder($idCategoryNode, $positionCursor);
-
-            $positionCursor--;
+        if (!$categoryNodesToReorder) {
+            return false;
         }
+
+        $categoryNodeCollectionRequestTransfer = $this->categoryNodeMapper
+            ->mapCategoryNodesDataToCategoryNodeCollectionRequestTransfer(
+                $categoryNodesToReorder,
+                new CategoryNodeCollectionRequestTransfer(),
+            )
+            ->setIsTransactional(true);
+
+        $categoryNodeCollectionResponseTransfer = $this->categoryFacade->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
+
+        return !count($categoryNodeCollectionResponseTransfer->getErrors());
     }
 }
