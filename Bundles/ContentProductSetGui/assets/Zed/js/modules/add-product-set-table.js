@@ -108,9 +108,7 @@ var ContentProductSetGui = function (options) {
     this.getRowData = function (productSetTable, idProductSet) {
         var tableData = productSetTable.dataTable().api().data().toArray();
         var rowData = tableData.find(function (item) {
-            if (item[0] === Number(idProductSet)) {
-                return item;
-            }
+            return Number(item[0]) === Number(idProductSet);
         });
 
         rowData.splice(-1, 1);

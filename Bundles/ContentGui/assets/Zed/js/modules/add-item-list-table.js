@@ -166,9 +166,7 @@ var ItemListContentItem = function (options) {
     this.getRowData = function (itemTable, itemId) {
         var tableData = itemTable.dataTable().api().data().toArray();
         var rowData = tableData.find(function (item) {
-            if (item[0] === Number(itemId)) {
-                return item;
-            }
+            return Number(item[0]) === Number(itemId);
         });
 
         rowData.splice(-1, 1);
