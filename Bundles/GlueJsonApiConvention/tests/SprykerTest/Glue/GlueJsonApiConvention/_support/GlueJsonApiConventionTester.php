@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Inherited Methods
@@ -93,6 +94,13 @@ class GlueJsonApiConventionTester extends Actor
     protected const RESOURCE_TYPE = 'foo';
 
     /**
+     * @uses \Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\JsonApiConventionPlugin::HEADER_ACCEPT
+     *
+     * @var string
+     */
+    protected const HEADER_ACCEPT = 'accept';
+
+    /**
      * @return \Generated\Shared\Transfer\GlueRequestTransfer
      */
     public function createGlueRequestTransfer(): GlueRequestTransfer
@@ -113,6 +121,20 @@ class GlueJsonApiConventionTester extends Actor
         ])
             ->setPath(static::PATH)
             ->setMeta([static::META_KEY => [static::CONTENT_TYPE]])
+            ->setResource($this->createGlueResourceTransfer());
+
+        return $glueRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GlueRequestTransfer
+     */
+    public function createGlueRequestTransferWithAcceptHeader(): GlueRequestTransfer
+    {
+        $glueRequestTransfer = (new GlueRequestTransfer())
+            ->setPath(static::PATH)
+            ->setMethod(Request::METHOD_GET)
+            ->setMeta([static::HEADER_ACCEPT => [static::CONTENT_TYPE]])
             ->setResource($this->createGlueResourceTransfer());
 
         return $glueRequestTransfer;
