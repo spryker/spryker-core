@@ -25,7 +25,7 @@ class UtilTextFacadeTest extends Unit
     /**
      * @var \Spryker\Service\UtilText\UtilTextService
      */
-    protected $utilTextFacade;
+    protected UtilTextService $utilTextFacade;
 
     /**
      * @return void
@@ -42,10 +42,28 @@ class UtilTextFacadeTest extends Unit
      */
     public function testGenerateSlug(): void
     {
-        $slug = $this->utilTextFacade->generateSlug('A #value#, [to] Slug 8 times.');
-
+        // Arrange
         $expectedSlug = 'a-value-to-slug-8-times';
 
+        // Act
+        $slug = $this->utilTextFacade->generateSlug('A #value#, [to] Slug 8 times.');
+
+        // Assert
+        $this->assertSame($expectedSlug, $slug);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateSlugWithNonUTF8Char(): void
+    {
+        // Arrange
+        $expectedSlug = 'test-slug';
+
+        // Act
+        $slug = $this->utilTextFacade->generateSlug('test ​​slug');
+
+        // Assert
         $this->assertSame($expectedSlug, $slug);
     }
 
