@@ -80,6 +80,6 @@ class EmptyGeneratedDirectoryConsole extends Console
 
         $this->getFacade()->emptyGeneratedDirectory();
 
-        return null;
+        return static::CODE_SUCCESS;
     }
 }

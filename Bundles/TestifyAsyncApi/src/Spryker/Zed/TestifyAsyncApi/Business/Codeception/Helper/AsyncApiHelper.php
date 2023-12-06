@@ -750,7 +750,7 @@ class AsyncApiHelper extends Module
             }
 
             foreach ($items as $position => $value) {
-                if (!array_key_exists($requiredArrayProperty['property'], $value)) {
+                if (!isset($value[$requiredArrayProperty['property']])) {
                     $missingProperties[] = sprintf('%s[%s].%s', $requiredArrayProperty['parent'], $position, $requiredArrayProperty['property']);
                 }
             }

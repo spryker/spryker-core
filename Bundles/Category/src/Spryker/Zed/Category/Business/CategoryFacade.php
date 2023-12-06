@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -134,6 +136,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::reorderCategoryNodeCollection()} instead.
      *
      * @param int $idCategoryNode
      * @param int $position
@@ -391,5 +395,22 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionResponseTransfer {
         return $this->getFactory()->createCategoryDeleter()->deleteCategoryCollection($categoryCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
+     */
+    public function reorderCategoryNodeCollection(
+        CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+    ): CategoryNodeCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCategoryNodeReorderer()
+            ->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
     }
 }

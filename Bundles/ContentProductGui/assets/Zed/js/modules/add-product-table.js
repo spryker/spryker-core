@@ -179,9 +179,7 @@ var ProductListContentItem = function (
     this.getRowData = function (productTable, productId) {
         var tableData = productTable.dataTable().api().data().toArray();
         var rowData = tableData.find(function (item) {
-            if (item[0] === Number(productId)) {
-                return item;
-            }
+            return Number(item[0]) === Number(productId);
         });
 
         rowData.splice(-1, 1);

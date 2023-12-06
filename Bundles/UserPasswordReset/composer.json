@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/propel-orm": "^1.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.17.0",
         "spryker/user-password-reset-extension": "^1.0.0",

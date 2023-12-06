@@ -8,11 +8,6 @@
 namespace SprykerTest\Zed\PriceProductMerchantRelationship;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\PriceProductBuilder;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 
 /**
  * @method void wantToTest($text)
@@ -33,67 +28,4 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 class PriceProductMerchantRelationshipBusinessTester extends Actor
 {
     use _generated\PriceProductMerchantRelationshipBusinessTesterActions;
-
-    /**
-     * @param string $merchantRelationshipKey
-     * @param string|null $companyBusinessUnitOwnerKey
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    protected function createMerchantRelationship(
-        string $merchantRelationshipKey,
-        ?string $companyBusinessUnitOwnerKey = null
-    ): MerchantRelationshipTransfer {
-        $merchant = $this->haveMerchant();
-
-        $companyBusinessUnitSeed = [
-            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
-        ];
-        if ($companyBusinessUnitOwnerKey) {
-            $companyBusinessUnitSeed[CompanyBusinessUnitTransfer::KEY] = $companyBusinessUnitOwnerKey;
-        }
-        $companyBusinessUnitOwner = $this->haveCompanyBusinessUnit($companyBusinessUnitSeed);
-
-        return $this->haveMerchantRelationship([
-            'fkMerchant' => $merchant->getIdMerchant(),
-            'merchant' => $merchant,
-            'fkCompanyBusinessUnit' => $companyBusinessUnitOwner->getIdCompanyBusinessUnit(),
-            'merchantRelationshipKey' => $merchantRelationshipKey,
-            'ownerCompanyBusinessUnit' => $companyBusinessUnitOwner,
-        ]);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function createPriceProductMerchantRelationship(int $idProductAbstract): PriceProductTransfer
-    {
-        $priceProductTransfer = (new PriceProductBuilder())
-            ->withMoneyValue()
-            ->withPriceDimension()
-            ->withPriceType()
-            ->build();
-
-        $priceProductTransfer->fromArray(
-            $this->getPriceProductFacade()->findProductAbstractPrice($idProductAbstract)->modifiedToArray(),
-        );
-
-        $merchantRelationshipTransfer = $this->createMerchantRelationship('key');
-
-        $priceProductTransfer
-            ->getPriceDimension()
-            ->setIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship());
-
-        return $this->getFacade()->savePriceProductMerchantRelationship($priceProductTransfer);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
-     */
-    protected function getPriceProductFacade(): PriceProductFacadeInterface
-    {
-        return $this->getLocator()->priceProduct()->facade();
-    }
 }

@@ -35,4 +35,17 @@
         <property name="userConditions" type="UserConditions" strict="true"/>
     </transfer>
 
+    <transfer name="SecurityCheckAuthContext">
+        <property name="type" type="string"/>
+        <property name="ip" type="string"/>
+        <property name="account" type="string"/>
+    </transfer>
+
+    <transfer name="SecurityCheckAuthResponse">
+        <property name="isBlocked" type="bool"/>
+        <property name="numberOfAttempts" type="int"/>
+        <property name="blockedFor" type="int"/>
+        <property name="securityCheckAuthContext" type="SecurityCheckAuthContext"/>
+    </transfer>
+
 </transfers>

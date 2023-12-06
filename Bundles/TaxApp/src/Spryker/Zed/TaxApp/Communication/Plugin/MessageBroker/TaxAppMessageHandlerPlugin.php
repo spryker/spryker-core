@@ -33,12 +33,19 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
      */
     public function onTaxAppConfigured(ConfigureTaxAppTransfer $configureTaxAppTransfer): void
     {
+        $messageAttributesTransfer = $configureTaxAppTransfer->getMessageAttributesOrFail();
+
         $taxAppConfigTransfer = (new TaxAppConfigTransfer())
-            ->setApplicationid($configureTaxAppTransfer->getMessageAttributesOrFail()->getEmitterOrFail())
+            ->setApplicationId($messageAttributesTransfer->getEmitter())
             ->setApiUrl($configureTaxAppTransfer->getApiUrlOrFail())
             ->setIsActive($configureTaxAppTransfer->getIsActiveOrFail())
             ->setVendorCode($configureTaxAppTransfer->getVendorCodeOrFail())
-            ->setStoreReference($configureTaxAppTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail());
+            ->setStoreReference($messageAttributesTransfer->getStoreReference())
+            ->setTenantIdentifier($messageAttributesTransfer->getTenantIdentifier());
+
+        if ($messageAttributesTransfer->getEmitter() === null || $messageAttributesTransfer->getActorId() !== null) {
+            $taxAppConfigTransfer->setApplicationId($messageAttributesTransfer->getActorIdOrFail());
+        }
 
         $this->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
     }
@@ -55,7 +62,17 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
     public function onTaxAppDeleted(DeleteTaxAppTransfer $deleteTaxAppTransfer): void
     {
         $taxAppConditionsTransfer = (new TaxAppConfigConditionsTransfer());
-        $taxAppConditionsTransfer->addStoreReference($deleteTaxAppTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail())->addVendorCode($deleteTaxAppTransfer->getVendorCodeOrFail());
+        $messageAttributesTransfer = $deleteTaxAppTransfer->getMessageAttributesOrFail();
+
+        if ($messageAttributesTransfer->getStoreReference() !== null) {
+            $taxAppConditionsTransfer->addStoreReference($messageAttributesTransfer->getStoreReferenceOrFail());
+        }
+
+        $taxAppConditionsTransfer->addVendorCode($deleteTaxAppTransfer->getVendorCodeOrFail());
+
+        if ($messageAttributesTransfer->getActorId() !== null) {
+            $taxAppConditionsTransfer->addApplicationId($messageAttributesTransfer->getActorIdOrFail());
+        }
 
         $taxAppConfigCriteria = (new TaxAppConfigCriteriaTransfer())->setTaxAppConfigConditions($taxAppConditionsTransfer);
 

@@ -120,7 +120,7 @@ class CustomerUpdateForm extends CustomerForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -138,7 +138,7 @@ class CustomerUpdateForm extends CustomerForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -157,7 +157,7 @@ class CustomerUpdateForm extends CustomerForm
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'customer';
     }
@@ -167,7 +167,7 @@ class CustomerUpdateForm extends CustomerForm
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

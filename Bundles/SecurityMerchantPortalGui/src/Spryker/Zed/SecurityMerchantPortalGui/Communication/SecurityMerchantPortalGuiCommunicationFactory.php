@@ -19,6 +19,7 @@ use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdater;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdaterInterface;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSecurityBlockerClientInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeInterface;
@@ -142,5 +143,13 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getMerchantUserLoginRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSecurityBlockerClientInterface
+     */
+    public function getSecurityBlockerClient(): SecurityMerchantPortalGuiToSecurityBlockerClientInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::CLIENT_SECURITY_BLOCKER);
     }
 }

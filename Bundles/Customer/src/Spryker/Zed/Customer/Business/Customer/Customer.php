@@ -23,6 +23,7 @@ use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
+use Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
@@ -34,7 +35,6 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -49,11 +49,6 @@ class Customer implements CustomerInterface
      * @var string
      */
     protected const BCRYPT_SALT = '';
-
-    /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
 
     /**
      * @var string
@@ -116,6 +111,11 @@ class Customer implements CustomerInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface
+     */
+    protected PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -125,6 +125,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
+     * @param \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker
      * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface> $postCustomerRegistrationPlugins
      */
     public function __construct(
@@ -137,6 +138,7 @@ class Customer implements CustomerInterface
         CustomerToLocaleInterface $localeFacade,
         CustomerExpanderInterface $customerExpander,
         CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
+        PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker,
         array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
@@ -149,6 +151,7 @@ class Customer implements CustomerInterface
         $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
         $this->localeFacade = $localeFacade;
+        $this->passwordResetExpirationChecker = $passwordResetExpirationChecker;
     }
 
     /**
@@ -434,7 +437,7 @@ class Customer implements CustomerInterface
         if (!$customerEntity) {
             return $customerResponseTransfer
                 ->setIsSuccess(false)
-                ->addError((new CustomerErrorTransfer())->setMessage(static::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED));
+                ->addError((new CustomerErrorTransfer())->setMessage(CustomerConfig::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED));
         }
 
         $customerEntity->setRegistered(new DateTime());
@@ -503,6 +506,14 @@ class Customer implements CustomerInterface
                 ->addError($customerError);
 
             return $customerResponseTransfer;
+        }
+
+        $customerResponseTransfer = $this
+            ->passwordResetExpirationChecker
+            ->checkPasswordResetExpiration($customerEntity, $customerResponseTransfer);
+
+        if (!$customerResponseTransfer->getIsSuccess()) {
+             return $customerResponseTransfer;
         }
 
         $customerEntity->setRestorePasswordDate(null);
@@ -887,11 +898,7 @@ class Customer implements CustomerInterface
      */
     protected function getPasswordEncoder(): PasswordEncoderInterface
     {
-        if (class_exists(NativePasswordEncoder::class)) {
-            return new NativePasswordEncoder(null, null, static::BCRYPT_FACTOR);
-        }
-
-        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);
+        return new NativePasswordEncoder(null, null, static::BCRYPT_FACTOR);
     }
 
     /**

@@ -17,6 +17,7 @@ use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthentica
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Provider\UserProvider;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
 use Spryker\Zed\SecurityGui\Communication\Security\UserInterface;
+use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
@@ -147,5 +148,13 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUserLoginRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_LOGIN_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientInterface
+     */
+    public function getSecurityBlockerClient(): SecurityGuiToSecurityBlockerClientInterface
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::CLIENT_SECURITY_BLOCKER);
     }
 }

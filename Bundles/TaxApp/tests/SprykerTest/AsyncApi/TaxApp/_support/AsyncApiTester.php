@@ -83,6 +83,13 @@ class AsyncApiTester extends Actor
 
         foreach ($orderTransfer->getItems() as $item) {
             $item->setSku('some_sku');
+            $item->setUnitDiscountAmountFullAggregation(0);
+        }
+
+        foreach ($orderTransfer->getExpenses() as $expense) {
+            if ($expense->getType() === 'SHIPMENT_EXPENSE_TYPE') {
+                $expense->setSumDiscountAmountAggregation(0);
+            }
         }
 
         $orderTransfer->setPriceMode('NET_MODE');

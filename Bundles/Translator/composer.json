@@ -21,6 +21,8 @@
         "spryker/container": "*",
         "spryker/installer": "*",
         "spryker/silex": "^2.2.0",
+        "spryker/storage": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

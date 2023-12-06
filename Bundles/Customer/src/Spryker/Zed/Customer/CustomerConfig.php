@@ -41,6 +41,11 @@ class CustomerConfig extends AbstractBundleConfig
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
     /**
+     * @var string
+     */
+    public const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+
+    /**
      * Specification:
      * - Regular expression to validate Customer First Name field.
      *
@@ -98,6 +103,16 @@ class CustomerConfig extends AbstractBundleConfig
     protected const PASSWORD_RESTORE_TOKEN_URL_WITHOUT_STORE = '%s/password/restore?token=%s';
 
     /**
+     * @var string
+     */
+    protected const CUSTOMER_PASSWORD_EXPIRATION_PERIOD = '+2 hours';
+
+    /**
+     * @var bool
+     */
+    protected const PASSWORD_RESET_EXPIRATION_IS_ENABLED = false;
+
+    /**
      * @api
      *
      * @return string
@@ -105,6 +120,34 @@ class CustomerConfig extends AbstractBundleConfig
     public function getHostYves()
     {
         return $this->get(CustomerConstants::BASE_URL_YVES);
+    }
+
+    /**
+     * Specification:
+     * - Toggles the password reset expiration.
+     * - It is enabled by default.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerPasswordResetExpirationEnabled(): bool
+    {
+        return static::PASSWORD_RESET_EXPIRATION_IS_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns a time string that must be compatible with https://www.php.net/manual/en/datetime.modify.php that is used to check if the password reset has been expired.
+     * - The default is 2h hours.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerPasswordResetExpirationPeriod(): string
+    {
+        return static::CUSTOMER_PASSWORD_EXPIRATION_PERIOD;
     }
 
     /**

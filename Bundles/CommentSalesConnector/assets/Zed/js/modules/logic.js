@@ -2,11 +2,12 @@
 
 var scrollDownComments = function () {
     var commentWrapper = document.getElementsByClassName('comment-wrapper')[0];
-    var commentWrapperScrollHeight = commentWrapper.scrollHeight;
-    var commentWrapperClientHeight = commentWrapper.clientHeight;
-    var scrollTop = commentWrapperScrollHeight - commentWrapperClientHeight;
 
-    $(commentWrapper).animate({ scrollTop: scrollTop }, 1000);
+    if (!commentWrapper) {
+        return;
+    }
+
+    $('html, body').animate({ scrollTop: $(commentWrapper).offset().top + 40 + 'px' }, 1000);
 };
 
 $(document).ready(function () {

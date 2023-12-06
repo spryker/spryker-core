@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
+
 interface ProductSearchRepositoryInterface
 {
     /**
@@ -30,4 +33,13 @@ interface ProductSearchRepositoryInterface
      * @return array<string>
      */
     public function getAllProductAttributeKeys(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer
+     */
+    public function getProductSearchAttributeCollection(
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): ProductSearchAttributeCollectionTransfer;
 }

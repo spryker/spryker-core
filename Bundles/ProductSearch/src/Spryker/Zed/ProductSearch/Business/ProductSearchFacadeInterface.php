@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductSearch\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -218,6 +220,8 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface::getProductSearchAttributeCollection()} instead.
+     *
      * @param int $idProductSearchAttribute
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer|null
@@ -231,9 +235,30 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface::getProductSearchAttributeCollection()} instead.
+     *
      * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function getProductSearchAttributeList();
+
+    /**
+     * Specification:
+     * - Retrieves product search attribute entities filtered by criteria from Persistence.
+     * - Uses `ProductSearchAttributeCriteriaTransfer.productSearchAttributeConditions.productSearchAttributeIds` to filter by product search attribute ids.
+     * - Uses `ProductSearchAttributeCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ProductSearchAttributeCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ProductSearchAttributeCriteriaTransfer.productSearchAttributeConditions.withLocalizedAttributes` to load localized attributes.
+     * - Returns `ProductSearchAttributeCollectionTransfer` filled with found product search attributes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer
+     */
+    public function getProductSearchAttributeCollection(
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): ProductSearchAttributeCollectionTransfer;
 
     /**
      * Specification:

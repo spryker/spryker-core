@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductSearch\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -263,6 +265,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacade::getProductSearchAttributeCollection()} instead.
+     *
      * @param int $idProductSearchAttribute
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer|null
@@ -280,6 +284,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacade::getProductSearchAttributeCollection()} instead.
+     *
      * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function getProductSearchAttributeList()
@@ -288,6 +294,23 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->getFactory()
             ->createAttributeReader()
             ->getAttributeList();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer
+     */
+    public function getProductSearchAttributeCollection(
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): ProductSearchAttributeCollectionTransfer {
+        return $this->getFactory()
+            ->createProductSearchAttributeReader()
+            ->getProductSearchAttributeCollection($productSearchAttributeCriteriaTransfer);
     }
 
     /**

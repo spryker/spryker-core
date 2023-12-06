@@ -10,3 +10,4 @@ Password,Password
 "The password fields must match.","The password fields must match."
 "Repeat Password","Repeat Password"
 "Recover password","Recover password"
+"If there is an account associated with this email, you will receive an Email with further instructions.","If there is an account associated with this email, you will receive an Email with further instructions."

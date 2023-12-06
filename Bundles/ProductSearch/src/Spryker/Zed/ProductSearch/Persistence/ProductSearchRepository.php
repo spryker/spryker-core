@@ -7,8 +7,14 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
@@ -67,5 +73,74 @@ class ProductSearchRepository extends AbstractRepository implements ProductSearc
             ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer
+     */
+    public function getProductSearchAttributeCollection(
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): ProductSearchAttributeCollectionTransfer {
+        $productSearchAttributeQuery = $this->getFactory()
+            ->createProductSearchAttributeQuery()
+            ->joinWithSpyProductAttributeKey();
+
+        $productSearchAttributeQuery = $this->applyProductSearchAttributeFilters($productSearchAttributeQuery, $productSearchAttributeCriteriaTransfer);
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $productSearchAttributeCriteriaTransfer->getSortCollection();
+        $productSearchAttributeQuery = $this->applySorting($productSearchAttributeQuery, $sortTransfers);
+
+        return $this->getFactory()
+            ->createProductSearchAttributeMapper()
+            ->mapProductSearchAttributeEntitiesToProductSearchAttributeCollectionTransfer(
+                $productSearchAttributeQuery->find(),
+                new ProductSearchAttributeCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery $productSearchAttributeQuery
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    protected function applyProductSearchAttributeFilters(
+        SpyProductSearchAttributeQuery $productSearchAttributeQuery,
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): SpyProductSearchAttributeQuery {
+        $productSearchAttributeConditionsTransfer = $productSearchAttributeCriteriaTransfer->getProductSearchAttributeConditions();
+
+        if (!$productSearchAttributeConditionsTransfer) {
+            return $productSearchAttributeQuery;
+        }
+
+        if ($productSearchAttributeConditionsTransfer->getProductSearchAttributeIds()) {
+            $productSearchAttributeQuery->filterByIdProductSearchAttribute_In($productSearchAttributeConditionsTransfer->getProductSearchAttributeIds());
+        }
+
+        return $productSearchAttributeQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applySorting(
+        ModelCriteria $modelCriteria,
+        ArrayObject $sortTransfers
+    ): ModelCriteria {
+        foreach ($sortTransfers as $sortTransfer) {
+            $modelCriteria->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $modelCriteria;
     }
 }

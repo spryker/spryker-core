@@ -20,6 +20,7 @@ use Spryker\Glue\GlueJsonApiConvention\GlueJsonApiConventionConfig;
 use Spryker\Glue\GlueJsonApiConvention\GlueJsonApiConventionDependencyProvider;
 use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\JsonApiConventionPlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -45,19 +46,80 @@ class JsonApiApiConventionPluginTest extends Unit
     protected const TEST_VALUE = 'TEST_VALUE';
 
     /**
+     * @uses \Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\JsonApiConventionPlugin::HEADER_CONTENT_TYPE
+     *
+     * @var string
+     */
+    protected const HEADER_CONTENT_TYPE = 'content-type';
+
+    /**
+     * @var string
+     */
+    protected const CONTENT_TYPE = 'application/json';
+
+    /**
      * @return void
      */
-    public function testJsonApiApiConventionPluginIsApplicable(): void
+    public function testJsonApiApiConventionPluginIsApplicableByContentTypeHeader(): void
     {
         //Arrange
         $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
 
-        //Act
+        // Act
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
         $isApplicable = $jsonApiApiConventionPlugin->isApplicable($glueRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertTrue($isApplicable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testJsonApiApiConventionPluginIsNotApplicableByContentTypeHeader(): void
+    {
+        //Arrange
+        $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
+        $glueRequestTransfer->setMeta([static::HEADER_CONTENT_TYPE => [static::CONTENT_TYPE]]);
+
+        // Act
+        $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
+        $isApplicable = $jsonApiApiConventionPlugin->isApplicable($glueRequestTransfer);
+
+        // Assert
+        $this->assertFalse($isApplicable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testJsonApiApiConventionPluginIsApplicableByAcceptHeader(): void
+    {
+        //Arrange
+        $glueRequestTransfer = $this->tester->createGlueRequestTransferWithAcceptHeader();
+
+        // Act
+        $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
+        $isApplicable = $jsonApiApiConventionPlugin->isApplicable($glueRequestTransfer);
+
+        // Assert
+        $this->assertTrue($isApplicable);
+    }
+
+    /**
+     * @return void
+     */
+    public function testJsonApiApiConventionPluginIsNotApplicableByAcceptHeader(): void
+    {
+        // Arrange
+        $glueRequestTransfer = $this->tester->createGlueRequestTransferWithAcceptHeader();
+        $glueRequestTransfer->setMethod(Request::METHOD_POST);
+        // Act
+        $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
+        $isApplicable = $jsonApiApiConventionPlugin->isApplicable($glueRequestTransfer);
+
+        // Assert
+        $this->assertFalse($isApplicable);
     }
 
     /**
@@ -65,11 +127,11 @@ class JsonApiApiConventionPluginTest extends Unit
      */
     public function testJsonApiApiConventionPluginGetName(): void
     {
-        //Act
+        // Act
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
         $jsonApiApiConventionName = $jsonApiApiConventionPlugin->getName();
 
-        //Assert
+        // Assert
         $this->assertSame(GlueJsonApiConventionConfig::CONVENTION_JSON_API, $jsonApiApiConventionName);
     }
 
@@ -78,11 +140,11 @@ class JsonApiApiConventionPluginTest extends Unit
      */
     public function testJsonApiApiConventionPluginGetResourceType(): void
     {
-        //Act
+        // Act
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
         $jsonApiApiConventionResourceType = $jsonApiApiConventionPlugin->getResourceType();
 
-        //Assert
+        // Assert
         $this->assertSame(JsonApiResourceInterface::class, $jsonApiApiConventionResourceType);
     }
 
@@ -98,10 +160,10 @@ class JsonApiApiConventionPluginTest extends Unit
         );
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
 
-        //Act
+        // Act
         $actualRequestBuilderPlugins = $jsonApiApiConventionPlugin->provideRequestBuilderPlugins();
 
-        //Assert
+        // Assert
         $this->assertEquals($this->createArrayOfRequestBuilderPluginMock(), $actualRequestBuilderPlugins);
     }
 
@@ -117,10 +179,10 @@ class JsonApiApiConventionPluginTest extends Unit
         );
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
 
-        //Act
+        // Act
         $actualRequestValidatorPlugins = $jsonApiApiConventionPlugin->provideRequestValidatorPlugins();
 
-        //Assert
+        // Assert
         $this->assertEquals($this->createArrayOfRequestValidatorPluginMock(), $actualRequestValidatorPlugins);
     }
 
@@ -136,10 +198,10 @@ class JsonApiApiConventionPluginTest extends Unit
         );
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
 
-        //Act
+        // Act
         $actualRequestAfterRoutingValidatorPlugins = $jsonApiApiConventionPlugin->provideRequestAfterRoutingValidatorPlugins();
 
-        //Assert
+        // Assert
         $this->assertEquals($this->createArrayOfRequestAfterRoutingValidatorPluginInterfaceMock(), $actualRequestAfterRoutingValidatorPlugins);
     }
 
@@ -155,10 +217,10 @@ class JsonApiApiConventionPluginTest extends Unit
         );
         $jsonApiApiConventionPlugin = $this->createJsonApiApiConventionPlugin();
 
-        //Act
+        // Act
         $actualResponseFormatterPlugins = $jsonApiApiConventionPlugin->provideResponseFormatterPlugins();
 
-        //Assert
+        // Assert
         $this->assertEquals($this->createArrayOfResponseFormatterPluginInterfaceMock(), $actualResponseFormatterPlugins);
     }
 

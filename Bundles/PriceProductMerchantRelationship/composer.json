@@ -32,7 +32,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\PriceProductMerchantRelationship\\Helper\\": "tests/SprykerTest/Shared/PriceProductMerchantRelationship/Helper/"
         }
     },
     "autoload-dev": {

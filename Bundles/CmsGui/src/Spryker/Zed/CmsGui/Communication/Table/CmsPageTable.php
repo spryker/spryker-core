@@ -112,11 +112,10 @@ class CmsPageTable extends AbstractTable
         $cmsPageAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
 
         $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
-        $query = $this->prepareQuery();
+        $query = $this->prepareQuery($localeTransfer);
 
         /** @var list<array<string, mixed>> $queryResults */
         $queryResults = $this->runQuery($query, $config);
-        $queryResults = $this->expandCmsPageDataCollectionWithLocalizedData($queryResults, $localeTransfer);
 
         $results = [];
         foreach ($queryResults as $item) {
@@ -127,42 +126,22 @@ class CmsPageTable extends AbstractTable
     }
 
     /**
-     * @param list<array<string, mixed>> $cmsPageDataCollection
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return list<array<string, mixed>>
-     */
-    protected function expandCmsPageDataCollectionWithLocalizedData(array $cmsPageDataCollection, LocaleTransfer $localeTransfer): array
-    {
-        $cmsPageNamesIndexedByIdCmsPage = $this->cmsPageLocalizedAttributesQuery
-            ->filterByFkCmsPage_In($this->extractCmsPageIdsFromCmsPageData($cmsPageDataCollection))
-            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
-            ->select([
-                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME,
-                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_ATTRIBUTES_TABLE_FK_CMS_PAGE,
-            ])
-            ->find()
-            ->toKeyValue(
-                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_ATTRIBUTES_TABLE_FK_CMS_PAGE,
-                CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME,
-            );
-
-        foreach ($cmsPageDataCollection as $key => $cmsPageData) {
-            $cmsPageDataCollection[$key][CmsPageTableConstants::COL_NAME]
-                = $cmsPageNamesIndexedByIdCmsPage[$cmsPageData[CmsPageTableConstants::COL_ID_CMS_PAGE]];
-        }
-
-        return array_values($cmsPageDataCollection);
-    }
-
-    /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    protected function prepareQuery(): SpyCmsPageQuery
+    protected function prepareQuery(LocaleTransfer $localeTransfer): SpyCmsPageQuery
     {
+        /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->cmsPageQuery
+            ->groupByIdCmsPage()
             ->leftJoinCmsTemplate()
             ->withColumn(CmsPageTableConstants::COL_CMS_TEMPLATE_TABLE_TEMPLATE_NAME, CmsPageTableConstants::COL_TEMPLATE)
+            ->innerJoinSpyCmsPageLocalizedAttributes()
+            ->withColumn(CmsPageTableConstants::COL_CMS_PAGE_LOCALIZED_TABLE_ATTRIBUTES_NAME, CmsPageTableConstants::COL_NAME)
+            ->useSpyCmsPageLocalizedAttributesQuery()
+                ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->endUse()
             ->addJoin(
                 CmsPageTableConstants::COL_CMS_PAGE_TABLE_ID_CMS_PAGE,
                 CmsPageTableConstants::COL_URL_TABLE_FK_RESOURCE_PAGE,
@@ -174,8 +153,7 @@ class CmsPageTable extends AbstractTable
                 CmsPageTableConstants::COL_VERSION_TABLE_FK_CMS_PAGE,
                 Criteria::LEFT_JOIN,
             )
-            ->withColumn(sprintf('COUNT(DISTINCT %s)', CmsPageTableConstants::COL_VERSION_TABLE_VERSION), CmsPageTableConstants::COL_CMS_VERSION_COUNT)
-            ->groupByIdCmsPage();
+            ->withColumn(sprintf('COUNT(DISTINCT %s)', CmsPageTableConstants::COL_VERSION_TABLE_VERSION), CmsPageTableConstants::COL_CMS_VERSION_COUNT);
     }
 
     /**

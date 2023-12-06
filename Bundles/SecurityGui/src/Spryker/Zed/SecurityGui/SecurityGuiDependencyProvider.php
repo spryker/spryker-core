@@ -9,6 +9,7 @@ namespace Spryker\Zed\SecurityGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeBridge;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeBridge;
@@ -19,6 +20,11 @@ use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFaca
  */
 class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+
     /**
      * @var string
      */
@@ -70,6 +76,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAuthenticationLinkPlugins($container);
         $container = $this->addUserRoleFilterPlugins($container);
         $container = $this->addUserLoginRestrictionPlugins($container);
+        $container = $this->addSecurityBlockerClient($container);
 
         return $container;
     }
@@ -84,6 +91,22 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUserFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSecurityBlockerClient(Container $container)
+    {
+        $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
+            return new SecurityGuiToSecurityBlockerClientBridge(
+                $container->getLocator()->securityBlocker()->client(),
+            );
+        });
 
         return $container;
     }

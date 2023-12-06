@@ -70,7 +70,7 @@ class GraphController extends AbstractController
 
         $format = (string)$request->query->get(static::URL_PARAM_FORMAT) ?: null;
         $fontSize = $request->query->getInt(static::URL_PARAM_FONT_SIZE);
-        $highlightState = (string)$request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
+        $highlightState = $this->getSanitizedHighlightState($request);
         $stateMachine = (string)$request->query->get(static::URL_PARAM_STATE_MACHINE);
 
         $reload = false;
@@ -133,8 +133,7 @@ class GraphController extends AbstractController
         $stateMachine = $request->query->get(static::URL_PARAM_STATE_MACHINE);
         /** @var string|null $processName */
         $processName = $request->query->get(static::URL_PARAM_PROCESS);
-        /** @var string|null $highlightState */
-        $highlightState = $request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
+        $highlightState = $this->getSanitizedHighlightState($request);
 
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
         /** @var string $format */
@@ -168,6 +167,18 @@ class GraphController extends AbstractController
             'processName' => $processName,
             'stateMachineName' => $stateMachine,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getSanitizedHighlightState(Request $request): string
+    {
+        $highlightState = (string)$request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
+
+        return $this->getFactory()->getUtilSanitizeXssService()->sanitizeXss($highlightState);
     }
 
     /**

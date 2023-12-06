@@ -23,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Translator\PHPMD)
  */
 class TranslatorBusinessTester extends Actor
 {

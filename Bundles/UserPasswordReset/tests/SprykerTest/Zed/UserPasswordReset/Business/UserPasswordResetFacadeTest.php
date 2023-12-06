@@ -51,6 +51,27 @@ class UserPasswordResetFacadeTest extends Unit
     protected const USER_STATUS_ACTIVE = 'active';
 
     /**
+     * @uses \Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap::COL_STATUS_EXPIRED
+     *
+     * @var string
+     */
+    protected const PASSWORD_RESET_STATUS_EXPIRED = 'expired';
+
+    /**
+     * @uses \Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const PASSWORD_RESET_STATUS_ACTIVE = 'active';
+
+    /**
+     * @uses \Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap::COL_STATUS_USED
+     *
+     * @var string
+     */
+    protected const PASSWORD_RESET_STATUS_USED = 'used';
+
+    /**
      * @var \SprykerTest\Zed\UserPasswordReset\UserPasswordResetBusinessTester
      */
     protected $tester;
@@ -129,7 +150,7 @@ class UserPasswordResetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsValidPasswordResetTokenReturnsTrueFotValidToken(): void
+    public function testIsValidPasswordResetTokenReturnsTrueForValidToken(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([
@@ -151,7 +172,7 @@ class UserPasswordResetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsValidPasswordResetTokenReturnsFalseFotInvalidToken(): void
+    public function testIsValidPasswordResetTokenReturnsFalseForInvalidToken(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([
@@ -198,5 +219,106 @@ class UserPasswordResetFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($isPasswordResetSuccessfully, 'It is not possible to request restore password for non active user');
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestPasswordResetReturnsFalseForUsedToken(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::TEST_MAIL,
+        ]);
+
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername()),
+        );
+
+        $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser())
+            ->setCreatedAt((new DateTime('-1 minute'))->format('Y-m-d H:i:s'))
+            ->setStatus(static::PASSWORD_RESET_STATUS_USED);
+
+        $this->tester->updateResetPasswordByIdAuthResetPassword(
+            $resetPasswordTransfer->getIdResetPassword(),
+            $resetPasswordTransfer,
+        );
+
+        // Act
+        $isValidUsedPasswordResetToken = $this->tester->getUserPasswordReset()->isValidPasswordResetToken($resetPasswordTransfer->getCode());
+
+        // Assert
+        $this->assertFalse($isValidUsedPasswordResetToken);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestPasswordResetReturnsFalseForExpiredToken(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::TEST_MAIL,
+        ]);
+
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername()),
+        );
+
+        $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser())
+            ->setCreatedAt((new DateTime('-1 minute'))->format('Y-m-d H:i:s'))
+            ->setStatus(static::PASSWORD_RESET_STATUS_EXPIRED);
+
+        $this->tester->updateResetPasswordByIdAuthResetPassword(
+            $resetPasswordTransfer->getIdResetPassword(),
+            $resetPasswordTransfer,
+        );
+
+        // Act
+        $isValidUsedPasswordResetToken = $this->tester->getUserPasswordReset()->isValidPasswordResetToken($resetPasswordTransfer->getCode());
+
+        // Assert
+        $this->assertFalse($isValidUsedPasswordResetToken);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestPasswordResetWillInvalidatePreviousResetsWhenANewResetIsRequested(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::TEST_MAIL,
+        ]);
+
+        $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername()),
+        );
+
+        $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser())
+            ->setCreatedAt((new DateTime('-2 minutes'))->format('Y-m-d H:i:s'))
+            ->setStatus(static::PASSWORD_RESET_STATUS_ACTIVE);
+
+        $this->tester->updateResetPasswordByIdAuthResetPassword(
+            $resetPasswordTransfer->getIdResetPassword(),
+            $resetPasswordTransfer,
+        );
+
+        // Act
+        $isPasswordResetRequestSuccessfully = $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername()),
+        );
+
+        $invalidatedResetPasswordTransfer = $this->tester->findResetPasswordTransferByIdAuthResetPassword(
+            $resetPasswordTransfer->getIdResetPassword(),
+        );
+
+        // Assert
+        $this->assertTrue($isPasswordResetRequestSuccessfully, 'It is not possible to request restore password for non active user');
+        $this->assertEquals(static::PASSWORD_RESET_STATUS_EXPIRED, $invalidatedResetPasswordTransfer->getStatus());
     }
 }

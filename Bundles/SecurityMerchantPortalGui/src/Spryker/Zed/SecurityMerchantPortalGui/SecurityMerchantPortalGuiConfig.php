@@ -27,6 +27,43 @@ class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
     protected const LOGIN_URL = '/security-merchant-portal-gui/login';
 
     /**
+     * @var string
+     */
+    protected const MERCHANT_PORTAL_SECURITY_BLOCKER_ENTITY_TYPE = 'customer';
+
+    /**
+     * @var bool
+     */
+    protected const MERCHANT_PORTAL_SECURITY_BLOCKER_ENABLED = false;
+
+    /**
+     * Specification:
+     * - Checks if the security blocker is enabled.
+     * - It is disabled by default.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMerchantPortalSecurityBlockerEnabled(): bool
+    {
+        return static::MERCHANT_PORTAL_SECURITY_BLOCKER_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns the entity identifier that is used to block the password resets.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalSecurityBlockerEntityType(): string
+    {
+        return static::MERCHANT_PORTAL_SECURITY_BLOCKER_ENTITY_TYPE;
+    }
+
+    /**
      * @api
      *
      * @return string

@@ -13,9 +13,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class UserPasswordResetConfig extends AbstractBundleConfig
 {
     /**
+     * Default expiration time in seconds, 2h by default.
+     *
      * @var int
      */
-    protected const DAY_IN_SECONDS = 86400;
+    protected const PASSWORD_EXPIRATION_TIME_IN_SECONDS = 7200;
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::PASSWORD_RESET_PATH
@@ -38,7 +40,7 @@ class UserPasswordResetConfig extends AbstractBundleConfig
      */
     public function getPasswordTokenExpirationInSeconds(): int
     {
-        return static::DAY_IN_SECONDS;
+        return static::PASSWORD_EXPIRATION_TIME_IN_SECONDS;
     }
 
     /**

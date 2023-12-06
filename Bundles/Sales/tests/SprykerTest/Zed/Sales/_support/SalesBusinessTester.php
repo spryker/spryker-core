@@ -8,15 +8,29 @@
 namespace SprykerTest\Zed\Sales;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderListRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
+use Spryker\Shared\Price\PriceMode;
+use Spryker\Zed\Oms\OmsConfig;
 
 /**
  * @method void wantToTest($text)
@@ -31,7 +45,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Sales\PHPMD)
  */
 class SalesBusinessTester extends Actor
 {
@@ -142,5 +156,60 @@ class SalesBusinessTester extends Actor
         $salesOrderTotalsEntity->save();
 
         return $salesOrderTotalsEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState
+     */
+    public function createInitialState(): SpyOmsOrderItemState
+    {
+        $initialState = SpyOmsOrderItemStateQuery::create()
+            ->filterByName((new OmsConfig())->getInitialStatus())
+            ->findOneOrCreate();
+
+        $initialState->save();
+
+        return $initialState;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getValidBaseQuoteTransfer(): QuoteTransfer
+    {
+        $country = new SpyCountry();
+        $country->setIso2Code('ix');
+        $country->save();
+
+        $currencyTransfer = (new CurrencyTransfer())->setCode('EUR');
+        $billingAddress = (new AddressBuilder())->build();
+        $shippingAddress = (new AddressBuilder())->build();
+        $customerTransfer = (new CustomerBuilder())->build();
+        $itemTransfer = (new ItemBuilder())
+            ->withShipment()
+            ->build();
+
+        $paymentTransfer = (new PaymentTransfer())
+            ->setPaymentSelection('dummyPaymentInvoice');
+
+        $shipmentTransfer = (new ShipmentTransfer())
+            ->setMethod(new ShipmentMethodTransfer())
+            ->setShippingAddress($shippingAddress);
+
+        $totalsTransfer = (new TotalsTransfer())
+            ->setGrandTotal(1337)
+            ->setSubtotal(337)
+            ->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
+
+        return (new QuoteTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setShippingAddress($shippingAddress)
+            ->setBillingAddress($billingAddress)
+            ->setTotals($totalsTransfer)
+            ->setCustomer($customerTransfer)
+            ->setShipment($shipmentTransfer)
+            ->addItem($itemTransfer)
+            ->setPayment($paymentTransfer);
     }
 }

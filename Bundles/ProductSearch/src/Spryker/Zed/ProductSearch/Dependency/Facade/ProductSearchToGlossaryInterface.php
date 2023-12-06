@@ -76,4 +76,12 @@ interface ProductSearchToGlossaryInterface
      * @return int
      */
     public function createKey($keyName);
+
+    /**
+     * @param list<string> $glossaryKeys
+     * @param list<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\TranslationTransfer>
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
 }

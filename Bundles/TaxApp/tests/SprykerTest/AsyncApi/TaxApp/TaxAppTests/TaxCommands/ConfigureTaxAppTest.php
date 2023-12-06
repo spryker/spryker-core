@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigureTaxAppTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Ramsey\Uuid\Uuid;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerTest\AsyncApi\TaxApp\AsyncApiTester;
 
 /**
@@ -63,5 +64,53 @@ class ConfigureTaxAppTest extends Unit
 
         // Assert
         $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenConfigureTaxAppMessageIsReceivedAndTenantIdentifierIsPresentThenTheTaxAppIsConfigured(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $messageAttributesTransfer->setStoreReference('de-DE')
+            ->setTenantIdentifier('tenant-identifier')
+            ->setActorId('actor-id');
+
+        $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
+        $configureTaxAppTransfer->setApiUrl('https://example.com')
+            ->setVendorCode(Uuid::uuid4()->toString())
+            ->setMessageAttributes($messageAttributesTransfer)
+            ->setIsActive(true);
+
+        // Act
+        $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenConfigureTaxAppMessageIsReceivedAndNeitherEmitterOrActorIdArePresentThenAnExceptionIsThrown(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $messageAttributesTransfer->setStoreReference('de-DE')
+            ->setTenantIdentifier('tenant-identifier');
+
+        $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
+        $configureTaxAppTransfer->setApiUrl('https://example.com')
+            ->setVendorCode(Uuid::uuid4()->toString())
+            ->setMessageAttributes($messageAttributesTransfer)
+            ->setIsActive(true);
+
+        // Assert
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage('actorId');
+
+        // Act
+        $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
     }
 }

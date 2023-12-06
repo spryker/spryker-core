@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.1",
-        "spryker/category": "^5.2.0",
+        "spryker/category": "^5.15.0",
         "spryker/category-gui-extension": "^1.0.0",
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.30.0",
@@ -13,7 +13,7 @@
         "spryker/propel-orm": "^1.0.0",
         "spryker/store": "^1.15.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/translator": "^1.8.0",
         "spryker/util-encoding": "^2.0.0",
         "spryker/util-text": "^1.1.0"

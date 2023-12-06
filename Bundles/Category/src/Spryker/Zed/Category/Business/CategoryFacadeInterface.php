@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -164,6 +166,8 @@ interface CategoryFacadeInterface
      *  - Touches navigation active
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::reorderCategoryNodeCollection()} instead.
      *
      * @param int $idCategoryNode
      * @param int $position
@@ -416,4 +420,26 @@ interface CategoryFacadeInterface
     public function deleteCategoryCollection(
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates category nodes order based on the order in the provided collection.
+     * - Requires `CategoryNodeCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `CategoryNodeCollectionRequestTransfer.categoryNodes` to be set.
+     * - Requires `NodeTransfer.idCategoryNode` to be set.
+     * - Validates category node existence using `NodeTransfer.idCategoryNode`.
+     * - Uses `CategoryNodeCollectionRequestTransfer.isTransactional` to make transactional update.
+     * - Triggers `CategoryEvents::CATEGORY_TREE_PUBLISH` event if category nodes order was updated.
+     * - Returns `CategoryNodeCollectionResponseTransfer.categoryNodes` filled with updated category nodes.
+     * - Returns `CategoryNodeCollectionResponseTransfer.errors` filled with errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
+     */
+    public function reorderCategoryNodeCollection(
+        CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+    ): CategoryNodeCollectionResponseTransfer;
 }

@@ -26,7 +26,7 @@ use Spryker\Zed\UserPasswordReset\Business\UserPasswordResetFacadeInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\PHPMD)
  */
 class UserPasswordResetBusinessTester extends Actor
 {
@@ -38,6 +38,26 @@ class UserPasswordResetBusinessTester extends Actor
     public function getUserPasswordReset(): UserPasswordResetFacadeInterface
     {
         return $this->getLocator()->userPasswordReset()->facade();
+    }
+
+    /**
+     * @param int $idAuthResetPassword
+     *
+     * @return \Generated\Shared\Transfer\ResetPasswordTransfer|null
+     */
+    public function findResetPasswordTransferByIdAuthResetPassword(int $idAuthResetPassword): ?ResetPasswordTransfer
+    {
+        $resetPasswordEntity = $this->createResetPasswordPropelQuery()
+            ->filterByIdAuthResetPassword($idAuthResetPassword)
+            ->findOne();
+
+        if (!$resetPasswordEntity) {
+            return null;
+        }
+
+        return (new ResetPasswordTransfer())->fromArray($resetPasswordEntity->toArray(), true)
+            ->setIdResetPassword($resetPasswordEntity->getIdAuthResetPassword())
+            ->setFkUserId($resetPasswordEntity->getFkUser());
     }
 
     /**

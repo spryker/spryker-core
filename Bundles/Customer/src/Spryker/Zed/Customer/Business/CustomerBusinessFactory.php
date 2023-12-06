@@ -14,6 +14,8 @@ use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress;
 use Spryker\Zed\Customer\Business\Customer\Address;
+use Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationChecker;
+use Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
 use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
@@ -66,10 +68,21 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->createCustomerExpander(),
             $this->createCustomerPasswordPolicyValidator(),
+            $this->createPasswordResetExpirationChecker(),
             $this->getPostCustomerRegistrationPlugins(),
         );
 
         return $customer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface
+     */
+    public function createPasswordResetExpirationChecker(): PasswordResetExpirationCheckerInterface
+    {
+        return new PasswordResetExpirationChecker(
+            $this->getConfig(),
+        );
     }
 
     /**

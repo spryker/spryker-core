@@ -130,6 +130,7 @@
     <transfer name="Error">
         <property name="message" type="string"/>
         <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
     <transfer name="CategoryNodeCriteria">
@@ -235,6 +236,20 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="CategoryNodeCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categoryNodes" type="Node[]" singular="categoryNode"/>
+    </transfer>
+
+    <transfer name="CategoryNodeCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="categoryNodes" type="Node[]" singular="categoryNode"/>
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
 </transfers>

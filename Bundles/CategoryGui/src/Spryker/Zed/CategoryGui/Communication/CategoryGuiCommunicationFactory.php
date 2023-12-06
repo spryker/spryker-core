@@ -35,6 +35,8 @@ use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Communication\Form\EventListener\CategoryStoreRelationFieldEventSubscriber;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
 use Spryker\Zed\CategoryGui\Communication\Form\Transformer\CategoryExtraParentsTransformer;
+use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapper;
+use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapperInterface;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapper;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
@@ -213,6 +215,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryNodeOrderUpdater(
             $this->getCategoryFacade(),
             $this->getUtilEncodingService(),
+            $this->createCategoryNodeMapper(),
         );
     }
 
@@ -328,6 +331,14 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryExpander(): CategoryExpanderInterface
     {
         return new CategoryExpander($this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Mapper\CategoryNodeMapperInterface
+     */
+    public function createCategoryNodeMapper(): CategoryNodeMapperInterface
+    {
+        return new CategoryNodeMapper();
     }
 
     /**

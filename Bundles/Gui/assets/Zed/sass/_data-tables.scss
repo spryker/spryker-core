@@ -2,9 +2,8 @@ $data-table-selected-row-bg-color: rgba(#0088cc, 0.15);
 $data-table-selected-row-border-size: 1px;
 $data-table-selected-row-border-color: rgba(#0088cc, 1);
 
-.dataTables_scrollHeadInner {
-    width: 100% !important;
-
+.dataTables_scrollHeadInner,
+.dataTables_scrollBody {
     & > .table {
         width: 100% !important;
     }

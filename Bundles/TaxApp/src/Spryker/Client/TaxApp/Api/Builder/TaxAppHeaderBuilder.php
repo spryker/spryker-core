@@ -8,8 +8,10 @@
 namespace Spryker\Client\TaxApp\Api\Builder;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
 {
@@ -17,6 +19,11 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
      * @var string
      */
     protected const HEADER_STORE_REFERENCE = 'X-Store-Reference';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_TENANT_IDENTIFIER = 'X-Tenant-Identifier';
 
     /**
      * @var string
@@ -39,16 +46,32 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer $taxCalculationRequestTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return array<string, string>
      */
     public function build(
         TaxCalculationRequestTransfer $taxCalculationRequestTransfer,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        TaxAppConfigTransfer $taxAppConfigTransfer
     ): array {
-        $headers = [
-            static::HEADER_STORE_REFERENCE => $this->getStoreReference($storeTransfer),
-        ];
+        if (
+            $taxAppConfigTransfer->getTenantIdentifier() === null &&
+            ($storeTransfer->getStoreReference() === null && $storeTransfer->getName() === null)
+        ) {
+            throw new NullValueException('Tenant identifier or store reference or store name must be set.');
+        }
+        $headers = [];
+
+        if ($taxAppConfigTransfer->getTenantIdentifier() !== null) {
+            $headers[static::HEADER_TENANT_IDENTIFIER] = $taxAppConfigTransfer->getTenantIdentifier();
+        }
+
+        if ($storeTransfer->getStoreReference() || $storeTransfer->getName()) {
+            $headers[static::HEADER_STORE_REFERENCE] = $this->getStoreReference($storeTransfer);
+        }
 
         if (
             $taxCalculationRequestTransfer->offsetExists('authorization')

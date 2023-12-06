@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/Translator
+    - tests/SprykerTest/Yves/Translator
 paths:
     tests: tests
     output: tests/_output

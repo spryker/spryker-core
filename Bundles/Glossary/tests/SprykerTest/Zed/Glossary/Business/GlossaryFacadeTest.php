@@ -235,10 +235,15 @@ class GlossaryFacadeTest extends Unit
         $this->tester->haveTranslation($seedData);
 
         // Act
-        $translations = $glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers([static::GLOSSARY_KEY], $localeTransfers);
+        $translationTransfers = $glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers([static::GLOSSARY_KEY], $localeTransfers);
 
         // Assert
-        $this->assertCount(count($localeTransfers), $translations);
+        $this->assertCount(count($localeTransfers), $translationTransfers);
+
+        foreach ($translationTransfers as $translationTransfer) {
+            $this->assertNotNull($translationTransfer->getGlossaryKey());
+            $this->assertNotNull($translationTransfer->getGlossaryKeyOrFail()->getKey());
+        }
     }
 
     /**

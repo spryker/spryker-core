@@ -49,6 +49,8 @@
 
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
+        <property name="actorId" type="string"/>
         <property name="emitter" type="string"/>
     </transfer>
 
@@ -58,6 +60,7 @@
         <property name="apiUrl" type="string"/>
         <property name="vendorCode" type="string"/>
         <property name="storeReference" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">

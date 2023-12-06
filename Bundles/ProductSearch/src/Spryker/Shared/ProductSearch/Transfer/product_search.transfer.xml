@@ -67,6 +67,8 @@
 
     <transfer name="Translation">
         <property name="value" type="string"/>
+        <property name="glossaryKey" type="GlossaryKey" strict="true"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="PageMap">
@@ -92,6 +94,29 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeCollection" strict="true">
+        <property name="productSearchAttributes" type="ProductSearchAttribute[]" singular="productSearchAttribute"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeCriteria" strict="true">
+        <property name="productSearchAttributeConditions" type="ProductSearchAttributeConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeConditions" strict="true">
+        <property name="productSearchAttributeIds" type="int[]" singular="idProductSearchAttribute"/>
+        <property name="withLocalizedAttributes" type="bool"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>

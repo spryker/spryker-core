@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -118,7 +119,7 @@ class CustomerForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'customer';
     }
@@ -188,7 +189,7 @@ class CustomerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -246,7 +247,7 @@ class CustomerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -319,7 +320,7 @@ class CustomerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -351,7 +352,7 @@ class CustomerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed, mixed> $choices
      *
      * @return $this
      */
@@ -394,9 +395,9 @@ class CustomerForm extends AbstractType
     }
 
     /**
-     * @return array
+     * @return list<\Symfony\Component\Validator\Constraint>
      */
-    protected function createEmailConstraints()
+    protected function createEmailConstraints(): array
     {
         $emailConstraints = [
             new NotBlank(),
@@ -456,7 +457,7 @@ class CustomerForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createDateTimeModelTransformer()
+    protected function createDateTimeModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($dateAsString) {
@@ -473,7 +474,7 @@ class CustomerForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createLocaleModelTransformer()
+    protected function createLocaleModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($localeAsObject) {
@@ -494,7 +495,7 @@ class CustomerForm extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

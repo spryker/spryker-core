@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -80,17 +82,6 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param int $position
-     *
-     * @return void
-     */
-    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void
-    {
-        $this->categoryFacade->updateCategoryNodeOrder($idCategoryNode, $position);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
@@ -108,5 +99,16 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
     {
         return $this->categoryFacade->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
+     */
+    public function reorderCategoryNodeCollection(
+        CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
+    ): CategoryNodeCollectionResponseTransfer {
+        return $this->categoryFacade->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
     }
 }

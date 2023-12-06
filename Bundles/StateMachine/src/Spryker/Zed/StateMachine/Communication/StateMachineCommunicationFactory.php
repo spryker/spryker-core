@@ -12,6 +12,7 @@ use Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventItemTriggerFor
 use Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventTriggerFormDataProvider;
 use Spryker\Zed\StateMachine\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\StateMachine\Communication\Form\EventTriggerForm;
+use Spryker\Zed\StateMachine\Dependency\Service\StateMachineToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -73,5 +74,13 @@ class StateMachineCommunicationFactory extends AbstractCommunicationFactory
     public function createEventItemTriggerForm(array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(EventItemTriggerForm::class, null, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\StateMachine\Dependency\Service\StateMachineToUtilSanitizeXssServiceInterface
+     */
+    public function getUtilSanitizeXssService(): StateMachineToUtilSanitizeXssServiceInterface
+    {
+        return $this->getProvidedDependency(StateMachineDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 }

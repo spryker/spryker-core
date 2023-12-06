@@ -27,7 +27,7 @@ use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUse
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\PHPMD)
  */
 class SecurityMerchantPortalGuiCommunicationTester extends Actor
 {

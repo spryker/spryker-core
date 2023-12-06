@@ -56,11 +56,13 @@ class ConfigDeleter implements ConfigDeleterInterface
     public function delete(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): void
     {
         try {
-            $taxAppConfigCriteriaTransfer = $this->getStoreIdsByStoreReference($taxAppConfigCriteriaTransfer);
+            $taxAppConfigConditionsTransfer = $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail();
 
-            if ($taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail()->getFkStores() && $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail()->getVendorCodes()) {
-                $this->taxAppEntityManager->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
+            if ($taxAppConfigConditionsTransfer->getStoreReferences() !== []) {
+                $taxAppConfigCriteriaTransfer = $this->getStoreIdsByStoreReference($taxAppConfigCriteriaTransfer);
             }
+
+            $this->taxAppEntityManager->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
         } catch (NullValueException $e) {
             $this->logException($e);
 

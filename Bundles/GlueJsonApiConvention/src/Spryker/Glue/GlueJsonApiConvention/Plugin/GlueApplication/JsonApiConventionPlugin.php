@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInte
 use Spryker\Glue\GlueJsonApiConvention\GlueJsonApiConventionConfig;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\GlueJsonApiConvention\GlueJsonApiConventionFactory getFactory()
@@ -19,8 +20,19 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class JsonApiConventionPlugin extends AbstractPlugin implements ConventionPluginInterface
 {
     /**
+     * @var string
+     */
+    protected const HEADER_ACCEPT = 'accept';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_CONTENT_TYPE = 'content-type';
+
+    /**
      * {@inheritDoc}
-     * - Returns true if the `ContentType` header is present and is equal to JSON:API mime-type "application/vnd.api+json".
+     * - Returns true if the `ContentType` header is present and is equal to JSON:API mime-type "application/vnd.api+json"
+     * or if the `Accept` header is present and is equal to JSON:API mime-type "application/vnd.api+json" and the request has GET type.
      *
      * @api
      *
@@ -30,11 +42,11 @@ class JsonApiConventionPlugin extends AbstractPlugin implements ConventionPlugin
      */
     public function isApplicable(GlueRequestTransfer $glueRequestTransfer): bool
     {
-        $meta = $glueRequestTransfer->getMeta();
+        if ($this->isApplicableByContentTypeHeader($glueRequestTransfer)) {
+            return true;
+        }
 
-        return array_key_exists('content-type', $meta)
-            && isset($meta['content-type'][0])
-            && $meta['content-type'][0] === GlueJsonApiConventionConfig::HEADER_CONTENT_TYPE;
+        return $this->isApplicableByAcceptHeader($glueRequestTransfer);
     }
 
     /**
@@ -107,5 +119,46 @@ class JsonApiConventionPlugin extends AbstractPlugin implements ConventionPlugin
     public function provideResponseFormatterPlugins(): array
     {
         return $this->getFactory()->getResponseFormatterPlugins();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isApplicableByAcceptHeader(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        $meta = $glueRequestTransfer->getMeta();
+
+        if (
+            array_key_exists(static::HEADER_ACCEPT, $meta)
+            && isset($meta[static::HEADER_ACCEPT][0])
+            && $meta[static::HEADER_ACCEPT][0] === GlueJsonApiConventionConfig::HEADER_CONTENT_TYPE
+            && $glueRequestTransfer->getMethodOrFail() === Request::METHOD_GET
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isApplicableByContentTypeHeader(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        $meta = $glueRequestTransfer->getMeta();
+
+        if (
+            array_key_exists(static::HEADER_CONTENT_TYPE, $meta)
+            && isset($meta[static::HEADER_CONTENT_TYPE][0])
+            && $meta[static::HEADER_CONTENT_TYPE][0] === GlueJsonApiConventionConfig::HEADER_CONTENT_TYPE
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

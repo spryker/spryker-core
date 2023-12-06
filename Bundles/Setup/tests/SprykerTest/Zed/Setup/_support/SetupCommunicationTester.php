@@ -21,9 +21,36 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Setup\PHPMD)
  */
 class SetupCommunicationTester extends Actor
 {
     use _generated\SetupCommunicationTesterActions;
+
+    /**
+     * @param string $pathToDirectory
+     *
+     * @return string
+     */
+    public function createTestFile(string $pathToDirectory): string
+    {
+        if (!is_dir($pathToDirectory)) {
+            mkdir($pathToDirectory, 0777, true);
+        }
+
+        $pathToFile = sprintf('%s/%s', $pathToDirectory, 'foo.file');
+        file_put_contents($pathToFile, 'content');
+
+        return $pathToFile;
+    }
+
+    /**
+     * @return void
+     */
+    public function clearDirectory(string $pathToDirectory): void
+    {
+        if (is_dir($pathToDirectory)) {
+            rmdir($pathToDirectory);
+        }
+    }
 }

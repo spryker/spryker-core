@@ -25,7 +25,7 @@ class ResetPassword implements ResetPasswordInterface
     /**
      * @var int
      */
-    protected const RANDOM_STRING_LENGTH = 8;
+    protected const RANDOM_STRING_LENGTH = 35;
 
     /**
      * @var string
@@ -122,12 +122,13 @@ class ResetPassword implements ResetPasswordInterface
         }
 
         $token = $this->generateToken();
-        $resetPasswordTransfer = $this->userPasswordResetEntityManager->createResetPassword(
-            (new ResetPasswordTransfer())
-                ->setFkUserId($userTransfer->getIdUser())
-                ->setCode($token)
-                ->setStatus(static::STATUS_ACTIVE),
-        );
+        $resetPasswordTransfer = (new ResetPasswordTransfer())
+            ->setFkUserId($userTransfer->getIdUser())
+            ->setCode($token)
+            ->setStatus(static::STATUS_ACTIVE);
+
+        $resetPasswordTransfer = $this->userPasswordResetEntityManager->createResetPassword($resetPasswordTransfer);
+        $resetPasswordTransfer = $this->userPasswordResetEntityManager->invalidatePreviousPasswordResets($resetPasswordTransfer);
 
         $userPasswordResetRequestTransfer
             ->setUser($userTransfer)
@@ -151,15 +152,7 @@ class ResetPassword implements ResetPasswordInterface
             (new ResetPasswordCriteriaTransfer())->setCode($token),
         );
 
-        if (!$resetPasswordTransfer) {
-            return false;
-        }
-
-        if ($this->isExpiredPasswordResetToken($resetPasswordTransfer)) {
-            return false;
-        }
-
-        return true;
+        return $resetPasswordTransfer !== null && $this->isTokenActive($resetPasswordTransfer);
     }
 
     /**
@@ -202,6 +195,16 @@ class ResetPassword implements ResetPasswordInterface
     protected function generateToken(): string
     {
         return $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResetPasswordTransfer $resetPasswordTransfer
+     *
+     * @return bool
+     */
+    protected function isTokenActive(ResetPasswordTransfer $resetPasswordTransfer): bool
+    {
+        return $resetPasswordTransfer->getStatus() === static::STATUS_ACTIVE && !$this->isExpiredPasswordResetToken($resetPasswordTransfer);
     }
 
     /**

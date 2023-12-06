@@ -198,6 +198,38 @@ class AsyncApiHelperTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDiffRequiredFieldsThrowsExceptionWhenArrayFieldsHaveRequiredPropertyReset(): void
+    {
+        // Arrange
+        $this->tester->setAsyncApi(codecept_data_dir('asyncapi/simple-valid-schema.yml'));
+
+        $testifyAsyncApiItemTransfer = (new TestifyAsyncApiItemTransfer())->setPropA('someProp');
+
+        $testifyAsyncApiBarTransfer = new TestifyAsyncApiBarTransfer();
+        $testifyAsyncApiBarTransfer->setBar('bar');
+        $testifyAsyncApiBarTransfer->addItem($testifyAsyncApiItemTransfer);
+
+        $testifyAsyncApiNested = (new TestifyAsyncApiNestedTransfer())->setNestedPropA('nestedPropA');
+        $testifyAsyncApiBarTransfer->setNested($testifyAsyncApiNested);
+
+        $testifyAsyncApiFooTransfer = new TestifyAsyncApiFooTransfer();
+        $testifyAsyncApiFooTransfer->setFoo($testifyAsyncApiBarTransfer);
+
+        // Reset Item.propA to null to trigger the exception.
+        // Similar to setting the property with some value and later on removing it.
+        $testifyAsyncApiFooTransfer->getFoo()->getItems()->offsetGet(0)->setPropA(null);
+
+        // Expect
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage('The message "TestifyAsyncApiFoo" does not contain all required properties "foo, foo.bar, foo.items, foo.nested, foo.nested.nestedPropA, foo.items.propA". The following properties are missing "foo.items[0].propA".');
+
+        // Act
+        $this->tester->runMessageReceiveTest($testifyAsyncApiFooTransfer, 'foo-events', [$this, 'handleMessage']);
+    }
+
+    /**
      * Helper method to get around the need of a configured MessageHandler
      *
      * @return iterable

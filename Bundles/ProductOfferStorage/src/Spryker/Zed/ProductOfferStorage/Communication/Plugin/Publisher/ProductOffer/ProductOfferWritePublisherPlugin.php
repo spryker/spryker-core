@@ -45,8 +45,6 @@ class ProductOfferWritePublisherPlugin extends AbstractPlugin implements Publish
         return [
             ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_CREATE,
             ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_UPDATE,
-            ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE,
-            ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE,
             ProductOfferStorageConfig::PRODUCT_OFFER_PUBLISH,
             ProductOfferStorageConfig::PRODUCT_OFFER_STORE_PUBLISH,
         ];

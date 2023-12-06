@@ -9,6 +9,7 @@ namespace Spryker\Zed\SecurityMerchantPortalGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Client\SecurityMerchantPortalGuiToSecurityBlockerClientBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeBridge;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeBridge;
@@ -46,6 +47,11 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
+     * @var string
+     */
+    public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -57,10 +63,9 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
-
         $container = $this->addTokenStorage($container);
-
         $container = $this->addMerchantUserLoginRestrictionPlugins($container);
+        $container = $this->addSecurityBlockerClient($container);
 
         return $container;
     }
@@ -75,6 +80,20 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addMerchantUserFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSecurityBlockerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
+            return new SecurityMerchantPortalGuiToSecurityBlockerClientBridge($container->getLocator()->securityBlocker()->client());
+        });
 
         return $container;
     }

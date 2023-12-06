@@ -44,6 +44,31 @@ class ReSortController extends CategoryAbstractController
     protected const REQUEST_PARAM_NODES = 'nodes';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_CODE = 'code';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_MESSAGE = 'message';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_MESSAGE_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_MESSAGE_RESORT_FAILED = 'Category nodes cannot be relocated.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_MESSAGE_RESORT_SUCCESS = 'Category nodes successfully re-sorted.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<mixed>
@@ -65,21 +90,30 @@ class ReSortController extends CategoryAbstractController
      */
     public function saveAction(Request $request): JsonResponse
     {
+        $translationFacade = $this->getFactory()->getTranslatorFacade();
+
         if (!$this->isCsrfTokenValid($request->get(static::PARAM_REQUEST_RE_SORT_FORM_TOKEN))) {
             return $this->jsonResponse([
-                'code' => Response::HTTP_BAD_REQUEST,
-                'message' => 'CSRF token is not valid.',
+                static::RESPONSE_KEY_CODE => Response::HTTP_BAD_REQUEST,
+                static::RESPONSE_KEY_MESSAGE => $translationFacade->trans(static::RESPONSE_MESSAGE_TOKEN_IS_NOT_VALID),
             ]);
         }
 
         $categoryNodesData = (string)$request->request->get(static::REQUEST_PARAM_NODES);
-        $this->getFactory()
+        $isUpdateSuccessful = $this->getFactory()
             ->createCategoryNodeOrderUpdater()
             ->updateCategoryNodeOrder($categoryNodesData);
 
+        if (!$isUpdateSuccessful) {
+            return $this->jsonResponse([
+                static::RESPONSE_KEY_CODE => Response::HTTP_BAD_REQUEST,
+                static::RESPONSE_KEY_MESSAGE => $translationFacade->trans(static::RESPONSE_MESSAGE_RESORT_FAILED),
+            ]);
+        }
+
         return $this->jsonResponse([
-            'code' => Response::HTTP_OK,
-            'message' => 'Category nodes successfully re-sorted.',
+            static::RESPONSE_KEY_CODE => Response::HTTP_OK,
+            static::RESPONSE_KEY_MESSAGE => $translationFacade->trans(static::RESPONSE_MESSAGE_RESORT_SUCCESS),
         ]);
     }
 

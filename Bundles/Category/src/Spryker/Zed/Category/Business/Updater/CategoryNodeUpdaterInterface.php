@@ -26,6 +26,8 @@ interface CategoryNodeUpdaterInterface
     public function updateExtraParentCategoryNodes(CategoryTransfer $categoryTransfer): void;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\Reorderer\CategoryNodeReordererInterface::reorderCategoryNodeCollection()} instead.
+     *
      * @param int $idCategoryNode
      * @param int $position
      *

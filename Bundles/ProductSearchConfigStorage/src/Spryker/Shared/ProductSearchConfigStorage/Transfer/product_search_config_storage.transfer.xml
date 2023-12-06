@@ -17,12 +17,31 @@
     <transfer name="ProductSearchAttribute">
         <property name="filterType" type="string"/>
         <property name="key" type="string"/>
+        <property name="position" type="int"/>
     </transfer>
 
     <transfer name="SynchronizationData">
     </transfer>
 
     <transfer name="SortConfig">
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeConditions" strict="true">
+        <property name="withLocalizedAttributes" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeCriteria" strict="true">
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="productSearchAttributeConditions" type="ProductSearchAttributeConditions"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttributeCollection" strict="true">
+        <property name="productSearchAttributes" type="ProductSearchAttribute[]" singular="productSearchAttribute"/>
     </transfer>
 
 </transfers>

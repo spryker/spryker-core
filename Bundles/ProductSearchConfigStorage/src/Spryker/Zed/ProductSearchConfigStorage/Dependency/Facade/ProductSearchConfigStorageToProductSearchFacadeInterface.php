@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer;
+
 interface ProductSearchConfigStorageToProductSearchFacadeInterface
 {
     /**
-     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
+     * @param \Generated\Shared\Transfer\ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductSearchAttributeCollectionTransfer
      */
-    public function getProductSearchAttributeList();
+    public function getProductSearchAttributeCollection(
+        ProductSearchAttributeCriteriaTransfer $productSearchAttributeCriteriaTransfer
+    ): ProductSearchAttributeCollectionTransfer;
 }
