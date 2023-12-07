@@ -10,9 +10,7 @@ namespace SprykerTest\Zed\Category\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryBuilder;
-use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -21,7 +19,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
@@ -246,8 +243,8 @@ class CategoryFacadeTest extends Unit
         // Arrange
         $localeTransfer1 = $this->tester->haveLocale();
         $localeTransfer2 = $this->tester->haveLocale();
-        $categoryLocalizedAttributesTransfer1 = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer1);
-        $categoryLocalizedAttributesTransfer2 = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer2);
+        $categoryLocalizedAttributesTransfer1 = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransfer1);
+        $categoryLocalizedAttributesTransfer2 = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransfer2);
         $categoryTransfer = $this->tester->haveCategory([
             CategoryTransfer::LOCALIZED_ATTRIBUTES => [
                 $categoryLocalizedAttributesTransfer1->toArray(),
@@ -370,7 +367,7 @@ class CategoryFacadeTest extends Unit
         $categoryTransfer = (new CategoryBuilder([
             CategoryTransfer::ID_CATEGORY => null,
             CategoryTransfer::LOCALIZED_ATTRIBUTES => [
-                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+                $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
             ],
             CategoryTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
             CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTransfer->toArray(),
@@ -410,7 +407,7 @@ class CategoryFacadeTest extends Unit
 
         $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
         $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
-        $categoryLocalizedAttributesTransfer = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
+        $categoryLocalizedAttributesTransfer = $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
 
         $categoryTransfer = (new CategoryBuilder([
             CategoryTransfer::ID_CATEGORY => null,
@@ -700,8 +697,8 @@ class CategoryFacadeTest extends Unit
         $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation($updateCategoryStoreRelationRequestTransfer);
 
         // Assert
-        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
-        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+        $parentCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
 
         $this->assertCount(2, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
         $this->assertCount(1, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
@@ -743,8 +740,8 @@ class CategoryFacadeTest extends Unit
         $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation($updateCategoryStoreRelationRequestTransfer);
 
         // Assert
-        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
-        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+        $parentCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
 
         $this->assertCount(1, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
         $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
@@ -782,8 +779,8 @@ class CategoryFacadeTest extends Unit
         $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation($updateCategoryStoreRelationRequestTransfer);
 
         // Assert
-        $parentCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
-        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
+        $parentCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($parentCategoryTransfer->getIdCategory());
+        $childCategoryStoreRelationStoreIds = $this->tester->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
 
         $this->assertCount(1, $parentCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
         $this->assertCount(1, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
@@ -791,7 +788,8 @@ class CategoryFacadeTest extends Unit
         $this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
             'Category store relations are different from expecting value.',
-        );$this->assertEmpty(
+        );
+        $this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
             'Category store relations are different from expecting value.',
         );
@@ -810,135 +808,6 @@ class CategoryFacadeTest extends Unit
 
         // Act
         $this->getFacade()->updateCategoryStoreRelation(new UpdateCategoryStoreRelationRequestTransfer());
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCategoryWhenParentCategoryIsChangedWillRemoveStoreRelationsMissingForParentCategory(): void
-    {
-        // Arrange
-        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE], false);
-        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT], false);
-
-        $firstParentCategoryTransfer = $this->tester->haveCategory();
-        $this->tester->haveCategoryStoreRelation($firstParentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
-
-        $secondParentCategoryTransfer = $this->tester->haveCategory();
-        $this->tester->haveCategoryStoreRelation($secondParentCategoryTransfer->getIdCategory(), $atStoreTransfer->getIdStore());
-
-        $childCategoryTransfer = $this->tester->haveCategory([
-            CategoryTransfer::PARENT_CATEGORY_NODE => $firstParentCategoryTransfer->getCategoryNode(),
-        ]);
-        $this->tester->haveCategoryStoreRelation($childCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
-
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($childCategoryTransfer->getIdCategory())
-            ->setWithChildrenRecursively(true);
-        $childCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
-
-        $childCategoryTransfer->setParentCategoryNode($secondParentCategoryTransfer->getCategoryNode());
-
-        // Act
-        $this->getFacade()->update($childCategoryTransfer);
-
-        // Assert
-        $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
-        $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCategoryWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
-    {
-        // Arrange
-        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
-            new CategoryUrlPathPrefixUpdaterPlugin(),
-        ]);
-
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
-        $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
-
-        $categoryTransfer = $this->tester->haveCategory();
-        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
-
-        // Act
-        $this->getFacade()->update($categoryTransfer);
-
-        // Assert
-        $urlEntity = SpyUrlQuery::create()
-            ->filterByFkResourceCategorynode($categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail())
-            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
-            ->findOne();
-        $this->assertNotNull($urlEntity, 'Category URL should be successfully created.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCategoryWithChildNodesWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
-    {
-        // Arrange
-        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
-            new CategoryUrlPathPrefixUpdaterPlugin(),
-        ]);
-
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
-        $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
-
-        $categoryTransfer = $this->tester->haveCategory();
-        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
-        $this->tester->haveCategory([
-            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode(),
-        ]);
-
-        // Act
-        $this->getFacade()->update($categoryTransfer);
-
-        // Assert
-        $urlEntity = SpyUrlQuery::create()
-            ->filterByFkResourceCategorynode($categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail())
-            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
-            ->findOne();
-        $this->assertNotNull($urlEntity, 'Category URL should be successfully created.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCategoryWhenParentCategoryIsChangedWillProperlyUpdateCategoryClosureTableData(): void
-    {
-        // Arrange
-        $firstParentCategoryTransfer = $this->tester->haveCategory();
-        $secondParentCategoryTransfer = $this->tester->haveCategory();
-        $firstChildCategoryTransfer = $this->tester->haveCategory([
-            CategoryTransfer::PARENT_CATEGORY_NODE => $firstParentCategoryTransfer->getCategoryNode(),
-        ]);
-        $secondChildCategoryTransfer = $this->tester->haveCategory([
-            CategoryTransfer::PARENT_CATEGORY_NODE => $firstChildCategoryTransfer->getCategoryNode(),
-        ]);
-
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($firstChildCategoryTransfer->getIdCategory())
-            ->setWithChildrenRecursively(true);
-        $firstChildCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
-
-        $firstChildCategoryTransfer->setParentCategoryNode($secondParentCategoryTransfer->getCategoryNode());
-
-        // Act
-        $this->getFacade()->update($firstChildCategoryTransfer);
-
-        // Assert
-        $secondParentIdCategoryNode = $secondParentCategoryTransfer->getCategoryNode()->getIdCategoryNode();
-        $firstChildIdCategoryNode = $firstChildCategoryTransfer->getCategoryNode()->getIdCategoryNode();
-        $secondChildIdCategoryNode = $secondChildCategoryTransfer->getCategoryNode()->getIdCategoryNode();
-
-        $this->assertSame(0, $this->tester->findCategoryClosureTableDepth($firstChildIdCategoryNode, $firstChildIdCategoryNode));
-        $this->assertSame(0, $this->tester->findCategoryClosureTableDepth($secondChildIdCategoryNode, $secondChildIdCategoryNode));
-        $this->assertSame(1, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $firstChildIdCategoryNode));
-        $this->assertSame(1, $this->tester->findCategoryClosureTableDepth($firstChildIdCategoryNode, $secondChildIdCategoryNode));
-        $this->assertSame(2, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $secondChildIdCategoryNode));
     }
 
     /**
@@ -1063,55 +932,6 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testUpdateShouldUpdateCategoryWhenParentCategoryAndAdditionalParentSwitched(): void
-    {
-        // Arrange
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
-
-        $parentCategoryNodeTransfer = $this->tester->haveCategory([
-            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
-                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
-            ],
-        ])->getCategoryNodeOrFail();
-
-        $extraParentCategoryNodeTransfer = $this->tester->haveCategory([
-            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
-                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
-            ],
-        ])->getCategoryNodeOrFail();
-
-        $categoryTransfer = $this->tester->haveCategory([
-            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryNodeTransfer,
-            CategoryTransfer::EXTRA_PARENTS => [
-                $extraParentCategoryNodeTransfer->toArray(),
-            ],
-            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
-                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
-            ],
-        ]);
-
-        $categoryTransfer->setParentCategoryNode($extraParentCategoryNodeTransfer);
-        $categoryTransfer->setExtraParents(new ArrayObject([$parentCategoryNodeTransfer]));
-        $this->getFacade()->update($categoryTransfer);
-
-        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
-        $categoryTransfer->setExtraParents(new ArrayObject([$extraParentCategoryNodeTransfer]));
-
-        // Act
-        $this->getFacade()->update($categoryTransfer);
-
-        // Assert
-        $this->assertSame($parentCategoryNodeTransfer->getIdCategoryNodeOrFail(), $categoryTransfer->getCategoryNodeOrFail()->getFkParentCategoryNodeOrFail());
-        $this->assertCount(1, $categoryTransfer->getExtraParents());
-
-        /** @var \Generated\Shared\Transfer\NodeTransfer $updatedExtraParentCategoryNodeTransfer */
-        $updatedExtraParentCategoryNodeTransfer = $categoryTransfer->getExtraParents()->offsetGet(0);
-        $this->assertSame($extraParentCategoryNodeTransfer->getIdCategoryNodeOrFail(), $updatedExtraParentCategoryNodeTransfer->getIdCategoryNodeOrFail());
-    }
-
-    /**
      * @return int
      */
     protected function getRootCategoryId(): int
@@ -1141,32 +961,6 @@ class CategoryFacadeTest extends Unit
     protected function getFacade(): CategoryFacadeInterface
     {
         return $this->tester->getFacade();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    protected function createCategoryLocalizedAttributesTransferForLocale(LocaleTransfer $localeTransfer): CategoryLocalizedAttributesTransfer
-    {
-        return (new CategoryLocalizedAttributesBuilder([
-            CategoryLocalizedAttributesTransfer::LOCALE => $localeTransfer->toArray(),
-        ]))->build();
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return array<int>
-     */
-    protected function getCategoryRelationStoreIds(int $idCategory): array
-    {
-        return SpyCategoryStoreQuery::create()
-            ->filterByFkCategory($idCategory)
-            ->select(SpyCategoryStoreTableMap::COL_FK_STORE)
-            ->find()
-            ->getData();
     }
 
     /**
