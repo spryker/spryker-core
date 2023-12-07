@@ -178,6 +178,10 @@ class MessagePublisherTest extends Unit
         $messageAttributesLogData['event'] = $transferName;
         $messageAttributesLogData['name'] = $transferName;
 
+        if (isset($messageAttributesLogData[MessageAttributesTransfer::AUTHORIZATION])) {
+            unset($messageAttributesLogData[MessageAttributesTransfer::AUTHORIZATION]);
+        }
+
         return $messageAttributesLogData;
     }
 

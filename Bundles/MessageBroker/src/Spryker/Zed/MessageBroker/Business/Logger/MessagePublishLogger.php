@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MessageBroker\Business\Logger;
 
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Monolog\Logger;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
@@ -106,6 +107,11 @@ class MessagePublishLogger implements MessagePublishLoggerInterface
                 $messageTransfer->getMessageAttributes()->toArrayRecursiveCamelCased(),
                 array_flip($this->messageBrokerConfig->getProtectedMessageAttributes()),
             );
+        }
+
+        //It is not allowed to log authorization token for security reasons
+        if (isset($loggerMessageAttributes[MessageAttributesTransfer::AUTHORIZATION])) {
+            unset($loggerMessageAttributes[MessageAttributesTransfer::AUTHORIZATION]);
         }
 
         return $loggerMessageAttributes;
