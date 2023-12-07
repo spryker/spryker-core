@@ -1,3 +1,8 @@
+{#
+@var group \Generated\Shared\Transfer\ProductBundleGroupTransfer
+@var group.groupItems \Generated\Shared\Transfer\ItemTransfer[]
+@var group.groupItems[0].salesOrderConfiguredBundleItem \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer
+#}
 {% for group in groups | default %}
     {% if not group.groupItems[0].salesOrderConfiguredBundleItem %}
         {% if group.isBundle %}

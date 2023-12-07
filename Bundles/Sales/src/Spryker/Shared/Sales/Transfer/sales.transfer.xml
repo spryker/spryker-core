@@ -196,6 +196,7 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
         <property name="metadata" type="ItemMetadata"/>
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -431,6 +432,7 @@
     </transfer>
 
     <transfer name="ProductBundleGroup">
+        <property name="groupItems" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="CheckoutError">
@@ -484,5 +486,8 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
     </transfer>
 </transfers>
