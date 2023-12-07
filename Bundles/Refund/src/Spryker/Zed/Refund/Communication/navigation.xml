@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <config>
     <sales>
-        <label>Refunds</label>
-        <title>Refunds</title>
-        <bundle>refund</bundle>
         <pages>
             <table>
                 <label>Refunds</label>
