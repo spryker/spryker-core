@@ -12,6 +12,7 @@ use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class StorageInstanceBuilder
 {
@@ -194,7 +195,7 @@ class StorageInstanceBuilder
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected static function getElasticsearchClientConfig()
     {
@@ -206,9 +207,14 @@ class StorageInstanceBuilder
             $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
         }
 
-        $config['transport'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
-        $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
-        $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
+        $config['transport'] = ucfirst(
+            Config::get(CollectorConfig::SEARCH_ELASTICSEARCH_PARAMETER_TRANSPORT, '') ?:
+                Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT),
+        );
+        $config['port'] = Config::get(CollectorConfig::SEARCH_ELASTICSEARCH_PARAMETER_PORT, '') ?:
+            Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
+        $config['host'] = Config::get(CollectorConfig::SEARCH_ELASTICSEARCH_PARAMETER_HOST, '') ?:
+            Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
         $authHeader = (string)Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER, '');
 

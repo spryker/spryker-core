@@ -49,6 +49,42 @@ class CollectorConfig extends AbstractBundleConfig
     public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**
+     * Specification:
+     * - The `transport` search parameter config key.
+     *
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SEARCH_ELASTICSEARCH_PARAMETER_TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
+
+    /**
+     * Specification:
+     * - The `port` search parameter config key.
+     *
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SEARCH_ELASTICSEARCH_PARAMETER_PORT = 'SEARCH_ELASTICSEARCH:PORT';
+
+    /**
+     * Specification:
+     * - The `host` search parameter config key.
+     *
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const SEARCH_ELASTICSEARCH_PARAMETER_HOST = 'SEARCH_ELASTICSEARCH:HOST';
+
+    /**
      * @api
      *
      * @return string
