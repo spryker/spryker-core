@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

@@ -75,6 +75,7 @@ class ProductOfferStorageDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductFacadeFacade($container);
         $container = $this->addProductOfferStorageFilterPlugins($container);
 
         return $container;

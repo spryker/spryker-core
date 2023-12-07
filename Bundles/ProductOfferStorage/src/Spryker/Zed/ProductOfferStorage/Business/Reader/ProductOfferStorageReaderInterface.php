@@ -16,6 +16,13 @@ interface ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
+    public function getProductOfferSellableCollectionByProductOfferIds(array $productOfferIds): ProductOfferCollectionTransfer;
+
+    /**
+     * @param array<int> $productOfferIds
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
     public function getProductOfferCollectionByProductOfferIds(array $productOfferIds): ProductOfferCollectionTransfer;
 
     /**

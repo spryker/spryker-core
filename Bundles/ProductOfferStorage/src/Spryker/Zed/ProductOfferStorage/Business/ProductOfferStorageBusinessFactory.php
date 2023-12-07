@@ -21,6 +21,7 @@ use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransfer
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\ProductOfferStorageDependencyProvider;
 
@@ -92,6 +93,8 @@ class ProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductOfferStorageReader(
             $this->getRepository(),
             $this->createProductOfferCriteriaTransferProvider(),
+            $this->getProductOfferFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -109,6 +112,14 @@ class ProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ProductOfferStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface
+     */
+    public function getProductOfferFacade(): ProductOfferStorageToProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferStorageDependencyProvider::FACADE_PRODUCT_OFFER);
     }
 
     /**

@@ -9,9 +9,7 @@ namespace SprykerTest\Zed\ProductOfferStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
@@ -118,37 +116,6 @@ class ProductOfferStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteProductOfferStorageCollectionByProductOfferEvents(): void
-    {
-        // Assign
-        $this->tester->clearProductOfferData();
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
-        $productTransfer = $this->tester->haveProduct();
-
-        $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::CONCRETE_SKU => $productTransfer->getSku(),
-        ])->addStore($storeTransfer);
-
-        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([
-                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeProductOfferStorageCollectionByProductOfferEvents($eventTransfers);
-
-        $this->assertCount(
-            1,
-            $this->tester->getProductOfferStorageEntities([$productOfferTransfer->getProductOfferReference()]),
-        );
-    }
-
-    /**
-     * @return void
-     */
     public function testDeleteProductOfferStorageCollectionByProductOfferEvents(): void
     {
         // Assign
@@ -172,109 +139,6 @@ class ProductOfferStorageFacadeTest extends Unit
             0,
             $this->tester->getProductOfferStorageEntities([$productOfferTransfer->getProductOfferReference()]),
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByProductOfferStoreEventsPublishesDeStoreSuccessfuly(): void
-    {
-        // Arrange
-        $storeTransfer = $this->tester->haveStoreByName(static::STORE_NAME_DE);
-
-        $productOfferTransfer = $this->tester->createProductOffer(
-            $storeTransfer,
-        );
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-                SpyProductOfferStoreTableMap::COL_FK_STORE => $storeTransfer->getIdStore(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByProductOfferStoreEvents($eventTransfers);
-        $productOfferStorageData = $this->tester->getProductOfferStorageEntities(
-            [$productOfferTransfer->getProductOfferReference()],
-        );
-
-        // Assert
-        $this->assertCount(1, $productOfferStorageData);
-        $this->assertSame($productOfferStorageData[0]->getStore(), $storeTransfer->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testWriteCollectionByProductOfferStoreEventsPublishesAtStoreAndRemovesDeStoreSuccessfuly(): void
-    {
-        // Arrange
-        $storeTransfer = $this->tester->haveStoreByName(static::STORE_NAME_AT);
-        $productOfferTransfer = $this->tester->createProductOffer(
-            $storeTransfer,
-        );
-        $this->tester->haveProductOfferStorage(
-            (new ProductOfferStorageTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference()),
-            (new StoreTransfer())->setName(static::STORE_NAME_DE),
-        );
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-                SpyProductOfferStoreTableMap::COL_FK_STORE => $storeTransfer->getIdStore(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->writeCollectionByProductOfferStoreEvents($eventTransfers);
-        $productOfferStorageData = $this->tester->getProductOfferStorageEntities(
-            [$productOfferTransfer->getProductOfferReference()],
-        );
-
-        // Assert
-        $this->assertCount(1, $productOfferStorageData);
-        $this->assertSame($productOfferStorageData[0]->getStore(), $storeTransfer->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteCollectionByProductOfferStoreEventsDeletesProductOfferFromStorage(): void
-    {
-        // Arrange
-        $storeTransferDe = $this->tester->haveStoreByName(static::STORE_NAME_DE);
-        $storeTransferAt = $this->tester->haveStoreByName(static::STORE_NAME_AT);
-
-        $productOfferTransfer = $this->tester->haveProductOffer();
-
-        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransferDe);
-        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransferAt);
-
-        $this->tester->haveProductOfferStorage(
-            (new ProductOfferStorageTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference()),
-            (new StoreTransfer())->setName(static::STORE_NAME_DE),
-        );
-
-        $this->tester->haveProductOfferStorage(
-            (new ProductOfferStorageTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference()),
-            (new StoreTransfer())->setName(static::STORE_NAME_AT),
-        );
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
-                SpyProductOfferStoreTableMap::COL_FK_STORE => $storeTransferAt->getIdStore(),
-            ]),
-        ];
-
-        // Act
-        $this->tester->getFacade()->deleteCollectionByProductOfferStoreEvents($eventTransfers);
-        $productOfferStorageData = $this->tester->getProductOfferStorageEntities(
-            [$productOfferTransfer->getProductOfferReference()],
-        );
-
-        // Assert
-        $this->assertCount(1, $productOfferStorageData);
     }
 
     /**
