@@ -117,7 +117,7 @@ class MemoryAllocatedElasticBatchTest extends Unit
         $mocked->method('getBulkWriteGradualityFactor')
             ->willReturn($bulkWriteGradualityFactor);
 
-        $mocked->method('getBulkWriteMemoryThesoldPercent')
+        $mocked->method('getBulkWriteMemoryThresholdPercent')
             ->willReturn($memoryThresholdPercent);
 
         return $mocked;
