@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductOfferStorage\Business\Reader;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface;
+use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInterface;
 
 class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
@@ -25,15 +28,45 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productOfferCriteriaTransferProvider;
 
     /**
+     * @var \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface
+     */
+    protected ProductOfferStorageToProductOfferFacadeInterface $productOfferFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface
+     */
+    protected ProductOfferStorageToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInterface $productOfferStorageRepository
      * @param \Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
+     * @param \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductOfferStorageRepositoryInterface $productOfferStorageRepository,
-        ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
+        ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider,
+        ProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
+        ProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->productOfferStorageRepository = $productOfferStorageRepository;
         $this->productOfferCriteriaTransferProvider = $productOfferCriteriaTransferProvider;
+        $this->productOfferFacade = $productOfferFacade;
+        $this->storeFacade = $storeFacade;
+    }
+
+    /**
+     * @param array<int> $productOfferIds
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferSellableCollectionByProductOfferIds(array $productOfferIds): ProductOfferCollectionTransfer
+    {
+        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider
+            ->createSellableProductOfferCriteriaTransfer()
+            ->setProductOfferIds($productOfferIds);
+
+        return $this->productOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
     }
 
     /**
@@ -43,9 +76,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      */
     public function getProductOfferCollectionByProductOfferIds(array $productOfferIds): ProductOfferCollectionTransfer
     {
-        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider
-            ->createSellableProductOfferCriteriaTransfer()
-            ->setProductOfferIds($productOfferIds);
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())->setProductOfferIds($productOfferIds);
 
         return $this->productOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
     }
@@ -89,21 +120,39 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     public function getProductOfferReferencesGroupedByStore(array $productOfferIds, array $storeIds): array
     {
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
-            ->setProductOfferIds($productOfferIds)
-            ->setStoreIds($storeIds);
-        $productOfferCollectionTransfer = $this->productOfferStorageRepository
-            ->getProductOffers($productOfferCriteriaTransfer);
+            ->setProductOfferConditions((new ProductOfferConditionsTransfer())->setProductOfferIds($productOfferIds));
+        $productOfferTransfers = $this->productOfferFacade
+            ->getProductOfferCollection($productOfferCriteriaTransfer)
+            ->getProductOffers();
 
-        $productOfferTransfers = $productOfferCollectionTransfer->getProductOffers();
+        $storeNamesIndexedByIdStore = $this->getStoreNamesIndexedByIdStore($this->storeFacade->getAllStores());
 
         $productOfferReferencesGroupedByStore = [];
         foreach ($productOfferTransfers as $productOfferTransfer) {
-            $storeTransfers = $productOfferTransfer->getStores();
-            foreach ($storeTransfers as $storeTransfer) {
-                $productOfferReferencesGroupedByStore[$storeTransfer->getNameOrFail()][] = $productOfferTransfer->getProductOfferReferenceOrFail();
+            foreach ($storeIds as $idStore) {
+                if (!isset($storeNamesIndexedByIdStore[$idStore])) {
+                    continue;
+                }
+
+                $productOfferReferencesGroupedByStore[$storeNamesIndexedByIdStore[$idStore]][] = $productOfferTransfer->getProductOfferReferenceOrFail();
             }
         }
 
         return $productOfferReferencesGroupedByStore;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<int, string>
+     */
+    protected function getStoreNamesIndexedByIdStore(array $storeTransfers): array
+    {
+        $storeNamesIndexedByIdStore = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $storeNamesIndexedByIdStore[$storeTransfer->getIdStoreOrFail()] = $storeTransfer->getNameOrFail();
+        }
+
+        return $storeNamesIndexedByIdStore;
     }
 }

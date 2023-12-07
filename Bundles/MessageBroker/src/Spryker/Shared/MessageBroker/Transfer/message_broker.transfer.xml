@@ -13,6 +13,7 @@
         <property name="transactionId" type="string"/>
         <property name="actorId" type="string"/>
         <property name="name" type="string"/>
+        <property name="authorization" type="string" description="It is used for excluding this property from logging because it consists a sensitive data."/>
     </transfer>
 
     <transfer name="Publisher" deprecated="Will be removed in next major.">

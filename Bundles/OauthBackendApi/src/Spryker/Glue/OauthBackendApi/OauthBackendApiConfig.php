@@ -23,6 +23,8 @@ class OauthBackendApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed in next major.
+     *
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED
      *
      * @var string

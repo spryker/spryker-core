@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\DataImport\PHPMD)
  */
 class DataImportBusinessTester extends Actor
 {

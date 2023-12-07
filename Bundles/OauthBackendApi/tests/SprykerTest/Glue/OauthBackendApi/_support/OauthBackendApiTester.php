@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\OauthBackendApi;
 
 use Codeception\Actor;
+use Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin;
 
 /**
  * Inherited Methods
@@ -28,4 +29,17 @@ use Codeception\Actor;
 class OauthBackendApiTester extends Actor
 {
     use _generated\OauthBackendApiTesterActions;
+
+    /**
+     * @var string
+     */
+    public const AUTHORIZATION = 'authorization';
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin
+     */
+    public function createBackendApiAccessTokenValidatorPlugin(): BackendApiAccessTokenValidatorPlugin
+    {
+        return new BackendApiAccessTokenValidatorPlugin();
+    }
 }

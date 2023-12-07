@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OauthBackendApi\Plugin;
+namespace Spryker\Glue\OauthBackendApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
@@ -13,15 +13,13 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPlug
 use Spryker\Glue\Kernel\Backend\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\BackendApiAccessTokenValidatorPlugin} instead.
- *
  * @method \Spryker\Glue\OauthBackendApi\OauthBackendApiFactory getFactory()
  */
-class AccessTokenValidatorPlugin extends AbstractPlugin implements RequestValidatorPluginInterface
+class BackendApiAccessTokenValidatorPlugin extends AbstractPlugin implements RequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Validates access token passed via Authorization header.
+     * - Validates access token that passed via Authorization header.
      *
      * @api
      *
@@ -32,7 +30,7 @@ class AccessTokenValidatorPlugin extends AbstractPlugin implements RequestValida
     public function validate(GlueRequestTransfer $glueRequestTransfer): GlueRequestValidationTransfer
     {
         return $this->getFactory()
-            ->createAccessTokenValidator()
+            ->createBackendApiAccessTokenValidator()
             ->validate($glueRequestTransfer);
     }
 }

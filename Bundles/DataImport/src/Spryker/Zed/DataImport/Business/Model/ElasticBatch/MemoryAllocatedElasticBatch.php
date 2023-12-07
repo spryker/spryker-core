@@ -59,7 +59,7 @@ class MemoryAllocatedElasticBatch implements ElasticBatchInterface
      *
      * @var int
      */
-    protected static $memoryTresholdPercent;
+    protected static $memoryThresholdPercent;
 
     /**
      * Calculated maximum memory quota to be filled.
@@ -87,7 +87,7 @@ class MemoryAllocatedElasticBatch implements ElasticBatchInterface
         $this->systemMemory = $systemMemory;
 
         static::$gradualityFactorCounter = $config->getBulkWriteGradualityFactor();
-        static::$memoryTresholdPercent = $config->getBulkWriteMemoryThesoldPercent();
+        static::$memoryThresholdPercent = $config->getBulkWriteMemoryThresholdPercent();
     }
 
     /**
@@ -251,7 +251,7 @@ class MemoryAllocatedElasticBatch implements ElasticBatchInterface
      */
     protected function getMemoryLimitWithThreshold(): int
     {
-        return (int)floor(static::$memoryTresholdPercent / 100 * $this->systemMemory->getMemoryLimit());
+        return (int)floor(static::$memoryThresholdPercent / 100 * $this->systemMemory->getMemoryLimit());
     }
 
     /**

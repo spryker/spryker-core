@@ -10,10 +10,7 @@ namespace Spryker\Glue\OauthBackendApi\Processor\Validator;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Processor\Validator\BackendApiAccessTokenValidatorInterface} instead.
- */
-interface AccessTokenValidatorInterface
+interface BackendApiAccessTokenValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer

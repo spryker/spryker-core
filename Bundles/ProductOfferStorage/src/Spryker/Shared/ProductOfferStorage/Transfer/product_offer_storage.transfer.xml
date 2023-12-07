@@ -22,6 +22,11 @@
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="pagination" type="Pagination"/>
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
     </transfer>
 
     <transfer name="Pagination">

@@ -60,7 +60,7 @@ class DataImportConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    protected const BULK_MODE_MEMORY_THESHOLD_PERCENT = 30;
+    protected const BULK_MODE_MEMORY_THRESHOLD_PERCENT = 30;
 
     /**
      * @api
@@ -158,9 +158,27 @@ class DataImportConfig extends AbstractBundleConfig
      *
      * @return int
      */
+    public function getBulkWriteMemoryThresholdPercent(): int
+    {
+        return $this->get(
+            DataImportConstants::BULK_MODE_MEMORY_THESHOLD_PERCENT,
+            $this->get(DataImportConstants::BULK_MODE_MEMORY_THRESHOLD_PERCENT, static::BULK_MODE_MEMORY_THRESHOLD_PERCENT),
+        );
+    }
+
+    /**
+     * Specification:
+     * - Returns memory threshold limit in percentage of total allowed memory.
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\DataImport\DataImportConfig::getBulkWriteMemoryThresholdPercent()} instead.
+     *
+     * @return int
+     */
     public function getBulkWriteMemoryThesoldPercent(): int
     {
-        return $this->get(DataImportConstants::BULK_MODE_MEMORY_THESHOLD_PERCENT, static::BULK_MODE_MEMORY_THESHOLD_PERCENT);
+        return $this->get(DataImportConstants::BULK_MODE_MEMORY_THESHOLD_PERCENT, static::BULK_MODE_MEMORY_THRESHOLD_PERCENT);
     }
 
     /**

@@ -110,11 +110,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     public function writeProductOfferStorageCollectionByProductOfferEvents(array $eventTransfers): void
     {
-        $productOfferCollectionTransfer = $this->getProductOfferCollectionFromProductOfferEvents($eventTransfers);
-        $productOfferReferences = $this->extractProductOfferReferencesFromProductOfferCollection($productOfferCollectionTransfer);
+        $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues(
+            $eventTransfers,
+            static::COL_PRODUCT_OFFER_REFERENCE,
+        );
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferReferences) {
-            $this->writeProductOfferCollectionByProductOfferReferences($productOfferCollectionTransfer, $productOfferReferences);
+        if ($productOfferReferences) {
+            $productOfferCollectionTransfer = $this->productOfferStorageReader
+                ->getProductOfferCollectionByProductOfferReferences($productOfferReferences);
+
+            $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferReferences) {
+                $this->writeProductOfferCollectionByProductOfferReferences($productOfferCollectionTransfer, $productOfferReferences);
+            });
+
+            return;
+        }
+
+        $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        $productOfferCollectionTransfer = $this->productOfferStorageReader
+            ->getProductOfferSellableCollectionByProductOfferIds($productOfferIds);
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferIds) {
+            $this->writeProductOfferCollectionByProductOfferIds($productOfferCollectionTransfer, $productOfferIds);
         });
     }
 
@@ -131,37 +149,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             return;
         }
 
-        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferCollectionByProductOfferIds($productOfferIds);
-        $productOfferReferences = $this->extractProductOfferReferencesFromProductOfferCollection($productOfferCollectionTransfer);
+        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferSellableCollectionByProductOfferIds($productOfferIds);
 
-        if (!$productOfferReferences) {
-            return;
-        }
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferReferences) {
-            $this->writeProductOfferCollectionByProductOfferReferences($productOfferCollectionTransfer, $productOfferReferences);
-        });
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    protected function getProductOfferCollectionFromProductOfferEvents(array $eventTransfers): ProductOfferCollectionTransfer
-    {
-        $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues(
-            $eventTransfers,
-            static::COL_PRODUCT_OFFER_REFERENCE,
-        );
-
-        if ($productOfferReferences) {
-            return $this->productOfferStorageReader->getProductOfferCollectionByProductOfferReferences($productOfferReferences);
-        }
-
-        $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
-        return $this->productOfferStorageReader->getProductOfferCollectionByProductOfferIds($productOfferIds);
+        $this->writeProductOfferCollectionByProductOfferIds($productOfferCollectionTransfer, $productOfferIds);
     }
 
     /**
@@ -186,6 +176,26 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 
         $this->productOfferStorageDeleter->deleteProductOfferStorageEntitiesByProductOfferReferences(
             array_diff($productOfferReferences, $sellableProductOfferReferences),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     * @param array<int> $productOfferIds
+     *
+     * @return void
+     */
+    protected function writeProductOfferCollectionByProductOfferIds(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer,
+        array $productOfferIds
+    ): void {
+        $productOfferReferences = $this->extractProductOfferReferencesFromProductOfferCollection(
+            $this->productOfferStorageReader->getProductOfferCollectionByProductOfferIds($productOfferIds),
+        );
+
+        $this->writeProductOfferCollectionByProductOfferReferences(
+            $productOfferCollectionTransfer,
+            $productOfferReferences,
         );
     }
 

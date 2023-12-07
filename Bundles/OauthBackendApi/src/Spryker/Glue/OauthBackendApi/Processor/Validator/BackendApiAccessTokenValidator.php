@@ -14,13 +14,10 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToOauthFacadeInterface;
 use Spryker\Glue\OauthBackendApi\OauthBackendApiConfig;
-use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface;
+use Spryker\Glue\OauthBackendApi\Processor\Extractor\BackendAccessTokenExtractorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Processor\Validator\BackendApiAccessTokenValidator} instead.
- */
-class AccessTokenValidator implements AccessTokenValidatorInterface
+class BackendApiAccessTokenValidator implements BackendApiAccessTokenValidatorInterface
 {
     /**
      * @var \Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToOauthFacadeInterface
@@ -28,20 +25,20 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     protected $oauthFacade;
 
     /**
-     * @var \Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface
+     * @var \Spryker\Glue\OauthBackendApi\Processor\Extractor\BackendAccessTokenExtractorInterface
      */
-    protected $accessTokenExtractor;
+    protected $backendAccessTokenExtractor;
 
     /**
      * @param \Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToOauthFacadeInterface $oauthFacade
-     * @param \Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface $accessTokenExtractor
+     * @param \Spryker\Glue\OauthBackendApi\Processor\Extractor\BackendAccessTokenExtractorInterface $backendAccessTokenExtractor
      */
     public function __construct(
         OauthBackendApiToOauthFacadeInterface $oauthFacade,
-        AccessTokenExtractorInterface $accessTokenExtractor
+        BackendAccessTokenExtractorInterface $backendAccessTokenExtractor
     ) {
         $this->oauthFacade = $oauthFacade;
-        $this->accessTokenExtractor = $accessTokenExtractor;
+        $this->backendAccessTokenExtractor = $backendAccessTokenExtractor;
     }
 
     /**
@@ -53,11 +50,11 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     {
         $glueRequestValidationTransfer = new GlueRequestValidationTransfer();
 
-        if (!$glueRequestTransfer->getHttpRequestAttributes()) {
+        if (!$this->backendAccessTokenExtractor->isAuthorizationHeaderSet($glueRequestTransfer)) {
             return $glueRequestValidationTransfer->setIsValid(true);
         }
 
-        $accessTokenData = $this->accessTokenExtractor->extract($glueRequestTransfer);
+        $accessTokenData = $this->backendAccessTokenExtractor->extract($glueRequestTransfer);
 
         if ($accessTokenData === null) {
             return $glueRequestValidationTransfer
@@ -73,25 +70,19 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
 
         $oauthAccessTokenValidationRequestTransfer = $this->validateAccessToken($accessTokenData);
 
-        if (!$oauthAccessTokenValidationRequestTransfer->getIsValid()) {
-            $glueRequestValidationTransfer
-                ->setIsValid(false)
-                ->setStatus(Response::HTTP_UNAUTHORIZED)
-                ->addError(
-                    (new GlueErrorTransfer())
-                        ->setStatus(Response::HTTP_UNAUTHORIZED)
-                        ->setCode(OauthBackendApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID)
-                        ->setMessage(OauthBackendApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN),
-                );
+        if ($oauthAccessTokenValidationRequestTransfer->getIsValid() === true) {
+            return $glueRequestValidationTransfer->setIsValid(true);
         }
 
-        $glueRequestValidationTransfer->setIsValid($oauthAccessTokenValidationRequestTransfer->getIsValid());
-
-        if (!array_key_exists(OauthBackendApiConfig::REQUEST_ATTRIBUTE_IS_PROTECTED, $glueRequestTransfer->getHttpRequestAttributes())) {
-            $glueRequestValidationTransfer->setIsValid(true);
-        }
-
-        return $glueRequestValidationTransfer;
+        return $glueRequestValidationTransfer
+            ->setIsValid(false)
+            ->setStatus(Response::HTTP_UNAUTHORIZED)
+            ->addError(
+                (new GlueErrorTransfer())
+                    ->setStatus(Response::HTTP_UNAUTHORIZED)
+                    ->setCode(OauthBackendApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID)
+                    ->setMessage(OauthBackendApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN),
+            );
     }
 
     /**

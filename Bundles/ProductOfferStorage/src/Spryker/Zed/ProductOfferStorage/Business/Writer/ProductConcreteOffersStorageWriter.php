@@ -131,7 +131,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             return;
         }
 
-        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferCollectionByProductOfferIds($productOfferIds);
+        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferSellableCollectionByProductOfferIds($productOfferIds);
         $productConcreteSkus = $this->extractProductConcreteSkusFromProductOfferCollection($productOfferCollectionTransfer);
 
         if (!$productConcreteSkus) {
