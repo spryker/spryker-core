@@ -158,7 +158,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         }
 
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
-            ->addIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
+            ->addIdCategoryNode($categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail());
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
         $this->createCategoryNodeUrlsForNewLocalizedAttributes($categoryTransfer, $urlTransfers, $categoryTransfer->getCategoryNodeOrFail());

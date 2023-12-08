@@ -420,19 +420,19 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $baseCategoryClosureTableEntity
      *
      * @return void
      */
     protected function createCategoryClosureTableParentEntries(
         ObjectCollection $parentCategoryClosureTableEntities,
-        SpyCategoryClosureTable $categoryClosureTableEntity
+        SpyCategoryClosureTable $baseCategoryClosureTableEntity
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
-            $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
+            $depth = $baseCategoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
-                $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
+                $baseCategoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth,
             );
 
