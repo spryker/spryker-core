@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Customer\Business\Facade;
 
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPostDeletePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -35,6 +37,26 @@ class DeleteCustomerTest extends AbstractCustomerAddressFacadeTest
 
         // Assert
         $this->assertTrue($isSuccess);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecutesCustomerPostDeletePlugins(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->createTestCustomer();
+
+        $customerPostDeletePlugin = $this->getMockBuilder(CustomerPostDeletePluginInterface::class)->getMock();
+        $this->tester->setDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_POST_DELETE, [$customerPostDeletePlugin]);
+
+        // Assert
+        $customerPostDeletePlugin
+            ->expects($this->once())
+            ->method('execute');
+
+        // Act
+        $this->tester->getFacade()->deleteCustomer($customerTransfer);
     }
 
     /**

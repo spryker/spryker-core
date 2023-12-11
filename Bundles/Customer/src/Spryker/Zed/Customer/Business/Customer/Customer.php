@@ -27,6 +27,7 @@ use Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationChecke
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
@@ -96,11 +97,6 @@ class Customer implements CustomerInterface
     protected $customerExpander;
 
     /**
-     * @var array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface>
-     */
-    protected $postCustomerRegistrationPlugins;
-
-    /**
      * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
      */
     protected $customerPasswordPolicyValidator;
@@ -116,6 +112,11 @@ class Customer implements CustomerInterface
     protected PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface
+     */
+    protected CustomerPluginExecutorInterface $customerPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -126,7 +127,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
      * @param \Spryker\Zed\Customer\Business\Customer\Checker\PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker
-     * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface> $postCustomerRegistrationPlugins
+     * @param \Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface $customerPluginExecutor
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -139,7 +140,7 @@ class Customer implements CustomerInterface
         CustomerExpanderInterface $customerExpander,
         CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
         PasswordResetExpirationCheckerInterface $passwordResetExpirationChecker,
-        array $postCustomerRegistrationPlugins = []
+        CustomerPluginExecutorInterface $customerPluginExecutor
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -149,9 +150,9 @@ class Customer implements CustomerInterface
         $this->localePropelQuery = $localePropelQuery;
         $this->customerExpander = $customerExpander;
         $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
-        $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
         $this->localeFacade = $localeFacade;
         $this->passwordResetExpirationChecker = $passwordResetExpirationChecker;
+        $this->customerPluginExecutor = $customerPluginExecutor;
     }
 
     /**
@@ -264,7 +265,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
-        $this->executePostCustomerRegistrationPlugins($customerTransfer);
+        $this->customerPluginExecutor->executePostCustomerRegistrationPlugins($customerTransfer);
         $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         $this->sendRegistrationToken($customerTransfer);
@@ -539,6 +540,8 @@ class Customer implements CustomerInterface
     {
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->delete();
+
+        $this->customerPluginExecutor->executeCustomerPostDeletePlugins($customerTransfer);
 
         return true;
     }
@@ -988,18 +991,6 @@ class Customer implements CustomerInterface
         $customerTransfer->setLocale($localeTransfer);
 
         return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer)
-    {
-        foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
-            $postCustomerRegistrationPlugin->execute($customerTransfer);
-        }
     }
 
     /**

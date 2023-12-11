@@ -28,6 +28,8 @@ use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyV
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\DenyListCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\SequenceCustomerPasswordPolicy;
+use Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutor;
+use Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -69,7 +71,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->createCustomerExpander(),
             $this->createCustomerPasswordPolicyValidator(),
             $this->createPasswordResetExpirationChecker(),
-            $this->getPostCustomerRegistrationPlugins(),
+            $this->createCustomerPluginExecutor(),
         );
 
         return $customer;
@@ -95,6 +97,17 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createAddress(),
             $this->createCustomerExpander(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Executor\CustomerPluginExecutorInterface
+     */
+    public function createCustomerPluginExecutor(): CustomerPluginExecutorInterface
+    {
+        return new CustomerPluginExecutor(
+            $this->getPostCustomerRegistrationPlugins(),
+            $this->getCustomerPostDeletePlugins(),
         );
     }
 
@@ -322,6 +335,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function getPostCustomerRegistrationPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_POST_CUSTOMER_REGISTRATION);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPostDeletePluginInterface>
+     */
+    public function getCustomerPostDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_POST_DELETE);
     }
 
     /**

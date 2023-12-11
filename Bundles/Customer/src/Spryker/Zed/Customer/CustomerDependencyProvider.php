@@ -119,6 +119,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CUSTOMER_POST_DELETE = 'PLUGINS_CUSTOMER_POST_DELETE';
+
+    /**
+     * @var string
+     */
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
     /**
@@ -139,6 +144,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
         $container = $this->addCustomerService($container);
+        $container = $this->addCustomerPostDeletePlugins($container);
 
         return $container;
     }
@@ -387,6 +393,28 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface>
      */
     protected function getCustomerTableActionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerPostDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CUSTOMER_POST_DELETE, function () {
+            return $this->getCustomerPostDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPostDeletePluginInterface>
+     */
+    protected function getCustomerPostDeletePlugins(): array
     {
         return [];
     }

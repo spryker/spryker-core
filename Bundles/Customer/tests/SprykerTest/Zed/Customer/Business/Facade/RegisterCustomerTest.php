@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Customer\Business\Facade;
 
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -41,6 +43,26 @@ class RegisterCustomerTest extends AbstractCustomerFacadeTest
 
         // Assert
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRegistrationKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecutesPostCustomerRegistrationPlugins(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->createTestCustomerTransfer();
+
+        $postCustomerRegistrationPluginMock = $this->getMockBuilder(PostCustomerRegistrationPluginInterface::class)->getMock();
+        $this->tester->setDependency(CustomerDependencyProvider::PLUGINS_POST_CUSTOMER_REGISTRATION, [$postCustomerRegistrationPluginMock]);
+
+        // Assert
+        $postCustomerRegistrationPluginMock
+            ->expects($this->once())
+            ->method('execute');
+
+        // Act
+        $this->tester->getFacade()->registerCustomer($customerTransfer);
     }
 
     /**

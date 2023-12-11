@@ -142,6 +142,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Deletes a customer by either customer ID, customer email, or password restoration key.
+     * - Executes {@link \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerPostDeletePluginInterface} plugin stack.
      *
      * @api
      *
