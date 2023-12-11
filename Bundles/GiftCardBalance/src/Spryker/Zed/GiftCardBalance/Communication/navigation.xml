@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <config>
     <sales>
-        <label>Gift Card Balance</label>
-        <title>Gift Card Balance</title>
-        <bundle>gift-card-balance</bundle>
         <pages>
             <gift-card>
                 <label>Gift Card Balance</label>
