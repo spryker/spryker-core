@@ -20,11 +20,20 @@ class OrderUpdater implements OrderUpdaterInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @var list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface>
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer)
-    {
+    protected array $orderPostUpdatePlugins;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface> $orderPostUpdatePlugins
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        array $orderPostUpdatePlugins
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->orderPostUpdatePlugins = $orderPostUpdatePlugins;
     }
 
     /**
@@ -50,7 +59,21 @@ class OrderUpdater implements OrderUpdaterInterface
         $this->updateOrderItems($orderTransfer, $orderEntity);
         $this->updateOrderExpenses($orderTransfer, $orderEntity);
 
+        $this->executeOrderPostUpdatePlugins($orderTransfer);
+
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    protected function executeOrderPostUpdatePlugins(OrderTransfer $orderTransfer): void
+    {
+        foreach ($this->orderPostUpdatePlugins as $orderPostUpdatePlugin) {
+            $orderPostUpdatePlugin->execute($orderTransfer);
+        }
     }
 
     /**

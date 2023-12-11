@@ -150,6 +150,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Update sales order with data from order transfer
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface} plugin stack.
      * - Returns true if order was successfully updated
      *
      * @api

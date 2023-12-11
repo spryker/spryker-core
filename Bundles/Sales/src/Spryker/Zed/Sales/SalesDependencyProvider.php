@@ -152,6 +152,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_ITEMS_POST_SAVE = 'PLUGINS_ORDER_ITEMS_POST_SAVE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_POST_UPDATE = 'PLUGINS_ORDER_POST_UPDATE';
+
+    /**
      * @deprecated Will be removed in the next major version.
      *
      * @var string
@@ -186,6 +191,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
         $container = $this->addCustomerOrderAccessCheckPlugins($container);
         $container = $this->addOrderItemsPostSavePlugins($container);
+        $container = $this->addOrderPostUpdatePlugins($container);
 
         return $container;
     }
@@ -576,6 +582,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_POST_UPDATE, function () {
+            return $this->getOrderPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -683,6 +703,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface>
      */
     protected function getOrderItemsPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface>
+     */
+    protected function getOrderPostUpdatePlugins(): array
     {
         return [];
     }

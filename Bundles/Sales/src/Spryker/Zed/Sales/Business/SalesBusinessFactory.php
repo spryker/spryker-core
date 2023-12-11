@@ -224,7 +224,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderUpdater()
     {
-        return new OrderUpdater($this->getQueryContainer());
+        return new OrderUpdater(
+            $this->getQueryContainer(),
+            $this->getOrderPostUpdatePlugins(),
+        );
     }
 
     /**
@@ -677,6 +680,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getOrderItemsPostSavePlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface>
+     */
+    public function getOrderPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_UPDATE);
     }
 
     /**
