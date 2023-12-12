@@ -113,7 +113,8 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
-     * - Ignores company users with anonymised customers.
+     * - Includes company users of anonymized customers if `CompanyUserCriteriaFilterTransfer.includeAnonymizedCustomers` is set to `true`.
+     * - Ignores company users of anonymized customers otherwise.
      *
      * @api
      *
@@ -296,6 +297,8 @@ interface CompanyUserFacadeInterface
      * Specification:
      * - Returns an array of CompanyUserTransfer without relations.
      * - Uses CompanyUserCriteriaFilterTransfer for pagination.
+     * - Includes company users of anonymized customers if `CompanyUserCriteriaFilterTransfer.includeAnonymizedCustomers` is set to `true`.
+     * - Ignores company users of anonymized customers otherwise.
      *
      * @api
      *

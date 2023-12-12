@@ -127,10 +127,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser */
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
-            ->joinWithCustomer()
-            ->useCustomerQuery()
-                ->filterByAnonymizedAt(null, Criteria::ISNULL)
-            ->endUse();
+            ->joinWithCustomer();
 
         $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
 
@@ -246,7 +243,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
@@ -269,6 +266,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             $paginationTransfer->setNextPage($paginationModel->getNextPage());
             $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
+            /** @phpstan-var \Propel\Runtime\Collection\ObjectCollection */
             return $paginationModel->getResults();
         }
 
@@ -323,6 +321,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     *
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -330,6 +330,13 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): void
     {
+        if (!$criteriaFilterTransfer->getIncludeAnonymizedCustomers()) {
+            $queryCompanyUser
+                ->useCustomerQuery()
+                    ->filterByAnonymizedAt(null, Criteria::ISNULL)
+                ->endUse();
+        }
+
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }

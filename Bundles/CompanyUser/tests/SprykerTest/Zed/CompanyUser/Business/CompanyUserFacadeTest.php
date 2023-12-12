@@ -8,14 +8,11 @@
 namespace SprykerTest\Zed\CompanyUser\Business;
 
 use Codeception\Test\Unit;
-use DateTime;
 use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
-use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -226,48 +223,6 @@ class CompanyUserFacadeTest extends Unit
 
         // Assert
         $this->assertNull($companyUserTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCompanyUserCollectionShouldReturnTransfer(): void
-    {
-        // Assign
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer();
-        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
-            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
-        ]))->build();
-
-        // Act
-        $companyUserCollectionTransfer = $this->tester->getFacade()
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
-
-        // Assert
-        $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCompanyUserCollectionIgnoresAnonymizedCustomers(): void
-    {
-        // Assign
-        $customerTransfer = (new CustomerBuilder())->build();
-        $customerTransfer->setAnonymizedAt(new DateTime());
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
-            [CompanyUserTransfer::CUSTOMER => $customerTransfer],
-        );
-        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
-            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
-        ]))->build();
-
-        // Act
-        $companyUserCollectionTransfer = $this->tester->getFacade()
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
-
-        // Assert
-        $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
     }
 
     /**
@@ -606,28 +561,6 @@ class CompanyUserFacadeTest extends Unit
             return $collectionItem->getIdCompanyUser();
         }, $companyUserCollectionTransfer->getArrayCopy());
         $this->assertContains($companyUserTransfer->getIdCompanyUser(), $companyUserIds);
-    }
-
-    /**
-     * @return void
-     */
-    public function testRawCompanyUsersByCriteriaShouldReturnTransfer(): void
-    {
-        // Arrange
-        $companyUserTransfer = $this->tester->createCompanyUserTransfer();
-        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
-            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
-        ]))->build();
-
-        // Act
-        $foundCompanyUserTransfer = $this->tester->getFacade()
-            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer)
-            ->getCompanyUsers()
-            ->offsetGet(0);
-
-        // Assert
-        $this->assertNotEmpty($foundCompanyUserTransfer);
-        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**

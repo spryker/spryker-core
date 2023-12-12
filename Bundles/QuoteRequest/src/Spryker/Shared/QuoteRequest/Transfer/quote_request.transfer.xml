@@ -122,6 +122,7 @@
 
     <transfer name="CompanyUserCriteriaFilter">
         <property name="companyUserIds" type="array" singular="companyUserIds"/>
+        <property name="includeAnonymizedCustomers" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">

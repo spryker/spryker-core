@@ -197,8 +197,12 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             }
         }
 
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
+            ->setCompanyUserIds($companyUserIds)
+            ->setIncludeAnonymizedCustomers(true);
+
         $companyUserTransfers = $this->companyUserFacade
-            ->getCompanyUserCollection((new CompanyUserCriteriaFilterTransfer())->setCompanyUserIds($companyUserIds))
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
             ->getCompanyUsers()
             ->getArrayCopy();
 
