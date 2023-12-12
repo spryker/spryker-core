@@ -65,6 +65,20 @@ class AddProductConcreteController extends AbstractController
     protected const FIELD_PRODUCTS = 'products';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::ID_TABLE_PRODUCT_LIST
+     *
+     * @var string
+     */
+    protected const ID_TABLE_PRODUCT_LIST = 'product-list';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::ID_TABLE_PRODUCT_CONCRETE
+     * 
+     * @var string
+     */
+    protected const ID_TABLE_PRODUCT_CONCRETE = 'product-concrete-table';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException
@@ -261,11 +275,12 @@ class AddProductConcreteController extends AbstractController
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
             ->addActionCloseDrawer()
-            ->addActionRefreshTable()
+            ->addActionRefreshTable(static::ID_TABLE_PRODUCT_CONCRETE)
+            ->addActionRefreshTable(static::ID_TABLE_PRODUCT_LIST)
             ->addSuccessNotification($message)
             ->createResponse();
 
-        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray(true, true));
     }
 
     /**

@@ -52,6 +52,11 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     protected const URL_ADD_PRODUCT_CONCRETE = '/product-merchant-portal-gui/add-product-concrete';
 
     /**
+     * @var string
+     */
+    protected const ID_TABLE_PRODUCT_CONCRETE = 'product-concrete-table';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException
@@ -321,6 +326,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                         ->createApplicableApprovalStatusReader()
                         ->getApplicableUpdateApprovalStatuses($productAbstractTransfer->getApprovalStatus() ?? static::STATUS_DRAFT),
                     'superAttributes' => $productManagementAttributeTransfers,
+                    'idTableProductConcrete' => static::ID_TABLE_PRODUCT_CONCRETE,
                 ],
             )->getContent(),
         ];
