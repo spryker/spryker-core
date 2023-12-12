@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Communication\Controller;
 
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -27,6 +29,35 @@ class DeleteMerchantRelationshipController extends AbstractController
     /**
      * @var string
      */
+    protected const REQUEST_PARAMETER_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+
+    /**
+     * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\ListMerchantRelationshipController::indexAction()
+     *
+     * @var string
+     */
+    protected const ROUTE_LIST_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/list-merchant-relationship';
+
+    /**
+     * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\DeleteMerchantRelationshipController::indexAction()
+     *
+     * @var string
+     */
+    protected const ROUTE_DELETE_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/delete-merchant-relationship';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_MERCHANT_RELATION_DOES_NOT_EXIST = 'Merchant Relation with ID "%id%" doesn\'t exist.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_PARAMETER_ID = '%id%';
+
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS = 'Merchant relation deleted successfully.';
 
     /**
@@ -36,7 +67,7 @@ class DeleteMerchantRelationshipController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idMerchantRelationship = $this->castId($request->get(MerchantRelationshipTableConstants::REQUEST_ID_MERCHANT_RELATIONSHIP));
+        $idMerchantRelationship = $this->castId($request->get(static::REQUEST_PARAMETER_ID_MERCHANT_RELATIONSHIP));
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
 
         $form = $this->getFactory()->createDeleteMerchantRelationshipForm()->handleRequest($request);
@@ -61,5 +92,44 @@ class DeleteMerchantRelationshipController extends AbstractController
         $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     */
+    public function confirmAction(Request $request): RedirectResponse|array
+    {
+        $idMerchantRelationship = $this->castId(
+            $request->query->get(static::REQUEST_PARAMETER_ID_MERCHANT_RELATIONSHIP),
+        );
+
+        $merchantRelationshipConditionsTransfer = (new MerchantRelationshipConditionsTransfer())
+            ->addIdMerchantRelationship($idMerchantRelationship);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions($merchantRelationshipConditionsTransfer);
+
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer */
+        $merchantRelationshipCollectionTransfer = $this->getFactory()->getMerchantRelationshipFacade()->getMerchantRelationshipCollection(
+            null,
+            $merchantRelationshipCriteriaTransfer,
+        );
+
+        $merchantRelationshipTransfers = $merchantRelationshipCollectionTransfer->getMerchantRelationships();
+
+        if (!$merchantRelationshipTransfers->count()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_MERCHANT_RELATION_DOES_NOT_EXIST, [
+                static::ERROR_MESSAGE_PARAMETER_ID => $idMerchantRelationship,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_LIST_MERCHANT_RELATIONSHIP);
+        }
+
+        return $this->viewResponse([
+            'deleteMerchantRelationshipRoute' => static::ROUTE_DELETE_MERCHANT_RELATIONSHIP,
+            'merchantRelationshipTransfer' => $merchantRelationshipTransfers->getIterator()->current(),
+            'deleteMerchantRelationshipForm' => $this->getFactory()->createDeleteMerchantRelationshipForm()->createView(),
+        ]);
     }
 }

@@ -1,0 +1,42 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Merchant Relation deletion confirmation' %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% set backUrl = app.request.headers.get('referer') %}
+
+{% block action %}
+
+    {{ backActionButton(backUrl, 'Back to Merchant relations' | trans) }}
+{% endblock %}
+
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <p>{{ 'Are you sure you want to delete this Merchant Relation?' | trans }}</p>
+            <p><b>{{ merchantRelationshipTransfer.name }}</b></p>
+            <div>
+                <a href="{{ backUrl }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
+                {{ form_start(deleteMerchantRelationshipForm, {
+                    'action': url(
+                        deleteMerchantRelationshipRoute,
+                        {'id-merchant-relationship': merchantRelationshipTransfer.idMerchantRelationship}
+                    )
+                }) }}
+                <button class="btn btn-danger safe-submit"> {{ 'Delete Merchant Relation' | trans }} </button>
+                {{ form_end(deleteMerchantRelationshipForm) }}
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

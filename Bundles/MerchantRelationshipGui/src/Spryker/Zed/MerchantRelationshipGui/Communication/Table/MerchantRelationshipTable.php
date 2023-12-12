@@ -15,7 +15,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DeleteMerchantRelationshipForm;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class MerchantRelationshipTable extends AbstractTable
@@ -143,8 +142,6 @@ class MerchantRelationshipTable extends AbstractTable
         $buttons[] = $this->generateRemoveButton(
             Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_DELETE, $urlParams),
             'Delete',
-            [],
-            DeleteMerchantRelationshipForm::class,
         );
 
         return implode(' ', $buttons);

@@ -6,6 +6,12 @@
 {% block section_title widget_title %}
 
 {% block action %}
+    {{ removeActionButton(
+        url('/merchant-relationship-gui/delete-merchant-relationship/confirm',
+            {'id-merchant-relationship': merchantRelationshipTransfer.idMerchantRelationship}
+        ),
+        'Delete Merchant Relation' | trans
+    ) }}
     {{ backActionButton(url('/merchant-relationship-gui/list-merchant-relationship'), 'Back to Merchant relations' | trans) }}
 {% endblock %}
 

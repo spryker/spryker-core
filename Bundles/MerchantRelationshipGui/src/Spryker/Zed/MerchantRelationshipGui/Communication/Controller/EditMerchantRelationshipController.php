@@ -32,7 +32,12 @@ class EditMerchantRelationshipController extends AbstractController
     /**
      * @var string
      */
-    protected const MESSAGE_MERCHANT_RELATIONSHIP_NOT_FOUND = 'Merchant relation is not found.';
+    protected const ERROR_MESSAGE_MERCHANT_RELATION_DOES_NOT_EXIST = 'Merchant Relation with ID "%id%" doesn\'t exist.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_PARAMETER_ID = '%id%';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +52,12 @@ class EditMerchantRelationshipController extends AbstractController
         $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
 
         if ($merchantRelationshipTransfer === null) {
-            $this->addErrorMessage("Merchant Relationship with id %s doesn't exists.", ['%s' => $idMerchantRelationship]);
+            $this->addErrorMessage(
+                static::ERROR_MESSAGE_MERCHANT_RELATION_DOES_NOT_EXIST,
+                [
+                    static::ERROR_MESSAGE_PARAMETER_ID => $idMerchantRelationship,
+                ],
+            );
 
             return $this->redirectResponse(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         }

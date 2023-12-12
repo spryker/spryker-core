@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MerchantRelationship\PHPMD)
  */
 class MerchantRelationshipGuiCommunicationTester extends Actor
 {

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
@@ -82,5 +84,21 @@ class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements Merch
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
     {
         return $this->merchantRelationshipFacade->findMerchantRelationshipById($merchantRelationshipTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer Deprecated: Use {@link \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer} instead.
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     */
+    public function getMerchantRelationshipCollection(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    ) {
+        return $this->merchantRelationshipFacade->getMerchantRelationshipCollection(
+            $merchantRelationshipFilterTransfer,
+            $merchantRelationshipCriteriaTransfer,
+        );
     }
 }

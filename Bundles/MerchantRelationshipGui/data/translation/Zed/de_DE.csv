@@ -17,7 +17,7 @@ Merchant,Verkäufer
 "Merchant relation is not found.","Verkäuferbeziehung wurde nicht gefunden."
 "Merchant relation updated successfully.","Verkäuferbeziehung erfolgreich aktualisiert."
 "Merchant Relations",Verkäuferbeziehungen
-"Merchant Relationship with id %s doesn't exists.","Verkäuferbeziehung mit der ID %s existiert nicht."
+"Merchant Relation with ID ""%id%"" doesn\'t exist.","Verkäuferbeziehung mit der ID ""%id%"" existiert nicht."
 Merchants,Verkäufer
 "Overview of Merchant relation","Übersicht der Verkäuferbeziehung"
 Save,Speichern
@@ -25,3 +25,7 @@ Save,Speichern
 "Select merchant","Verkäufer auswählen"
 "Select business unit","Geschäftseinheit auswählen"
 "Please select an item in the list","Wählen Sie bitte ein Element aus der Liste aus."
+"Delete Merchant Relation","Händlerbeziehung löschen"
+"Merchant Relation deletion confirmation","Löschen der Händlerbeziehung bestätigen"
+"Are you sure you want to delete this Merchant Relation?","Sind Sie sicher, dass Sie diese Händlerbeziehung löschen möchten?"
+Cancel,Abbrechen

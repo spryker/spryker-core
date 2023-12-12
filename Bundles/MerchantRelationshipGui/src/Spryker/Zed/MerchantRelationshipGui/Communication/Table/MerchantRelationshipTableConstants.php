@@ -39,6 +39,8 @@ interface MerchantRelationshipTableConstants
     public const COL_ACTIONS = 'actions';
 
     /**
+     * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\DeleteMerchantRelationshipController::REQUEST_PARAMETER_ID_MERCHANT_RELATIONSHIP
+     *
      * @var string
      */
     public const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
@@ -56,5 +58,5 @@ interface MerchantRelationshipTableConstants
     /**
      * @var string
      */
-    public const URL_MERCHANT_RELATIONSHIP_DELETE = '/merchant-relationship-gui/delete-merchant-relationship';
+    public const URL_MERCHANT_RELATIONSHIP_DELETE = '/merchant-relationship-gui/delete-merchant-relationship/confirm';
 }

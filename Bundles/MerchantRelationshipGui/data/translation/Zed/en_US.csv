@@ -17,7 +17,7 @@ Merchant,Merchant
 "Merchant relation is not found.","Merchant relation is not found."
 "Merchant relation updated successfully.","Merchant relation updated successfully."
 "Merchant Relations","Merchant Relations"
-"Merchant Relationship with id %s doesn't exists.","Merchant Relationship with id %s doesn't exists."
+"Merchant Relation with ID ""%id%"" doesn\'t exist.","Merchant Relation with ID ""%id%"" doesn\'t exist."
 Merchants,Merchants
 "Overview of Merchant relation","Overview of Merchant relation"
 Save,Save
@@ -25,3 +25,7 @@ Save,Save
 "Select merchant","Select merchant"
 "Select business unit","Select business unit"
 "Please select an item in the list","Please select an item in the list"
+"Delete Merchant Relation","Delete Merchant Relation"
+"Merchant Relation deletion confirmation","Merchant Relation deletion confirmation"
+"Are you sure you want to delete this Merchant Relation?","Are you sure you want to delete Merchant Relation"
+Cancel,Cancel
