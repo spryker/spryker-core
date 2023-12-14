@@ -116,7 +116,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $bundleTotalStockPerWarehouse
+     * @param array<int, array<string, mixed>> $bundleTotalStockPerWarehouse
      *
      * @return void
      */
@@ -145,7 +145,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     protected function calculateBundleStockPerWarehouse(ObjectCollection $bundleItems)
     {
@@ -164,9 +164,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param int $idBundledProduct
-     * @param array $bundledItemStock
+     * @param array<int, array<int, array<string, mixed>>> $bundledItemStock
      *
-     * @return array
+     * @return array<int, array<int, array<string, mixed>>>
      */
     protected function getStockGroupedByBundledItem($idBundledProduct, array $bundledItemStock)
     {
@@ -191,35 +191,25 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param array $bundledItemStock
-     * @param array<int> $bundledItemQuantity
+     * @param array<int, array<int, array<string, mixed>>> $bundledItemStock
+     * @param array<int, int> $bundleItemQuantitiesIndexedByIdProduct
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
-    protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundledItemQuantity)
+    protected function groupBundleStockByWarehouse(array $bundledItemStock, array $bundleItemQuantitiesIndexedByIdProduct): array
     {
         $bundleTotalStockPerWarehouse = [];
-        foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = new Decimal(0);
-            $isAllNeverOutOfStock = true;
-            foreach ($warehouseStock as $idProduct => $productStockQuantity) {
-                $bundleItemQuantity = $bundledItemQuantity[$idProduct];
-                $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
-
-                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
-                    $bundleStock = $itemStock;
-                }
-
-                if (!$isNeverOutOfStock) {
-                    $isAllNeverOutOfStock = false;
-                }
-            }
+        foreach ($bundledItemStock as $idStock => $stockIndexedByIdProduct) {
+            $productBundleItemQuantities = $this->calculateProductBundleItemQuantitiesForStock(
+                $bundleItemQuantitiesIndexedByIdProduct,
+                $stockIndexedByIdProduct,
+            );
+            $quantity = $productBundleItemQuantities ? min($productBundleItemQuantities) : 0;
 
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $bundleStock->floor(),
-                static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
+                static::QUANTITY => new Decimal($quantity),
+                static::IS_NEVER_OUT_OF_STOCK => count($productBundleItemQuantities) === 0,
             ];
         }
 
@@ -227,19 +217,33 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Spryker\DecimalObject\Decimal $bundleStock
-     * @param \Spryker\DecimalObject\Decimal $itemStock
-     * @param bool $isNeverOutOfStock
+     * @param array<int, int> $bundleItemQuantitiesIndexedByIdProduct
+     * @param array<int, array<string, mixed>> $stockIndexedByIdProduct
      *
-     * @return bool
+     * @return list<int>
      */
-    protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
+    protected function calculateProductBundleItemQuantitiesForStock(array $bundleItemQuantitiesIndexedByIdProduct, array $stockIndexedByIdProduct): array
     {
-        if (($bundleStock->greaterThan($itemStock) || $bundleStock->isZero()) && !$isNeverOutOfStock) {
-            return true;
+        $productBundleItemQuantities = [];
+
+        foreach ($bundleItemQuantitiesIndexedByIdProduct as $idProduct => $bundleQuantity) {
+            if (!isset($stockIndexedByIdProduct[$idProduct])) {
+                $productBundleItemQuantities[] = 0;
+
+                continue;
+            }
+
+            if ($stockIndexedByIdProduct[$idProduct][static::IS_NEVER_OUT_OF_STOCK]) {
+                continue;
+            }
+
+            $productBundleItemQuantities[] = (new Decimal($stockIndexedByIdProduct[$idProduct][static::QUANTITY]))
+                ->divide($bundleQuantity, static::DIVISION_SCALE)
+                ->floor()
+                ->toInt();
         }
 
-        return false;
+        return $productBundleItemQuantities;
     }
 
     /**
@@ -332,9 +336,9 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param array $bundleTotalStockPerWarehouse
+     * @param array<int, array<string, mixed>> $bundleTotalStockPerWarehouse
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     protected function removeBundleStockFromWarehousesWithoutBundledItems(
         ProductConcreteTransfer $productConcreteTransfer,

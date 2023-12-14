@@ -103,6 +103,11 @@ class ProductBundleBusinessTester extends Actor
     public const FAKE_CURRENCY_CODE = 'FAKE';
 
     /**
+     * @var int
+     */
+    public const DEFAULT_PRODUCT_AVAILABILITY = 10;
+
+    /**
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
@@ -165,6 +170,7 @@ class ProductBundleBusinessTester extends Actor
      * @param string $sku
      * @param bool $isActive
      * @param bool $isNeverOutOfStock
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -174,6 +180,7 @@ class ProductBundleBusinessTester extends Actor
         string $sku,
         bool $isActive = false,
         bool $isNeverOutOfStock = false,
+        int $quantity = self::DEFAULT_PRODUCT_AVAILABILITY,
         ?CurrencyTransfer $currencyTransfer = null
     ): ProductConcreteTransfer {
         $productConcreteTransfer = $this->haveProduct([
@@ -184,10 +191,10 @@ class ProductBundleBusinessTester extends Actor
         $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 10,
+            StockProductTransfer::QUANTITY => $quantity,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => $isNeverOutOfStock,
         ]);
-        $this->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 10);
+        $this->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, $quantity);
 
         if ($currencyTransfer === null) {
             $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => static::FAKE_CURRENCY_CODE]);
