@@ -216,28 +216,28 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
             );
         }
 
-        $priceProductTransferToReplace = (new PriceProductTransfer())->setMoneyValue(new MoneyValueTransfer());
-        $priceProductTransferToReplace->setVolumeQuantity(
+        $volumePriceProductTransfer = (new PriceProductTransfer())->setMoneyValue(new MoneyValueTransfer());
+        $volumePriceProductTransfer->setVolumeQuantity(
             $this->getVolumeQuantity($volumeQuantity, $requestKey, $requestValue),
         );
-        $priceProductTransferToReplace = $this->priceProductVolumeService->extractVolumePrice(
+
+        $extractedVolumePriceProductTransfer = $this->priceProductVolumeService->extractVolumePrice(
             $storedPriceProductTransfer,
+            $volumePriceProductTransfer,
+        );
+
+        $priceProductTransferToReplace = $extractedVolumePriceProductTransfer ?? $volumePriceProductTransfer;
+        $priceProductTransferToReplace = $this->priceProductOfferMapper->mapMoneyValuesToPriceProductTransfer(
+            $requestKey,
+            $requestValue,
             $priceProductTransferToReplace,
         );
 
-        if ($priceProductTransferToReplace !== null) {
-            $priceProductTransferToReplace = $this->priceProductOfferMapper->mapMoneyValuesToPriceProductTransfer(
-                $requestKey,
-                $requestValue,
-                $priceProductTransferToReplace,
-            );
-
-            $this->priceProductVolumeService->deleteVolumePrice(
-                $storedPriceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
-            );
-            $this->priceProductVolumeService->addVolumePrice($storedPriceProductTransfer, $priceProductTransferToReplace);
-        }
+        $this->priceProductVolumeService->deleteVolumePrice(
+            $storedPriceProductTransfer,
+            (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
+        );
+        $this->priceProductVolumeService->addVolumePrice($storedPriceProductTransfer, $priceProductTransferToReplace);
 
         return $storedPriceProductTransfers;
     }
