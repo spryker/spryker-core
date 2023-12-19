@@ -29,8 +29,7 @@ class CatalogSearchResourceController extends AbstractController
      *              {
      *                  "name": "q",
      *                  "in": "query",
-     *                  "description": "Search query string.",
-     *                  "required": true
+     *                  "description": "Search query string."
      *              }
      *          ],
      *          "isIdNullable": true
