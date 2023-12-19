@@ -31,6 +31,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -62,6 +64,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::validateAndUpdateWishlist()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

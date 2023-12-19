@@ -20,6 +20,8 @@ use Generated\Shared\Transfer\WishlistTransfer;
 interface WishlistStubInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStubInterface::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -34,6 +36,8 @@ interface WishlistStubInterface
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStubInterface::validateAndUpdateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

@@ -34,6 +34,8 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -60,6 +62,8 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::validateAndUpdateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

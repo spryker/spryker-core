@@ -29,7 +29,9 @@ class WishlistDataHelper extends Module
     public function haveWishlist(array $override): WishlistTransfer
     {
         $wishlistTransfer = (new WishlistBuilder($override))->build();
-        $wishlistTransfer = $this->getWishlistFacade()->createWishlist($wishlistTransfer);
+        $wishlistTransfer = $this->getWishlistFacade()
+            ->validateAndCreateWishlist($wishlistTransfer)
+            ->getWishlist();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($wishlistTransfer): void {
             $this->cleanupWishlist($wishlistTransfer);

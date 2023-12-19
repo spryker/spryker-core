@@ -30,6 +30,8 @@ interface WishlistClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -53,6 +55,8 @@ interface WishlistClientInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::validateAndUpdateWishlist()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

@@ -380,6 +380,24 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testValidateAndCreateWishlistShouldFailWhenNameConsistsOfSpaces(): void
+    {
+        // Arrange
+        $wishlistTransfer = (new WishlistTransfer())
+            ->setName(' ')
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        // Act
+        $wishlistResponseTransfer = $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $wishlistResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateWishlistShouldUpdateWishlist(): void
     {
         // Arrange
@@ -447,6 +465,24 @@ class WishlistFacadeTest extends Unit
         // Assert
         $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
         $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateAndUpdateWishlistShouldFailWhenNameConsistsOfSpaces(): void
+    {
+        // Arrange
+        $wishlistTransfer = (new WishlistTransfer())
+            ->fromArray($this->wishlist->toArray(), true)
+            ->setName(' ');
+
+        // Act
+        $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $wishlistResponseTransfer->getErrors());
     }
 
     /**

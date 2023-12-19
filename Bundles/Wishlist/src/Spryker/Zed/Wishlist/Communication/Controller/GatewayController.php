@@ -27,6 +27,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::validateAndCreateWishlistAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -47,6 +49,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::validateAndUpdateWishlistAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer

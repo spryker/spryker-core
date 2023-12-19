@@ -28,7 +28,7 @@ class WishlistHelper extends Module
     {
         $wishlistTransfer = (new WishlistBuilder($override))->build();
 
-        return $this->getWishlistFacade()->createWishlist($wishlistTransfer);
+        return $this->getWishlistFacade()->validateAndCreateWishlist($wishlistTransfer)->getWishlist();
     }
 
     /**

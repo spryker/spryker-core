@@ -30,6 +30,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClient::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -57,6 +59,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClient::validateAndUpdateWishlist()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

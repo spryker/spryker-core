@@ -28,6 +28,8 @@ interface WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::validateAndCreateWishlist()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -56,6 +58,8 @@ interface WishlistFacadeInterface
      *  - Returns WishlistTransfer
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::validateAndUpdateWishlist()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
