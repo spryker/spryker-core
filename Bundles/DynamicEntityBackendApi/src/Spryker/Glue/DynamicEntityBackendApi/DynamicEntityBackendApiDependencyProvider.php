@@ -9,7 +9,6 @@ namespace Spryker\Glue\DynamicEntityBackendApi;
 
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientBridge;
-use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToStorageClientBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceBridge;

@@ -25,7 +25,6 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Definition\FieldTypeInteg
  * @group Definition
  * @group FieldTypeIntegerValidatorRuleTest
  * Add your own group annotations below this line
- * @group geega
  */
 class FieldTypeIntegerValidatorRuleTest extends Unit
 {

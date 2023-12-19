@@ -27,7 +27,7 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
     /**
      * @var string
      */
-    protected const QUERY_CLASS_PLACEHOLDER = '%sQuery';
+    protected const TEMPLATE_TABLE_ALIAS_CONDITION = '(table_alias = ? OR parentConfigurationRelation.name IN (%s) OR childConfigurationRelation.name IN (%s))';
 
     /**
      * @param string $tableAlias
@@ -53,7 +53,41 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    public function getDynamicEntityConfigurationByDynamicEntityCriteria(
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+    ): DynamicEntityConfigurationCollectionTransfer {
+        if ($dynamicEntityCriteriaTransfer->getRelationChains() === []) {
+            return $this->getDynamicEntityConfigurationTransfersWithoutRelationChains($dynamicEntityCriteriaTransfer);
+        }
+
+        $relationChains = $dynamicEntityCriteriaTransfer->getRelationChains();
+        $relationNames = $this->getRelationNamesFromRelationChains($relationChains);
+        $relationNamesQueryPlaceholders = array_fill(0, count($relationNames), '?');
+
+        $whereParams = $this->buildWhereClauseForRelations(
+            $relationNames,
+            $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+        );
+
+        $dynamicEntityConfigurationCollection = $this
+            ->buildQueryWithRelationAndFieldMapping($relationNamesQueryPlaceholders, $whereParams)
+            ->find();
+
+        return $this->getFactory()
+            ->createDynamicEntityMapper()
+            ->mapDynamicEntityConfigurationsToCollectionTransfer(
+                $dynamicEntityConfigurationCollection->getData(),
+                new DynamicEntityConfigurationCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param array<string, array<int|string>> $foreignKeyFieldMappingArray
      *
      * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
      *
@@ -61,7 +95,8 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
      */
     public function getEntities(
         DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        array $foreignKeyFieldMappingArray = []
     ): DynamicEntityCollectionTransfer {
         $dynamicEntityCollectionTransfer = new DynamicEntityCollectionTransfer();
 
@@ -77,7 +112,12 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
             );
         }
 
-        $entityRecordsData = $this->runDynamicEntityQuery($dynamicEntityQueryClassName, $dynamicEntityCriteriaTransfer, $dynamicEntityConfigurationTransfer);
+        $entityRecordsData = $this->runDynamicEntityQuery(
+            $dynamicEntityQueryClassName,
+            $dynamicEntityCriteriaTransfer,
+            $dynamicEntityConfigurationTransfer,
+            $foreignKeyFieldMappingArray,
+        );
 
         if ($entityRecordsData === []) {
             return $dynamicEntityCollectionTransfer;
@@ -100,9 +140,7 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
     ): DynamicEntityConfigurationCollectionTransfer {
         $dynamicEntityConfigurationsQuery = $this->getFactory()->createDynamicEntityConfigurationQuery();
 
-        if ($dynamicEntityConfigurationCriteriaTransfer->getDynamicEntityConfigurationConditions() !== null) {
-            $dynamicEntityConfigurationsQuery = $this->filterConfigurationByConditions($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationCriteriaTransfer->getDynamicEntityConfigurationConditions());
-        }
+        $dynamicEntityConfigurationsQuery = $this->applyDynamicEntityConfigurationCriteria($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationCriteriaTransfer);
 
         $dynamicEntityConfigurations = $dynamicEntityConfigurationsQuery->find()->getData();
 
@@ -134,15 +172,41 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    protected function getDynamicEntityConfigurationTransfersWithoutRelationChains(
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+    ): DynamicEntityConfigurationCollectionTransfer {
+        $dynamicEntityConfigurationTransfer = $this->findDynamicEntityConfigurationByTableAlias(
+            $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+        );
+
+        if ($dynamicEntityConfigurationTransfer === null) {
+            return (new DynamicEntityConfigurationCollectionTransfer());
+        }
+
+        return (new DynamicEntityConfigurationCollectionTransfer())
+            ->addDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+    }
+
+    /**
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer $dynamicEntityConfigurationCriteriaTransfer
      *
      * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery
      */
-    protected function filterConfigurationByConditions(
+    protected function applyDynamicEntityConfigurationCriteria(
         SpyDynamicEntityConfigurationQuery $dynamicEntityConfigurationsQuery,
-        DynamicEntityConfigurationConditionsTransfer $dynamicEntityConfigurationConditionsTransfer
+        DynamicEntityConfigurationCriteriaTransfer $dynamicEntityConfigurationCriteriaTransfer
     ): SpyDynamicEntityConfigurationQuery {
+        $dynamicEntityConfigurationConditionsTransfer = $dynamicEntityConfigurationCriteriaTransfer->getDynamicEntityConfigurationConditions();
+
+        if ($dynamicEntityConfigurationConditionsTransfer === null) {
+            return $dynamicEntityConfigurationsQuery;
+        }
+
         $dynamicEntityConfigurationsQuery = $this->addCreatedAtFilter($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationConditionsTransfer);
         $dynamicEntityConfigurationsQuery = $this->addUpdatedAtFilter($dynamicEntityConfigurationsQuery, $dynamicEntityConfigurationConditionsTransfer);
 
@@ -221,21 +285,28 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
      * @param string $dynamicEntityQueryClassName
      * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param array<string, array<int|string>> $foreignKeyFieldMappingArray
      *
      * @return array<mixed>
      */
     protected function runDynamicEntityQuery(
         string $dynamicEntityQueryClassName,
         DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        array $foreignKeyFieldMappingArray = []
     ): array {
         /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $dynamicEntityQuery */
         $dynamicEntityQuery = new $dynamicEntityQueryClassName();
 
+        if ($dynamicEntityCriteriaTransfer->getDynamicEntityConditions() === null && $foreignKeyFieldMappingArray === []) {
+            $dynamicEntityQuery->find()->getData();
+        }
+
         $dynamicEntityQuery = $this->getFactory()->createDynamicEntityQueryBuilder()->buildQueryWithFieldConditions(
             $dynamicEntityQuery,
-            $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail(),
+            $dynamicEntityCriteriaTransfer,
             $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
+            $foreignKeyFieldMappingArray,
         );
 
         $dynamicEntityQuery = $this->buildQueryWithPagination(
@@ -262,5 +333,68 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
         }
 
         return $dynamicEntityQuery;
+    }
+
+    /**
+     * @param array<string> $relationNames
+     * @param string|null $tableAlias
+     *
+     * @return array<string>
+     */
+    protected function buildWhereClauseForRelations(array $relationNames, ?string $tableAlias): array
+    {
+        $whereParams = $relationNames;
+        $whereParams = array_merge($whereParams, $relationNames);
+
+        if ($tableAlias === null) {
+            return $whereParams;
+        }
+
+        array_unshift($whereParams, $tableAlias);
+
+        return $whereParams;
+    }
+
+    /**
+     * @param array<string> $relationChains
+     *
+     * @return array<string>
+     */
+    protected function getRelationNamesFromRelationChains(array $relationChains): array
+    {
+        $relationNames = [];
+        foreach ($relationChains as $relationChain) {
+            $relationNames[] = explode('.', trim($relationChain));
+        }
+
+        return array_unique(array_merge(...$relationNames));
+    }
+
+    /**
+     * @param array<string> $relationNamesQueryPlaceholders
+     * @param array<string> $whereParams
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery
+     */
+    protected function buildQueryWithRelationAndFieldMapping(
+        array $relationNamesQueryPlaceholders,
+        array $whereParams
+    ): SpyDynamicEntityConfigurationQuery {
+        $dynamicEntityConfigurationsQuery = $this->getFactory()->createDynamicEntityConfigurationQuery();
+
+        $relationNamesQueryPlaceholdersString = implode(', ', array_fill(0, count($relationNamesQueryPlaceholders), '?'));
+
+        /** @phpstan-var literal-string $wherePlaceholder */
+        $wherePlaceholder = sprintf(static::TEMPLATE_TABLE_ALIAS_CONDITION, $relationNamesQueryPlaceholdersString, $relationNamesQueryPlaceholdersString);
+
+        /** @phpstan-var \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery */
+        return $dynamicEntityConfigurationsQuery->filterByIsActive(true)
+            ->leftJoinSpyDynamicEntityConfigurationRelationRelatedByFkParentDynamicEntityConfiguration('parentConfigurationRelation')
+            ->useSpyDynamicEntityConfigurationRelationRelatedByFkChildDynamicEntityConfigurationQuery('childConfigurationRelation', Criteria::LEFT_JOIN)
+            ->leftJoinSpyDynamicEntityConfigurationRelationFieldMapping()
+            ->endUse()
+            ->where($wherePlaceholder, $whereParams)
+            ->with('parentConfigurationRelation')
+            ->with('childConfigurationRelation');
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\DynamicEntity\Business\Installer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityFileNotReadableException;
-use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface;
@@ -56,21 +56,21 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
     protected DynamicEntityEntityManagerInterface $entityManager;
 
     /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper
+     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
      */
-    protected DynamicEntityMapper $dynamicEntityMapper;
+    protected DynamicEntityMapperInterface $dynamicEntityMapper;
 
     /**
      * @param \Spryker\Zed\DynamicEntity\DynamicEntityConfig $dynamicEntityConfig
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface $dynamicEntityRepository
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper $dynamicEntityMapper
+     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
      */
     public function __construct(
         DynamicEntityConfig $dynamicEntityConfig,
         DynamicEntityRepositoryInterface $dynamicEntityRepository,
         DynamicEntityEntityManagerInterface $entityManager,
-        DynamicEntityMapper $dynamicEntityMapper
+        DynamicEntityMapperInterface $dynamicEntityMapper
     ) {
         $this->dynamicEntityConfig = $dynamicEntityConfig;
         $this->dynamicEntityRepository = $dynamicEntityRepository;

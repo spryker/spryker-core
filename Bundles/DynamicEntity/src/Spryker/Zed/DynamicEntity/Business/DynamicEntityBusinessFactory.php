@@ -7,17 +7,22 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilder;
+use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdaterInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidator;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidator;
@@ -57,6 +62,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new DynamicEntityReader(
             $this->getRepository(),
+            $this->createDynamicEntityMapper(),
+            $this->createDynamicEntityConfigurationTreeValidator(),
+            $this->createDynamicEntityRelationConfigurationTreeBuilder(),
         );
     }
 
@@ -291,9 +299,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper
+     * @return \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
      */
-    public function createDynamicEntityMapper(): DynamicEntityMapper
+    public function createDynamicEntityMapper(): DynamicEntityMapperInterface
     {
         return new DynamicEntityMapper();
     }
@@ -354,5 +362,21 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
         return new DisallowedTablesReader(
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface
+     */
+    public function createDynamicEntityRelationConfigurationTreeBuilder(): DynamicEntityRelationConfigurationTreeBuilderInterface
+    {
+        return new DynamicEntityRelationConfigurationTreeBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface
+     */
+    public function createDynamicEntityConfigurationTreeValidator(): DynamicEntityConfigurationTreeValidatorInterface
+    {
+        return new DynamicEntityConfigurationTreeValidator();
     }
 }

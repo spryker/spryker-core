@@ -25,7 +25,6 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Definition\FieldTypeStrin
  * @group Definition
  * @group FieldTypeStringValidatorRuleTest
  * Add your own group annotations below this line
- * @group geega
  */
 class FieldTypeStringValidatorRuleTest extends Unit
 {

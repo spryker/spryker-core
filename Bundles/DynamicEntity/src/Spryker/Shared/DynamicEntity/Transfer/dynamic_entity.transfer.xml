@@ -4,6 +4,7 @@
     <transfer name="DynamicEntityCriteria" strict="true">
         <property name="dynamicEntityConditions" type="DynamicEntityConditions"/>
         <property name="pagination" type="Pagination"/>
+        <property name="relationChains" type="array" singular="relationChain"/>
     </transfer>
 
     <transfer name="DynamicEntityConditions" strict="true">
@@ -25,6 +26,7 @@
     <transfer name="DynamicEntity" strict="true">
         <property name="identifier" type="string"/>
         <property name="fields" type="array" singular="field"/>
+        <property name="childRelations" type="DynamicEntityRelation[]" singular="childRelation"/>
     </transfer>
 
     <transfer name="DynamicEntityConfigurationCollection" strict="true">
@@ -53,6 +55,7 @@
         <property name="tableName" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="dynamicEntityDefinition" type="DynamicEntityDefinition"/>
+        <property name="childRelations" type="DynamicEntityConfigurationRelation[]" singular="childRelation"/>
     </transfer>
 
     <transfer name="DynamicEntityDefinition" strict="true">
@@ -131,4 +134,22 @@
     <transfer name="DynamicEntityPostEditResponse" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
+
+    <transfer name="DynamicEntityConfigurationRelation" strict="true">
+        <property name="name" type="string"/>
+        <property name="childDynamicEntityConfiguration" type="DynamicEntityConfiguration"/>
+        <property name="relationFieldMappings" type="DynamicEntityRelationFieldMapping[]" singular="relationFieldMapping"/>
+        <property name="isEditable" type="bool"/>
+    </transfer>
+
+    <transfer name="DynamicEntityRelationFieldMapping" strict="true">
+        <property name="childFieldName" type="string"/>
+        <property name="parentFieldName" type="string"/>
+    </transfer>
+
+    <transfer name="DynamicEntityRelation" strict="true">
+        <property name="name" type="string"/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
+    </transfer>
+
 </transfers>

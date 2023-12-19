@@ -9,12 +9,16 @@ namespace Spryker\Zed\DynamicEntity\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
+use Generated\Shared\Transfer\DynamicEntityRelationFieldMappingTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
-use Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class DynamicEntityMapper
@@ -50,7 +54,7 @@ class DynamicEntityMapper
     protected const TYPE_INTEGER = 'integer';
 
     /**
-     * @param \Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration $dynamicEntityConfiguration
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfiguration
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
@@ -73,9 +77,9 @@ class DynamicEntityMapper
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
      *
-     * @return \Orm\Zed\DynamicEntity\Persistence\Base\SpyDynamicEntityConfiguration
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
      */
     public function mapDynamicEntityConfigurationTransferToEntity(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
@@ -144,6 +148,11 @@ class DynamicEntityMapper
                 new DynamicEntityConfigurationTransfer(),
             );
 
+            $dynamicEntityConfigurationTransfer = $this->mapDynamicEntityConfigurationCollectionToDynamicEntityConfigurationTransfers(
+                $dynamicEntityConfiguration,
+                $dynamicEntityConfigurationTransfer,
+            );
+
             $dynamicEntityConfigurationCollectionTransfer->addDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
         }
 
@@ -166,6 +175,83 @@ class DynamicEntityMapper
         }
 
         return $activeRecord;
+    }
+
+    /**
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfiguration
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function mapDynamicEntityConfigurationCollectionToDynamicEntityConfigurationTransfers(
+        SpyDynamicEntityConfiguration $dynamicEntityConfiguration,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityConfigurationTransfer {
+        foreach ($dynamicEntityConfiguration->getSpyDynamicEntityConfigurationRelationsRelatedByFkParentDynamicEntityConfiguration() as $dynamicEntityRelationConfigurationRelation) {
+            $childConfigurationEntity = $dynamicEntityRelationConfigurationRelation->getSpyDynamicEntityConfigurationRelatedByFkChildDynamicEntityConfiguration();
+
+            $dynamicEntityConfigurationTransfer = $this->mapDynamicEntityConfigurationEntityRelationToDynamicEntityConfigurationTransfer(
+                $childConfigurationEntity,
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityRelationConfigurationRelation,
+            );
+        }
+
+        return $dynamicEntityConfigurationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation $dynamicEntityRelationConfigurationRelation
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    protected function mapDynamicEntityConfigurationEntityRelationToDynamicEntityConfigurationTransfer(
+        SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        SpyDynamicEntityConfigurationRelation $dynamicEntityRelationConfigurationRelation
+    ): DynamicEntityConfigurationTransfer {
+        $childDynamicEntityConfigurationTransfer = $this->mapDynamicEntityConfigurationToTransfer(
+            $dynamicEntityConfigurationEntity,
+            new DynamicEntityConfigurationTransfer(),
+        );
+
+        $childConfigurationRelationTransfer = (new DynamicEntityConfigurationRelationTransfer())
+            ->setName($dynamicEntityRelationConfigurationRelation->getName())
+            ->setChildDynamicEntityConfiguration($childDynamicEntityConfigurationTransfer);
+
+        foreach ($dynamicEntityRelationConfigurationRelation->getSpyDynamicEntityConfigurationRelationFieldMappings() as $fieldMapping) {
+            $childConfigurationRelationTransfer = $this->mapDynamicEntityConfigurationRelationToDynamicEntityConfigurationTransfer(
+                $fieldMapping,
+                $childConfigurationRelationTransfer,
+            );
+        }
+
+        $dynamicEntityConfigurationTransfer->addChildRelation($childConfigurationRelationTransfer);
+
+        return $dynamicEntityConfigurationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping $fieldMapping
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer
+     */
+    protected function mapDynamicEntityConfigurationRelationToDynamicEntityConfigurationTransfer(
+        SpyDynamicEntityConfigurationRelationFieldMapping $fieldMapping,
+        DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer
+    ): DynamicEntityConfigurationRelationTransfer {
+        $dynamicEntityRelationFieldMappingTransfer = (new DynamicEntityRelationFieldMappingTransfer())
+            ->setParentFieldName($fieldMapping->getParentFieldName())
+            ->setChildFieldName($fieldMapping->getChildFieldName());
+
+        $dynamicEntityConfigurationRelationTransfer->addRelationFieldMapping(
+            $dynamicEntityRelationFieldMappingTransfer,
+        );
+
+        return $dynamicEntityConfigurationRelationTransfer;
     }
 
     /**

@@ -25,7 +25,6 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Definition\FieldTypeDecim
  * @group Definition
  * @group FieldTypeDecimalValidatorRuleTest
  * Add your own group annotations below this line
- * @group geega
  */
 class FieldTypeDecimalValidatorRuleTest extends Unit
 {

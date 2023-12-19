@@ -21,6 +21,7 @@
     <transfer name="DynamicEntityCriteria" strict="true">
         <property name="pagination" type="Pagination"/>
         <property name="dynamicEntityConditions" type="DynamicEntityConditions"/>
+        <property name="relationChains" type="array" singular="relationChain"/>
     </transfer>
 
     <transfer name="GlueRequest">
@@ -32,11 +33,13 @@
         <property name="attributes" type="array" singular="attribute"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
         <property name="requestedFormat" type="string"/>
+        <property name="queryFields" type="array" associative="true" singular="queryField"/>
     </transfer>
 
     <transfer name="DynamicEntity" strict="true">
         <property name="identifier" type="string"/>
         <property name="fields" type="array" singular="field"/>
+        <property name="childRelations" type="DynamicEntityRelation[]" singular="childRelation"/>
     </transfer>
 
     <transfer name="DynamicEntityConditions" strict="true">
@@ -144,6 +147,11 @@
 
     <transfer name="DocumentationInvalidationVoterRequest">
         <property name="interval" type="string"/>
+    </transfer>
+
+    <transfer name="DynamicEntityRelation" strict="true">
+        <property name="name" type="string"/>
+        <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
     </transfer>
 
 </transfers>

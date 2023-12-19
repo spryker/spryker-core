@@ -30,6 +30,11 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @var string
      */
+    protected const RESPONSE_CODE_ALIAS_IS_WRONG = '1312';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_DATA = 'data';
 
     /**
@@ -120,8 +125,11 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->getCollectionAction($glueRequestTransfer);
 
         //Assert
-        $contentData = json_decode($glueResponseTransfer->getContentOrFail(), true);
-        $this->assertEmpty($contentData[static::RESPONSE_KEY_DATA]);
+        $contentData = json_decode($glueResponseTransfer->getContent(), true);
+        $errors = $glueResponseTransfer->getErrors();
+        $this->assertNull($contentData);
+        $this->assertNotEmpty($errors);
+        $this->assertSame($errors[0]->getCode(), static::RESPONSE_CODE_ALIAS_IS_WRONG);
     }
 
     /**

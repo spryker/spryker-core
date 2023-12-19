@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Persistence\Builder;
 
-use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
+use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
@@ -29,14 +29,16 @@ interface DynamicEntityQueryBuilderInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param array<string, array<int|string>> $foreignKeyFieldMappingArray
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function buildQueryWithFieldConditions(
         ModelCriteria $query,
-        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        array $foreignKeyFieldMappingArray = []
     ): ModelCriteria;
 }

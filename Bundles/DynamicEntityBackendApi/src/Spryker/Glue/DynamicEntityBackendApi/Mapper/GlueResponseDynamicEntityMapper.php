@@ -28,6 +28,11 @@ class GlueResponseDynamicEntityMapper
     /**
      * @var string
      */
+    protected const GLOSSARY_KEY_CONFIGURATION_NOT_FOUND = 'dynamic_entity.validation.configuration_not_found';
+
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_PERSISTENCE_FAILED = 'dynamic_entity.validation.persistence_failed';
 
     /**
@@ -49,6 +54,11 @@ class GlueResponseDynamicEntityMapper
      * @var string
      */
     protected const GLOSSARY_KEY_REQUIRED_FIELD_IS_MISSING = 'dynamic_entity.validation.required_field_is_missing';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_RELATION_NOT_FOUND = 'dynamic_entity.validation.relation_not_found';
 
     /**
      * @var string
@@ -129,6 +139,16 @@ class GlueResponseDynamicEntityMapper
      * @var int
      */
     protected const RESPONSE_CODE_PROVIDED_FIELD_IS_INVALID = 1311;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_CONFIGURATION_NOT_FOUND = 1312;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_RELATION_NOT_FOUND = 1313;
 
     /**
      * @var string
@@ -317,7 +337,7 @@ class GlueResponseDynamicEntityMapper
     {
         $dynamicEntityAttributesTransfer = new DynamicEntityAttributes();
 
-        $dynamicEntityAttributesTransfer->fromArray($dynamicEntityTransfer->getFields(), true);
+        $dynamicEntityAttributesTransfer->fromArray($this->getFieldsCollection(new ArrayObject([$dynamicEntityTransfer]))[0], true);
 
         return (new GlueResourceTransfer())
             ->setType($tableAlias)
@@ -385,7 +405,14 @@ class GlueResponseDynamicEntityMapper
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY,
             ],
-
+            static::GLOSSARY_KEY_CONFIGURATION_NOT_FOUND => [
+                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_CONFIGURATION_NOT_FOUND,
+            ],
+            static::GLOSSARY_KEY_RELATION_NOT_FOUND => [
+                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_RELATION_NOT_FOUND,
+            ],
         ];
     }
 
@@ -400,16 +427,47 @@ class GlueResponseDynamicEntityMapper
         ?GlueRequestTransfer $glueRequestTransfer
     ): array {
         if ($glueRequestTransfer !== null && $glueRequestTransfer->getResourceOrFail()->getId() !== null) {
-            return $dynamicEntities->offsetGet(0) ? $dynamicEntities->offsetGet(0)->getFields() : [];
+            return $this->getFieldsCollection($dynamicEntities)[0];
         }
 
-        $fieldsCollection = [];
+        return $this->getFieldsCollection($dynamicEntities);
+    }
 
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityTransfer> $dynamicEntities
+     *
+     * @return array<mixed>
+     */
+    protected function getFieldsCollection(ArrayObject $dynamicEntities): array
+    {
+        $fieldsCollection = [];
         foreach ($dynamicEntities as $dynamicEntityTransfer) {
-            $fieldsCollection[] = $dynamicEntityTransfer->getFields();
+            $fields = $dynamicEntityTransfer->getFields();
+
+            if ($dynamicEntityTransfer->getChildRelations()->count() !== 0) {
+                $fields = $this->mapChildFieldsToFields($dynamicEntityTransfer, $fields);
+            }
+
+            $fieldsCollection[] = $fields;
         }
 
         return $fieldsCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param array<mixed> $fields
+     *
+     * @return array<string, mixed>
+     */
+    protected function mapChildFieldsToFields(DynamicEntityTransfer $dynamicEntityTransfer, array $fields): array
+    {
+        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelation) {
+            $childFields = $this->getFieldsCollection($childRelation->getDynamicEntities());
+            $fields[$childRelation->getNameOrFail()] = $childFields;
+        }
+
+        return $fields;
     }
 
     /**

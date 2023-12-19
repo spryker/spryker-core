@@ -31,6 +31,11 @@ class GlueRequestDynamicEntityMapper
     protected const DYNAMIC_ENTITY_PATH_PATTERN = '/\/([^\/]+)\/([\w-]+)/';
 
     /**
+     * @var string
+     */
+    protected const QUERY_PARAMETER_INCLUDE = 'include';
+
+    /**
      * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceInterface
      */
     protected DynamicEntityBackendApiToUtilEncodingServiceInterface $serviceUtilEncoding;
@@ -63,6 +68,14 @@ class GlueRequestDynamicEntityMapper
         $dynamicEntityCriteriaTransfer = new DynamicEntityCriteriaTransfer();
 
         $paginationTransfer = $this->setDefaultPaginationLimit($glueRequestTransfer->getPagination());
+
+        $queryFields = $glueRequestTransfer->getQueryFields();
+
+        if (isset($queryFields[static::QUERY_PARAMETER_INCLUDE])) {
+            $dynamicEntityCriteriaTransfer->setRelationChains(
+                explode(',', $queryFields[static::QUERY_PARAMETER_INCLUDE]),
+            );
+        }
 
         $dynamicEntityCriteriaTransfer->setPagination($paginationTransfer);
 

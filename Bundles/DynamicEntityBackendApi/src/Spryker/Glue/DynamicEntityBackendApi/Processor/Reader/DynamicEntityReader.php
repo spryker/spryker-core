@@ -110,7 +110,7 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             throw $e;
         }
 
-        if ($dynamicEntityCollectionTransfer->getDynamicEntities()->count() === 0) {
+        if ($dynamicEntityCollectionTransfer->getDynamicEntities()->count() === 0 && $dynamicEntityCollectionTransfer->getErrors()->count() === 0) {
             return $this->responseMapper->mapErrorToResponseTransfer(DynamicEntityBackendApiConfig::GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST, new GlueResponseTransfer());
         }
 

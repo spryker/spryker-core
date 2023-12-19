@@ -24,13 +24,24 @@ interface DynamicEntityRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    public function getDynamicEntityConfigurationByDynamicEntityCriteria(
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+    ): DynamicEntityConfigurationCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param array<string, array<int|string>> $foreignKeyFieldMappingArray
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionTransfer
      */
     public function getEntities(
         DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        array $foreignKeyFieldMappingArray = []
     ): DynamicEntityCollectionTransfer;
 
     /**

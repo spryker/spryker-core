@@ -10,13 +10,17 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\DynamicEntity;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
+use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping;
 
 /**
  * Inherited Methods
@@ -183,8 +187,20 @@ class DynamicEntityBusinessTester extends Actor
      */
     public function findDynamicEntityConfigurationById(int $idDynamicEntityConfiguration): ?SpyDynamicEntityConfiguration
     {
-        return (new SpyDynamicEntityConfigurationQuery())
+        return $this->createSpyDynamicEntityConfigurationQuery()
             ->filterByIdDynamicEntityConfiguration($idDynamicEntityConfiguration)
+            ->findOne();
+    }
+
+    /**
+     * @param string $tableAlias
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration|null
+     */
+    public function findDynamicEntityConfiguration(string $tableAlias): ?SpyDynamicEntityConfiguration
+    {
+        return $this->createSpyDynamicEntityConfigurationQuery()
+            ->filterByTableAlias($tableAlias)
             ->findOne();
     }
 
@@ -283,5 +299,213 @@ class DynamicEntityBusinessTester extends Actor
         return <<<'EOT'
 {"identifier":"id_test_table","fields":[{"fieldName":"id_test_table","fieldVisibleName":"id","type":"integer","isCreatable":false,"isEditable":false,"validation":{"isRequired":false}},{"fieldName":"string_field","fieldVisibleName":"string_field","type":"string","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"minLength":1,"maxLength":255}},{"fieldName":"int_field","fieldVisibleName":"int_field","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"min":100,"max":255}},{"fieldName":"bool_field","fieldVisibleName":"bool_field","type":"boolean","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"decimal_field","fieldVisibleName":"decimal_field","type":"decimal","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"scale":2,"precision":10}}]}
 EOT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefinitionForDynamicEntityConfigurationRelation(): string
+    {
+        return <<<DEFINITION
+{
+  "identifier": "id_dynamic_entity_configuration_relation",
+  "fields": [
+    {
+      "fieldName": "id_dynamic_entity_configuration_relation",
+      "fieldVisibleName": "id_dynamic_entity_configuration_relation",
+      "isEditable": false,
+      "isCreatable": false,
+      "type": "integer",
+      "validation": {
+        "isRequired": false
+      }
+    },
+    {
+      "fieldName": "fk_parent_dynamic_entity_configuration",
+      "fieldVisibleName": "fk_parent_dynamic_entity_configuration",
+      "type": "integer",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    },
+    {
+      "fieldName": "fk_child_dynamic_entity_configuration",
+      "fieldVisibleName": "fk_child_dynamic_entity_configuration",
+      "type": "integer",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    },
+    {
+      "fieldName": "name",
+      "fieldVisibleName": "name",
+      "type": "string",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    },
+    {
+      "fieldName": "is_editable",
+      "fieldVisibleName": "is_editable",
+      "isEditable": true,
+      "isCreatable": true,
+      "type": "boolean",
+      "validation": {
+        "isRequired": true
+      }
+    }
+  ]
+}
+DEFINITION;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefinitionForDynamicEntityConfigurationRelationFieldMapping(): string
+    {
+        return <<<DEFINITION
+{
+  "identifier": "id_dynamic_entity_configuration_relation_field_mapping",
+  "fields": [
+    {
+      "fieldName": "id_dynamic_entity_configuration_relation_field_mapping",
+      "fieldVisibleName": "id_dynamic_entity_configuration_relation_field_mapping",
+      "isEditable": false,
+      "isCreatable": false,
+      "type": "integer",
+      "validation": {
+        "isRequired": false
+      }
+    },
+    {
+      "fieldName": "fk_dynamic_entity_configuration_relation",
+      "fieldVisibleName": "fk_dynamic_entity_configuration_relation",
+      "type": "integer",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    },
+    {
+      "fieldName": "child_field_name",
+      "fieldVisibleName": "child_field_name",
+      "type": "string",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    },
+    {
+      "fieldName": "parent_field_name",
+      "fieldVisibleName": "parent_field_name",
+      "type": "string",
+      "isEditable": true,
+      "isCreatable": true,
+      "validation": {
+        "isRequired": true
+      }
+    }
+  ]
+}
+DEFINITION;
+    }
+
+    /**
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
+     */
+    public function createConfigRelationEntity(): SpyDynamicEntityConfiguration
+    {
+        $spyDynamicEntityConfigurationEntity = new SpyDynamicEntityConfiguration();
+        $spyDynamicEntityConfigurationEntity->setIsActive(true)
+            ->setTableAlias('de_configuration_relation')
+            ->setTableName('spy_dynamic_entity_configuration_relation')
+            ->setDefinition($this->getDefinitionForDynamicEntityConfigurationRelation())
+            ->save();
+
+        return $spyDynamicEntityConfigurationEntity;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\DynamicEntity\SpyDynamicEntityConfiguration
+     */
+    public function createConfigRelationFieldMappingEntity(): SpyDynamicEntityConfiguration
+    {
+        $spyDynamicEntityConfigurationEntity = new SpyDynamicEntityConfiguration();
+        $spyDynamicEntityConfigurationEntity->setIsActive(true)
+            ->setTableAlias('de_configuration_relation_field_mapping')
+            ->setTableName('spy_dynamic_entity_configuration_relation_field_mapping')
+            ->setDefinition($this->getDefinitionForDynamicEntityConfigurationRelationFieldMapping())
+            ->save();
+
+        return $spyDynamicEntityConfigurationEntity;
+    }
+
+    /**
+     * @param string $name
+     * @param string $parrentFieldName
+     * @param string $parrentFieldId
+     * @param string $childFieldName
+     * @param string $childFieldId
+     *
+     * @return void
+     */
+    public function createRelationWithFieldMapping(
+        string $name,
+        string $parrentFieldName,
+        string $parrentFieldId,
+        string $childFieldName,
+        string $childFieldId
+    ): void {
+        $relationEntity = new SpyDynamicEntityConfigurationRelation();
+        $relationEntity->setName($name)
+            ->setFkParentDynamicEntityConfiguration((int)$parrentFieldId)
+            ->setFkChildDynamicEntityConfiguration((int)$childFieldId)
+            ->setIsEditable(true)
+            ->save();
+
+        (new SpyDynamicEntityConfigurationRelationFieldMapping())
+            ->setFkDynamicEntityConfigurationRelation($relationEntity->getIdDynamicEntityConfigurationRelation())
+            ->setChildFieldName($childFieldName)
+            ->setParentFieldName($parrentFieldName)
+            ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
+     * @param string $fieldName
+     * @param string $value
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer|null
+     */
+    public function getDynamicEntityFromCollectionByFieldNameAndValue(
+        DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer,
+        string $fieldName,
+        string $value
+    ): ?DynamicEntityTransfer {
+        foreach ($dynamicEntityCollectionTransfer->getDynamicEntities() as $dynamicEntity) {
+            $fieldValue = $dynamicEntity->getFields()[$fieldName] ?? null;
+            if ($fieldValue === $value) {
+                return $dynamicEntity;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery
+     */
+    protected function createSpyDynamicEntityConfigurationQuery(): SpyDynamicEntityConfigurationQuery
+    {
+        return new SpyDynamicEntityConfigurationQuery();
     }
 }

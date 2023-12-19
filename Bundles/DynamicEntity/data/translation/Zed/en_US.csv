@@ -18,3 +18,5 @@
 "Field definition `isCreatable` is required for dynamic entity configuration.","Field definition `isCreatable` is required for dynamic entity configuration."
 "Field definition `isEditable` is required for dynamic entity configuration.","Field definition `isEditable` is required for dynamic entity configuration."
 "Resource name `%s` is not valid. Allowed characters: a-z, A-Z, 0-9, _ and - ","Resource name `%s` is not valid. Allowed characters: a-z, A-Z, 0-9, _ and -."
+"Dynamic entity configuration for table alias `%s` not found.","Dynamic entity configuration for table alias `%s` not found."
+"Model for table `%s` not found.","Model for table `%s` not found."

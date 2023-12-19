@@ -211,7 +211,7 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
     }
 
     /**
-     * @param array|null
+     * @param array|null $data
      *
      * @return \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface
      */

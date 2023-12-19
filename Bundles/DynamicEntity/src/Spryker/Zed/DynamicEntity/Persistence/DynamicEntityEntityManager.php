@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
@@ -360,11 +361,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     ): ?ActiveRecordInterface {
         /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $dynamicEntityQuery */
         $dynamicEntityQuery = new $dynamicEntityQueryClassName();
+        $dynamicEntityCriteriaTransfer = (new DynamicEntityCriteriaTransfer())
+            ->setDynamicEntityConditions($dynamicEntityConditionsTransfer);
 
         $dynamicEntityQuery = $this->getFactory()->createDynamicEntityQueryBuilder()
             ->buildQueryWithFieldConditions(
                 $dynamicEntityQuery,
-                $dynamicEntityConditionsTransfer,
+                $dynamicEntityCriteriaTransfer,
                 $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
             );
 

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
@@ -53,6 +54,21 @@ class DynamicEntityFacadeTest extends Unit
      * @var string
      */
     protected const ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED = 'dynamic_entity.validation.modification_of_immutable_field_prohibited';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_PARENT_ENTITY_ID_CONFIGURATION = 'id_dynamic_entity_configuration';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_CHILD_ENTITY_ID_CONFIGURATION = 'fk_parent_dynamic_entity_configuration';
+
+    /**
+     * @var string
+     */
+    protected const RELATION_TEST_NAME = 'relationTest';
 
     /**
      * @var string
@@ -173,6 +189,67 @@ class DynamicEntityFacadeTest extends Unit
 
         //Assert
         $this->assertEmpty($dynamicEntityCollectionTransfer->getDynamicEntities());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDynamicEntityCollectionReturnsCollectionWithoutChild(): void
+    {
+        // Arrange
+        $spyDynamicEntityConfigurationRelationEntity = $this->tester->createConfigRelationEntity();
+        $spyDynamicEntityConfigurationEntity = $this->tester->findDynamicEntityConfiguration(static::FOO_TABLE_ALIAS_1);
+        $this->tester->createRelationWithFieldMapping(
+            static::RELATION_TEST_NAME,
+            static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
+            $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration(),
+            static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
+            $spyDynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfiguration(),
+        );
+
+        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
+
+        // Act
+        $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
+        $dynamicEntityTranfer = $this->tester->getDynamicEntityFromCollectionByFieldNameAndValue($dynamicEntityCollectionTransfer, 'table_alias', 'FOO');
+
+        // Assert
+        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
+        $this->assertEmpty($dynamicEntityTranfer->getChildRelations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDynamicEntityCollectionReturnsCollectionWithChildRelations(): void
+    {
+        // Arrange
+        $spyDynamicEntityConfigurationRelationEntity = $this->tester->createConfigRelationEntity();
+        $spyDynamicEntityConfigurationEntity = $this->tester->findDynamicEntityConfiguration(static::FOO_TABLE_ALIAS_1);
+        $this->tester->createRelationWithFieldMapping(
+            static::RELATION_TEST_NAME,
+            static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
+            $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration(),
+            static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
+            $spyDynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfiguration(),
+        );
+
+        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCriteriaTransfer->setRelationChains([static::RELATION_TEST_NAME]);
+
+        // Act
+        $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
+        $dynamicEntityTranfer = $this->tester->getDynamicEntityFromCollectionByFieldNameAndValue($dynamicEntityCollectionTransfer, 'table_alias', 'FOO');
+
+        // Assert
+        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
+        $this->assertNotEmpty($dynamicEntityTranfer->getChildRelations());
+        $this->assertEquals(1, count($dynamicEntityTranfer->getChildRelations()));
+        $this->assertNotEmpty($dynamicEntityTranfer->getChildRelations()[0]);
+        $this->assertInstanceOf(DynamicEntityRelationTransfer::class, $dynamicEntityTranfer->getChildRelations()[0]);
+        $this->assertEquals(static::RELATION_TEST_NAME, $dynamicEntityTranfer->getChildRelations()[0]->getName());
+        $this->assertNotEmpty($dynamicEntityTranfer->getChildRelations()[0]->getDynamicEntities());
+        $this->assertEquals(1, count($dynamicEntityTranfer->getChildRelations()[0]->getDynamicEntities()));
     }
 
     /**

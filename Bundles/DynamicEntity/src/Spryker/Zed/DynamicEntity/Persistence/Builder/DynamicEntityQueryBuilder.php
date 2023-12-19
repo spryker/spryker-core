@@ -8,9 +8,11 @@
 namespace Spryker\Zed\DynamicEntity\Persistence\Builder;
 
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
+use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\DatabaseMap;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
 {
@@ -59,34 +61,32 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param array<string, array<int|string>> $foreignKeyFieldMappingArray
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function buildQueryWithFieldConditions(
         ModelCriteria $query,
-        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        array $foreignKeyFieldMappingArray = []
     ): ModelCriteria {
-        if ($dynamicEntityConditionsTransfer->getFieldConditions()->getArrayCopy() === []) {
+        if ($dynamicEntityCriteriaTransfer->getDynamicEntityConditions() !== null) {
+            $query = $this->filterByFieldConditions(
+                $query,
+                $dynamicEntityDefinitionTransfer,
+                $dynamicEntityCriteriaTransfer->getDynamicEntityConditions(),
+            );
+        }
+
+        if ($foreignKeyFieldMappingArray === []) {
             return $query;
         }
 
-        $definedFieldNames = $this->collectDefinedFieldNames($dynamicEntityDefinitionTransfer);
-
-        foreach ($dynamicEntityConditionsTransfer->getFieldConditions() as $fieldCondition) {
-            $fieldConfitionName = $fieldCondition->getNameOrFail();
-
-            if ($fieldConfitionName === static::IDENTIFIER_KEY) {
-                $fieldConfitionName = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
-            }
-
-            if (!in_array($fieldConfitionName, $definedFieldNames)) {
-                continue;
-            }
-
-            $query->filterBy($this->convertSnakeCaseToCamelCase($fieldConfitionName), $fieldCondition->getValue());
+        foreach ($foreignKeyFieldMappingArray as $fieldConditionName => $fieldConditionValues) {
+            $query->filterBy($this->convertSnakeCaseToCamelCase($fieldConditionName), $fieldConditionValues, Criteria::IN);
         }
 
         return $query;
@@ -116,5 +116,40 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
         }
 
         return $definedFieldNames;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer|null $dynamicEntityConditionsTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function filterByFieldConditions(
+        ModelCriteria $query,
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        ?DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+    ): ModelCriteria {
+        if ($dynamicEntityConditionsTransfer === null || $dynamicEntityConditionsTransfer->getFieldConditions()->getArrayCopy() === []) {
+            return $query;
+        }
+
+        $definedFieldNames = $this->collectDefinedFieldNames($dynamicEntityDefinitionTransfer);
+
+        foreach ($dynamicEntityConditionsTransfer->getFieldConditions() as $fieldCondition) {
+            $fieldConditionName = $fieldCondition->getNameOrFail();
+
+            if ($fieldConditionName === static::IDENTIFIER_KEY) {
+                $fieldConditionName = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+            }
+
+            if (!in_array($fieldConditionName, $definedFieldNames)) {
+                continue;
+            }
+
+            $query->filterBy($this->convertSnakeCaseToCamelCase($fieldConditionName), $fieldCondition->getValue());
+        }
+
+        return $query;
     }
 }

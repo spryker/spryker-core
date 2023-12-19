@@ -52,7 +52,7 @@ class InvalidationVoter implements InvalidationVoterInterface
     public function __construct(
         DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade,
         DynamicEntityBackendApiConfig $dynamicEntityBackendApiConfig,
-        DynamicEntityBackendApiToStorageFacadeInterface $storageFacade,
+        DynamicEntityBackendApiToStorageFacadeInterface $storageFacade
     ) {
         $this->dynamicEntityFacade = $dynamicEntityFacade;
         $this->dynamicEntityBackendApiConfig = $dynamicEntityBackendApiConfig;
