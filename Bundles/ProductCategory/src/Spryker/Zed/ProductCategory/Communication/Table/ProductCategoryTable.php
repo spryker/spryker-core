@@ -108,9 +108,9 @@ class ProductCategoryTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
         $query->clearOrderByColumns();
@@ -134,11 +134,11 @@ class ProductCategoryTable extends AbstractTable
     }
 
     /**
-     * @param array $productCategory
+     * @param array<string, mixed> $productCategory
      *
      * @return string
      */
-    protected function getCheckboxHtml(array $productCategory)
+    protected function getCheckboxHtml(array $productCategory): string
     {
         $info = [
             'id' => $productCategory['id_product_abstract'],
@@ -154,7 +154,7 @@ class ProductCategoryTable extends AbstractTable
     }
 
     /**
-     * @param array $productCategory
+     * @param array<string, mixed> $productCategory
      *
      * @return string
      */
@@ -168,7 +168,7 @@ class ProductCategoryTable extends AbstractTable
             OrderForm::class,
             OrderForm::FIELD_ORDER,
             [
-                OrderForm::OPTION_LOCALE => $this->locale->getName(),
+                OrderForm::OPTION_LOCALE => $this->locale->getLocaleName(),
                 OrderForm::OPTION_ID => sprintf('product_category_order_%d', $productCategory['id_product_abstract']),
                 OrderForm::OPTION_DATA_INFO => $this->utilEncodingService->encodeJson($info),
             ],

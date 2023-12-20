@@ -31,7 +31,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductCategory\PHPMD)
  */
 class ProductCategoryPersistenceTester extends Actor
 {

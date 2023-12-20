@@ -15,6 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
+use Spryker\Zed\ProductSetGui\Communication\Form\Table\ProductSetReorderFormType;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -30,6 +31,9 @@ class ProductSetReorderTable extends AbstractTable
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
 
+    /**
+     * @var string
+     */
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
 
     /**
@@ -111,9 +115,9 @@ class ProductSetReorderTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->productSetGuiQueryContainer->queryProductSet($this->localeTransfer);
 
@@ -130,9 +134,9 @@ class ProductSetReorderTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function generateItem(SpyProductSet $productSetEntity)
+    protected function generateItem(SpyProductSet $productSetEntity): array
     {
         return [
             static::COL_ID_PRODUCT_SET => $this->formatInt($productSetEntity->getIdProductSet()),
@@ -227,12 +231,21 @@ class ProductSetReorderTable extends AbstractTable
      *
      * @return string
      */
-    protected function getWeightField(SpyProductSet $productAbstractEntity)
+    protected function getWeightField(SpyProductSet $productAbstractEntity): string
     {
-        return sprintf(
-            '<input type="text" value="%2$d" id="product_set_weight_%1$d" class="product_set_weight" size="4" data-id="%1$s">',
-            $productAbstractEntity->getIdProductSet(),
-            $productAbstractEntity->getWeight(),
+        $idProductSet = $productAbstractEntity->getIdProductSet();
+
+        return $this->generateFormField(
+            ProductSetReorderFormType::class,
+            ProductSetReorderFormType::FIELD_PRODUCT_SET_WEIGHT,
+            [
+                ProductSetReorderFormType::OPTION_LOCALE => $this->localeTransfer->getLocaleName(),
+                ProductSetReorderFormType::OPTION_ID => sprintf('product_position_%d', $idProductSet),
+                ProductSetReorderFormType::OPTION_DATA_ID => $idProductSet,
+            ],
+            [
+                ProductSetReorderFormType::FIELD_PRODUCT_SET_WEIGHT => $productAbstractEntity->getWeight(),
+            ],
         );
     }
 }

@@ -1,33 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Zed/ProductSetGui/Communication/Form/CreateProductSetFormType.php",
-        "description": "Method `Spryker\\Zed\\ProductSetGui\\Communication\\Form\\CreateProductSetFormType::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductSetGui/Communication/Form/Images/LocalizedProductImageSetFormType.php",
-        "description": "Method `Spryker\\Zed\\ProductSetGui\\Communication\\Form\\Images\\LocalizedProductImageSetFormType::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductSetGui/Communication/Form/Images/ProductImageFormType.php",
-        "description": "Method `Spryker\\Zed\\ProductSetGui\\Communication\\Form\\Images\\ProductImageFormType::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductSetGui/Communication/Form/UpdateProductSetFormType.php",
-        "description": "Method `Spryker\\Zed\\ProductSetGui\\Communication\\Form\\UpdateProductSetFormType::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/ProductSetGui/Dependency/Facade/ProductSetGuiToLocaleBridge.php",
         "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -37,6 +9,13 @@
     {
         "fileName": "src/Spryker/Zed/ProductSetGui/Dependency/Facade/ProductSetGuiToLocaleBridge.php",
         "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSetGui/Dependency/Facade/ProductSetGuiToLocaleBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -143,13 +122,6 @@
         "fileName": "src/Spryker/Zed/ProductSetGui/Dependency/Service/ProductSetGuiToUtilEncodingBridge.php",
         "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductSetGui\\Dependency\\Service\\ProductSetGuiToUtilEncodingBridge::decodeJson()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductSetGui/Dependency/Facade/ProductSetGuiToLocaleBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

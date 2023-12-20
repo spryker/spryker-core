@@ -30,7 +30,7 @@ use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductCategory\PHPMD)
  */
 class ProductCategoryPresentationTester extends Actor
 {

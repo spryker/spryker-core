@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
+use Spryker\Zed\ProductSetGui\Communication\Form\Table\ProductAbstractSetUpdateFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
@@ -169,7 +170,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -188,7 +189,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
@@ -216,10 +217,19 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      */
     protected function getPositionField(SpyProductAbstract $productAbstractEntity): string
     {
-        return sprintf(
-            '<input type="text" value="%2$d" id="product_position_%1$d" class="product_position" size="4" data-id="%1$s">',
-            $productAbstractEntity->getIdProductAbstract(),
-            $productAbstractEntity->getVirtualColumn(static::COL_POSITION),
+        $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
+
+        return $this->generateFormField(
+            ProductAbstractSetUpdateFormType::class,
+            ProductAbstractSetUpdateFormType::FIELD_PRODUCT_POSITION,
+            [
+                ProductAbstractSetUpdateFormType::OPTION_LOCALE => $this->localeTransfer->getLocaleName(),
+                ProductAbstractSetUpdateFormType::OPTION_ID => sprintf('product_position_%d', $idProductAbstract),
+                ProductAbstractSetUpdateFormType::OPTION_DATA_ID => $idProductAbstract,
+            ],
+            [
+                ProductAbstractSetUpdateFormType::FIELD_PRODUCT_POSITION => $productAbstractEntity->getVirtualColumn(static::COL_POSITION),
+            ],
         );
     }
 

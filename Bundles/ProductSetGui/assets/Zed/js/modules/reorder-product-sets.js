@@ -5,6 +5,8 @@
 
 'use strict';
 
+var initFormattedNumber = require('ZedGuiModules/libs/formatted-number-input');
+
 $(document).ready(function () {
     var $productSetWeightsField = $('#reorder_product_sets_form_product_set_weights');
     var productSetWeights = getProductSetWeights();
@@ -12,6 +14,8 @@ $(document).ready(function () {
     $('#product-set-reorder-table')
         .DataTable()
         .on('draw', function (event, settings) {
+            initFormattedNumber();
+
             $('.product_set_weight').off('change').on('change', onProductSetWeightChange);
 
             setProductSetWeightFieldsOnTableDraw(settings);
@@ -34,10 +38,16 @@ $(document).ready(function () {
     function onProductSetWeightChange() {
         var $input = $(this);
         var id = $.parseJSON($input.attr('data-id'));
+        var unformattedInputClassName = $input.attr('data-target');
 
-        productSetWeights[id] = $input.val();
+        if (unformattedInputClassName) {
+            var $unformattedInput = $('.' + unformattedInputClassName);
+            productSetWeights[id] = $unformattedInput.val();
+        } else {
+            productSetWeights[id] = $input.val();
+        }
+
         $productSetWeightsField.attr('value', JSON.stringify(productSetWeights));
-        console.log(productSetWeights);
     }
 
     /**
