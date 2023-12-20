@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CompanyUnitAddress\PHPMD)
  */
 class CompanyUnitAddressBusinessTester extends Actor
 {

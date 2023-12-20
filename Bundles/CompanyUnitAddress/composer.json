@@ -14,6 +14,7 @@
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/tax-product-connector-extension": "^1.0.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {

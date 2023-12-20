@@ -11,6 +11,7 @@ use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapper;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface;
+use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -34,7 +35,7 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCompanyUnitAddressMapper(): CompanyUnitAddressMapperInterface
     {
-        return new CompanyUnitAddressMapper();
+        return new CompanyUnitAddressMapper($this->createCountryMapper());
     }
 
     /**
@@ -43,5 +44,13 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUnitAddressToCompanyBusinessUnitQuery(): SpyCompanyUnitAddressToCompanyBusinessUnitQuery
     {
         return SpyCompanyUnitAddressToCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper
+     */
+    public function createCountryMapper(): CountryMapper
+    {
+        return new CountryMapper();
     }
 }

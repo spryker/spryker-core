@@ -31,6 +31,7 @@
         <property name="companyBusinessUnits" type="CompanyBusinessUnitCollection"/>
         <property name="uuid" type="string"/>
         <property name="company" type="Company"/>
+        <property name="country" type="Country" strict="true"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">

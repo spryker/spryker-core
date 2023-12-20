@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface;
@@ -69,7 +70,7 @@ class CompanyBusinessUnitAddressFormDataProvider
     /**
      * @param int|null $idCompany
      *
-     * @return array
+     * @return array<int, string>
      */
     protected function getAddressChoices(?int $idCompany = null): array
     {
@@ -78,8 +79,8 @@ class CompanyBusinessUnitAddressFormDataProvider
         );
 
         $result = [];
-        foreach ($addressCollection->getCompanyUnitAddresses() as $address) {
-            $result[$address->getIdCompanyUnitAddress()] = $address->getAddress1();
+        foreach ($addressCollection->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            $result[$companyUnitAddressTransfer->getIdCompanyUnitAddressOrFail()] = $this->getAddressValue($companyUnitAddressTransfer);
         }
 
         return $result;
@@ -118,5 +119,22 @@ class CompanyBusinessUnitAddressFormDataProvider
         $labelCollection->setCompanyUnitAddresses(new ArrayObject());
 
         return $labelCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return string
+     */
+    protected function getAddressValue(CompanyUnitAddressTransfer $companyUnitAddressTransfer): string
+    {
+        return sprintf(
+            '%s %s %s %s, %s',
+            $companyUnitAddressTransfer->getAddress1(),
+            $companyUnitAddressTransfer->getAddress2(),
+            $companyUnitAddressTransfer->getZipCode(),
+            $companyUnitAddressTransfer->getCity(),
+            $companyUnitAddressTransfer->getCountryOrFail()->getName(),
+        );
     }
 }

@@ -14,11 +14,13 @@
     <transfer name="CompanyUnitAddress">
         <property name="idCompanyUnitAddress" type="int"/>
         <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="fkCountry" type="int"/>
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="comment" type="string"/>
+        <property name="country" type="Country" strict="true"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">

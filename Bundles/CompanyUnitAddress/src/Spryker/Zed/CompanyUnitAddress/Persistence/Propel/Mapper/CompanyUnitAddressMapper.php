@@ -11,12 +11,26 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
 
 class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper
+     */
+    protected CountryMapper $countryMapper;
+
+    /**
+     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper $countryMapper
+     */
+    public function __construct(CountryMapper $countryMapper)
+    {
+        $this->countryMapper = $countryMapper;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -29,7 +43,11 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     ): CompanyUnitAddressTransfer {
         $companyUnitAddressTransfer->fromArray($companyUnitAddressEntityTransfer->toArray(), true);
 
-        $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntityTransfer->getCountry()->getIso2Code());
+        $countryEntityTransfer = $companyUnitAddressEntityTransfer->getCountryOrFail();
+        $companyUnitAddressTransfer->setIso2Code($countryEntityTransfer->getIso2Code());
+        $companyUnitAddressTransfer->setCountry(
+            $this->countryMapper->mapCountryEntityTransferToCountryTransfer($countryEntityTransfer, new CountryTransfer()),
+        );
 
         $companyBusinessUnitTransfers = $this->mapCompanyBusinessUnitCollection($companyUnitAddressEntityTransfer);
         $companyUnitAddressTransfer->setCompanyBusinessUnits($companyBusinessUnitTransfers);
