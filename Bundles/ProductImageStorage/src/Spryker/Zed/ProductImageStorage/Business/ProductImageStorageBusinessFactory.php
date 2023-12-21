@@ -17,6 +17,7 @@ use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageEntityManagerInterface getEntityManager()
  */
 class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -29,6 +30,7 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
             $this->getRepository(),
+            $this->getEntityManager(),
             $this->getEventBehaviorFacade(),
             $this->getConfig()->isSendingToQueue(),
         );

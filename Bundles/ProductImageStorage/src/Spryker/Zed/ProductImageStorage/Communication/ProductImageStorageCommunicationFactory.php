@@ -16,6 +16,7 @@ use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageEntityManagerInterface getEntityManager()
  */
 class ProductImageStorageCommunicationFactory extends AbstractCommunicationFactory
 {

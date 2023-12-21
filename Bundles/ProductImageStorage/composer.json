@@ -13,11 +13,13 @@
         "spryker/storage": "^3.4.0",
         "spryker/synchronization": "^0.2.0 || ^1.0.0",
         "spryker/synchronization-behavior": "^1.0.0",
-        "spryker/synchronization-extension": "^1.0.0"
+        "spryker/synchronization-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/event": "*",
+        "spryker/locale": "*",
         "spryker/product-attribute": "*",
         "spryker/product-storage": "*",
         "spryker/propel": "*",

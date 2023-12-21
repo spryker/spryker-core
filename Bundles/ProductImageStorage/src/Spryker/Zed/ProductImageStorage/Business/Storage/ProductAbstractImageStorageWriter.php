@@ -15,6 +15,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
+use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageEntityManagerInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface;
 
@@ -43,6 +44,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     protected ProductImageStorageRepositoryInterface $repository;
 
     /**
+     * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageEntityManagerInterface
+     */
+    protected ProductImageStorageEntityManagerInterface $productImageStorageEntityManager;
+
+    /**
      * @var \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface
      */
     protected ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade;
@@ -58,6 +64,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageEntityManagerInterface $productImageStorageEntityManager
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param bool $isSendingToQueue
      */
@@ -65,12 +72,14 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         ProductImageStorageToProductImageInterface $productImageFacade,
         ProductImageStorageQueryContainerInterface $queryContainer,
         ProductImageStorageRepositoryInterface $repository,
+        ProductImageStorageEntityManagerInterface $productImageStorageEntityManager,
         ProductImageStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         bool $isSendingToQueue
     ) {
         $this->productImageFacade = $productImageFacade;
         $this->queryContainer = $queryContainer;
         $this->repository = $repository;
+        $this->productImageStorageEntityManager = $productImageStorageEntityManager;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
@@ -130,6 +139,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         $imageSets = [];
 
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $this->deleteProductAbstractImageStoragesForProductsWithoutLocalizedAttributes(
+            $productAbstractLocalizedEntities,
+            $productAbstractIds,
+        );
+
         $defaultProductAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractId(
             $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds),
         );
@@ -336,5 +350,57 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         }
 
         return $productAbstractStorageEntitiesByIdAndLocale;
+    }
+
+    /**
+     * @param list<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedEntities
+     * @param list<int> $productAbstractIds
+     *
+     * @return void
+     */
+    protected function deleteProductAbstractImageStoragesForProductsWithoutLocalizedAttributes(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractIds
+    ): void {
+        $productAbstractIdsWithoutLocalizedAttributes = $this->getProductAbstractIdsWithoutLocalizedAttributes(
+            $productAbstractLocalizedEntities,
+            $productAbstractIds,
+        );
+        if ($productAbstractIdsWithoutLocalizedAttributes !== []) {
+            $this->productImageStorageEntityManager->deleteProductAbstractImageStorageByProductAbstractIds(
+                $productAbstractIdsWithoutLocalizedAttributes,
+            );
+        }
+    }
+
+    /**
+     * @param list<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedEntities
+     * @param list<int> $productAbstractIds
+     *
+     * @return list<int>
+     */
+    protected function getProductAbstractIdsWithoutLocalizedAttributes(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractIds
+    ): array {
+        return array_diff(
+            $productAbstractIds,
+            $this->extractProductAbstractIdsFromProductAbstractLocalizedEntities($productAbstractLocalizedEntities),
+        );
+    }
+
+    /**
+     * @param list<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedEntities
+     *
+     * @return list<int>
+     */
+    protected function extractProductAbstractIdsFromProductAbstractLocalizedEntities(array $productAbstractLocalizedEntities): array
+    {
+        $productAbstractIds = [];
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $productAbstractIds[] = $productAbstractLocalizedEntity->getFkProductAbstract();
+        }
+
+        return array_unique($productAbstractIds);
     }
 }
