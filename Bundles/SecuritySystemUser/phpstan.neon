@@ -1,2 +1,10 @@
 parameters:
     level: 8
+    reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Call to an undefined method .+loadUserByUsername\(\).#'
+        - '#Call to an undefined method .+getUsername\(\).#'
+        - '#Instantiated class .+UsernameNotFoundException not found.#'
+        - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'
+        - '#Parameter \#1 \$passport of method .+SystemUserTokenAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'

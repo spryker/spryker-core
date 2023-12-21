@@ -4,7 +4,8 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Instantiated class .+NativePasswordEncoder not found.#'
-        - '#Instantiated class .+BCryptPasswordEncoder not found.#'
         - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
-        - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
         - '#Cannot call method format\(\) on DateTime\|string.#'
+        - { message: '#Call to method encodePassword\(\) on an unknown class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php' }
+        - { message: '#Call to method isPasswordValid\(\) on an unknown class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php' }
+        - { message: '#Method .+Customer::getPasswordEncoder\(\) has invalid return type Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php' }

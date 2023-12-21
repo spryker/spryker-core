@@ -8,8 +8,9 @@
 namespace Spryker\Zed\SecurityGui\Communication\Security;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var \Generated\Shared\Transfer\UserTransfer
@@ -75,6 +76,14 @@ class User implements UserInterface
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->userTransfer->getUsernameOrFail();
     }
 
     /**

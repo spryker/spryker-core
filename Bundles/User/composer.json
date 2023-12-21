@@ -35,7 +35,6 @@
         "spryker/zed-navigation": "*"
     },
     "suggest": {
-        "spryker/container": "If you want to use UserTwigPlugin.",
         "spryker/installer": "If you want to use Installer plugin.",
         "spryker/silex": "If you want to use ServiceProvider.",
         "spryker/twig": "Use this module when using plugins that need Twig dependencies."

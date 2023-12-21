@@ -8,6 +8,8 @@
 namespace Spryker\Zed\User\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\User\Communication\Extender\SecurityServiceExtender;
+use Spryker\Zed\User\Communication\Extender\SecurityServiceExtenderInterface;
 use Spryker\Zed\User\Communication\Form\ActivateUserForm;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
@@ -16,11 +18,13 @@ use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserDeleteConfirmForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
+use Spryker\Zed\User\Communication\Plugin\Security\UserSessionHandlerSecurityPlugin;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutor;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\UserDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 /**
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
@@ -144,6 +148,20 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function getGroupPlugin()
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGIN_GROUP);
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Communication\Extender\SecurityServiceExtenderInterface
+     */
+    public function createSecurityServiceExtender(): SecurityServiceExtenderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new UserSessionHandlerSecurityPlugin();
+        }
+
+        return new SecurityServiceExtender(
+            $this->getFacade(),
+        );
     }
 
     /**

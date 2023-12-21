@@ -9,6 +9,10 @@ namespace Spryker\Zed\SecurityOauthUser\Communication;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SecurityOauthUser\Communication\Authenticator\OauthUserTokenAuthenticator;
+use Spryker\Zed\SecurityOauthUser\Communication\Expander\SecurityBuilderExpander;
+use Spryker\Zed\SecurityOauthUser\Communication\Expander\SecurityBuilderExpanderInterface;
+use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Provider\OauthUserProvider;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReader;
 use Spryker\Zed\SecurityOauthUser\Communication\Reader\ResourceOwnerReaderInterface;
@@ -20,12 +24,14 @@ use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessenger
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserDependencyProvider;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Token\GuardTokenInterface;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 
 /**
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
@@ -112,5 +118,35 @@ class SecurityOauthUserCommunicationFactory extends AbstractCommunicationFactory
     public function getRouter(): ChainRouterInterface
     {
         return $this->getProvidedDependency(SecurityOauthUserDependencyProvider::SERVICE_ROUTER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
+     */
+    public function createOauthUserTokenAuthenticator(): AuthenticatorInterface
+    {
+        return new OauthUserTokenAuthenticator(
+            $this->createResourceOwnerReader(),
+            $this->createOauthUserAuthenticationSuccessHandler(),
+            $this->createOauthUserAuthenticationFailureHandler(),
+            $this->getConfig(),
+            $this->createOauthUserProvider(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityOauthUser\Communication\Expander\SecurityBuilderExpanderInterface
+     */
+    public function createSecurityBuilderExpander(): SecurityBuilderExpanderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new OauthUserSecurityPlugin();
+        }
+
+        return new SecurityBuilderExpander(
+            $this->createOauthUserProvider(),
+            $this->getConfig(),
+            $this->createOauthUserTokenAuthenticator(),
+        );
     }
 }

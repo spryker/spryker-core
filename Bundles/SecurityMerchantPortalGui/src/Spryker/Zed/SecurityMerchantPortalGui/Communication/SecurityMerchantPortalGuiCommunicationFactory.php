@@ -9,11 +9,17 @@ namespace Spryker\Zed\SecurityMerchantPortalGui\Communication;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Authenticator\MerchantLoginFormAuthenticator;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilder;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpander;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantLoginForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordRequestForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationSuccessHandler;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Provider\MerchantUserProvider;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface;
@@ -26,10 +32,12 @@ use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPort
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 
 /**
  * @method \Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig getConfig()
@@ -41,7 +49,9 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
      */
     public function createMerchantUserProvider(): UserProviderInterface
     {
-        return new MerchantUserProvider($this->getMerchantUserLoginRestrictionPlugins());
+        return new MerchantUserProvider(
+            $this->getMerchantUserLoginRestrictionPlugins(),
+        );
     }
 
     /**
@@ -143,6 +153,44 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getMerchantUserLoginRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
+     */
+    public function createMechantLoginFormAuthenticator(): AuthenticatorInterface
+    {
+        return new MerchantLoginFormAuthenticator(
+            $this->createMerchantUserProvider(),
+            $this->createMerchantUserAuthenticationSuccessHandler(),
+            $this->createMerchantUserAuthenticationFailureHandler(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpanderInterface
+     */
+    public function createSecurityBuilderExpander(): SecurityBuilderExpanderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new MerchantUserSecurityPlugin();
+        }
+
+        return new SecurityBuilderExpander(
+            $this->createOptionsBuilder(),
+            $this->createMechantLoginFormAuthenticator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface
+     */
+    public function createOptionsBuilder(): OptionsBuilderInterface
+    {
+        return new OptionsBuilder(
+            $this->createMerchantUserProvider(),
+        );
     }
 
     /**

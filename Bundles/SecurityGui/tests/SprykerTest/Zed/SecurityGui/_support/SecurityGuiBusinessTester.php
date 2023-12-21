@@ -24,7 +24,7 @@ use Spryker\Zed\SecurityGui\Business\SecurityGuiFacadeInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(\PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SecurityGui\PHPMD)
  */
 class SecurityGuiBusinessTester extends Actor
 {

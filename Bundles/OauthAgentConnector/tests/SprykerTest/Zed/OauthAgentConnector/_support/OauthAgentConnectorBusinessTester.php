@@ -23,7 +23,7 @@ use Spryker\Zed\User\Business\UserFacadeInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\OauthAgentConnector\Business\OauthAgentConnectorFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\OauthAgentConnector\PHPMD)
  */
 class OauthAgentConnectorBusinessTester extends Actor
 {

@@ -13,7 +13,10 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecurityGui\Communication\Exception\AccessDeniedException;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -45,8 +48,10 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      * @param array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface> $userRoleFilterPlugins
      * @param array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface> $userLoginRestrictionPlugins
      */
-    public function __construct(array $userRoleFilterPlugins, array $userLoginRestrictionPlugins = [])
-    {
+    public function __construct(
+        array $userRoleFilterPlugins,
+        array $userLoginRestrictionPlugins
+    ) {
         $this->userRoleFilterPlugins = $userRoleFilterPlugins;
         $this->userLoginRestrictionPlugins = $userLoginRestrictionPlugins;
     }
@@ -65,12 +70,25 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username) /** @phpstan-ignore-line */
     {
-        $userTransfer = $this->findUserByUsername($username);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $userTransfer = $this->findUserByUsername($identifier);
 
         if ($userTransfer === null) {
-            throw new UsernameNotFoundException();
+            throw $this->getUserNotFoundException();
         }
 
         $this->executeUserLoginRestrictionPlugins($userTransfer);
@@ -93,6 +111,7 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
@@ -105,7 +124,7 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
         $userTransfer = $this->findUserByUsername($user->getUsername());
 
         if ($userTransfer === null) {
-            throw new UsernameNotFoundException();
+            throw $this->getUserNotFoundException();
         }
 
         $this->executeUserLoginRestrictionPlugins($userTransfer);
@@ -192,5 +211,28 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
             ->addStatus(static::USER_STATUS_ACTIVE);
 
         return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Exception\AuthenticationException
+     */
+    protected function getUserNotFoundException(): AuthenticationException
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            /** @phpstan-ignore-next-line */
+            return new UsernameNotFoundException();
+        }
+
+        return new UserNotFoundException();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

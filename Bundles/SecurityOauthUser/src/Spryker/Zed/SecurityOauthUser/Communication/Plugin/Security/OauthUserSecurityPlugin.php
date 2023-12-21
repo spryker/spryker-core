@@ -11,11 +11,14 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecurityOauthUser\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\Authenticator\OauthUserTokenAuthenticator;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\ZedOauthUserSecurityPlugin} instead.
+ *
  * This plugin must be connected after or instead of {@link \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin}.
  * These two plugins have an intersection in the pattern ("^/"), only the first firewall will be executed with the same pattern.
  * For this reason new plugin should expand the already existing firewall and DO NOT create an additional firewall with the same pattern.
@@ -24,7 +27,7 @@ use Symfony\Component\Security\Core\User\ChainUserProvider;
  * @method \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig getConfig()
  * @method \Spryker\Zed\SecurityOauthUser\Business\SecurityOauthUserFacadeInterface getFacade()
  */
-class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @var string

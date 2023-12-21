@@ -9,12 +9,18 @@ namespace Spryker\Zed\SecurityGui\Communication;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SecurityGui\Communication\Authenticator\LoginFormAuthenticator;
+use Spryker\Zed\SecurityGui\Communication\Builder\SecurityGuiOptionsBuilder;
+use Spryker\Zed\SecurityGui\Communication\Builder\SecurityGuiOptionsBuilderInterface;
+use Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpander;
+use Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecurityGui\Communication\Form\LoginForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordRequestForm;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Provider\UserProvider;
+use Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
 use Spryker\Zed\SecurityGui\Communication\Security\UserInterface;
 use Spryker\Zed\SecurityGui\Dependency\Client\SecurityGuiToSecurityBlockerClientInterface;
@@ -23,8 +29,10 @@ use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeInterfa
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFacadeInterface;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 
 /**
  * @method \Spryker\Zed\SecurityGui\SecurityGuiConfig getConfig()
@@ -148,6 +156,46 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUserLoginRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_LOGIN_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Communication\Builder\SecurityGuiOptionsBuilderInterface
+     */
+    public function createSecurityGuiOptionsBuilder(): SecurityGuiOptionsBuilderInterface
+    {
+        return new SecurityGuiOptionsBuilder(
+            $this->getConfig(),
+            $this->createUserProvider(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface
+     */
+    public function createLoginFormAuthenticator(): AuthenticatorInterface
+    {
+        return new LoginFormAuthenticator(
+            $this->createUserProvider(),
+            $this->createUserAuthenticationSuccessHandler(),
+            $this->createUserAuthenticationFailureHandler(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpanderInterface
+     */
+    public function createSecurityBuilderExpander(): SecurityBuilderExpanderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new UserSecurityPlugin();
+        }
+
+        return new SecurityBuilderExpander(
+            $this->createSecurityGuiOptionsBuilder(),
+            $this->getConfig(),
+            $this->createLoginFormAuthenticator(),
+        );
     }
 
     /**

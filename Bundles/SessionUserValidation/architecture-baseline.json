@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/SessionUserValidation/Communication/SessionUserValidationCommunicationFactory.php",
+        "description": "`SessionUserValidationCommunicationFactory::createSecurityServiceExtender()` in `Spryker\\Zed\\SessionUserValidation\\Communication\\SessionUserValidationCommunicationFactory::createSecurityServiceExtender()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/SessionUserValidation/Dependency/Facade/SessionUserValidationToUserFacadeBridge.php",
         "description": "Bridges: Method `getCurrentUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",

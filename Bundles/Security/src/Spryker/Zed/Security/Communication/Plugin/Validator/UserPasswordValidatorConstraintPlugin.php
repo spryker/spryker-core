@@ -10,17 +10,20 @@ namespace Spryker\Zed\Security\Communication\Plugin\Validator;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Security\Communication\Validator\UserPasswordValidatorConstraintInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Security\Communication\Plugin\Validator\ZedUserPasswordValidatorConstraintPlugin} instead.
+ *
  * @method \Spryker\Zed\Security\Business\SecurityFacadeInterface getFacade()
  * @method \Spryker\Zed\Security\Communication\SecurityCommunicationFactory getFactory()
  * @method \Spryker\Zed\Security\SecurityConfig getConfig()
  */
-class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements ConstraintPluginInterface
+class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements ConstraintPluginInterface, UserPasswordValidatorConstraintInterface
 {
     /**
      * @var string

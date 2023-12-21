@@ -15,6 +15,8 @@ use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin;
+use Spryker\Zed\Security\Communication\Plugin\Application\ZedSecurityApplicationPlugin;
+use Spryker\Zed\Security\Communication\Router\SecurityRouter;
 use Spryker\Zed\Security\Communication\SecurityCommunicationFactory;
 use Spryker\Zed\Security\SecurityConfig;
 use Spryker\Zed\Security\SecurityDependencyProvider;
@@ -24,6 +26,7 @@ use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 class SecurityHelper extends Module
 {
@@ -83,6 +86,42 @@ class SecurityHelper extends Module
     }
 
     /**
+     * @param \Spryker\Shared\Security\Configuration\SecurityConfiguration $securityConfiguration
+     *
+     * @return $this
+     */
+    public function mockZedSecurityPlugin(SecurityConfiguration $securityConfiguration)
+    {
+        $securityPluginStub = Stub::makeEmpty(SecurityPluginInterface::class, [
+            'extend' => function (SecurityBuilderInterface $securityBuilder) use ($securityConfiguration) {
+                $securityConfiguration = $securityConfiguration->getConfiguration();
+                $securityBuilder = $this->addFirewalls($securityBuilder, $securityConfiguration);
+                $securityBuilder = $this->addAccessRules($securityBuilder, $securityConfiguration);
+                $securityBuilder = $this->addRoleHierarchy($securityBuilder, $securityConfiguration);
+
+                return $securityBuilder;
+            },
+        ]);
+
+        $this->securityPlugins[] = $securityPluginStub;
+
+        $this->getDependencyProviderHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
+
+        return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function mockSecurityDependencies(): void
+    {
+        $this->getDependencyProviderHelper()->setDependency(
+            SecurityDependencyProvider::SECURITY_ROUTERS,
+            new SecurityRouter(),
+        );
+    }
+
+    /**
      * @param \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface $securityPlugin
      *
      * @return $this
@@ -108,10 +147,10 @@ class SecurityHelper extends Module
     /**
      * @return \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin
      */
-    protected function getSecurityApplicationPluginStub(): SecurityApplicationPlugin
+    protected function getSecurityApplicationPluginStub()
     {
-        /** @var \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin $securityApplicationPlugin */
-        $securityApplicationPlugin = Stub::make(SecurityApplicationPlugin::class, [
+        $securityApplicationPlugin = $this->isSymfonyVersion5() === true ? SecurityApplicationPlugin::class : ZedSecurityApplicationPlugin::class;
+        $securityApplicationPlugin = Stub::make($securityApplicationPlugin, [
             'getConfig' => function () {
                 return $this->getConfig();
             },
@@ -244,5 +283,15 @@ class SecurityHelper extends Module
         }
 
         return $securityBuilder;
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    public function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

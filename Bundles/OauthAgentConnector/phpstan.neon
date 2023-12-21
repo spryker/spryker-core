@@ -4,6 +4,6 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Instantiated class .+NativePasswordEncoder not found.#'
-        - '#Instantiated class .+BCryptPasswordEncoder not found.#'
         - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
-        - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
+        - '#Call to method isPasswordValid\(\) on an unknown class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#'
+        - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) has invalid return type Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface.#'

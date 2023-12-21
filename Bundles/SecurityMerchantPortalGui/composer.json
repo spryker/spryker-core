@@ -9,7 +9,7 @@
         "spryker/kernel": "^3.33.0",
         "spryker/merchant-user": "^1.0.0",
         "spryker/messenger": "^3.0.0",
-        "spryker/security": "^1.5.0",
+        "spryker/security": "^1.8.0",
         "spryker/security-blocker": "^1.0.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/security-merchant-portal-gui-extension": "^1.0.0",
@@ -33,9 +33,6 @@
         "spryker/testify": "*",
         "spryker/user": "*",
         "spryker/validator": "*"
-    },
-    "suggest": {
-        "spryker/container": "Add this module when you want to use the Container."
     },
     "autoload": {
         "psr-4": {

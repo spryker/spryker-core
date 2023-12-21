@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SecurityBlockerMerchantPortalGui\PHPMD)
  */
 class SecurityBlockerMerchantPortalGuiCommunicationTester extends Actor
 {

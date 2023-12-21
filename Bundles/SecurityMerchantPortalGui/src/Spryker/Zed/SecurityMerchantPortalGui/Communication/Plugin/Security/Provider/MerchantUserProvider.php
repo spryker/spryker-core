@@ -12,7 +12,10 @@ use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Exception\AccessDeniedException;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -45,17 +48,28 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
     /**
      * @param string $username
      *
-     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     * @throws \Spryker\Zed\SecurityMerchantPortalGui\Communication\Exception\AccessDeniedException
-     *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function loadUserByUsername(string $username): UserInterface
     {
-        $merchantUserTransfer = $this->findMerchantUser($username);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @throws \Spryker\Zed\SecurityMerchantPortalGui\Communication\Exception\AccessDeniedException
+     * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $merchantUserTransfer = $this->findMerchantUser($identifier);
 
         if ($merchantUserTransfer === null) {
-            throw new UsernameNotFoundException();
+            throw $this->getUserNotFoundException();
         }
 
         foreach ($this->merchantUserLoginRestrictionPlugins as $merchantUserLoginRestrictionPlugin) {
@@ -64,14 +78,14 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
             }
         }
 
-        return $this->getFactory()
-            ->createSecurityUser($merchantUserTransfer);
+        return $this->getFactory()->createSecurityUser($merchantUserTransfer);
     }
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
@@ -84,7 +98,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
         $merchantUserTransfer = $this->findMerchantUser($user->getUsername());
 
         if ($merchantUserTransfer === null) {
-            throw new UsernameNotFoundException();
+            throw $this->getUserNotFoundException();
         }
 
         return $this->getFactory()->createSecurityUser($merchantUserTransfer);
@@ -116,5 +130,28 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
                     ->setStatus('active')
                     ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED),
             );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Exception\AuthenticationException
+     */
+    protected function getUserNotFoundException(): AuthenticationException
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            /** @phpstan-ignore-next-line */
+            return new UsernameNotFoundException();
+        }
+
+        return new UserNotFoundException();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

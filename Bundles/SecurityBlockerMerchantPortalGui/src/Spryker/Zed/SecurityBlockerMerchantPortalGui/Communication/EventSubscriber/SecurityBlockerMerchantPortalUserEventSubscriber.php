@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\AuthenticationEvents;
+use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 
 class SecurityBlockerMerchantPortalUserEventSubscriber implements EventSubscriberInterface
 {
@@ -95,7 +95,7 @@ class SecurityBlockerMerchantPortalUserEventSubscriber implements EventSubscribe
     public static function getSubscribedEvents(): array
     {
         return [
-            AuthenticationEvents::AUTHENTICATION_FAILURE => static::AUTHENTICATION_FAILURE_EVENT,
+            LoginFailureEvent::class => static::AUTHENTICATION_FAILURE_EVENT,
             KernelEvents::REQUEST => ['onKernelRequest', static::KERNEL_REQUEST_SUBSCRIBER_PRIORITY],
         ];
     }

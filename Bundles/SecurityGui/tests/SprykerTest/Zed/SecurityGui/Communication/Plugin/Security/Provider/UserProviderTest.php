@@ -46,13 +46,11 @@ class UserProviderTest extends Unit
         );
         $userTransfer = $this->tester->haveUser();
 
-        $userProvider = $this->tester->getCommunicationFactory()->createUserProvider();
-
         // Assert
         $this->expectException(AccessDeniedException::class);
 
         // Act
-        $userProvider->loadUserByUsername($userTransfer->getUsernameOrFail());
+        $this->tester->getUser($userTransfer->getUsernameOrFail());
     }
 
     /**
@@ -67,10 +65,8 @@ class UserProviderTest extends Unit
         );
         $userTransfer = $this->tester->haveUser();
 
-        $userProvider = $this->tester->getCommunicationFactory()->createUserProvider();
-
         // Act
-        $user = $userProvider->loadUserByUsername($userTransfer->getUsernameOrFail());
+        $user = $this->tester->getUser($userTransfer->getUsernameOrFail());
 
         // Assert
         $this->assertInstanceOf(UserInterface::class, $user);

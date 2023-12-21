@@ -10,6 +10,7 @@ namespace Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -34,9 +35,9 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
         /** @var \Spryker\Zed\SecurityGui\Communication\Security\User $user */
         $user = $token->getUser();

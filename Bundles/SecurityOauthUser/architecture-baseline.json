@@ -57,13 +57,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
-        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::loadUserByUsername()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
         "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::refreshUser()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
@@ -73,6 +66,13 @@
         "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
         "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::supportsClass()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/SecurityOauthUserCommunicationFactory.php",
+        "description": "`SecurityOauthUserCommunicationFactory::createSecurityBuilderExpander()` in `Spryker\\Zed\\SecurityOauthUser\\Communication\\SecurityOauthUserCommunicationFactory::createSecurityBuilderExpander()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     },

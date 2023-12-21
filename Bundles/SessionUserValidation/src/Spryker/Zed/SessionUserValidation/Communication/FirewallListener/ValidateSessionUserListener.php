@@ -98,7 +98,7 @@ class ValidateSessionUserListener extends AbstractListener
 
         if (!$this->sessionUserValidatorPlugin->isSessionUserValid($sessionUserTransfer)) {
             $session->invalidate(0);
-            $this->tokenStorage->setToken();
+            $this->tokenStorage->setToken(null);
             $event->setResponse(new RedirectResponse(static::LOGIN_PATH));
         }
     }

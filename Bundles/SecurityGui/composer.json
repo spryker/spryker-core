@@ -7,7 +7,7 @@
         "php": ">=8.1",
         "spryker/kernel": "^3.30.0",
         "spryker/messenger": "^3.0.0",
-        "spryker/security": "^1.3.0",
+        "spryker/security": "^1.8.0",
         "spryker/security-blocker": "^1.0.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/security-gui-extension": "^1.2.0",
@@ -30,7 +30,6 @@
         "spryker/validator": "*"
     },
     "suggest": {
-        "spryker/container": "Add this module to use the Container.",
         "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces."
     },
     "autoload": {

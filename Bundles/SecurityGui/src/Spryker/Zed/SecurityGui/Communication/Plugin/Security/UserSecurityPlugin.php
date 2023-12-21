@@ -11,15 +11,18 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecurityGui\Communication\Form\LoginForm;
 use Spryker\Zed\SecurityGui\SecurityGuiConfig;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SecurityGui\Communication\Plugin\Security\ZedUserSecurityPlugin} instead.
+ *
  * @method \Spryker\Zed\SecurityGui\Communication\SecurityGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityGui\Business\SecurityGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\SecurityGui\SecurityGuiConfig getConfig()
  */
-class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @var string

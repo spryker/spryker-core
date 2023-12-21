@@ -36,6 +36,9 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -893,7 +896,11 @@ class Customer implements CustomerInterface
             return $currentPassword;
         }
 
-        return $this->getPasswordEncoder()->encodePassword($currentPassword, static::BCRYPT_SALT);
+        if ($this->isSymfonyVersion5() === true) {
+            return $this->getPasswordEncoder()->encodePassword($currentPassword, static::BCRYPT_SALT);
+        }
+
+        return $this->createPasswordHasher()->hash($currentPassword);
     }
 
     /**
@@ -905,6 +912,14 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @return \Symfony\Component\PasswordHasher\PasswordHasherInterface
+     */
+    public function createPasswordHasher(): PasswordHasherInterface
+    {
+        return new NativePasswordHasher(null, null, static::BCRYPT_FACTOR);
+    }
+
+    /**
      * @param string $hash
      * @param string $rawPassword
      *
@@ -912,7 +927,11 @@ class Customer implements CustomerInterface
      */
     protected function isValidPassword($hash, $rawPassword)
     {
-        return $this->getPasswordEncoder()->isPasswordValid($hash, $rawPassword, static::BCRYPT_SALT);
+        if ($this->isSymfonyVersion5() === true) {
+            return $this->getPasswordEncoder()->isPasswordValid($hash, $rawPassword, static::BCRYPT_SALT);
+        }
+
+        return $this->createPasswordHasher()->verify($hash, $rawPassword);
     }
 
     /**
@@ -1034,5 +1053,15 @@ class Customer implements CustomerInterface
                 $index === $customersCount ? PHP_EOL : '',
             ));
         }
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

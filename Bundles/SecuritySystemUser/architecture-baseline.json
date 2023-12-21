@@ -57,13 +57,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Plugin/Security/Provider/SystemUserProvider.php",
-        "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Plugin\\Security\\Provider\\SystemUserProvider::loadUserByUsername()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Plugin/Security/Provider/SystemUserProvider.php",
         "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Plugin\\Security\\Provider\\SystemUserProvider::refreshUser()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
@@ -77,30 +70,9 @@
         "priority": "1"
     },
     {
-        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Security/SystemUser.php",
-        "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Security\\SystemUser::getRoles()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Security/SystemUser.php",
-        "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Security\\SystemUser::getSalt()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Security/SystemUser.php",
-        "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Security\\SystemUser::getUsername()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/Security/SystemUser.php",
-        "description": "Method `Spryker\\Zed\\SecuritySystemUser\\Communication\\Security\\SystemUser::getPassword()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "fileName": "src/Spryker/Zed/SecuritySystemUser/Communication/SecuritySystemUserCommunicationFactory.php",
+        "description": "`SecuritySystemUserCommunicationFactory::createSecurityBuilderExpander()` in `Spryker\\Zed\\SecuritySystemUser\\Communication\\SecuritySystemUserCommunicationFactory::createSecurityBuilderExpander()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     }

@@ -1,7 +1,21 @@
 [
     {
         "fileName": "src/Spryker/Zed/Security/Communication/SecurityCommunicationFactory.php",
-        "description": "`SecurityCommunicationFactory::createPasswordEncoder()` in `Spryker\\Zed\\Security\\Communication\\SecurityCommunicationFactory::createPasswordEncoder()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "description": "`SecurityCommunicationFactory::createServicesLoader()` in `Spryker\\Zed\\Security\\Communication\\SecurityCommunicationFactory::createServicesLoader()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Security/Communication/SecurityCommunicationFactory.php",
+        "description": "`SecurityCommunicationFactory::createUserPasswordValidatorConstraint()` in `Spryker\\Zed\\Security\\Communication\\SecurityCommunicationFactory::createUserPasswordValidatorConstraint()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Security/Communication/SecurityCommunicationFactory.php",
+        "description": "`SecurityCommunicationFactory::createSecurityApplicationBooter()` in `Spryker\\Zed\\Security\\Communication\\SecurityCommunicationFactory::createSecurityApplicationBooter()` contains 2 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"

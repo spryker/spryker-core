@@ -11,15 +11,18 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecuritySystemUser\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\Authenticator\TokenAuthenticator;
 use Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\ZedSystemUserSecurityPlugin} instead.
+ *
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
  * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
-class SystemUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class SystemUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @var string

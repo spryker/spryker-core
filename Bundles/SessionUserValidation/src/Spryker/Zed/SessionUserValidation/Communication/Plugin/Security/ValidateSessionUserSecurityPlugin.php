@@ -11,12 +11,15 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SessionUserValidation\Communication\Extender\SecurityServiceExtenderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SessionUserValidation\Communication\Plugin\Security\ZedValidateSessionUserSecurityPlugin} instead.
+ *
  * @method \Spryker\Zed\SessionUserValidation\Communication\SessionUserValidationCommunicationFactory getFactory()
  * @method \Spryker\Zed\SessionUserValidation\SessionUserValidationConfig getConfig()
  */
-class ValidateSessionUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class ValidateSessionUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityServiceExtenderInterface
 {
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE

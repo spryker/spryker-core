@@ -9,12 +9,16 @@ namespace Spryker\Zed\SessionUserValidation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SessionUserValidation\Communication\EventListener\SaveSessionUserListener;
+use Spryker\Zed\SessionUserValidation\Communication\Extender\SecurityServiceExtender;
+use Spryker\Zed\SessionUserValidation\Communication\Extender\SecurityServiceExtenderInterface;
 use Spryker\Zed\SessionUserValidation\Communication\FirewallListener\ValidateSessionUserListener;
+use Spryker\Zed\SessionUserValidation\Communication\Plugin\Security\ValidateSessionUserSecurityPlugin;
 use Spryker\Zed\SessionUserValidation\Dependency\Facade\SessionUserValidationToUserFacadeInterface;
 use Spryker\Zed\SessionUserValidation\SessionUserValidationDependencyProvider;
 use Spryker\Zed\SessionUserValidationExtension\Dependency\Plugin\SessionUserSaverPluginInterface;
 use Spryker\Zed\SessionUserValidationExtension\Dependency\Plugin\SessionUserValidatorPluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Firewall\AbstractListener;
 
@@ -70,5 +74,20 @@ class SessionUserValidationCommunicationFactory extends AbstractCommunicationFac
     public function getUserFacade(): SessionUserValidationToUserFacadeInterface
     {
         return $this->getProvidedDependency(SessionUserValidationDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionUserValidation\Communication\Extender\SecurityServiceExtenderInterface
+     */
+    public function createSecurityServiceExtender(): SecurityServiceExtenderInterface
+    {
+        if (class_exists(AuthenticationProviderManager::class) === true) {
+            return new ValidateSessionUserSecurityPlugin();
+        }
+
+        return new SecurityServiceExtender(
+            $this->getUserFacade(),
+            $this->getSessionUserValidatorPlugin(),
+        );
     }
 }

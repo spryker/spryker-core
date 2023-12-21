@@ -19,6 +19,8 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\RequestContext;
 
 /**
+ * @deprecated Use {@link \Spryker\Yves\Http\Plugin\Application\YvesHttpApplicationPlugin} instead.
+ *
  * @method \Spryker\Yves\Http\HttpConfig getConfig()
  * @method \Spryker\Yves\Http\HttpFactory getFactory()
  */

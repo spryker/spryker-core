@@ -10,7 +10,10 @@ namespace Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\Provider;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecuritySystemUser\Communication\Security\SystemUser;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -28,7 +31,17 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        return $this->getUserByToken($username);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->getUserByToken($identifier);
     }
 
     /**
@@ -62,6 +75,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
      * @param string $token
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
@@ -80,13 +94,14 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
             }
         }
 
-        throw new UsernameNotFoundException();
+        throw $this->getUserNotFoundException();
     }
 
     /**
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Symfony\Component\Security\Core\Exception\UserNotFoundException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
@@ -101,7 +116,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
             }
         }
 
-        throw new UsernameNotFoundException();
+        throw $this->getUserNotFoundException();
     }
 
     /**
@@ -113,5 +128,28 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
     protected function isValidToken(string $userToken, string $token): bool
     {
         return password_verify($userToken, base64_decode($token));
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Exception\AuthenticationException
+     */
+    protected function getUserNotFoundException(): AuthenticationException
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            /** @phpstan-ignore-next-line */
+            return new UsernameNotFoundException();
+        }
+
+        return new UserNotFoundException();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

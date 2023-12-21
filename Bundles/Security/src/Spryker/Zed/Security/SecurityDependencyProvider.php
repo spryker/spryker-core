@@ -9,6 +9,7 @@ namespace Spryker\Zed\Security;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Security\Communication\Router\SecurityRouter;
 
 /**
  * @method \Spryker\Zed\Security\SecurityConfig getConfig()
@@ -28,6 +29,11 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
+     * @var string
+     */
+    public const SECURITY_ROUTERS = 'SECURITY_ROUTERS';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -37,6 +43,7 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addSecurityPlugins($container);
+        $container = $this->addSecurityRouter($container);
 
         return $container;
     }
@@ -89,5 +96,19 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSecurityPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSecurityRouter(Container $container): Container
+    {
+        $container->set(static::SECURITY_ROUTERS, function () {
+            return new SecurityRouter();
+        });
+
+        return $container;
     }
 }

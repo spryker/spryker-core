@@ -1,5 +1,10 @@
 parameters:
     level: 8
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Parameter \#3 \$firewallName of class Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken constructor expects string, array\<int, string\> given.#'
+        - '#Instantiated class .+UsernameNotFoundException not found.#'
+        - '#Parameter \#1 \$passport of method .+MerchantLoginFormAuthenticator::createToken\(\) expects .+Passport, .+PassportInterface given.#'
+        - '#Throwing object of an unknown class .+UsernameNotFoundException.#'
+        - '#PHPDoc tag @throws with type .+UsernameNotFoundException\|.+UserNotFoundException is not subtype of Throwable#'

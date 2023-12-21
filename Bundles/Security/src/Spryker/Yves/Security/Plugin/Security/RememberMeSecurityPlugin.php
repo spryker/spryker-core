@@ -34,6 +34,8 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
      * {@inheritDoc}
      * - Adds remember_me related services.
      * - Adds a ResponseListener.
+     * - Compatible only with `symfony/security-core` package version ^5.0.0. To be removed once Symfony 5 support is discontinued.
+     * For `symfony/security-core` package version >= 6 use {@link \SprykerShop\Yves\CustomerPage\Plugin\Security\CustomerRememberMeSecurityPlugin} instead.
      *
      * @api
      *

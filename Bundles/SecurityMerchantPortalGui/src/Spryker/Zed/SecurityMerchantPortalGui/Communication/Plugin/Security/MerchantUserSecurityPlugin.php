@@ -11,14 +11,17 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpanderInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantLoginForm;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\ZedMerchantUserSecurityPlugin} instead.
+ *
  * @method \Spryker\Zed\SecurityMerchantPortalGui\Communication\SecurityMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig getConfig()
  */
-class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
+class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface, SecurityBuilderExpanderInterface
 {
     /**
      * @var string

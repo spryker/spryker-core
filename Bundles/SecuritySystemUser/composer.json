@@ -19,10 +19,8 @@
         "spryker/event-dispatcher": "*",
         "spryker/router": "*",
         "spryker/security": "*",
+        "spryker/session": "*",
         "spryker/testify": "*"
-    },
-    "suggest": {
-        "spryker/container": "Add this module when you want to use the Container."
     },
     "autoload": {
         "psr-4": {

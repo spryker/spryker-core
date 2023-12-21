@@ -78,7 +78,7 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -88,5 +88,13 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     public function getUserTransfer(): UserTransfer
     {
         return $this->userTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->userTransfer->getUsernameOrFail();
     }
 }

@@ -8,7 +8,7 @@
         "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/security-extension": "^1.1.0",
-        "spryker/symfony": "^3.8.0",
+        "spryker/symfony": "^3.15.0",
         "spryker/validator-extension": "^1.0.0"
     },
     "require-dev": {
@@ -23,7 +23,6 @@
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/container": "Add this module to use the Container.",
         "spryker/event-dispatcher": "Add this module to use the EventDispatcher.",
         "spryker/event-dispatcher-extension": "Add this module to use the EventDispatcherExtension.",
         "spryker/log": "Add this module when you want to use the Logger."

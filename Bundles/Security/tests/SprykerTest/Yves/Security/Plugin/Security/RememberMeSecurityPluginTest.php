@@ -54,6 +54,10 @@ class RememberMeSecurityPluginTest extends Unit
     {
         parent::setUp();
 
+        if ($this->tester->isSymfonyVersion5() !== true) {
+            $this->markTestSkipped('Compatible only with `symfony/security-core` package version ^5.0.0. To be removed once Symfony 5 support is discontinued.');
+        }
+
         $this->interactiveLoginTriggered = false;
     }
 

@@ -42,7 +42,7 @@ class SystemUser implements SystemUserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -66,15 +66,23 @@ class SystemUser implements SystemUserInterface
     /**
      * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 }

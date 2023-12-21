@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.1",
+        "spryker/container": "^1.4.0",
         "spryker/kernel": "^3.30.0",
         "spryker/security-extension": "^1.0.0",
         "spryker/session-user-validation-extension": "^1.0.0",
@@ -13,12 +14,10 @@
         "spryker/user": "^3.17.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/container": "*"
+        "spryker/code-sniffer": "*"
     },
     "suggest": {
-        "spryker/container": "Add this module if you want to use security plugins.N",
-        "spryker/event-dispatcher": "Add this module if you want to use security plugins.N"
+        "spryker/event-dispatcher": "Add this module if you want to use security plugins."
     },
     "autoload": {
         "psr-4": {

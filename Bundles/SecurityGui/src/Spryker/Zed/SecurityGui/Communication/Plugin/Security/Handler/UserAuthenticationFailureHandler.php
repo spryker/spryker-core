@@ -22,22 +22,23 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 class UserAuthenticationFailureHandler extends AbstractPlugin implements AuthenticationFailureHandlerInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
+     * @var string
+     */
+    protected const MESSAGE_AUTHENTICATION_FAILED = 'Authentication failed!';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
     {
         $this->getFactory()
             ->getMessengerFacade()
             ->addErrorMessage(
                 (new MessageTransfer())
-                ->setValue('Authentication failed!'),
+                    ->setValue(static::MESSAGE_AUTHENTICATION_FAILED),
             );
 
         return new RedirectResponse($this->getConfig()->getUrlLogin());

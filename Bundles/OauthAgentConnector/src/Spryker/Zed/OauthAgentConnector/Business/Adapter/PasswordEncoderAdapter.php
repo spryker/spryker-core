@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\OauthAgentConnector\Business\Adapter;
 
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -27,9 +29,11 @@ class PasswordEncoderAdapter implements PasswordEncoderAdapterInterface
      */
     public function isPasswordValid(string $encoded, string $raw, ?string $salt = null): bool
     {
-        return $this
-            ->getPasswordEncoder()
-            ->isPasswordValid($encoded, $raw, $salt);
+        if ($this->isSymfonyVersion5() === true) {
+            return $this->getPasswordEncoder()->isPasswordValid($encoded, $raw, $salt);
+        }
+
+        return $this->createPasswordHasher()->verify($encoded, $raw);
     }
 
     /**
@@ -37,10 +41,24 @@ class PasswordEncoderAdapter implements PasswordEncoderAdapterInterface
      */
     protected function getPasswordEncoder(): PasswordEncoderInterface
     {
-        if (class_exists(NativePasswordEncoder::class)) {
-            return new NativePasswordEncoder();
-        }
+        return new NativePasswordEncoder();
+    }
 
-        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);
+    /**
+     * @return \Symfony\Component\PasswordHasher\PasswordHasherInterface
+     */
+    public function createPasswordHasher(): PasswordHasherInterface
+    {
+        return new NativePasswordHasher();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

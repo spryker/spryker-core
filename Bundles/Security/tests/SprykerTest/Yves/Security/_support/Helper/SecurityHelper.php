@@ -16,7 +16,9 @@ use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterfac
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
+use Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
+use Spryker\Yves\Security\Router\SecurityRouter;
 use Spryker\Yves\Security\SecurityConfig;
 use Spryker\Yves\Security\SecurityDependencyProvider;
 use Spryker\Yves\Security\SecurityFactory;
@@ -25,6 +27,7 @@ use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Yves\Testify\Helper\DependencyProviderHelperTrait;
 use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 class SecurityHelper extends Module
 {
@@ -40,6 +43,16 @@ class SecurityHelper extends Module
     protected const MODULE_NAME = 'Security';
 
     /**
+     * @var string
+     */
+    protected const REQUEST_STACK = 'request_stack';
+
+    /**
+     * @var string
+     */
+    protected const REMEMBER_ME = 'remember_me';
+
+    /**
      * @var array
      */
     protected $securityPlugins = [];
@@ -51,11 +64,13 @@ class SecurityHelper extends Module
      */
     public function _before(TestInterface $test): void
     {
-        $this->securityPlugins[] = new RememberMeSecurityPlugin();
+        if ($this->isSymfonyVersion5() === true) {
+            $this->securityPlugins[] = new RememberMeSecurityPlugin();
 
-        $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getSecurityApplicationPluginStub(),
-        );
+            $this->getApplicationHelper()->addApplicationPlugin(
+                $this->getSecurityApplicationPluginStub(),
+            );
+        }
 
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new RouterListenerEventDispatcherPlugin());
     }
@@ -63,10 +78,11 @@ class SecurityHelper extends Module
     /**
      * @return \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin
      */
-    protected function getSecurityApplicationPluginStub(): SecurityApplicationPlugin
+    protected function getSecurityApplicationPluginStub()
     {
-        /** @var \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin $securityApplicationPlugin */
-        $securityApplicationPlugin = Stub::make(SecurityApplicationPlugin::class, [
+        $securityApplicationPlugin = $this->isSymfonyVersion5() === true ? SecurityApplicationPlugin::class : YvesSecurityApplicationPlugin::class;
+
+        $securityApplicationPlugin = Stub::make($securityApplicationPlugin, [
             'getConfig' => function () {
                 return $this->getConfig();
             },
@@ -140,6 +156,52 @@ class SecurityHelper extends Module
         $this->getDependencyProviderHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
 
         return $this;
+    }
+
+    /**
+     * @param \Spryker\Shared\Security\Configuration\SecurityConfiguration $securityConfiguration
+     *
+     * @return $this
+     */
+    public function mockYvesSecurityPlugin(SecurityConfiguration $securityConfiguration)
+    {
+        $securityPluginStub = Stub::makeEmpty(SecurityPluginInterface::class, [
+            'extend' => function (SecurityBuilderInterface $securityBuilder) use ($securityConfiguration) {
+                $securityConfiguration = $securityConfiguration->getConfiguration();
+                $securityBuilder = $this->addFirewalls($securityBuilder, $securityConfiguration);
+                $securityBuilder = $this->addAccessRules($securityBuilder, $securityConfiguration);
+                $securityBuilder = $this->addRoleHierarchy($securityBuilder, $securityConfiguration);
+
+                return $securityBuilder;
+            },
+        ]);
+
+        $this->securityPlugins[] = $securityPluginStub;
+
+        $this->getDependencyProviderHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
+
+        return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function enableSecurityApplicationPlugin(): void
+    {
+        $this->getApplicationHelper()->addApplicationPlugin(
+            $this->getSecurityApplicationPluginStub(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function mockSecurityDependencies(): void
+    {
+        $this->getDependencyProviderHelper()->setDependency(
+            SecurityDependencyProvider::SERVICE_SECURITY_ROUTERS,
+            new SecurityRouter(),
+        );
     }
 
     /**
@@ -251,5 +313,15 @@ class SecurityHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->securityPlugins = [];
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    public function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

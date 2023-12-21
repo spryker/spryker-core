@@ -68,13 +68,14 @@ class MerchantUserProviderTest extends Unit
         $userTransfer = $this->tester->haveUser([UserTransfer::STATUS => static::USER_STATUS_ACTIVE]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
-        $merchantUserProvider = $this->tester->getFactory()->createMerchantUserProvider();
-
         // Assert
         $this->expectException(AccessDeniedException::class);
 
         // Act
-        $merchantUserProvider->loadUserByUsername($userTransfer->getUsernameOrFail());
+        $this->tester->getUser(
+            $this->tester->getFactory()->createMerchantUserProvider(),
+            $userTransfer->getUsernameOrFail(),
+        );
     }
 
     /**
@@ -98,10 +99,11 @@ class MerchantUserProviderTest extends Unit
         $userTransfer = $this->tester->haveUser([UserTransfer::STATUS => static::USER_STATUS_ACTIVE]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
-        $merchantUserProvider = $this->tester->getFactory()->createMerchantUserProvider();
-
         // Act
-        $user = $merchantUserProvider->loadUserByUsername($userTransfer->getUsernameOrFail());
+        $user = $this->tester->getUser(
+            $this->tester->getFactory()->createMerchantUserProvider(),
+            $userTransfer->getUsernameOrFail(),
+        );
 
         // Assert
         $this->assertInstanceOf(UserInterface::class, $user);

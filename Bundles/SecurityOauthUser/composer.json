@@ -26,9 +26,6 @@
         "spryker/session": "*",
         "spryker/testify": "*"
     },
-    "suggest": {
-        "spryker/container": "Add this module to use the Container."
-    },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"

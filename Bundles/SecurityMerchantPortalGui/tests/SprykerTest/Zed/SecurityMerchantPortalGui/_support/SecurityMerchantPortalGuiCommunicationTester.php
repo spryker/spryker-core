@@ -12,6 +12,8 @@ use Codeception\Stub;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Inherited Methods
@@ -27,7 +29,7 @@ use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUse
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(\PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SecurityMerchantPortalGui\PHPMD)
  */
 class SecurityMerchantPortalGuiCommunicationTester extends Actor
 {
@@ -65,5 +67,20 @@ class SecurityMerchantPortalGuiCommunicationTester extends Actor
         }
 
         return $this->haveGroup([GroupTransfer::NAME => static::ROOT_GROUP_NAME]);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $merchantUserProvider
+     * @param string $username
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function getUser(UserProviderInterface $merchantUserProvider, string $username): UserInterface
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            return $merchantUserProvider->loadUserByUsername($username);
+        }
+
+        return $merchantUserProvider->loadUserByIdentifier($username);
     }
 }

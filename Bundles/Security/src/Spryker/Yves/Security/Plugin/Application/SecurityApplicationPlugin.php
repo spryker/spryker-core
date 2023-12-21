@@ -15,6 +15,8 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPlu
 use Spryker\Shared\Security\EventListener\RedirectLogoutListener;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Security\Booter\SecurityApplicationBooterInterface;
+use Spryker\Yves\Security\Loader\ServicesLoaderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -76,10 +78,12 @@ use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Yves\Security\Plugin\Application\YvesSecurityApplicationPlugin} instead.
+ *
  * @method \Spryker\Yves\Security\SecurityFactory getFactory()
  * @method \Spryker\Yves\Security\SecurityConfig getConfig()()
  */
-class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
+class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface, ServicesLoaderInterface, SecurityApplicationBooterInterface
 {
     /**
      * @var string

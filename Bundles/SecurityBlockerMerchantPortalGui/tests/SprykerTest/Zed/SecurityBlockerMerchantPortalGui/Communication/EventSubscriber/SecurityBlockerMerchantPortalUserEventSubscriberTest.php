@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\AuthenticationEvents;
+use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 
 /**
  * Auto-generated group annotations
@@ -170,7 +170,7 @@ class SecurityBlockerMerchantPortalUserEventSubscriberTest extends Unit
         $event = $this->createRequestEventForMethod($securityCheckAuthContextTransfer, Request::METHOD_POST);
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addSubscriber($this->subscriber);
-        $eventDispatcher->dispatch($event, AuthenticationEvents::AUTHENTICATION_FAILURE);
+        $eventDispatcher->dispatch($event, LoginFailureEvent::class);
     }
 
     /**
@@ -193,7 +193,7 @@ class SecurityBlockerMerchantPortalUserEventSubscriberTest extends Unit
         $event = $this->createRequestEventForMethod($securityCheckAuthContextTransfer, Request::METHOD_POST);
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addSubscriber($this->subscriber);
-        $eventDispatcher->dispatch($event, AuthenticationEvents::AUTHENTICATION_FAILURE);
+        $eventDispatcher->dispatch($event, LoginFailureEvent::class);
     }
 
     /**

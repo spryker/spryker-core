@@ -8,8 +8,9 @@
 namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Security;
 
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-class MerchantUser implements MerchantUserInterface
+class MerchantUser implements MerchantUserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var \Generated\Shared\Transfer\MerchantUserTransfer
@@ -75,6 +76,14 @@ class MerchantUser implements MerchantUserInterface
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 
     /**

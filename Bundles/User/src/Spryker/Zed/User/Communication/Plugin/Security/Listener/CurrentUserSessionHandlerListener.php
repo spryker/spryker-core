@@ -14,6 +14,7 @@ use Spryker\Zed\User\Business\UserFacadeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Firewall\AbstractListener;
@@ -57,7 +58,7 @@ class CurrentUserSessionHandlerListener extends AbstractListener
      *
      * @return void
      */
-    public function authenticate(RequestEvent $event)
+    public function authenticate(RequestEvent $event): void
     {
         $token = $this->tokenStorage->getToken();
         if (!$token) {
@@ -69,12 +70,12 @@ class CurrentUserSessionHandlerListener extends AbstractListener
         }
 
         $currentUser = $this->userFacade->getCurrentUser();
-        if ($currentUser->getUsername() === $token->getUser()->getUsername()) {
+        if ($currentUser->getUsername() === $this->getUserIdentifier($token->getUser())) {
             return;
         }
 
         $currentUser = $this->getUserTransfer(
-            $token->getUser()->getUsername(),
+            $this->getUserIdentifier($token->getUser()),
         );
 
         $this->userFacade->setCurrentUser($currentUser);
@@ -109,5 +110,29 @@ class CurrentUserSessionHandlerListener extends AbstractListener
             ->setThrowUserNotFoundException(true);
 
         return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return string
+     */
+    protected function getUserIdentifier(UserInterface $user): string
+    {
+        if ($this->isSymfonyVersion5() === true) {
+            return $user->getUsername();
+        }
+
+        return $user->getUserIdentifier();
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

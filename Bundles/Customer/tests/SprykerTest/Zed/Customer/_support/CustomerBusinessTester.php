@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
@@ -44,6 +46,11 @@ class CustomerBusinessTester extends Actor
     public const TESTER_PASSWORD = '$2tester';
 
     /**
+     * @var int
+     */
+    protected const BCRYPT_FACTOR = 12;
+
+    /**
      * @param string $hash
      * @param string $rawPassword
      * @param string $salt
@@ -52,9 +59,15 @@ class CustomerBusinessTester extends Actor
      */
     public function assertPasswordsEqual(string $hash, string $rawPassword, string $salt = ''): void
     {
-        $passwordEncoder = $this->getPasswordEncoder();
+        if ($this->isSymfonyVersion5() === true) {
+            $this->assertPasswordIsEncoded($hash, $rawPassword, $salt);
 
-        $this->assertTrue($passwordEncoder->isPasswordValid($hash, $rawPassword, $salt), 'Passwords are not equal.');
+            return;
+        }
+
+        $passwordHasher = $this->createPasswordHasher();
+
+        $this->assertTrue($passwordHasher->verify($hash, $rawPassword), 'Passwords are not equal.');
     }
 
     /**
@@ -82,14 +95,42 @@ class CustomerBusinessTester extends Actor
     }
 
     /**
+     * @param string $hash
+     * @param string $rawPassword
+     * @param string $salt
+     *
+     * @return void
+     */
+    protected function assertPasswordIsEncoded(string $hash, string $rawPassword, string $salt = ''): void
+    {
+        $passwordEncoder = $this->getPasswordEncoder();
+
+        $this->assertTrue($passwordEncoder->isPasswordValid($hash, $rawPassword, $salt), 'Passwords are not equal.');
+    }
+
+    /**
      * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
      */
     protected function getPasswordEncoder(): PasswordEncoderInterface
     {
-        if (class_exists(BCryptPasswordEncoder::class)) {
-            return new BCryptPasswordEncoder(12);
-        }
+        return new NativePasswordEncoder(null, null, static::BCRYPT_FACTOR);
+    }
 
-        return new NativePasswordEncoder(null, null, 12);
+    /**
+     * @return \Symfony\Component\PasswordHasher\PasswordHasherInterface
+     */
+    protected function createPasswordHasher(): PasswordHasherInterface
+    {
+        return new NativePasswordHasher(null, null, static::BCRYPT_FACTOR);
+    }
+
+    /**
+     * @deprecated Shim for Symfony Security Core 5.x, to be removed when Symfony Security Core dependency becomes 6.x+.
+     *
+     * @return bool
+     */
+    protected function isSymfonyVersion5(): bool
+    {
+        return class_exists(AuthenticationProviderManager::class);
     }
 }

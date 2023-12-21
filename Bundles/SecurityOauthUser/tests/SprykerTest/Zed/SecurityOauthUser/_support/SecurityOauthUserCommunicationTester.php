@@ -26,7 +26,7 @@ use Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStra
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SecurityOauthUser\PHPMD)
  */
 class SecurityOauthUserCommunicationTester extends Actor
 {

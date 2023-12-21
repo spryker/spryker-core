@@ -9,6 +9,7 @@ namespace Spryker\Yves\Security;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Security\Router\SecurityRouter;
 
 /**
  * @method \Spryker\Yves\Security\SecurityConfig getConfig()
@@ -26,6 +27,11 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER = 'PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const SERVICE_SECURITY_ROUTERS = 'SECURITY_ROUTERS';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -36,6 +42,7 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addSecurityPlugins($container);
         $container = $this->addSecurityAuthenticationListenerFactoryTypeExpanderPlugins($container);
+        $container = $this->addSecurityRouter($container);
 
         return $container;
     }
@@ -82,5 +89,19 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSecurityAuthenticationListenerFactoryTypeExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSecurityRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_ROUTERS, function () {
+            return new SecurityRouter();
+        });
+
+        return $container;
     }
 }
