@@ -177,14 +177,48 @@ class TaxAppDataHelper extends Module
 
     /**
      * @param string $vendorCode
+     * @param int|null $idStore
+     * @param bool|null $isActive
      *
      * @return void
      */
-    public function assertTaxAppWithVendorCodeIsConfigured(string $vendorCode): void
+    public function assertTaxAppWithVendorCodeIsConfigured(string $vendorCode, ?int $idStore = null, ?bool $isActive = null): void
     {
         $taxAppConfigEntity = $this->findTaxAppConfigByVendorCode($vendorCode);
 
         $this->assertNotNull($taxAppConfigEntity, sprintf('Expected to find a Tax App configuration for the vendor with vendor code "%s" but it was not found.', $vendorCode));
+        $this->assertSame($taxAppConfigEntity->getFkStore(), $idStore, sprintf('Expected for a Tax App configuration to have the store with id "%s" but it has "%s".', $idStore, $taxAppConfigEntity->getFkStore()));
+
+        if ($isActive !== null) {
+            $this->assertSame($taxAppConfigEntity->getIsActive(), $isActive, sprintf('Expected for a Tax App configuration to have the isActive flag "%b" but it has "%b".', $isActive, $taxAppConfigEntity->getIsActive()));
+        }
+    }
+
+    /**
+     * @param string $vendorCode
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $allowedStores
+     *
+     * @return void
+     */
+    public function assertTaxAppWithVendorCodeIsConfiguredWithMultipleStores(string $vendorCode, array $allowedStores = []): void
+    {
+        $taxAppConfigEntities = $this->getTaxAppConfigQuery()
+            ->filterByVendorCode($vendorCode)
+            ->find();
+
+        $this->assertSame(count($allowedStores), $taxAppConfigEntities->count(), sprintf('Expected to find Tax App configurations with vendor code "%s" but it was not found.', $vendorCode));
+
+        $countAppConfigEntities = 0;
+        foreach ($taxAppConfigEntities as $taxAppConfigEntity) {
+            foreach ($allowedStores as $allowedStore) {
+                if ($taxAppConfigEntity->getFkStore() === $allowedStore->getIdStore()) {
+                    $this->assertSame($taxAppConfigEntity->getFkStore(), $allowedStore->getIdStore(), sprintf('Expected for a Tax App configuration to have the store with id "%s" but it has "%s".', $allowedStore->getIdStore(), $taxAppConfigEntity->getFkStore()));
+                    $countAppConfigEntities++;
+                }
+            }
+        }
+
+        $this->assertSame(count($allowedStores), $countAppConfigEntities, sprintf('Expected to find Tax App configurations with vendor code "%s" but it was not found.', $vendorCode));
     }
 
     /**
@@ -218,12 +252,32 @@ class TaxAppDataHelper extends Module
      */
     public function configureStoreFacadeGetStoreByStoreReferenceMethod(?StoreTransfer $storeTransfer = null): void
     {
-        $storeTransfer = $this->createStoreTransferWithStoreReference();
+        if (!$storeTransfer) {
+            $storeTransfer = $this->createStoreTransferWithStoreReference();
+        }
 
         $storeFacadeMock = Stub::makeEmpty(StoreFacadeInterface::class, [
             'getStoreByStoreReference' => $storeTransfer,
             'getCurrentStore' => $storeTransfer,
             'getAllStores' => [$storeTransfer],
+            'getIsDynamicStoreEnabled' => true,
+            'isDynamicStoreEnabled' => true,
+        ]);
+        $this->getLocatorHelper()->addToLocatorCache('store-facade', $storeFacadeMock);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer1
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer2
+     *
+     * @return void
+     */
+    public function configureStoreFacadeGetStoreByStoreReferenceWithMultipleStoresMethod(StoreTransfer $storeTransfer1, StoreTransfer $storeTransfer2): void
+    {
+        $storeFacadeMock = Stub::makeEmpty(StoreFacadeInterface::class, [
+            'getStoreByStoreReference' => $storeTransfer1,
+            'getCurrentStore' => $storeTransfer1,
+            'getAllStores' => [$storeTransfer1, $storeTransfer2],
             'getIsDynamicStoreEnabled' => true,
             'isDynamicStoreEnabled' => true,
         ]);

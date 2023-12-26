@@ -56,12 +56,6 @@ class ConfigDeleter implements ConfigDeleterInterface
     public function delete(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): void
     {
         try {
-            $taxAppConfigConditionsTransfer = $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail();
-
-            if ($taxAppConfigConditionsTransfer->getStoreReferences() !== []) {
-                $taxAppConfigCriteriaTransfer = $this->getStoreIdsByStoreReference($taxAppConfigCriteriaTransfer);
-            }
-
             $this->taxAppEntityManager->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
         } catch (NullValueException $e) {
             $this->logException($e);
@@ -78,20 +72,5 @@ class ConfigDeleter implements ConfigDeleterInterface
     protected function logException(Exception $e): void
     {
         $this->getLogger()->error(sprintf(static::LOG_MESSAGE_CONFIG_DELETION_FAILED, $e->getMessage()), ['exception' => $e]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer
-     */
-    protected function getStoreIdsByStoreReference(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): TaxAppConfigCriteriaTransfer
-    {
-        foreach ($taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail()->getStoreReferences() as $storeReference) {
-            $storeTransfer = $this->storeFacade->getStoreByStoreReference($storeReference);
-            $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail()->addFkStore($storeTransfer->getIdStoreOrFail());
-        }
-
-        return $taxAppConfigCriteriaTransfer;
     }
 }

@@ -39,6 +39,26 @@ class DeleteTaxAppTest extends Unit
         $storeTransfer = $this->tester->haveStore([], false);
         $taxAppConfigTransfer = $this->tester->haveTaxAppConfig(['vendor_code' => Uuid::uuid4()->toString(), 'fk_store' => $storeTransfer->getIdStore()]);
         $deleteTaxAppTransfer = $this->tester->haveDeleteTaxAppMessage(['vendor_code' => $taxAppConfigTransfer->getVendorCode()]);
+        $deleteTaxAppTransfer->getMessageAttributes()->setStoreReference('de-DE');
+
+        // Act
+        $this->tester->runMessageReceiveTest($deleteTaxAppTransfer, 'tax-commands');
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeDoesNotExist($taxAppConfigTransfer->getVendorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenDeleteTaxAppMessageIsReceivedWithoutStoreReferenceThenTaxAppConfigurationIsDeleted(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([], false);
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
+
+        $taxAppConfigTransfer = $this->tester->haveTaxAppConfig(['vendor_code' => Uuid::uuid4()->toString(), 'fk_store' => null]);
+        $deleteTaxAppTransfer = $this->tester->haveDeleteTaxAppMessage(['vendor_code' => $taxAppConfigTransfer->getVendorCode()]);
 
         // Act
         $this->tester->runMessageReceiveTest($deleteTaxAppTransfer, 'tax-commands');

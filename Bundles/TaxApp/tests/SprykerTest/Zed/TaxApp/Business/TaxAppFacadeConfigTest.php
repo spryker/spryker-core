@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\TaxApp\Business;
 use Codeception\Stub;
 use Codeception\Test\Unit;
 use Exception;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigConditionsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
@@ -54,14 +55,52 @@ class TaxAppFacadeConfigTest extends Unit
     public function testWhenTaxAppConfigDoesNotExistSaveTaxAppConfigSuccessfullySavesConfig(): void
     {
         // Arrange
-        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod();
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
 
         // Act
         $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode());
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode(), $storeTransfer->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigDoesNotExistSaveTaxAppConfigWithMultipleStoresSuccessfullySavesConfig(): void
+    {
+        // Arrange
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => 'store1'], false);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'store2'], false);
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceWithMultipleStoresMethod($storeTransfer1, $storeTransfer2);
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+
+        // Act
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfiguredWithMultipleStores($taxAppConfigTransfer->getVendorCode(), [$storeTransfer1, $storeTransfer2]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigDoesNotExistSaveTaxAppConfigWithTenantIdentifierSuccessfullySavesConfig(): void
+    {
+        // Arrange
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
+            TaxAppConfigTransfer::TENANT_IDENTIFIER => 'tenant-identifier',
+            TaxAppConfigTransfer::STORE_REFERENCE => null,
+        ]);
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+
+        // Act
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode(), $storeTransfer->getIdStore());
     }
 
     /**
@@ -70,18 +109,54 @@ class TaxAppFacadeConfigTest extends Unit
     public function testWhenTaxAppConfigExistsSaveTaxAppConfigSuccessfullyUpdatesExistingConfig(): void
     {
         // Arrange
-        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod();
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
         $vendorCode = Uuid::uuid4()->toString();
-        $storeTransfer = $this->tester->haveStore([], false);
-        $this->tester->haveTaxAppConfig(['vendor_code' => $vendorCode, 'fk_store' => $storeTransfer->getIdStore()]);
+        $this->tester->haveTaxAppConfig([
+            TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
+            TaxAppConfigTransfer::IS_ACTIVE => false,
+            'fk_store' => $storeTransfer->getIdStore(),
+        ]);
 
-        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['vendor_code' => $vendorCode]);
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
+            TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
+            TaxAppConfigTransfer::IS_ACTIVE => true,
+        ]);
 
         // Act
         $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode());
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode(), $storeTransfer->getIdStore(), true);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigExistsSaveTaxAppConfigWithTenantIdentifierSuccessfullyUpdatesExistingConfig(): void
+    {
+        // Arrange
+        $vendorCode = Uuid::uuid4()->toString();
+        $this->tester->haveTaxAppConfig([
+            TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
+            TaxAppConfigTransfer::TENANT_IDENTIFIER => 'tenant-identifier',
+            TaxAppConfigTransfer::STORE_REFERENCE => null,
+            TaxAppConfigTransfer::IS_ACTIVE => false,
+        ]);
+
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
+            TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
+            TaxAppConfigTransfer::TENANT_IDENTIFIER => 'tenant-identifier',
+            TaxAppConfigTransfer::STORE_REFERENCE => null,
+            TaxAppConfigTransfer::IS_ACTIVE => true,
+        ]);
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+
+        // Act
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode(), $storeTransfer->getIdStore(), true);
     }
 
     /**
@@ -98,6 +173,54 @@ class TaxAppFacadeConfigTest extends Unit
         $taxAppConfigCriteriaTransfer = $this->tester->createTaxAppConfigCriteriaTransferWithTaxAppConfigConditionsTransfer([
             'vendor_codes' => [$taxAppConfigTransfer->getVendorCode()],
             'store_references' => [$taxAppConfigTransfer->getStoreReference()],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeDoesNotExist($taxAppConfigTransfer->getVendorCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigExistsDeleteTaxAppConfigWithMultipleStoresIsSuccessful(): void
+    {
+        // Arrange
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => 'store1']);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'store2']);
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceWithMultipleStoresMethod($storeTransfer1, $storeTransfer2);
+
+        $vendorCode = Uuid::uuid4()->toString();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
+            TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
+        ]);
+
+        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
+
+        $taxAppConfigCriteriaTransfer = $this->tester->createTaxAppConfigCriteriaTransferWithTaxAppConfigConditionsTransfer([
+            'vendor_codes' => [$vendorCode],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->deleteTaxAppConfig($taxAppConfigCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeDoesNotExist($vendorCode);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenTaxAppConfigExistsDeleteTaxAppConfigWithoutStoreReferenceIsSuccessful(): void
+    {
+        // Arrange
+        $vendorCode = Uuid::uuid4()->toString();
+        $taxAppConfigTransfer = $this->tester->haveTaxAppConfig(['vendor_code' => $vendorCode]);
+
+        $taxAppConfigCriteriaTransfer = $this->tester->createTaxAppConfigCriteriaTransferWithTaxAppConfigConditionsTransfer([
+            'vendor_codes' => [$taxAppConfigTransfer->getVendorCode()],
         ]);
 
         // Act
@@ -156,31 +279,8 @@ class TaxAppFacadeConfigTest extends Unit
         $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer);
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testWhenMultipleTaxAppConfigExistsAndStoreReferenceIsNullSaveTaxAppConfigSuccessfullyUpdatesAllConfigs(): void
-    {
-        // Arrange
-        $tenant = 'tenant1';
-        $vendorCode = Uuid::uuid4()->toString();
-        $newApiUrl = 'new-api-url';
-
-        $secondTenantConfig = $this->tester->haveTaxAppConfig(['store_reference' => null, 'tenant_identifier' => 'tenant-2', 'vendor_code' => $vendorCode]);
-        $this->tester->haveTaxAppConfig(['api_url' => '1', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
-        $this->tester->haveTaxAppConfig(['api_url' => '2', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
-        $this->tester->haveTaxAppConfig(['api_url' => '3', 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
-
-        $taxAppConfigTransfer1 = $this->tester->createTaxAppConfigTransfer(['api_url' => $newApiUrl, 'store_reference' => null, 'tenant_identifier' => $tenant, 'vendor_code' => $vendorCode]);
-
-        // Act
-        $this->tester->getFacade()->saveTaxAppConfig($taxAppConfigTransfer1);
-
-        // Assert
-        $this->tester->assertAllTaxAppConfigsForTenantHaveNewApiUrl($taxAppConfigTransfer1, $newApiUrl);
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($taxAppConfigTransfer->getVendorCode(), $storeTransfer->getIdStore());
     }
 
     /**

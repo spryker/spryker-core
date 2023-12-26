@@ -40,7 +40,6 @@ class ConfigureTaxAppTest extends Unit
         parent::setUp();
 
         $this->tester->ensureTaxAppConfigTableIsEmpty();
-        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod();
     }
 
     /**
@@ -49,6 +48,9 @@ class ConfigureTaxAppTest extends Unit
     public function testWhenConfigureTaxAppMessageIsReceivedThenTheTaxAppIsConfigured(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->createStoreTransferWithStoreReference();
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
+
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $messageAttributesTransfer->setStoreReference('de-DE')
             ->setEmitter('emitter');
@@ -63,7 +65,7 @@ class ConfigureTaxAppTest extends Unit
         $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode());
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), $storeTransfer->getIdStore());
     }
 
     /**
@@ -72,6 +74,8 @@ class ConfigureTaxAppTest extends Unit
     public function testWhenConfigureTaxAppMessageIsReceivedAndTenantIdentifierIsPresentThenTheTaxAppIsConfigured(): void
     {
         // Arrange
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($this->tester->haveStore());
+
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $messageAttributesTransfer->setStoreReference('de-DE')
             ->setTenantIdentifier('tenant-identifier')
@@ -87,7 +91,32 @@ class ConfigureTaxAppTest extends Unit
         $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode());
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), null);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenConfigureTaxAppMessageIsReceivedAndTenantIdentifierIsPresentButStoreReferenceIsNullThenTheTaxAppIsConfigured(): void
+    {
+        // Arrange
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($this->tester->haveStore());
+
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $messageAttributesTransfer->setTenantIdentifier('tenant-identifier')
+            ->setActorId('actor-id');
+
+        $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
+        $configureTaxAppTransfer->setApiUrl('https://example.com')
+            ->setVendorCode(Uuid::uuid4()->toString())
+            ->setMessageAttributes($messageAttributesTransfer)
+            ->setIsActive(true);
+
+        // Act
+        $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
+
+        // Assert
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), null);
     }
 
     /**

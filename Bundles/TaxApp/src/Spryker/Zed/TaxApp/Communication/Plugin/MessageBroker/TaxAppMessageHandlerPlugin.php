@@ -24,6 +24,10 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
 {
     /**
      * {@inheritDoc}
+     * - Handles `ConfigureTaxApp` message by saving given tax app config to the database.
+     * - Maps `MessageAttributes`'s `apiUrl`, `isActive`, `vendorCode` and `tenantIdentifier` to the corresponding `TaxAppConfig`'s properties.
+     * - Maps `MessageAttributes.actorId` to `TaxAppConfig.applicationId` if it is not null, otherwise use `MessageAttributes.emitter`.
+     * - Executes {@link \Spryker\Zed\TaxApp\Business\TaxAppFacadeInterface::saveTaxAppConfig()} method with mapped `TaxAppConfig`.
      *
      * @api
      *
@@ -40,7 +44,6 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
             ->setApiUrl($configureTaxAppTransfer->getApiUrlOrFail())
             ->setIsActive($configureTaxAppTransfer->getIsActiveOrFail())
             ->setVendorCode($configureTaxAppTransfer->getVendorCodeOrFail())
-            ->setStoreReference($messageAttributesTransfer->getStoreReference())
             ->setTenantIdentifier($messageAttributesTransfer->getTenantIdentifier());
 
         if ($messageAttributesTransfer->getEmitter() === null || $messageAttributesTransfer->getActorId() !== null) {
@@ -52,6 +55,9 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
 
     /**
      * {@inheritDoc}
+     *  - Handles `DeleteTaxApp` message by saving given tax app config to the database.
+     *  - Maps `MessageAttributes.vendorCode` to `TaxAppConfigCriteria.TaxAppConfigConditions.vendorCode`.
+     *  - Executes {@link \Spryker\Zed\TaxApp\Business\TaxAppFacadeInterface::deleteTaxAppConfig()} method with mapped `TaxAppConfig`.
      *
      * @api
      *
@@ -63,10 +69,6 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
     {
         $taxAppConditionsTransfer = (new TaxAppConfigConditionsTransfer());
         $messageAttributesTransfer = $deleteTaxAppTransfer->getMessageAttributesOrFail();
-
-        if ($messageAttributesTransfer->getStoreReference() !== null) {
-            $taxAppConditionsTransfer->addStoreReference($messageAttributesTransfer->getStoreReferenceOrFail());
-        }
 
         $taxAppConditionsTransfer->addVendorCode($deleteTaxAppTransfer->getVendorCodeOrFail());
 

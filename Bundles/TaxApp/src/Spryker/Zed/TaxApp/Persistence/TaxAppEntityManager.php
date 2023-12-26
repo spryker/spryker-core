@@ -24,41 +24,43 @@ class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityM
 
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
      * @return void
      */
     public function saveTaxAppConfig(
         TaxAppConfigTransfer $taxAppConfigTransfer,
-        StoreTransfer $storeTransfer
+        array $storeTransfers
     ): void {
-        $taxAppConfigTransfer->requireApiUrl()->requireApplicationId()->requireVendorCode();
-        $taxAppConfigEntityCollection = $this->getTaxAppConfigEntityCollectionByTaxAppConfigAndStore($taxAppConfigTransfer, $storeTransfer);
+        foreach ($storeTransfers as $storeTransfer) {
+            $taxAppConfigTransfer->requireApiUrl()->requireApplicationId()->requireVendorCode();
+            $taxAppConfigEntityCollection = $this->getTaxAppConfigEntityCollectionByTaxAppConfigAndStore($taxAppConfigTransfer, $storeTransfer);
 
-        if ($taxAppConfigEntityCollection->count() === 0) {
-            $taxAppConfigEntity = new SpyTaxAppConfig();
-            $taxAppConfigEntity = $this->getFactory()
-                ->createTaxAppConfigMapper()
-                ->mapTaxAppConfigTransferToTaxAppConfigEntity($taxAppConfigTransfer, $taxAppConfigEntity);
+            if ($taxAppConfigEntityCollection->count() === 0) {
+                $taxAppConfigEntity = new SpyTaxAppConfig();
+                $taxAppConfigEntity = $this->getFactory()
+                    ->createTaxAppConfigMapper()
+                    ->mapTaxAppConfigTransferToTaxAppConfigEntity($taxAppConfigTransfer, $taxAppConfigEntity);
 
-            $taxAppConfigEntity->setFkStore($storeTransfer->getIdStore());
+                $taxAppConfigEntity->setFkStore($storeTransfer->getIdStore());
 
-            $taxAppConfigEntity->save();
+                $taxAppConfigEntity->save();
 
-            return;
+                continue;
+            }
+
+            foreach ($taxAppConfigEntityCollection as $taxAppConfigEntity) {
+                $taxAppConfigEntity = $this->getFactory()
+                    ->createTaxAppConfigMapper()
+                    ->mapTaxAppConfigTransferToTaxAppConfigEntity($taxAppConfigTransfer, $taxAppConfigEntity);
+
+                $taxAppConfigEntity->setFkStore($storeTransfer->getIdStore());
+
+                $this->persist($taxAppConfigEntity);
+            }
+
+            $this->commit();
         }
-
-        foreach ($taxAppConfigEntityCollection as $taxAppConfigEntity) {
-            $taxAppConfigEntity = $this->getFactory()
-                ->createTaxAppConfigMapper()
-                ->mapTaxAppConfigTransferToTaxAppConfigEntity($taxAppConfigTransfer, $taxAppConfigEntity);
-
-            $taxAppConfigEntity->setFkStore($storeTransfer->getIdStore());
-
-            $this->persist($taxAppConfigEntity);
-        }
-
-        $this->commit();
     }
 
     /**
@@ -109,16 +111,9 @@ class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityM
     protected function getTaxAppConfigEntityCollectionByTaxAppConfigCriteria(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): ObjectCollection
     {
         $taxAppConfigConditionTransfer = $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail();
-        if ($taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail()->getFkStores() === []) {
-            return $this->getFactory()
-                ->createTaxAppConfigQuery()
-                ->filterByVendorCode_In($taxAppConfigConditionTransfer->getVendorCodes())
-                ->find();
-        }
 
         return $this->getFactory()
             ->createTaxAppConfigQuery()
-            ->filterByFkStore_In($taxAppConfigConditionTransfer->getFkStores())
             ->filterByVendorCode_In($taxAppConfigConditionTransfer->getVendorCodes())
             ->find();
     }

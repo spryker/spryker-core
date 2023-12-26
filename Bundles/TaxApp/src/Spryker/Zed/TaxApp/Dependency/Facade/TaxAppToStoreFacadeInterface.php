@@ -22,4 +22,9 @@ interface TaxAppToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByStoreReference(string $storeReference): StoreTransfer;
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
 }

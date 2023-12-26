@@ -20,13 +20,10 @@ class TaxCommandsDeleteTaxAppHelper extends Module
      */
     public function haveDeleteTaxAppMessage(array $seed = []): DeleteTaxAppTransfer
     {
-        $messageAttributesTransfer = new MessageAttributesTransfer();
-        $messageAttributesTransfer->setStoreReference('de-DE');
-
         $deleteTaxAppTransfer = new DeleteTaxAppTransfer();
         $deleteTaxAppTransfer
             ->fromArray($seed)
-            ->setMessageAttributes($messageAttributesTransfer);
+            ->setMessageAttributes(new MessageAttributesTransfer());
 
         return $deleteTaxAppTransfer;
     }

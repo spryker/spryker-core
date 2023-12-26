@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxApp\Persistence;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 
@@ -15,11 +14,11 @@ interface TaxAppEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
      * @return void
      */
-    public function saveTaxAppConfig(TaxAppConfigTransfer $taxAppConfigTransfer, StoreTransfer $storeTransfer): void;
+    public function saveTaxAppConfig(TaxAppConfigTransfer $taxAppConfigTransfer, array $storeTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer
