@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataImport\Business\Model;
 
 use Exception;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
@@ -16,15 +17,18 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException;
 use Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface;
+use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
@@ -32,6 +36,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CategoryWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var string
      */
@@ -73,11 +79,20 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     protected $categoryReader;
 
     /**
-     * @param \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface $categoryReader
+     * @var \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface
      */
-    public function __construct(CategoryReaderInterface $categoryReader)
-    {
+    protected $urlFacade;
+
+    /**
+     * @param \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface $categoryReader
+     * @param \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface $urlFacade
+     */
+    public function __construct(
+        CategoryReaderInterface $categoryReader,
+        CategoryDataImportToUrlFacadeInterface $urlFacade
+    ) {
         $this->categoryReader = $categoryReader;
+        $this->urlFacade = $urlFacade;
     }
 
     /**
@@ -172,6 +187,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         $this->addToClosureTable($categoryNodeEntity);
         $this->addPublishEvents(CategoryEvents::CATEGORY_NODE_PUBLISH, $categoryNodeEntity->getIdCategoryNode());
 
+        $urls = [];
         foreach ($categoryEntity->getAttributes() as $categoryAttributesEntity) {
             $idLocale = $categoryAttributesEntity->getFkLocale();
             $languageIdentifier = $this->getLanguageIdentifier($idLocale, $dataSet);
@@ -204,10 +220,33 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
             $urlEntity
                 ->setUrl($url);
 
-            if ($urlEntity->isNew() || $urlEntity->isModified()) {
+            if ($urlEntity->isNew()) {
                 $urlEntity->save();
                 $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+
+                continue;
             }
+
+            if ($urlEntity->isModified()) {
+                $isPoolingEnabled = $this->isInstancePoolingEnabled();
+                if ($isPoolingEnabled) {
+                    $this->disableInstancePooling();
+                }
+
+                $urlTransfer = $this->mapUrlEntityToUrlTransfer($urlEntity);
+                $this->urlFacade->updateUrl($urlTransfer);
+
+                $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+                $urls[] = $urlTransfer->getUrlOrFail();
+
+                if ($isPoolingEnabled) {
+                    $this->enableInstancePooling();
+                }
+            }
+        }
+
+        if ($urls !== []) {
+            $this->triggerPublishForUrlRedirectsByUrls($urls);
         }
 
         return $categoryNodeEntity;
@@ -287,5 +326,34 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         }
 
         return $categoryTemplateEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function mapUrlEntityToUrlTransfer(SpyUrl $urlEntity): UrlTransfer
+    {
+        return (new UrlTransfer())
+            ->fromArray($urlEntity->toArray(), true);
+    }
+
+    /**
+     * @param list<string> $toUrls
+     *
+     * @return void
+     */
+    protected function triggerPublishForUrlRedirectsByUrls(array $toUrls): void
+    {
+        $urlEntities = SpyUrlQuery::create()
+            ->useSpyUrlRedirectQuery()
+                ->filterByToUrl_In($toUrls)
+            ->endUse()
+            ->find();
+
+        foreach ($urlEntities as $urlEntity) {
+            $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+        }
     }
 }

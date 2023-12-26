@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataImport;
 
 use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeBridge;
+use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeBridge;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,6 +23,11 @@ class CategoryDataImportDependencyProvider extends DataImportDependencyProvider
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
 
     /**
+     * @var string
+     */
+    public const FACADE_URL = 'FACADE_URL';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -30,6 +36,7 @@ class CategoryDataImportDependencyProvider extends DataImportDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCategoryFacade($container);
+        $container = $this->addUrlFacade($container);
 
         return $container;
     }
@@ -43,6 +50,20 @@ class CategoryDataImportDependencyProvider extends DataImportDependencyProvider
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new CategoryDataImportToCategoryFacadeBridge($container->getLocator()->category()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_URL, function (Container $container) {
+            return new CategoryDataImportToUrlFacadeBridge($container->getLocator()->url()->facade());
         });
 
         return $container;

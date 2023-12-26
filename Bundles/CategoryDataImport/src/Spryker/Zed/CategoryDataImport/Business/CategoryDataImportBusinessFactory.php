@@ -15,6 +15,7 @@ use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\StoreNameToIdSt
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\StoreRelationshipFilterStep;
 use Spryker\Zed\CategoryDataImport\CategoryDataImportDependencyProvider;
 use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeInterface;
+use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
@@ -39,7 +40,12 @@ class CategoryDataImportBusinessFactory extends DataImportBusinessFactory
                 CategoryWriterStep::KEY_META_DESCRIPTION,
                 CategoryWriterStep::KEY_META_KEYWORDS,
             ]))
-            ->addStep(new CategoryWriterStep($this->createCategoryRepository()));
+            ->addStep(
+                new CategoryWriterStep(
+                    $this->createCategoryRepository(),
+                    $this->getUrlFacade(),
+                ),
+            );
 
         $dataImporter
             ->addDataSetStepBroker($dataSetStepBroker);
@@ -112,5 +118,13 @@ class CategoryDataImportBusinessFactory extends DataImportBusinessFactory
     public function getCategoryFacade(): CategoryDataImportToCategoryFacadeInterface
     {
         return $this->getProvidedDependency(CategoryDataImportDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToUrlFacadeInterface
+     */
+    public function getUrlFacade(): CategoryDataImportToUrlFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryDataImportDependencyProvider::FACADE_URL);
     }
 }

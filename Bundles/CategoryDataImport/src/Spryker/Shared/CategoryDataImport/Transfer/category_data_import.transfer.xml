@@ -17,4 +17,8 @@
         <property name="currentStoreAssignment" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>
