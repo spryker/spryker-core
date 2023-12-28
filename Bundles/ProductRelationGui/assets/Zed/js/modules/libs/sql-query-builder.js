@@ -13,15 +13,16 @@ var SqlQueryBuilder = function (options) {
     this.queryBuilderElement = null;
     this.filtersUrl = null;
     this.productRelationQuerySet = null;
-    this.productRelationForm = null;
     this.productRelationFormSubmitBtn = null;
     this.ruleQueryTable = null;
+    this.tabsContainer = null;
+    this.flashMessages = null;
 
     $.extend(this, options);
 
     var filterConfigurationUrl = this.filtersUrl + this.idProductRelation;
-
     var self = this;
+
     $.get(filterConfigurationUrl).done(function (filters) {
         self.builder = self.queryBuilderElement.queryBuilder(self.getQueryBuilderOptions(filters));
         self.loadQuerySet();
@@ -38,13 +39,15 @@ SqlQueryBuilder.prototype.getQuerySet = function () {
         return [];
     }
 
-    this.enableSubmitButton();
+    this.toggleSubmitButton(false);
+    this.toggleErrorState(false);
 
     return this.builder.queryBuilder('getRules');
 };
 
 SqlQueryBuilder.prototype.loadQuerySet = function () {
     var querySet = this.productRelationQuerySet.val();
+
     if (querySet.length > 0) {
         this.builder.queryBuilder('setRules', JSON.parse(querySet));
     }
@@ -52,12 +55,13 @@ SqlQueryBuilder.prototype.loadQuerySet = function () {
 
 SqlQueryBuilder.prototype.onFormSubmit = function () {
     var self = this;
+
     this.productRelationFormSubmitBtn.on('click', function (event) {
         if (!self.builder.queryBuilder('validate')) {
             event.preventDefault();
-            $('.tabs-container').find('[data-tab-content-id="tab-content-assign-products"]').addClass('error');
-
-            $('.flash-messages').html('<div class="alert alert-danger">Query rule not provided.</div>');
+            self.toggleSubmitButton(true);
+            self.toggleErrorState(true);
+            window.scrollTo(0, 0);
 
             return;
         }
@@ -133,9 +137,16 @@ SqlQueryBuilder.prototype.reloadQueryBuilderTable = function (table, json) {
     table.ajax.url(newUrl).load();
 };
 
-SqlQueryBuilder.prototype.enableSubmitButton = function () {
-    this.productRelationFormSubmitBtn[0].disabled = false;
-    this.productRelationFormSubmitBtn[0].classList.remove('disabled');
+SqlQueryBuilder.prototype.toggleSubmitButton = function (isDisabled) {
+    this.productRelationFormSubmitBtn[0].disabled = isDisabled;
+    this.productRelationFormSubmitBtn[0].classList.toggle('disabled', isDisabled);
+};
+
+SqlQueryBuilder.prototype.toggleErrorState = function (isError) {
+    this.tabsContainer.find('[data-tab-content-id="tab-content-assign-products"]').toggleClass('error', isError);
+    this.flashMessages.html(
+        isError ? '<div class="alert alert-danger">' + this.builder.attr('data-error-message') + '</div>' : '',
+    );
 };
 
 module.exports = SqlQueryBuilder;

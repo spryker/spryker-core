@@ -66,3 +66,4 @@ Delete,Löschen
 "Number of Products",Artikelanzahl
 Store,Store
 "CSRF token is not valid.","CSRF-Token ist ungültig."
+"Query rule is not provided.","Es wird keine Abfrageregel bereitgestellt."

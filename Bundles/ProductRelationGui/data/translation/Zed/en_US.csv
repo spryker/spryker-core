@@ -66,3 +66,4 @@ Delete,Delete
 "Number of Products","Number of products"
 Store,Store
 "CSRF token is not valid.","CSRF token is not valid."
+"Query rule is not provided.","Query rule is not provided."

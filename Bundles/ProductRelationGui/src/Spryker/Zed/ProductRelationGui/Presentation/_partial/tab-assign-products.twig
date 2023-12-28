@@ -1,7 +1,6 @@
-
 <h4>{{ 'Assign related products' | trans }}</h4>
 
-<div id="builder"></div>
+<div id="builder" data-error-message="{{ 'Query rule is not provided.' | trans }}"></div>
 
 <div>
     <div id="queryBuilderImport" style="display: none">
@@ -12,4 +11,3 @@
 <hr/>
 
 {{ productRuleTable | raw }}
-

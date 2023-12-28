@@ -24,8 +24,9 @@ $(document).ready(function () {
         queryBuilderElement: $('#builder'),
         filtersUrl: '/product-relation-gui/query-builder/load-filter-set?id-product-relation=',
         productRelationQuerySet: $('#product_relation_querySet'),
-        productRelationForm: $('#form-product-relation'),
         productRelationFormSubmitBtn: $('#submit-relation'),
         ruleQueryTable: $('#rule-query-table'),
+        tabsContainer: $('.tabs-container'),
+        flashMessages: $('.flash-messages'),
     });
 });
