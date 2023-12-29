@@ -15,17 +15,26 @@ use Spryker\Zed\TaxApp\Business\Aggregator\PriceAggregator;
 use Spryker\Zed\TaxApp\Business\Aggregator\PriceAggregatorInterface;
 use Spryker\Zed\TaxApp\Business\Calculator\Calculator;
 use Spryker\Zed\TaxApp\Business\Calculator\CalculatorInterface;
+use Spryker\Zed\TaxApp\Business\Calculator\FallbackCalculator;
+use Spryker\Zed\TaxApp\Business\Calculator\FallbackCalculatorInterface;
+use Spryker\Zed\TaxApp\Business\Calculator\TaxAppCalculator;
+use Spryker\Zed\TaxApp\Business\Calculator\TaxAppCalculatorInterface;
 use Spryker\Zed\TaxApp\Business\Config\ConfigDeleter;
 use Spryker\Zed\TaxApp\Business\Config\ConfigDeleterInterface;
+use Spryker\Zed\TaxApp\Business\Config\ConfigReader;
+use Spryker\Zed\TaxApp\Business\Config\ConfigReaderInterface;
 use Spryker\Zed\TaxApp\Business\Config\ConfigWriter;
 use Spryker\Zed\TaxApp\Business\Config\ConfigWriterInterface;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapper;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface;
-use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpenseItemExpensePriceRetriever;
+use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetriever;
 use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface;
 use Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapper;
 use Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapperInterface;
-use Spryker\Zed\TaxApp\Business\PaymentSubmitTaxInvoiceSender\PaymentSubmitTaxInvoiceSender;
+use Spryker\Zed\TaxApp\Business\Order\RefundProcessor;
+use Spryker\Zed\TaxApp\Business\Order\RefundProcessorInterface;
+use Spryker\Zed\TaxApp\Business\Sender\PaymentSubmitTaxInvoiceSender;
+use Spryker\Zed\TaxApp\Business\Sender\PaymentSubmitTaxInvoiceSenderInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToMessageBrokerFacadeInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeInterface;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToSalesFacadeInterface;
@@ -53,6 +62,14 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     public function createConfigDeleter(): ConfigDeleterInterface
     {
         return new ConfigDeleter($this->getEntityManager(), $this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Config\ConfigReaderInterface
+     */
+    public function createConfigReader(): ConfigReaderInterface
+    {
+        return new ConfigReader($this->getRepository());
     }
 
     /**
@@ -85,10 +102,42 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     public function createCalculator(): CalculatorInterface
     {
         return new Calculator(
+            $this->getStoreFacade(),
+            $this->createConfigReader(),
+            $this->createFallbackQuoteCalculator(),
+            $this->createFallbackOrderCalculator(),
+            $this->createTaxAppCalculator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Calculator\FallbackCalculatorInterface
+     */
+    public function createFallbackQuoteCalculator(): FallbackCalculatorInterface
+    {
+        return new FallbackCalculator(
+            $this->getFallbackQuoteCalculationPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Calculator\FallbackCalculatorInterface
+     */
+    public function createFallbackOrderCalculator(): FallbackCalculatorInterface
+    {
+        return new FallbackCalculator(
+            $this->getFallbackOrderCalculationPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Calculator\TaxAppCalculatorInterface
+     */
+    public function createTaxAppCalculator(): TaxAppCalculatorInterface
+    {
+        return new TaxAppCalculator(
             $this->createTaxAppMapper(),
             $this->getTaxAppClient(),
-            $this->getStoreFacade(),
-            $this->getRepository(),
             $this->createAccessTokenProvider(),
             $this->getCalculableObjectTaxAppExpanderPlugins(),
             $this->createPriceAggregator(),
@@ -107,15 +156,31 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\TaxApp\Business\PaymentSubmitTaxInvoiceSender\PaymentSubmitTaxInvoiceSender
+     * @return \Spryker\Zed\TaxApp\Business\Sender\PaymentSubmitTaxInvoiceSenderInterface
      */
-    public function createPaymentSubmitTaxInvoiceSender(): PaymentSubmitTaxInvoiceSender
+    public function createPaymentSubmitTaxInvoiceSender(): PaymentSubmitTaxInvoiceSenderInterface
     {
         return new PaymentSubmitTaxInvoiceSender(
             $this->getMessageBrokerFacade(),
             $this->getStoreFacade(),
             $this->getSalesFacade(),
             $this->createTaxAppMapper(),
+            $this->getOrderTaxAppExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxApp\Business\Order\RefundProcessorInterface
+     */
+    public function createRefundProcessor(): RefundProcessorInterface
+    {
+        return new RefundProcessor(
+            $this->getTaxAppClient(),
+            $this->getStoreFacade(),
+            $this->getSalesFacade(),
+            $this->createTaxAppMapper(),
+            $this->createAccessTokenProvider(),
+            $this->createConfigReader(),
             $this->getOrderTaxAppExpanderPlugins(),
         );
     }
@@ -157,7 +222,7 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemExpensePriceRetriever(): ItemExpensePriceRetrieverInterface
     {
-        return new ItemExpenseItemExpensePriceRetriever();
+        return new ItemExpensePriceRetriever();
     }
 
     /**
@@ -182,5 +247,21 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
     public function createPriceAggregator(): PriceAggregatorInterface
     {
         return new PriceAggregator();
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface>
+     */
+    public function getFallbackQuoteCalculationPlugins(): array
+    {
+        return $this->getProvidedDependency(TaxAppDependencyProvider::PLUGINS_FALLBACK_QUOTE_CALCULATION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface>
+     */
+    public function getFallbackOrderCalculationPlugins(): array
+    {
+        return $this->getProvidedDependency(TaxAppDependencyProvider::PLUGINS_FALLBACK_ORDER_CALCULATION);
     }
 }

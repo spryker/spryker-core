@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\TaxApp\Business\PaymentSubmitTaxInvoiceSender;
+namespace Spryker\Zed\TaxApp\Business\Sender;
 
 use Generated\Shared\Transfer\OrderTransfer;
 

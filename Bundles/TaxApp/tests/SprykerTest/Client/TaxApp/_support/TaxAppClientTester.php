@@ -15,6 +15,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Stream\Stream;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
 use Spryker\Client\TaxApp\Dependency\External\TaxAppToHttpClientAdapterInterface;
+use Spryker\Client\TaxApp\TaxAppConfig;
 
 /**
  * Inherited Methods
@@ -62,6 +63,18 @@ class TaxAppClientTester extends Actor
         ]);
 
         $this->mockFactoryMethod('getStoreClient', $storeClientMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function mockConfig(): void
+    {
+        $configMock = Stub::makeEmpty(TaxAppConfig::class, [
+            'getRequestTimeoutInSeconds' => 5,
+        ]);
+
+        $this->mockFactoryMethod('getConfig', $configMock);
     }
 
     /**

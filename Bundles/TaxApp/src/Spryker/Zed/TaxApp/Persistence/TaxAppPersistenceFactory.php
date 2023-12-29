@@ -8,8 +8,10 @@
 namespace Spryker\Zed\TaxApp\Persistence;
 
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
+use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\TaxApp\Persistence\Mapper\TaxAppConfigMapper;
+use Spryker\Zed\TaxApp\TaxAppDependencyProvider;
 
 /**
  * @method \Spryker\Zed\TaxApp\Persistence\TaxAppRepositoryInterface getRepository()
@@ -31,6 +33,14 @@ class TaxAppPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createTaxAppConfigMapper(): TaxAppConfigMapper
     {
-        return new TaxAppConfigMapper();
+        return new TaxAppConfigMapper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): TaxAppToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(TaxAppDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

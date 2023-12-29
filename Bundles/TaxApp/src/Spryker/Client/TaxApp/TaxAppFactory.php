@@ -14,8 +14,11 @@ use Spryker\Client\TaxApp\Api\Sender\TaxAppRequestSender;
 use Spryker\Client\TaxApp\Api\Sender\TaxAppRequestSenderInterface;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
 use Spryker\Client\TaxApp\Dependency\External\TaxAppToHttpClientAdapterInterface;
-use Spryker\Client\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
+use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 
+/**
+ * @method \Spryker\Client\TaxApp\TaxAppConfig getConfig()
+ */
 class TaxAppFactory extends AbstractFactory
 {
     /**
@@ -35,11 +38,12 @@ class TaxAppFactory extends AbstractFactory
             $this->createTaxAppHeaderBuilder(),
             $this->getHttpClient(),
             $this->getUtilEncodingService(),
+            $this->getConfig()->getRequestTimeoutInSeconds(),
         );
     }
 
     /**
-     * @return \Spryker\Client\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface
+     * @return \Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): TaxAppToUtilEncodingServiceInterface
     {

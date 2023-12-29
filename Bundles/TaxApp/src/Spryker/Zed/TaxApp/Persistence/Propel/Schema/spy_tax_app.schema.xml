@@ -8,7 +8,7 @@
         <column name="application_id" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" required="true" type="BOOLEAN" default="TRUE"/>
         <column name="vendor_code" required="true" type="VARCHAR" size="255"/>
-        <column name="api_url" description="API Url including path part" required="true" type="LONGVARCHAR"/>
+        <column name="api_urls" description="API URLs JSON-encoded object" required="true" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
     </table>

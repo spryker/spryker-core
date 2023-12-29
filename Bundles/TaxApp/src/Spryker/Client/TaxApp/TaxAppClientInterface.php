@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
+use Generated\Shared\Transfer\TaxRefundRequestTransfer;
 
 interface TaxAppClientInterface
 {
     /**
      * Specification:
-     * - Sends a request to a foreign Tax Calculation service.
+     * - Sends a request for Tax Quotation to a foreign Tax Calculation service.
      *
      * @api
      *
@@ -28,6 +29,24 @@ interface TaxAppClientInterface
      */
     public function requestTaxQuotation(
         TaxCalculationRequestTransfer $taxCalculationRequest,
+        TaxAppConfigTransfer $taxAppConfigTransfer,
+        StoreTransfer $storeTransfer
+    ): TaxCalculationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Sends a request for Tax Refunds to a foreign Tax Calculation service.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxRefundRequestTransfer $taxRefundRequest
+     * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxCalculationResponseTransfer
+     */
+    public function requestTaxRefund(
+        TaxRefundRequestTransfer $taxRefundRequest,
         TaxAppConfigTransfer $taxAppConfigTransfer,
         StoreTransfer $storeTransfer
     ): TaxCalculationResponseTransfer;

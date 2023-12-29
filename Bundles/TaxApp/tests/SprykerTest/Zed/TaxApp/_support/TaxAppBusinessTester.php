@@ -18,13 +18,17 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\StockAddressBuilder;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantStockAddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockAddressTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
@@ -42,7 +46,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProfile\Communication\Plugin\TaxApp\MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeBridge;
+use Spryker\Zed\TaxApp\TaxAppDependencyProvider;
 use SprykerTest\Shared\TaxApp\Plugins\CalculableObjectTaxAppExpanderPlugin;
+use SprykerTest\Zed\TaxApp\Business\TaxAppFacadeCalculationTest;
 
 /**
  * Inherited Methods
@@ -58,6 +64,7 @@ use SprykerTest\Shared\TaxApp\Plugins\CalculableObjectTaxAppExpanderPlugin;
  * @method void comment($description)
  * @method void pause($vars = [])
  * @method \Spryker\Zed\TaxApp\Business\TaxAppBusinessFactory getFactory(?string $moduleName = NULL)
+ * @method \Spryker\Zed\TaxApp\Business\TaxAppFacadeInterface getFacade
  *
  * @SuppressWarnings(\SprykerTest\Zed\TaxApp\PHPMD)
  */
@@ -71,11 +78,11 @@ class TaxAppBusinessTester extends Actor
     public function setQuoteTaxMetadataExpanderPlugins(): void
     {
         $this->setDependency(
-            'PLUGINS_CALCULABLE_OBJECT_TAX_APP_EXPANDER',
+            TaxAppDependencyProvider::PLUGINS_CALCULABLE_OBJECT_TAX_APP_EXPANDER,
             [
                 new CalculableObjectTaxAppExpanderPlugin(),
                 new MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin(),
-            ],
+            ]
         );
     }
 
@@ -400,5 +407,86 @@ class TaxAppBusinessTester extends Actor
         $calculationFacade->setFactory($calculationBusinessFactory);
 
         return $calculationFacade;
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderByStateMachineProcessName(string $stateMachineProcessName, StoreTransfer $storeTransfer): OrderTransfer
+    {
+        $quoteTransfer = $this->buildFakeQuote(
+            $this->haveCustomer(),
+            $storeTransfer,
+        );
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems())
+            ->setExpenses($quoteTransfer->getExpenses())
+            ->setBillingAddress($quoteTransfer->getBillingAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransferForRefund(StoreTransfer $storeTransfer): OrderTransfer
+    {
+        $orderTransfer = $this->createOrderByStateMachineProcessName(
+            TaxAppFacadeCalculationTest::DEFAULT_OMS_PROCESS_NAME,
+            $storeTransfer,
+        );
+        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
+        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
+
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->setSku('some_sku');
+            $item->setCanceledAmount($item->getSumPrice());
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function buildFakeQuote(CustomerTransfer $customerTransfer, StoreTransfer $storeTransfer): QuoteTransfer
+    {
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withShippingAddress()
+            ->withMethod((new ShipmentMethodBuilder())->withPrice());
+
+        $expenseBuilder = (new ExpenseBuilder([ExpenseTransfer::TYPE => 'SHIPMENT_EXPENSE_TYPE']))
+            ->withShipment($shipmentBuilder);
+
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem((new ItemBuilder())->withShipment($shipmentBuilder))
+            ->withShipment($shipmentBuilder)
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->withExpense($expenseBuilder)
+            ->build();
+
+        $quoteTransfer
+            ->setPriceMode('NET_MODE')
+            ->setCustomer($customerTransfer)
+            ->setStore($storeTransfer);
+
+        return $quoteTransfer;
     }
 }

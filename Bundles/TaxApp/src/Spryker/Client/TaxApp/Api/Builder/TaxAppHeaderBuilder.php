@@ -9,9 +9,9 @@ namespace Spryker\Client\TaxApp\Api\Builder;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
-use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
-use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use Spryker\Client\TaxApp\Exception\TaxAppInvalidConfigException;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
 {
@@ -44,16 +44,16 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer $taxCalculationRequestTransfer
+     * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer|\Generated\Shared\Transfer\TaxRefundRequestTransfer $taxRequestTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     * @throws \Spryker\Client\TaxApp\Exception\TaxAppInvalidConfigException
      *
      * @return array<string, string>
      */
     public function build(
-        TaxCalculationRequestTransfer $taxCalculationRequestTransfer,
+        AbstractTransfer $taxRequestTransfer,
         StoreTransfer $storeTransfer,
         TaxAppConfigTransfer $taxAppConfigTransfer
     ): array {
@@ -61,23 +61,23 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
             $taxAppConfigTransfer->getTenantIdentifier() === null &&
             ($storeTransfer->getStoreReference() === null && $storeTransfer->getName() === null)
         ) {
-            throw new NullValueException('Tenant identifier or store reference or store name must be set.');
+            throw new TaxAppInvalidConfigException('Tenant identifier or store reference or store name must be set.');
         }
         $headers = [];
 
-        if ($taxAppConfigTransfer->getTenantIdentifier() !== null) {
-            $headers[static::HEADER_TENANT_IDENTIFIER] = $taxAppConfigTransfer->getTenantIdentifier();
+        $tenantIdentifier = $taxAppConfigTransfer->getTenantIdentifier();
+
+        if (!$tenantIdentifier) {
+            $tenantIdentifier = $this->getStoreReference($storeTransfer);
         }
 
-        if ($storeTransfer->getStoreReference() || $storeTransfer->getName()) {
-            $headers[static::HEADER_STORE_REFERENCE] = $this->getStoreReference($storeTransfer);
-        }
+        $headers[static::HEADER_TENANT_IDENTIFIER] = $tenantIdentifier;
 
         if (
-            $taxCalculationRequestTransfer->offsetExists('authorization')
-            && $taxCalculationRequestTransfer->getAuthorization()
+            $taxRequestTransfer->offsetExists('authorization')
+            && $taxRequestTransfer->offsetGet('authorization')
         ) {
-            $headers[static::HEADER_AUTHORIZATION] = $taxCalculationRequestTransfer->getAuthorization();
+            $headers[static::HEADER_AUTHORIZATION] = $taxRequestTransfer->offsetGet('authorization');
         }
 
         return $headers;

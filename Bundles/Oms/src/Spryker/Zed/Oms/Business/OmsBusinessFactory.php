@@ -20,6 +20,8 @@ use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpanderInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
+use Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifier;
+use Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifierInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
@@ -89,7 +91,16 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->createUtilReservation(),
             $this->getConfig(),
+            $this->createEventTriggeredNotifier(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifierInterface
+     */
+    public function createEventTriggeredNotifier(): EventTriggeredNotifierInterface
+    {
+        return new EventTriggeredNotifier($this->getOmsEventTriggeredListenerPlugins());
     }
 
     /**
@@ -572,5 +583,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderStatusChangedMessageSender(): OrderStatusChangedMessageSender
     {
         return new OrderStatusChangedMessageSender($this->getMessageBrokerFacade(), $this->getStoreFacade(), $this->getSalesFacade(), $this->getConfig(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsEventTriggeredListenerPluginInterface>
+     */
+    public function getOmsEventTriggeredListenerPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_EVENT_TRIGGERED_LISTENER);
     }
 }

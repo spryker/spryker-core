@@ -84,6 +84,10 @@ class TaxAppMapper implements TaxAppMapperInterface
         $transferIdentifier = $this->getTransferIdentifier($originalTransfer);
 
         $documentDate = (new DateTime())->format('Y-m-d');
+        if (method_exists($originalTransfer, 'getCreatedAt') && $originalTransfer->getCreatedAt()) {
+            $createdAt = DateTime::createFromFormat('Y-m-d H:i:s.u', $originalTransfer->getCreatedAt());
+            $documentDate = $createdAt ? $createdAt->format('Y-m-d') : $documentDate;
+        }
 
         $taxAppSaleTransfer
             ->setTransactionId($transferIdentifier)
@@ -138,11 +142,15 @@ class TaxAppMapper implements TaxAppMapperInterface
     ): TaxAppItemTransfer {
         $taxAppItemTransfer = new TaxAppItemTransfer();
 
-        $taxAppItemTransfer->fromArray($itemTransfer->toArray(true, true), true);
         $taxAppItemTransfer->setId(sprintf('%s_%s', $itemTransfer->getSku(), $itemIndex));
         $taxAppItemTransfer->setSku($itemTransfer->getSku());
+        $taxAppItemTransfer->setQuantity($itemTransfer->getQuantity());
 
-        $taxAppItemTransfer->setPriceAmount($this->priceFormatter->getUnitPrice($itemTransfer, $priceMode));
+        $taxAppItemTransfer->setPriceAmount($this->priceFormatter->getUnitPriceWithoutDiscount($itemTransfer, $priceMode));
+
+        if ($itemTransfer->getCanceledAmount()) {
+            $taxAppItemTransfer->setRefundableAmount($this->priceFormatter->getUnitPriceWithoutDiscount($itemTransfer, $priceMode));
+        }
 
         $taxAppItemTransfer->setDiscountAmount($itemTransfer->getUnitDiscountAmountFullAggregation());
 
@@ -232,7 +240,11 @@ class TaxAppMapper implements TaxAppMapperInterface
             $taxAppShipmentTransfer->setBillingAddress($billingTaxAppAddressTransfer);
         }
 
-        $taxAppShipmentTransfer->setPriceAmount($this->priceFormatter->getSumPrice($expenseTransfer, $priceMode));
+        $taxAppShipmentTransfer->setPriceAmount($this->priceFormatter->getSumPriceWithoutDiscount($expenseTransfer, $priceMode));
+
+        if ($expenseTransfer->getCanceledAmount()) {
+            $taxAppShipmentTransfer->setRefundableAmount($this->priceFormatter->getSumPriceWithoutDiscount($expenseTransfer, $priceMode));
+        }
         $taxAppShipmentTransfer->setDiscountAmount($expenseTransfer->getSumDiscountAmountAggregation());
 
         return $taxAppShipmentTransfer;

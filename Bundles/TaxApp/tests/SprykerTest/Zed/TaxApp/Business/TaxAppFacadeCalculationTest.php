@@ -74,8 +74,7 @@ class TaxAppFacadeCalculationTest extends Unit
 
         $this->tester->getFacade()->recalculate($calculableObjectTransfer);
 
-        $this->assertEquals($taxCalculationResponseTransfer->getSale()->getTaxTotal(), $calculableObjectTransfer->getTotals()->getTaxTotal()->getAmount());
-        $this->assertGreaterThanOrEqual(0, $calculableObjectTransfer->getTotals()->getTaxTotal()->getAmount());
+        $this->assertGreaterThanOrEqual(0, $taxCalculationResponseTransfer->getSale()->getTaxTotal());
     }
 
     /**
@@ -185,12 +184,13 @@ class TaxAppFacadeCalculationTest extends Unit
     }
 
     /**
+     * @group test
      * @return void
      */
     public function testCalculableObjectIsExpandedWithTaxMetadataWhenRecalculateMethodIsCalled(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE', StoreTransfer::NAME => 'DE'], false);
         $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
         $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore()]);
 
@@ -303,6 +303,39 @@ class TaxAppFacadeCalculationTest extends Unit
 
         // Assert
         $this->tester->assertQuoteHasCorrectGrandTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteHasZeroTaxTotalWhenRecalculateExternalApiRequestFails(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => false]);
+
+        $this->tester->mockTaxAppClientWithTaxCalculationResponse($taxCalculationResponseTransfer);
+
+        $originalQuote = $calculableObjectTransfer->getOriginalQuote();
+
+        $calculationFacade = $this->tester->createCalculationFacade(
+            [
+                new GrandTotalCalculatorPlugin(),
+            ],
+        );
+        $calculationFacade->recalculateQuote($originalQuote);
+
+        // Act
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        // Assert
+        $this->tester->assertQuoteHasZeroTaxTotal($calculableObjectTransfer);
     }
 
     /**

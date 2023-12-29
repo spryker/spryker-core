@@ -10,6 +10,7 @@ namespace SprykerTest\AsyncApi\TaxApp\TaxAppTests\TaxCommands;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigureTaxAppTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\TaxAppApiUrlsTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use SprykerTest\AsyncApi\TaxApp\AsyncApiTester;
@@ -55,8 +56,12 @@ class ConfigureTaxAppTest extends Unit
         $messageAttributesTransfer->setStoreReference('de-DE')
             ->setEmitter('emitter');
 
+        $taxAppApiUrlsTransfer = (new TaxAppApiUrlsTransfer())
+            ->setQuotationUrlOrFail('https://example.com')
+            ->setRefundsUrlOrFail('https://example.com');
+
         $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
-        $configureTaxAppTransfer->setApiUrl('https://example.com')
+        $configureTaxAppTransfer->setApiUrls($taxAppApiUrlsTransfer)
             ->setVendorCode(Uuid::uuid4()->toString())
             ->setMessageAttributes($messageAttributesTransfer)
             ->setIsActive(true);
@@ -74,15 +79,20 @@ class ConfigureTaxAppTest extends Unit
     public function testWhenConfigureTaxAppMessageIsReceivedAndTenantIdentifierIsPresentThenTheTaxAppIsConfigured(): void
     {
         // Arrange
-        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($this->tester->haveStore());
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $messageAttributesTransfer->setStoreReference('de-DE')
             ->setTenantIdentifier('tenant-identifier')
             ->setActorId('actor-id');
 
+        $taxAppApiUrlsTransfer = (new TaxAppApiUrlsTransfer())
+            ->setQuotationUrlOrFail('https://example.com')
+            ->setRefundsUrlOrFail('https://example.com');
+
         $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
-        $configureTaxAppTransfer->setApiUrl('https://example.com')
+        $configureTaxAppTransfer->setApiUrls($taxAppApiUrlsTransfer)
             ->setVendorCode(Uuid::uuid4()->toString())
             ->setMessageAttributes($messageAttributesTransfer)
             ->setIsActive(true);
@@ -91,7 +101,7 @@ class ConfigureTaxAppTest extends Unit
         $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), null);
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), $storeTransfer->getIdStore());
     }
 
     /**
@@ -100,14 +110,21 @@ class ConfigureTaxAppTest extends Unit
     public function testWhenConfigureTaxAppMessageIsReceivedAndTenantIdentifierIsPresentButStoreReferenceIsNullThenTheTaxAppIsConfigured(): void
     {
         // Arrange
-        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($this->tester->haveStore());
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->configureStoreFacadeGetStoreByStoreReferenceMethod($storeTransfer);
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $messageAttributesTransfer->setTenantIdentifier('tenant-identifier')
             ->setActorId('actor-id');
 
         $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
-        $configureTaxAppTransfer->setApiUrl('https://example.com')
+
+        $taxAppApiUrlsTransfer = (new TaxAppApiUrlsTransfer())
+            ->setQuotationUrlOrFail('https://example.com')
+            ->setRefundsUrlOrFail('https://example.com');
+
+        $configureTaxAppTransfer
+            ->setApiUrls($taxAppApiUrlsTransfer)
             ->setVendorCode(Uuid::uuid4()->toString())
             ->setMessageAttributes($messageAttributesTransfer)
             ->setIsActive(true);
@@ -116,7 +133,7 @@ class ConfigureTaxAppTest extends Unit
         $this->tester->runMessageReceiveTest($configureTaxAppTransfer, 'tax-commands');
 
         // Assert
-        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), null);
+        $this->tester->assertTaxAppWithVendorCodeIsConfigured($configureTaxAppTransfer->getVendorCode(), $storeTransfer->getIdStore());
     }
 
     /**
@@ -129,8 +146,12 @@ class ConfigureTaxAppTest extends Unit
         $messageAttributesTransfer->setStoreReference('de-DE')
             ->setTenantIdentifier('tenant-identifier');
 
+        $taxAppApiUrlsTransfer = (new TaxAppApiUrlsTransfer())
+            ->setQuotationUrlOrFail('https://example.com')
+            ->setRefundsUrlOrFail('https://example.com');
+
         $configureTaxAppTransfer = new ConfigureTaxAppTransfer();
-        $configureTaxAppTransfer->setApiUrl('https://example.com')
+        $configureTaxAppTransfer->setApiUrls($taxAppApiUrlsTransfer)
             ->setVendorCode(Uuid::uuid4()->toString())
             ->setMessageAttributes($messageAttributesTransfer)
             ->setIsActive(true);

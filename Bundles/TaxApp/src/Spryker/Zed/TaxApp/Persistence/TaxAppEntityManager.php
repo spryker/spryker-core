@@ -33,7 +33,7 @@ class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityM
         array $storeTransfers
     ): void {
         foreach ($storeTransfers as $storeTransfer) {
-            $taxAppConfigTransfer->requireApiUrl()->requireApplicationId()->requireVendorCode();
+            $taxAppConfigTransfer->requireApiUrls()->requireApplicationId()->requireVendorCode();
             $taxAppConfigEntityCollection = $this->getTaxAppConfigEntityCollectionByTaxAppConfigAndStore($taxAppConfigTransfer, $storeTransfer);
 
             if ($taxAppConfigEntityCollection->count() === 0) {

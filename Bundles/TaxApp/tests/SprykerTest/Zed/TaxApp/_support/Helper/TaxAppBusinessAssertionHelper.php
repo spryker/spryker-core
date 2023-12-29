@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\TaxApp\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\TaxAppApiUrlsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
@@ -180,14 +181,34 @@ class TaxAppBusinessAssertionHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function assertQuoteHasZeroTaxTotal(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $itemsSumTaxAmountFullAggregation = 0;
+        foreach ($calculableObjectTransfer->getItems() as $item) {
+            $itemsSumTaxAmountFullAggregation += $item->getSumTaxAmountFullAggregation();
+        }
+
+        $expensesSumTaxAmount = 0;
+
+        foreach ($calculableObjectTransfer->getExpenses() as $expense) {
+            $expensesSumTaxAmount += $expense->getSumTaxAmount();
+        }
+
+        $this->assertEquals(0, $itemsSumTaxAmountFullAggregation);
+        $this->assertEquals(0, $expensesSumTaxAmount);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
-     * @param string $apiUrl
      *
      * @return void
      */
     public function assertAllTaxAppConfigsForTenantHaveNewApiUrl(
-        TaxAppConfigTransfer $taxAppConfigTransfer,
-        string $apiUrl
+        TaxAppConfigTransfer $taxAppConfigTransfer
     ): void {
         $taxAppConfigEntityCollection = SpyTaxAppConfigQuery::create()
             ->filterByVendorCode($taxAppConfigTransfer->getVendorCode())
@@ -196,7 +217,10 @@ class TaxAppBusinessAssertionHelper extends Module
         $this->assertTrue($taxAppConfigEntityCollection->count() > 1);
 
         foreach ($taxAppConfigEntityCollection as $taxAppConfigEntity) {
-            $this->assertEquals($taxAppConfigEntity->getApiUrl(), $apiUrl);
+            $taxAppConfigEntityApiUrls = json_decode($taxAppConfigEntity->getApiUrls(), true);
+            $taxAppConfigEntityApiUrls = (new TaxAppApiUrlsTransfer())->fromArray($taxAppConfigEntityApiUrls, true);
+            $this->assertEquals($taxAppConfigEntityApiUrls->getQuotationUrl(), $taxAppConfigTransfer->getApiUrlsOrFail()->getQuotationUrl());
+            $this->assertEquals($taxAppConfigEntityApiUrls->getRefundsUrl(), $taxAppConfigTransfer->getApiUrlsOrFail()->getRefundsUrl());
         }
     }
 

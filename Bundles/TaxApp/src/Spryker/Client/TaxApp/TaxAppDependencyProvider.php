@@ -12,8 +12,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientBridge;
 use Spryker\Client\TaxApp\Dependency\External\TaxAppToGuzzleHttpClientAdapter;
-use Spryker\Client\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceBridge;
+use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Client\TaxApp\TaxAppConfig getConfig()
+ */
 class TaxAppDependencyProvider extends AbstractDependencyProvider
 {
     /**

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
+use Generated\Shared\Transfer\TaxRefundRequestTransfer;
 
 interface TaxAppRequestSenderInterface
 {
@@ -23,6 +24,21 @@ interface TaxAppRequestSenderInterface
      */
     public function requestTaxQuotation(
         TaxCalculationRequestTransfer $taxCalculationRequestTransfer,
+        TaxAppConfigTransfer $taxAppConfigTransfer,
+        StoreTransfer $storeTransfer
+    ): TaxCalculationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxRefundRequestTransfer $taxRefundRequestTransfer
+     * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Client\TaxApp\Exception\TaxCalculationResponseException
+     *
+     * @return \Generated\Shared\Transfer\TaxCalculationResponseTransfer
+     */
+    public function requestTaxRefund(
+        TaxRefundRequestTransfer $taxRefundRequestTransfer,
         TaxAppConfigTransfer $taxAppConfigTransfer,
         StoreTransfer $storeTransfer
     ): TaxCalculationResponseTransfer;

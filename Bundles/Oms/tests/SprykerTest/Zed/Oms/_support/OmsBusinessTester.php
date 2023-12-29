@@ -15,6 +15,7 @@ use Exception;
 use Generated\Shared\DataBuilder\ItemMetadataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OmsEventTriggeredTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -35,6 +36,7 @@ use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsEventTriggeredListenerPluginInterface;
 use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\MessageBroker\CurrentStoreReferenceMessageAttributeProviderPlugin;
 use Spryker\Zed\Store\Communication\Plugin\MessageBroker\StoreReferenceMessageValidatorPlugin;
@@ -405,5 +407,42 @@ class OmsBusinessTester extends Actor
         $this->setDependency(MessageBrokerDependencyProvider::PLUGINS_MESSAGE_ATTRIBUTE_PROVIDER, [new CurrentStoreReferenceMessageAttributeProviderPlugin()]);
 
         $this->setDependency(MessageBrokerDependencyProvider::PLUGINS_EXTERNAL_VALIDATOR, [new StoreReferenceMessageValidatorPlugin()]);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsEventTriggeredListenerPluginInterface
+     */
+    public function setupEventTriggeredListenerPluginDependency(): OmsEventTriggeredListenerPluginInterface
+    {
+        $omsEventTriggeredListener = new class implements OmsEventTriggeredListenerPluginInterface {
+            /**
+             * @var bool
+             */
+            public $wasTriggered;
+
+            /**
+             * @param \Generated\Shared\Transfer\OmsEventTriggeredTransfer $omsEventTriggeredTransfer
+             *
+             * @return void
+             */
+            public function onEventTriggered(OmsEventTriggeredTransfer $omsEventTriggeredTransfer): void
+            {
+                $this->wasTriggered = true;
+            }
+
+            /**
+             * @param \Generated\Shared\Transfer\OmsEventTriggeredTransfer $omsEventTriggeredTransfer
+             *
+             * @return bool
+             */
+            public function isApplicable(OmsEventTriggeredTransfer $omsEventTriggeredTransfer): bool
+            {
+                return true;
+            }
+        };
+
+        $this->setDependency('PLUGINS_OMS_EVENT_TRIGGERED_LISTENER', [$omsEventTriggeredListener]);
+
+        return $omsEventTriggeredListener;
     }
 }

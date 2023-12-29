@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
+use Generated\Shared\Transfer\TaxRefundRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -35,5 +36,24 @@ class TaxAppClient extends AbstractClient implements TaxAppClientInterface
         StoreTransfer $storeTransfer
     ): TaxCalculationResponseTransfer {
         return $this->getFactory()->createTaxAppRequestSender()->requestTaxQuotation($taxCalculationRequest, $taxAppConfigTransfer, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxRefundRequestTransfer $taxRefundRequest
+     * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxCalculationResponseTransfer
+     */
+    public function requestTaxRefund(
+        TaxRefundRequestTransfer $taxRefundRequest,
+        TaxAppConfigTransfer $taxAppConfigTransfer,
+        StoreTransfer $storeTransfer
+    ): TaxCalculationResponseTransfer {
+        return $this->getFactory()->createTaxAppRequestSender()->requestTaxRefund($taxRefundRequest, $taxAppConfigTransfer, $storeTransfer);
     }
 }

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\TaxAppItemTransfer;
 use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use Generated\Shared\Transfer\TaxAppShipmentTransfer;
-use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpenseItemExpensePriceRetriever;
+use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetriever;
 use Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapper;
 
 class PriceAggregator implements PriceAggregatorInterface
@@ -55,6 +55,7 @@ class PriceAggregator implements PriceAggregatorInterface
 
             $indexedQuoteItems[$taxAppSaleItem->getId()] = $this->calculateTaxAmountFullAggregationForItem($indexedQuoteItems[$taxAppSaleItem->getId()], $taxAppSaleItem);
             $indexedQuoteItems[$taxAppSaleItem->getId()] = $this->calculatePriceToPayAggregationForItem($indexedQuoteItems[$taxAppSaleItem->getId()], $calculableObjectTransfer->getPriceModeOrFail());
+            $indexedQuoteItems[$taxAppSaleItem->getId()]->setTaxRateAverageAggregation(0);
         }
 
         return $calculableObjectTransfer;
@@ -70,8 +71,18 @@ class PriceAggregator implements PriceAggregatorInterface
     {
         $saleItemQuantity = $this->getItemQuantity($taxAppItemTransfer);
 
-        $quoteItem->setUnitTaxAmountFullAggregation((int)round($taxAppItemTransfer->getTaxTotal() / $saleItemQuantity));
-        $quoteItem->setSumTaxAmountFullAggregation($taxAppItemTransfer->getTaxTotal() ?? 0);
+        $taxTotal = $taxAppItemTransfer->getTaxTotal();
+
+        if ($taxAppItemTransfer->getRefundedTaxTotal()) {
+            $taxTotal = $taxAppItemTransfer->getRefundedTaxTotal();
+            $quoteItem->setTaxAmountAfterCancellation($taxAppItemTransfer->getRefundedTaxTotal());
+        }
+
+        $quoteItem->setUnitTaxAmount((int)round($taxTotal / $saleItemQuantity));
+        $quoteItem->setSumTaxAmount($taxTotal);
+        // TaxAmountFullAggregation includes ProductOption taxes which are not supported by TaxApp module.
+        $quoteItem->setUnitTaxAmountFullAggregation((int)round($taxTotal / $saleItemQuantity));
+        $quoteItem->setSumTaxAmountFullAggregation($taxTotal);
 
         return $quoteItem;
     }
@@ -110,8 +121,8 @@ class PriceAggregator implements PriceAggregatorInterface
             $this->calculatePriceToPayAggregation(
                 $itemTransfer->getUnitSubtotalAggregationOrFail(),
                 $priceMode,
-                $itemTransfer->getUnitDiscountAmountAggregationOrFail(),
-                $itemTransfer->getUnitTaxAmountFullAggregationOrFail(),
+                $itemTransfer->getUnitDiscountAmountAggregation() ?? 0,
+                $itemTransfer->getUnitTaxAmountFullAggregation() ?? 0,
             ),
         );
 
@@ -119,8 +130,8 @@ class PriceAggregator implements PriceAggregatorInterface
             $this->calculatePriceToPayAggregation(
                 $itemTransfer->getSumSubtotalAggregationOrFail(),
                 $priceMode,
-                $itemTransfer->getSumDiscountAmountFullAggregationOrFail(),
-                $itemTransfer->getSumTaxAmountFullAggregationOrFail(),
+                $itemTransfer->getSumDiscountAmountFullAggregation() ?? 0,
+                $itemTransfer->getSumTaxAmountFullAggregation() ?? 0,
             ),
         );
 
@@ -171,6 +182,12 @@ class PriceAggregator implements PriceAggregatorInterface
      */
     protected function calculateTaxAmountForExpense(ExpenseTransfer $expenseTransfer, TaxAppShipmentTransfer $taxAppShipmentTransfer): ExpenseTransfer
     {
+        if ($taxAppShipmentTransfer->getRefundedTaxTotal()) {
+            $expenseTransfer->setTaxAmountAfterCancellation($taxAppShipmentTransfer->getRefundedTaxTotal());
+
+            return $expenseTransfer;
+        }
+
         $expenseTransfer->setUnitTaxAmount($taxAppShipmentTransfer->getTaxTotal());
         $expenseTransfer->setSumTaxAmount($taxAppShipmentTransfer->getTaxTotal());
 
@@ -189,8 +206,8 @@ class PriceAggregator implements PriceAggregatorInterface
             $this->calculatePriceToPayAggregation(
                 $expenseTransfer->getUnitPriceOrFail(),
                 $priceMode,
-                $expenseTransfer->getUnitDiscountAmountAggregationOrFail(),
-                $expenseTransfer->getUnitTaxAmountOrFail(),
+                $expenseTransfer->getUnitDiscountAmountAggregation() ?? 0,
+                $expenseTransfer->getUnitTaxAmount() ?? 0,
             ),
         );
 
@@ -198,8 +215,8 @@ class PriceAggregator implements PriceAggregatorInterface
             $this->calculatePriceToPayAggregation(
                 $expenseTransfer->getSumPriceOrFail(),
                 $priceMode,
-                $expenseTransfer->getSumDiscountAmountAggregationOrFail(),
-                $expenseTransfer->getSumTaxAmountOrFail(),
+                $expenseTransfer->getSumDiscountAmountAggregation() ?? 0,
+                $expenseTransfer->getSumTaxAmount() ?? 0,
             ),
         );
 
@@ -235,7 +252,7 @@ class PriceAggregator implements PriceAggregatorInterface
      */
     protected function calculatePriceToPayAggregation(int $price, string $priceMode, int $discountAmount = 0, int $taxAmount = 0): int
     {
-        if ($priceMode === ItemExpenseItemExpensePriceRetriever::PRICE_MODE_NET) {
+        if ($priceMode === ItemExpensePriceRetriever::PRICE_MODE_NET) {
             return $price + $taxAmount - $discountAmount;
         }
 

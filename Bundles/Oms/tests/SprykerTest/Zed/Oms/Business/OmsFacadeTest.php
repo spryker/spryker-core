@@ -131,6 +131,33 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @group new
+     *
+     * @return void
+     */
+    public function testEventTriggeredListenersAreNotifiedWhenEventIsTriggered(): void
+    {
+        $testStateMachineProcessName = 'Test01';
+
+        $omsEventTriggeredListener = $this->tester->setupEventTriggeredListenerPluginDependency();
+
+        $omsFacade = $this->createOmsFacadeWithTestStateMachine([$testStateMachineProcessName]);
+
+        $saveOrderTransfer = $this->tester->haveOrder([
+            'unitPrice' => 100,
+            'sumPrice' => 100,
+        ], $testStateMachineProcessName);
+
+        $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
+
+        $salesOrderEntity = SpySalesOrderQuery::create()->filterByIdSalesOrder($idSalesOrder)->findOne();
+
+        $omsFacade->triggerEvent('authorize', $salesOrderEntity->getItems(), []);
+
+        $this->assertTrue($omsEventTriggeredListener->wasTriggered);
+    }
+
+    /**
      * @return void
      */
     public function testIsOrderFlaggedExcludeFromCustomerShouldReturnFalseWhenAnyOfStatesMissingFlag(): void

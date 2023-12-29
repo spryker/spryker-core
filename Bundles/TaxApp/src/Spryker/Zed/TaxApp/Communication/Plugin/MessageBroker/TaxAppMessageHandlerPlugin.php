@@ -41,7 +41,7 @@ class TaxAppMessageHandlerPlugin extends AbstractPlugin implements MessageHandle
 
         $taxAppConfigTransfer = (new TaxAppConfigTransfer())
             ->setApplicationId($messageAttributesTransfer->getEmitter())
-            ->setApiUrl($configureTaxAppTransfer->getApiUrlOrFail())
+            ->setApiUrls($configureTaxAppTransfer->getApiUrlsOrFail())
             ->setIsActive($configureTaxAppTransfer->getIsActiveOrFail())
             ->setVendorCode($configureTaxAppTransfer->getVendorCodeOrFail())
             ->setTenantIdentifier($messageAttributesTransfer->getTenantIdentifier());

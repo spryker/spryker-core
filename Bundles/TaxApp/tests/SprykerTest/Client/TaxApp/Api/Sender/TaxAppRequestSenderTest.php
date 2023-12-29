@@ -38,6 +38,15 @@ class TaxAppRequestSenderTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->tester->mockConfig();
+    }
+
+    /**
+     * @return void
+     */
     public function testTaxQuotationRequestHasSuccessfulResponseTransfer(): void
     {
         // Arrange
@@ -59,6 +68,27 @@ class TaxAppRequestSenderTest extends Unit
     /**
      * @return void
      */
+    public function testTaxRefundRequestHasSuccessfulResponseTransfer(): void
+    {
+        // Arrange
+        $taxRefundRequestTransfer = $this->tester->haveTaxRefundRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+        $this->tester->mockHttpClient($this->tester->haveValidResponse());
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxRefund($taxRefundRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
+        $this->assertTrue($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
     public function testTaxQuotationRequestHasUnsuccessfulResponseTransferWhenHttpResponseIsEmpty(): void
     {
         // Arrange
@@ -71,6 +101,48 @@ class TaxAppRequestSenderTest extends Unit
 
         // Act
         $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
+        $this->assertFalse($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestHasUnsuccessfulResponseTransferWhenQuotationUrlIsMissing(): void
+    {
+        // Arrange
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+        $taxAppConfigTransfer->getApiUrlsOrFail()->setQuotationUrl(null);
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
+        $this->assertFalse($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxRefundRequestHasUnsuccessfulResponseTransferWhenQuotationUrlIsMissing(): void
+    {
+        // Arrange
+        $taxCalculationRequestTransfer = $this->tester->haveTaxRefundRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+        $taxAppConfigTransfer->getApiUrlsOrFail()->setRefundsUrl(null);
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE'], false);
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxRefund($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
 
         // Assert
         $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);

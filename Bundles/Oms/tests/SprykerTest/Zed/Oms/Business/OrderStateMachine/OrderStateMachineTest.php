@@ -16,6 +16,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrder as ChildSpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use ReflectionClass;
+use Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifier;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
@@ -82,6 +83,7 @@ class OrderStateMachineTest extends Unit
             [],
             $this->getReservationMock(),
             new OmsConfig(),
+            new EventTriggeredNotifier([]),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -110,6 +112,7 @@ class OrderStateMachineTest extends Unit
             [],
             $this->getReservationMock(),
             new OmsConfig(),
+            new EventTriggeredNotifier([]),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -135,6 +138,7 @@ class OrderStateMachineTest extends Unit
             [static::COMMAND_NAME => $this->getCommandMock()],
             $this->getReservationMock(),
             new OmsConfig(),
+            new EventTriggeredNotifier([]),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -163,6 +167,7 @@ class OrderStateMachineTest extends Unit
             $commandCollection,
             $this->getReservationMock(),
             new OmsConfig(),
+            new EventTriggeredNotifier([]),
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -273,6 +278,7 @@ class OrderStateMachineTest extends Unit
                 [],
                 $omsBusinessFactory->createUtilReservation(),
                 $omsConfigMock,
+                $omsBusinessFactory->createEventTriggeredNotifier(),
             ])
             ->onlyMethods($methods);
 

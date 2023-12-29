@@ -18,7 +18,7 @@ interface TaxAppFacadeInterface
      * Specification:
      * - Saves tax app config.
      * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.applicationId.
-     * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.apiUrl.
+     * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.apiUrls.
      * - Requires TaxAppConfigTransfer.TaxAppConfigConditionsTransfer.vendorCode.
      *
      * @api
@@ -53,6 +53,7 @@ interface TaxAppFacadeInterface
      * - Sets 'Item.UnitPriceToPayAggregation', 'Item.SumPriceToPayAggregation', 'Item.UnitTaxAmountFullAggregation' and 'Item.SumTaxAmountFullAggregation' with returned amounts, if tax quotation request is successful.
      * - Sets 'Expense.UnitTaxAmount', 'Expense.SumTaxAmount', 'Expense.UnitPriceToPayAggregation' and 'Expense.SumPriceToPayAggregation' (if expense type is shipment) with returned amounts, if tax quotation request is successful.
      * - Recalculation does not trigger additional API calls when TaxAppSale data was not changed.
+     * - Executes fallback {@link \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface} plugins stack if tax app config is missing or inactive.
      *
      * @api
      *
@@ -75,4 +76,18 @@ interface TaxAppFacadeInterface
      * @return void
      */
     public function sendSubmitPaymentTaxInvoiceMessage(OrderTransfer $orderTransfer): void;
+
+    /**
+     * Specification:
+     * - Executes {@link \Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface} plugins stack.
+     * - Sends a refund request to Tax App.
+     *
+     * @api
+     *
+     * @param array<int> $orderItemIds
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function processOrderRefund(array $orderItemIds, int $idSalesOrder): void;
 }

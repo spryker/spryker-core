@@ -100,6 +100,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_OMS_EVENT_TRIGGERED_LISTENER = 'PLUGINS_OMS_EVENT_TRIGGERED_LISTENER';
+
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
@@ -165,6 +170,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsReservationWriterStrategyPlugins($container);
         $container = $this->addReservationPostSaveTerminationAwareStrategyPlugins($container);
         $container = $this->addTimeoutProcessorPlugins($container);
+        $container = $this->addOmsEventTriggeredListenerPlugins($container);
         $container = $this->addMessageBrokerFacade($container);
 
         return $container;
@@ -599,6 +605,28 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface>
      */
     protected function getTimeoutProcessorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsEventTriggeredListenerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_EVENT_TRIGGERED_LISTENER, function () {
+            return $this->getOmsEventTriggeredListenerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsEventTriggeredListenerPluginInterface>
+     */
+    protected function getOmsEventTriggeredListenerPlugins(): array
     {
         return [];
     }

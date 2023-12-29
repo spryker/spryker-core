@@ -21,6 +21,7 @@ use Generated\Shared\DataBuilder\TaxAppConfigCriteriaBuilder;
 use Generated\Shared\DataBuilder\TaxAppSaleBuilder;
 use Generated\Shared\DataBuilder\TaxCalculationRequestBuilder;
 use Generated\Shared\DataBuilder\TaxCalculationResponseBuilder;
+use Generated\Shared\DataBuilder\TaxRefundRequestBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -31,6 +32,7 @@ use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
 use Generated\Shared\Transfer\TaxCalculationResponseTransfer;
+use Generated\Shared\Transfer\TaxRefundRequestTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -53,7 +55,7 @@ class TaxAppDataHelper extends Module
      */
     public function createTaxAppConfigTransfer(array $seed = []): TaxAppConfigTransfer
     {
-        return (new TaxAppConfigBuilder())->seed($seed)->build();
+        return (new TaxAppConfigBuilder())->seed($seed)->withApiUrls()->build();
     }
 
     /**
@@ -98,9 +100,13 @@ class TaxAppDataHelper extends Module
     {
         $taxAppConfigTransfer = $this->createTaxAppConfigTransfer();
         $seed = array_merge($taxAppConfigTransfer->toArray(), $seed);
+        unset($seed['api_urls']);
+        $taxAppApiUrlsJson = json_encode($taxAppConfigTransfer->getApiUrls()->toArray());
 
         $taxAppConfigEntity = (new SpyTaxAppConfig())
             ->fromArray($seed);
+
+        $taxAppConfigEntity->setApiUrls($taxAppApiUrlsJson);
 
         $taxAppConfigEntity->save();
 
@@ -108,7 +114,13 @@ class TaxAppDataHelper extends Module
             $taxAppConfigEntity->delete();
         });
 
-        return $taxAppConfigTransfer->fromArray($taxAppConfigEntity->toArray(), true);
+        $spyTaxAppConfigTransfer = $taxAppConfigEntity->toArray();
+        unset($spyTaxAppConfigTransfer['api_urls']);
+
+        $taxAppConfigTransfer = $taxAppConfigTransfer->fromArray($spyTaxAppConfigTransfer, true);
+        $taxAppConfigTransfer->setApiUrls($taxAppConfigTransfer->getApiUrls());
+
+        return $taxAppConfigTransfer;
     }
 
     /**
@@ -362,6 +374,16 @@ class TaxAppDataHelper extends Module
     public function haveTaxCalculationRequestTransfer(array $seed = []): TaxCalculationRequestTransfer
     {
         return (new TaxCalculationRequestBuilder())->seed($seed)->withSale($this->haveTaxAppSaleTransfer()->toArray())->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\TaxRefundRequestTransfer
+     */
+    public function haveTaxRefundRequestTransfer(array $seed = []): TaxRefundRequestTransfer
+    {
+        return (new TaxRefundRequestBuilder())->seed($seed)->withSale($this->haveTaxAppSaleTransfer()->toArray())->build();
     }
 
     /**

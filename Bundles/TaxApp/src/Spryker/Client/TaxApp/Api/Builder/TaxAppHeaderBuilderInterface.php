@@ -9,19 +9,21 @@ namespace Spryker\Client\TaxApp\Api\Builder;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
-use Generated\Shared\Transfer\TaxCalculationRequestTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface TaxAppHeaderBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer $taxCalculationRequestTransfer
+     * @param \Generated\Shared\Transfer\TaxCalculationRequestTransfer|\Generated\Shared\Transfer\TaxRefundRequestTransfer $taxRequestTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
+     *
+     * @throws \Spryker\Client\TaxApp\Exception\TaxAppInvalidConfigException
      *
      * @return array<string, string>
      */
     public function build(
-        TaxCalculationRequestTransfer $taxCalculationRequestTransfer,
+        AbstractTransfer $taxRequestTransfer,
         StoreTransfer $storeTransfer,
         TaxAppConfigTransfer $taxAppConfigTransfer
     ): array;

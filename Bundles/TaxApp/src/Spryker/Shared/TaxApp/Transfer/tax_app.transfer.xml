@@ -24,12 +24,17 @@
     <transfer name="Item">
         <property name="taxMetadata" type="ItemTaxMetadata" strict="true"/>
         <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
         <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="quantity" type="int"/>
         <property name="shipment" type="Shipment"/>
         <property name="merchantProfileAddress" type="MerchantProfileAddress"/>
         <property name="merchantStockAddresses" type="MerchantStockAddress[]" singular="merchantStockAddress"/>
         <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="unitTaxAmount" type="int"/>
         <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
         <property name="sumSubtotalAggregation" type="int"/>
         <property name="unitPriceToPayAggregation" type="int"/>
         <property name="unitSubtotalAggregation" type="int"/>
@@ -37,6 +42,24 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="unitNetPrice" type="int"/>
         <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="taxRateAverageAggregation" type="float"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="taxMetadata" type="ItemTaxMetadata" strict="true"/>
+        <property name="shipment" type="Shipment"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="type" type="string"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
     </transfer>
 
     <transfer name="SaleTaxMetadata" strict="true">
@@ -57,10 +80,15 @@
     <transfer name="TaxAppConfig" strict="true">
         <property name="applicationId" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="apiUrl" type="string"/>
+        <property name="apiUrls" type="TaxAppApiUrls"/>
         <property name="vendorCode" type="string"/>
         <property name="storeReference" type="string"/>
         <property name="tenantIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="TaxAppApiUrls" strict="true">
+        <property name="quotationUrl" type="string"/>
+        <property name="refundsUrl" type="string"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">
@@ -95,7 +123,7 @@
     <transfer name="ConfigureTaxApp" strict="true">
         <property name="messageAttributes" type="MessageAttributes"/>
         <property name="isActive" type="bool"/>
-        <property name="apiUrl" type="string"/>
+        <property name="apiUrls" type="TaxAppApiUrls"/>
         <property name="vendorCode" type="string"/>
     </transfer>
 
@@ -113,20 +141,7 @@
         <property name="shipments" type="TaxAppShipment[]" singular="shipment"/>
         <property name="taxMetadata" type="array" associative="true" singular="taxMetadataEntry"/>
         <property name="taxTotal" type="int"/>
-    </transfer>
-
-    <transfer name="Expense">
-        <property name="taxMetadata" type="ItemTaxMetadata" strict="true"/>
-        <property name="shipment" type="Shipment"/>
-        <property name="sumDiscountAmountAggregation" type="int"/>
-        <property name="type" type="string"/>
-        <property name="unitTaxAmount" type="int"/>
-        <property name="sumTaxAmount" type="int"/>
-        <property name="unitPriceToPayAggregation" type="int"/>
-        <property name="unitPrice" type="int"/>
-        <property name="unitDiscountAmountAggregation" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
-        <property name="sumPrice" type="int"/>
+        <property name="refundedTaxTotal" type="int"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -136,9 +151,11 @@
     <transfer name="TaxAppItem" strict="true">
         <property name="id" type="string"/>
         <property name="priceAmount" type="int"/>
+        <property name="refundableAmount" type="int"/>
         <property name="discountAmount" type="int"/>
         <property name="quantity" type="int"/>
         <property name="taxTotal" type="int"/>
+        <property name="refundedTaxTotal" type="int"/>
         <property name="shippingAddress" type="TaxAppAddress"/>
         <property name="billingAddress" type="TaxAppAddress"/>
         <property name="sellerAddress" type="TaxAppAddress"/>
@@ -155,8 +172,10 @@
     <transfer name="TaxAppShipment" strict="true">
         <property name="id" type="string"/>
         <property name="priceAmount" type="int"/>
+        <property name="refundableAmount" type="int"/>
         <property name="discountAmount" type="int"/>
         <property name="taxTotal" type="int"/>
+        <property name="refundedTaxTotal" type="int"/>
         <property name="shippingAddress" type="TaxAppAddress"/>
         <property name="billingAddress" type="TaxAppAddress"/>
     </transfer>
@@ -172,6 +191,12 @@
 
     <transfer name="TaxCalculationRequest" strict="true">
         <property name="sale" type="TaxAppSale"/>
+        <property name="authorization" type="string"/>
+    </transfer>
+
+    <transfer name="TaxRefundRequest" strict="true">
+        <property name="sale" type="TaxAppSale"/>
+        <property name="reportingDate" type="string"/>
         <property name="authorization" type="string"/>
     </transfer>
 
@@ -258,5 +283,11 @@
 
     <transfer name="AccessTokenError" strict="true">
         <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="OmsEventTriggered" strict="true">
+        <property name="idEvent" type="string"/>
+        <property name="orderItemIds" type="array" singular="idOrderItem"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 </transfers>

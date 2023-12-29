@@ -13,6 +13,7 @@
         "spryker/message-broker": "^1.5.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/oauth-client": "^1.4.0",
+        "spryker/oms-extension": "^1.4.0",
         "spryker/propel-orm": "^1.18.0",
         "spryker/ramsey-uuid": "^2.0.0",
         "spryker/sales": "^11.0.0",

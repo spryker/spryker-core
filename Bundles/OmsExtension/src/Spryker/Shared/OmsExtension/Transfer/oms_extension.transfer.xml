@@ -32,4 +32,7 @@
     <transfer name="TimeoutProcessorTimeoutResponse">
     </transfer>
 
+    <transfer name="OmsEventTriggered" strict="true">
+    </transfer>
+
 </transfers>

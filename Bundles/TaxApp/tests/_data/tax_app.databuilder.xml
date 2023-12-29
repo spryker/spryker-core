@@ -7,10 +7,15 @@
 
     <transfer name="TaxAppConfig" strict="true">
         <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
-        <property name="apiUrl" dataBuilderRule="lexify('??????????')"/>
+        <property name="apiUrls" dataBuilderRule="TaxAppApiUrls"/>
         <property name="vendorCode" dataBuilderRule="lexify('??????????')"/>
         <property name="storeReference" dataBuilderRule="=de-DE"/>
         <property name="tenantIdentifier" dataBuilderRule="lexify('??????????')"/>
+    </transfer>
+
+    <transfer name="TaxAppApiUrls" strict="true">
+        <property name="quotationUrl" dataBuilderRule="lexify('??????????')"/>
+        <property name="refundsUrl" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="TaxAppConfigCriteria" strict="true">
@@ -73,6 +78,10 @@
     </transfer>
 
     <transfer name="TaxCalculationRequest" strict="true">
+        <property name="sale" dataBuilderRule="TaxAppSale"/>
+    </transfer>
+
+    <transfer name="TaxRefundRequest" strict="true">
         <property name="sale" dataBuilderRule="TaxAppSale"/>
     </transfer>
 

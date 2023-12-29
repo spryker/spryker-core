@@ -7,6 +7,16 @@
 
     <transfer name="Item">
         <property name="unitNetPrice" dataBuilderRule="randomNumber(5)"/>
+        <property name="unitSubtotalAggregation" dataBuilderRule="randomNumber(5)"/>
+        <property name="unitDiscountAmountAggregation" dataBuilderRule="randomNumber(5)"/>
+        <property name="unitTaxAmountFullAggregation" dataBuilderRule="randomNumber(5)"/>
+        <property name="sumSubtotalAggregation" dataBuilderRule="randomNumber(5)"/>
+        <property name="sumDiscountAmountFullAggregation" dataBuilderRule="randomNumber(5)"/>
+        <property name="sumTaxAmountFullAggregation" dataBuilderRule="randomNumber(5)"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="sumDiscountAmountAggregation" dataBuilderRule="randomNumber(5)"/>
     </transfer>
 
 </transfers>

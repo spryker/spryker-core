@@ -131,18 +131,21 @@ class TaxAppFacadeConfigTest extends Unit
     }
 
     /**
+     * @group new
      * @return void
      */
     public function testWhenTaxAppConfigExistsSaveTaxAppConfigWithTenantIdentifierSuccessfullyUpdatesExistingConfig(): void
     {
         // Arrange
         $vendorCode = Uuid::uuid4()->toString();
-        $this->tester->haveTaxAppConfig([
+        $initialTaxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
             TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,
             TaxAppConfigTransfer::TENANT_IDENTIFIER => 'tenant-identifier',
             TaxAppConfigTransfer::STORE_REFERENCE => null,
             TaxAppConfigTransfer::IS_ACTIVE => false,
         ]);
+
+        $this->tester->getFacade()->saveTaxAppConfig($initialTaxAppConfigTransfer);
 
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer([
             TaxAppConfigTransfer::VENDOR_CODE => $vendorCode,

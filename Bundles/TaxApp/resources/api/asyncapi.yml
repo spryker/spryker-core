@@ -54,15 +54,14 @@ components:
                 isActive:
                     type: boolean
                     description: Indicates if the tax app is active.
-                apiUrl:
-                    type: string
-                    description: The URI of the tax calculation endpoint.
+                apiUrls:
+                    $ref: '#/components/schemas/ApiUrls'
                 vendorCode:
                     type: string
                     description: The vendor code to identify the tax Vendor.
             required:
                 - isActive
-                - apiUrl
+                - apiUrls
                 - vendorCode
         TaxAppConfigCriteria:
             type: object
@@ -79,6 +78,19 @@ components:
                     $ref: '#/components/schemas/Sale'
             required:
                 - sale
+
+        ApiUrls:
+            type: object
+            properties:
+                quotationUrl:
+                    type: string
+                    description: The URI of the tax calculation endpoint.
+                refundsUrl:
+                    type: string
+                    description: The URI of the refunds endpoint.
+            required:
+                - quotationUrl
+                - refundsUrl
 
         Sale:
             properties:

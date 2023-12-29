@@ -281,4 +281,10 @@
         <property name="image" type="string"/>
     </transfer>
 
+    <transfer name="OmsEventTriggered" strict="true">
+        <property name="idEvent" type="string"/>
+        <property name="orderItemIds" type="array" singular="idOrderItem"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="eventData" type="array" singular="eventData"/>
+    </transfer>
 </transfers>

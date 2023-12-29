@@ -8,6 +8,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/TaxApp/Dependency/Facade/TaxAppToStoreFacadeInterface.php",
+        "description": "Bridges: Method `getStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/TaxApp/Dependency/Facade/TaxAppToStoreFacadeInterface.php",
         "description": "Bridges: Method `getStoreByStoreReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -79,6 +86,13 @@
     {
         "fileName": "src/Spryker/Zed/TaxApp/Dependency/Facade/TaxAppToStoreFacadeBridge.php",
         "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/TaxApp/Dependency/Facade/TaxAppToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

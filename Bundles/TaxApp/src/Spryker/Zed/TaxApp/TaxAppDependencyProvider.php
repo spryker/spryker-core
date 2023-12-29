@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxApp;
 
+use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToMessageBrokerFacadeBridge;
@@ -45,6 +46,20 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_TAX_APP_EXPANDER = 'PLUGINS_ORDER_TAX_APP_EXPANDER';
 
     /**
+     * string
+     *
+     * @var string
+     */
+    public const PLUGINS_FALLBACK_QUOTE_CALCULATION = 'PLUGINS_FALLBACK_QUOTE_CALCULATION';
+
+    /**
+     * string
+     *
+     * @var string
+     */
+    public const PLUGINS_FALLBACK_ORDER_CALCULATION = 'PLUGINS_FALLBACK_ORDER_CALCULATION';
+
+    /**
      * @var string
      */
     public const CLIENT_TAX_APP = 'CLIENT_TAX_APP';
@@ -53,6 +68,11 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_OAUTH_CLIENT = 'FACADE_OAUTH_CLIENT';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -69,6 +89,22 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addTaxAppClient($container);
         $container = $this->addOauthClientFacade($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addFallbackQuoteCalculationPlugins($container);
+        $container = $this->addFallbackOrderCalculationPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -134,6 +170,20 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new TaxAppToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addMessageBrokerFacade(Container $container): Container
     {
         $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
@@ -172,6 +222,34 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFallbackQuoteCalculationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FALLBACK_QUOTE_CALCULATION, function () {
+            return $this->getFallbackQuoteCalculationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFallbackOrderCalculationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FALLBACK_ORDER_CALCULATION, function () {
+            return $this->getFallbackOrderCalculationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\TaxAppExtension\Dependency\Plugin\CalculableObjectTaxAppExpanderPluginInterface>
      */
     protected function getCalculableObjectTaxAppExpanderPlugins(): array
@@ -183,6 +261,31 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface>
      */
     protected function getOrderTaxAppExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * This calculation stack is executed as a fallback during quote recalculation when tax app is not configured or is disabled.
+     * Please see the descriptions of those plugins in {@link \Spryker\Zed\Calculation\CalculationDependencyProvider::getQuoteCalculatorPluginStack}.
+     * This plugin stack should include all plugins present between extracted tax calculation plugins. They will be executed instead of TaxAppCalculationPlugin.
+     *
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface>
+     */
+    protected function getFallbackQuoteCalculationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     *
+     * This calculation stack is executed as a fallback during order recalculation when tax app is not configured or is disabled.
+     * Please see the descriptions of those plugins in {@link \Spryker\Zed\Calculation\CalculationDependencyProvider::getOrderCalculatorPluginStack}.
+     * This plugin stack should include all plugins present between extracted tax calculation plugins. They will be executed instead of TaxAppCalculationPlugin.
+     *
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface>
+     */
+    protected function getFallbackOrderCalculationPlugins(): array
     {
         return [];
     }

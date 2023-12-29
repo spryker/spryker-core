@@ -7,13 +7,28 @@
 
 namespace Spryker\Zed\TaxApp\Persistence\Mapper;
 
+use Generated\Shared\Transfer\TaxAppApiUrlsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 
 class TaxAppConfigMapper
 {
+    /**
+     * @var \Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface
+     */
+    protected TaxAppToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
+     * @param \Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(TaxAppToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
      * @param \Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig $taxAppConfigEntity
@@ -24,7 +39,14 @@ class TaxAppConfigMapper
         TaxAppConfigTransfer $taxAppConfigTransfer,
         SpyTaxAppConfig $taxAppConfigEntity
     ): SpyTaxAppConfig {
-        return $taxAppConfigEntity->fromArray($taxAppConfigTransfer->toArray());
+        $taxAppApiUrlsJson = $this->utilEncodingService->encodeJson($taxAppConfigTransfer->getApiUrlsOrFail()->toArray());
+        $taxAppConfigTransfer = $taxAppConfigTransfer->toArray();
+        unset($taxAppConfigTransfer['api_urls']);
+
+        $taxAppConfigEntity = $taxAppConfigEntity->fromArray($taxAppConfigTransfer);
+        $taxAppConfigEntity->setApiUrls($taxAppApiUrlsJson ?? '');
+
+        return $taxAppConfigEntity;
     }
 
     /**
@@ -37,7 +59,16 @@ class TaxAppConfigMapper
         SpyTaxAppConfig $spyTaxAppConfigTransfer,
         TaxAppConfigTransfer $taxAppConfigTransfer
     ): TaxAppConfigTransfer {
-        return $taxAppConfigTransfer->fromArray($spyTaxAppConfigTransfer->toArray(), true);
+        $taxAppApiUrlsArray = $this->utilEncodingService->decodeJson($spyTaxAppConfigTransfer->getApiUrls(), true);
+        $taxAppApiUrlsTransfer = (new TaxAppApiUrlsTransfer())->fromArray((array)($taxAppApiUrlsArray ?? []), true);
+
+        $spyTaxAppConfigTransfer = $spyTaxAppConfigTransfer->toArray();
+        unset($spyTaxAppConfigTransfer['api_urls']);
+
+        $taxAppConfigTransfer = $taxAppConfigTransfer->fromArray($spyTaxAppConfigTransfer, true);
+        $taxAppConfigTransfer->setApiUrls($taxAppApiUrlsTransfer);
+
+        return $taxAppConfigTransfer;
     }
 
     /**

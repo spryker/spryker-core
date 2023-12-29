@@ -22,7 +22,7 @@ class SubmitPaymentTaxInvoicePlugin extends AbstractPlugin implements CommandByO
 {
     /**
      * {@inheritDoc}
-     * - Sends SubmitPaymentTaxInvoice message to the message broker `tax-commands` channel.
+     * - Sends SubmitPaymentTaxInvoice message to the message broker `payment-tax-invoice-commands' channel.
      *
      * @api
      *

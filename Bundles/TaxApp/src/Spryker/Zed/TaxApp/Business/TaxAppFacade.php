@@ -75,4 +75,19 @@ class TaxAppFacade extends AbstractFacade implements TaxAppFacadeInterface
     {
         $this->getFactory()->createPaymentSubmitTaxInvoiceSender()->sendSubmitPaymentTaxInvoiceMessage($orderTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<int> $orderItemIds
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function processOrderRefund(array $orderItemIds, int $idSalesOrder): void
+    {
+        $this->getFactory()->createRefundProcessor()->processOrderRefund($orderItemIds, $idSalesOrder);
+    }
 }

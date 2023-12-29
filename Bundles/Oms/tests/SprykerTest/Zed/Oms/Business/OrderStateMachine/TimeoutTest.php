@@ -314,6 +314,7 @@ class TimeoutTest extends Unit
                 $omsBusinessFactory->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
                 $omsBusinessFactory->createUtilReservation(),
                 $omsConfigMock,
+                $omsBusinessFactory->createEventTriggeredNotifier(),
             ])
             ->onlyMethods($methods)
             ->getMock();

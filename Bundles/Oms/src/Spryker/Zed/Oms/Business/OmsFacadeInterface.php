@@ -86,6 +86,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
@@ -113,6 +114,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
@@ -138,6 +140,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
@@ -370,6 +373,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
@@ -397,6 +401,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
@@ -423,6 +428,7 @@ interface OmsFacadeInterface
      *  - Calls condition plugins
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
+     *  - Notified listeners about event handling
      *  - Unlocks state machine trigger
      *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
      *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.

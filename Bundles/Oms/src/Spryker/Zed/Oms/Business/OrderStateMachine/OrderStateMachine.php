@@ -18,6 +18,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifierInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -126,6 +127,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $omsConfig;
 
     /**
+     * @var \Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifierInterface
+     */
+    protected EventTriggeredNotifierInterface $eventTriggeredNotifier;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
@@ -135,6 +141,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      * @param \Spryker\Zed\Oms\Business\Util\ReservationInterface $reservation
      * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
+     * @param \Spryker\Zed\Oms\Business\Notifier\EventTriggeredNotifierInterface $eventTriggeredNotifier
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -145,7 +152,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         $conditions,
         $commands,
         ReservationInterface $reservation,
-        OmsConfig $omsConfig
+        OmsConfig $omsConfig,
+        EventTriggeredNotifierInterface $eventTriggeredNotifier
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -156,6 +164,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->setCommands($commands);
         $this->reservation = $reservation;
         $this->omsConfig = $omsConfig;
+        $this->eventTriggeredNotifier = $eventTriggeredNotifier;
     }
 
     /**
@@ -238,6 +247,15 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
             $sourceStateBuffer = $this->updateStateByEvent($eventId, $processedOrderItems, $sourceStateBuffer, $log);
             $this->saveOrderItems($processedOrderItems, $log, $processes, $sourceStateBuffer);
+
+            $currentOrderItemEntity = current($processedOrderItems);
+
+            if ($currentOrderItemEntity) {
+                $orderEntity = $currentOrderItemEntity->getOrder();
+
+                $this->eventTriggeredNotifier->notifyOmsEventTriggeredListeners($eventId, $processedOrderItems, $orderEntity, $data);
+            }
+
             $allProcessedOrderItems = array_merge($allProcessedOrderItems, $processedOrderItems);
         }
 
