@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Glue\Testify\Tester;
+
+use SprykerTest\Shared\Testify\Tester\EndToEndTester;
+
+abstract class AbstractEndToEndTester extends EndToEndTester
+{
+    /**
+     * @param string $url
+     * @param array<string, mixed> $params
+     *
+     * @return string
+     */
+    abstract public function formatFullUrl(string $url, array $params = []): string;
+
+    /**
+     * @param string $url
+     * @param array<string, mixed> $params
+     *
+     * @return string
+     */
+    public function formatUrl(string $url, array $params = []): string
+    {
+        $refinedParams = [];
+
+        foreach ($params as $key => $value) {
+            $refinedParams['{' . $key . '}'] = urlencode($value);
+        }
+
+        return strtr($url, $refinedParams);
+    }
+}

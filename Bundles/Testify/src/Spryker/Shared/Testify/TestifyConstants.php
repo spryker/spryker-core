@@ -48,4 +48,14 @@ class TestifyConstants
      * @var string
      */
     public const WEB_DRIVER_HOST = 'TESTIFY_CONSTANTS:WEB_DRIVER_HOST';
+
+    /**
+     * Specification:
+     * - Backend API application domain for end-to-end testing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_BACKEND_API_DOMAIN = 'TESTIFY:GLUE_BACKEND_API_DOMAIN';
 }

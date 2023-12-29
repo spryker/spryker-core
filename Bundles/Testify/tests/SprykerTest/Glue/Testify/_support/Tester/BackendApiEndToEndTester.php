@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\Testify\Tester;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
 
-abstract class ApiEndToEndTester extends AbstractEndToEndTester
+class BackendApiEndToEndTester extends AbstractEndToEndTester
 {
     /**
      * @param string $url
@@ -20,6 +20,6 @@ abstract class ApiEndToEndTester extends AbstractEndToEndTester
      */
     public function formatFullUrl(string $url, array $params = []): string
     {
-        return rtrim(Config::get(TestifyConstants::GLUE_APPLICATION_DOMAIN) . '/' . $this->formatUrl($url, $params), '/');
+        return rtrim(Config::get(TestifyConstants::GLUE_BACKEND_API_DOMAIN) . '/' . $this->formatUrl($url, $params), '/');
     }
 }

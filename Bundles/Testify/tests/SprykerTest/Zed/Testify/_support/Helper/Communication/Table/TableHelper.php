@@ -142,7 +142,7 @@ class TableHelper extends Module
             $this->fail(sprintf(
                 'Current data set has only "%d" entries. Requested row "%d" does not exist.',
                 count($dataSet),
-                $rowPosition
+                $rowPosition,
             ));
         }
 
