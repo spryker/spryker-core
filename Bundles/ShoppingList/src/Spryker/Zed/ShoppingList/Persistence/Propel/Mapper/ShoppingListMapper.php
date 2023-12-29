@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
 {
@@ -90,6 +91,25 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList> $shoppingListEntities
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function mapShoppingListEntitiesToShoppingListCollectionTransfer(
+        ObjectCollection $shoppingListEntities,
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+    ): ShoppingListCollectionTransfer {
+        foreach ($shoppingListEntities as $shoppingListEntity) {
+            $shoppingListCollectionTransfer->addShoppingList(
+                $this->mapShoppingListEntityToShoppingListTransfer($shoppingListEntity, new ShoppingListTransfer()),
+            );
+        }
+
+        return $shoppingListCollectionTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $shoppingListEntity
      *
@@ -100,6 +120,22 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         $shoppingListEntity->fromArray($shoppingListTransfer->modifiedToArray());
 
         return $shoppingListEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $shoppingListEntity
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function mapShoppingListEntityToShoppingListTransfer(
+        SpyShoppingList $shoppingListEntity,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntity->toArray(), true);
+        $shoppingListTransfer->setNumberOfItems((int)$shoppingListEntity->getVirtualColumn(static::FIELD_NUMBER_OF_ITEMS));
+
+        return $this->mapShoppingListEntityOwnerNameToShoppingListTransfer($shoppingListEntity, $shoppingListTransfer);
     }
 
     /**
@@ -208,5 +244,21 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $shoppingListEntity
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function mapShoppingListEntityOwnerNameToShoppingListTransfer(
+        SpyShoppingList $shoppingListEntity,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        $ownerFirstName = $shoppingListEntity->getVirtualColumn(static::FIELD_FIRST_NAME);
+        $ownerLastName = $shoppingListEntity->getVirtualColumn(static::FIELD_LAST_NAME);
+
+        return $shoppingListTransfer->setOwner(trim(sprintf('%s %s', $ownerFirstName, $ownerLastName)));
     }
 }

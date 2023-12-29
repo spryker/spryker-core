@@ -8,6 +8,12 @@
 namespace Spryker\Zed\ShoppingList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShoppingList\Business\Expander\ShoppingListItemExpander;
+use Spryker\Zed\ShoppingList\Business\Expander\ShoppingListItemExpanderInterface;
+use Spryker\Zed\ShoppingList\Business\Extractor\ShoppingListExtractor;
+use Spryker\Zed\ShoppingList\Business\Extractor\ShoppingListExtractorInterface;
+use Spryker\Zed\ShoppingList\Business\Filter\ShoppingListFilter;
+use Spryker\Zed\ShoppingList\Business\Filter\ShoppingListFilterInterface;
 use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstaller;
 use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstallerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\QuoteToShoppingListConverter;
@@ -24,6 +30,8 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
 use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveChecker;
 use Spryker\Zed\ShoppingList\Business\Product\ProductConcreteIsActiveCheckerInterface;
+use Spryker\Zed\ShoppingList\Business\Reader\ShoppingListCollectionReader;
+use Spryker\Zed\ShoppingList\Business\Reader\ShoppingListCollectionReaderInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdder;
@@ -73,6 +81,48 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getMessengerFacade(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Reader\ShoppingListCollectionReaderInterface
+     */
+    public function createShoppingListCollectionReader(): ShoppingListCollectionReaderInterface
+    {
+        return new ShoppingListCollectionReader(
+            $this->createShoppingListItemExpander(),
+            $this->getRepository(),
+            $this->createShoppingListFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Expander\ShoppingListItemExpanderInterface
+     */
+    public function createShoppingListItemExpander(): ShoppingListItemExpanderInterface
+    {
+        return new ShoppingListItemExpander(
+            $this->getRepository(),
+            $this->createShoppingListExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Filter\ShoppingListFilterInterface
+     */
+    public function createShoppingListFilter(): ShoppingListFilterInterface
+    {
+        return new ShoppingListFilter(
+            $this->getRepository(),
+            $this->createShoppingListExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Extractor\ShoppingListExtractorInterface
+     */
+    public function createShoppingListExtractor(): ShoppingListExtractorInterface
+    {
+        return new ShoppingListExtractor();
     }
 
     /**

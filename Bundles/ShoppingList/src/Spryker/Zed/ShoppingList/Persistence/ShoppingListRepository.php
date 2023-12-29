@@ -13,12 +13,15 @@ use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\ShoppingList\Persistence\Base\SpyShoppingListItemQuery;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
@@ -260,6 +263,50 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getShoppingListCollection(ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer): ShoppingListCollectionTransfer
+    {
+        $shoppingListQuery = $this->getFactory()
+            ->createShoppingListQuery()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->leftJoinSpyShoppingListItem()
+            ->distinct()
+            ->clearSelectColumns()
+            ->addSelfSelectColumns(true)
+            ->withColumn(sprintf('SUM(%s)', SpyShoppingListItemTableMap::COL_QUANTITY), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->groupByIdShoppingList();
+
+        $shoppingListQuery = $this->applyShoppingListFilters($shoppingListQuery, $shoppingListCriteriaTransfer);
+
+        return $this->getFactory()->createShoppingListMapper()->mapShoppingListEntitiesToShoppingListCollectionTransfer(
+            $shoppingListQuery->find(),
+            new ShoppingListCollectionTransfer(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCriteriaTransfer $shoppingListItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollection(ShoppingListItemCriteriaTransfer $shoppingListItemCriteriaTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemQuery = $this->getFactory()->createShoppingListItemQuery();
+
+        $shoppingListItemQuery = $this->applyShoppingListItemFilters($shoppingListItemQuery, $shoppingListItemCriteriaTransfer);
+
+        return $this->getFactory()->createShoppingListItemMapper()->mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer(
+            $shoppingListItemQuery->find(),
+            new ShoppingListItemCollectionTransfer(),
+        );
+    }
+
+    /**
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
@@ -466,6 +513,75 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         }
 
         return $shoppingListCompanyUserCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
+     * @param \Generated\Shared\Transfer\ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
+     */
+    protected function applyShoppingListFilters(
+        SpyShoppingListQuery $shoppingListQuery,
+        ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer
+    ): SpyShoppingListQuery {
+        $shoppingListConditionsTransfer = $shoppingListCriteriaTransfer->getShoppingListConditions();
+
+        if (!$shoppingListConditionsTransfer) {
+            return $shoppingListQuery;
+        }
+
+        if ($shoppingListConditionsTransfer->getCustomerReferences()) {
+            $shoppingListQuery->filterByCustomerReference_In($shoppingListConditionsTransfer->getCustomerReferences());
+        }
+
+        if ($shoppingListConditionsTransfer->getCompanyUserIds()) {
+            $shoppingListQuery
+                ->useSpyShoppingListCompanyUserQuery()
+                    ->filterByFkCompanyUser_In($shoppingListConditionsTransfer->getCompanyUserIds())
+                ->endUse();
+        }
+
+        if ($shoppingListConditionsTransfer->getBlacklistCompanyUserIds()) {
+            $shoppingListQuery
+                ->useSpyShoppingListCompanyBusinessUnitQuery()
+                    ->useSpyShoppingListCompanyBusinessUnitBlacklistQuery()
+                        ->filterByFkCompanyUser_In($shoppingListConditionsTransfer->getBlacklistCompanyUserIds())
+                    ->endUse()
+                ->endUse();
+        }
+
+        if ($shoppingListConditionsTransfer->getCompanyBusinessUnitIds()) {
+            $shoppingListQuery
+                ->useSpyShoppingListCompanyBusinessUnitQuery()
+                    ->filterByFkCompanyBusinessUnit_In($shoppingListConditionsTransfer->getCompanyBusinessUnitIds())
+                ->endUse();
+        }
+
+        return $shoppingListQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\Base\SpyShoppingListItemQuery $shoppingListItemQuery
+     * @param \Generated\Shared\Transfer\ShoppingListItemCriteriaTransfer $shoppingListItemCriteriaTransfer
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\Base\SpyShoppingListItemQuery
+     */
+    protected function applyShoppingListItemFilters(
+        SpyShoppingListItemQuery $shoppingListItemQuery,
+        ShoppingListItemCriteriaTransfer $shoppingListItemCriteriaTransfer
+    ): SpyShoppingListItemQuery {
+        $shoppingListItemConditions = $shoppingListItemCriteriaTransfer->getShoppingListConditions();
+
+        if (!$shoppingListItemConditions) {
+            return $shoppingListItemQuery;
+        }
+
+        if ($shoppingListItemConditions->getShoppingListIds()) {
+            $shoppingListItemQuery->filterByFkShoppingList_In($shoppingListItemConditions->getShoppingListIds());
+        }
+
+        return $shoppingListItemQuery;
     }
 
     /**

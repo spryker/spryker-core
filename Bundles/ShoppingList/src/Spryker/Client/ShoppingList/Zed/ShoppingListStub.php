@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -218,6 +219,24 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListCollectionAction()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getShoppingListCollection(ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer): ShoppingListCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer */
+        $shoppingListCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-collection',
+            $shoppingListCriteriaTransfer,
+        );
+
+        return $shoppingListCollectionTransfer;
+    }
+
+    /**
      * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getCustomerShoppingListCollectionAction()
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -396,7 +415,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::findShoppingListByUuid()
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::findShoppingListByUuidAction()
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *

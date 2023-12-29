@@ -10,10 +10,15 @@ namespace SprykerTest\Shared\ShoppingList\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\DataBuilder\ShoppingListItemBuilder;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupToPermission;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -101,5 +106,49 @@ class ShoppingListHelper extends Module
         $shoppingListPermissionGroupTransfer->fromArray($shoppingListPermissionGroupEntity->toArray(), true);
 
         return $shoppingListPermissionGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
+     */
+    public function haveShoppingListCompanyUser(
+        CompanyUserTransfer $companyUserTransfer,
+        ShoppingListTransfer $shoppingListTransfer,
+        ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+    ): ShoppingListCompanyUserTransfer {
+        $shoppingListCompanyUserEntity = new SpyShoppingListCompanyUser();
+        $shoppingListCompanyUserEntity->setFkShoppingList($shoppingListTransfer->getIdShoppingListOrFail());
+        $shoppingListCompanyUserEntity->setFkCompanyUser($companyUserTransfer->getIdCompanyUserOrFail());
+        $shoppingListCompanyUserEntity->setFkShoppingListPermissionGroup($shoppingListPermissionGroupTransfer->getIdShoppingListPermissionGroupOrFail());
+
+        $shoppingListCompanyUserEntity->save();
+
+        return (new ShoppingListCompanyUserTransfer())->fromArray($shoppingListCompanyUserEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
+     */
+    public function haveShoppingListCompanyBusinessUnit(
+        CompanyUserTransfer $companyUserTransfer,
+        ShoppingListTransfer $shoppingListTransfer,
+        ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+    ): ShoppingListCompanyBusinessUnitTransfer {
+        $shoppingListCompanyBusinessUnitEntity = (new SpyShoppingListCompanyBusinessUnit())
+            ->setFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnitOrFail())
+            ->setFkShoppingList($shoppingListTransfer->getIdShoppingListOrFail())
+            ->setFkShoppingListPermissionGroup($shoppingListPermissionGroupTransfer->getIdShoppingListPermissionGroupOrFail());
+
+        $shoppingListCompanyBusinessUnitEntity->save();
+
+        return (new ShoppingListCompanyBusinessUnitTransfer())->fromArray($shoppingListCompanyBusinessUnitEntity->toArray(), true);
     }
 }

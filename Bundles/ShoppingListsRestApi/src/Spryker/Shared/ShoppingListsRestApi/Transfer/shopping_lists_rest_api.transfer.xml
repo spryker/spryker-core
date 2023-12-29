@@ -88,4 +88,19 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
     </transfer>
 
+    <transfer name="ShoppingListConditions" strict="true">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="withExcludedBlacklistedShoppingLists" type="bool"/>
+        <property name="withCustomerSharedShoppingLists" type="bool"/>
+        <property name="withBusinessUnitSharedShoppingLists" type="bool"/>
+        <property name="withShoppingListItems" type="bool"/>
+        <property name="companyUserIds" type="int[]" singular="idCompanyUser"/>
+        <property name="blacklistCompanyUserIds" type="int[]" singular="idBlacklistCompanyUser"/>
+        <property name="companyBusinessUnitIds" type="int[]" singular="idCompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="ShoppingListCriteria" strict="true">
+        <property name="shoppingListConditions" type="ShoppingListConditions"/>
+    </transfer>
+
 </transfers>

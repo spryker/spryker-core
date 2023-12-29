@@ -31,7 +31,7 @@ use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
  *
  * @method \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ShoppingListsRestApi\PHPMD)
  */
 class ShoppingListsRestApiBusinessTester extends Actor
 {

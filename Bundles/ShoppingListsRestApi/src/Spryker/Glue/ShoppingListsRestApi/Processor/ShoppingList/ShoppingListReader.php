@@ -9,6 +9,9 @@ namespace Spryker\Glue\ShoppingListsRestApi\Processor\ShoppingList;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestShoppingListCollectionResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListConditionsTransfer;
+use Generated\Shared\Transfer\ShoppingListCriteriaTransfer;
 use Spryker\Client\ShoppingListsRestApi\ShoppingListsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -77,9 +80,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $restRequest->getRestUser(),
             new CustomerTransfer(),
         );
-        $shoppingListCollectionResponseTransfer = $this->shoppingListsRestApiClient->getCustomerShoppingListCollection($customerTransfer);
+
+        $shoppingListCollectionTransfer = $this->getShoppingListCollectionForCustomer($customerTransfer);
         $restShoppingListCollectionResponseTransfer = (new RestShoppingListCollectionResponseTransfer())
-            ->setShoppingLists($shoppingListCollectionResponseTransfer->getShoppingLists());
+            ->setShoppingLists($shoppingListCollectionTransfer->getShoppingLists());
+
         if (count($restShoppingListCollectionResponseTransfer->getErrorIdentifiers()) > 0) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
@@ -115,5 +120,32 @@ class ShoppingListReader implements ShoppingListReaderInterface
         return $this->shoppingListRestResponseBuilder->buildShoppingListRestResponse(
             $shoppingListResponseTransfer->getShoppingList(),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function getShoppingListCollectionForCustomer(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
+    {
+        $shoppingListConditionsTransfer = (new ShoppingListConditionsTransfer())
+            ->addCustomerReference($customerTransfer->getCustomerReference())
+            ->setWithExcludedBlacklistedShoppingLists(true)
+            ->setWithCustomerSharedShoppingLists(true)
+            ->setWithBusinessUnitSharedShoppingLists(true)
+            ->setWithShoppingListItems(true);
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        if ($companyUserTransfer && $companyUserTransfer->getIdCompanyUser()) {
+            $shoppingListConditionsTransfer->addIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+            $shoppingListConditionsTransfer->addIdBlacklistCompanyUser($companyUserTransfer->getIdCompanyUser());
+            $shoppingListConditionsTransfer->addIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
+        }
+
+        $shoppingListCriteriaTransfer = (new ShoppingListCriteriaTransfer())->setShoppingListConditions($shoppingListConditionsTransfer);
+
+        return $this->shoppingListClient->getShoppingListCollection($shoppingListCriteriaTransfer);
     }
 }

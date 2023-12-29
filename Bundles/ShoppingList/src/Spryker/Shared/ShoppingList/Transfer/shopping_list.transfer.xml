@@ -257,4 +257,27 @@
         <property name="companyUserIds" type="array" singular="companyUserIds"/>
     </transfer>
 
+    <transfer name="ShoppingListItemCriteria" strict="true">
+        <property name="shoppingListConditions" type="ShoppingListItemConditions"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemConditions" strict="true">
+        <property name="shoppingListIds" type="int[]" singular="idShoppingList"/>
+    </transfer>
+
+    <transfer name="ShoppingListCriteria" strict="true">
+        <property name="shoppingListConditions" type="ShoppingListConditions"/>
+    </transfer>
+
+    <transfer name="ShoppingListConditions" strict="true">
+        <property name="companyUserIds" type="int[]" singular="idCompanyUser"/>
+        <property name="blacklistCompanyUserIds" type="int[]" singular="idBlacklistCompanyUser"/>
+        <property name="companyBusinessUnitIds" type="int[]" singular="idCompanyBusinessUnit"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="withShoppingListItems" type="bool"/>
+        <property name="withExcludedBlacklistedShoppingLists" type="bool"/>
+        <property name="withCustomerSharedShoppingLists" type="bool"/>
+        <property name="withBusinessUnitSharedShoppingLists" type="bool"/>
+    </transfer>
+
 </transfers>

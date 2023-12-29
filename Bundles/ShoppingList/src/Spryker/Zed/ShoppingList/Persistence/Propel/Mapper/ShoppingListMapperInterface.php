@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface ShoppingListMapperInterface
 {
@@ -31,6 +32,17 @@ interface ShoppingListMapperInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function mapCollectionTransfer(array $shoppingListEntityTransferCollection): ShoppingListCollectionTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList> $shoppingListEntities
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function mapShoppingListEntitiesToShoppingListCollectionTransfer(
+        ObjectCollection $shoppingListEntities,
+        ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+    ): ShoppingListCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer

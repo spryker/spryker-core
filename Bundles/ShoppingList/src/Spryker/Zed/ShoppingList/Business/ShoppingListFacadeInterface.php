@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -207,6 +208,24 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves shopping list entities filtered by criteria from Persistence.
+     * - Uses `ShoppingListCriteriaTransfer.shoppingListConditions.customerReferences` to filter by customer references.
+     * - Uses `ShoppingListCriteriaTransfer.shoppingListConditions.withExcludedBlacklistedShoppingLists` and `ShoppingListCriteriaTransfer.shoppingListConditions.blacklistCompanyUserIds` to filter out blacklisted shopping lists.
+     * - Uses `ShoppingListCriteriaTransfer.shoppingListConditions.withCustomerSharedShoppingLists` and `ShoppingListCriteriaTransfer.shoppingListConditions.companyUserIds` to include customer shared shopping lists.
+     * - Uses `ShoppingListCriteriaTransfer.shoppingListConditions.withBusinessUnitSharedShoppingLists` and `ShoppingListCriteriaTransfer.shoppingListConditions.companyBusinessUnitIds` to include business unit shared shopping lists.
+     * - Uses `ShoppingListCriteriaTransfer.shoppingListConditions.withShoppingListItems` to load shopping list items.
+     * - Returns `ShoppingListCollectionTransfer` filled with found shopping lists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getShoppingListCollection(ShoppingListCriteriaTransfer $shoppingListCriteriaTransfer): ShoppingListCollectionTransfer;
 
     /**
      * Specification:
