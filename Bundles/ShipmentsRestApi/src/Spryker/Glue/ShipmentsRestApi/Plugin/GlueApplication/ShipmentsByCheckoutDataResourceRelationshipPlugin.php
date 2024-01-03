@@ -29,6 +29,7 @@ class ShipmentsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin i
      * - Expects `RestCheckoutDataTransfer.availableShipmentMethods` to be provided.
      * - Uses `ShipmentService::groupItemsByShipment()` which exists in `Shipment` module from version `^7.0.0`.
      * - Is not applicable if `RestCheckoutDataTransfer` contains `shippingAddress` or `shipment` attributes.
+     * - Executes {@link \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\RestAddressResponseMapperPluginInterface} plugin stack.
      *
      * @api
      *

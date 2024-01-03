@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodTransfer;
 use Generated\Shared\Transfer\RestShipmentsAttributesTransfer;
@@ -14,6 +15,19 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 class ShipmentMapper implements ShipmentMapperInterface
 {
+    /**
+     * @var list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\RestAddressResponseMapperPluginInterface>
+     */
+    protected array $restAddressResponseMapperPlugins;
+
+    /**
+     * @param list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\RestAddressResponseMapperPluginInterface> $restAddressResponseMapperPlugins
+     */
+    public function __construct(array $restAddressResponseMapperPlugins)
+    {
+        $this->restAddressResponseMapperPlugins = $restAddressResponseMapperPlugins;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\RestShipmentsAttributesTransfer $restShipmentsAttributesTransfer
@@ -60,9 +74,11 @@ class ShipmentMapper implements ShipmentMapperInterface
             return new RestAddressTransfer();
         }
 
-        return (new RestAddressTransfer())
+        $restAddressTransfer = (new RestAddressTransfer())
             ->fromArray($addressTransfer->toArray(), true)
             ->setId($addressTransfer->getUuid());
+
+        return $this->executeRestAddressResponseMapperPlugins($addressTransfer, $restAddressTransfer);
     }
 
     /**
@@ -82,5 +98,22 @@ class ShipmentMapper implements ShipmentMapperInterface
             ->fromArray($shipmentMethodTransfer->toArray(), true)
             ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
             ->setId($shipmentMethodTransfer->getIdShipmentMethod());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestAddressTransfer
+     */
+    protected function executeRestAddressResponseMapperPlugins(
+        AddressTransfer $addressTransfer,
+        RestAddressTransfer $restAddressTransfer
+    ): RestAddressTransfer {
+        foreach ($this->restAddressResponseMapperPlugins as $restAddressResponseMapperPlugin) {
+            $restAddressTransfer = $restAddressResponseMapperPlugin->map($addressTransfer, $restAddressTransfer);
+        }
+
+        return $restAddressTransfer;
     }
 }

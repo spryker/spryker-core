@@ -9,12 +9,15 @@ namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Dependency\Service\CustomersRestApiToUtilTextServiceInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Activator\CustomerActivator;
 use Spryker\Glue\CustomersRestApi\Processor\Activator\CustomerActivatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressReader;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressWriterInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Checker\CheckoutBillingAddressChecker;
+use Spryker\Glue\CustomersRestApi\Processor\Checker\CheckoutBillingAddressCheckerInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerReader;
 use Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customer\CustomerWriter;
@@ -302,5 +305,24 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->createCustomerRestResponseBuilder(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Checker\CheckoutBillingAddressCheckerInterface
+     */
+    public function createCheckoutBillingAddressChecker(): CheckoutBillingAddressCheckerInterface
+    {
+        return new CheckoutBillingAddressChecker(
+            $this->getConfig(),
+            $this->getUtilTextService(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Dependency\Service\CustomersRestApiToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): CustomersRestApiToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

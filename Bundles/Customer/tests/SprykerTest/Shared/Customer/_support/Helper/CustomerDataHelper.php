@@ -10,7 +10,9 @@ namespace SprykerTest\Shared\Customer\Helper;
 use Codeception\Exception\TestRuntimeException;
 use Codeception\Module;
 use Codeception\Stub;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
@@ -86,6 +88,24 @@ class CustomerDataHelper extends Module
         }
 
         return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function haveCustomerAddress(array $seed = []): AddressTransfer
+    {
+        $addressTransfer = $this->getCustomerFacade()
+            ->createAddress((new AddressBuilder($seed))->build());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($addressTransfer): void {
+            $this->debug(sprintf('Deleting Customer Address: %s', $addressTransfer->getIdCustomerAddress()));
+            $this->getCustomerFacade()->deleteAddress($addressTransfer);
+        });
+
+        return $addressTransfer;
     }
 
     /**

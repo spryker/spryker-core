@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi;
 
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -345,4 +346,19 @@ class CustomersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const FORMAT_SELF_LINK_ADDRESS_RESOURCE = '%s/%s/%s/%s';
+
+    /**
+     * Specification:
+     * - Defines a list of properties in a `RestAddressTransfer` that should trigger validation skip.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getBillingAddressFieldsToSkipValidation(): array
+    {
+        return [
+            RestAddressTransfer::ID,
+        ];
+    }
 }

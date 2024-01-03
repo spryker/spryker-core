@@ -84,7 +84,9 @@ class ShipmentsRestApiFactory extends AbstractFactory
      */
     public function createShipmentMapper(): ShipmentMapperInterface
     {
-        return new ShipmentMapper();
+        return new ShipmentMapper(
+            $this->getRestAddressResponseMapperPlugins(),
+        );
     }
 
     /**
@@ -200,5 +202,13 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new QuoteRequestItemExpander(
             $this->getShipmentService(),
         );
+    }
+
+    /**
+     * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\RestAddressResponseMapperPluginInterface>
+     */
+    public function getRestAddressResponseMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::PLUGINS_REST_ADDRESS_RESPONSE_MAPPER);
     }
 }

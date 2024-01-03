@@ -58,6 +58,8 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidator::validateCountriesInCheckoutData()} instead.
+     *
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
@@ -75,6 +77,25 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCountriesInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
+        $checkoutResponseTransfer = $this->checkCountryInBillingAddress($checkoutDataTransfer, $checkoutResponseTransfer);
+
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            return $checkoutResponseTransfer;
+        }
+
+        return $this->validateCountriesInShipments($checkoutDataTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidator::checkCountryInBillingAddress()} instead.
+     *
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -190,5 +211,38 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
             ->addError((new CheckoutErrorTransfer())
                 ->setParameters($parameters)
                 ->setMessage($message));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function checkCountryInBillingAddress(
+        CheckoutDataTransfer $checkoutDataTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): CheckoutResponseTransfer {
+        if (!$checkoutDataTransfer->getBillingAddress()) {
+            return $this->addErrorToCheckoutResponseTransfer(
+                $checkoutResponseTransfer,
+                static::GLOSSARY_KEY_BILLING_ADDRESS_IS_MISSING,
+            );
+        }
+
+        $billingAddressCountryIso2Code = $checkoutDataTransfer->getBillingAddressOrFail()->getIso2Code();
+        if (!$billingAddressCountryIso2Code) {
+            return $checkoutResponseTransfer;
+        }
+
+        if (!$this->countryReader->countryExists($billingAddressCountryIso2Code)) {
+            $checkoutResponseTransfer = $this->addErrorToCheckoutResponseTransfer(
+                $checkoutResponseTransfer,
+                static::GLOSSARY_KEY_BILLING_ADDRESS_COUNTRY_NOT_FOUND,
+                [static::COUNTRY_CODE_PARAMETER => $billingAddressCountryIso2Code],
+            );
+        }
+
+        return $checkoutResponseTransfer;
     }
 }

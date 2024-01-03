@@ -49,7 +49,7 @@ use Spryker\Zed\Kernel\Container;
  * @method void pause()
  * @method \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\CompanyBusinessUnitAddressesRestApiFacade getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CompanyBusinessUnitAddressesRestApi\PHPMD)
  */
 class CompanyBusinessUnitAddressesRestApiBusinessTester extends Actor
 {

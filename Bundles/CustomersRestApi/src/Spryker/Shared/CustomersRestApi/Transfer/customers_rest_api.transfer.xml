@@ -214,4 +214,8 @@
         <property name="apiMessage" type="string"/>
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
 </transfers>

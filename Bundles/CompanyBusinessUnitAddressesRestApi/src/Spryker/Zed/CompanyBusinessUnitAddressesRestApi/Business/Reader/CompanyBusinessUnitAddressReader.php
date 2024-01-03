@@ -55,7 +55,8 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             ->setFirstName($quoteTransfer->getCustomer()->getFirstName())
             ->setLastName($quoteTransfer->getCustomer()->getLastName())
             ->setSalutation($quoteTransfer->getCustomer()->getSalutation())
-            ->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName());
+            ->setCompany($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName())
+            ->setCompanyBusinessUnitAddressUuid($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid());
     }
 
     /**

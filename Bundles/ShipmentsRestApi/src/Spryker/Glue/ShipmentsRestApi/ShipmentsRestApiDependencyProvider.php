@@ -32,6 +32,11 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY = 'PLUGINS_SHIPPING_ADDRESS_VALIDATION_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REST_ADDRESS_RESPONSE_MAPPER = 'PLUGINS_REST_ADDRESS_RESPONSE_MAPPER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -42,6 +47,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addShipmentService($container);
         $container = $this->addAddressSourceCheckerPlugins($container);
         $container = $this->addShipmentAddressValidationStrategyPlugins($container);
+        $container = $this->addRestAddressResponseMapperPlugins($container);
 
         return $container;
     }
@@ -89,6 +95,20 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestAddressResponseMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_ADDRESS_RESPONSE_MAPPER, function () {
+            return $this->getRestAddressResponseMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     protected function getAddressSourceCheckerPlugins(): array
@@ -100,6 +120,14 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\ShippingAddressValidationStrategyPluginInterface>
      */
     protected function getShippingAddressValidationStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\RestAddressResponseMapperPluginInterface>
+     */
+    protected function getRestAddressResponseMapperPlugins(): array
     {
         return [];
     }

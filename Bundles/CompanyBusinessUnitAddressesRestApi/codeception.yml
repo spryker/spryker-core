@@ -1,5 +1,6 @@
 namespace: CompanyBusinessUnitAddressesRestApi
 include:
+    - tests/SprykerTest/Glue/CompanyBusinessUnitAddressesRestApi
     - tests/SprykerTest/Zed/CompanyBusinessUnitAddressesRestApi
 paths:
     tests: tests

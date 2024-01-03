@@ -192,6 +192,7 @@ class GetCompanyBusinessUnitAddressTest extends Unit
         $this->assertSame($quoteTransfer->getCustomer()->getFirstName(), $addressTransfer->getFirstName());
         $this->assertSame($quoteTransfer->getCustomer()->getLastName(), $addressTransfer->getLastName());
         $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getCompany()->getName(), $addressTransfer->getCompany());
+        $this->assertSame($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid(), $addressTransfer->getCompanyBusinessUnitAddressUuid());
     }
 
     /**

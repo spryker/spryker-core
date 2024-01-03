@@ -109,6 +109,7 @@
         <property name="lastName" type="string"/>
         <property name="salutation" type="string"/>
         <property name="company" type="string"/>
+        <property name="companyBusinessUnitAddressUuid" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Item">

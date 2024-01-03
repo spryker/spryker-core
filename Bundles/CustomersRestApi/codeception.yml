@@ -1,5 +1,6 @@
 namespace: CustomersRestApi
 include:
+    - tests/SprykerTest/Glue/CustomersRestApi
     - tests/SprykerTest/Zed/CustomersRestApi
 paths:
     tests: tests

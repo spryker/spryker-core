@@ -9,6 +9,7 @@ namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientBridge;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientBridge;
+use Spryker\Glue\CustomersRestApi\Dependency\Service\CustomersRestApiToUtilTextServiceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -47,6 +48,11 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const PLUGINS_CUSTOMER_POST_CREATE = 'PLUGINS_CUSTOMER_POST_CREATE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -57,6 +63,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addSessionClient($container);
         $container = $this->addCustomerPostCreatePlugins($container);
         $container = $this->addCustomerExpanderPlugins($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -114,6 +121,22 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::PLUGINS_CUSTOMER_EXPANDER, function () {
             return $this->getCustomerExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new CustomersRestApiToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service(),
+            );
         });
 
         return $container;

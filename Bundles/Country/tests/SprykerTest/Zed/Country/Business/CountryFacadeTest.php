@@ -81,6 +81,11 @@ class CountryFacadeTest extends Unit
     protected const STORE_NAME_DE = 'DE';
 
     /**
+     * @var string
+     */
+    protected const FAKE_ISO_2_CODE = 'FAKE_ISO_2_CODE';
+
+    /**
      * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
@@ -233,6 +238,22 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testValidateCountriesInCheckoutDataValidatesWithErrors(): void
+    {
+        // Arrange
+        $checkoutDataTransfer = $this->prepareCheckoutDataTransferWithUnknownIso2Code();
+
+        // Act
+        $checkoutResponseTransfer = $this->countryFacade->validateCountriesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateStoreCountriesWithAddingNewAndRemovingOldRelations(): void
     {
         // Arrange
@@ -340,6 +361,20 @@ class CountryFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
         $checkoutDataTransfer = (new CheckoutDataBuilder())
             ->withBillingAddress(['billingAddress' => new AddressTransfer()])
+            ->withShippingAddress(['shippingAddress' => new AddressTransfer()])
+            ->build();
+
+        return $checkoutDataTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutDataTransfer
+     */
+    protected function prepareCheckoutDataTransferWithUnknownIso2Code(): CheckoutDataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
+        $checkoutDataTransfer = (new CheckoutDataBuilder())
+            ->withBillingAddress(['billingAddress' => (new AddressTransfer())->setIso2Code(static::FAKE_ISO_2_CODE)])
             ->withShippingAddress(['shippingAddress' => new AddressTransfer()])
             ->build();
 

@@ -16,17 +16,19 @@
         "spryker/session": "^3.2.0 || ^4.0.0",
         "spryker/shipments-rest-api-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/util-text": "^1.1.0",
         "spryker/uuid-behavior": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/testify": "*"
     },
     "suggest": {
         "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
+        "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
         "spryker/rest-request-validator": "If you want to use rest request validation.",
-        "spryker/uuid": "If you want to generate UUIDs for existing entities.",
-        "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0."
+        "spryker/uuid": "If you want to generate UUIDs for existing entities."
     },
     "autoload": {
         "psr-4": {

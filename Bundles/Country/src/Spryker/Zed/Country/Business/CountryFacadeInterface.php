@@ -58,11 +58,28 @@ interface CountryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Country\Business\CountryFacadeInterface::validateCountriesInCheckoutData()} instead.
+     *
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function validateCountryCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
+
+    /**
+     * Specification:
+     * - Verifies if countries can be found by countryIso2Codes given in `CheckoutDataTransfer.billingAddress`.
+     * - Verifies if `CheckoutDataTransfer.billingAddress` is set.
+     * - Verifies if countries can be found by countryIso2Codes given in `CheckoutDataTransfer.shipments.shippingAddress`.
+     * - Returns `CheckoutResponseTransfer` with error if any check was failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCountriesInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 
     /**
      * Specification:

@@ -68,6 +68,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Country\Business\CountryFacade::validateCountriesInCheckoutData()} instead.
+     *
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
@@ -75,6 +77,20 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     public function validateCountryCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
     {
         return $this->getFactory()->createCountryCheckoutDataValidator()->validateCountryCheckoutData($checkoutDataTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCountriesInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()->createCountryCheckoutDataValidator()->validateCountriesInCheckoutData($checkoutDataTransfer);
     }
 
     /**

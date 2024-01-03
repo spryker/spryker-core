@@ -32,7 +32,7 @@ use Spryker\Zed\Kernel\Container;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\CustomersRestApi\PHPMD)
  */
 class CustomersRestApiBusinessTester extends Actor
 {
