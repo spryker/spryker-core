@@ -109,16 +109,6 @@ interface PathMethodBuilderInterface
     /**
      * @var string
      */
-    public const KEY_CONTENT = 'content';
-
-    /**
-     * @var string
-     */
-    public const KEY_APPLICATION_JSON = 'application/json';
-
-    /**
-     * @var string
-     */
     public const KEY_RESPONSES = 'responses';
 
     /**
@@ -175,6 +165,11 @@ interface PathMethodBuilderInterface
      * @var string
      */
     public const SCHEMA_LIMIT = 'limit';
+
+    /**
+     * @var string
+     */
+    public const SCHEMA_ONE_OF = 'oneOf';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer

@@ -7,9 +7,11 @@
 
 namespace Spryker\Glue\DynamicEntityBackendApi\Processor\Reader;
 
+use ArrayObject;
 use Exception;
 use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
@@ -134,6 +136,76 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
     }
 
     /**
+     * @param int|null $deep
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
+     */
+    public function getDynamicEntityConfigurationsWithChildRecursively(?int $deep = null): array
+    {
+        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityConfigurationCollection(
+            $this->createDynamicEntityConfigurationCriteriaWithChildTransfer(),
+        );
+
+        return $this->buildDynamicEntityConfigurationTransfersRecursively($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->getArrayCopy());
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationsTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
+     */
+    protected function buildDynamicEntityConfigurationTransfersRecursively(array $dynamicEntityConfigurationsTransfers = []): array
+    {
+        $dynamicEntityConfigurationTransfers = [];
+
+        foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationTransfer) {
+            $dynamicEntityConfigurationTransfers[] = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityConfigurationsTransfers,
+            );
+        }
+
+        return $dynamicEntityConfigurationTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfiguration
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
+     * @param int $deep
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    protected function buildDynamicEntityConfigurationTransferWithChildRelations(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfiguration,
+        array $dynamicEntityConfigurationTransfers,
+        int $deep = 0
+    ): DynamicEntityConfigurationTransfer {
+        $dynamicEntityConfigurationRelationTransfers = $dynamicEntityConfiguration->getChildRelations();
+
+        $newRelations = [];
+
+        /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer */
+        foreach ($dynamicEntityConfigurationRelationTransfers as $dynamicEntityConfigurationRelationTransfer) {
+            $dynamicEntityConfigurationTransfer = $this->findDynamicEntityConfigurationById($dynamicEntityConfigurationTransfers, $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail());
+
+            if ($dynamicEntityConfigurationTransfer === null) {
+                continue;
+            }
+
+            $dynamicEntityConfigurationTransfer = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityConfigurationTransfers,
+                $deep++,
+            );
+            $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+            $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
+        }
+        $dynamicEntityConfiguration->setChildRelations(new ArrayObject($newRelations));
+
+        return $dynamicEntityConfiguration;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer
      */
     protected function createDynamicEntityConfigurationCriteriaTransfer(): DynamicEntityConfigurationCriteriaTransfer
@@ -145,5 +217,38 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
         );
 
         return $dynamicEntityConfigurationCriteriaTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer
+     */
+    protected function createDynamicEntityConfigurationCriteriaWithChildTransfer(): DynamicEntityConfigurationCriteriaTransfer
+    {
+        $dynamicEntityConfigurationCriteriaTransfer = new DynamicEntityConfigurationCriteriaTransfer();
+        $dynamicEntityConfigurationCriteriaTransfer->setDynamicEntityConfigurationConditions(
+            (new DynamicEntityConfigurationConditionsTransfer())
+                ->setIsActive(true),
+        );
+
+        return $dynamicEntityConfigurationCriteriaTransfer;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationsTransfers
+     * @param int $idDynamicEntityConfiguration
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
+     */
+    protected function findDynamicEntityConfigurationById(
+        array $dynamicEntityConfigurationsTransfers,
+        int $idDynamicEntityConfiguration
+    ): ?DynamicEntityConfigurationTransfer {
+        foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationTransfer) {
+            if ($dynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration() === $idDynamicEntityConfiguration) {
+                return $dynamicEntityConfigurationTransfer;
+            }
+        }
+
+        return null;
     }
 }

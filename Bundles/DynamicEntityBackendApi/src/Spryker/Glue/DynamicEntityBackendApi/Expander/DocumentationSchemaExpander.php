@@ -56,7 +56,7 @@ class DocumentationSchemaExpander implements DocumentationSchemaExpanderInterfac
         $filteredCustomRoutes = $this->filterDynamicEntityControllerRouter($apiApplicationSchemaContextTransfer->getCustomRoutesContexts()->getArrayCopy());
         $apiApplicationSchemaContextTransfer->setCustomRoutesContexts(new ArrayObject($filteredCustomRoutes));
 
-        $dynamicEntityConfigurationsTransfers = $this->dynamicEntityReader->getDynamicEntityConfigurations();
+        $dynamicEntityConfigurationsTransfers = $this->dynamicEntityReader->getDynamicEntityConfigurationsWithChildRecursively();
         $apiApplicationSchemaContextTransfer->setDynamicEntityConfigurations(new ArrayObject($dynamicEntityConfigurationsTransfers));
 
         return $apiApplicationSchemaContextTransfer;

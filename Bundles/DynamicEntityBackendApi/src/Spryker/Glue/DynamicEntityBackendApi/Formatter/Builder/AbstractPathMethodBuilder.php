@@ -10,8 +10,10 @@ namespace Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
+use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
 use Spryker\Glue\DynamicEntityBackendApi\Exception\MissingFieldDefinitionException;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
@@ -84,11 +86,6 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     /**
      * @var string
      */
-    protected const PROPERTY_NAME = 'data';
-
-    /**
-     * @var string
-     */
     protected const MISSING_FIELD_DEFINITIONS_EXCEPTION_MESSAGE = 'No fields defined for dynamic entity.';
 
     /**
@@ -119,11 +116,28 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     protected DynamicEntityBackendApiConfig $config;
 
     /**
-     * @param \Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig $config
+     * @var \Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface
      */
-    public function __construct(DynamicEntityBackendApiConfig $config)
-    {
+    protected DynamicEntityConfigurationTreeBuilderInterface $treeBuilder;
+
+    /**
+     * @var \Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface
+     */
+    protected SchemaBuilderInterface $schemaBuilder;
+
+    /**
+     * @param \Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig $config
+     * @param \Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface $treeBuilder
+     * @param \Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface $schemaBuilder
+     */
+    public function __construct(
+        DynamicEntityBackendApiConfig $config,
+        DynamicEntityConfigurationTreeBuilderInterface $treeBuilder,
+        SchemaBuilderInterface $schemaBuilder
+    ) {
         $this->config = $config;
+        $this->treeBuilder = $treeBuilder;
+        $this->schemaBuilder = $schemaBuilder;
     }
 
     /**
@@ -144,20 +158,25 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     ): array {
         $result = [];
 
-        if ($dynamicEntityDefinitionTransfer->getFieldDefinitions()->count() === 0) {
+        $fieldDefinitions = $dynamicEntityDefinitionTransfer->getFieldDefinitions();
+
+        if ($fieldDefinitions->count() === 0) {
             throw new MissingFieldDefinitionException(static::MISSING_FIELD_DEFINITIONS_EXCEPTION_MESSAGE);
         }
 
-        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $field) {
-            if ($skipIdentifier && $dynamicEntityDefinitionTransfer->getIdentifierOrFail() === $field->getFieldVisibleNameOrFail()) {
+        /**
+         * @var \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $field
+         */
+        foreach ($fieldDefinitions as $field) {
+            $isFieldIdentifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail() === $field->getFieldNameOrFail();
+            if ($skipIdentifier === true && $isFieldIdentifier === true) {
                 continue;
             }
 
-            if ($filterIsCreatable && !$field->getIsCreatable()) {
-                continue;
-            }
-
-            if ($filterIsEditable && !$field->getIsEditable()) {
+            if (
+                !$isFieldIdentifier &&
+                ($filterIsCreatable && !$field->getIsCreatable() || $filterIsEditable && !$field->getIsEditable())
+            ) {
                 continue;
             }
 
@@ -165,6 +184,94 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return int
+     */
+    protected function calculateDeepLevelInConfiguration(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): int
+    {
+        $deepLevel = 0;
+        /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childRelation */
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $deepLevel = max($deepLevel, $this->calculateDeepLevelInConfiguration($childRelation->getChildDynamicEntityConfigurationOrFail()));
+        }
+
+        return $deepLevel + 1;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param bool $skipIdentifier
+     * @param bool $filterIsCreatable
+     * @param bool $filterIsEditable
+     *
+     * @return array<mixed>
+     */
+    protected function buildOneOfCombinationArrayRecursively(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        bool $skipIdentifier = false,
+        bool $filterIsCreatable = false,
+        bool $filterIsEditable = false
+    ): array {
+        $dynamicEntityConfigurationTransfers = $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer);
+
+        $oneOfCombinationsFields = [];
+
+        foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
+            $oneOfCombinationsFields[] = $this->schemaBuilder->buildRootOneOfItem(
+                $this->prepareFieldsArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreatable,
+                    $filterIsEditable,
+                ),
+            );
+        }
+
+        return $oneOfCombinationsFields;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param bool $skipIdentifier
+     * @param bool $filterIsCreatable
+     * @param bool $filterIsEditable
+     *
+     * @return array<string, mixed>
+     */
+    protected function prepareFieldsArrayRecursively(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        bool $skipIdentifier = false,
+        bool $filterIsCreatable = false,
+        bool $filterIsEditable = false
+    ): array {
+        $fields = $this->prepareFieldsArray(
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
+            $skipIdentifier,
+            $filterIsCreatable,
+            $filterIsEditable,
+        );
+
+        /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childRelation */
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $fields[$childRelation->getNameOrFail()] = [
+                static::KEY_TYPE => static::SCHEMA_TYPE_ARRAY,
+                static::KEY_SCHEMA_ITEMS => [
+                    static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
+                    static::KEY_SCHEMA_PROPERTIES => $this->prepareFieldsArrayRecursively(
+                        $childRelation->getChildDynamicEntityConfigurationOrFail(),
+                        $skipIdentifier,
+                        $filterIsCreatable,
+                        $filterIsEditable,
+                    ),
+                ],
+            ];
+        }
+
+        return $fields;
     }
 
     /**
@@ -183,6 +290,19 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
             return $filedType;
         }
 
+        return $this->addValidationToFieldType($filedType, $dynamicEntityFieldValidationTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $filedType
+     * @param \Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer $dynamicEntityFieldValidationTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function addValidationToFieldType(
+        array $filedType,
+        DynamicEntityFieldValidationTransfer $dynamicEntityFieldValidationTransfer
+    ): array {
         if ($dynamicEntityFieldValidationTransfer->getMin() !== null) {
             $filedType[static::KEY_TYPE_MIN] = $dynamicEntityFieldValidationTransfer->getMin();
         }
@@ -247,81 +367,53 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function buildIdParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
-        return [
-            static::KEY_NAME => static::ID,
-            static::KEY_IN => static::PATH,
-            static::KEY_REQUIRED => true,
-            static::KEY_DESCRIPTION => sprintf(static::DESCRIPTION_PARAMETER_ID, $dynamicEntityConfigurationTransfer->getTableAliasOrFail()),
-            static::KEY_SCHEMA => [
-                static::KEY_TYPE => static::SCHEMA_TYPE_INTEGER,
-            ],
-        ];
+        return $this->schemaBuilder->buildParameter(
+            static::ID,
+            static::PATH,
+            sprintf(static::DESCRIPTION_PARAMETER_ID, $dynamicEntityConfigurationTransfer->getTableAliasOrFail()),
+            static::SCHEMA_TYPE_INTEGER,
+        );
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function buildHeaderContentTypeParameter(): array
     {
-        return [
-            static::KEY_NAME => static::HEADER_CONTENT_TYPE,
-            static::KEY_IN => static::HEADER,
-            static::KEY_DESCRIPTION => static::HEADER_CONTENT_TYPE_DESCRIPTION,
-            static::KEY_REQUIRED => true,
-            static::KEY_SCHEMA => [
-                static::KEY_TYPE => static::SCHEMA_TYPE_STRING,
-                static::KEY_EXAMPLE => static::APPLICATION_JSON,
-            ],
-        ];
+        return $this->schemaBuilder->buildParameter(
+            static::HEADER_CONTENT_TYPE,
+            static::HEADER,
+            static::HEADER_CONTENT_TYPE_DESCRIPTION,
+            static::SCHEMA_TYPE_STRING,
+            static::APPLICATION_JSON,
+        );
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function buildHeaderAcceptParameter(): array
     {
-        return [
-            static::KEY_NAME => static::HEADER_ACCEPT,
-            static::KEY_IN => static::HEADER,
-            static::KEY_DESCRIPTION => static::HEADER_ACCEPT_DESCRIPTION,
-            static::KEY_REQUIRED => true,
-            static::KEY_SCHEMA => [
-                static::KEY_TYPE => static::SCHEMA_TYPE_STRING,
-                static::KEY_EXAMPLE => static::APPLICATION_JSON,
-            ],
-        ];
+        return $this->schemaBuilder->buildParameter(
+            static::HEADER_ACCEPT,
+            static::HEADER,
+            static::HEADER_ACCEPT_DESCRIPTION,
+            static::SCHEMA_TYPE_STRING,
+            static::APPLICATION_JSON,
+        );
     }
 
     /**
-     * @param string $description
-     *
-     * @return array<mixed>
-     */
-    protected function buildResponseError(string $description): array
-    {
-        return [
-            static::KEY_DESCRIPTION => $description,
-            static::KEY_CONTENT => [
-                static::KEY_APPLICATION_JSON => [
-                    static::KEY_SCHEMA => [
-                        static::KEY_SCHEMA_REF => static::SCHEMA_REF_COMPONENT_REST_ERROR,
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function buildResponseDefault(): array
     {
         return [
-            static::KEY_RESPONSE_DEFAULT => $this->buildResponseError(static::RESPONSE_ERROR_DEFAULT_MESSAGE),
+            static::KEY_RESPONSE_DEFAULT => $this->schemaBuilder->buildResponse(static::RESPONSE_ERROR_DEFAULT_MESSAGE, [static::KEY_SCHEMA_REF => static::SCHEMA_REF_COMPONENT_REST_ERROR]),
         ];
     }
 
@@ -331,7 +423,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     protected function buildResponseNotFound(): array
     {
         return [
-            (string)Response::HTTP_NOT_FOUND => $this->buildResponseError(static::RESPONSE_ERROR_NOT_FOUND_MESSAGE),
+            (string)Response::HTTP_NOT_FOUND => $this->schemaBuilder->buildResponse(static::RESPONSE_ERROR_NOT_FOUND_MESSAGE, [static::KEY_SCHEMA_REF => static::SCHEMA_REF_COMPONENT_REST_ERROR]),
         ];
     }
 
@@ -341,71 +433,107 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     protected function buildResponseUnauthorizedRequest(): array
     {
         return [
-            (string)Response::HTTP_FORBIDDEN => $this->buildResponseError(static::RESPONSE_ERROR_UNAUTHORIZED_REQUEST_MESSAGE),
+            (string)Response::HTTP_FORBIDDEN => $this->schemaBuilder->buildResponse(static::RESPONSE_ERROR_UNAUTHORIZED_REQUEST_MESSAGE, [static::KEY_SCHEMA_REF => static::SCHEMA_REF_COMPONENT_REST_ERROR]),
         ];
     }
 
     /**
      * @param string $responseDescriptionValue
-     * @param array<mixed> $fieldsArray
+     * @param array<string, mixed> $fieldsArray
      * @param string $code
+     * @param bool $isCollection
+     * @param bool $isOneOf
      *
-     * @return array<string, array<mixed>>
+     * @return array<string, array<string, mixed>>
      */
-    protected function buildResponseSuccess(
+    protected function buildSuccessResponse(
         string $responseDescriptionValue,
         array $fieldsArray,
-        string $code
+        string $code,
+        bool $isCollection = false,
+        bool $isOneOf = false
     ): array {
-        return [
-            $code => [
-                static::KEY_DESCRIPTION => $responseDescriptionValue,
-                static::KEY_CONTENT => [
-                    static::KEY_APPLICATION_JSON => [
-                        static::KEY_SCHEMA => [
-                            static::KEY_TYPE => static::SCHEMA_TYPE_ARRAY,
-                            static::KEY_SCHEMA_ITEMS => [
-                                static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
-                                static::KEY_SCHEMA_PROPERTIES => $fieldsArray,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $schemaStructure = $this->buildSchemaStructure($fieldsArray, $isCollection, $isOneOf);
+
+        return $this->schemaBuilder->buildResponseArray($responseDescriptionValue, $code, $schemaStructure);
+    }
+
+    /**
+     * @param string $description
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param bool $skipIdentifier
+     * @param bool $filterIsCreatable
+     * @param bool $filterIsEditable
+     *
+     * @return array<string, mixed>
+     */
+    protected function buildRequest(
+        string $description,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        bool $skipIdentifier = false,
+        bool $filterIsCreatable = false,
+        bool $filterIsEditable = false
+    ): array {
+        if (!$this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildRequestBody(
+                $description,
+                $this->prepareFieldsArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreatable,
+                    $filterIsEditable,
+                ),
+            );
+        }
+
+        return $this->buildRequestBody(
+            $description,
+            $this->buildOneOfRequestItems(
+                $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer),
+            ),
+            false,
+            true,
+        );
     }
 
     /**
      * @param string $descriptionValue
-     * @param array<mixed> $fieldsArray
+     * @param array<string, mixed> $fieldsArray
+     * @param bool $isCollection
+     * @param bool $isOneOf
      *
-     * @return array<string, array<string, mixed>>
+     * @return array<string, mixed>
      */
-    protected function buildRequestBody(string $descriptionValue, array $fieldsArray): array
-    {
-        return [
-            static::KEY_REQUEST_BODY => [
-                static::KEY_DESCRIPTION => $descriptionValue,
-                static::KEY_REQUIRED => true,
-                static::KEY_CONTENT => [
-                    static::KEY_APPLICATION_JSON => [
-                        static::KEY_SCHEMA => [
-                            static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
-                            static::KEY_SCHEMA_PROPERTIES => [
-                                static::PROPERTY_NAME => [
-                                    static::KEY_TYPE => static::SCHEMA_TYPE_ARRAY,
-                                    static::KEY_SCHEMA_ITEMS => [
-                                        static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
-                                        static::KEY_SCHEMA_PROPERTIES => $fieldsArray,
-                                    ],
-                                ],
-                            ],
-                        ],
+    protected function buildRequestBody(
+        string $descriptionValue,
+        array $fieldsArray,
+        bool $isCollection = false,
+        bool $isOneOf = false
+    ): array {
+        $schemaStructure = $this->buildSchemaStructure($fieldsArray, $isCollection, $isOneOf);
 
-                    ],
-                ],
-            ],
+        return [
+            static::KEY_REQUEST_BODY => $this->schemaBuilder->buildResponse($descriptionValue, $schemaStructure, true),
         ];
+    }
+
+    /**
+     * @param array<string, mixed> $fieldsArray
+     * @param bool $isCollection
+     * @param bool $isOneOf
+     *
+     * @return array<string, mixed>
+     */
+    protected function buildSchemaStructure(
+        array $fieldsArray,
+        bool $isCollection = false,
+        bool $isOneOf = false
+    ): array {
+        if ($isOneOf === true) {
+            return $this->schemaBuilder->generateSchemaStructureOneOf($fieldsArray, $isCollection);
+        }
+
+        return $this->schemaBuilder->generateSchemaStructure($fieldsArray, $isCollection);
     }
 
     /**
@@ -430,28 +558,24 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     }
 
     /**
-     * @return array<string, mixed>
-     */
-    protected function buildKeyParameters(): array
-    {
-        return [
-            static::KEY_PARAMETERS => [
-                $this->buildHeaderContentTypeParameter(),
-                $this->buildHeaderAcceptParameter(),
-            ],
-        ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null $dynamicEntityConfigurationTransfer
      *
      * @return array<string, mixed>
      */
-    protected function buildKeyParametersWithIdParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    protected function buildKeyParameters(?DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer = null): array
     {
+        if ($dynamicEntityConfigurationTransfer !== null) {
+            return [
+                static::KEY_PARAMETERS => [
+                    $this->buildIdParameter($dynamicEntityConfigurationTransfer),
+                    $this->buildHeaderContentTypeParameter(),
+                    $this->buildHeaderAcceptParameter(),
+                ],
+            ];
+        }
+
         return [
             static::KEY_PARAMETERS => [
-                $this->buildIdParameter($dynamicEntityConfigurationTransfer),
                 $this->buildHeaderContentTypeParameter(),
                 $this->buildHeaderAcceptParameter(),
             ],
@@ -468,5 +592,145 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         return [
             static::KEY_RESPONSES => $responses,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return bool
+     */
+    protected function haveChildRelations(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): bool
+    {
+        return $dynamicEntityConfigurationTransfer->getChildRelations()->count() > 0;
+    }
+
+    /**
+     * @param string $responseDescriptionValue
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $httpCode
+     *
+     * @return array<mixed>
+     */
+    protected function buildSuccessResponseBody(
+        string $responseDescriptionValue,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $httpCode
+    ): array {
+        if (!$this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildSuccessResponse(
+                $responseDescriptionValue,
+                $this->prepareFieldsArrayRecursively($dynamicEntityConfigurationTransfer),
+                $httpCode,
+            );
+        }
+
+        return $this->buildSuccessResponse(
+            $responseDescriptionValue,
+            $this->buildOneOfResponseItems(
+                $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer),
+            ),
+            $httpCode,
+            false,
+            true,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
+     */
+    protected function buildDynamicEntityConfigurationTransferWithCombinations(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $deepLevel = $this->calculateDeepLevelInConfiguration($dynamicEntityConfigurationTransfer);
+
+        $dynamicEntityConfigurationTransfers = [];
+
+        while ($deepLevel > -1) {
+            $copyDynamicEntityConfigurationTransfer = (new DynamicEntityConfigurationTransfer())->fromArray($dynamicEntityConfigurationTransfer->toArray(), true);
+            $copyDynamicEntityConfigurationTransfer = $this->treeBuilder->buildDynamicEntityConfigurationTransferTree($copyDynamicEntityConfigurationTransfer, $deepLevel);
+            $dynamicEntityConfigurationTransfers[] = $copyDynamicEntityConfigurationTransfer;
+            $deepLevel--;
+        }
+
+        return $dynamicEntityConfigurationTransfers;
+    }
+
+    /**
+     *
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
+     * @param bool $skipIdentifier
+     * @param bool $filterIsCreatable
+     * @param bool $filterIsEditable
+     *
+     * @return array<mixed>
+     */
+    protected function buildOneOfResponseItems(
+        array $dynamicEntityConfigurationTransfers,
+        bool $skipIdentifier = false,
+        bool $filterIsCreatable = false,
+        bool $filterIsEditable = false
+    ): array {
+        $items = [];
+        foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
+            $items[] = $this->schemaBuilder->buildResponseRootOneOfItem(
+                $this->prepareFieldsArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreatable,
+                    $filterIsEditable,
+                ),
+            );
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getRequestDescription(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        if (!$this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return '';
+        }
+
+        return sprintf(
+            ' Request data can contain also child relation, for example: `{ ...fields, %s: { ...childFields } }`.',
+            $dynamicEntityConfigurationTransfer->getChildRelations()[0]->getNameOrFail(),
+        );
+    }
+
+    /**
+     *
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
+     * @param bool $skipIdentifier
+     * @param bool $filterIsCreatable
+     * @param bool $filterIsEditable
+     *
+     * @return array<mixed>
+     */
+    protected function buildOneOfRequestItems(
+        array $dynamicEntityConfigurationTransfers,
+        bool $skipIdentifier = false,
+        bool $filterIsCreatable = false,
+        bool $filterIsEditable = false
+    ): array {
+        $items = [];
+        /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer */
+        foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
+            $items[] = $this->schemaBuilder->buildRequestRootOneOfItem(
+                $this->prepareFieldsArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreatable,
+                    $filterIsEditable,
+                ),
+            );
+        }
+
+        return $items;
     }
 }

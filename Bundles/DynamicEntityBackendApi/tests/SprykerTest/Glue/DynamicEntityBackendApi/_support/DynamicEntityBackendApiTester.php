@@ -11,6 +11,7 @@ namespace SprykerTest\Glue\DynamicEntityBackendApi;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
@@ -18,6 +19,10 @@ use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilder;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilder;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 
@@ -262,13 +267,72 @@ class DynamicEntityBackendApiTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfigurationTransferWithChildRelation(): DynamicEntityConfigurationTransfer
+    {
+        $dynamicEntityFieldDefinitionTransfer = $this->createDynamicEntityConfigurationTransfer();
+
+        $dynamicEntityFieldDefinitionTransfer->addChildRelation(
+            (new DynamicEntityConfigurationRelationTransfer())
+                ->setChildDynamicEntityConfiguration(
+                    $this->createDynamicEntityConfigurationTransfer(),
+                )->setIsEditable(true)
+                ->setName('test-child-relation'),
+        );
+
+        return $dynamicEntityFieldDefinitionTransfer;
+    }
+
+    /**
+     * @param int $numberRelations
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfigurationTransferWithChildRelations(int $numberRelations = 3): DynamicEntityConfigurationTransfer
+    {
+        $dynamicEntityFieldDefinitionTransfer = $this->createDynamicEntityConfigurationTransfer();
+
+        for ($i = 0; $i < $numberRelations; $i++) {
+            $dynamicEntityFieldDefinitionTransfer->addChildRelation(
+                (new DynamicEntityConfigurationRelationTransfer())
+                    ->setChildDynamicEntityConfiguration(
+                        $this->createDynamicEntityConfigurationTransfer(),
+                    )->setIsEditable(true)
+                    ->setName('test-child-relation-' . $i),
+            );
+        }
+
+        return $dynamicEntityFieldDefinitionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfigurationTransferWithChildRelationsTree(): DynamicEntityConfigurationTransfer
+    {
+        $dynamicEntityFieldDefinitionTransfer = $this->createDynamicEntityConfigurationTransfer();
+
+        $dynamicEntityFieldDefinitionTransfer->addChildRelation(
+            (new DynamicEntityConfigurationRelationTransfer())
+                ->setChildDynamicEntityConfiguration(
+                    $this->createDynamicEntityConfigurationTransferWithChildRelations(),
+                )->setIsEditable(true)
+                ->setName('test-first-level-child-relation'),
+        );
+
+        return $dynamicEntityFieldDefinitionTransfer;
+    }
+
+    /**
      * @param string $fileName
+     * @param string $methodName
      *
      * @return array<mixed>
      */
-    public function getExpectedPathData(string $fileName): array
+    public function getExpectedPathData(string $fileName, string $methodName): array
     {
-        return require codecept_data_dir() . $fileName;
+        return require codecept_data_dir() . 'Builder' . DIRECTORY_SEPARATOR . $methodName . DIRECTORY_SEPARATOR . $fileName;
     }
 
     /**
@@ -281,6 +345,51 @@ class DynamicEntityBackendApiTester extends Actor
         $this->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST));
         $this->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE));
         $this->setConfig(StorageConstants::STORAGE_REDIS_PASSWORD, Config::get(static::REDIS_PASSWORD));
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface
+     */
+    public function createDynamicEntityConfigurationTreeBuilder(): DynamicEntityConfigurationTreeBuilderInterface
+    {
+        return new DynamicEntityConfigurationTreeBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface
+     */
+    public function createSchemaBuilder(): SchemaBuilderInterface
+    {
+        return new SchemaBuilder();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     */
+    public function createDynamicEntityConfigurationTransferWithThreeLevels(): DynamicEntityConfigurationTransfer
+    {
+        $rootDynamicEntityConfigurationTransfer = $this->createDynamicEntityConfigurationTransfer();
+
+        $thirdLevelDynamicEntityConfigurationTransfer = $this->createDynamicEntityConfigurationTransfer();
+        $thirdLevelDynamicEntityConfigurationRelationTransfer = new DynamicEntityConfigurationRelationTransfer();
+        $thirdLevelDynamicEntityConfigurationRelationTransfer->setName('test-third-level-child-relation');
+        $thirdLevelDynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($thirdLevelDynamicEntityConfigurationTransfer);
+
+        $secondLevelDynamicEntityConfigurationTransfer = $this->createDynamicEntityConfigurationTransfer();
+        $secondLevelDynamicEntityConfigurationTransfer->addChildRelation($thirdLevelDynamicEntityConfigurationRelationTransfer);
+        $secondLevelDynamicEntityConfigurationRelationTransfer = new DynamicEntityConfigurationRelationTransfer();
+        $secondLevelDynamicEntityConfigurationRelationTransfer->setName('test-second-level-child-relation');
+        $secondLevelDynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($secondLevelDynamicEntityConfigurationTransfer);
+
+        $firstLevelDynamicEntityConfigurationTransfer = $this->createDynamicEntityConfigurationTransfer();
+        $firstLevelDynamicEntityConfigurationTransfer->addChildRelation($secondLevelDynamicEntityConfigurationRelationTransfer);
+        $firstLevelDynamicEntityConfigurationRelationTransfer = new DynamicEntityConfigurationRelationTransfer();
+        $firstLevelDynamicEntityConfigurationRelationTransfer->setName('test-first-level-child-relation');
+        $firstLevelDynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($firstLevelDynamicEntityConfigurationTransfer);
+
+        $rootDynamicEntityConfigurationTransfer->addChildRelation($firstLevelDynamicEntityConfigurationRelationTransfer);
+
+        return $rootDynamicEntityConfigurationTransfer;
     }
 
     /**

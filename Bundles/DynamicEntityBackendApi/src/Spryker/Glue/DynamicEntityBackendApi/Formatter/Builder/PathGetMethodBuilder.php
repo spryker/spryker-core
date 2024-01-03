@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder;
 
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,6 +17,11 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
      * @var string
      */
     protected const KEY_HTTP_METHOD_GET = 'get';
+
+    /**
+     * @var string
+     */
+    protected const KEY_PARAMETER_ENUM = 'enum';
 
     /**
      * @var string
@@ -50,6 +56,11 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
+    protected const PARAMETER_INCLUDE_DESCRIPTION = 'Parameter is used to include related entities.';
+
+    /**
+     * @var string
+     */
     protected const TPL_COLLECTION_OPERATION_ID = 'get-collection-dynamic-api-%s';
 
     /**
@@ -75,7 +86,30 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
+    protected const INCLUDE = 'include';
+
+    /**
+     * @var string
+     */
     protected const DEEP_OBJECT = 'deepObject';
+
+    /**
+     * @var string
+     */
+    protected const TEMPLATE_EXAMPLE_INCLUDE = '%s (or %s)';
+
+    /**
+     * @var string
+     */
+    protected const TEMPLATE_INCLUDE_DESCRIPTION = 'Parameter is used to include related resources.
+            Possible values are: %s. Use for `GET {{url}}/{{resource}}?include={{relation}}-> {200, { ...default+fields... + {{relation}} }}`.
+            It works also in deep relations like `{{url}}/{{resource}}?include={{relation}}.{{relation}}-> {200, { ...default+fields... + {{relation}}: { ...default+fields... + {{relation}}: { ...default+fields... } } }}`.
+            Examples: ';
+
+    /**
+     * @var string
+     */
+    protected const TEMPLATE_INCLUDE_ADDITIONAL_DESCRIPTION = ' `{{url}}/%s?include=%s-> {200, { ...default_fields... + %s: {...relation_fields...} }}`;  ';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
@@ -110,7 +144,9 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 static::SUMMARY_GET_COLLECTION,
             ),
             $this->buildKeyParametersWithFilterParameter($dynamicEntityConfigurationTransfer),
-            $this->buildResponses($this->buildCollectionResponses($dynamicEntityConfigurationTransfer)),
+            $this->buildResponses(
+                $this->buildCollectionResponses($dynamicEntityConfigurationTransfer),
+            ),
         );
     }
 
@@ -122,10 +158,10 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     protected function buildCollectionResponses(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
         return array_replace(
-            $this->buildResponseSuccess(
-                static::RESPONSE_DESCRIPTION_GET_COLLECTION,
-                $this->prepareFieldsArray($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()),
-                (string)Response::HTTP_OK,
+            $this->buildGetSuccessResponseBody(
+                $dynamicEntityConfigurationTransfer,
+                static::SUMMARY_GET_ITEM,
+                true,
             ),
             $this->buildResponseUnauthorizedRequest(),
             $this->buildResponseDefault(),
@@ -146,7 +182,7 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 static::TPL_ENTITY_OPERATION_ID,
                 static::SUMMARY_GET_ITEM,
             ),
-            $this->buildKeyParametersWithIdParameter($dynamicEntityConfigurationTransfer),
+            $this->buildKeyParameters($dynamicEntityConfigurationTransfer),
             [static::KEY_RESPONSES => $this->buildGetEntityResponse($dynamicEntityConfigurationTransfer)],
         );
     }
@@ -159,10 +195,9 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     protected function buildGetEntityResponse(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
         return array_replace(
-            $this->buildResponseSuccess(
-                static::RESPONSE_DESCRIPTION_GET_COLLECTION,
-                $this->prepareFieldsArray($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()),
-                (string)Response::HTTP_OK,
+            $this->buildGetSuccessResponseBody(
+                $dynamicEntityConfigurationTransfer,
+                static::SUMMARY_GET_ITEM,
             ),
             $this->buildResponseUnauthorizedRequest(),
             $this->buildResponseNotFound(),
@@ -224,9 +259,141 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
      *
      * @return array<string, mixed>
      */
+    protected function buildIncludeParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $includeParameterFormattedData = [
+            static::KEY_NAME => static::INCLUDE,
+            static::KEY_IN => static::QUERY,
+            static::KEY_DESCRIPTION => $this->buildIncludeParameterDescription($dynamicEntityConfigurationTransfer),
+            static::KEY_REQUIRED => false,
+            static::KEY_SCHEMA => [
+                static::KEY_TYPE => static::SCHEMA_TYPE_STRING,
+                static::KEY_EXAMPLE => $this->buildIncludeParameterExample($dynamicEntityConfigurationTransfer),
+            ],
+        ];
+
+        $enums = $this->buildIncludeParameterEnum($dynamicEntityConfigurationTransfer);
+
+        if (is_array($includeParameterFormattedData[static::KEY_SCHEMA]) && $enums !== []) {
+            $includeParameterFormattedData[static::KEY_SCHEMA][static::KEY_PARAMETER_ENUM] = $enums;
+        }
+
+        return $includeParameterFormattedData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function buildIncludeParameterDescription(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        $description = sprintf(
+            static::TEMPLATE_INCLUDE_DESCRIPTION,
+            implode(', ', $this->buildIncludeParameterEnum($dynamicEntityConfigurationTransfer)),
+        );
+
+        /**
+         * @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childRelation
+         */
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $description .= sprintf(
+                static::TEMPLATE_INCLUDE_ADDITIONAL_DESCRIPTION,
+                $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
+                $childRelation->getName(),
+                $childRelation->getName(),
+            );
+        }
+
+        return $description;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string>
+     */
+    protected function buildIncludeParameterEnum(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $includeEnums = [];
+
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $includeEnums = $includeEnums + $this->buildIncludePath($childRelation);
+        }
+
+        return $includeEnums;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function buildIncludeParameterExample(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        $includeEnums = $this->buildIncludeParameterEnum($dynamicEntityConfigurationTransfer);
+
+        if ($includeEnums === []) {
+            return '';
+        }
+
+        $firstIncludeRelation = array_shift($includeEnums);
+
+        if ($includeEnums === []) {
+            return $firstIncludeRelation;
+        }
+
+        return sprintf(static::TEMPLATE_EXAMPLE_INCLUDE, $firstIncludeRelation, implode(',', $includeEnums));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer
+     *
+     * @return array<string>
+     */
+    protected function buildIncludePath(DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer): array
+    {
+        $rootPath = $dynamicEntityConfigurationRelationTransfer->getNameOrFail();
+        $pathExamples = [
+            $rootPath,
+        ];
+
+        $dynamicEntityConfigurationTransfer = $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail();
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childDynamicEntityConfigurationRelationTransfer) {
+            $pathExamples = $this->populatePathExamples(
+                $pathExamples,
+                $this->buildIncludePath($childDynamicEntityConfigurationRelationTransfer),
+                $rootPath,
+            );
+        }
+
+        return array_unique($pathExamples);
+    }
+
+    /**
+     * @param array<string> $pathExamples
+     * @param array<string> $subPaths
+     * @param string $rootPath
+     *
+     * @return array<string>
+     */
+    protected function populatePathExamples(array $pathExamples, array $subPaths, string $rootPath): array
+    {
+        foreach ($subPaths as $subPath) {
+            $pathExamples[] = $rootPath . '.' . $subPath;
+        }
+
+        return array_unique($pathExamples);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, mixed>
+     */
     protected function buildKeyParametersWithFilterParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
-        return [
+        $parameters = [
             static::KEY_PARAMETERS => [
                 $this->buildFilterParameter($dynamicEntityConfigurationTransfer),
                 $this->buildHeaderContentTypeParameter(),
@@ -234,5 +401,47 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 $this->buildPageParameter(),
             ],
         ];
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            $parameters[static::KEY_PARAMETERS][] = $this->buildIncludeParameter($dynamicEntityConfigurationTransfer);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $responseDescription
+     * @param bool $isCollection
+     *
+     * @return array<mixed>
+     */
+    protected function buildGetSuccessResponseBody(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $responseDescription,
+        bool $isCollection = false
+    ): array {
+        $httpCodeStatus = (string)Response::HTTP_OK;
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildSuccessResponse(
+                $responseDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                ),
+                $httpCodeStatus,
+                $isCollection,
+                true,
+            );
+        }
+
+        return $this->buildSuccessResponse(
+            $responseDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+            ),
+            $httpCodeStatus,
+            $isCollection,
+        );
     }
 }

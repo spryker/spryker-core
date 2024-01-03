@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\DynamicEntityBackendApi\Formatter\Builder;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
 use Spryker\Glue\DynamicEntityBackendApi\Exception\MissingFieldDefinitionException;
@@ -33,6 +34,11 @@ class PathPatchMethodBuilderTest extends Unit
     protected const CONFIG_METHOD_NAME = 'getRoutePrefix';
 
     /**
+     * @var string
+     */
+    protected const PATH_METHOD_NAME = 'PathPatchMethod';
+
+    /**
      * @var \SprykerTest\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiTester
      */
     protected $tester;
@@ -51,14 +57,86 @@ class PathPatchMethodBuilderTest extends Unit
             ->method(static::CONFIG_METHOD_NAME)
             ->willReturn('dynamic-entity-prefix');
 
-        $builder = new PathPatchMethodBuilder($configMock);
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
         $formattedPathData = $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransfer());
 
         // Assert
         $this->assertIsArray($formattedPathData);
-        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithRoutePrefix.php'), $formattedPathData);
+        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithRoutePrefix.php', static::PATH_METHOD_NAME), $formattedPathData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPathDataFormatsPathDataWithOneChildRelation(): void
+    {
+        // Arrange
+        $configMock = $this->getMockBuilder(
+            DynamicEntityBackendApiConfig::class,
+        )->getMock();
+
+        $configMock
+            ->method(static::CONFIG_METHOD_NAME)
+            ->willReturn('dynamic-entity-prefix-patch');
+
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
+
+        // Act
+        $formattedPathData = $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithChildRelation());
+
+        // Assert
+        $this->assertIsArray($formattedPathData);
+        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithChildRelation.php', static::PATH_METHOD_NAME), $formattedPathData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPathDataFormatsPathDataWithChildRelations(): void
+    {
+        // Arrange
+        $configMock = $this->getMockBuilder(
+            DynamicEntityBackendApiConfig::class,
+        )->getMock();
+
+        $configMock
+            ->method(static::CONFIG_METHOD_NAME)
+            ->willReturn('dynamic-entity-prefix-patch');
+
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
+
+        // Act
+        $formattedPathData = $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithChildRelations());
+
+        // Assert
+        $this->assertIsArray($formattedPathData);
+        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithChildRelations.php', static::PATH_METHOD_NAME), $formattedPathData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPathDataFormatsPathDataWithOneChildRelationsTree(): void
+    {
+        // Arrange
+        $configMock = $this->getMockBuilder(
+            DynamicEntityBackendApiConfig::class,
+        )->getMock();
+
+        $configMock
+            ->method(static::CONFIG_METHOD_NAME)
+            ->willReturn('dynamic-entity-prefix-patch');
+
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
+
+        // Act
+        $formattedPathData = $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithChildRelationsTree());
+
+        // Assert
+        $this->assertIsArray($formattedPathData);
+        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithChildRelationsTree.php', static::PATH_METHOD_NAME), $formattedPathData);
     }
 
     /**
@@ -77,10 +155,35 @@ class PathPatchMethodBuilderTest extends Unit
             ->method(static::CONFIG_METHOD_NAME)
             ->willReturn('xxx');
 
-        $builder = new PathPatchMethodBuilder($configMock);
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
         $builder->buildPathData(new DynamicEntityConfigurationTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPathDataWithChildRelationsThrowsNullValueException(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Arrange
+        $configMock = $this->getMockBuilder(DynamicEntityBackendApiConfig::class)
+            ->getMock();
+
+        $configMock
+            ->method(static::CONFIG_METHOD_NAME)
+            ->willReturn('dynamic-entity-prefix-patch');
+
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
+        $dynamicEntityConfigurationTransfer = $this->tester->createDynamicEntityConfigurationTransfer();
+
+        // Act
+        $builder->buildPathData($dynamicEntityConfigurationTransfer->addChildRelation(
+            (new DynamicEntityConfigurationRelationTransfer())->setName('child')->setIsEditable(true),
+        ));
     }
 
     /**
@@ -96,13 +199,14 @@ class PathPatchMethodBuilderTest extends Unit
             ->method(static::CONFIG_METHOD_NAME)
             ->willReturn('');
 
-        $builder = new PathPatchMethodBuilder($configMock);
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
         $formattedPathData = $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransfer());
+
         // Assert
         $this->assertIsArray($formattedPathData);
-        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithoutRoutePrefix.php'), $formattedPathData);
+        $this->assertEquals($this->tester->getExpectedPathData('expectedPatchPathDataWithoutRoutePrefix.php', static::PATH_METHOD_NAME), $formattedPathData);
     }
 
     /**
@@ -121,7 +225,7 @@ class PathPatchMethodBuilderTest extends Unit
             ->method(static::CONFIG_METHOD_NAME)
             ->willReturn('xxx');
 
-        $builder = new PathPatchMethodBuilder($configMock);
+        $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
         $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithEmtpyFieldDefinitions());

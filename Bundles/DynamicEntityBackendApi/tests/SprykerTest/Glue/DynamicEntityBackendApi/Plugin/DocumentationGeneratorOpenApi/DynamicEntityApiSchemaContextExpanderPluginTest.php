@@ -11,9 +11,16 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Controller\DynamicEntityBackendApiController;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Logger\DynamicEntityBackendApiLoggerInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Mapper\GlueRequestDynamicEntityMapper;
+use Spryker\Glue\DynamicEntityBackendApi\Mapper\GlueResponseDynamicEntityMapper;
 use Spryker\Glue\DynamicEntityBackendApi\Plugin\DocumentationGeneratorApi\DynamicEntityApiSchemaContextExpanderPlugin;
+use Spryker\Glue\DynamicEntityBackendApi\Processor\Reader\DynamicEntityReader;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Reader\DynamicEntityReaderInterface;
 
 /**
@@ -43,6 +50,11 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
      * @var string
      */
     protected const RESOURCE_NAME_2 = 'resource-2';
+
+    /**
+     * @var string
+     */
+    protected const RELATION_NAME = 'child-resource';
 
     /**
      * @var \SprykerTest\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiTester
@@ -78,7 +90,7 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
 
         $dynamicEntityReaderMock = $this->createMock(DynamicEntityReaderInterface::class);
         $dynamicEntityReaderMock->expects($this->once())
-            ->method('getDynamicEntityConfigurations')
+            ->method('getDynamicEntityConfigurationsWithChildRecursively')
             ->willReturn($dynamicEntityConfigurations);
 
         $this->tester->mockFactoryMethod('createDynamicEntityReader', $dynamicEntityReaderMock);
@@ -102,12 +114,71 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
     /**
      * @return void
      */
+    public function testExpandExpandsDynamicEntityConfigurationsItemsWithChildRelations(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
+
+        $dynamicEntityConfigurationCollectionTransfer->addDynamicEntityConfiguration(
+            (new DynamicEntityConfigurationTransfer())
+                ->setTableAlias(static::RESOURCE_NAME_1)
+                ->setIdDynamicEntityConfiguration(1)->addChildRelation(
+                    (new DynamicEntityConfigurationRelationTransfer())
+                        ->setName(static::RELATION_NAME)
+                        ->setChildDynamicEntityConfiguration(
+                            (new DynamicEntityConfigurationTransfer())
+                                ->setIdDynamicEntityConfiguration(2),
+                        ),
+                ),
+        );
+        $dynamicEntityConfigurationCollectionTransfer->addDynamicEntityConfiguration(
+            (new DynamicEntityConfigurationTransfer())
+                ->setTableAlias(static::RESOURCE_NAME_2)
+                ->setIdDynamicEntityConfiguration(2),
+        );
+
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock->expects($this->once())
+            ->method('getDynamicEntityConfigurationCollection')
+            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+        $dynamicEntityReaderMock = new DynamicEntityReader(
+            $dynamicEntityBackendApiToDynamicEntityFacadeMock,
+            $this->createMock(GlueRequestDynamicEntityMapper::class),
+            $this->createMock(GlueResponseDynamicEntityMapper::class),
+            $this->createMock(DynamicEntityBackendApiLoggerInterface::class),
+        );
+
+        $this->tester->mockFactoryMethod('createDynamicEntityReader', $dynamicEntityReaderMock);
+
+        $apiApplicationSchemaContextTransfer = new ApiApplicationSchemaContextTransfer();
+
+        $plugin = $this->createDynamicEntityApiSchemaContextExpanderPlugin();
+        $plugin->setFactory($this->tester->getFactory());
+
+        // Act
+        $newApiApplicationSchemaContextTransfer = $plugin->expand($apiApplicationSchemaContextTransfer);
+
+        // Assert
+        $this->assertSame($apiApplicationSchemaContextTransfer, $newApiApplicationSchemaContextTransfer);
+        $this->assertCount(2, $newApiApplicationSchemaContextTransfer->getDynamicEntityConfigurations());
+        $copyArrayDynamicEntityConfigurations = $newApiApplicationSchemaContextTransfer->getDynamicEntityConfigurations()->getArrayCopy();
+        $this->assertSame(static::RESOURCE_NAME_1, $copyArrayDynamicEntityConfigurations[0]->getTableAlias());
+        $this->assertSame(static::RESOURCE_NAME_2, $copyArrayDynamicEntityConfigurations[1]->getTableAlias());
+        $this->assertCount(1, $copyArrayDynamicEntityConfigurations[0]->getChildRelations());
+        $this->assertSame(static::RELATION_NAME, $copyArrayDynamicEntityConfigurations[0]->getChildRelations()->getArrayCopy()[0]->getName());
+        $this->assertSame(static::RESOURCE_NAME_2, $copyArrayDynamicEntityConfigurations[0]->getChildRelations()->getArrayCopy()[0]->getChildDynamicEntityConfiguration()->getTableAlias());
+        $this->assertCount(0, $copyArrayDynamicEntityConfigurations[1]->getChildRelations());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandNotExpandsDynamicEntityConfigurationsItems(): void
     {
         // Arrange
         $dynamicEntityReaderMock = $this->createMock(DynamicEntityReaderInterface::class);
         $dynamicEntityReaderMock->expects($this->once())
-            ->method('getDynamicEntityConfigurations')
+            ->method('getDynamicEntityConfigurationsWithChildRecursively')
             ->willReturn([]);
 
         $this->tester->mockFactoryMethod('createDynamicEntityReader', $dynamicEntityReaderMock);

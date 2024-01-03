@@ -28,8 +28,12 @@ use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathMethodBuilderInte
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPatchMethodBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPostMethodBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPutMethodBuilder;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilder;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\DynamicApiPathMethodFormatter;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\DynamicApiPathMethodFormatterInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilder;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoter;
 use Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoterInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Logger\DynamicEntityBackendApiLogger;
@@ -243,7 +247,11 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
      */
     public function createPathGetMethodBuilder(): PathMethodBuilderInterface
     {
-        return new PathGetMethodBuilder($this->getConfig());
+        return new PathGetMethodBuilder(
+            $this->getConfig(),
+            $this->createDynamicEntityConfigurationTreeBuilder(),
+            $this->createSchemaBuilder(),
+        );
     }
 
     /**
@@ -251,7 +259,11 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
      */
     public function createPathPostMethodBuilder(): PathMethodBuilderInterface
     {
-        return new PathPostMethodBuilder($this->getConfig());
+        return new PathPostMethodBuilder(
+            $this->getConfig(),
+            $this->createDynamicEntityConfigurationTreeBuilder(),
+            $this->createSchemaBuilder(),
+        );
     }
 
     /**
@@ -259,7 +271,11 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
      */
     public function createPathPutMethodBuilder(): PathMethodBuilderInterface
     {
-        return new PathPutMethodBuilder($this->getConfig());
+        return new PathPutMethodBuilder(
+            $this->getConfig(),
+            $this->createDynamicEntityConfigurationTreeBuilder(),
+            $this->createSchemaBuilder(),
+        );
     }
 
     /**
@@ -267,7 +283,11 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
      */
     public function createPathPatchMethodBuilder(): PathMethodBuilderInterface
     {
-        return new PathPatchMethodBuilder($this->getConfig());
+        return new PathPatchMethodBuilder(
+            $this->getConfig(),
+            $this->createDynamicEntityConfigurationTreeBuilder(),
+            $this->createSchemaBuilder(),
+        );
     }
 
     /**
@@ -288,5 +308,21 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     public function getStorageFacade(): DynamicEntityBackendApiToStorageFacadeInterface
     {
         return $this->getProvidedDependency(DynamicEntityBackendApiDependencyProvider::FACADE_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilderInterface
+     */
+    public function createDynamicEntityConfigurationTreeBuilder(): DynamicEntityConfigurationTreeBuilderInterface
+    {
+        return new DynamicEntityConfigurationTreeBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface
+     */
+    public function createSchemaBuilder(): SchemaBuilderInterface
+    {
+        return new SchemaBuilder();
     }
 }

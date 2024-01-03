@@ -100,11 +100,10 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 static::SUMMARY_UPSERT_COLLECTION,
             ),
             $this->buildKeyParameters(),
-            $this->buildRequestBody(
-                static::REQUEST_DATA_UPSERT_COLLECTION_DESCRIPTION,
-                $this->prepareFieldsArray($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(), false, true, true),
+            $this->buildUpsertCollectionRequestBody($dynamicEntityConfigurationTransfer),
+            $this->buildResponses(
+                $this->buildUpsertCollectionResponses($dynamicEntityConfigurationTransfer),
             ),
-            $this->buildResponses($this->buildUpsertCollectionResponses($dynamicEntityConfigurationTransfer)),
         );
     }
 
@@ -121,12 +120,47 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
                 static::TPL_UPSERT_ENTITY_OPERATION_ID,
                 static::SUMMARY_UPSERT_ENTITY,
             ),
-            $this->buildKeyParametersWithIdParameter($dynamicEntityConfigurationTransfer),
-            $this->buildRequestBody(
-                static::REQUEST_DATA_UPSERT_ENTITY_DESCRIPTION,
-                $this->prepareFieldsArray($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(), true, true, true),
+            $this->buildKeyParameters($dynamicEntityConfigurationTransfer),
+            $this->buildUpsertEntityRequestBody($dynamicEntityConfigurationTransfer),
+            $this->buildResponses(
+                $this->buildUpsertEntityResponses($dynamicEntityConfigurationTransfer),
             ),
-            $this->buildResponses($this->buildUpsertEntityResponses($dynamicEntityConfigurationTransfer)),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildUpsertEntityRequestBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = true;
+        $filterIsCreated = true;
+        $filterIsEditable = true;
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildRequestBody(
+                static::REQUEST_DATA_UPSERT_ENTITY_DESCRIPTION,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                    $filterIsEditable,
+                ),
+                false,
+                true,
+            );
+        }
+
+        return $this->buildRequestBody(
+            static::REQUEST_DATA_UPSERT_ENTITY_DESCRIPTION,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+                $filterIsEditable,
+            ),
         );
     }
 
@@ -138,16 +172,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     protected function buildUpsertCollectionResponses(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
         return array_replace(
-            $this->buildResponseSuccess(
-                static::RESPONSE_DESCRIPTION,
-                $this->prepareFieldsArray(
-                    $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
-                    false,
-                    true,
-                    true,
-                ),
-                (string)Response::HTTP_OK,
-            ),
+            $this->buildUpsertCollectionSuccessResponseBody($dynamicEntityConfigurationTransfer),
             $this->buildResponseUnauthorizedRequest(),
             $this->buildResponseDefault(),
         );
@@ -161,19 +186,139 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     protected function buildUpsertEntityResponses(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
         return array_replace(
-            $this->buildResponseSuccess(
-                static::RESPONSE_DESCRIPTION,
-                $this->prepareFieldsArray(
-                    $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
-                    true,
-                    true,
-                    true,
-                ),
-                (string)Response::HTTP_OK,
-            ),
+            $this->buildUpsertEntitySuccessResponseBody($dynamicEntityConfigurationTransfer),
             $this->buildResponseUnauthorizedRequest(),
             $this->buildResponseNotFound(),
             $this->buildResponseDefault(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getCollectionRequestDescription(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        return sprintf('%s %s', static::REQUEST_DATA_UPSERT_COLLECTION_DESCRIPTION, $this->getRequestDescription($dynamicEntityConfigurationTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildUpsertCollectionRequestBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = false;
+        $filterIsCreated = true;
+        $filterIsEditable = true;
+        $requestDescription = $this->getCollectionRequestDescription($dynamicEntityConfigurationTransfer);
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildRequestBody(
+                $requestDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                    $filterIsEditable,
+                ),
+                false,
+                true,
+            );
+        }
+
+        return $this->buildRequestBody(
+            $requestDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+                $filterIsEditable,
+            ),
+            true,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildUpsertEntitySuccessResponseBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = true;
+        $filterIsCreated = true;
+        $filterIsEditable = true;
+        $httpCodeStatus = (string)Response::HTTP_OK;
+        $responseDescription = static::RESPONSE_DESCRIPTION;
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildSuccessResponse(
+                $responseDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                    $filterIsEditable,
+                ),
+                $httpCodeStatus,
+                false,
+                true,
+            );
+        }
+
+        return $this->buildSuccessResponse(
+            $responseDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+                $filterIsEditable,
+            ),
+            $httpCodeStatus,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildUpsertCollectionSuccessResponseBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = false;
+        $filterIsCreated = true;
+        $filterIsEditable = true;
+        $httpCodeStatus = (string)Response::HTTP_OK;
+        $responseDescription = static::RESPONSE_DESCRIPTION;
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildSuccessResponse(
+                $responseDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                    $filterIsEditable,
+                ),
+                $httpCodeStatus,
+                false,
+                true,
+            );
+        }
+
+        return $this->buildSuccessResponse(
+            $responseDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+                $filterIsEditable,
+            ),
+            $httpCodeStatus,
+            true,
         );
     }
 }

@@ -78,9 +78,8 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
                 static::SUMMARY_SAVE_COLLECTION,
             ),
             $this->buildKeyParameters(),
-            $this->buildRequestBody(
-                static::DESCRIPTION_REQUEST_BODY,
-                $this->prepareFieldsArray($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(), true, true),
+            $this->buildSaveCollectionRequestBody(
+                $dynamicEntityConfigurationTransfer,
             ),
             $this->buildResponses($this->buildSaveCollectionResponses($dynamicEntityConfigurationTransfer)),
         );
@@ -94,17 +93,93 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
     protected function buildSaveCollectionResponses(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
         return array_replace(
-            $this->buildResponseSuccess(
-                static::DESCRIPTION_RESPONSE_BODY,
-                $this->prepareFieldsArray(
-                    $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
-                    false,
-                    true,
-                ),
-                (string)Response::HTTP_CREATED,
-            ),
+            $this->buildSaveCollectionSuccessResponseBody($dynamicEntityConfigurationTransfer),
             $this->buildResponseUnauthorizedRequest(),
             $this->buildResponseDefault(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getSaveRequestDescription(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        return sprintf('%s %s', static::DESCRIPTION_REQUEST_BODY, $this->getRequestDescription($dynamicEntityConfigurationTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildSaveCollectionRequestBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = true;
+        $filterIsCreated = true;
+        $requestDescription = $this->getSaveRequestDescription($dynamicEntityConfigurationTransfer);
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildRequestBody(
+                $requestDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                ),
+                true,
+                true,
+            );
+        }
+
+        return $this->buildRequestBody(
+            $requestDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+            ),
+            true,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildSaveCollectionSuccessResponseBody(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $skipIdentifier = false;
+        $filterIsCreated = true;
+        $httpCodeStatus = (string)Response::HTTP_CREATED;
+        $responseSchemaDescription = static::DESCRIPTION_RESPONSE_BODY;
+        $isCollection = true;
+
+        if ($this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
+            return $this->buildSuccessResponse(
+                $responseSchemaDescription,
+                $this->buildOneOfCombinationArrayRecursively(
+                    $dynamicEntityConfigurationTransfer,
+                    $skipIdentifier,
+                    $filterIsCreated,
+                ),
+                $httpCodeStatus,
+                $isCollection,
+                true,
+            );
+        }
+
+        return $this->buildSuccessResponse(
+            $responseSchemaDescription,
+            $this->prepareFieldsArrayRecursively(
+                $dynamicEntityConfigurationTransfer,
+                $skipIdentifier,
+                $filterIsCreated,
+            ),
+            (string)Response::HTTP_CREATED,
+            $isCollection,
         );
     }
 }
