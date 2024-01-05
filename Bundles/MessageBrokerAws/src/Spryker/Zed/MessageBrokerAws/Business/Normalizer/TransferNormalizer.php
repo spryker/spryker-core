@@ -49,7 +49,7 @@ if (!interface_exists(CacheableSupportsMethodInterface::class)) {
          *
          * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
          */
-        public function denormalize($data, string $type, string $format = null, array $context = [])
+        public function denormalize($data, string $type, string $format = null, array $context = []): mixed
         {
             if (is_subclass_of($type, AbstractTransfer::class)) {
                 return (new $type())->fromArray($data, true);

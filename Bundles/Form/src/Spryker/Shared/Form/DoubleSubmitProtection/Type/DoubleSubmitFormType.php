@@ -112,7 +112,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
 
         $factory = $form->getConfig()->getFormFactory();
         $token = $this->tokenGenerator->generateToken();
-        $fieldName = $options[static::OPTION_KEY_TOKEN_FIELD_NAME];
+        $fieldName = (string)$options[static::OPTION_KEY_TOKEN_FIELD_NAME];
         $formName = $form->getName() ?: get_class($form->getConfig()->getType()->getInnerType());
         $this->storage->setToken($formName, $token);
 
