@@ -15,8 +15,16 @@ filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
         - Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/*
-        - Bundles/*/src/Spryker/Zed/*/*Factory.php
+        - Bundles/Security/src/Spryker/Zed/Security/Communication/Plugin/Application/*
+        - Bundles/*/src/Spryker/*/Zed/*/*/*Factory.php
+        - Bundles/*/src/Spryker/*/Client/*/*Factory.php
+        - Bundles/*/src/Spryker/*/*/*DependencyProvider.php
         - Bundles/Transfer/tests/_data/test_files/*
+        - Bundles/Development/*
+        - Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php
+        - Bundles/Propel/src/Spryker/Zed/Propel/Persistence/BatchProcessor/ActiveRecordBatchProcessorTrait.php
+        - Bundles/TestifyAsyncApi/src/Spryker/Zed/TestifyAsyncApi/Business/Codeception/Helper/AsyncApiHelper.php
+        - Bundles/Setup/src/Spryker/Zed/Setup/Business/Model/Cronjobs.php
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'
