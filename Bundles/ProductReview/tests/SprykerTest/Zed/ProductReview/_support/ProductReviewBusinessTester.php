@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductReview\PHPMD)
  */
 class ProductReviewBusinessTester extends Actor
 {

@@ -85,6 +85,7 @@
     </transfer>
     <transfer name="ProductView">
         <property name="rating" type="ProductReviewSummary"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
     <transfer name="ProductReviewSummary">
         <property name="maximumRating" type="int"/>

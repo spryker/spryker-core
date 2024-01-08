@@ -217,7 +217,7 @@ class AclEntityFacadeTest extends Unit
     public function testSaveAclRulesThrowsDuplicatedAclEntityRuleException(): void
     {
         // Arrange
-        $aclEntityRuleTransfer = $this->tester->haveAclEntityRule(
+        $this->tester->haveAclEntityRule(
             [
                 AclEntityRuleTransfer::SCOPE => AclEntityConstants::SCOPE_SEGMENT,
                 AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
@@ -340,7 +340,7 @@ class AclEntityFacadeTest extends Unit
         $this->expectException(AclEntityMetadataConfigInvalidKeyException::class);
 
         // Act
-        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
+        $aclEntityFacade->getAclEntityMetadataConfig();
     }
 
     /**
@@ -357,6 +357,6 @@ class AclEntityFacadeTest extends Unit
         $this->expectException(AclEntityMetadataConfigParentEntityNotFoundException::class);
 
         // Act
-        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
+        $aclEntityFacade->getAclEntityMetadataConfig();
     }
 }

@@ -139,7 +139,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
 
         // Act
         /** @var \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer */
-        $validationResponseTransfer = $priceProductTransferExpanded = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
@@ -163,7 +163,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
 
         // Act
         /** @var \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer */
-        $validationResponseTransfer = $priceProductTransferExpanded = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
@@ -192,7 +192,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
 
         // Act
         /** @var \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer */
-        $validationResponseTransfer = $priceProductTransferExpanded = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
@@ -219,7 +219,7 @@ class PriceProductOfferVolumeFacadeTest extends Unit
 
         // Act
         /** @var \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer */
-        $validationResponseTransfer = $priceProductTransferExpanded = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 

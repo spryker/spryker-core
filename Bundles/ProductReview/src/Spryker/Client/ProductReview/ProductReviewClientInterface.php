@@ -94,14 +94,15 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
-     *  - Expands product view data with product review summary data (average rating).
+     * - Expands product view data with product review summary data (average rating).
+     * - Expects `ProductViewTransfer.idProductAbstract` to be set.
      *
      * @api
      *
-     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     * @return array<int, \Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function expandProductViewBulkWithProductReviewData(
         array $productViewTransfers,

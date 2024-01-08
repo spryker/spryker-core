@@ -60,35 +60,35 @@ class ExpandProductConcretesWithRatingTest extends Unit
             $this->tester->haveFullProduct(),
         ];
 
-        $pendingProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             3,
             SpyProductReviewTableMap::COL_STATUS_PENDING,
             [1, 2, 1],
         );
 
-        $approvedProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             5,
             SpyProductReviewTableMap::COL_STATUS_APPROVED,
             [3, 5, 1, 2, 5],
         );
 
-        $rejectedProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             1,
             SpyProductReviewTableMap::COL_STATUS_REJECTED,
             [1],
         );
 
-        $approvedProductReviewTransfersForProduct2 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[1],
             2,
             SpyProductReviewTableMap::COL_STATUS_APPROVED,
             [5, 1],
         );
 
-        $rejectedProductReviewTransfersForProduct2 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[1],
             4,
             SpyProductReviewTableMap::COL_STATUS_REJECTED,
@@ -122,28 +122,28 @@ class ExpandProductConcretesWithRatingTest extends Unit
             $this->tester->haveFullProduct(),
         ];
 
-        $pendingProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             3,
             SpyProductReviewTableMap::COL_STATUS_PENDING,
             [4, 5, 5],
         );
 
-        $approvedProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             5,
             SpyProductReviewTableMap::COL_STATUS_APPROVED,
             [1, 2, 3, 2, 1],
         );
 
-        $rejectedProductReviewTransfersForProduct1 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[0],
             1,
             SpyProductReviewTableMap::COL_STATUS_REJECTED,
             [4],
         );
 
-        $rejectedProductReviewTransfersForProduct2 = $this->tester->createReviewsForProduct(
+        $this->tester->createReviewsForProduct(
             $productConcreteTransfers[1],
             4,
             SpyProductReviewTableMap::COL_STATUS_REJECTED,

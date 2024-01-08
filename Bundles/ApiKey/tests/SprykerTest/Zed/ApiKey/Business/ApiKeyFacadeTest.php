@@ -184,7 +184,7 @@ class ApiKeyFacadeTest extends Unit
                 ->setKey($this->tester::FOO_KEY));
 
         //Act
-        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
+        $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
 
         //Assert
         $createdApiKeyEntity = $this->tester->getFakeApiKeyEntityByName($this->tester::BAR_NAME);
@@ -206,7 +206,7 @@ class ApiKeyFacadeTest extends Unit
                 ->setValidTo(date(static::DATE_TIME_FORMAT, strtotime('+1 day'))));
 
         //Act
-        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
+        $this->tester->getFacade()->createApiKeyCollection($apiKeyCollectionRequestTransfer);
 
         //Assert
         $createdApiKeyEntity = $this->tester->getFakeApiKeyEntityByName($this->tester::BAR_NAME);
@@ -293,7 +293,7 @@ class ApiKeyFacadeTest extends Unit
                 ->setName($this->tester::BAR_NAME));
 
         //Act
-        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->updateApiKeyCollection($apiKeyCollectionRequestTransfer);
+        $this->tester->getFacade()->updateApiKeyCollection($apiKeyCollectionRequestTransfer);
 
         //Assert
         $updatedApiKeyEntity = $this->tester->getFakeApiKeyEntityById($this->apiKeyEntity->getIdApiKey());
@@ -315,7 +315,7 @@ class ApiKeyFacadeTest extends Unit
                 ->setKey($this->tester::FOO_KEY));
 
         //Act
-        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->updateApiKeyCollection($apiKeyCollectionRequestTransfer);
+        $this->tester->getFacade()->updateApiKeyCollection($apiKeyCollectionRequestTransfer);
 
         //Assert
         $updatedApiKeyEntity = $this->tester->getFakeApiKeyEntityById($this->apiKeyEntity->getIdApiKey());
@@ -333,7 +333,7 @@ class ApiKeyFacadeTest extends Unit
                 ->addIdApiKey($this->apiKeyEntity->getIdApiKey());
 
         //Act
-        $apiKeyCollectionResponseTransfer = $this->tester->getFacade()->deleteApiKeyCollection($apiKeyCollectionDeleteCriteriaTransfer);
+        $this->tester->getFacade()->deleteApiKeyCollection($apiKeyCollectionDeleteCriteriaTransfer);
 
         //Assert
         $removedApiKeyEntity = $this->tester->getFakeApiKeyEntityById($this->apiKeyEntity->getIdApiKey());

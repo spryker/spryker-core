@@ -24,9 +24,9 @@ interface ProductViewExpanderInterface
     ): ProductViewTransfer;
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     * @return array<int, \Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function expandProductViewsWithProductReviewData(
         array $productViewTransfers

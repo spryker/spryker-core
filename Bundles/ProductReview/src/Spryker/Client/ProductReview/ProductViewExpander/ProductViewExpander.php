@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductReview\ProductViewExpander;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\RatingAggregationTransfer;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface;
@@ -87,9 +88,9 @@ class ProductViewExpander implements ProductViewExpanderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
+     * @return array<int, \Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function expandProductViewsWithProductReviewData(
         array $productViewTransfers
@@ -100,18 +101,61 @@ class ProductViewExpander implements ProductViewExpanderInterface
             return $productViewTransfers;
         }
 
-        foreach ($productsReviews[static::KEY_PRODUCT_BULK_AGGREGATION] as $productId => $productReviews) {
+        foreach ($productsReviews[static::KEY_PRODUCT_BULK_AGGREGATION] as $idProductAbstract => $productReviews) {
             if (empty($productReviews[static::KEY_RATING_AGGREGATION])) {
                 continue;
             }
 
-            if (isset($productViewTransfers[$productId])) {
-                $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
-                    $this->createRatingAggregationTransfer($productReviews),
-                );
-
-                $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer);
+            $filteredProductViewTransfers = $this->filterProductViewTransfersByIdProductAbstract($productViewTransfers, $idProductAbstract);
+            if (!count($filteredProductViewTransfers)) {
+                continue;
             }
+
+            $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
+                $this->createRatingAggregationTransfer($productReviews),
+            );
+
+            $this->expandProductViewTransfersWithRating(
+                $filteredProductViewTransfers,
+                $productReviewSummaryTransfer,
+            );
+        }
+
+        return $productViewTransfers;
+    }
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param int $idProductAbstract
+     *
+     * @return array<int, \Generated\Shared\Transfer\ProductViewTransfer>
+     */
+    protected function filterProductViewTransfersByIdProductAbstract(array $productViewTransfers, int $idProductAbstract): array
+    {
+        /** @var array<int, \Generated\Shared\Transfer\ProductViewTransfer> $filteredProductViewTransfers */
+        $filteredProductViewTransfers = array_filter($productViewTransfers, function (ProductViewTransfer $productViewTransfer) use ($idProductAbstract) {
+            return $productViewTransfer->getIdProductAbstract() === $idProductAbstract;
+        });
+
+        if (count($filteredProductViewTransfers)) {
+            return $filteredProductViewTransfers;
+        }
+
+        return isset($productViewTransfers[$idProductAbstract]) ? [$productViewTransfers[$idProductAbstract]] : [];
+    }
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     * @param \Generated\Shared\Transfer\ProductReviewSummaryTransfer $productReviewSummaryTransfer
+     *
+     * @return array<int, \Generated\Shared\Transfer\ProductViewTransfer>
+     */
+    protected function expandProductViewTransfersWithRating(
+        array $productViewTransfers,
+        ProductReviewSummaryTransfer $productReviewSummaryTransfer
+    ): array {
+        foreach ($productViewTransfers as $productViewTransfer) {
+            $productViewTransfer->setRating($productReviewSummaryTransfer);
         }
 
         return $productViewTransfers;

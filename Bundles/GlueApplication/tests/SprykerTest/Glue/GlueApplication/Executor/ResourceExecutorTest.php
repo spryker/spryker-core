@@ -41,7 +41,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testGetResourceExecutesResourceWithControllerAndAction(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(new GlueResourceTransfer());
 
@@ -66,11 +66,11 @@ class ResourceExecutorTest extends Unit
 
         $config = new GlueApplicationConfig();
 
-        //Act
+        // Act
         $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $config))
             ->executeResource($resourceMock, $glueRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
         $this->assertCount(1, $glueResponseTransfer->getResources());
     }
@@ -80,7 +80,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testGetResourceExecutesResourceByResourceId(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource((new GlueResourceTransfer())
                 ->setId('FOO'));
@@ -107,11 +107,11 @@ class ResourceExecutorTest extends Unit
 
         $config = new GlueApplicationConfig();
 
-        //Act
+        // Act
         $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $config))
             ->executeResource($resourceMock, $glueRequestTransfer);
 
-        //Assert
+        // Assert
         $resource = $glueResponseTransfer->getResources()->offsetGet(0);
         $this->assertSame('FOO', $resource->getId());
     }
@@ -121,7 +121,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testExecuteResourceExecutesIfContentExistsAndFirstArgumentDoesNotExist(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource((new GlueResourceTransfer())->setMethod('get'))
             ->setContent('fooBar');
@@ -154,11 +154,11 @@ class ResourceExecutorTest extends Unit
 
         $config = new GlueApplicationConfig();
 
-        //Act
+        // Act
         $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $config))
             ->executeResource($resourceMock, $glueRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
         $this->assertSame($glueResponseTransfer->getContent(), $glueRequestTransfer->getContent());
     }
@@ -168,7 +168,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testExecuteResourceExecutesMethodInUpperCase(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource((new GlueResourceTransfer())->setMethod('GET'))
             ->setContent('fooBar');
@@ -194,11 +194,11 @@ class ResourceExecutorTest extends Unit
 
         $config = new GlueApplicationConfig();
 
-        //Act
+        // Act
         $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $config))
             ->executeResource($resourceMock, $glueRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
         $this->assertSame($glueResponseTransfer->getContent(), $glueRequestTransfer->getContent());
     }
@@ -208,7 +208,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testExecuteResourceExecutesIfContentAndFirstArgumentExist(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource((new GlueResourceTransfer())->setMethod(strtolower(Request::METHOD_POST)))
             ->setContent('fooBar');
@@ -242,11 +242,11 @@ class ResourceExecutorTest extends Unit
 
         $config = new GlueApplicationConfig();
 
-        //Act
+        // Act
         $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $config))
             ->executeResource($resourceMock, $glueRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
         $this->assertSame($glueResponseTransfer->getContent(), $glueRequestTransfer->getContent());
     }
@@ -256,7 +256,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testExecuteResourceDoesNotExecuteIfControllerDoesNotExist(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(new GlueResourceTransfer());
 
@@ -276,7 +276,6 @@ class ResourceExecutorTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $config = new GlueApplicationConfig();
         $configMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -284,11 +283,11 @@ class ResourceExecutorTest extends Unit
             ->method('isDevelopmentMode')
             ->willReturn(false);
 
-        //Assert
+        // Assert
         $this->expectException(ControllerNotFoundException::class);
 
-        //Act
-        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock))
+        // Act
+        (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock))
             ->executeResource($resourceMock, $glueRequestTransfer);
     }
 
@@ -297,7 +296,7 @@ class ResourceExecutorTest extends Unit
      */
     public function testExecuteResourceThrowsExceptionIfCachedDataDoesNotExist(): void
     {
-        //Arrange
+        // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(new GlueResourceTransfer());
 
@@ -317,7 +316,6 @@ class ResourceExecutorTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $config = new GlueApplicationConfig();
         $configMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -325,11 +323,11 @@ class ResourceExecutorTest extends Unit
             ->method('isDevelopmentMode')
             ->willReturn(false);
 
-        //Assert
+        // Assert
         $this->expectException(InvalidActionParametersException::class);
 
-        //Act
-        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock))
+        // Act
+        (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock))
             ->executeResource($resourceMock, $glueRequestTransfer);
     }
 }
