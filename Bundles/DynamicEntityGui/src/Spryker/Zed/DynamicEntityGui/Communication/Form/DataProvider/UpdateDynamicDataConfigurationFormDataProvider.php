@@ -9,6 +9,8 @@ namespace Spryker\Zed\DynamicEntityGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
+use Propel\Generator\Model\PropelTypes;
+use Propel\Runtime\Map\ColumnMap;
 use Propel\Runtime\Map\DatabaseMap;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\UpdateDynamicDataConfigurationForm;
 use Spryker\Zed\DynamicEntityGui\Communication\Validator\TableValidatorInterface;
@@ -117,6 +119,26 @@ class UpdateDynamicDataConfigurationFormDataProvider
     protected const VALIDATION = 'validation';
 
     /**
+     * @var string
+     */
+    protected const FIELD_DEFINTION_TYPE_STRING = 'string';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_DEFINTION_TYPE_INTEGER = 'integer';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_DEFINTION_TYPE_DECIMAL = 'decimal';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_DEFINTION_TYPE_BOOLEAN = 'boolean';
+
+    /**
      * @var \Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToDynamicEntityFacadeInterface
      */
     protected DynamicEntityGuiToDynamicEntityFacadeInterface $dynamicEntityFacade;
@@ -223,10 +245,10 @@ class UpdateDynamicDataConfigurationFormDataProvider
             $dynamicEntityConfigurations[static::FIELD_DEFINITIONS][] = [
                 static::FIELD_NAME => $column->getName(),
                 static::FIELD_VISIBLE_NAME => $fieldDefinitions[$column->getName()][static::FIELD_VISIBLE_NAME] ?? lcfirst($column->getPhpName()),
-                static::TYPE => $fieldDefinitions[$column->getName()][static::TYPE] ?? null,
+                static::TYPE => $fieldDefinitions[$column->getName()][static::TYPE] ?? $this->getDefaultTypeColumn($column),
                 static::IS_CREATABLE => $fieldDefinitions[$column->getName()][static::IS_CREATABLE] ?? false,
                 static::IS_EDITABLE => $fieldDefinitions[$column->getName()][static::IS_EDITABLE] ?? false,
-                static::IS_REQUIRED => $fieldDefinitions[$column->getName()][static::VALIDATION][static::IS_REQUIRED] ?? false,
+                static::IS_REQUIRED => $fieldDefinitions[$column->getName()][static::VALIDATION][static::IS_REQUIRED] ?? $this->getDefaultIsRequiredColumn($column),
                 static::MIN => $fieldDefinitions[$column->getName()][static::VALIDATION][static::MIN] ?? null,
                 static::MAX => $fieldDefinitions[$column->getName()][static::VALIDATION][static::MAX] ?? null,
                 static::MIN_LENGTH => $fieldDefinitions[$column->getName()][static::VALIDATION][static::MIN_LENGTH] ?? null,
@@ -276,5 +298,51 @@ class UpdateDynamicDataConfigurationFormDataProvider
         }
 
         return $columns;
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap $column
+     *
+     * @return string
+     */
+    protected function getDefaultTypeColumn(ColumnMap $column): string
+    {
+        return $this->mapPropelTypesToFieldType($column->getType());
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap $column
+     *
+     * @return bool
+     */
+    protected function getDefaultIsRequiredColumn(ColumnMap $column): bool
+    {
+        return (bool)$column->isNotNull();
+    }
+
+    /**
+     * @param string $propelType
+     *
+     * @return string
+     */
+    protected function mapPropelTypesToFieldType(string $propelType): string
+    {
+        $propelTypeToTypeMap = [
+            PropelTypes::VARCHAR => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::LONGVARCHAR => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::CLOB => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::CHAR => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::INTEGER => static::FIELD_DEFINTION_TYPE_INTEGER,
+            PropelTypes::BOOLEAN => static::FIELD_DEFINTION_TYPE_BOOLEAN,
+            PropelTypes::FLOAT => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::DOUBLE => static::FIELD_DEFINTION_TYPE_DECIMAL,
+            PropelTypes::DECIMAL => static::FIELD_DEFINTION_TYPE_DECIMAL,
+            PropelTypes::DATE => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::TIME => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::TIMESTAMP => static::FIELD_DEFINTION_TYPE_STRING,
+            PropelTypes::ENUM => static::FIELD_DEFINTION_TYPE_STRING,
+        ];
+
+        return $propelTypeToTypeMap[$propelType] ?? static::FIELD_DEFINTION_TYPE_STRING;
     }
 }
