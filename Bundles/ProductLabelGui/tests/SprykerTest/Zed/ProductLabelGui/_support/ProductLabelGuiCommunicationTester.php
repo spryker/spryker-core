@@ -27,7 +27,7 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductLabelGui\PHPMD)
  */
 class ProductLabelGuiCommunicationTester extends Actor
 {

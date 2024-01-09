@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductLabelGui\Communication\Table;
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainer;
+use SprykerTest\Zed\ProductLabelGui\ProductLabelGuiCommunicationTester;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -47,7 +48,7 @@ class ProductLabelTableQueryTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductLabelGui\ProductLabelGuiCommunicationTester
      */
-    protected $tester;
+    protected ProductLabelGuiCommunicationTester $tester;
 
     /**
      * @return void
@@ -89,6 +90,26 @@ class ProductLabelTableQueryTest extends Unit
         $this->assertEquals($productLabelTransfer2->getIdProductLabel(), $result[1][ProductLabelTable::COL_ID_PRODUCT_LABEL]);
         $this->assertEquals(2, $result[0][ProductLabelTable::COL_ABSTRACT_PRODUCT_RELATION_COUNT]);
         $this->assertEquals(1, $result[1][ProductLabelTable::COL_ABSTRACT_PRODUCT_RELATION_COUNT]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFetchDataReturnsCorrectProductLabelDataWhenMultipleLabelsDoNotHaveProducts(): void
+    {
+        // Arrange
+        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+
+        $productLabelTableMock = new ProductLabelTableMock(new ProductLabelGuiQueryContainer());
+        $productLabelTableMock->setTwig($this->getTwigMock());
+
+        // Act
+        $result = $productLabelTableMock->fetchData();
+
+        // Assert
+        $this->assertCount(3, $result);
     }
 
     /**

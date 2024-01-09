@@ -226,7 +226,7 @@ class ProductLabelTable extends AbstractTable
                     sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
                     static::COL_ABSTRACT_PRODUCT_RELATION_COUNT,
                 )
-                ->groupByFkProductLabel()
+                ->addGroupByColumn(SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL)
             ->endUse();
     }
 
