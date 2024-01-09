@@ -1,0 +1,32 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@change-field-overlay-header-padding: var(--spy-change-field-overlay-header-padding, 15px 30px);
+@change-field-overlay-content-padding: var(--spy-change-field-overlay-content-padding, 30px);
+@change-field-overlay-form-control-max-width: var(--spy-change-field-overlay-form-control-max-width, 400px);
+
+.mp-change-field-overlay {
+    .@{headline-prefix-cls},
+    .@{card-prefix-cls}-body {
+        padding-bottom: 0;
+
+        &__title {
+            &--h1 {
+                font-size: @heading-5-font-size;
+                font-weight: @font-weight-semi-bold;
+            }
+        }
+    }
+
+    .@{form-item-prefix-cls}-control {
+        max-width: @change-field-overlay-form-control-max-width;
+    }
+
+    &__header {
+        background-color: @spy-white;
+        padding: @change-field-overlay-header-padding;
+    }
+
+    &__content {
+        padding: @change-field-overlay-content-padding;
+    }
+}

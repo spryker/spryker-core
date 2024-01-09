@@ -9,9 +9,11 @@ namespace Spryker\Zed\UserMerchantPortalGui\Communication;
 
 use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\UserMerchantPortalGui\Communication\Form\ChangeEmailForm;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\ChangePasswordForm;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\CurrentPasswordConstraint;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\UniqueUserEmailConstraint;
+use Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider\ChangeEmailFormDataProvider;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider\MerchantAccountFormDataProvider;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider\MerchantAccountFormDataProviderInterface;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\MerchantAccountForm;
@@ -24,6 +26,9 @@ use Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @method \Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiConfig getConfig()
+ */
 class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -49,6 +54,16 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @return \Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider\ChangeEmailFormDataProvider
+     */
+    public function createChangeEmailFormDataProvider(): ChangeEmailFormDataProvider
+    {
+        return new ChangeEmailFormDataProvider(
+            $this->getMerchantUserFacade(),
+        );
+    }
+
+    /**
      * @param int $idUser
      *
      * @return \Symfony\Component\Validator\Constraint
@@ -67,6 +82,16 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     public function createChangePasswordForm(): FormInterface
     {
         return $this->getFormFactory()->create(ChangePasswordForm::class);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createChangeEmailForm(array $data = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ChangeEmailForm::class, $data);
     }
 
     /**

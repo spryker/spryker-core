@@ -22,14 +22,21 @@ class MyAccountController extends AbstractController
     /**
      * @var string
      */
-    protected const URL_MERCHANT_MY_ACCOUNT = '/user-merchant-portal-gui/my-account';
+    protected const ROUTE_MERCHANT_MY_ACCOUNT = '/user-merchant-portal-gui/my-account';
 
     /**
-     * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\MyAccountController::indexAction()
+     * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\ChangePasswordController::indexAction()
      *
      * @var string
      */
-    protected const URL_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';
+    protected const ROUTE_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';
+
+    /**
+     * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\ChangeEmailController::indexAction()
+     *
+     * @var string
+     */
+    protected const ROUTE_CHANGE_EMAIL = '/user-merchant-portal-gui/change-email';
 
     /**
      * @var string
@@ -65,7 +72,9 @@ class MyAccountController extends AbstractController
 
         $response = [
             'merchantAccountForm' => $merchantAccountForm->createView(),
-            'urlChangePassword' => static::URL_CHANGE_PASSWORD,
+            'urlChangePassword' => static::ROUTE_CHANGE_PASSWORD,
+            'urlChangeEmail' => static::ROUTE_CHANGE_EMAIL,
+            'isEmailUpdatePasswordVerificationEnabled' => $this->getFactory()->getConfig()->isEmailUpdatePasswordVerificationEnabled(),
         ];
 
         if (!$merchantAccountForm->isSubmitted()) {
@@ -80,7 +89,7 @@ class MyAccountController extends AbstractController
 
         $this->handleFormSubmission($merchantAccountForm);
 
-        return new RedirectResponse(static::URL_MERCHANT_MY_ACCOUNT);
+        return new RedirectResponse(static::ROUTE_MERCHANT_MY_ACCOUNT);
     }
 
     /**

@@ -5,6 +5,7 @@ E-mail,E-mail
 Language,Language
 Save,Save
 "Change password","Change password"
+"Change email","Change email"
 "Success! The Account is updated.","Success! The Account is updated."
 "Please resolve all errors.","Please resolve all errors."
 "This value should not be blank.","This value should not be blank."
@@ -12,6 +13,7 @@ Save,Save
 "A user with this email already exists.","A user with this email already exists."
 "Personal Details","Personal Details"
 "Email *","Email *"
+"New email","New email"
 Password,Password
 "Current password","Current password"
 "New password","New password"
@@ -20,4 +22,5 @@ Password,Password
 "The value is incorrect. Please try again.","The value is incorrect. Please try again."
 "The value needs to match the New Password input.","The value needs to match the New Password input."
 "Success! The Password is updated.","Success! The Password is updated."
+"Success! The Email is updated.","Success! The Email is updated."
 "The value cannot be empty","The value cannot be empty"

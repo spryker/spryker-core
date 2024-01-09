@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiConfig getConfig()
  */
 class MerchantAccountForm extends AbstractType
 {
@@ -208,6 +209,7 @@ class MerchantAccountForm extends AbstractType
                     new Email(),
                     $this->getFactory()->createUniqueUserEmailConstraint($formData[static::KEY_ID_USER]),
                 ],
+                'disabled' => $this->getConfig()->isEmailUpdatePasswordVerificationEnabled(),
                 'sanitize_xss' => true,
             ]);
 

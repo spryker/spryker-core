@@ -1,0 +1,15 @@
+{% form_theme changeEmailForm '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block body %}
+    {{ form_start(changeEmailForm, { attr: { excludeFormTag: true } }) }}
+        <web-mp-change-field-overlay cloak>
+            <h5 title>{{ 'Change email' | trans }}</h5>
+            {{ form_row(changeEmailForm.save, { attr: { size: 'lg', action: '' } }) }}
+
+            <web-spy-card cloak>
+                {{ form_row(changeEmailForm.current_password) }}
+                {{ form_row(changeEmailForm.email) }}
+            </web-spy-card>
+        </web-mp-change-field-overlay>
+    {{ form_end(changeEmailForm) }}
+{% endblock %}
