@@ -10,13 +10,14 @@
 {% macro langIcon(localeName) -%}
     {%- if localeName == 'en_US' -%}united-states
     {%- elseif localeName == 'de_DE' -%}germany
+    {%- else -%}{{- ('icon_' ~ localeName) | trans -}}
     {%- endif -%}
 {% endmacro %}
 
 {% macro langFullName(localeName) -%}
     {%- if localeName == 'en_US' -%}English
     {%- elseif localeName == 'de_DE' -%}German
-    {%- elseif localeName == 'Default' -%}Default
+    {%- else -%}{{- localeName -}}
     {%- endif -%}
 {% endmacro %}
 
@@ -79,13 +80,17 @@
                                         {% block nameCardInner %}
                                             <web-spy-tabs cloak mode="card">
                                                 {% for localizedAttributeForm in form.localizedAttributes.children %}
-                                                    <web-spy-tab
-                                                        cloak
-                                                        spy-title="{{ macros.langFullName(localizedAttributeForm.vars.value.locale.localeName) | trans }} ({{ localizedAttributeForm.vars.value.locale.localeName }})"
-                                                        icon-name="{{ macros.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
-                                                    >
-                                                        {{ form_row(localizedAttributeForm.children.name, { row_attr: { 'no-spaces': 'true' } }) }}
-                                                    </web-spy-tab>
+                                                    {% set localeName = localizedAttributeForm.vars.value.locale.localeName %}
+
+                                                    {% block nameCardInnerTab %}
+                                                        <web-spy-tab
+                                                            cloak
+                                                            spy-title="{{ macros.langFullName(localeName) | trans }} ({{ localeName }})"
+                                                            icon-name="{{ macros.langIcon(localeName) }}"
+                                                        >
+                                                            {{ form_row(localizedAttributeForm.children.name, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                        </web-spy-tab>
+                                                    {% endblock %}
                                                 {% endfor %}
                                             </web-spy-tabs>
                                         {% endblock %}
@@ -97,13 +102,17 @@
                                         {% block descriptionCardInner %}
                                             <web-spy-tabs cloak mode="card">
                                                 {% for localizedAttributeForm in form.localizedAttributes.children %}
-                                                    <web-spy-tab
-                                                        cloak
-                                                        spy-title="{{ macros.langFullName(localizedAttributeForm.vars.value.locale.localeName) | trans }} ({{ localizedAttributeForm.vars.value.locale.localeName }})"
-                                                        icon-name="{{ macros.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
-                                                    >
-                                                        {{ form_row(localizedAttributeForm.children.description, { row_attr: { 'no-spaces': 'true' } }) }}
-                                                    </web-spy-tab>
+                                                    {% set localeName = localizedAttributeForm.vars.value.locale.localeName %}
+
+                                                    {% block descriptionCardInnerTab %}
+                                                        <web-spy-tab
+                                                            cloak
+                                                            spy-title="{{ macros.langFullName(localeName) | trans }} ({{ localeName }})"
+                                                            icon-name="{{ macros.langIcon(localeName) }}"
+                                                        >
+                                                            {{ form_row(localizedAttributeForm.children.description, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                        </web-spy-tab>
+                                                    {% endblock %}
                                                 {% endfor %}
                                             </web-spy-tabs>
                                         {% endblock %}
@@ -179,7 +188,7 @@
                                                         {% block imagesCardInnerTab %}
                                                             <web-spy-tab
                                                                 cloak
-                                                                spy-title="{{ macros.langFullName(localeName) | trans }}{{ localeName != 'Default' ? ' (' ~ localeName ~ ')' : null }}"
+                                                                spy-title="{{ macros.langFullName(localeName) | trans }} {{ localeName != 'Default' ? '(' ~ localeName ~ ')' }}"
                                                                 icon-name="{{ macros.langIcon(localeName) }}"
                                                             >
                                                                 {% set imageSets = imageSetsGroupedByIdLocale[idLocale] | default([]) %}
@@ -278,10 +287,12 @@
                                         {% block seoCardInner %}
                                             <web-spy-tabs mode="card" cloak>
                                                 {% for localizedAttributeForm in form.localizedAttributes.children %}
+                                                    {% set localeName = localizedAttributeForm.vars.value.locale.localeName %}
+
                                                     {% block seoCardInnerTab %}
                                                         <web-spy-tab
-                                                            spy-title="{{ macros.langFullName(localizedAttributeForm.vars.value.locale.localeName) | trans }} ({{ localizedAttributeForm.vars.value.locale.localeName }})"
-                                                            icon-name="{{ macros.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
+                                                            spy-title="{{ macros.langFullName(localeName) | trans }} ({{ localeName }})"
+                                                            icon-name="{{ macros.langIcon(localeName) }}"
                                                         >
                                                             {{ form_row(localizedAttributeForm.children.metaTitle) }}
                                                             {{ form_row(localizedAttributeForm.children.metaKeywords) }}

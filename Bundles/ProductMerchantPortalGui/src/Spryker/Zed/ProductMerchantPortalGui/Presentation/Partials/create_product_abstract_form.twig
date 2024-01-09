@@ -3,12 +3,14 @@
 {% macro langIcon(localeName) -%}
     {%- if localeName == 'en_US' -%}united-states
     {%- elseif localeName == 'de_DE' -%}germany
+    {%- else -%}{{- ('icon_' ~ localeName) | trans -}}
     {%- endif -%}
 {% endmacro %}
 
 {% macro langFullName(localeName) -%}
     {%- if localeName == 'en_US' -%}English
     {%- elseif localeName == 'de_DE' -%}German
+    {%- else -%}{{- localeName -}}
     {%- endif -%}
 {% endmacro %}
 
