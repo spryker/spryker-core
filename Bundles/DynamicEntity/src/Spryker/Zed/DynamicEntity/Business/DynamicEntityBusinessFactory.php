@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Propel\Runtime\Map\DatabaseMap;
+use Propel\Runtime\Propel;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilder;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
+use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidator;
+use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapper;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
@@ -207,7 +211,26 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createDynamicEntityMapper(),
+            $this->createFieldMappingValidator(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface
+     */
+    public function createFieldMappingValidator(): FieldMappingValidatorInterface
+    {
+        return new FieldMappingValidator(
+            $this->getPropelDatabaseMap(),
+        );
+    }
+
+    /**
+     * @return \Propel\Runtime\Map\DatabaseMap
+     */
+    public function getPropelDatabaseMap(): DatabaseMap
+    {
+        return Propel::getDatabaseMap();
     }
 
     /**

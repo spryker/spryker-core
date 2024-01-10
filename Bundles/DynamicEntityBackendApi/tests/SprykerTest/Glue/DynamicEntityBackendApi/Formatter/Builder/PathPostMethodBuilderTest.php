@@ -228,6 +228,6 @@ class PathPostMethodBuilderTest extends Unit
         $builder = new PathPostMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
-        $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithEmtpyFieldDefinitions());
+        $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithEmptyFieldDefinitions());
     }
 }

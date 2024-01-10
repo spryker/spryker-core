@@ -106,7 +106,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     abstract public function buildPathData(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array;
 
@@ -188,15 +188,22 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string|null $parentRelationName
      *
      * @return int
      */
-    protected function calculateDeepLevelInConfiguration(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): int
-    {
+    protected function calculateDeepLevelInConfiguration(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        ?string $parentRelationName = null
+    ): int {
         $deepLevel = 0;
         /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childRelation */
         foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
-            $deepLevel = max($deepLevel, $this->calculateDeepLevelInConfiguration($childRelation->getChildDynamicEntityConfigurationOrFail()));
+            if ($childRelation->getNameOrFail() === $parentRelationName) {
+                continue;
+            }
+
+            $deepLevel = max($deepLevel, $this->calculateDeepLevelInConfiguration($childRelation->getChildDynamicEntityConfigurationOrFail(), $childRelation->getNameOrFail()));
         }
 
         return $deepLevel + 1;

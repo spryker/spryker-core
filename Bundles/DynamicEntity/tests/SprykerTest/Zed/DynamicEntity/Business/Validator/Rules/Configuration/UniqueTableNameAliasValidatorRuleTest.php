@@ -9,7 +9,8 @@ namespace SprykerTest\Zed\DynamicEntity\Business\Validator\Rules\Configuration;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration\UniqueTableNameAliasValidatorRule;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface;
 
@@ -57,7 +58,7 @@ class UniqueTableNameAliasValidatorRuleTest extends Unit
     {
         // Arrange
         $dynamicEntityRepositoryMock = $this->getMockBuilder(DynamicEntityRepositoryInterface::class)->getMock();
-        $dynamicEntityRepositoryMock->method('findDynamicEntityConfigurationByTableAliasesOrTableNames')->willReturn([]);
+        $dynamicEntityRepositoryMock->method('getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames')->willReturn(new DynamicEntityConfigurationCollectionTransfer());
 
         $validatorRule = new UniqueTableNameAliasValidatorRule($dynamicEntityRepositoryMock);
         $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();
@@ -76,12 +77,13 @@ class UniqueTableNameAliasValidatorRuleTest extends Unit
     {
         // Arrange
         $dynamicEntityRepositoryMock = $this->getMockBuilder(DynamicEntityRepositoryInterface::class)->getMock();
-        $dynamicEntityRepositoryMock->method('findDynamicEntityConfigurationByTableAliasesOrTableNames')->willReturn([
-            (new SpyDynamicEntityConfiguration())
-                ->setIdDynamicEntityConfiguration(10)
-                ->setTableAlias('test-table')
-                ->setTableName('spy_test_table'),
-        ]);
+        $dynamicEntityRepositoryMock->method('getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames')->willReturn(
+            (new DynamicEntityConfigurationCollectionTransfer())
+                ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())
+                    ->setIdDynamicEntityConfiguration(10)
+                    ->setTableAlias('test-table')
+                    ->setTableName('spy_test_table')),
+        );
 
         $validatorRule = new UniqueTableNameAliasValidatorRule($dynamicEntityRepositoryMock);
         $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();
@@ -103,16 +105,17 @@ class UniqueTableNameAliasValidatorRuleTest extends Unit
     {
         // Arrange
         $dynamicEntityRepositoryMock = $this->getMockBuilder(DynamicEntityRepositoryInterface::class)->getMock();
-        $dynamicEntityRepositoryMock->method('findDynamicEntityConfigurationByTableAliasesOrTableNames')->willReturn([
-            (new SpyDynamicEntityConfiguration())
-                ->setIdDynamicEntityConfiguration(10)
-                ->setTableAlias('test-endpoint')
-                ->setTableName('spy_my_table'),
-            (new SpyDynamicEntityConfiguration())
-                ->setIdDynamicEntityConfiguration(11)
-                ->setTableAlias('my-endpoint')
-                ->setTableName('spy_test_table'),
-        ]);
+        $dynamicEntityRepositoryMock->method('getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames')->willReturn(
+            (new DynamicEntityConfigurationCollectionTransfer())
+                ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())
+                    ->setIdDynamicEntityConfiguration(10)
+                    ->setTableAlias('test-endpoint')
+                    ->setTableName('spy_my_table'))
+                ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())
+                    ->setIdDynamicEntityConfiguration(11)
+                    ->setTableAlias('my-endpoint')
+                    ->setTableName('spy_test_table')),
+        );
 
         $validatorRule = new UniqueTableNameAliasValidatorRule($dynamicEntityRepositoryMock);
         $dynamicEntityConfigurationCollectionRequestTransfer = $this->tester->createDynamicEntityConfigurationCollectionRequestTransfer();

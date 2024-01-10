@@ -251,7 +251,7 @@ class DynamicEntityBackendApiTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
      */
-    public function createDynamicEntityConfigurationTransferWithEmtpyFieldDefinitions(): DynamicEntityConfigurationTransfer
+    public function createDynamicEntityConfigurationTransferWithEmptyFieldDefinitions(): DynamicEntityConfigurationTransfer
     {
         $dynamicEntityDefinitionTransfer = new DynamicEntityDefinitionTransfer();
         $dynamicEntityDefinitionTransfer

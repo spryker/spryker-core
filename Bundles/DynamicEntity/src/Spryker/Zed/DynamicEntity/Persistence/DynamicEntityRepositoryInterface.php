@@ -57,10 +57,10 @@ interface DynamicEntityRepositoryInterface
      * @param array<int, string> $tableNames
      * @param array<int, string> $tableAliases
      *
-     * @return array<string, mixed>
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
      */
-    public function findDynamicEntityConfigurationByTableAliasesOrTableNames(
+    public function getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames(
         array $tableNames = [],
         array $tableAliases = []
-    ): array;
+    ): DynamicEntityConfigurationCollectionTransfer;
 }

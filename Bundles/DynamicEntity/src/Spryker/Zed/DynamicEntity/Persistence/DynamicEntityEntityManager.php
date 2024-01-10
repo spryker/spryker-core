@@ -11,6 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
@@ -19,6 +20,8 @@ use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -60,6 +63,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @var string
      */
     protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE = 'dynamic_entity.validation.entity_not_found_or_identifier_is_not_creatable';
+
+    /**
+     * @var string
+     */
+    protected const KEY_RELATION_FIELD_MAPPINGS = 'relation_field_mappings';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
@@ -266,6 +274,34 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         }
 
         return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $childDynamicEntityConfigurationCollectionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $parentDynamicEntityConfigurationTransfer
+     * @param array<string, array<string, mixed>> $indexedChildRelations
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    public function createDynamicEntityConfigurationRelation(
+        DynamicEntityConfigurationCollectionTransfer $childDynamicEntityConfigurationCollectionTransfer,
+        DynamicEntityConfigurationTransfer $parentDynamicEntityConfigurationTransfer,
+        array $indexedChildRelations
+    ): DynamicEntityConfigurationCollectionTransfer {
+        foreach ($childDynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $childDynamicEntityConfigurationTransfer) {
+            $dynamicEntityConfigurationRelationEntity = (new SpyDynamicEntityConfigurationRelation())
+                ->fromArray($indexedChildRelations[$childDynamicEntityConfigurationTransfer->getTableAliasOrFail()])
+                ->setFkParentDynamicEntityConfiguration($parentDynamicEntityConfigurationTransfer->getIdDynamicEntityConfigurationOrFail())
+                ->setFkChildDynamicEntityConfiguration($childDynamicEntityConfigurationTransfer->getIdDynamicEntityConfigurationOrFail());
+            $dynamicEntityConfigurationRelationEntity->save();
+
+            (new SpyDynamicEntityConfigurationRelationFieldMapping())
+                ->fromArray($indexedChildRelations[$childDynamicEntityConfigurationTransfer->getTableAliasOrFail()][static::KEY_RELATION_FIELD_MAPPINGS][0])
+                ->setFkDynamicEntityConfigurationRelation($dynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfigurationRelation())
+                ->save();
+        }
+
+        return $childDynamicEntityConfigurationCollectionTransfer;
     }
 
     /**

@@ -132,20 +132,6 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             $this->createDynamicEntityConfigurationCriteriaTransfer(),
         );
 
-        return $dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->getArrayCopy();
-    }
-
-    /**
-     * @param int|null $deep
-     *
-     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
-     */
-    public function getDynamicEntityConfigurationsWithChildRecursively(?int $deep = null): array
-    {
-        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityConfigurationCollection(
-            $this->createDynamicEntityConfigurationCriteriaWithChildTransfer(),
-        );
-
         return $this->buildDynamicEntityConfigurationTransfersRecursively($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->getArrayCopy());
     }
 
@@ -157,52 +143,73 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
     protected function buildDynamicEntityConfigurationTransfersRecursively(array $dynamicEntityConfigurationsTransfers = []): array
     {
         $dynamicEntityConfigurationTransfers = [];
-
         foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationTransfer) {
-            $dynamicEntityConfigurationTransfers[] = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
+            $dynamicEntityConfigurationTransfer = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
                 $dynamicEntityConfigurationTransfer,
-                $dynamicEntityConfigurationsTransfers,
+                $this->getDynamicEntityConfigurationsTransfersIndexedByIdDynamicEntityConfiguration($dynamicEntityConfigurationsTransfers),
             );
+            if ($dynamicEntityConfigurationTransfer !== null) {
+                $dynamicEntityConfigurationTransfers[] = $dynamicEntityConfigurationTransfer;
+            }
         }
 
         return $dynamicEntityConfigurationTransfers;
     }
 
     /**
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationsTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
+     */
+    protected function getDynamicEntityConfigurationsTransfersIndexedByIdDynamicEntityConfiguration(
+        array $dynamicEntityConfigurationsTransfers
+    ): array {
+        $indexedDynamicEntityConfigurationsTransfers = [];
+        foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationsTransfer) {
+            $indexedDynamicEntityConfigurationsTransfers[$dynamicEntityConfigurationsTransfer->getIdDynamicEntityConfigurationOrFail()] = $dynamicEntityConfigurationsTransfer;
+        }
+
+        return $indexedDynamicEntityConfigurationsTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfiguration
      * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
-     * @param int $deep
+     * @param string|null $parentTableAlias
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
      */
     protected function buildDynamicEntityConfigurationTransferWithChildRelations(
         DynamicEntityConfigurationTransfer $dynamicEntityConfiguration,
         array $dynamicEntityConfigurationTransfers,
-        int $deep = 0
-    ): DynamicEntityConfigurationTransfer {
-        $dynamicEntityConfigurationRelationTransfers = $dynamicEntityConfiguration->getChildRelations();
+        ?string $parentTableAlias = null
+    ): ?DynamicEntityConfigurationTransfer {
+        if ($dynamicEntityConfiguration->getTableAliasOrFail() === $parentTableAlias) {
+            return null;
+        }
 
+        $dynamicEntityConfigurationRelationTransfers = $dynamicEntityConfiguration->getChildRelations();
         $newRelations = [];
 
         /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer */
         foreach ($dynamicEntityConfigurationRelationTransfers as $dynamicEntityConfigurationRelationTransfer) {
-            $dynamicEntityConfigurationTransfer = $this->findDynamicEntityConfigurationById($dynamicEntityConfigurationTransfers, $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail());
-
-            if ($dynamicEntityConfigurationTransfer === null) {
+            if (array_key_exists($dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail(), $dynamicEntityConfigurationTransfers) === false) {
                 continue;
             }
 
             $dynamicEntityConfigurationTransfer = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
-                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail()],
                 $dynamicEntityConfigurationTransfers,
-                $deep++,
+                $dynamicEntityConfiguration->getTableAliasOrFail(),
             );
-            $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
-            $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
-        }
-        $dynamicEntityConfiguration->setChildRelations(new ArrayObject($newRelations));
 
-        return $dynamicEntityConfiguration;
+            if ($dynamicEntityConfigurationTransfer !== null) {
+                $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+                $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
+            }
+        }
+
+        return $newRelations === [] ? $dynamicEntityConfiguration : $dynamicEntityConfiguration->setChildRelations(new ArrayObject($newRelations));
     }
 
     /**
@@ -217,38 +224,5 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
         );
 
         return $dynamicEntityConfigurationCriteriaTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer
-     */
-    protected function createDynamicEntityConfigurationCriteriaWithChildTransfer(): DynamicEntityConfigurationCriteriaTransfer
-    {
-        $dynamicEntityConfigurationCriteriaTransfer = new DynamicEntityConfigurationCriteriaTransfer();
-        $dynamicEntityConfigurationCriteriaTransfer->setDynamicEntityConfigurationConditions(
-            (new DynamicEntityConfigurationConditionsTransfer())
-                ->setIsActive(true),
-        );
-
-        return $dynamicEntityConfigurationCriteriaTransfer;
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationsTransfers
-     * @param int $idDynamicEntityConfiguration
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
-     */
-    protected function findDynamicEntityConfigurationById(
-        array $dynamicEntityConfigurationsTransfers,
-        int $idDynamicEntityConfiguration
-    ): ?DynamicEntityConfigurationTransfer {
-        foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationTransfer) {
-            if ($dynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration() === $idDynamicEntityConfiguration) {
-                return $dynamicEntityConfigurationTransfer;
-            }
-        }
-
-        return null;
     }
 }

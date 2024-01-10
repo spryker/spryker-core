@@ -70,7 +70,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function buildPathData(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {

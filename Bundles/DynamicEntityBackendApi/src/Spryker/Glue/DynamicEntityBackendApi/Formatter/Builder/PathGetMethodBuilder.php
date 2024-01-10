@@ -114,7 +114,7 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function buildPathData(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
@@ -348,10 +348,14 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer
+     * @param string|null $parentRelationName
      *
      * @return array<string>
      */
-    protected function buildIncludePath(DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer): array
+    protected function buildIncludePath(
+        DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer,
+        ?string $parentRelationName = null
+    ): array
     {
         $rootPath = $dynamicEntityConfigurationRelationTransfer->getNameOrFail();
         $pathExamples = [
@@ -360,9 +364,13 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         $dynamicEntityConfigurationTransfer = $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail();
         foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childDynamicEntityConfigurationRelationTransfer) {
+            if ($childDynamicEntityConfigurationRelationTransfer->getNameOrFail() === $parentRelationName) {
+                continue;
+            }
+
             $pathExamples = $this->populatePathExamples(
                 $pathExamples,
-                $this->buildIncludePath($childDynamicEntityConfigurationRelationTransfer),
+                $this->buildIncludePath($childDynamicEntityConfigurationRelationTransfer, $dynamicEntityConfigurationRelationTransfer->getNameOrFail()),
                 $rootPath,
             );
         }

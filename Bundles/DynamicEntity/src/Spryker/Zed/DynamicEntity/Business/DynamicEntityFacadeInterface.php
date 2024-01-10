@@ -21,8 +21,9 @@ interface DynamicEntityFacadeInterface
     /**
      * Specification:
      * - Retrieves a collection of entities based on the provided criteria.
-     * - Returns an empty collection if configuration for the requested entity is not found.
+     * - Returns an empty collection if the configuration for the requested entity is not found.
      * - Returns and filters data sets if they are defined in configuration for the requested entity.
+     * - If `DynamicEntityCriteriaTransfer.relationChains` is present in the request and valid - returns data with relations.
      * - Returns errors if entity configuration is not valid.
      *
      * @api

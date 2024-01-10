@@ -228,6 +228,6 @@ class PathPatchMethodBuilderTest extends Unit
         $builder = new PathPatchMethodBuilder($configMock, $this->tester->createDynamicEntityConfigurationTreeBuilder(), $this->tester->createSchemaBuilder());
 
         // Act
-        $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithEmtpyFieldDefinitions());
+        $builder->buildPathData($this->tester->createDynamicEntityConfigurationTransferWithEmptyFieldDefinitions());
     }
 }

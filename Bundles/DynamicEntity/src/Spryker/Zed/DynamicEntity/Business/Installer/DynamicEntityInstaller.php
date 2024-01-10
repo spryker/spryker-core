@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Installer;
 
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityFileNotReadableException;
+use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface;
@@ -61,21 +63,29 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
     protected DynamicEntityMapperInterface $dynamicEntityMapper;
 
     /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface
+     */
+    protected FieldMappingValidatorInterface $fieldMappingValidator;
+
+    /**
      * @param \Spryker\Zed\DynamicEntity\DynamicEntityConfig $dynamicEntityConfig
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface $dynamicEntityRepository
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface $entityManager
      * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
+     * @param \Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface $fieldMappingValidator
      */
     public function __construct(
         DynamicEntityConfig $dynamicEntityConfig,
         DynamicEntityRepositoryInterface $dynamicEntityRepository,
         DynamicEntityEntityManagerInterface $entityManager,
-        DynamicEntityMapperInterface $dynamicEntityMapper
+        DynamicEntityMapperInterface $dynamicEntityMapper,
+        FieldMappingValidatorInterface $fieldMappingValidator
     ) {
         $this->dynamicEntityConfig = $dynamicEntityConfig;
         $this->dynamicEntityRepository = $dynamicEntityRepository;
         $this->entityManager = $entityManager;
         $this->dynamicEntityMapper = $dynamicEntityMapper;
+        $this->fieldMappingValidator = $fieldMappingValidator;
     }
 
     /**
@@ -108,6 +118,9 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
         }
 
         $tableAliases = $this->getTableAliases();
+        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityConfigurationTransfers = [];
+
         foreach ($installerConfigurationDecodedData as $dynamicEntityConfiguration) {
             if (!isset($dynamicEntityConfiguration[static::TABLE_ALIAS])) {
                 continue;
@@ -121,10 +134,14 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
                     $dynamicEntityConfiguration,
                     new DynamicEntityConfigurationTransfer(),
                 );
+                $dynamicEntityConfigurationCollectionTransfer->addDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
 
-                $this->entityManager->createDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+                $dynamicEntityConfigurationTransfer = $this->entityManager->createDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
+                $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationTransfer->getTableAliasOrFail()] = $dynamicEntityConfigurationTransfer;
             }
         }
+
+        $this->createChildRelations($dynamicEntityConfigurationCollectionTransfer, $dynamicEntityConfigurationTransfers);
     }
 
     /**
@@ -139,5 +156,54 @@ class DynamicEntityInstaller implements DynamicEntityInstallerInterface
         }
 
         return $tableAliases;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+     * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
+     *
+     * @return void
+     */
+    protected function createChildRelations(
+        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer,
+        array $dynamicEntityConfigurationTransfers
+    ): void {
+        foreach ($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $dynamicEntityConfigurationTransfer) {
+            $indexedChildRelations = $this->getChildRelationsIndexedByTableAlias($dynamicEntityConfigurationTransfer);
+
+            if ($indexedChildRelations === []) {
+                continue;
+            }
+
+            if (array_key_exists($dynamicEntityConfigurationTransfer->getTableAliasOrFail(), $dynamicEntityConfigurationTransfers) === false) {
+                continue;
+            }
+
+            $parentDynamicEntityConfigurationTransfer = $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationTransfer->getTableAliasOrFail()];
+
+            $childDynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityRepository->getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames(
+                [],
+                array_keys($indexedChildRelations),
+            );
+
+            $this->fieldMappingValidator->validate($childDynamicEntityConfigurationCollectionTransfer, $parentDynamicEntityConfigurationTransfer, $indexedChildRelations);
+            $this->entityManager->createDynamicEntityConfigurationRelation($childDynamicEntityConfigurationCollectionTransfer, $parentDynamicEntityConfigurationTransfer, $indexedChildRelations);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function getChildRelationsIndexedByTableAlias(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $childRelationsIndexedByTableName = [];
+
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelationTransfer) {
+            $childRelationsIndexedByTableName[$childRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getTableAliasOrFail()] = $childRelationTransfer->toArray();
+        }
+
+        return $childRelationsIndexedByTableName;
     }
 }

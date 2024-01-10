@@ -90,7 +90,7 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
 
         $dynamicEntityReaderMock = $this->createMock(DynamicEntityReaderInterface::class);
         $dynamicEntityReaderMock->expects($this->once())
-            ->method('getDynamicEntityConfigurationsWithChildRecursively')
+            ->method('getDynamicEntityConfigurations')
             ->willReturn($dynamicEntityConfigurations);
 
         $this->tester->mockFactoryMethod('createDynamicEntityReader', $dynamicEntityReaderMock);
@@ -178,7 +178,7 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
         // Arrange
         $dynamicEntityReaderMock = $this->createMock(DynamicEntityReaderInterface::class);
         $dynamicEntityReaderMock->expects($this->once())
-            ->method('getDynamicEntityConfigurationsWithChildRecursively')
+            ->method('getDynamicEntityConfigurations')
             ->willReturn([]);
 
         $this->tester->mockFactoryMethod('createDynamicEntityReader', $dynamicEntityReaderMock);

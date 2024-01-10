@@ -77,7 +77,7 @@
                 "name": "childTestBar",
                 "isEditable": true,
                 "childDynamicEntityConfiguration": {
-                    "tableAlias": "bar"
+                    "tableAlias": "foo-bar"
                 },
                 "relationFieldMappings": [
                     {

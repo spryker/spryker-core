@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration;
 
 use ArrayObject;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
@@ -76,14 +77,13 @@ class UniqueTableNameAliasValidatorRule implements ValidatorRuleInterface
             $tableAliases[] = $dynamicEntityConfigurationTransfer->getTableAliasOrFail();
         }
 
-        /** @var array<int, \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration> $existDynamicEntityConfigurations */
-        $existDynamicEntityConfigurations = $this->repository->findDynamicEntityConfigurationByTableAliasesOrTableNames($tableNames, $tableAliases);
+        $existingDynamicEntityConfigurationCollectionTransfer = $this->repository->getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames($tableNames, $tableAliases);
 
         if ($this->isCreateTransfers($dynamicEntityConfigurationTransfers)) {
-            return $this->buildErrorCollectionTransfer($errorCollectionTransfer, $existDynamicEntityConfigurations);
+            return $this->buildErrorCollectionTransfer($errorCollectionTransfer, $existingDynamicEntityConfigurationCollectionTransfer);
         }
 
-        return $this->validateUpdateTransfers($dynamicEntityConfigurationTransfers, $existDynamicEntityConfigurations);
+        return $this->validateUpdateTransfers($dynamicEntityConfigurationTransfers, $existingDynamicEntityConfigurationCollectionTransfer);
     }
 
     /**
@@ -102,21 +102,20 @@ class UniqueTableNameAliasValidatorRule implements ValidatorRuleInterface
 
     /**
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
-     * @param array<int, \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration> $existDynamicEntityConfigurations
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     protected function buildErrorCollectionTransfer(
         ErrorCollectionTransfer $errorCollectionTransfer,
-        array $existDynamicEntityConfigurations
+        DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer
     ): ErrorCollectionTransfer {
-        /** @var \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $existDynamicEntityConfiguration */
-        foreach ($existDynamicEntityConfigurations as $existDynamicEntityConfiguration) {
+        foreach ($existingDynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $existDynamicEntityConfigurationTransfer) {
             $errorCollectionTransfer->addError(
                 (new ErrorTransfer())
-                    ->setMessage(sprintf(static::ERROR_MESSAGE_TABLE_NAME_TABLE_ALIAS, $existDynamicEntityConfiguration->getTableName()))
+                    ->setMessage(sprintf(static::ERROR_MESSAGE_TABLE_NAME_TABLE_ALIAS, $existDynamicEntityConfigurationTransfer->getTableName()))
                     ->setParameters([static::TYPE => static::TABLE_ALIAS])
-                    ->setEntityIdentifier($existDynamicEntityConfiguration->getTableName()),
+                    ->setEntityIdentifier($existDynamicEntityConfigurationTransfer->getTableName()),
             );
         }
 
@@ -125,37 +124,37 @@ class UniqueTableNameAliasValidatorRule implements ValidatorRuleInterface
 
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
-     * @param array<int, \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration> $existingDynamicEntityConfigurations
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     protected function validateUpdateTransfers(
         ArrayObject $dynamicEntityConfigurationTransfers,
-        array $existingDynamicEntityConfigurations
+        DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer
     ): ErrorCollectionTransfer {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
 
-        foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
-            $errorCollectionTransfer = $this->validateExistingDynamicEntityConfigurations($existingDynamicEntityConfigurations, $dynamicEntityConfigurationTransfer, $errorCollectionTransfer);
+        foreach ($existingDynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $dynamicEntityConfigurationTransfer) {
+            $errorCollectionTransfer = $this->validateExistingDynamicEntityConfigurations($existingDynamicEntityConfigurationCollectionTransfer, $dynamicEntityConfigurationTransfer, $errorCollectionTransfer);
         }
 
         return $errorCollectionTransfer;
     }
 
     /**
-     * @param array<\Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration> $existingDynamicEntityConfigurations
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
     protected function validateExistingDynamicEntityConfigurations(
-        array $existingDynamicEntityConfigurations,
+        DynamicEntityConfigurationCollectionTransfer $existingDynamicEntityConfigurationCollectionTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ErrorCollectionTransfer {
         /** @var \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $existingDynamicEntityConfiguration */
-        foreach ($existingDynamicEntityConfigurations as $existingDynamicEntityConfiguration) {
+        foreach ($existingDynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations() as $existingDynamicEntityConfiguration) {
             if ($existingDynamicEntityConfiguration->getIdDynamicEntityConfiguration() === $dynamicEntityConfigurationTransfer->getIdDynamicEntityConfiguration()) {
                 continue;
             }

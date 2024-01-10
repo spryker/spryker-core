@@ -34,9 +34,4 @@ interface DynamicEntityReaderInterface
      * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
      */
     public function getDynamicEntityConfigurations(): array;
-
-    /**
-     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
-     */
-    public function getDynamicEntityConfigurationsWithChildRecursively(): array;
 }

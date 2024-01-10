@@ -158,17 +158,22 @@ class DynamicEntityRepository extends AbstractRepository implements DynamicEntit
      * @param array<int, string> $tableNames
      * @param array<int, string> $tableAliases
      *
-     * @return array<string, mixed>
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
      */
-    public function findDynamicEntityConfigurationByTableAliasesOrTableNames(array $tableNames = [], array $tableAliases = []): array
-    {
-        return $this->getFactory()
+    public function getDynamicEntityConfigurationCollectionByTableAliasesOrTableNames(
+        array $tableNames = [],
+        array $tableAliases = []
+    ): DynamicEntityConfigurationCollectionTransfer {
+        $dynamicEntityConfigurations = $this->getFactory()
             ->createDynamicEntityConfigurationQuery()
             ->filterByTableAlias_In($tableAliases)
             ->_or()
             ->filterByTableName_In($tableNames)
             ->find()
             ->getData();
+
+        return $this->getFactory()->createDynamicEntityMapper()
+            ->mapDynamicEntityConfigurationsToCollectionTransfer($dynamicEntityConfigurations, new DynamicEntityConfigurationCollectionTransfer());
     }
 
     /**

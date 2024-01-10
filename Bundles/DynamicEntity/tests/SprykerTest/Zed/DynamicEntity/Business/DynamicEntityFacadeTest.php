@@ -19,11 +19,14 @@ use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
-use Spryker\Zed\DynamicEntity\Business\DynamicEntityBusinessFactory;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationQuery;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacade;
 use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface;
+use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
+use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManager;
+use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepository;
 use Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface;
 use Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostUpdatePluginInterface;
 
@@ -596,39 +599,56 @@ class DynamicEntityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider getDynamicEntityConfigurationJsonDataProvider
+     *
      * @return void
      */
-    public function testInstallNotFails(): void
-    {
+    public function testInstallPersistsConfigurations(
+        string $dynamicEntityConfigurationJsonFilename,
+        int $expectedNumberOfDynamicEntityValidConfigurations,
+        int $expectedNumberOfDynamicEntityInvalidConfigurations,
+        int $expectedNumberOfDynamicEntityChildRelations
+    ): void {
         // Arrange
-        $configMock = $this->getMockBuilder(
-            DynamicEntityConfig::class,
-        )->getMock();
-
-        $configMock
-            ->method('getInstallerConfigurationDataFilePath')
-            ->willReturn(sprintf('%sconfiguration.json', codecept_data_dir()));
-
-        $factory = new DynamicEntityBusinessFactory();
-        $factory->setConfig($configMock);
-        $this->dynamicEntityFacade->setFactory($factory);
+        $this->createBusinessFactoryMock($dynamicEntityConfigurationJsonFilename);
 
         // Act
         $this->dynamicEntityFacade->install();
 
         // Assert
         $this->assertCount(
-            1,
+            $expectedNumberOfDynamicEntityValidConfigurations,
             SpyDynamicEntityConfigurationQuery::create()
                 ->filterByTableAlias('test')
                 ->find(),
         );
         $this->assertCount(
-            0,
+            $expectedNumberOfDynamicEntityInvalidConfigurations,
             SpyDynamicEntityConfigurationQuery::create()
-                ->filterByTableAlias('tests')
+                ->filterByTableName('spy_foo')
                 ->find(),
         );
+        $this->assertCount(
+            $expectedNumberOfDynamicEntityChildRelations,
+            SpyDynamicEntityConfigurationRelationQuery::create()
+                ->filterByName('childTestBar')
+                ->find(),
+        );
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getDynamicEntityConfigurationJsonDataProvider(): array
+    {
+        return [
+            'Should add a new entity configuration with child relations' => [
+                'configuration.json', 1, 0, 1,
+            ],
+            'Should add a new entity configuration without child relations' => [
+                'configuration_invalid.json', 1, 0, 0,
+            ],
+        ];
     }
 
     /**
@@ -900,5 +920,52 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionRequestTransfer->setTableAlias($tableAlias);
 
         return $dynamicEntityCollectionRequestTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function createBusinessFactoryMock(string $configurationFilename): void
+    {
+        $factoryMock = $this->tester->mockFactoryMethod('getConfig', $this->createConfigMock($configurationFilename));
+        $factoryMock = $this->tester->mockFactoryMethod('getRepository', new DynamicEntityRepository());
+        $factoryMock = $this->tester->mockFactoryMethod('getEntityManager', new DynamicEntityEntityManager());
+        $factoryMock = $this->tester->mockFactoryMethod('createFieldMappingValidator', $this->createFieldMappingValidatorMock());
+
+        $this->dynamicEntityFacade->setFactory($factoryMock);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface
+     */
+    protected function createFieldMappingValidatorMock(): FieldMappingValidatorInterface
+    {
+        $fieldMappingValidatorMock = $this->getMockBuilder(FieldMappingValidatorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fieldMappingValidatorMock
+            ->method('validate')
+            ->willReturnSelf();
+
+        return $fieldMappingValidatorMock;
+    }
+
+    /**
+     * @param string $configurationFilename
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DynamicEntity\DynamicEntityConfig
+     */
+    protected function createConfigMock(string $configurationFilename): DynamicEntityConfig
+    {
+        $configMock = $this->getMockBuilder(
+            DynamicEntityConfig::class,
+        )->getMock();
+
+        $configMock
+            ->method('getInstallerConfigurationDataFilePath')
+            ->willReturn(sprintf('%s%s', codecept_data_dir(), $configurationFilename));
+
+        return $configMock;
     }
 }

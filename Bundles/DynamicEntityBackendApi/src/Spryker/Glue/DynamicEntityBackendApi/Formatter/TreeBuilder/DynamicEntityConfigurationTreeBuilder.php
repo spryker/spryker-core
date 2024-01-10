@@ -15,12 +15,14 @@ class DynamicEntityConfigurationTreeBuilder implements DynamicEntityConfiguratio
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param int|null $deepLevel
+     * @param string|null $parentRelationName
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
      */
     public function buildDynamicEntityConfigurationTransferTree(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        ?int $deepLevel = null
+        ?int $deepLevel = null,
+        ?string $parentRelationName = null
     ): DynamicEntityConfigurationTransfer {
         if ($deepLevel === null) {
             return $dynamicEntityConfigurationTransfer;
@@ -36,10 +38,15 @@ class DynamicEntityConfigurationTreeBuilder implements DynamicEntityConfiguratio
          * @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer
          */
         foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $dynamicEntityConfigurationRelationTransfer) {
+            if ($dynamicEntityConfigurationRelationTransfer->getNameOrFail() === $parentRelationName) {
+                continue;
+            }
+
             $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration(
                 $this->buildDynamicEntityConfigurationTransferTree(
                     $dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail(),
                     $deepLevel - 1,
+                    $dynamicEntityConfigurationRelationTransfer->getNameOrFail(),
                 ),
             );
         }
