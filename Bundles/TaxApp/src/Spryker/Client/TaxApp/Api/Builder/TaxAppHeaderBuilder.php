@@ -11,15 +11,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface;
 use Spryker\Client\TaxApp\Exception\TaxAppInvalidConfigException;
+use Spryker\Client\TaxApp\TaxAppConfig;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
 {
-    /**
-     * @var string
-     */
-    protected const HEADER_STORE_REFERENCE = 'X-Store-Reference';
-
     /**
      * @var string
      */
@@ -36,11 +32,20 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
     protected TaxAppToStoreClientInterface $storeClient;
 
     /**
-     * @param \Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface $storeClient
+     * @var \Spryker\Client\TaxApp\TaxAppConfig
      */
-    public function __construct(TaxAppToStoreClientInterface $storeClient)
-    {
+    protected TaxAppConfig $taxAppConfig;
+
+    /**
+     * @param \Spryker\Client\TaxApp\Dependency\Client\TaxAppToStoreClientInterface $storeClient
+     * @param \Spryker\Client\TaxApp\TaxAppConfig $taxAppConfig
+     */
+    public function __construct(
+        TaxAppToStoreClientInterface $storeClient,
+        TaxAppConfig $taxAppConfig
+    ) {
         $this->storeClient = $storeClient;
+        $this->taxAppConfig = $taxAppConfig;
     }
 
     /**
@@ -58,20 +63,15 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
         TaxAppConfigTransfer $taxAppConfigTransfer
     ): array {
         if (
-            $taxAppConfigTransfer->getTenantIdentifier() === null &&
-            ($storeTransfer->getStoreReference() === null && $storeTransfer->getName() === null)
+            !$this->taxAppConfig->getTenantIdentifier()
+            && ($storeTransfer->getStoreReference() === null && $storeTransfer->getName() === null)
         ) {
             throw new TaxAppInvalidConfigException('Tenant identifier or store reference or store name must be set.');
         }
-        $headers = [];
 
-        $tenantIdentifier = $taxAppConfigTransfer->getTenantIdentifier();
-
-        if (!$tenantIdentifier) {
-            $tenantIdentifier = $this->getStoreReference($storeTransfer);
-        }
-
-        $headers[static::HEADER_TENANT_IDENTIFIER] = $tenantIdentifier;
+        $headers = [
+            static::HEADER_TENANT_IDENTIFIER => $this->taxAppConfig->getTenantIdentifier() ?: $this->findStoreReference($storeTransfer),
+        ];
 
         if (
             $taxRequestTransfer->offsetExists('authorization')
@@ -86,14 +86,14 @@ class TaxAppHeaderBuilder implements TaxAppHeaderBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getStoreReference(StoreTransfer $storeTransfer): string
+    protected function findStoreReference(StoreTransfer $storeTransfer): ?string
     {
         if ($storeTransfer->getStoreReference()) {
             return $storeTransfer->getStoreReference();
         }
 
-        return $this->storeClient->getStoreByName($storeTransfer->getNameOrFail())->getStoreReferenceOrFail();
+        return $this->storeClient->getStoreByName($storeTransfer->getNameOrFail())->getStoreReference();
     }
 }

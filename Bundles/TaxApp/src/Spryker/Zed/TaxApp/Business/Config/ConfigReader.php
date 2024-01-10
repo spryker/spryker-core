@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxApp\Business\Config;
 
+use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\TaxAppConfigConditionsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
@@ -37,7 +38,13 @@ class ConfigReader implements ConfigReaderInterface
         $taxAppConfigConditionsTransfer = new TaxAppConfigConditionsTransfer();
         $taxAppConfigConditionsTransfer->addFkStore($idStore);
 
-        $taxAppConfigCriteriaTransfer = (new TaxAppConfigCriteriaTransfer())->setTaxAppConfigConditions($taxAppConfigConditionsTransfer);
+        $taxAppConfigCriteriaTransfer = (new TaxAppConfigCriteriaTransfer())
+            ->setTaxAppConfigConditions($taxAppConfigConditionsTransfer)
+            ->addSort(
+                (new SortTransfer())
+                    ->setField(TaxAppConfigTransfer::IS_ACTIVE)
+                    ->setIsAscending(false),
+            );
 
         $taxAppConfigCollectionTransfer = $this->taxAppRepository->getTaxAppConfigCollection($taxAppConfigCriteriaTransfer);
 

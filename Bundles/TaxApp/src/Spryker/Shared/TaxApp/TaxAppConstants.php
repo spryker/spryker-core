@@ -20,7 +20,7 @@ interface TaxAppConstants
      *
      * @var string
      */
-    public const OAUTH_PROVIDER_NAME = 'OAUTH_CLIENT:OAUTH_PROVIDER_NAME';
+    public const OAUTH_PROVIDER_NAME = 'TAX_APP:OAUTH_PROVIDER_NAME';
 
     /**
      * Specification:
@@ -30,7 +30,7 @@ interface TaxAppConstants
      *
      * @var string
      */
-    public const OAUTH_GRANT_TYPE = 'OAUTH_CLIENT:OAUTH_GRANT_TYPE';
+    public const OAUTH_GRANT_TYPE = 'TAX_APP:OAUTH_GRANT_TYPE';
 
     /**
      * Specification:
@@ -40,5 +40,10 @@ interface TaxAppConstants
      *
      * @var string
      */
-    public const OAUTH_OPTION_AUDIENCE = 'OAUTH_CLIENT:OAUTH_OPTION_AUDIENCE';
+    public const OAUTH_OPTION_AUDIENCE = 'TAX_APP:OAUTH_OPTION_AUDIENCE';
+
+    /**
+     * @var string
+     */
+    public const TENANT_IDENTIFIER = 'TAX_APP:TENANT_IDENTIFIER';
 }

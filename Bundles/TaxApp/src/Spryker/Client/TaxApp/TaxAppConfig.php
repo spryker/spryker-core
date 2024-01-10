@@ -8,6 +8,7 @@
 namespace Spryker\Client\TaxApp;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\TaxApp\TaxAppConstants;
 
 class TaxAppConfig extends AbstractBundleConfig
 {
@@ -24,5 +25,15 @@ class TaxAppConfig extends AbstractBundleConfig
     public function getRequestTimeoutInSeconds(): int
     {
         return static::REQUEST_TIMEOUT_SECONDS;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTenantIdentifier(): string
+    {
+        return $this->get(TaxAppConstants::TENANT_IDENTIFIER, '');
     }
 }

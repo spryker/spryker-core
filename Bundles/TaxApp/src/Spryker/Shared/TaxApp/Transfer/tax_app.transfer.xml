@@ -83,7 +83,7 @@
         <property name="apiUrls" type="TaxAppApiUrls"/>
         <property name="vendorCode" type="string"/>
         <property name="storeReference" type="string"/>
-        <property name="tenantIdentifier" type="string"/>
+        <property name="tenantIdentifier" type="string" deprecated="Will be removed in next major."/>
     </transfer>
 
     <transfer name="TaxAppApiUrls" strict="true">

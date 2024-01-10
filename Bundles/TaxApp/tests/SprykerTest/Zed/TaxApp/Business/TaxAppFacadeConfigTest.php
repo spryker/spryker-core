@@ -132,6 +132,7 @@ class TaxAppFacadeConfigTest extends Unit
 
     /**
      * @group new
+     *
      * @return void
      */
     public function testWhenTaxAppConfigExistsSaveTaxAppConfigWithTenantIdentifierSuccessfullyUpdatesExistingConfig(): void

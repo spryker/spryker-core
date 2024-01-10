@@ -26,7 +26,7 @@ class TaxAppFactory extends AbstractFactory
      */
     public function createTaxAppHeaderBuilder(): TaxAppHeaderBuilderInterface
     {
-        return new TaxAppHeaderBuilder($this->getStoreClient());
+        return new TaxAppHeaderBuilder($this->getStoreClient(), $this->getConfig());
     }
 
     /**

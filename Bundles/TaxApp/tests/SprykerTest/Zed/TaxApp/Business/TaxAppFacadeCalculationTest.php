@@ -185,6 +185,7 @@ class TaxAppFacadeCalculationTest extends Unit
 
     /**
      * @group test
+     *
      * @return void
      */
     public function testCalculableObjectIsExpandedWithTaxMetadataWhenRecalculateMethodIsCalled(): void

@@ -82,7 +82,7 @@ class TaxAppBusinessTester extends Actor
             [
                 new CalculableObjectTaxAppExpanderPlugin(),
                 new MerchantProfileAddressCalculableObjectTaxAppExpanderPlugin(),
-            ]
+            ],
         );
     }
 

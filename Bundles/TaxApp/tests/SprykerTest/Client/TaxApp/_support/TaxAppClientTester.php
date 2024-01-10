@@ -32,6 +32,8 @@ use Spryker\Client\TaxApp\TaxAppConfig;
  * @method void pause($vars = [])
  *
  * @SuppressWarnings(\SprykerTest\Client\TaxApp\PHPMD)
+ *
+ * @method \Spryker\Client\TaxApp\TaxAppFactory getFactory()
  */
 class TaxAppClientTester extends Actor
 {
@@ -66,13 +68,13 @@ class TaxAppClientTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $seed
+     *
      * @return void
      */
-    public function mockConfig(): void
+    public function mockConfig(array $seed = []): void
     {
-        $configMock = Stub::makeEmpty(TaxAppConfig::class, [
-            'getRequestTimeoutInSeconds' => 5,
-        ]);
+        $configMock = Stub::makeEmpty(TaxAppConfig::class, $seed + ['getRequestTimeoutInSeconds' => 5]);
 
         $this->mockFactoryMethod('getConfig', $configMock);
     }

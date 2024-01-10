@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -35,9 +36,15 @@ class TaxAppRepository extends AbstractRepository implements TaxAppRepositoryInt
             $taxAppConfigQuery = $this->applyTaxAppConfigPagination($taxAppConfigQuery, $paginationTransfer);
         }
 
+        $hasSortCollection = count($taxAppConfigCriteriaTransfer->getSortCollection());
+        if ($hasSortCollection) {
+            $taxAppConfigQuery = $this->applyTaxAppConfigSorting($taxAppConfigQuery, $taxAppConfigCriteriaTransfer);
+        }
+
         $taxAppConfigEntities = $taxAppConfigQuery->find();
 
-        return $this->getFactory()->createTaxAppConfigMapper()->mapTaxAppConfigEntitiesToTaxAppConfigCollectionTransfer($taxAppConfigEntities, $taxAppCollectionTransfer);
+        return $this->getFactory()->createTaxAppConfigMapper()
+            ->mapTaxAppConfigEntitiesToTaxAppConfigCollectionTransfer($taxAppConfigEntities, $taxAppCollectionTransfer);
     }
 
     /**
@@ -85,6 +92,27 @@ class TaxAppRepository extends AbstractRepository implements TaxAppRepositoryInt
             return $taxAppConfigQuery
                 ->limit($paginationTransfer->getLimit())
                 ->offset($paginationTransfer->getOffset());
+        }
+
+        return $taxAppConfigQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery $taxAppConfigQuery
+     * @param \Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer
+     *
+     * @return \Orm\Zed\TaxApp\Persistence\SpyTaxAppConfigQuery
+     */
+    protected function applyTaxAppConfigSorting(
+        SpyTaxAppConfigQuery $taxAppConfigQuery,
+        TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer
+    ): SpyTaxAppConfigQuery {
+        $sortCollection = $taxAppConfigCriteriaTransfer->getSortCollection();
+        foreach ($sortCollection as $sortTransfer) {
+            $taxAppConfigQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
         }
 
         return $taxAppConfigQuery;

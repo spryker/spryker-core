@@ -71,7 +71,7 @@ class PriceAggregator implements PriceAggregatorInterface
     {
         $saleItemQuantity = $this->getItemQuantity($taxAppItemTransfer);
 
-        $taxTotal = $taxAppItemTransfer->getTaxTotal();
+        $taxTotal = (int)$taxAppItemTransfer->getTaxTotal();
 
         if ($taxAppItemTransfer->getRefundedTaxTotal()) {
             $taxTotal = $taxAppItemTransfer->getRefundedTaxTotal();

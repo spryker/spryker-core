@@ -9,6 +9,7 @@ namespace SprykerTest\Client\TaxApp\Api;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\TaxApp\Dependency\External\TaxAppToHttpClientAdapterInterface;
 use SprykerTest\Client\TaxApp\TaxAppClientTester;
 
 /**
@@ -24,11 +25,11 @@ use SprykerTest\Client\TaxApp\TaxAppClientTester;
 class TaxAppRequestSenderTest extends Unit
 {
     /**
-     * @var array<string, string>
+     * @see \Spryker\Client\TaxApp\Api\Builder\TaxAppHeaderBuilder::HEADER_TENANT_IDENTIFIER
+     *
+     * @var string
      */
-    protected const REQUEST_HEADERS = [
-        'X-Store-Reference' => 'store-reference',
-    ];
+    protected const HEADER_TENANT_IDENTIFIER = 'X-Tenant-Identifier';
 
     /**
      * @var \SprykerTest\Client\TaxApp\TaxAppClientTester
@@ -38,18 +39,10 @@ class TaxAppRequestSenderTest extends Unit
     /**
      * @return void
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->tester->mockConfig();
-    }
-
-    /**
-     * @return void
-     */
     public function testTaxQuotationRequestHasSuccessfulResponseTransfer(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $this->tester->mockHttpClient($this->tester->haveValidResponse());
@@ -71,6 +64,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxRefundRequestHasSuccessfulResponseTransfer(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxRefundRequestTransfer = $this->tester->haveTaxRefundRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $this->tester->mockHttpClient($this->tester->haveValidResponse());
@@ -92,6 +86,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestHasUnsuccessfulResponseTransferWhenHttpResponseIsEmpty(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $this->tester->mockHttpClient($this->tester->haveEmptyResponse());
@@ -113,6 +108,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestHasUnsuccessfulResponseTransferWhenQuotationUrlIsMissing(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $taxAppConfigTransfer->getApiUrlsOrFail()->setQuotationUrl(null);
@@ -134,6 +130,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxRefundRequestHasUnsuccessfulResponseTransferWhenQuotationUrlIsMissing(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxRefundRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $taxAppConfigTransfer->getApiUrlsOrFail()->setRefundsUrl(null);
@@ -155,6 +152,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestHasUnsuccessfulResponseTransferWhenHttpResponseContainsError(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
         $this->tester->mockHttpClient($this->tester->haveErrorResponse());
@@ -176,8 +174,11 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestSucceedsWhenTenantIdentifierIsPresent(): void
     {
         // Arrange
+        $this->tester->mockConfig([
+            'getTenantIdentifier' => 'test-tenant-identifier',
+        ]);
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
-        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['isActive' => true, 'tenant_identifier' => 'tenant-1']);
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['isActive' => true]);
         $this->tester->mockHttpClient($this->tester->haveValidResponse());
         $client = $this->tester->getFactory()->createTaxAppRequestSender();
         $storeTransfer = new StoreTransfer();
@@ -195,6 +196,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestFailsWhenNeitherTenantIdentifierOrStoreArePresent(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['is_active' => true, 'tenant_identifier' => null]);
         $this->tester->mockHttpClient($this->tester->haveEmptyResponse());
@@ -215,6 +217,7 @@ class TaxAppRequestSenderTest extends Unit
     public function testTaxQuotationRequestSucceedsWhenTenantIdentifierIsNotPresentButStoreIsPresent(): void
     {
         // Arrange
+        $this->tester->mockConfig();
         $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
         $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer(['is_active' => true, 'tenant_identifier' => null]);
         $this->tester->mockHttpClient($this->tester->haveValidResponse());
@@ -226,6 +229,75 @@ class TaxAppRequestSenderTest extends Unit
         $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
 
         // Assert
+        $this->assertTrue($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestHasSuccessfulResponseTransferWithCorrectHeadersWhenStoreReferenceIsSet(): void
+    {
+        // Arrange
+        $storeReference = 'dev-DE';
+        $this->tester->mockConfig();
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+        $response = $this->tester->haveValidResponse();
+
+        $httpClientMock = $this->createMock(TaxAppToHttpClientAdapterInterface::class);
+        $httpClientMock->method('request')->willReturnCallback(function (string $method, string $uri, array $options = []) use ($storeReference, $response) {
+            $this->assertArrayHasKey(static::HEADER_TENANT_IDENTIFIER, $options['headers']);
+            $this->assertSame($options['headers'][static::HEADER_TENANT_IDENTIFIER], $storeReference);
+
+            return $response;
+        });
+        $this->tester->mockFactoryMethod('getHttpClient', $httpClientMock);
+
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => $storeReference], false);
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
+        $this->assertTrue($responseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTaxQuotationRequestHasSuccessfulResponseTransferWithCorrectHeadersWhenTenantIdentifierIsSet(): void
+    {
+        // Arrange
+        $tenantIdentifier = 'test-tenant-identifier';
+        $this->tester->mockConfig([
+            'getTenantIdentifier' => $tenantIdentifier,
+        ]);
+        $taxCalculationRequestTransfer = $this->tester->haveTaxCalculationRequestTransfer();
+        $taxAppConfigTransfer = $this->tester->createTaxAppConfigTransfer();
+        $response = $this->tester->haveValidResponse();
+
+        $httpClientMock = $this->createMock(TaxAppToHttpClientAdapterInterface::class);
+        $httpClientMock->method('request')
+            ->willReturnCallback(function (string $method, string $uri, array $options = []) use ($tenantIdentifier, $response) {
+                $this->assertArrayHasKey(static::HEADER_TENANT_IDENTIFIER, $options['headers']);
+                $this->assertSame($options['headers'][static::HEADER_TENANT_IDENTIFIER], $tenantIdentifier);
+
+                return $response;
+            });
+        $this->tester->mockFactoryMethod('getHttpClient', $httpClientMock);
+
+        $client = $this->tester->getFactory()->createTaxAppRequestSender();
+        $storeTransfer = new StoreTransfer();
+        $this->tester->mockStoreClient($storeTransfer);
+
+        // Act
+        $responseTransfer = $client->requestTaxQuotation($taxCalculationRequestTransfer, $taxAppConfigTransfer, $storeTransfer);
+
+        // Assert
+        $this->tester->assertTaxCalculationResponseIsNotEmpty($responseTransfer);
         $this->assertTrue($responseTransfer->getIsSuccessful());
     }
 }

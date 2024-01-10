@@ -278,7 +278,6 @@ class TaxAppDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     *
      * This calculation stack is executed as a fallback during order recalculation when tax app is not configured or is disabled.
      * Please see the descriptions of those plugins in {@link \Spryker\Zed\Calculation\CalculationDependencyProvider::getOrderCalculatorPluginStack}.
      * This plugin stack should include all plugins present between extracted tax calculation plugins. They will be executed instead of TaxAppCalculationPlugin.
