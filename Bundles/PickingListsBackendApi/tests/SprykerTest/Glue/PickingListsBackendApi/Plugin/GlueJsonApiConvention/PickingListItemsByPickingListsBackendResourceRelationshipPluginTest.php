@@ -8,12 +8,9 @@
 namespace SprykerTest\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\PickingListBuilder;
-use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PickingListItemsBackendApiAttributesTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListsBackendApiAttributesTransfer;
@@ -36,18 +33,6 @@ use SprykerTest\Glue\PickingListsBackendApi\PickingListsBackendApiTester;
 class PickingListItemsByPickingListsBackendResourceRelationshipPluginTest extends Unit
 {
     /**
-     * @uses \Spryker\Shared\PickingList\PickingListConfig::STATUS_READY_FOR_PICKING
-     *
-     * @var string
-     */
-    protected const STATUS_READY_FOR_PICKING = 'ready-for-picking';
-
-    /**
-     * @var string
-     */
-    protected const TEST_ITEM_UUID = 'test-item-uuid';
-
-    /**
      * @var \SprykerTest\Glue\PickingListsBackendApi\PickingListsBackendApiTester
      */
     protected PickingListsBackendApiTester $tester;
@@ -58,20 +43,7 @@ class PickingListItemsByPickingListsBackendResourceRelationshipPluginTest extend
     public function testAddRelationshipsShouldAddPickingListItemsRelationshipToGlueResourceTransfer(): void
     {
         // Arrange
-        $itemTransfer = (new ItemBuilder([ItemTransfer::UUID => static::TEST_ITEM_UUID]))->build();
-        $pickingListItemTransfer = (new PickingListItemBuilder([
-            PickingListItemTransfer::ORDER_ITEM => $itemTransfer->toArray(),
-        ]))->build();
-
-        $stockTransfer = $this->tester->haveStock();
-
-        $pickingListTransfer = (new PickingListBuilder([
-            PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
-            PickingListTransfer::STATUS => static::STATUS_READY_FOR_PICKING,
-        ]))->build()->addPickingListItem($pickingListItemTransfer);
-
-        $pickingListTransfer = $this->tester->havePickingList($pickingListTransfer);
-
+        $pickingListTransfer = $this->tester->havePickingListWithPickingListItem();
         $glueRequestTransfer = (new GlueRequestTransfer())->setAttributes([
             PickingListTransfer::UUID => $pickingListTransfer->getUuidOrFail(),
         ]);
@@ -87,6 +59,53 @@ class PickingListItemsByPickingListsBackendResourceRelationshipPluginTest extend
         (new PickingListItemsByPickingListsBackendResourceRelationshipPlugin())->addRelationships($glueResourceTransfers, $glueRequestTransfer);
 
         // Assert
+        $this->assertPickingListItemResourceIncluded(
+            $pickingListTransfer->getPickingListItems()->getIterator()->current(),
+            $glueResourceTransfers,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddRelationshipShouldAddRelatedPickingListItemsWhenCollectionIsPaginated(): void
+    {
+        $this->tester->havePickingListWithPickingListItem();
+        $this->tester->havePickingListWithPickingListItem();
+        $pickingListTransfer = $this->tester->havePickingListWithPickingListItem();
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setLimit(1)
+            ->setOffset(1);
+        $glueRequestTransfer = (new GlueRequestTransfer())->setPagination($paginationTransfer);
+
+        $glueResourceTransfers = [
+            (new GlueResourceTransfer())
+                ->setId($pickingListTransfer->getUuidOrFail())
+                ->setType(PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS)
+                ->setAttributes(new PickingListsBackendApiAttributesTransfer()),
+        ];
+
+        // Act
+        (new PickingListItemsByPickingListsBackendResourceRelationshipPlugin())->addRelationships($glueResourceTransfers, $glueRequestTransfer);
+
+        // Assert
+        $this->assertPickingListItemResourceIncluded(
+            $pickingListTransfer->getPickingListItems()->getIterator()->current(),
+            $glueResourceTransfers,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PickingListItemTransfer $pickingListItemTransfer
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransfers
+     *
+     * @return void
+     */
+    protected function assertPickingListItemResourceIncluded(
+        PickingListItemTransfer $pickingListItemTransfer,
+        array $glueResourceTransfers
+    ): void {
         $this->assertCount(1, $glueResourceTransfers[0]->getRelationships());
 
         /** @var \Generated\Shared\Transfer\GlueRelationshipTransfer $glueRelationshipTransfer */

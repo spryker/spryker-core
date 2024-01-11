@@ -8,14 +8,17 @@
 namespace SprykerTest\Zed\PickingList\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PickingListCriteriaBuilder;
 use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListConditionsTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use SprykerTest\Zed\PickingList\PickingListBusinessTester;
 
 /**
@@ -236,6 +239,165 @@ class GetPickingListCollectionTest extends Unit
         /** @var \Generated\Shared\Transfer\PickingListItemTransfer $secondPickingListItemTransfer */
         $secondPickingListItemTransfer = $secondPickingListTransfer->getPickingListItems()->getIterator()->current();
         $this->assertSame(static::TEST_UUID_2, $secondPickingListItemTransfer->getOrderItem()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldPaginateCollectionByOffsetAndLimit(): void
+    {
+        // Arrange
+        $this->tester->ensurePickingListTableIsEmpty();
+        $this->tester->configureTestStateMachine([PickingListBusinessTester::DEFAULT_OMS_PROCESS_NAME]);
+
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setOffset(1)
+            ->setLimit(2);
+
+        $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->setPagination($paginationTransfer);
+
+        // Act
+        $pickingListCollectionTransfer = $this->tester->getFacade()->getPickingListCollection($pickingListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $pickingListCollectionTransfer->getPickingLists());
+        $this->assertNotNull($pickingListCollectionTransfer->getPagination());
+        $this->assertSame(4, $pickingListCollectionTransfer->getPaginationOrFail()->getNbResults());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldPaginateCollectionByPageAndMaxPerPage(): void
+    {
+        // Arrange
+        $this->tester->ensurePickingListTableIsEmpty();
+        $this->tester->configureTestStateMachine([PickingListBusinessTester::DEFAULT_OMS_PROCESS_NAME]);
+
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+        $this->tester->createPickingListByOrder($this->tester->createPersistedOrderTransfer());
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setPage(2)
+            ->setMaxPerPage(2);
+
+        $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->setPagination($paginationTransfer);
+
+        // Act
+        $pickingListCollectionTransfer = $this->tester->getFacade()->getPickingListCollection($pickingListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $pickingListCollectionTransfer->getPickingLists());
+        $this->assertNotNull($pickingListCollectionTransfer->getPagination());
+        $this->assertSame(4, $pickingListCollectionTransfer->getPaginationOrFail()->getNbResults());
+
+        $paginationTransfer = $pickingListCollectionTransfer->getPaginationOrFail();
+        $this->assertSame(2, $paginationTransfer->getPageOrFail());
+        $this->assertSame(2, $paginationTransfer->getMaxPerPageOrFail());
+        $this->assertSame(4, $paginationTransfer->getNbResultsOrFail());
+        $this->assertSame(3, $paginationTransfer->getFirstIndexOrFail());
+        $this->assertSame(4, $paginationTransfer->getLastIndexOrFail());
+        $this->assertSame(1, $paginationTransfer->getFirstPage());
+        $this->assertSame(2, $paginationTransfer->getLastPageOrFail());
+        $this->assertSame(2, $paginationTransfer->getNextPageOrFail());
+        $this->assertSame(1, $paginationTransfer->getPreviousPageOrFail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldSortCollectionByCreatedAtAsc(): void
+    {
+        // Arrange
+        $this->tester->ensurePickingListTableIsEmpty();
+
+        $stockTransfer = $this->tester->haveStock();
+        $pickingListTransfer1 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('now'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+        $pickingListTransfer2 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+        $pickingListTransfer3 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('-1 hour'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+
+        $sortTransfer = (new SortTransfer())
+            ->setField(PickingListTransfer::CREATED_AT)
+            ->setIsAscending(true);
+
+        $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->addSort($sortTransfer);
+
+        // Act
+        $pickingListCollectionTransfer = $this->tester->getFacade()->getPickingListCollection($pickingListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $pickingListCollectionTransfer->getPickingLists());
+        $pickingListCollectionIterator = $pickingListCollectionTransfer->getPickingLists()->getIterator();
+        $this->assertSame($pickingListTransfer3->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(0)->getIdPickingList());
+        $this->assertSame($pickingListTransfer1->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(1)->getIdPickingList());
+        $this->assertSame($pickingListTransfer2->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(2)->getIdPickingList());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldSortCollectionByCreatedAtDesc(): void
+    {
+        // Arrange
+        $this->tester->ensurePickingListTableIsEmpty();
+
+        $stockTransfer = $this->tester->haveStock();
+        $pickingListTransfer1 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('now'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+        $pickingListTransfer2 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+        $pickingListTransfer3 = $this->tester->havePickingList(
+            $this->tester->createPickingListTransfer([
+                PickingListTransfer::WAREHOUSE => $stockTransfer->toArray(),
+                PickingListTransfer::CREATED_AT => (new DateTime('-1 hour'))->format('Y-m-d H:i:s'),
+            ]),
+        );
+
+        $sortTransfer = (new SortTransfer())
+            ->setField(PickingListTransfer::CREATED_AT)
+            ->setIsAscending(false);
+
+        $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())->addSort($sortTransfer);
+
+        // Act
+        $pickingListCollectionTransfer = $this->tester->getFacade()->getPickingListCollection($pickingListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $pickingListCollectionTransfer->getPickingLists());
+        $pickingListCollectionIterator = $pickingListCollectionTransfer->getPickingLists()->getIterator();
+        $this->assertSame($pickingListTransfer2->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(0)->getIdPickingList());
+        $this->assertSame($pickingListTransfer1->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(1)->getIdPickingList());
+        $this->assertSame($pickingListTransfer3->getIdPickingListOrFail(), $pickingListCollectionIterator->offsetGet(2)->getIdPickingList());
     }
 
     /**

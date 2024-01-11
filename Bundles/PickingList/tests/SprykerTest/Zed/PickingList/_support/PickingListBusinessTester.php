@@ -199,7 +199,7 @@ class PickingListBusinessTester extends Actor
      */
     public function getPickingListsAssignedToUser(UserTransfer $userTransfer): ObjectCollection
     {
-        return SpyPickingListQuery::create()
+        return $this->getPickingListQuery()
             ->filterByUserUuid($userTransfer->getUuidOrFail())
             ->find();
     }
@@ -279,5 +279,21 @@ class PickingListBusinessTester extends Actor
             ->setIsTransactional(true);
 
         $pickingListFacade->createPickingListCollection($pickingListCollectionRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function ensurePickingListTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getPickingListQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\PickingList\Persistence\SpyPickingListQuery
+     */
+    protected function getPickingListQuery(): SpyPickingListQuery
+    {
+        return SpyPickingListQuery::create();
     }
 }

@@ -8,8 +8,13 @@
 namespace SprykerTest\Glue\PickingListsBackendApi;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\PickingListBuilder;
+use Generated\Shared\DataBuilder\PickingListItemBuilder;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PickingListTransfer;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\PickingListItemsBackendResourcePlugin;
 use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\PickingListsBackendResourcePlugin;
@@ -34,6 +39,13 @@ use Spryker\Glue\PickingListsBackendApi\Plugin\GlueBackendApiApplication\Picking
 class PickingListsBackendApiTester extends Actor
 {
     use _generated\PickingListsBackendApiTesterActions;
+
+    /**
+     * @uses \Spryker\Shared\PickingList\PickingListConfig::STATUS_READY_FOR_PICKING
+     *
+     * @var string
+     */
+    protected const STATUS_READY_FOR_PICKING = 'ready-for-picking';
 
     /**
      * @return \Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface
@@ -67,5 +79,23 @@ class PickingListsBackendApiTester extends Actor
         return (new GlueRequestTransfer())
             ->setResource((new GlueResourceTransfer())
             ->setMethod('getCollection'));
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PickingListTransfer
+     */
+    public function havePickingListWithPickingListItem(): PickingListTransfer
+    {
+        $pickingListItemBuilder = (new PickingListItemBuilder())
+            ->withOrderItem((new ItemBuilder([ItemTransfer::UUID => md5(random_bytes(16))])));
+
+        $pickingListTransfer = (new PickingListBuilder([
+            PickingListTransfer::STATUS => static::STATUS_READY_FOR_PICKING,
+        ]))
+            ->withWarehouse($this->haveStock()->toArray())
+            ->withPickingListItem($pickingListItemBuilder)
+            ->build();
+
+        return $this->havePickingList($pickingListTransfer);
     }
 }

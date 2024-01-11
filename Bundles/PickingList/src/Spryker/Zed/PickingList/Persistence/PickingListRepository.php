@@ -17,6 +17,7 @@ use Orm\Zed\PickingList\Persistence\SpyPickingListItemQuery;
 use Orm\Zed\PickingList\Persistence\SpyPickingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
@@ -37,25 +38,34 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
     ): PickingListCollectionTransfer {
         $this->disableInstancePooling();
 
-        $pickingListQuery = $this->getFactory()
-            ->createPickingListQuery()
-            ->leftJoinWithSpyPickingListItem();
-
+        $pickingListQuery = $this->getFactory()->createPickingListQuery();
         $pickingListQuery = $this->applyPickingListFilters($pickingListQuery, $pickingListCriteriaTransfer);
         $pickingListQuery = $this->applyPickingListSorting($pickingListQuery, $pickingListCriteriaTransfer);
 
         $paginationTransfer = $pickingListCriteriaTransfer->getPagination();
-        $pickingListCollectionTransfer = new PickingListCollectionTransfer();
+        if ($paginationTransfer === null) {
+            $pickingListQuery->leftJoinWithSpyPickingListItem();
+        }
 
+        $pickingListCollectionTransfer = new PickingListCollectionTransfer();
         if ($paginationTransfer !== null) {
             $pickingListQuery = $this->applyPickingListPagination($pickingListQuery, $paginationTransfer);
             $pickingListCollectionTransfer->setPagination($paginationTransfer);
         }
 
+        $pickingListEntities = $pickingListQuery->find();
+        if ($pickingListEntities->count() === 0) {
+            return $pickingListCollectionTransfer;
+        }
+
+        if ($paginationTransfer !== null) {
+            $pickingListEntities = $this->expandPickingListEntitiesWithPickingListItemEntities($pickingListEntities, $pickingListCriteriaTransfer);
+        }
+
         $pickingListCollectionTransfer = $this->getFactory()
             ->createPickingListMapper()
             ->mapPickingListEntityCollectionToPickingListCollectionTransfer(
-                $pickingListQuery->find(),
+                $pickingListEntities,
                 $pickingListCollectionTransfer,
             );
 
@@ -86,6 +96,35 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
                 $pickingListItemEntityCollection,
                 new PickingListItemCollectionTransfer(),
             );
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingList> $pickingListEntities
+     * @param \Generated\Shared\Transfer\PickingListCriteriaTransfer $pickingListCriteriaTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingList>
+     */
+    protected function expandPickingListEntitiesWithPickingListItemEntities(
+        ObjectCollection $pickingListEntities,
+        PickingListCriteriaTransfer $pickingListCriteriaTransfer
+    ): ObjectCollection {
+        $pickingListIds = $this->extractPickingListIdsFromPickingListEntities($pickingListEntities);
+
+        $pickingListItemQuery = $this->getFactory()
+            ->createPickingListItemQuery()
+            ->filterByFkPickingList_In($pickingListIds);
+        $pickingListItemQuery = $this->applyPickingListFiltersToPickingListItemQuery($pickingListItemQuery, $pickingListCriteriaTransfer);
+
+        $pickingListItemEntitiesGroupedByIdPickingList = $this->groupPickingListItemEntitiesByIdPickingList(
+            $pickingListItemQuery->find(),
+        );
+
+        foreach ($pickingListEntities as $pickingListEntity) {
+            $pickingListEntityCollection = $pickingListItemEntitiesGroupedByIdPickingList[$pickingListEntity->getIdPickingList()] ?? [];
+            $pickingListEntity->setSpyPickingListItems(new ObjectCollection($pickingListEntityCollection));
+        }
+
+        return $pickingListEntities;
     }
 
     /**
@@ -124,6 +163,29 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
         $pickingListIds = $pickingListItemConditionsTransfer->getPickingListIds();
         if ($pickingListIds !== []) {
             $pickingListItemQuery->filterByFkPickingList_In($pickingListIds);
+        }
+
+        return $pickingListItemQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\PickingList\Persistence\SpyPickingListItemQuery $pickingListItemQuery
+     * @param \Generated\Shared\Transfer\PickingListCriteriaTransfer $pickingListCriteriaTransfer
+     *
+     * @return \Orm\Zed\PickingList\Persistence\SpyPickingListItemQuery
+     */
+    protected function applyPickingListFiltersToPickingListItemQuery(
+        SpyPickingListItemQuery $pickingListItemQuery,
+        PickingListCriteriaTransfer $pickingListCriteriaTransfer
+    ): SpyPickingListItemQuery {
+        $pickingListConditionsTransfer = $pickingListCriteriaTransfer->getPickingListConditions();
+        if ($pickingListConditionsTransfer === null) {
+            return $pickingListItemQuery;
+        }
+
+        $salesOrderItemUuids = $pickingListConditionsTransfer->getSalesOrderItemUuids();
+        if ($salesOrderItemUuids !== []) {
+            $pickingListItemQuery->filterBySalesOrderItemUuid_In($salesOrderItemUuids);
         }
 
         return $pickingListItemQuery;
@@ -246,5 +308,35 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
         }
 
         return $pickingListQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingList> $pickingListEntities
+     *
+     * @return list<int>
+     */
+    protected function extractPickingListIdsFromPickingListEntities(ObjectCollection $pickingListEntities): array
+    {
+        $pickingListIds = [];
+        foreach ($pickingListEntities as $pickingListEntity) {
+            $pickingListIds[] = $pickingListEntity->getIdPickingList();
+        }
+
+        return $pickingListIds;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingListItem> $pickingListItemEntities
+     *
+     * @return array<int, list<\Orm\Zed\PickingList\Persistence\SpyPickingListItem>>
+     */
+    protected function groupPickingListItemEntitiesByIdPickingList(ObjectCollection $pickingListItemEntities): array
+    {
+        $groupedPickingListItemEntities = [];
+        foreach ($pickingListItemEntities as $pickingListItemEntity) {
+            $groupedPickingListItemEntities[$pickingListItemEntity->getFkPickingList()][] = $pickingListItemEntity;
+        }
+
+        return $groupedPickingListItemEntities;
     }
 }

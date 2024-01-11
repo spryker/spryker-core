@@ -49,10 +49,8 @@ class PickingListRelationshipExpander implements PickingListRelationshipExpander
         array $glueResourceTransfers,
         GlueRequestTransfer $glueRequestTransfer
     ): void {
-        $pickingListUuids = $this->extractPickingListUuidsFromGlueResourceTransfers($glueResourceTransfers);
         $pickingListCollectionTransfer = $this->pickingListReader->getPickingListCollectionByPickingListUuids(
-            $glueRequestTransfer,
-            $pickingListUuids,
+            $this->extractPickingListUuidsFromGlueResourceTransfers($glueResourceTransfers),
         );
         $pickingListItemTransfersGroupedByPickingListUuid = $this->getPickingListItemsGroupedByPickingListUuid($pickingListCollectionTransfer);
 

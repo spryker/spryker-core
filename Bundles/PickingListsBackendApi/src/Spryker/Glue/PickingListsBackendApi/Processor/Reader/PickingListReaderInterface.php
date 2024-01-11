@@ -42,13 +42,9 @@ interface PickingListReaderInterface
     ): GlueResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param list<string> $pickingListUuids
      *
      * @return \Generated\Shared\Transfer\PickingListCollectionTransfer
      */
-    public function getPickingListCollectionByPickingListUuids(
-        GlueRequestTransfer $glueRequestTransfer,
-        array $pickingListUuids
-    ): PickingListCollectionTransfer;
+    public function getPickingListCollectionByPickingListUuids(array $pickingListUuids): PickingListCollectionTransfer;
 }
