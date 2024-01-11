@@ -356,7 +356,7 @@ class DynamicEntityMapper
      */
     protected function castTypes(string $type, mixed $value): mixed
     {
-        return $type === static::TYPE_INTEGER ? (int)$value : $value;
+        return ($type === static::TYPE_INTEGER && $value !== null) ? (int)$value : $value;
     }
 
     /**
