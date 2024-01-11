@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiConfig getConfig()
  */
 class UserMerchantPortalGuiMerchantUserAclRuleExpanderPlugin extends AbstractPlugin implements MerchantUserAclRuleExpanderPluginInterface
 {

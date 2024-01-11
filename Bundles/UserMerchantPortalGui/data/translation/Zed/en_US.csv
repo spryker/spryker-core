@@ -24,3 +24,4 @@ Password,Password
 "Success! The Password is updated.","Success! The Password is updated."
 "Success! The Email is updated.","Success! The Email is updated."
 "The value cannot be empty","The value cannot be empty"
+"Email changing has been blocked due to too many attempts.","Email changing has been blocked due to too many attempts."

@@ -19,6 +19,7 @@ use Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider\MerchantAc
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\MerchantAccountForm;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Updater\MerchantUserUpdater;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Updater\MerchantUserUpdaterInterface;
+use Spryker\Zed\UserMerchantPortalGui\Dependency\Client\UserMerchantPortalGuiToSecurityBlockerClientInterface;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToTranslatorFacadeInterface;
@@ -86,12 +87,13 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
 
     /**
      * @param array<string, mixed> $data
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createChangeEmailForm(array $data = []): FormInterface
+    public function createChangeEmailForm(array $data = [], array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(ChangeEmailForm::class, $data);
+        return $this->getFormFactory()->create(ChangeEmailForm::class, $data, $options);
     }
 
     /**
@@ -129,6 +131,14 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     public function getMerchantUserFacade(): UserMerchantPortalGuiToMerchantUserFacadeInterface
     {
         return $this->getProvidedDependency(UserMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserMerchantPortalGui\Dependency\Client\UserMerchantPortalGuiToSecurityBlockerClientInterface
+     */
+    public function getSecurityBlockerClient(): UserMerchantPortalGuiToSecurityBlockerClientInterface
+    {
+        return $this->getProvidedDependency(UserMerchantPortalGuiDependencyProvider::CLIENT_SECURITY_BLOCKER);
     }
 
     /**

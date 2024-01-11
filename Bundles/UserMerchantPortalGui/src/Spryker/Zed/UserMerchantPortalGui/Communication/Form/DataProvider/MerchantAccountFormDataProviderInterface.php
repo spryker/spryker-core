@@ -10,9 +10,11 @@ namespace Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider;
 interface MerchantAccountFormDataProviderInterface
 {
     /**
+     * @param bool $isEmailUniquenessValidationEnabled
+     *
      * @return array<mixed>
      */
-    public function getOptions(): array;
+    public function getOptions(bool $isEmailUniquenessValidationEnabled = true): array;
 
     /**
      * @return array<mixed>

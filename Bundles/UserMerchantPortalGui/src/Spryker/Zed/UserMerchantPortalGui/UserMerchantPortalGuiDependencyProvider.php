@@ -9,10 +9,14 @@ namespace Spryker\Zed\UserMerchantPortalGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\UserMerchantPortalGui\Dependency\Client\UserMerchantPortalGuiToSecurityBlockerClientBridge;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToTranslatorFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiConfig getConfig()
+ */
 class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
@@ -29,6 +33,11 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
 
     /**
      * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
@@ -54,6 +63,7 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addSecurityBlockerClient($container);
         $container = $this->addZedUiFactory($container);
 
         $container = $this->addMerchantUserPostChangePlugin($container);
@@ -98,6 +108,22 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new UserMerchantPortalGuiToTranslatorFacadeBridge($container->getLocator()->translator()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSecurityBlockerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
+            return new UserMerchantPortalGuiToSecurityBlockerClientBridge(
+                $container->getLocator()->securityBlocker()->client(),
+            );
         });
 
         return $container;

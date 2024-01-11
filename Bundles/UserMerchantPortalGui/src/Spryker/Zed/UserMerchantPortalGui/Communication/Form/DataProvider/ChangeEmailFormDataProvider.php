@@ -35,4 +35,16 @@ class ChangeEmailFormDataProvider
             ChangeEmailForm::KEY_ID_USER => $this->merchantUserFacade->getCurrentMerchantUser()->getIdUserOrFail(),
         ];
     }
+
+    /**
+     * @param bool $isEmailUniquenessValidationEnabled
+     *
+     * @return array<string, mixed>
+     */
+    public function getOptions(bool $isEmailUniquenessValidationEnabled = true): array
+    {
+        return [
+            ChangeEmailForm::OPTION_IS_EMAIL_UNIQUENESS_VALIDATION_ENABLED => $isEmailUniquenessValidationEnabled,
+        ];
+    }
 }

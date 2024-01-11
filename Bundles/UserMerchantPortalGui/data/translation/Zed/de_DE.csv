@@ -24,3 +24,4 @@ Password,Passwort
 "Success! The Password is updated.","Das Passwort wurde erfolgreich geändert."
 "Success! The Email is updated.","Die E-Mail wurde erfolgreich geändert."
 "The value cannot be empty","Dies ist ein Pflichtfeld"
+"Email changing has been blocked due to too many attempts.","E-Mail-Änderung wurde aufgrund zu vieler Versuche blockiert."

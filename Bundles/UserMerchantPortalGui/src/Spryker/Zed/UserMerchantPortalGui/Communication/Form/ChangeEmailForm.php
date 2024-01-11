@@ -12,11 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UserMerchantPortalGui\UserMerchantPortalGuiConfig getConfig()
  */
 class ChangeEmailForm extends AbstractType
 {
@@ -29,6 +31,11 @@ class ChangeEmailForm extends AbstractType
      * @var string
      */
     public const KEY_ID_USER = 'id_user';
+
+    /**
+     * @var string
+     */
+    public const OPTION_IS_EMAIL_UNIQUENESS_VALIDATION_ENABLED = 'is_email_uniqueness_validation_enabled';
 
     /**
      * @var string
@@ -78,8 +85,20 @@ class ChangeEmailForm extends AbstractType
     {
         $this
             ->addCurrentPasswordField($builder)
-            ->addEmailField($builder)
+            ->addEmailField($builder, $options)
             ->addSaveButton($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            static::OPTION_IS_EMAIL_UNIQUENESS_VALIDATION_ENABLED => true,
+        ]);
     }
 
     /**
@@ -106,23 +125,29 @@ class ChangeEmailForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder, array $options)
     {
         $formData = $builder->getData();
+
+        $constraints = [
+            new NotBlank(),
+            new Email(),
+        ];
+
+        if ($options[static::OPTION_IS_EMAIL_UNIQUENESS_VALIDATION_ENABLED]) {
+            $constraints[] = $this->getFactory()->createUniqueUserEmailConstraint($formData[static::KEY_ID_USER]);
+        }
 
         $builder
             ->add(static::FIELD_EMAIL, EmailType::class, [
                 'required' => true,
                 'label' => static::LABEL_NEW_EMAIL,
                 'sanitize_xss' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new Email(),
-                    $this->getFactory()->createUniqueUserEmailConstraint($formData[static::KEY_ID_USER]),
-                ],
+                'constraints' => $constraints,
             ]);
 
         return $this;
