@@ -38,7 +38,7 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
 
         $productOfferPriceRestResources = $this->productOfferPriceReader->getProductOfferPriceRestResources(
             $productOfferReferences,
-            $restRequest->getMetadata()->getLocale(),
+            $restRequest,
         );
 
         foreach ($resources as $resource) {

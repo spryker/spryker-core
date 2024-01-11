@@ -5,19 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductPricesRestApi\Processor\Currency;
+namespace Spryker\Glue\ProductPricesRestApi\Processor\Builder;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-interface CurrencyUpdaterInterface
+interface PriceProductFilterTransferBuilderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    public function setCurrentCurrency(RestRequestInterface $restRequest): void;
+    public function build(RestRequestInterface $restRequest): PriceProductFilterTransfer;
 }

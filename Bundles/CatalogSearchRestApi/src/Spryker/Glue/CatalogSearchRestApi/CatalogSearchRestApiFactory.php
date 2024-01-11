@@ -54,6 +54,7 @@ class CatalogSearchRestApiFactory extends AbstractFactory
         return new CatalogSearchReader(
             $this->getCatalogClient(),
             $this->getPriceClient(),
+            $this->getCurrencyClient(),
             $this->getResourceBuilder(),
             $this->createCatalogSearchResourceMapper(),
             $this->createCatalogSearchSuggestionsResourceMapper(),

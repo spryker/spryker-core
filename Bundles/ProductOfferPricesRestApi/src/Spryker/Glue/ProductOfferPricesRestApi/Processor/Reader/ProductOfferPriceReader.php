@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -15,6 +14,7 @@ use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesR
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 
@@ -66,24 +66,32 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     protected $productOfferPriceRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface
+     */
+    protected PriceProductFilterTransferBuilderInterface $priceProductFilterTransferBuilder;
+
+    /**
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface $productOfferStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilderInterface $productOfferPriceRestResponseBuilder
+     * @param \Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface $priceProductFilterTransferBuilder
      */
     public function __construct(
         ProductOfferPricesRestApiToProductOfferStorageClientInterface $productOfferStorageClient,
         ProductOfferPricesRestApiToProductStorageClientInterface $productStorageClient,
         ProductOfferPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         ProductOfferPricesRestApiToPriceProductClientInterface $priceProductClient,
-        ProductOfferPriceRestResponseBuilderInterface $productOfferPriceRestResponseBuilder
+        ProductOfferPriceRestResponseBuilderInterface $productOfferPriceRestResponseBuilder,
+        PriceProductFilterTransferBuilderInterface $priceProductFilterTransferBuilder
     ) {
         $this->productOfferStorageClient = $productOfferStorageClient;
         $this->productStorageClient = $productStorageClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->priceProductClient = $priceProductClient;
         $this->productOfferPriceRestResponseBuilder = $productOfferPriceRestResponseBuilder;
+        $this->priceProductFilterTransferBuilder = $priceProductFilterTransferBuilder;
     }
 
     /**
@@ -107,7 +115,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
         $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
             [$productOfferRestResource->getId()],
-            $restRequest->getMetadata()->getLocale(),
+            $restRequest,
             reset($productOfferStorageTransfers),
         );
 
@@ -121,14 +129,14 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
     /**
      * @param array<string> $productOfferReferences
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer|null $productOfferStorageTransfer
      *
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductOfferPriceRestResources(
         array $productOfferReferences,
-        string $localeName,
+        RestRequestInterface $restRequest,
         ?ProductOfferStorageTransfer $productOfferStorageTransfer = null
     ): array {
         $productOfferStorageTransfers = $productOfferStorageTransfer ?
@@ -138,7 +146,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
         $productConcreteSkus = $this->getProductConcreteSkus($productOfferStorageTransfers);
 
         $productConcreteData = $this->productStorageClient
-            ->getBulkProductConcreteStorageDataByMapping(static::MAPPING_TYPE_SKU, $productConcreteSkus, $localeName);
+            ->getBulkProductConcreteStorageDataByMapping(static::MAPPING_TYPE_SKU, $productConcreteSkus, $restRequest->getMetadata()->getLocale());
 
         $productOfferPriceRestResources = [];
         foreach ($productConcreteData as $productConcreteDataItem) {
@@ -157,8 +165,8 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
                     continue;
                 }
 
-                $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-                    ->setProductOfferReference($productOfferReference);
+                $priceProductFilterTransfer = $this->priceProductFilterTransferBuilder->build($restRequest);
+                $priceProductFilterTransfer->setProductOfferReference($productOfferReference);
 
                 $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
                     $priceProductTransfers,

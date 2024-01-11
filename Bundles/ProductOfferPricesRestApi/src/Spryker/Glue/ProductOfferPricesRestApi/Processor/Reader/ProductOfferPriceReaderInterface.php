@@ -22,14 +22,14 @@ interface ProductOfferPriceReaderInterface
 
     /**
      * @param array<string> $productOfferReferences
-     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer|null $productOfferStorageTransfer
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array
      */
     public function getProductOfferPriceRestResources(
         array $productOfferReferences,
-        string $localeName,
+        RestRequestInterface $restRequest,
         ?ProductOfferStorageTransfer $productOfferStorageTransfer = null
     ): array;
 }

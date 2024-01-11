@@ -11,6 +11,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class CurrencyUpdater implements CurrencyUpdaterInterface
 {
     /**

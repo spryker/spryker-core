@@ -16,6 +16,8 @@ use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPr
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToStoreClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReaderInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilder;
+use Spryker\Glue\ProductPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdater;
@@ -45,7 +47,6 @@ class ProductPricesRestApiFactory extends AbstractFactory
     {
         return new ProductPricesMapper(
             $this->getPriceClient(),
-            $this->getCurrencyClient(),
             $this->getRestProductPricesAttributesMapperPlugins(),
         );
     }
@@ -61,6 +62,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getPriceProductClient(),
             $this->getResourceBuilder(),
             $this->createProductPricesMapper(),
+            $this->createPriceProductFilterTransferBuilder(),
         );
     }
 
@@ -75,6 +77,17 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getPriceProductClient(),
             $this->getResourceBuilder(),
             $this->createProductPricesMapper(),
+            $this->createPriceProductFilterTransferBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface
+     */
+    public function createPriceProductFilterTransferBuilder(): PriceProductFilterTransferBuilderInterface
+    {
+        return new PriceProductFilterTransferBuilder(
+            $this->getCurrencyClient(),
         );
     }
 
@@ -98,6 +111,8 @@ class ProductPricesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdaterInterface
      */
     public function createCurrencyUpdater(): CurrencyUpdaterInterface

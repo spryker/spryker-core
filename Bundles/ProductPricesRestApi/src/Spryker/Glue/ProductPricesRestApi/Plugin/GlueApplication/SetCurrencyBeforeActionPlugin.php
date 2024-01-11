@@ -12,6 +12,8 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActi
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiFactory getFactory()
  */
 class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface

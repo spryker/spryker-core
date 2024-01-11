@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class ProductPricesRestApiToPriceProductClientBridge implements ProductPricesRestApiToPriceProductClientInterface
 {
@@ -26,11 +27,14 @@ class ProductPricesRestApiToPriceProductClientBridge implements ProductPricesRes
 
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
-    {
-        return $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer {
+        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
 }

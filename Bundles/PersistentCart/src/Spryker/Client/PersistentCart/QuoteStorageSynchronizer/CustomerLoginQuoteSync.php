@@ -136,18 +136,7 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
     {
         return $quoteTransfer->getIdQuote()
             || $quoteTransfer->getItems()->count()
-            || $this->isDatabaseStorageStrategy($this->quoteClient->getStorageStrategy())
-            || $this->isQuoteModified($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteModified(QuoteTransfer $quoteTransfer): bool
-    {
-        return count($quoteTransfer->modifiedToArray()) > 0;
+            || $this->isDatabaseStorageStrategy($this->quoteClient->getStorageStrategy());
     }
 
     /**

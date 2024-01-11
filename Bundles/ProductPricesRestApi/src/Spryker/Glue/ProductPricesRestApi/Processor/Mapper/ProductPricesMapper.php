@@ -41,32 +41,19 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected static $netPriceModeIdentifier;
 
     /**
-     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
-     */
-    protected $currencyClient;
-
-    /**
      * @var array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface>
      */
     protected $restProductPricesAttributesMapperPlugins;
 
     /**
-     * @var \Generated\Shared\Transfer\RestCurrencyTransfer
-     */
-    protected static $restCurrencyTransfer;
-
-    /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
-     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
      * @param array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface> $restProductPricesAttributesMapperPlugins
      */
     public function __construct(
         ProductPricesRestApiToPriceClientInterface $priceClient,
-        ProductPricesRestApiToCurrencyClientInterface $currencyClient,
         array $restProductPricesAttributesMapperPlugins
     ) {
         $this->priceClient = $priceClient;
-        $this->currencyClient = $currencyClient;
         $this->restProductPricesAttributesMapperPlugins = $restProductPricesAttributesMapperPlugins;
     }
 
@@ -82,7 +69,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
         $productPricesRestAttributesTransfer = (new RestProductPricesAttributesTransfer())
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
-            $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
+            $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($currentProductPriceTransfer, $priceType, $amount);
             $restProductPriceAttributesTransfer = $this->executeRestProductPriceAttributesMapperPlugins(
                 $currentProductPriceTransfer,
                 $restProductPriceAttributesTransfer,
@@ -126,17 +113,25 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $priceType
      * @param int $amount
      *
      * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
      */
-    protected function getRestProductPriceAttributesTransfer(string $priceType, int $amount): RestProductPriceAttributesTransfer
-    {
+    protected function getRestProductPriceAttributesTransfer(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        string $priceType,
+        int $amount
+    ): RestProductPriceAttributesTransfer {
         $restProductPriceAttributesTransfer = new RestProductPriceAttributesTransfer();
 
         $restProductPriceAttributesTransfer->setPriceTypeName($priceType);
-        $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
+        $restProductPriceAttributesTransfer->setCurrency(
+            (new RestCurrencyTransfer())
+                ->fromArray($currentProductPriceTransfer->getCurrencyOrFail()->toArray(), true),
+        );
+
         if ($this->getCurrentPriceMode() === $this->getGrossPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setGrossAmount($amount);
 
@@ -205,18 +200,5 @@ class ProductPricesMapper implements ProductPricesMapperInterface
         }
 
         return static::$netPriceModeIdentifier;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestCurrencyTransfer
-     */
-    protected function getRestCurrencyTransfer(): RestCurrencyTransfer
-    {
-        if (static::$restCurrencyTransfer === null) {
-            static::$restCurrencyTransfer = (new RestCurrencyTransfer())
-                ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
-        }
-
-        return static::$restCurrencyTransfer;
     }
 }

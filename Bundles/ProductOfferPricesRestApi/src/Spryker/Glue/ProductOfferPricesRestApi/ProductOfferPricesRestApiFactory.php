@@ -8,10 +8,13 @@
 namespace Spryker\Glue\ProductOfferPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilder;
+use Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpander;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpanderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Mapper\ProductOfferPriceMapper;
@@ -37,6 +40,17 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
             $this->getPriceProductStorageClient(),
             $this->getPriceProductClient(),
             $this->createProductOfferPriceRestResponseBuilder(),
+            $this->createPriceProductFilterTransferBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferPricesRestApi\Processor\Builder\PriceProductFilterTransferBuilderInterface
+     */
+    public function createPriceProductFilterTransferBuilder(): PriceProductFilterTransferBuilderInterface
+    {
+        return new PriceProductFilterTransferBuilder(
+            $this->getCurrencyClient(),
         );
     }
 
@@ -99,6 +113,14 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function getPriceProductClient(): ProductOfferPricesRestApiToPriceProductClientInterface
     {
         return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToCurrencyClientInterface
+     */
+    public function getCurrencyClient(): ProductOfferPricesRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_CURRENCY);
     }
 
     /**

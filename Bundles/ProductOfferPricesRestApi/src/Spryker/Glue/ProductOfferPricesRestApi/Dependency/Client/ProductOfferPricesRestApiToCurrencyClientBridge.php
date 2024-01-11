@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
+namespace Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 
-class ProductPricesRestApiToCurrencyClientBridge implements ProductPricesRestApiToCurrencyClientInterface
+class ProductOfferPricesRestApiToCurrencyClientBridge implements ProductOfferPricesRestApiToCurrencyClientInterface
 {
     /**
      * @var \Spryker\Client\Currency\CurrencyClientInterface
@@ -22,24 +22,6 @@ class ProductPricesRestApiToCurrencyClientBridge implements ProductPricesRestApi
     public function __construct($currencyClient)
     {
         $this->currencyClient = $currencyClient;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    public function getCurrent()
-    {
-        return $this->currencyClient->getCurrent();
-    }
-
-    /**
-     * @param string $currencyIsoCode
-     *
-     * @return void
-     */
-    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void
-    {
-        $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
     }
 
     /**

@@ -21,6 +21,8 @@
 
     <transfer name="PriceProductFilter">
         <property name="productOfferReference" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
