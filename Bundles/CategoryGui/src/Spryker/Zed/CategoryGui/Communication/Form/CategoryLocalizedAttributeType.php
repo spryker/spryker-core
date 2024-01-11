@@ -192,7 +192,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                     new NotBlank(),
                     $this->getFactory()->createCategoryLocalizedAttributeNameUniqueConstraint(),
                 ],
-                'required' => false,
+                'required' => true,
             ]);
 
         return $this;
