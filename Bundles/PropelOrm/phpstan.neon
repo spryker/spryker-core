@@ -1,3 +1,5 @@
 parameters:
     level: 8
     checkMissingIterableValueType: false
+    excludePaths:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Polyfill/'

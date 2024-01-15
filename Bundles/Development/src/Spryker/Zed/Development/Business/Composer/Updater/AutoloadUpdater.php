@@ -72,6 +72,11 @@ class AutoloadUpdater implements UpdaterInterface
     /**
      * @var string
      */
+    public const POLYFILL_NAMESPACE = 'Polyfill';
+
+    /**
+     * @var string
+     */
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
 
     /**
@@ -174,6 +179,7 @@ class AutoloadUpdater implements UpdaterInterface
         self::BASE_FILTER_DIRECTORY,
         self::SPRYKER_SDK_NAMESPACE,
         self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
+        self::POLYFILL_NAMESPACE,
     ];
 
     /**

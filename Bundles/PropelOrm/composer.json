@@ -19,6 +19,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Propel\\": "src/Spryker/Zed/PropelOrm/Business/Polyfill/",
             "Spryker\\": "src/Spryker/",
             "SprykerTest\\Shared\\PropelOrm\\Helper\\": "tests/SprykerTest/Shared/PropelOrm/_support/Helper/"
         }
