@@ -202,6 +202,8 @@
 
     <transfer name="Customer">
         <property name="locale" type="Locale"/>
+        <property name="email" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Locale">

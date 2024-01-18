@@ -149,6 +149,8 @@ class PaymentConfig extends AbstractBundleConfig
                 StoreTransfer::NAME => 'storeName',
             ],
             QuoteTransfer::CUSTOMER => [
+                CustomerTransfer::CUSTOMER_REFERENCE => 'customerReference',
+                CustomerTransfer::EMAIL => 'customerEmail',
                 CustomerTransfer::LOCALE => [
                     LocaleTransfer::LOCALE_NAME => 'localeName',
                 ],
