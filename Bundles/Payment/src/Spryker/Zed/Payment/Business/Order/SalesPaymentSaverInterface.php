@@ -21,5 +21,5 @@ interface SalesPaymentSaverInterface
      *
      * @return void
      */
-    public function saveOrderPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function saveOrderPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
 }

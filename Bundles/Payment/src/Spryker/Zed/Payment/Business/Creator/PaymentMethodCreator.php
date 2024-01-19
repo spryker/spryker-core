@@ -119,7 +119,7 @@ class PaymentMethodCreator implements PaymentMethodCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodCollectionResponseTransfer $paymentMethodCollectionResponseTransfer
-     * @param array $entityIdentifiers
+     * @param array<string> $entityIdentifiers
      *
      * @return \Generated\Shared\Transfer\PaymentMethodCollectionResponseTransfer
      */

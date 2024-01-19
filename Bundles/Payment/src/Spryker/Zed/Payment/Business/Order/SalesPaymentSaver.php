@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPayment;
+use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -41,14 +42,14 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      *
      * @return void
      */
-    public function saveOrderPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrderPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
         $checkoutResponse->requireSaveOrder()
             ->getSaveOrder()
             ->requireIdSalesOrder();
 
         $idSalesOrder = $checkoutResponse->getSaveOrder()->getIdSalesOrder();
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $idSalesOrder) {
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $idSalesOrder): void {
             $this->executeSavePaymentMethodsTransaction($quoteTransfer, $idSalesOrder);
         });
     }
@@ -59,7 +60,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      *
      * @return void
      */
-    protected function executeSavePaymentMethodsTransaction(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    protected function executeSavePaymentMethodsTransaction(QuoteTransfer $quoteTransfer, $idSalesOrder): void
     {
         $paymentCollection = $this->getPaymentCollection($quoteTransfer);
         $this->savePaymentCollection($paymentCollection, $idSalesOrder);
@@ -94,7 +95,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      *
      * @return \Orm\Zed\Payment\Persistence\SpySalesPayment
      */
-    protected function mapSalesPaymentEntity(PaymentTransfer $paymentTransfer, $idSalesOrder)
+    protected function mapSalesPaymentEntity(PaymentTransfer $paymentTransfer, $idSalesOrder): SpySalesPayment
     {
         $paymentMethodTypeEntity = $this->findOrCreatePaymentMethodType($paymentTransfer);
 
@@ -112,7 +113,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      *
      * @return void
      */
-    protected function savePaymentCollection(ArrayObject $paymentCollection, $idSalesOrder)
+    protected function savePaymentCollection(ArrayObject $paymentCollection, $idSalesOrder): void
     {
         foreach ($paymentCollection as $paymentTransfer) {
             $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
@@ -126,7 +127,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      *
      * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType
      */
-    protected function findOrCreatePaymentMethodType(PaymentTransfer $paymentTransfer)
+    protected function findOrCreatePaymentMethodType(PaymentTransfer $paymentTransfer): SpySalesPaymentMethodType
     {
         $paymentMethodTypeEntity = $this->paymentQueryContainer
             ->queryPaymentMethodType(

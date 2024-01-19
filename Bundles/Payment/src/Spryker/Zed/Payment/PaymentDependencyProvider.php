@@ -15,6 +15,7 @@ use Spryker\Zed\Payment\Dependency\Facade\PaymentToOmsFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
+use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceBridge;
 
 /**
@@ -109,7 +110,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addStoreFacade($container);
         $container = $this->addPaymentMethodFilterPlugins($container);
@@ -190,7 +191,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addStoreFacade($container);
@@ -244,7 +245,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCheckoutPlugins(Container $container)
+    protected function addCheckoutPlugins(Container $container): Container
     {
         $container->set(static::CHECKOUT_PLUGINS, function (Container $container) {
             return new CheckoutPluginCollection();
@@ -260,7 +261,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPaymentHydrationPlugins(Container $container)
+    protected function addPaymentHydrationPlugins(Container $container): Container
     {
         $container->set(static::PAYMENT_HYDRATION_PLUGINS, function () {
             return $this->getPaymentHydrationPlugins();
@@ -274,7 +275,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
-    protected function getPaymentHydrationPlugins()
+    protected function getPaymentHydrationPlugins(): PaymentHydratorPluginCollectionInterface
     {
         return new PaymentHydratorPluginCollection();
     }

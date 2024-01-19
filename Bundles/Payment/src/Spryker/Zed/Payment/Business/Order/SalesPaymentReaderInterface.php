@@ -19,5 +19,5 @@ interface SalesPaymentReaderInterface
      *
      * @return int
      */
-    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $paymentTransfer);
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $paymentTransfer): int;
 }

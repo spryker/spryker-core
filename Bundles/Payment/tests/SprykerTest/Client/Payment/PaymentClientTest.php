@@ -9,11 +9,17 @@ namespace SprykerTest\Client\Payment;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\StreamInterface;
-use Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface;
+use Spryker\Client\Payment\Dependency\External\PaymentToGuzzleHttpClientAdapter;
 use Spryker\Client\Payment\PaymentDependencyProvider;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
+use SprykerTest\Client\Testify\Helper\ConfigHelperTrait;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyHttpResponse;
 
@@ -28,10 +34,25 @@ use Symfony\Component\HttpFoundation\Response as SymfonyHttpResponse;
  */
 class PaymentClientTest extends Unit
 {
+    use ConfigHelperTrait;
+
     /**
      * @var \SprykerTest\Client\Payment\PaymentClientTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->getConfigHelper()->setConfig(
+            KernelConstants::ENABLE_CONTAINER_OVERRIDING,
+            true,
+        );
+    }
 
     /**
      * @return void
@@ -90,6 +111,29 @@ class PaymentClientTest extends Unit
     /**
      * @return void
      */
+    public function testAuthorizePaymentUsesContentOfResponseInErrorMessageWhenDebugingIsEnabled(): void
+    {
+        // Arrange
+        $httpClientMock = $this->getHttpClientMock();
+        $this->getConfigHelper()->setConfig(ApplicationConstants::ENABLE_APPLICATION_DEBUG, true);
+
+        $responseMock = $this->getResponseMock('error_response.json', SymfonyHttpResponse::HTTP_BAD_REQUEST);
+        $requestException = new RequestException('something went wrong', new Request('POST', 'url'), $responseMock);
+        $httpClientMock->method('request')->willThrowException($requestException);
+
+        // Act
+        $paymentAuthorizeResponseTransfer = $this->tester->getClient()
+            ->authorizeForeignPayment($this->getPaymentAuthorizeRequestTransfer());
+
+        // Assert
+        $this->assertFalse($paymentAuthorizeResponseTransfer->getIsSuccessful());
+
+        $this->assertSame($this->getFixture('error_response.json'), $paymentAuthorizeResponseTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
     public function testAuthorizePaymentReturnsCorrectResponseWhenPaymentAuthorizeRequestTransferHasTenantIdentifier(): void
     {
         // Arrange
@@ -108,6 +152,7 @@ class PaymentClientTest extends Unit
                     RequestOptions::HEADERS => [
                         'X-Tenant-Identifier' => $paymentAuthorizeRequestTransfer->getTenantIdentifier(),
                         'X-Store-Reference' => $paymentAuthorizeRequestTransfer->getTenantIdentifier(),
+                        'Accept' => 'application/json',
                     ],
                 ],
             )->willReturn($responseMock);
@@ -121,15 +166,18 @@ class PaymentClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \GuzzleHttp\Client|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getHttpClientMock(): PaymentToHttpClientAdapterInterface
+    protected function getHttpClientMock(): Client
     {
-        $httpClientMock = $this->createMock(PaymentToHttpClientAdapterInterface::class);
+        $httpClientMock = $this->createMock(Client::class);
+        $paymentToGuzzleHttpClientAdapter = new PaymentToGuzzleHttpClientAdapter(
+            $httpClientMock,
+        );
 
         $this->tester->setDependency(
             PaymentDependencyProvider::CLIENT_HTTP,
-            $httpClientMock,
+            $paymentToGuzzleHttpClientAdapter,
         );
 
         return $httpClientMock;

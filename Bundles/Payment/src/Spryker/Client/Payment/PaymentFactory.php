@@ -8,18 +8,23 @@
 namespace Spryker\Client\Payment;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface;
 use Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface;
 use Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface;
 use Spryker\Client\Payment\Executor\PaymentRequestExecutor;
 use Spryker\Client\Payment\Executor\PaymentRequestExecutorInterface;
 use Spryker\Client\Payment\Zed\PaymentStub;
+use Spryker\Client\Payment\Zed\PaymentStubInterface;
 
+/**
+ * @method \Spryker\Client\Payment\PaymentConfig getConfig()
+ */
 class PaymentFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\Payment\Zed\PaymentStubInterface
      */
-    public function createZedStub()
+    public function createZedStub(): PaymentStubInterface
     {
         return new PaymentStub(
             $this->getZedRequestClient(),
@@ -34,6 +39,7 @@ class PaymentFactory extends AbstractFactory
         return new PaymentRequestExecutor(
             $this->getUtilEncodingService(),
             $this->getHttpClient(),
+            $this->getConfig(),
         );
     }
 
@@ -56,7 +62,7 @@ class PaymentFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface
      */
-    protected function getZedRequestClient()
+    protected function getZedRequestClient(): PaymentToZedRequestClientInterface
     {
         /** @var \Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface $zedStub */
         $zedStub = $this->getProvidedDependency(PaymentDependencyProvider::CLIENT_ZED_REQUEST);

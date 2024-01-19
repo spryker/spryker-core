@@ -19,5 +19,5 @@ interface SalesPaymentHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer);
+    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer): OrderTransfer;
 }

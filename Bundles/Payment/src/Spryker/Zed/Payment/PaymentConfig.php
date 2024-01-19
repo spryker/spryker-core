@@ -42,7 +42,7 @@ class PaymentConfig extends AbstractBundleConfig
     protected const BASE_URL_YVES = 'APPLICATION:BASE_URL_YVES';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const SUPPORTED_ORDER_PAYMENT_EVENT_TRANSFERS_LIST = [
         PaymentReservationCanceledTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_RESERVATION_SUCCESSFUL,
@@ -72,7 +72,7 @@ class PaymentConfig extends AbstractBundleConfig
      *
      * @return array<string, string>
      */
-    public function getPaymentStatemachineMappings()
+    public function getPaymentStatemachineMappings(): array
     {
         return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING, []);
     }
@@ -90,7 +90,7 @@ class PaymentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getSupportedOrderPaymentEventTransfersList(): array
     {

@@ -10,9 +10,11 @@ namespace Spryker\Client\Payment\Executor;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface;
 use Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface;
 use Spryker\Client\Payment\Http\Exception\PaymentHttpRequestException;
+use Spryker\Client\Payment\PaymentConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,15 +36,23 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
     protected $httpClient;
 
     /**
+     * @var \Spryker\Client\Payment\PaymentConfig
+     */
+    protected PaymentConfig $config;
+
+    /**
      * @param \Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterface $httpClient
+     * @param \Spryker\Client\Payment\PaymentConfig $config
      */
     public function __construct(
         PaymentToUtilEncodingServiceInterface $utilEncodingService,
-        PaymentToHttpClientAdapterInterface $httpClient
+        PaymentToHttpClientAdapterInterface $httpClient,
+        PaymentConfig $config,
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->httpClient = $httpClient;
+        $this->config = $config;
     }
 
     /**
@@ -51,7 +61,7 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
      * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
      */
     public function authorizeForeignPayment(
-        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer,
     ): PaymentAuthorizeResponseTransfer {
         try {
             $response = $this->httpClient->request(
@@ -63,20 +73,44 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
                 ],
             );
         } catch (PaymentHttpRequestException $e) {
-            return (new PaymentAuthorizeResponseTransfer())
-                ->setIsSuccessful(false)
-                ->setMessage(static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION);
+            return $this->getFailedPaymentAuthorizeResponse($e->getResponse());
         }
 
         if ($response->getStatusCode() !== Response::HTTP_OK) {
-            return (new PaymentAuthorizeResponseTransfer())
-                ->setIsSuccessful(false)
-                ->setMessage(static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION);
+            return $this->getFailedPaymentAuthorizeResponse($response);
         }
 
         $responseData = $this->utilEncodingService->decodeJson($response->getBody()->getContents(), true);
 
         return (new PaymentAuthorizeResponseTransfer())->fromArray($responseData, true);
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface|null $response
+     *
+     * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
+     */
+    protected function getFailedPaymentAuthorizeResponse(?ResponseInterface $response): PaymentAuthorizeResponseTransfer
+    {
+        return (new PaymentAuthorizeResponseTransfer())
+            ->setIsSuccessful(false)
+            ->setMessage($this->getPaymentAuthorizationErrorMessage($response));
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface|null $response
+     *
+     * @return string
+     */
+    protected function getPaymentAuthorizationErrorMessage(?ResponseInterface $response): string
+    {
+        $message = static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION;
+
+        if (!$response || !$this->config->isDebugEnabled()) {
+            return $message;
+        }
+
+        return $response->getBody()->getContents();
     }
 
     /**
@@ -86,7 +120,9 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
      */
     protected function getRequestHeaders(PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer): array
     {
-        $requestHeaders = [];
+        $requestHeaders = [
+            'Accept' => 'application/json',
+        ];
 
         if ($paymentAuthorizeRequestTransfer->getAuthorization()) {
             $requestHeaders['Authorization'] = $paymentAuthorizeRequestTransfer->getAuthorizationOrFail();

@@ -14,6 +14,9 @@ use Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientBridge;
 use Spryker\Client\Payment\Dependency\External\PaymentToGuzzleHttpClientAdapter;
 use Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Client\Payment\PaymentConfig getConfig()
+ */
 class PaymentDependencyProvider extends AbstractDependencyProvider
 {
     /**

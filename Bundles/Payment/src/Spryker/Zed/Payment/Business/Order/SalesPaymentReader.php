@@ -33,7 +33,7 @@ class SalesPaymentReader implements SalesPaymentReaderInterface
      *
      * @return int
      */
-    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $paymentTransfer)
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $paymentTransfer): int
     {
         $salesPaymentEntity = $this->paymentQueryContainer->queryPaymentMethodPriceToPay(
             $paymentTransfer->getFkSalesOrder(),

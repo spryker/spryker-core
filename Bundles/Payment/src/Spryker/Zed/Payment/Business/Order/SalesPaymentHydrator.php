@@ -46,7 +46,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer)
+    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer): OrderTransfer
     {
         $orderTransfer->requireIdSalesOrder();
 
@@ -61,7 +61,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      *
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
-    protected function mapPaymentTransfer(SpySalesPayment $salesPaymentEntity)
+    protected function mapPaymentTransfer(SpySalesPayment $salesPaymentEntity): PaymentTransfer
     {
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentProvider($salesPaymentEntity->getSalesPaymentMethodType()->getPaymentProvider());
@@ -77,7 +77,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function hydrate(ObjectCollection $objectCollection, OrderTransfer $orderTransfer)
+    protected function hydrate(ObjectCollection $objectCollection, OrderTransfer $orderTransfer): OrderTransfer
     {
         foreach ($objectCollection as $salesPaymentEntity) {
             $paymentTransfer = $this->mapPaymentTransfer($salesPaymentEntity);
@@ -120,7 +120,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      *
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
-    protected function executePaymentHydratorPlugin(PaymentTransfer $paymentTransfer, OrderTransfer $orderTransfer)
+    protected function executePaymentHydratorPlugin(PaymentTransfer $paymentTransfer, OrderTransfer $orderTransfer): PaymentTransfer
     {
         if ($this->paymentHydratePluginCollection->has($paymentTransfer->getPaymentProvider())) {
             $paymentHydratePlugin = $this->paymentHydratePluginCollection->get($paymentTransfer->getPaymentProvider());
@@ -136,7 +136,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      *
      * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment>
      */
-    protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer)
+    protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer): ObjectCollection
     {
         return $this->paymentQueryContainer
             ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())
