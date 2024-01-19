@@ -279,9 +279,6 @@ class ResourceExecutorTest extends Unit
         $configMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $configMock->expects($this->once())
-            ->method('isDevelopmentMode')
-            ->willReturn(false);
 
         // Assert
         $this->expectException(ControllerNotFoundException::class);
@@ -329,5 +326,59 @@ class ResourceExecutorTest extends Unit
         // Act
         (new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock))
             ->executeResource($resourceMock, $glueRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteResourceWarmsUpCacheForTheConfiguredRoutes(): void
+    {
+        // Arrange
+        $routePatterns = [
+            '/^\/dynamic-resource\/.+/',
+        ];
+
+        $glueRequestTransfer = (new GlueRequestTransfer())
+            ->setResource((new GlueResourceTransfer())->setMethod('get'))
+            ->setContent('fooBar')
+            ->setPath('/dynamic-resource/some-resource');
+
+        $resourceMock = $this->createMock(ResourceInterface::class);
+        $resourceMock->expects($this->once())
+            ->method('getResource')
+            ->willReturn([new ResourceController(), 'getCollectionAction']);
+
+        $configMock = $this->getMockBuilder(GlueApplicationConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $configMock->method('isDevelopmentMode')->willReturn(false);
+        $configMock->method('getRoutePatternsAllowedForCacheWarmUp')->willReturn($routePatterns);
+
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cacheReaderMock->method('getActionParameters')
+            ->willReturnOnConsecutiveCalls(
+                null,
+                [
+                    GlueRequestTransfer::class => '',
+                    GlueResponseTransfer::class => '',
+                ],
+            );
+
+        $cacheWriterMock = $this->getMockBuilder(ControllerCacheWriterInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cacheWriterMock->expects($this->once())
+            ->method('cache');
+
+        $resourceExecutor = new ResourceExecutor($cacheReaderMock, $cacheWriterMock, $configMock);
+
+        // Act
+        $glueResponseTransfer = $resourceExecutor->executeResource($resourceMock, $glueRequestTransfer);
+
+        // Assert
+        $this->assertSame($glueResponseTransfer->getContent(), $glueRequestTransfer->getContent());
+        $this->assertCount(1, $glueResponseTransfer->getResources());
     }
 }

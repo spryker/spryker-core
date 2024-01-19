@@ -68,13 +68,14 @@ class ResourceExecutor implements ResourceExecutorInterface
         ResourceInterface $resource,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        if ($this->glueApplicationConfig->isDevelopmentMode()) {
+        $executableResource = $resource->getResource($glueRequestTransfer);
+        $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
+
+        if ($parameters === null && $this->isCacheWriteAllowed($glueRequestTransfer)) {
             $this->controllerCacheWriter->cache($glueRequestTransfer->getApplication());
+            $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
         }
 
-        $executableResource = $resource->getResource($glueRequestTransfer);
-
-        $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
         if ($parameters === null) {
             throw new InvalidActionParametersException(static::CLEAR_CACHE_ERROR_MESSAGE);
         }
@@ -214,5 +215,25 @@ class ResourceExecutor implements ResourceExecutorInterface
         }
 
         return $parameters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isCacheWriteAllowed(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        if ($this->glueApplicationConfig->isDevelopmentMode()) {
+            return true;
+        }
+
+        foreach ($this->glueApplicationConfig->getRoutePatternsAllowedForCacheWarmUp() as $routePattern) {
+            if (preg_match($routePattern, $glueRequestTransfer->getPath())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
