@@ -1,0 +1,39 @@
+- pipeline: 'Spryker'
+  events:
+      - type: 'PUSH'
+        refs:
+            - 'refs/pull/*'
+  terminate_stale_runs: true
+  fail_on_prepare_env_warning: true
+  auto_clear_cache: true
+  resources: "NANO"
+  actions:
+      - action: 'Build Project'
+        type: 'BUILD'
+        main_service_name: 'post'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
+        shell: 'BASH'
+      - action: 'JS Validation'
+        type: 'BUILD'
+        docker_image_name: 'library/node'
+        docker_image_tag: '18'
+        execute_commands:
+            - 'npm ci'
+            - 'npm run formatter'
+            - 'npm run mp:stylelint'
+            - 'npm run mp:lint'
+            - 'npm run mp:test'
+        cache_base_image: false
+        shell: 'BASH'
+      - action: 'PHP Validation'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'chmod +x *.sh'
+            - 'bash travis_check_touched_modules.sh'
+        cache_base_image: false
+        shell: 'BASH'
