@@ -58,4 +58,12 @@ class TestifyConstants
      * @var string
      */
     public const GLUE_BACKEND_API_DOMAIN = 'TESTIFY:GLUE_BACKEND_API_DOMAIN';
+
+    /**
+     * Specification:
+     * - Folder in which the aggregated Glue Backend API OpenApi3 schema is saved.
+     *
+     * @var string
+     */
+    public const GLUE_BACKEND_API_OPEN_API_SCHEMA = 'TESTIFY:GLUE_BACKEND_API_OPEN_API_SCHEMA';
 }

@@ -1,0 +1,247 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Glue\Testify\Helper;
+
+use Codeception\Exception\ModuleException;
+use Codeception\Module;
+use JsonSchema\Constraints\Constraint;
+use JsonSchema\Validator;
+use PHPUnit\Framework\AssertionFailedError;
+use Spryker\Glue\Testify\OpenApi3\Exception\ParseException;
+use Spryker\Glue\Testify\OpenApi3\OpenApiSchemaParser;
+use Spryker\Glue\Testify\OpenApi3\Reader\YamlFileReader;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Response;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
+
+abstract class AbstractOpenApi3Helper extends Module
+{
+    use LastConnectionConsumerTrait;
+    use ModuleHelperConfigTrait;
+
+    /**
+     * @var string
+     */
+    protected $dependencyMessage = <<<EOF
+Example configuring OpenApi3.
+--
+modules:
+    enabled:
+        - \SprykerTest\Glue\Testify\Helper\OpenApi3
+    config:
+        \SprykerTest\Glue\Testify\Helper\OpenApi3:
+            schema: http://localhost/api/schema.yml
+--
+EOF;
+
+    /**
+     * @var \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi|null
+     */
+    protected $schema;
+
+    /**
+     * @return string
+     */
+    abstract protected function getOpenApiSchemaFilePath(): string;
+
+    /**
+     * @inheritDoc
+     */
+    public function _initialize(): void
+    {
+        parent::_initialize();
+
+        $this->schema = $this->readOpenApiSchemaIfDefined();
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function _parts(): array
+    {
+        return ['json'];
+    }
+
+    /**
+     * @part json
+     *
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return void
+     */
+    public function seeResponseMatchesOpenApiSchema(): void
+    {
+        if ($this->schema === null) {
+            throw new ModuleException('OpenApi3', 'Schema is not configured');
+        }
+
+        $connection = $this->getJsonLastConnection();
+        $pathDefinition = $this->findPathDefinition($this->schema, $connection->getRequestUrl());
+        $methodDefinition = $this->findMethodDefinition($pathDefinition, $connection->getRequestMethod());
+        $responseDefinition = $this->findResponseDefinition($methodDefinition, $connection->getResponseCode());
+        $responseSchema = $this->findResponseSchema($responseDefinition, $connection->getResponseContentType());
+
+        $this->seeResponseDataMatchesOpenApiSchema($connection->getResponseJson(), $responseSchema);
+    }
+
+    /**
+     * @part json
+     *
+     * @param array<string, mixed> $responseData
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $responseSchema
+     *
+     * @return void
+     */
+    public function seeResponseDataMatchesOpenApiSchema(array $responseData, Schema $responseSchema): void
+    {
+        $validator = new Validator();
+        $validator->validate($responseData, $responseSchema, Constraint::CHECK_MODE_EXCEPTIONS);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            'schema' => '',
+        ];
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi|null
+     */
+    protected function readOpenApiSchemaIfDefined(): ?OpenApi
+    {
+        $schemaPath = $this->config['schema'] ?: $this->getOpenApiSchemaFilePath();
+
+        $reader = new YamlFileReader($schemaPath);
+        $parser = new OpenApiSchemaParser();
+
+        try {
+            return $parser->parse($reader);
+        } catch (ParseException $exception) {
+            throw new ModuleException('OpenApi3', sprintf(
+                'OpenApi Schema validation has not passed: %s',
+                $exception->getMessage(),
+            ));
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi $schema
+     * @param string $url
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem
+     */
+    protected function findPathDefinition(OpenApi $schema, string $url): PathItem
+    {
+        $urlWithoutQuery = $this->getUrlWithoutQuery($url);
+        foreach ($schema->paths as $path => $pathDefinition) {
+            if ($this->isPathMatchesUrl($path, $urlWithoutQuery)) {
+                return $pathDefinition;
+            }
+        }
+
+        throw new AssertionFailedError(sprintf('No valid path is found in the schema for "%s"', $url));
+    }
+
+    /**
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem $pathItem
+     * @param string $method
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation
+     */
+    protected function findMethodDefinition(PathItem $pathItem, string $method): Operation
+    {
+        if (isset($pathItem->{$method})) {
+            return $pathItem->{$method};
+        }
+
+        throw new AssertionFailedError(sprintf('No valid method is found in the path definition for "%s"', $method));
+    }
+
+    /**
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation $operation
+     * @param int $responseCode
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response
+     */
+    protected function findResponseDefinition(Operation $operation, int $responseCode): Response
+    {
+        /** @var \Spryker\Glue\Testify\OpenApi3\Collection\Responses $responses */
+        $responses = $operation->responses;
+        if ($responses->offsetExists($responseCode)) {
+            return $responses[$responseCode];
+        }
+
+        $responseCodeMask = substr((string)$responseCode, 0, 1) . 'XX';
+        if ($responses->offsetExists($responseCodeMask)) {
+            return $responses[$responseCodeMask];
+        }
+
+        throw new AssertionFailedError(sprintf(
+            'No valid response code is found in the method definition for "%d"',
+            $responseCode,
+        ));
+    }
+
+    /**
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response $responseDefinition
+     * @param string $contentType
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema
+     */
+    protected function findResponseSchema(Response $responseDefinition, string $contentType): Schema
+    {
+        if (isset($responseDefinition->content[$contentType]->schema)) {
+            return $responseDefinition->content[$contentType]->schema;
+        }
+
+        throw new AssertionFailedError(sprintf(
+            'No valid response schema is found in the response definition for "%s"',
+            $contentType,
+        ));
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function getUrlWithoutQuery(string $url): string
+    {
+        return rtrim(strtok(parse_url($url, PHP_URL_PATH), '?'), '/');
+    }
+
+    /**
+     * @param string $path
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isPathMatchesUrl(string $path, string $url): bool
+    {
+        $pathTemplate = '#^' . preg_replace('/\{[^\}]+\}/m', '[^/]*', $path) . '((\?.*)|)$#';
+
+        return preg_match($pathTemplate, $url);
+    }
+}
