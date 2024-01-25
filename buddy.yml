@@ -5,7 +5,7 @@
             - 'refs/pull/*'
   fail_on_prepare_env_warning: true
   auto_clear_cache: true
-  resources: 'LARGE'
+  resources: 'NANO'
   actions:
       - action: 'Build Project'
         type: 'BUILD'
