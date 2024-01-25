@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
@@ -495,5 +496,22 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createVariantExpander()
             ->expandProductViewWithProductVariant($productViewTransfer, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param list<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     *
+     * @return array<int, array<string, string>>
+     */
+    public function generateProductAttributesResetUrlQueryParameters(Request $request, array $productViewTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductAttributesResetUrlGenerator()
+            ->generateProductAttributesResetUrlQueryParameters($request, $productViewTransfers);
     }
 }

@@ -24,7 +24,7 @@ use Spryker\Client\ProductStorage\ProductStorageClientInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Client\ProductStorage\PHPMD)
  */
 class ProductStorageClientTester extends Actor
 {

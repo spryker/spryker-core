@@ -25,6 +25,7 @@ use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
 use Spryker\Client\ProductStorage\ProductStorageFactory;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -106,6 +107,13 @@ class ProductStorageClientTest extends Unit
      * @var int
      */
     protected const ID_PRODUCT_5 = 8885;
+
+    /**
+     * @uses \Spryker\Client\ProductStorage\Generator\ProductAttributesResetUrlGenerator::REQUEST_PARAM_ATTRIBUTES
+     *
+     * @var string
+     */
+    protected const REQUEST_PARAM_ATTRIBUTES = 'attributes';
 
     /**
      * @var \SprykerTest\Client\ProductStorage\ProductStorageClientTester
@@ -432,6 +440,100 @@ class ProductStorageClientTest extends Unit
         // Assert
         $this->assertProductViewTransfersOrder($productConcreteIds, $productViewTransfers, ProductStorageClientTester::PRODUCT_CONCRETE_RESOURCE_NAME);
         $this->assertProductViewTransfersOrder($secondProductConcreteIds, $secondProductViewTransfers, ProductStorageClientTester::PRODUCT_CONCRETE_RESOURCE_NAME);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateProductAttributesResetUrlQueryParametersShouldGenerateParametersAccordingToProvidedRequestQueryData(): void
+    {
+        // Arrange
+        $productViewTransfer1 = $this->tester->createProductViewTransfer([ProductViewTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT]);
+        $productViewTransfer2 = $this->tester->createProductViewTransfer([ProductViewTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_2]);
+        $productViewTransfer1->setAttributeMap($this->buildAttributeMapStorageTransfer([
+            AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                static::SUPER_ATTRIBUTE_NAME_1 => [
+                    static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+            ],
+        ]));
+        $productViewTransfer2->setAttributeMap($this->buildAttributeMapStorageTransfer([
+            AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                static::SUPER_ATTRIBUTE_NAME_1 => [
+                    static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+                static::SUPER_ATTRIBUTE_NAME_2 => [
+                    static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ],
+            ],
+        ]));
+
+        $requestQuery = [
+            static::REQUEST_PARAM_ATTRIBUTES => [
+                $productViewTransfer1->getIdProductAbstractOrFail() => [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+                $productViewTransfer2->getIdProductAbstractOrFail() => [
+                    static::SUPER_ATTRIBUTE_NAME_1 => '',
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                ],
+            ],
+        ];
+        $request = (new Request($requestQuery));
+
+        $expectedProductAttributesResetUrlQueryParameters1 = [
+            static::SUPER_ATTRIBUTE_NAME_1 => http_build_query([
+                static::REQUEST_PARAM_ATTRIBUTES => [
+                    $productViewTransfer2->getIdProductAbstractOrFail() => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => '',
+                        static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    ],
+                ],
+            ]),
+        ];
+        $expectedProductAttributesResetUrlQueryParameters2 = [
+            static::SUPER_ATTRIBUTE_NAME_1 => http_build_query([
+                static::REQUEST_PARAM_ATTRIBUTES => [
+                    $productViewTransfer1->getIdProductAbstractOrFail() => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                    ],
+                    $productViewTransfer2->getIdProductAbstractOrFail() => [
+                        static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    ],
+                ],
+            ]),
+            static::SUPER_ATTRIBUTE_NAME_2 => http_build_query([
+                static::REQUEST_PARAM_ATTRIBUTES => [
+                    $productViewTransfer1->getIdProductAbstractOrFail() => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                    ],
+                    $productViewTransfer2->getIdProductAbstractOrFail() => [
+                        static::SUPER_ATTRIBUTE_NAME_1 => '',
+                    ],
+                ],
+            ]),
+        ];
+
+        // Act
+        $productAttributesResetUrlQueryParameters = $this->tester->getProductStorageClient()
+            ->generateProductAttributesResetUrlQueryParameters($request, [
+                $productViewTransfer1,
+                $productViewTransfer2,
+            ]);
+
+        // Assert
+        $this->assertCount(2, $productAttributesResetUrlQueryParameters);
+        $this->assertArrayHasKey($productViewTransfer1->getIdProductAbstractOrFail(), $productAttributesResetUrlQueryParameters);
+        $this->assertArrayHasKey($productViewTransfer2->getIdProductAbstractOrFail(), $productAttributesResetUrlQueryParameters);
+        $this->assertSame(
+            $expectedProductAttributesResetUrlQueryParameters1,
+            $productAttributesResetUrlQueryParameters[$productViewTransfer1->getIdProductAbstractOrFail()],
+        );
+        $this->assertSame(
+            $expectedProductAttributesResetUrlQueryParameters2,
+            $productAttributesResetUrlQueryParameters[$productViewTransfer2->getIdProductAbstractOrFail()],
+        );
     }
 
     /**

@@ -20,6 +20,8 @@ use Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductConcreteViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface;
+use Spryker\Client\ProductStorage\Generator\ProductAttributesResetUrlGenerator;
+use Spryker\Client\ProductStorage\Generator\ProductAttributesResetUrlGeneratorInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductAbstractStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper;
@@ -192,6 +194,14 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductConcreteStorageUrlBuilder(): ProductConcreteStorageUrlBuilderInterface
     {
         return new ProductConcreteStorageUrlBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Generator\ProductAttributesResetUrlGeneratorInterface
+     */
+    public function createProductAttributesResetUrlGenerator(): ProductAttributesResetUrlGeneratorInterface
+    {
+        return new ProductAttributesResetUrlGenerator();
     }
 
     /**

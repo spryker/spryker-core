@@ -24,7 +24,7 @@ use Codeception\Actor;
  * @method void pause()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\ProductStorage\PHPMD)
  */
 class ProductStorageBusinessTester extends Actor
 {

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 interface ProductStorageClientInterface
 {
@@ -436,4 +437,19 @@ interface ProductStorageClientInterface
         ProductViewTransfer $productViewTransfer,
         string $localeName
     ): ProductViewTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ProductViewTransfer.idProductAbstract` and `ProductViewTransfer.attributeMap` properties to be set.
+     * - Generates request URLs query parameters to reset selected product attributes.
+     * - Uses the current request to generate reset URL query parameters.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param list<\Generated\Shared\Transfer\ProductViewTransfer> $productViewTransfers
+     *
+     * @return array<int, array<string, string>>
+     */
+    public function generateProductAttributesResetUrlQueryParameters(Request $request, array $productViewTransfers): array;
 }
