@@ -3,7 +3,6 @@
       - type: 'PUSH'
         refs:
             - 'refs/pull/*'
-  terminate_stale_runs: true
   fail_on_prepare_env_warning: true
   auto_clear_cache: true
   resources: 'LARGE'
