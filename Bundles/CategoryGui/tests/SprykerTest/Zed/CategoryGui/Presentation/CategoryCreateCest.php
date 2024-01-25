@@ -59,6 +59,7 @@ class CategoryCreateCest
     protected function fillAttributeFields(CategoryPresentationTester $i, array $attributes): void
     {
         foreach ($attributes as $selector => $value) {
+            $i->waitForElementVisible(['name' => $selector]);
             $i->fillField(['name' => $selector], $value);
         }
     }

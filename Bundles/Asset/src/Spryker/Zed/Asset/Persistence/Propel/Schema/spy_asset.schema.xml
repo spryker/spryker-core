@@ -17,6 +17,7 @@
         <behavior name="event">
             <parameter name="spy_asset_all" column="*"/>
         </behavior>
+        <id-method-parameter value="spy_asset_pk_seq"/>
     </table>
 
     <table name="spy_asset_store" identifierQuoting="true">
@@ -40,5 +41,6 @@
         <behavior name="event">
             <parameter name="spy_asset_store_all" column="*"/>
         </behavior>
+        <id-method-parameter value="spy_asset_store_pk_seq"/>
     </table>
 </database>
