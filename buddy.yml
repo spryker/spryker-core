@@ -4,9 +4,9 @@
         refs:
             - 'refs/pull/*'
   terminate_stale_runs: true
-  fail_on_prepare_env_warning: true
   auto_clear_cache: true
-  resources: 'SMALL'
+  fail_on_prepare_env_warning: true
+  resources: 'MEDIUM'
   actions:
       - action: 'Build Project'
         type: 'BUILD'
@@ -20,8 +20,10 @@
         type: 'BUILD'
         time: 15
         docker_image_name: 'library/node'
-        docker_image_tag: '20'
+        docker_image_tag: '18'
         execute_commands:
+            - 'npm install'
+            - 'npm run mp:build:production'
             - 'npm ci'
             - 'npm run formatter'
             - 'npm run mp:stylelint'
