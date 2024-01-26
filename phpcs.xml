@@ -7,7 +7,7 @@
         it per module and per level.
     </description>
 
-    <exclude name="S2632" />
+    <exclude name="S2632"/>
 
     <arg name="tab-width" value="4"/>
     <arg value="nps"/>
