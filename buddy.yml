@@ -18,7 +18,6 @@
         shell: 'BASH'
       - action: 'JS Validation'
         type: 'BUILD'
-        time: 15
         docker_image_name: 'library/node'
         docker_image_tag: '18'
         execute_commands:
