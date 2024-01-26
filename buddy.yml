@@ -28,6 +28,7 @@
             - '.ci/snippet/RUN npm run mp:stylelint'
             - '.ci/snippet/RUN npm run mp:lint'
             - '.ci/snippet/RUN npm run mp:test'
+            - '.ci/snippet/FINISH'
         cache_base_image: false
         run_next_parallel: true
         shell: 'BASH'
