@@ -6,7 +6,7 @@
   terminate_stale_runs: true
   auto_clear_cache: true
   fail_on_prepare_env_warning: true
-  resources: 'MEDIUM'
+  resources: 'LARGE'
   actions:
       - action: 'Build Project'
         type: 'BUILD'
@@ -31,6 +31,7 @@
             - 'npm run mp:lint'
             - 'npm run mp:test'
         cache_base_image: false
+        run_next_parallel: true
         shell: 'BASH'
       - action: 'PHP Validation'
         type: 'BUILD'
