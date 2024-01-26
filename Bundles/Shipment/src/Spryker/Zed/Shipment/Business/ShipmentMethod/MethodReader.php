@@ -280,6 +280,7 @@ class MethodReader implements MethodReaderInterface
     ): ShipmentMethodsTransfer {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         foreach ($activeShipmentMethodTransfers as $shipmentMethodTransfer) {
+            $shipmentMethodTransfer = (new ShipmentMethodTransfer())->fromArray($shipmentMethodTransfer->toArray());
             $shipmentMethodTransfer = $this->prepareAvailableShipmentMethod(
                 $shipmentMethodTransfer,
                 $quoteTransfer,
