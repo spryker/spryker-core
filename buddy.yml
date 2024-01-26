@@ -23,7 +23,6 @@
         docker_image_tag: '18'
         execute_commands:
             - 'npm install'
-            - 'npm run mp:build:production'
             - 'npm ci'
             - 'npm run formatter'
             - 'npm run mp:stylelint'
