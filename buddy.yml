@@ -20,9 +20,11 @@
         type: 'BUILD'
         time: 15
         docker_image_name: 'library/node'
-        docker_image_tag: '18'
+        docker_image_tag: 'latest'
         execute_commands:
-            - 'npm install'
+            - 'npm install -g n'
+            - 'n latest'  # This installs the latest stable version of Node.js
+            - 'npm install -g npm'  # This installs the latest stable version of npm
             - 'npm ci'
             - 'npm run formatter'
             - 'npm run mp:stylelint'
