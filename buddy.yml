@@ -25,10 +25,11 @@
             - 'npm run formatter'
             - 'npm run mp:stylelint'
             - 'npm run mp:lint'
-            - 'timeout 20 npm run mp:test'
+            - 'npm run mp:test'
         cache_base_image: false
         run_next_parallel: true
         shell: 'BASH'
+        timeout: 30
       - action: 'PHP Validation'
         type: 'BUILD'
         docker_image_name: 'spryker/php'
