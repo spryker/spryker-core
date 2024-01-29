@@ -22,15 +22,14 @@
         docker_image_name: 'library/node'
         docker_image_tag: '18'
         execute_commands:
-            - '.ci/snippet/PREPARE'
-            - '.ci/snippet/REQUIRE npm ci'
-            - '.ci/snippet/RUN npm run formatter'
-            - '.ci/snippet/RUN npm run mp:stylelint'
-            - '.ci/snippet/RUN npm run mp:lint'
-            - '.ci/snippet/RUN npm run mp:test'
-            - '.ci/snippet/FINISH'
+            - 'npm ci'
+            - 'npm run formatter'
+            - 'npm run mp:stylelint'
+            - 'npm run mp:lint'
+            - 'npm run mp:test'
         cache_base_image: false
         run_next_parallel: true
+        timeout: 1200
         shell: 'BASH'
       - action: 'PHP Validation'
         type: 'BUILD'
