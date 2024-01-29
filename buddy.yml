@@ -29,7 +29,7 @@
         cache_base_image: false
         run_next_parallel: true
         shell: 'BASH'
-        timeout: 30m
+        timeout: 1800
       - action: 'PHP Validation'
         type: 'BUILD'
         docker_image_name: 'spryker/php'
