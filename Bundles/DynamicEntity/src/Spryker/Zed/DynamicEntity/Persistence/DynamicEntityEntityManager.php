@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
@@ -33,6 +34,11 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class DynamicEntityEntityManager extends AbstractEntityManager implements DynamicEntityEntityManagerInterface
 {
     use TransactionTrait;
+
+    /**
+     * @var string
+     */
+    protected const ERROR_ENTITY_MODEL_NOT_FOUND = 'Model for table "%s" not found.';
 
     /**
      * @var string
@@ -63,6 +69,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @var string
      */
     protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE = 'dynamic_entity.validation.entity_not_found_or_identifier_is_not_creatable';
+
+    /**
+     * @var string
+     */
+    protected const KEY_CONFIGURATIONS = 'configurations';
 
     /**
      * @var string
@@ -115,8 +126,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
-     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
-     *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function createDynamicEntityCollection(
@@ -125,17 +134,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     ): DynamicEntityCollectionResponseTransfer {
         $dynamicEntityCollectionResponseTransfer = new DynamicEntityCollectionResponseTransfer();
 
-        $entityClassName = $this->getFactory()->createDynamicEntityQueryBuilder()
-            ->getEntityClassName($dynamicEntityConfigurationTransfer->getTableNameOrFail());
+        $entityClassName = $this->getEntityClassName($dynamicEntityConfigurationTransfer->getTableNameOrFail());
 
-        if ($entityClassName === null || !class_exists($entityClassName)) {
-            throw new DynamicEntityModelNotFoundException(
-                sprintf(
-                    'Model for table "%s" not found.',
-                    $dynamicEntityConfigurationTransfer->getTableNameOrFail(),
-                ),
-            );
-        }
+        $dynamicEntityMapper = $this->getFactory()->createDynamicEntityMapper();
+        $indexedDynamicEntityConfigurations = $dynamicEntityMapper->getChildDynamicEntityConfigurationsIndexedByTableName($dynamicEntityConfigurationTransfer);
+        $indexedChildRelations = $dynamicEntityMapper->getChildTableAliasesIndexedByRelationName($dynamicEntityConfigurationTransfer);
 
         foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
             /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord */
@@ -161,6 +164,18 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityConfigurationTransfer,
                 $dynamicEntityTransfer,
+                $activeRecord,
+            );
+
+            if ($dynamicEntityCollectionResponseTransfer->getErrors()->count() > 0) {
+                return $dynamicEntityCollectionResponseTransfer;
+            }
+
+            $dynamicEntityCollectionResponseTransfer = $this->createChildDynamicEntitiesCollection(
+                $dynamicEntityTransfer,
+                $dynamicEntityCollectionResponseTransfer,
+                $indexedChildRelations,
+                $indexedDynamicEntityConfigurations,
                 $activeRecord,
             );
         }
@@ -305,6 +320,76 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param array<mixed> $indexedChildRelations
+     * @param array<mixed> $indexedDynamicEntityConfigurations
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentActiveRecord
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    protected function createChildDynamicEntitiesCollection(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        array $indexedChildRelations,
+        array $indexedDynamicEntityConfigurations,
+        ActiveRecordInterface $parentActiveRecord
+    ): DynamicEntityCollectionResponseTransfer {
+        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelation) {
+            $entityClassName = $this->getEntityClassName($indexedChildRelations[$childRelation->getNameOrFail()]->getChildDynamicEntityConfigurationOrFail()->getTableNameOrFail());
+
+            foreach ($childRelation->getDynamicEntities() as $childDynamicEntity) {
+                $relationConfiguration = $indexedDynamicEntityConfigurations[$indexedChildRelations[$childRelation->getNameOrFail()]->getChildDynamicEntityConfigurationOrFail()->getTableNameOrFail()];
+                $setMethod = $this->convertChildFieldNameToSetForeignKeyMethod($relationConfiguration);
+
+                /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord */
+                $activeRecord = new $entityClassName();
+                $activeRecord->$setMethod($parentActiveRecord->getPrimaryKey());
+
+                $childDynamicEntity = $this->getFactory()->createDynamicEntityFieldCreationFilter()->filter(
+                    $relationConfiguration[static::KEY_CONFIGURATIONS],
+                    $childDynamicEntity,
+                    $activeRecord,
+                );
+
+                $dynamicEntityCollectionResponseTransfer = $this->processActiveRecordSaving(
+                    $dynamicEntityCollectionResponseTransfer,
+                    $relationConfiguration[static::KEY_CONFIGURATIONS],
+                    $childDynamicEntity,
+                    $activeRecord,
+                    true,
+                );
+
+                if ($childDynamicEntity->getChildRelations()->count() > 0) {
+                    $dynamicEntityCollectionResponseTransfer = $this->createChildDynamicEntitiesCollection(
+                        $childDynamicEntity,
+                        $dynamicEntityCollectionResponseTransfer,
+                        $indexedChildRelations,
+                        $indexedDynamicEntityConfigurations,
+                        $activeRecord,
+                    );
+                }
+            }
+        }
+
+        return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
+     * @param array<mixed> $relationConfiguration
+     *
+     * @return string
+     */
+    protected function convertChildFieldNameToSetForeignKeyMethod(array $relationConfiguration): string
+    {
+        $childFieldName = $relationConfiguration[DynamicEntityConfigurationRelationTransfer::RELATION_FIELD_MAPPINGS]->offsetGet(0)->getChildFieldName();
+        $childFieldName = ucwords(preg_replace('/_/', ' ', $childFieldName));
+        $childFieldName = str_replace(' ', '', $childFieldName);
+
+        return sprintf('set' . $childFieldName);
+    }
+
+    /**
      * @throw \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
@@ -342,6 +427,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     * @param bool $isChildEntity
      *
      * @throws \Throwable
      *
@@ -351,7 +437,8 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        ActiveRecordInterface $activeRecord
+        ActiveRecordInterface $activeRecord,
+        bool $isChildEntity = false
     ): DynamicEntityCollectionResponseTransfer {
         $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
 
@@ -366,6 +453,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         } catch (Exception $exception) {
             $exceptionMapper = $this->getFactory()->createExceptionToErrorMapper();
             $errorMessageTransfer = $exceptionMapper->map($exception, $dynamicEntityConfigurationTransfer);
+
             if ($errorMessageTransfer !== null) {
                 return $dynamicEntityCollectionResponseTransfer->addError($errorMessageTransfer);
             }
@@ -376,7 +464,9 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $dynamicEntityTransfer = $this->buildDynamicEntityFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
         $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord, $dynamicEntityConfigurationTransfer);
 
-        $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
+        if ($isChildEntity === false) {
+            $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
+        }
 
         return $dynamicEntityCollectionResponseTransfer;
     }
@@ -550,5 +640,26 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         }
 
         return $identifier;
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return string
+     */
+    protected function getEntityClassName(string $tableName): string
+    {
+        $entityClassName = $this->getFactory()->createDynamicEntityQueryBuilder()
+            ->getEntityClassName($tableName);
+
+        if ($entityClassName === null || !class_exists($entityClassName)) {
+            throw new DynamicEntityModelNotFoundException(
+                sprintf(static::ERROR_ENTITY_MODEL_NOT_FOUND, $tableName),
+            );
+        }
+
+        return $entityClassName;
     }
 }

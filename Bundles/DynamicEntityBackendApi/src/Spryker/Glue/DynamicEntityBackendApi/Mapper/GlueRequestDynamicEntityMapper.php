@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
+use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -183,11 +184,56 @@ class GlueRequestDynamicEntityMapper
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         array $fields
     ): DynamicEntityCollectionRequestTransfer {
-        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
-            (new DynamicEntityTransfer())->setFields($fields),
-        );
+        $dynamicEntityTransfer = $this
+            ->mapChildRelationsToDynamicEntityTransfer($fields)
+            ->setFields($fields);
+
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity($dynamicEntityTransfer);
 
         return $dynamicEntityCollectionRequestTransfer;
+    }
+
+    /**
+     * @param array<mixed> $fields
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer|null $childDynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityRelationTransfer|null $childRelation
+     * @param array<mixed> $childRelations
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
+     */
+    protected function mapChildRelationsToDynamicEntityTransfer(
+        array $fields,
+        ?DynamicEntityTransfer $childDynamicEntityTransfer = null,
+        ?DynamicEntityRelationTransfer $childRelation = null,
+        array $childRelations = []
+    ): DynamicEntityTransfer {
+        $dynamicEntityTransfer = new DynamicEntityTransfer();
+
+        foreach ($fields as $fieldName => $fieldValue) {
+            if (is_array($fieldValue) === false) {
+                continue;
+            }
+
+            if (!is_int($fieldName)) {
+                $childRelation = $childRelations[$fieldName] ?? (new DynamicEntityRelationTransfer())->setName($fieldName);
+                $childRelations[$fieldName] = $childRelation;
+
+                $this->mapChildRelationsToDynamicEntityTransfer($fieldValue, null, $childRelation, $childRelations);
+
+                $dynamicEntityTransfer = $childDynamicEntityTransfer ?? $dynamicEntityTransfer;
+                $dynamicEntityTransfer->addChildRelation($childRelation);
+
+                continue;
+            }
+
+            $childDynamicEntity = (new DynamicEntityTransfer())->setFields($fieldValue);
+            $childRelation->addDynamicEntity($childDynamicEntity);
+            $childRelations[$childRelation->getName()] = $childRelation;
+
+            $this->mapChildRelationsToDynamicEntityTransfer($fieldValue, $childDynamicEntity, $childRelation, $childRelations);
+        }
+
+        return $dynamicEntityTransfer;
     }
 
     /**

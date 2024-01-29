@@ -10,10 +10,14 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\DynamicEntity;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
+use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
@@ -21,6 +25,9 @@ use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping;
+use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationQuery;
+use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacade;
+use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface;
 
 /**
  * Inherited Methods
@@ -451,23 +458,23 @@ DEFINITION;
 
     /**
      * @param string $name
-     * @param string $parrentFieldName
-     * @param string $parrentFieldId
+     * @param string $parentFieldName
+     * @param int $parentFieldId
      * @param string $childFieldName
-     * @param string $childFieldId
+     * @param int $childFieldId
      *
      * @return void
      */
     public function createRelationWithFieldMapping(
         string $name,
-        string $parrentFieldName,
-        string $parrentFieldId,
+        string $parentFieldName,
+        int $parentFieldId,
         string $childFieldName,
-        string $childFieldId
+        int $childFieldId
     ): void {
         $relationEntity = new SpyDynamicEntityConfigurationRelation();
         $relationEntity->setName($name)
-            ->setFkParentDynamicEntityConfiguration((int)$parrentFieldId)
+            ->setFkParentDynamicEntityConfiguration((int)$parentFieldId)
             ->setFkChildDynamicEntityConfiguration((int)$childFieldId)
             ->setIsEditable(true)
             ->save();
@@ -475,7 +482,7 @@ DEFINITION;
         (new SpyDynamicEntityConfigurationRelationFieldMapping())
             ->setFkDynamicEntityConfigurationRelation($relationEntity->getIdDynamicEntityConfigurationRelation())
             ->setChildFieldName($childFieldName)
-            ->setParentFieldName($parrentFieldName)
+            ->setParentFieldName($parentFieldName)
             ->save();
     }
 
@@ -499,6 +506,164 @@ DEFINITION;
         }
 
         return null;
+    }
+
+    /**
+     * @param string $parentTableAlias
+     * @param string $relationName
+     * @param string $parentConfigurationIdField
+     * @param string $childConfigurationIdField
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
+     */
+    public function createDynamicEntityConfigurationWithRelationAndFieldMapping(
+        string $parentTableAlias,
+        string $relationName,
+        string $parentConfigurationIdField,
+        string $childConfigurationIdField
+    ): SpyDynamicEntityConfiguration {
+        $dynamicEntityConfigurationRelationEntity = $this->createConfigRelationEntity();
+        $dynamicEntityConfigurationEntity = $this->findDynamicEntityConfiguration($parentTableAlias);
+
+        $this->createRelationWithFieldMapping(
+            $relationName,
+            $parentConfigurationIdField,
+            $dynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration(),
+            $childConfigurationIdField,
+            $dynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfiguration(),
+        );
+
+        return $dynamicEntityConfigurationEntity;
+    }
+
+    /**
+     * @param string $tableAlias
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
+     */
+    public function createDynamicEntityCollectionRequestTransfer(string $tableAlias): DynamicEntityCollectionRequestTransfer
+    {
+        $dynamicEntityCollectionRequestTransfer = new DynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer->setTableAlias($tableAlias);
+
+        return $dynamicEntityCollectionRequestTransfer;
+    }
+
+    /**
+     * @param string $tableAlias
+     * @param string|null $filterCondition
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer
+     */
+    public function haveDynamicEntityCriteriaTransfer(
+        string $tableAlias,
+        ?string $filterCondition = null
+    ): DynamicEntityCriteriaTransfer {
+        $dynamicEntityConditionTransfer = (new DynamicEntityConditionsTransfer())
+            ->setTableAlias($tableAlias);
+
+        if ($filterCondition) {
+            $dynamicEntityConditionTransfer->addFieldCondition(
+                (new DynamicEntityFieldConditionTransfer())
+                    ->setName('table_alias')
+                    ->setValue($filterCondition),
+            );
+        }
+
+        return (new DynamicEntityCriteriaTransfer())
+            ->setDynamicEntityConditions($dynamicEntityConditionTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface
+     */
+    public function createDynamicEntityFacade(): DynamicEntityFacadeInterface
+    {
+        return new DynamicEntityFacade();
+    }
+
+    /**
+     * @param string $tableName
+     * @param string $tableAlias
+     * @param string $definition
+     *
+     * @return void
+     */
+    public function createDynamicEntityConfigurationEntity(string $tableName, string $tableAlias, string $definition): void
+    {
+        (new SpyDynamicEntityConfiguration())
+            ->setIsActive(true)
+            ->setTableName($tableName)
+            ->setTableAlias($tableAlias)
+            ->setDefinition($definition)
+            ->setDefinition($definition)
+            ->save();
+    }
+
+    /**
+     * @param string $relationName
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation
+     */
+    public function getDynamicEntityConfigurationRelationEntityByRelation(string $relationName): SpyDynamicEntityConfigurationRelation
+    {
+        return SpyDynamicEntityConfigurationRelationQuery::create()
+            ->filterByName($relationName)
+            ->find()
+            ->getData()[0];
+    }
+
+    /**
+     * @param string $tableAlias
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
+     */
+    public function getDynamicEntityConfigurationByTableAlias(string $tableAlias): SpyDynamicEntityConfiguration
+    {
+        return SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableAlias($tableAlias)
+            ->find()
+            ->getData()[0];
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
+     */
+    public function getDynamicEntityConfigurationByTableName(string $tableName): SpyDynamicEntityConfiguration
+    {
+        return SpyDynamicEntityConfigurationQuery::create()
+            ->filterByTableName($tableName)
+            ->find()
+            ->getData()[0];
+    }
+
+    /**
+     * @param int $idDynamicEntityConfiguration
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration
+     */
+    public function getDynamicEntityConfigurationByIdDynamicEntityConfiguration(int $idDynamicEntityConfiguration): SpyDynamicEntityConfiguration
+    {
+        return SpyDynamicEntityConfigurationQuery::create()
+            ->filterByIdDynamicEntityConfiguration($idDynamicEntityConfiguration)
+            ->find()
+            ->getData()[0];
+    }
+
+    /**
+     * @param int $idDynamicEntityConfigurationRelation
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation
+     */
+    public function getDynamicEntityConfigurationRelationByIdDynamicEntityConfigurationRelation(
+        int $idDynamicEntityConfigurationRelation
+    ): SpyDynamicEntityConfigurationRelation {
+        return SpyDynamicEntityConfigurationRelationQuery::create()
+            ->filterByIdDynamicEntityConfigurationRelation($idDynamicEntityConfigurationRelation)
+            ->find()
+            ->getData()[0];
     }
 
     /**

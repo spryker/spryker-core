@@ -83,6 +83,11 @@ class GlueResponseDynamicEntityMapper
     /**
      * @var string
      */
+    protected const GLOSSARY_KEY_NOT_EDITABLE_RELATION = 'dynamic_entity.validation.relation_is_not_editable';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_DATA = 'data';
 
     /**
@@ -149,6 +154,11 @@ class GlueResponseDynamicEntityMapper
      * @var int
      */
     protected const RESPONSE_CODE_RELATION_NOT_FOUND = 1313;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_RELATION_IS_NOT_EDITABLE = 1314;
 
     /**
      * @var string
@@ -412,6 +422,10 @@ class GlueResponseDynamicEntityMapper
             static::GLOSSARY_KEY_RELATION_NOT_FOUND => [
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_RELATION_NOT_FOUND,
+            ],
+            static::GLOSSARY_KEY_NOT_EDITABLE_RELATION => [
+                GlueErrorTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_RELATION_IS_NOT_EDITABLE,
             ],
         ];
     }

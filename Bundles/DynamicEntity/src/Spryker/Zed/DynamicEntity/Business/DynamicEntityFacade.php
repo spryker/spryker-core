@@ -50,7 +50,7 @@ class DynamicEntityFacade extends AbstractFacade implements DynamicEntityFacadeI
     public function createDynamicEntityCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
     ): DynamicEntityCollectionResponseTransfer {
-        return $this->getFactory()->createDynamicEntityWriter()->create($dynamicEntityCollectionRequestTransfer);
+        return $this->getFactory()->createDynamicEntityCreator()->create($dynamicEntityCollectionRequestTransfer);
     }
 
     /**
@@ -65,7 +65,7 @@ class DynamicEntityFacade extends AbstractFacade implements DynamicEntityFacadeI
     public function updateDynamicEntityCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
     ): DynamicEntityCollectionResponseTransfer {
-        return $this->getFactory()->createDynamicEntityWriter()->update($dynamicEntityCollectionRequestTransfer);
+        return $this->getFactory()->createDynamicEntityUpdater()->update($dynamicEntityCollectionRequestTransfer);
     }
 
     /**

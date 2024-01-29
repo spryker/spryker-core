@@ -8,20 +8,13 @@
 namespace SprykerTest\Zed\DynamicEntity\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
-use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCriteriaTransfer;
-use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
-use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
-use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationQuery;
-use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacade;
-use Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidatorInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
@@ -140,8 +133,12 @@ class DynamicEntityFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->dynamicEntityFacade = $this->createDynamicEntityFacade();
-        $this->createFooEntity();
+        $this->dynamicEntityFacade = $this->tester->createDynamicEntityFacade();
+        $this->tester->createDynamicEntityConfigurationEntity(
+            static::TABLE_NAME,
+            static::FOO_TABLE_ALIAS_1,
+            static::FOO_DEFINITION,
+        );
     }
 
     /**
@@ -150,7 +147,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testGetDynamicEntityCollectionReturnsNotEmptyCollection(): void
     {
         //Arrange
-        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCriteriaTransfer = $this->tester->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
 
         //Act
         $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
@@ -168,7 +165,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testGetDynamicEntityCollectionReturnsFilteredCollection(): void
     {
         //Arrange
-        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1, static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCriteriaTransfer = $this->tester->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1, static::FOO_TABLE_ALIAS_1);
 
         //Act
         $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
@@ -185,7 +182,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testGetDynamicEntityCollectionReturnsEmptyCollection(): void
     {
         //Arrange
-        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1, static::FOO_CONDITION);
+        $dynamicEntityCriteriaTransfer = $this->tester->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1, static::FOO_CONDITION);
 
         //Act
         $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
@@ -200,24 +197,21 @@ class DynamicEntityFacadeTest extends Unit
     public function testGetDynamicEntityCollectionReturnsCollectionWithoutChild(): void
     {
         // Arrange
-        $spyDynamicEntityConfigurationRelationEntity = $this->tester->createConfigRelationEntity();
-        $spyDynamicEntityConfigurationEntity = $this->tester->findDynamicEntityConfiguration(static::FOO_TABLE_ALIAS_1);
-        $this->tester->createRelationWithFieldMapping(
+        $dynamicEntityConfigurationEntity = $this->tester->createDynamicEntityConfigurationWithRelationAndFieldMapping(
+            static::FOO_TABLE_ALIAS_1,
             static::RELATION_TEST_NAME,
             static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
-            $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration(),
             static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
-            $spyDynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfiguration(),
         );
 
-        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCriteriaTransfer = $this->tester->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
 
         // Act
         $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
         $dynamicEntityTranfer = $this->tester->getDynamicEntityFromCollectionByFieldNameAndValue($dynamicEntityCollectionTransfer, 'table_alias', 'FOO');
 
         // Assert
-        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
+        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $dynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
         $this->assertEmpty($dynamicEntityTranfer->getChildRelations());
     }
 
@@ -227,17 +221,14 @@ class DynamicEntityFacadeTest extends Unit
     public function testGetDynamicEntityCollectionReturnsCollectionWithChildRelations(): void
     {
         // Arrange
-        $spyDynamicEntityConfigurationRelationEntity = $this->tester->createConfigRelationEntity();
-        $spyDynamicEntityConfigurationEntity = $this->tester->findDynamicEntityConfiguration(static::FOO_TABLE_ALIAS_1);
-        $this->tester->createRelationWithFieldMapping(
+        $dynamicEntityConfigurationEntity = $this->tester->createDynamicEntityConfigurationWithRelationAndFieldMapping(
+            static::FOO_TABLE_ALIAS_1,
             static::RELATION_TEST_NAME,
             static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
-            $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration(),
             static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
-            $spyDynamicEntityConfigurationRelationEntity->getIdDynamicEntityConfiguration(),
         );
 
-        $dynamicEntityCriteriaTransfer = $this->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCriteriaTransfer = $this->tester->haveDynamicEntityCriteriaTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCriteriaTransfer->setRelationChains([static::RELATION_TEST_NAME]);
 
         // Act
@@ -245,7 +236,7 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityTranfer = $this->tester->getDynamicEntityFromCollectionByFieldNameAndValue($dynamicEntityCollectionTransfer, 'table_alias', 'FOO');
 
         // Assert
-        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $spyDynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
+        $this->assertEquals($dynamicEntityTranfer->getFields()[static::FIELD_PARENT_ENTITY_ID_CONFIGURATION], $dynamicEntityConfigurationEntity->getIdDynamicEntityConfiguration());
         $this->assertNotEmpty($dynamicEntityTranfer->getChildRelations());
         $this->assertEquals(1, count($dynamicEntityTranfer->getChildRelations()));
         $this->assertNotEmpty($dynamicEntityTranfer->getChildRelations()[0]);
@@ -261,7 +252,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testCreateDynamicEntityCollectionCreatesTheRecord(): void
     {
         //Arrange
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -278,11 +269,8 @@ class DynamicEntityFacadeTest extends Unit
         //Assert
         $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
 
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableName(static::FOO_TABLE_NAME)
-            ->find()
-            ->getData();
-        $this->assertEquals(static::FOO_TABLE_ALIAS_2, $fooEntity[0]->getTableAlias());
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableName(static::FOO_TABLE_NAME);
+        $this->assertEquals(static::FOO_TABLE_ALIAS_2, $dynamicConfigurationEntity->getTableAlias());
     }
 
     /**
@@ -293,7 +281,7 @@ class DynamicEntityFacadeTest extends Unit
         //Arrange
         $tableAliasUniq = uniqid();
         $tableNameUniq = 'spy_' . $tableAliasUniq;
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -307,11 +295,8 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->createDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
 
         //Assert
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableName($tableNameUniq)
-            ->find()
-            ->getData();
-        $this->assertEquals(false, $fooEntity[0]->getIsActive());
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableName($tableNameUniq);
+        $this->assertEquals(false, $dynamicConfigurationEntity->getIsActive());
     }
 
     /**
@@ -320,7 +305,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testCreateDynamicEntityCollectionReturnErrorIfInvalidDataTypeIsPassed(): void
     {
         //Arrange
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -348,7 +333,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testCreateDynamicEntityCollectionReturnErrorIfInvalidFieldNameIsProvided(): void
     {
         //Arrange
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -376,7 +361,7 @@ class DynamicEntityFacadeTest extends Unit
     public function testCreateDynamicEntityConfigurationCollectionExecutesDynamicEntityPostCreatePlugins(): void
     {
         // Arrange
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -411,16 +396,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionUpdatesTheRecord(): void
     {
         //Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name' => static::FOO_TABLE_NAME,
                 ]),
         );
@@ -429,13 +411,93 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
 
         //Assert
-        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
-            ->find()
-            ->getData()[0];
+        $updatedDynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByIdDynamicEntityConfiguration(
+            $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+        );
         $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
-        $this->assertNotEquals($fooEntity->getTableName(), $updatedFooEntity->getTableName());
-        $this->assertEquals(static::FOO_TABLE_NAME, $updatedFooEntity->getTableName());
+        $this->assertNotEquals($dynamicConfigurationEntity->getTableName(), $updatedDynamicConfigurationEntity->getTableName());
+        $this->assertEquals(static::FOO_TABLE_NAME, $updatedDynamicConfigurationEntity->getTableName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPatchDynamicEntityCollectionUpdatesCollectionWithChildRelations(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationEntity = $this->tester->createDynamicEntityConfigurationWithRelationAndFieldMapping(
+            static::FOO_TABLE_ALIAS_1,
+            static::RELATION_TEST_NAME,
+            static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
+            static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
+        );
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
+        $relationEntity = $this->tester->getDynamicEntityConfigurationRelationEntityByRelation(static::RELATION_TEST_NAME);
+        $childDynamicConfigurationEntity = $relationEntity->getSpyDynamicEntityConfigurationRelatedByFkChildDynamicEntityConfiguration();
+
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+                    'table_name' => static::FOO_TABLE_NAME,
+                    static::RELATION_TEST_NAME => [
+                        [
+                            'id_dynamic_entity_configuration_relation' => $relationEntity->getIdDynamicEntityConfigurationRelation(),
+                            'fk_parent_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+                            'fk_child_dynamic_entity_configuration' => 1,
+                            'is_editable' => true,
+                            'name' => 'testme',
+                        ],
+                    ],
+                ]),
+        );
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        // Assert
+        $updatedDynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByIdDynamicEntityConfiguration(
+            $childDynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+        );
+        $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
+        $this->assertNotEquals($dynamicConfigurationEntity->getTableName(), $updatedDynamicConfigurationEntity->getTableName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPatchDynamicEntityCollectionWithChildRelationsHasErrorsWhenWrongData(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationEntity = $this->tester->createDynamicEntityConfigurationWithRelationAndFieldMapping(
+            static::FOO_TABLE_ALIAS_1,
+            static::RELATION_TEST_NAME,
+            static::FIELD_PARENT_ENTITY_ID_CONFIGURATION,
+            static::FIELD_CHILD_ENTITY_ID_CONFIGURATION,
+        );
+
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
+        $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+            (new DynamicEntityTransfer())
+                ->setFields([
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+                    'table_name' => static::FOO_TABLE_NAME,
+                    static::RELATION_TEST_NAME => [
+                        [
+                            'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+                            'table_name' => static::FOO_TABLE_NAME,
+                        ],
+                    ],
+                ]),
+        );
+
+        // Act
+        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
+
+        // Assert
+        $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
     }
 
     /**
@@ -444,16 +506,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionReturnsErrorIfInvalidDataTypeIsPassed(): void
     {
         //Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name' => 4,
                 ]),
         );
@@ -475,16 +534,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionReturnsErrorIfInvalidFieldNameIsProvided(): void
     {
         //Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name_foo' => static::FOO_TABLE_NAME,
                 ]),
         );
@@ -506,16 +562,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionDoesNotUpdateIfFieldIsNotEditable(): void
     {
         //Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'is_active' => false,
                 ]),
         );
@@ -524,18 +577,17 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
 
         //Assert
-        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
-            ->find()
-            ->getData()[0];
+        $updatedDynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByIdDynamicEntityConfiguration(
+            $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+        );
 
         $this->assertNotEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
         $this->assertEquals(
             static::ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED,
             $dynamicEntityCollectionResponseTransfer->getErrors()[0]->getMessage(),
         );
-        $this->assertTrue($updatedFooEntity->getIsActive());
-        $this->assertEquals($fooEntity->getIsActive(), $updatedFooEntity->getIsActive());
+        $this->assertTrue($updatedDynamicConfigurationEntity->getIsActive());
+        $this->assertEquals($dynamicConfigurationEntity->getIsActive(), $updatedDynamicConfigurationEntity->getIsActive());
     }
 
     /**
@@ -544,16 +596,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityConfigurationCollectionExecutesDynamicEntityPostUpdatePlugins(): void
     {
         // Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name' => static::FOO_TABLE_NAME,
                 ]),
         );
@@ -601,6 +650,11 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @dataProvider getDynamicEntityConfigurationJsonDataProvider
      *
+     * @param string $dynamicEntityConfigurationJsonFilename
+     * @param int $expectedNumberOfDynamicEntityValidConfigurations
+     * @param int $expectedNumberOfDynamicEntityInvalidConfigurations
+     * @param int $expectedNumberOfDynamicEntityChildRelations
+     *
      * @return void
      */
     public function testInstallPersistsConfigurations(
@@ -625,7 +679,7 @@ class DynamicEntityFacadeTest extends Unit
         $this->assertCount(
             $expectedNumberOfDynamicEntityInvalidConfigurations,
             SpyDynamicEntityConfigurationQuery::create()
-                ->filterByTableName('spy_foo')
+                ->filterByTableName(static::FOO_TABLE_NAME)
                 ->find(),
         );
         $this->assertCount(
@@ -659,7 +713,7 @@ class DynamicEntityFacadeTest extends Unit
         //Arrange
         $resourceName = 'resource-1';
         $tableName = 'spy_resource_1';
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -675,15 +729,12 @@ class DynamicEntityFacadeTest extends Unit
         //Assert
         $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
 
-        $spyDynamicEntityConfiguratioEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableName($tableName)
-            ->find()
-            ->getData();
-        $this->assertEquals($resourceName, $spyDynamicEntityConfiguratioEntity[0]->getTableAlias());
+        $dynamicEntityConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableName($tableName);
+        $this->assertEquals($resourceName, $dynamicEntityConfigurationEntity->getTableAlias());
         $this->assertIsNumeric($dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['id_dynamic_entity_configuration']);
-        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getTableAlias(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_alias']);
-        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
-        $this->assertEquals($spyDynamicEntityConfiguratioEntity[0]->getDefinition(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['definition']);
+        $this->assertEquals($dynamicEntityConfigurationEntity->getTableAlias(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_alias']);
+        $this->assertEquals($dynamicEntityConfigurationEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
+        $this->assertEquals($dynamicEntityConfigurationEntity->getDefinition(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['definition']);
     }
 
     /**
@@ -692,16 +743,13 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionUpdatesTheRecordAndReturnsCorrectResponseTransfer(): void
     {
         //Arrange
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->find()
-            ->getData()[0];
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::FOO_TABLE_ALIAS_1);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer();
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'id_dynamic_entity_configuration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name' => static::FOO_TABLE_NAME,
                 ]),
         );
@@ -710,16 +758,16 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
 
         //Assert
-        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
-            ->find()
-            ->getData()[0];
+        $updatedDynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByIdDynamicEntityConfiguration(
+            $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+        );
+        $updateCollectionResponseFields = $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields();
         $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
-        $this->assertNotEquals($fooEntity->getTableName(), $updatedFooEntity->getTableName());
-        $this->assertEquals(static::FOO_TABLE_NAME, $updatedFooEntity->getTableName());
-        $this->assertEquals($updatedFooEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
-        $this->assertEquals($updatedFooEntity->getTableAlias(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_alias']);
-        $this->assertEquals($updatedFooEntity->getDefinition(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['definition']);
+        $this->assertNotEquals($dynamicConfigurationEntity->getTableName(), $updatedDynamicConfigurationEntity->getTableName());
+        $this->assertEquals(static::FOO_TABLE_NAME, $updatedDynamicConfigurationEntity->getTableName());
+        $this->assertEquals($updatedDynamicConfigurationEntity->getTableName(), $updateCollectionResponseFields['table_name']);
+        $this->assertEquals($updatedDynamicConfigurationEntity->getTableAlias(), $updateCollectionResponseFields['table_alias']);
+        $this->assertEquals($updatedDynamicConfigurationEntity->getDefinition(), $updateCollectionResponseFields['definition']);
     }
 
     /**
@@ -728,17 +776,18 @@ class DynamicEntityFacadeTest extends Unit
     public function testUpdateDynamicEntityCollectionUpdatesTheRecordWithNonDefaultIdentifierVisibleName(): void
     {
         //Arrange
-        $this->createIdentifierInCamelCaseEntity();
-        $fooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByTableAlias(static::IDENTIFIER_TEST_TABLE_ALIAS)
-            ->find()
-            ->getData()[0];
+        $this->tester->createDynamicEntityConfigurationEntity(
+            static::TABLE_NAME,
+            static::IDENTIFIER_TEST_TABLE_ALIAS,
+            static::IDENTIFIER_TEST_DIFFERENT_VISIBLE_NAME_DEFINITION,
+        );
+        $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias(static::IDENTIFIER_TEST_TABLE_ALIAS);
 
-        $dynamicEntityCollectionRequestTransfer = $this->createDynamicEntityCollectionRequestTransfer(static::IDENTIFIER_TEST_TABLE_ALIAS);
+        $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer(static::IDENTIFIER_TEST_TABLE_ALIAS);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
-                    'idDynamicEntityConfiguration' => $fooEntity->getIdDynamicEntityConfiguration(),
+                    'idDynamicEntityConfiguration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                     'table_name' => 'newid',
                 ]),
         );
@@ -747,14 +796,13 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityFacade->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer);
 
         //Assert
-        $updatedFooEntity = SpyDynamicEntityConfigurationQuery::create()
-            ->filterByIdDynamicEntityConfiguration($fooEntity->getIdDynamicEntityConfiguration())
-            ->find()
-            ->getData()[0];
+        $updatedDynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByIdDynamicEntityConfiguration(
+            $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
+        );
         $this->assertEmpty($dynamicEntityCollectionResponseTransfer->getErrors());
-        $this->assertNotEquals($fooEntity->getTableName(), $updatedFooEntity->getTableName());
-        $this->assertEquals('newid', $updatedFooEntity->getTableName());
-        $this->assertEquals($updatedFooEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
+        $this->assertNotEquals($dynamicConfigurationEntity->getTableName(), $updatedDynamicConfigurationEntity->getTableName());
+        $this->assertEquals('newid', $updatedDynamicConfigurationEntity->getTableName());
+        $this->assertEquals($updatedDynamicConfigurationEntity->getTableName(), $dynamicEntityCollectionResponseTransfer->getDynamicEntities()[0]->getFields()['table_name']);
     }
 
     /**
@@ -851,78 +899,8 @@ class DynamicEntityFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DynamicEntity\Business\DynamicEntityFacadeInterface
-     */
-    protected function createDynamicEntityFacade(): DynamicEntityFacadeInterface
-    {
-        return new DynamicEntityFacade();
-    }
-
-    /**
-     * @return void
-     */
-    protected function createFooEntity(): void
-    {
-        (new SpyDynamicEntityConfiguration())
-            ->setIsActive(true)
-            ->setTableAlias(static::FOO_TABLE_ALIAS_1)
-            ->setTableName(static::TABLE_NAME)
-            ->setDefinition(static::FOO_DEFINITION)
-            ->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function createIdentifierInCamelCaseEntity(): void
-    {
-        (new SpyDynamicEntityConfiguration())
-            ->setIsActive(true)
-            ->setTableAlias(static::IDENTIFIER_TEST_TABLE_ALIAS)
-            ->setTableName(static::TABLE_NAME)
-            ->setDefinition(static::IDENTIFIER_TEST_DIFFERENT_VISIBLE_NAME_DEFINITION)
-            ->save();
-    }
-
-    /**
-     * @param string $tableAlias
-     * @param string|null $filterCondition
+     * @param string $configurationFilename
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer
-     */
-    protected function haveDynamicEntityCriteriaTransfer(
-        string $tableAlias,
-        ?string $filterCondition = null
-    ): DynamicEntityCriteriaTransfer {
-        $dynamicEntityConditionTransfer = (new DynamicEntityConditionsTransfer())
-            ->setTableAlias($tableAlias);
-
-        if ($filterCondition) {
-            $dynamicEntityConditionTransfer->addFieldCondition(
-                (new DynamicEntityFieldConditionTransfer())
-                    ->setName('table_alias')
-                    ->setValue($filterCondition),
-            );
-        }
-
-        return (new DynamicEntityCriteriaTransfer())
-            ->setDynamicEntityConditions($dynamicEntityConditionTransfer);
-    }
-
-    /**
-     * @param string $tableAlias
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
-     */
-    protected function createDynamicEntityCollectionRequestTransfer(string $tableAlias = self::FOO_TABLE_ALIAS_1): DynamicEntityCollectionRequestTransfer
-    {
-        $dynamicEntityCollectionRequestTransfer = new DynamicEntityCollectionRequestTransfer();
-        $dynamicEntityCollectionRequestTransfer->setTableAlias($tableAlias);
-
-        return $dynamicEntityCollectionRequestTransfer;
-    }
-
-    /**
      * @return void
      */
     protected function createBusinessFactoryMock(string $configurationFilename): void

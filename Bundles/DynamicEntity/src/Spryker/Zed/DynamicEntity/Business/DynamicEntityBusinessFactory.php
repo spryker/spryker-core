@@ -9,10 +9,14 @@ namespace Spryker\Zed\DynamicEntity\Business;
 
 use Propel\Runtime\Map\DatabaseMap;
 use Propel\Runtime\Propel;
+use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilder;
+use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilderInterface;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilder;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreator;
+use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidator;
@@ -25,6 +29,8 @@ use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdaterInterface;
+use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdater;
+use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdaterInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidator;
@@ -37,6 +43,7 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\BooleanFieldTypeVali
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\DecimalFieldTypeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\IntegerFieldTypeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\StringFieldTypeValidator;
+use Spryker\Zed\DynamicEntity\Business\Validator\Relation\EditableRelationValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration\AllowedTablesValidatorRule;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration\ResourceNameValidatorRule;
 use Spryker\Zed\DynamicEntity\Business\Validator\Rules\Configuration\UniqueTableNameAliasValidatorRule;
@@ -73,19 +80,51 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreatorInterface
+     */
+    public function createDynamicEntityCreator(): DynamicEntityCreatorInterface
+    {
+        return new DynamicEntityCreator(
+            $this->createDynamicEntityReader(),
+            $this->createDynamicEntityWriter(),
+            $this->createDynamicEntityValidator(),
+            $this->createDynamicEntityConfigurationTreeValidator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdaterInterface
+     */
+    public function createDynamicEntityUpdater(): DynamicEntityUpdaterInterface
+    {
+        return new DynamicEntityUpdater(
+            $this->createDynamicEntityReader(),
+            $this->createDynamicEntityWriter(),
+            $this->createDynamicEntityUpdateValidator(),
+            $this->createDynamicEntityConfigurationTreeValidator(),
+            $this->createDynamicEntityCollectionRequestBuilder(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface
      */
     public function createDynamicEntityWriter(): DynamicEntityWriterInterface
     {
         return new DynamicEntityWriter(
-            $this->getRepository(),
             $this->getEntityManager(),
-            $this->createDynamicEntityValidator(),
-            $this->createDynamicEntityUpdateValidator(),
+            $this->getConnection(),
             $this->getDynamicEntityPostCreatePlugins(),
             $this->getDynamicEntityPostUpdatePlugins(),
-            $this->getConnection(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilderInterface
+     */
+    public function createDynamicEntityCollectionRequestBuilder(): DynamicEntityCollectionRequestBuilderInterface
+    {
+        return new DynamicEntityCollectionRequestBuilder();
     }
 
     /**
@@ -114,6 +153,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function getDynamicEntityValidators(): array
     {
         return [
+            $this->createEditableRelationValidator(),
             $this->createRequestFieldValidator(),
             $this->createRequiredFieldValidator(),
             $this->createIntegerFieldTypeValidator(),
@@ -129,6 +169,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function getDynamicEntityUpdateValidators(): array
     {
         return [
+            $this->createEditableRelationValidator(),
             $this->createRequestFieldValidator(),
             $this->createIntegerFieldTypeValidator(),
             $this->createStringFieldTypeValidator(),
@@ -151,6 +192,14 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createRequestFieldValidator(): DynamicEntityValidatorInterface
     {
         return new RequestFieldValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    public function createEditableRelationValidator(): DynamicEntityValidatorInterface
+    {
+        return new EditableRelationValidator();
     }
 
     /**
@@ -400,6 +449,8 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDynamicEntityConfigurationTreeValidator(): DynamicEntityConfigurationTreeValidatorInterface
     {
-        return new DynamicEntityConfigurationTreeValidator();
+        return new DynamicEntityConfigurationTreeValidator(
+            $this->createDynamicEntityMapper(),
+        );
     }
 }

@@ -214,7 +214,7 @@ class DynamicEntityRelationConfigurationTreeBuilder implements DynamicEntityRela
     ): ?DynamicEntityConfigurationTransfer {
         foreach ($dynamicEntityConfigurationCollection->getDynamicEntityConfigurations() as $dynamicEntityConfigurationTransfer) {
             if ($dynamicEntityConfigurationTransfer->getTableAlias() === $tableAlias) {
-                $dynamicEntityConfigurationTransfer = $this->setNoChildRelationsForCurrentTransfer($dynamicEntityConfigurationTransfer);
+                $dynamicEntityConfigurationTransfer = $this->cloneConfigurationWithoutRelations($dynamicEntityConfigurationTransfer);
 
                 return $dynamicEntityConfigurationTransfer;
             }
@@ -228,8 +228,9 @@ class DynamicEntityRelationConfigurationTreeBuilder implements DynamicEntityRela
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer
      */
-    protected function setNoChildRelationsForCurrentTransfer(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTranfer): DynamicEntityConfigurationTransfer
-    {
+    protected function cloneConfigurationWithoutRelations(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTranfer
+    ): DynamicEntityConfigurationTransfer {
         $clonedDynamicEntityConfigurationTranfer = clone $dynamicEntityConfigurationTranfer;
         $clonedDynamicEntityConfigurationTranfer->setChildRelations(new ArrayObject());
 

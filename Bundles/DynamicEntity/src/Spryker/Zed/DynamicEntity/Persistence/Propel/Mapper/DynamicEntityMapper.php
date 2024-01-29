@@ -54,6 +54,16 @@ class DynamicEntityMapper
     protected const TYPE_INTEGER = 'integer';
 
     /**
+     * @var string
+     */
+    protected const KEY_CONFIGURATIONS = 'configurations';
+
+    /**
+     * @var string
+     */
+    protected const KEY_RELATION_FIELD_MAPPINGS = 'relationFieldMappings';
+
+    /**
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfiguration
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
@@ -201,6 +211,63 @@ class DynamicEntityMapper
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param array<string, string|array<mixed>> $indexedDynamicEntityConfigurations
+     *
+     * @return array<string, string|array<mixed>>
+     */
+    public function getChildDynamicEntityConfigurationsIndexedByTableName(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        array $indexedDynamicEntityConfigurations = []
+    ): array {
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $childDynamicEntityConfigurationTransfer = $childRelation->getChildDynamicEntityConfigurationOrFail();
+            $tableName = $childDynamicEntityConfigurationTransfer->getTableNameOrFail();
+
+            if (isset($indexedDynamicEntityConfigurations[$tableName])) {
+                continue;
+            }
+
+            $indexedDynamicEntityConfigurations[$tableName] = [
+                static::KEY_CONFIGURATIONS => $childDynamicEntityConfigurationTransfer,
+                static::KEY_RELATION_FIELD_MAPPINGS => $childRelation->getRelationFieldMappings(),
+            ];
+
+            if ($childDynamicEntityConfigurationTransfer->getChildRelations()->count() > 0) {
+                $indexedDynamicEntityConfigurations = $this->getChildDynamicEntityConfigurationsIndexedByTableName(
+                    $childDynamicEntityConfigurationTransfer,
+                    $indexedDynamicEntityConfigurations,
+                );
+            }
+        }
+
+        return $indexedDynamicEntityConfigurations;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $indexedChildRelations
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer>
+     */
+    public function getChildTableAliasesIndexedByRelationName(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        array $indexedChildRelations = []
+    ): array {
+        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
+            $childDynamicEntityConfigurationTransfer = $childRelation->getChildDynamicEntityConfigurationOrFail();
+
+            $indexedChildRelations[$childRelation->getNameOrFail()] = $childRelation;
+
+            if ($childDynamicEntityConfigurationTransfer->getChildRelations()->count() > 0) {
+                $indexedChildRelations = $this->getChildTableAliasesIndexedByRelationName($childDynamicEntityConfigurationTransfer, $indexedChildRelations);
+            }
+        }
+
+        return $indexedChildRelations;
+    }
+
+    /**
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfigurationEntity
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation $dynamicEntityRelationConfigurationRelation
@@ -219,6 +286,7 @@ class DynamicEntityMapper
 
         $childConfigurationRelationTransfer = (new DynamicEntityConfigurationRelationTransfer())
             ->setName($dynamicEntityRelationConfigurationRelation->getName())
+            ->setIsEditable($dynamicEntityRelationConfigurationRelation->getIsEditable())
             ->setChildDynamicEntityConfiguration($childDynamicEntityConfigurationTransfer);
 
         foreach ($dynamicEntityRelationConfigurationRelation->getSpyDynamicEntityConfigurationRelationFieldMappings() as $fieldMapping) {

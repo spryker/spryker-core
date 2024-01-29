@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
@@ -225,5 +228,83 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         }
 
         return $foreignKeyFieldMappingArray;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer
+     */
+    public function mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+    ): DynamicEntityCriteriaTransfer {
+        $dynamicEntityConditionsTransfer = new DynamicEntityConditionsTransfer();
+        $dynamicEntityConditionsTransfer->setTableAlias($dynamicEntityCollectionRequestTransfer->getTableAliasOrFail());
+
+        $relationChains = $this->getUniqueRelationChains($dynamicEntityCollectionRequestTransfer);
+        $implodedRelationChains = $this->getImplodedRelationChains($relationChains);
+
+        return (new DynamicEntityCriteriaTransfer())
+            ->setDynamicEntityConditions($dynamicEntityConditionsTransfer)
+            ->setRelationChains($implodedRelationChains);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     *
+     * @return array<int, array<int, string>>
+     */
+    protected function getUniqueRelationChains(DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer): array
+    {
+        $relationChains = [];
+        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+            $relationChains = array_merge($relationChains, $this->collectRelationChains($dynamicEntityTransfer->getFields(), []));
+        }
+
+        $relationChains = array_unique(array_map('serialize', $relationChains));
+
+        return array_map('unserialize', $relationChains);
+    }
+
+    /**
+     * @param array<mixed> $fields
+     * @param array<mixed> $parentKeys
+     *
+     * @return array<int, array<int, string>>
+     */
+    protected function collectRelationChains(array $fields, array $parentKeys): array
+    {
+        $relationChainNames = [];
+
+        foreach ($fields as $fieldName => $fieldValue) {
+            if (is_array($fieldValue) === false) {
+                continue;
+            }
+
+            $currentKeys = !is_int($fieldName) ? array_merge($parentKeys, [$fieldName]) : $parentKeys;
+            $subResult = $this->collectRelationChains($fieldValue, $currentKeys);
+
+            if ($subResult === []) {
+                $relationChainNames[] = $currentKeys;
+
+                continue;
+            }
+
+            $relationChainNames = array_merge($relationChainNames, $subResult);
+        }
+
+        return $relationChainNames;
+    }
+
+    /**
+     * @param array<int, array<string>> $relationChains
+     *
+     * @return array<string>
+     */
+    protected function getImplodedRelationChains(array $relationChains): array
+    {
+        return array_map(function (array $keys): string {
+            return implode('.', $keys);
+        }, $relationChains);
     }
 }

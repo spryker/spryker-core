@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Reader;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
@@ -103,6 +105,49 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
         }
 
         return $this->getEntityCollectionByConfiguration($dynamicEntityCriteriaTransfer, $dynamicEntityConfigurationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
+     */
+    public function getDynamicEntityConfigurationByDynamicEntityCollectionRequest(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+    ): DynamicEntityConfigurationCollectionTransfer {
+        $dynamicEntityCriteriaTransfer = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer($dynamicEntityCollectionRequestTransfer);
+
+        return $this->repository->getDynamicEntityConfigurationByDynamicEntityCriteria(
+            $dynamicEntityCriteriaTransfer,
+        );
+    }
+
+    /**
+     * @param string $tableAlias
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
+     */
+    public function findDynamicEntityConfigurationByTableAlias(string $tableAlias): ?DynamicEntityConfigurationTransfer
+    {
+        return $this->repository->findDynamicEntityConfigurationByTableAlias($tableAlias);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
+     */
+    public function getDynamicEntityConfigurationTransferTreeByDynamicEntityConfigurationCollection(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+    ): ?DynamicEntityConfigurationTransfer {
+        $dynamicEntityCriteriaTransfer = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer($dynamicEntityCollectionRequestTransfer);
+
+        return $this->dynamicEntityRelationTreeBuilder->buildDynamicEntityConfigurationTransferTree(
+            $dynamicEntityCriteriaTransfer,
+            $dynamicEntityConfigurationCollectionTransfer,
+        );
     }
 
     /**

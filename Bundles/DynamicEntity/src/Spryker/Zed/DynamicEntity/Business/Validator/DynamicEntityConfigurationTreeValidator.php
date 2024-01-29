@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Validator;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 
 class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurationTreeValidatorInterface
 {
@@ -33,6 +35,19 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
      * @var string
      */
     protected const PLACEHOLDER_RELATION_NAME = '%relationName%';
+
+    /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
+     */
+    protected DynamicEntityMapperInterface $dynamicEntityMapper;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
+     */
+    public function __construct(DynamicEntityMapperInterface $dynamicEntityMapper)
+    {
+        $this->dynamicEntityMapper = $dynamicEntityMapper;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
@@ -62,6 +77,24 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
             $dynamicEntityConfigurationCollectionTransfer,
             $dynamicEntityCriteriaTransfer,
             $rootDynamicEntityConfigurationTranfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ErrorTransfer|null
+     */
+    public function validateDynamicEntityConfigurationCollectionByDynamicEntityConfigurationCollection(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
+    ): ?ErrorTransfer {
+        $dynamicEntityCriteriaTransfer = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer($dynamicEntityCollectionRequestTransfer);
+
+        return $this->validateDynamicEntityConfigurationCollection(
+            $dynamicEntityConfigurationCollectionTransfer,
+            $dynamicEntityCriteriaTransfer,
         );
     }
 

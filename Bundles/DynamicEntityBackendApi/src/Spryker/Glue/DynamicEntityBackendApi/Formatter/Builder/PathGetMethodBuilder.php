@@ -355,8 +355,7 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     protected function buildIncludePath(
         DynamicEntityConfigurationRelationTransfer $dynamicEntityConfigurationRelationTransfer,
         ?string $parentRelationName = null
-    ): array
-    {
+    ): array {
         $rootPath = $dynamicEntityConfigurationRelationTransfer->getNameOrFail();
         $pathExamples = [
             $rootPath,

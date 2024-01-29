@@ -9,7 +9,7 @@ namespace Spryker\Zed\DynamicEntity\Business\Validator;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
-use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 
 class DynamicEntityValidator implements DynamicEntityValidatorInterface
 {
@@ -28,20 +28,20 @@ class DynamicEntityValidator implements DynamicEntityValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): DynamicEntityCollectionResponseTransfer {
         foreach ($this->validators as $validator) {
             $dynamicEntityCollectionResponseTransfer = $validator->validate(
                 $dynamicEntityCollectionRequestTransfer,
-                $dynamicEntityDefinitionTransfer,
+                $dynamicEntityConfigurationTransfer,
                 $dynamicEntityCollectionResponseTransfer,
             );
         }

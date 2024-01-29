@@ -664,7 +664,6 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     }
 
     /**
-     *
      * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
      * @param bool $skipIdentifier
      * @param bool $filterIsCreatable
@@ -711,7 +710,6 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     }
 
     /**
-     *
      * @param array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $dynamicEntityConfigurationTransfers
      * @param bool $skipIdentifier
      * @param bool $filterIsCreatable
