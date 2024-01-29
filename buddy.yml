@@ -30,7 +30,7 @@
             - 'npm run mp:test --verbose --detectOpenHandles'
         cache_base_image: false
         run_next_parallel: true
-        timeout: 1200
+        timeout: 1500
         shell: 'BASH'
       - action: 'PHP Validation'
         type: 'BUILD'
