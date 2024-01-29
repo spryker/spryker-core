@@ -1,0 +1,37 @@
+language: php
+dist: focal
+
+git:
+    depth: 1
+
+php:
+    - 8.1
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+env:
+    global:
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
+
+before_install:
+    - phpenv config-rm xdebug.ini
+    - nvm install 18
+    - nvm use 18
+
+install:
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - npm ci
+
+script:
+    - chmod +x *.sh
+    - bash travis_check_touched_modules.sh
+    - npm run formatter
+    - npm run mp:stylelint
+    - npm run mp:lint
+    - npm run mp:test
+
+notifications:
+    email: false
