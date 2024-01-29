@@ -27,7 +27,7 @@
             - 'npm run formatter'
             - 'npm run mp:stylelint'
             - 'npm run mp:lint'
-            - 'npm run mp:test --verbose'
+            - 'npm run mp:test --verbose --detectOpenHandles'
         cache_base_image: false
         run_next_parallel: true
         timeout: 1200
