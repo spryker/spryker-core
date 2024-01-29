@@ -25,7 +25,7 @@
             - 'npm run formatter'
             - 'npm run mp:stylelint'
             - 'npm run mp:lint'
-            - 'npm run mp:test'
+            - 'timeout 20 npm run mp:test'
         cache_base_image: false
         run_next_parallel: true
         shell: 'BASH'
