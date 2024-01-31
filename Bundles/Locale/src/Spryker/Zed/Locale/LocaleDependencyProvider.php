@@ -143,7 +143,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
                 return $container->getApplicationService(static::SERVICE_LOCALE);
             }
 
-            return $localeToStoreBridge->getCurrentStore()->getDefaultLocaleIsoCode();
+            return $localeToStoreBridge->getCurrentStore(true)->getDefaultLocaleIsoCode();
         });
 
         return $container;
