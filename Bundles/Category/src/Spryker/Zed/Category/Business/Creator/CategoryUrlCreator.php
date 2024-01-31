@@ -40,7 +40,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
     protected $urlPathGenerator;
 
     /**
-     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface>
+     * @var list<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface>
      */
     protected $categoryUrlPathPlugins;
 
@@ -48,7 +48,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
-     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface> $categoryUrlPathPlugins
+     * @param list<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface> $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryToUrlInterface $urlFacade,

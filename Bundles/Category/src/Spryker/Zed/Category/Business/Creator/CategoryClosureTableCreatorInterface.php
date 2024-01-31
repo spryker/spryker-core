@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Category\Business\Creator;
 
+use Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryClosureTableCreatorInterface
@@ -17,4 +19,13 @@ interface CategoryClosureTableCreatorInterface
      * @return void
      */
     public function createCategoryClosureTable(NodeTransfer $nodeTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
+     */
+    public function createCategoryClosureTableCollection(
+        CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+    ): CategoryClosureTableCollectionResponseTransfer;
 }

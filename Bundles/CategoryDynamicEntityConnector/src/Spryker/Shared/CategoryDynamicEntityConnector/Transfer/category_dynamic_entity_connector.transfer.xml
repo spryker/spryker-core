@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DynamicEntityPostEditRequest" strict="true">
+        <property name="tableName" type="string"/>
+        <property name="rawDynamicEntities" type="RawDynamicEntity[]" singular="rawDynamicEntity"/>
+    </transfer>
+
+    <transfer name="RawDynamicEntity" strict="true">
+        <property name="fields" type="array" singular="field"/>
+    </transfer>
+
+    <transfer name="DynamicEntityPostEditResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CategoryClosureTableCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Node">
+    </transfer>
+
+    <transfer name="CategoryUrlCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryUrlCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CategoryConditions" strict="true">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="withChildren" type="bool"/>
+        <property name="withChildrenRecursively" type="bool"/>
+        <property name="withNodes" type="bool"/>
+        <property name="withParentCategory" type="bool"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="categoryConditions" type="CategoryConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="CategoryClosureTableCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categoryNodes" type="Node[]" singular="categoryNode"/>
+    </transfer>
+
+    <transfer name="Error">
+    </transfer>
+
+    <transfer name="Category">
+        <property name="categoryNode" type="Node"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+    </transfer>
+
+</transfers>

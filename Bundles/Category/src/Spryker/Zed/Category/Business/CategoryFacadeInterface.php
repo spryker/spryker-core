@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
@@ -17,6 +19,8 @@ use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
@@ -442,4 +446,102 @@ interface CategoryFacadeInterface
     public function reorderCategoryNodeCollection(
         CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
     ): CategoryNodeCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CategoryUrlCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `CategoryUrlCollectionRequestTransfer.categories` to be set.
+     * - Requires `CategoryTransfer.categoryNode` to be set.
+     * - Requires `CategoryTransfer.categoryNode.idCategoryNode` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes.locale` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes.locale.localeName` to be set.
+     * - Expects `CategoryTransfer.extraParent.idCategoryNode` to be set.
+     * - Validates if provided category nodes exist.
+     * - Validates if provided category localized attributes exist.
+     * - Uses `CategoryUrlCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Generates category URLs by provided `CategoryTransfer.categoryNode` and `CategoryTransfer.localizedAttributes`.
+     * - Persists generated category URLs.
+     * - Returns `CategoryUrlCollectionResponseTransfer.categories` filled with category transfers.
+     * - Returns `CategoryUrlCollectionResponseTransfer.errors` filled with errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
+     */
+    public function createCategoryUrlCollection(
+        CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+    ): CategoryUrlCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CategoryUrlCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `CategoryUrlCollectionRequestTransfer.categories` to be set.
+     * - Requires `CategoryTransfer.categoryNode` to be set.
+     * - Requires `CategoryTransfer.categoryNode.idCategoryNode` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes.locale` to be set.
+     * - Requires `CategoryTransfer.localizedAttributes.locale.localeName` to be set.
+     * - Expects `CategoryTransfer.extraParent.idCategoryNode` to be set.
+     * - Validates if provided category nodes exist.
+     * - Validates if provided category localized attributes exist.
+     * - Uses `CategoryUrlCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Generates category URLs by provided `CategoryTransfer.categoryNode` and `CategoryTransfer.localizedAttributes`.
+     * - Persists generated category URLs.
+     * - Returns `CategoryUrlCollectionResponseTransfer.categories` filled with category transfers.
+     * - Returns `CategoryUrlCollectionResponseTransfer.errors` filled with errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
+     */
+    public function updateCategoryUrlCollection(
+        CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+    ): CategoryUrlCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CategoryClosureTableCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `CategoryClosureTableCollectionRequestTransfer.categoryNodes` to be set.
+     * - Requires `NodeTransfer.idCategoryNode` to be set.
+     * - Validates if provided category nodes exist.
+     * - Uses `CategoryUrlCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Persists category closure table entities for category nodes.
+     * - Returns `CategoryClosureTableCollectionResponseTransfer.categoryNodes` filled with node transfers.
+     * - Returns `CategoryClosureTableCollectionResponseTransfer.errors` filled with errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
+     */
+    public function createCategoryClosureTableCollection(
+        CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+    ): CategoryClosureTableCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CategoryClosureTableCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `CategoryClosureTableCollectionRequestTransfer.categoryNodes` to be set.
+     * - Requires `NodeTransfer.idCategoryNode` to be set.
+     * - Validates if provided category nodes exist.
+     * - Uses `CategoryUrlCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Persists category closure table entities for category nodes.
+     * - Returns `CategoryClosureTableCollectionResponseTransfer.categoryNodes` filled with node transfers.
+     * - Returns `CategoryClosureTableCollectionResponseTransfer.errors` filled with errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
+     */
+    public function updateCategoryClosureTableCollection(
+        CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+    ): CategoryClosureTableCollectionResponseTransfer;
 }

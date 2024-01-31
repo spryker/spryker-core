@@ -13,12 +13,9 @@ use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
-use Orm\Zed\Url\Persistence\SpyUrl;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
  * @method void wantToTest($text)
@@ -167,22 +164,6 @@ class CategoryBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
-     */
-    public function findUrlCategoryNodeAndLocale(
-        NodeTransfer $categoryNodeTransfer,
-        LocaleTransfer $localeTransfer
-    ): SpyUrl {
-        return $this->getUrlQuery()
-            ->filterByFkResourceCategorynode($categoryNodeTransfer->getIdCategoryNodeOrFail())
-            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
-            ->findOne();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
@@ -235,13 +216,5 @@ class CategoryBusinessTester extends Actor
     protected function getCategoryStoreTableQuery(): SpyCategoryStoreQuery
     {
         return SpyCategoryStoreQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    protected function getUrlQuery(): SpyUrlQuery
-    {
-        return SpyUrlQuery::create();
     }
 }

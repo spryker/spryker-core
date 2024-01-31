@@ -252,4 +252,24 @@
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
+    <transfer name="CategoryUrlCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryUrlCollectionResponse" strict="true">
+        <property name="categories" type="Category[]" singular="category"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CategoryClosureTableCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categoryNodes" type="Node[]" singular="categoryNode"/>
+    </transfer>
+
+    <transfer name="CategoryClosureTableCollectionResponse" strict="true">
+        <property name="categoryNodes" type="Node[]" singular="categoryNode"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
 </transfers>

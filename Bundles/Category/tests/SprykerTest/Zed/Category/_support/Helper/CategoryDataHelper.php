@@ -17,15 +17,20 @@ use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Orm\Zed\Url\Persistence\SpyUrl;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryConfig;
@@ -237,6 +242,24 @@ class CategoryDataHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return void
+     */
+    public function haveCategoryClosureTableForCategoryNode(NodeTransfer $nodeTransfer): void
+    {
+        $categoryClosureTableEntityEntity = new SpyCategoryClosureTable();
+        $categoryClosureTableEntityEntity->setFkCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+        $categoryClosureTableEntityEntity->setFkCategoryNodeDescendant($nodeTransfer->getIdCategoryNodeOrFail());
+        $categoryClosureTableEntityEntity->setDepth(0);
+        $categoryClosureTableEntityEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryClosureTableEntityEntity): void {
+            $categoryClosureTableEntityEntity->delete();
+        });
+    }
+
+    /**
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
@@ -290,6 +313,72 @@ class CategoryDataHelper extends Module
         $categoryNodeTransfer = (new NodeBuilder($seedData))->build();
 
         return $categoryNodeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return void
+     */
+    public function updateCategoryNode(NodeTransfer $nodeTransfer): void
+    {
+        $categoryNodeEntity = $this->getCategoryNodeQuery()
+            ->filterByIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail())
+            ->findOne();
+
+        $categoryNodeEntity->fromArray($nodeTransfer->toArray());
+        $categoryNodeEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     * @param int $idCategory
+     *
+     * @return void
+     */
+    public function updateCategoryLocalizedAttribute(
+        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer,
+        int $idCategory
+    ): void {
+        $categoryAttributeEntity = $this->getCategoryAttributeQuery()
+            ->filterByFkCategory($idCategory)
+            ->filterByFkLocale($categoryLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail())
+            ->findOne();
+
+        $categoryAttributeEntity->fromArray($categoryLocalizedAttributesTransfer->toArray());
+        $categoryAttributeEntity->save();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int|null $fkCategoryNodeDescendant
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable|null
+     */
+    public function findCategoryClosureTableEntity(int $idCategoryNode, ?int $fkCategoryNodeDescendant = null): ?SpyCategoryClosureTable
+    {
+        $categoryClosureTableQuery = $this->getCategoryClosureTableQuery()
+            ->filterByFkCategoryNode($idCategoryNode);
+
+        if ($fkCategoryNodeDescendant !== null) {
+            $categoryClosureTableQuery->filterByFkCategoryNodeDescendant($fkCategoryNodeDescendant);
+        }
+
+        return $categoryClosureTableQuery->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl|null
+     */
+    public function findUrlCategoryEntityByNodeAndLocale(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): ?SpyUrl
+    {
+        return $this->getUrlQuery()
+            ->filterByFkResourceCategorynode($nodeTransfer->getIdCategoryNodeOrFail())
+            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->findOne();
     }
 
     /**
@@ -348,5 +437,37 @@ class CategoryDataHelper extends Module
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
             new MainChildrenPropagationCategoryStoreAssignerPlugin(),
         );
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    protected function getCategoryClosureTableQuery(): SpyCategoryClosureTableQuery
+    {
+        return SpyCategoryClosureTableQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function getCategoryNodeQuery(): SpyCategoryNodeQuery
+    {
+        return SpyCategoryNodeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function getUrlQuery(): SpyUrlQuery
+    {
+        return SpyUrlQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    protected function getCategoryAttributeQuery(): SpyCategoryAttributeQuery
+    {
+        return SpyCategoryAttributeQuery::create();
     }
 }

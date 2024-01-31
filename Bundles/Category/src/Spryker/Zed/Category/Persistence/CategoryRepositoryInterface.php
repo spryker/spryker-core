@@ -226,4 +226,11 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer
      */
     public function getDefaultCategoryTemplate(): CategoryTemplateTransfer;
+
+    /**
+     * @param list<int> $categoryNodeIds
+     *
+     * @return list<int>
+     */
+    public function getCategoryNodeIdsWithZeroDepthCategoryClosureTableEntities(array $categoryNodeIds): array;
 }

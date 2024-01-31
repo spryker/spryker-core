@@ -23,6 +23,8 @@ use Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreatorInterface;
 use Spryker\Zed\Category\Business\Creator\CategoryStoreCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface;
+use Spryker\Zed\Category\Business\Creator\CategoryUrlCollectionCreator;
+use Spryker\Zed\Category\Business\Creator\CategoryUrlCollectionCreatorInterface;
 use Spryker\Zed\Category\Business\Creator\CategoryUrlCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Deleter\CategoryAttributeDeleter;
@@ -45,8 +47,12 @@ use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface
 use Spryker\Zed\Category\Business\Expander\StoreRelationCategoryNodeRelationExpander;
 use Spryker\Zed\Category\Business\Extractor\ErrorExtractor;
 use Spryker\Zed\Category\Business\Extractor\ErrorExtractorInterface;
+use Spryker\Zed\Category\Business\Filter\CategoryClosureTableFilter;
+use Spryker\Zed\Category\Business\Filter\CategoryClosureTableFilterInterface;
 use Spryker\Zed\Category\Business\Filter\CategoryNodeFilter;
 use Spryker\Zed\Category\Business\Filter\CategoryNodeFilterInterface;
+use Spryker\Zed\Category\Business\Filter\CategoryUrlFilter;
+use Spryker\Zed\Category\Business\Filter\CategoryUrlFilterInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydrator;
@@ -80,12 +86,24 @@ use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryUrlCollectionUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryUrlCollectionUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface;
+use Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidator;
+use Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidatorInterface;
 use Spryker\Zed\Category\Business\Validator\CategoryNodeValidator;
 use Spryker\Zed\Category\Business\Validator\CategoryNodeValidatorInterface;
+use Spryker\Zed\Category\Business\Validator\CategoryUrlValidator;
+use Spryker\Zed\Category\Business\Validator\CategoryUrlValidatorInterface;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryClosureTable\CategoryClosureTableValidatorRuleInterface;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryClosureTable\CategoryNodeExistsCategoryClosureTableValidatorRule;
 use Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeExistsCategoryNodeValidationRule;
 use Spryker\Zed\Category\Business\Validator\Rule\CategoryNode\CategoryNodeValidatorRuleInterface;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryClosureTableExistsCategoryUrlValidatorRule;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryLocalizedAttributeExistsCategoryUrlValidatorRule;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryNodeExistsCategoryUrlValidatorRule;
+use Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryUrlValidatorRuleInterface;
 use Spryker\Zed\Category\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\Category\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
@@ -183,7 +201,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCategoryClosureTableCreator(): CategoryClosureTableCreatorInterface
     {
-        return new CategoryClosureTableCreator($this->getEntityManager());
+        return new CategoryClosureTableCreator(
+            $this->getEntityManager(),
+            $this->createCategoryClosureTableCreateValidator(),
+            $this->createCategoryClosureTableFilter(),
+        );
     }
 
     /**
@@ -261,7 +283,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createCategoryClosureTableUpdater(): CategoryClosureTableUpdaterInterface
     {
-        return new CategoryClosureTableUpdater($this->getEntityManager());
+        return new CategoryClosureTableUpdater(
+            $this->getEntityManager(),
+            $this->createCategoryClosureTableUpdateValidator(),
+            $this->createCategoryClosureTableFilter(),
+        );
     }
 
     /**
@@ -506,6 +532,134 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeRelationExpanderComposite(): CategoryNodeRelationExpanderInterface
     {
         return new CategoryNodeRelationExpanderComposite($this->getCategoryNodeRelationExpanders());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Creator\CategoryUrlCollectionCreatorInterface
+     */
+    public function createCategoryUrlCollectionCreator(): CategoryUrlCollectionCreatorInterface
+    {
+        return new CategoryUrlCollectionCreator(
+            $this->createCategoryUrlCreator(),
+            $this->createCategoryUrlCreateValidator(),
+            $this->createCategoryUrlFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryUrlCollectionUpdaterInterface
+     */
+    public function createCategoryUrlCollectionUpdater(): CategoryUrlCollectionUpdaterInterface
+    {
+        return new CategoryUrlCollectionUpdater(
+            $this->createCategoryUrlUpdater(),
+            $this->createCategoryUrlUpdateValidator(),
+            $this->createCategoryUrlFilter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Filter\CategoryUrlFilterInterface
+     */
+    public function createCategoryUrlFilter(): CategoryUrlFilterInterface
+    {
+        return new CategoryUrlFilter($this->createErrorExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Filter\CategoryClosureTableFilterInterface
+     */
+    public function createCategoryClosureTableFilter(): CategoryClosureTableFilterInterface
+    {
+        return new CategoryClosureTableFilter($this->createErrorExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\CategoryUrlValidatorInterface
+     */
+    public function createCategoryUrlCreateValidator(): CategoryUrlValidatorInterface
+    {
+        return new CategoryUrlValidator([
+            $this->createCategoryNodeExistsCategoryUrlValidatorRule(),
+            $this->createCategoryClosureTableExistsCategoryUrlValidatorRule(),
+            $this->createCategoryLocalizedAttributeExistsCategoryUrlValidatorRule(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\CategoryUrlValidatorInterface
+     */
+    public function createCategoryUrlUpdateValidator(): CategoryUrlValidatorInterface
+    {
+        return new CategoryUrlValidator([
+            $this->createCategoryNodeExistsCategoryUrlValidatorRule(),
+            $this->createCategoryClosureTableExistsCategoryUrlValidatorRule(),
+            $this->createCategoryLocalizedAttributeExistsCategoryUrlValidatorRule(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidatorInterface
+     */
+    public function createCategoryClosureTableCreateValidator(): CategoryClosureTableValidatorInterface
+    {
+        return new CategoryClosureTableValidator([
+            $this->createCategoryNodeExistsCategoryClosureTableValidatorRule(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidatorInterface
+     */
+    public function createCategoryClosureTableUpdateValidator(): CategoryClosureTableValidatorInterface
+    {
+        return new CategoryClosureTableValidator([
+            $this->createCategoryNodeExistsCategoryClosureTableValidatorRule(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryUrlValidatorRuleInterface
+     */
+    public function createCategoryNodeExistsCategoryUrlValidatorRule(): CategoryUrlValidatorRuleInterface
+    {
+        return new CategoryNodeExistsCategoryUrlValidatorRule(
+            $this->createCategoryNodeReader(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryUrlValidatorRuleInterface
+     */
+    public function createCategoryLocalizedAttributeExistsCategoryUrlValidatorRule(): CategoryUrlValidatorRuleInterface
+    {
+        return new CategoryLocalizedAttributeExistsCategoryUrlValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Rule\CategoryUrl\CategoryUrlValidatorRuleInterface
+     */
+    public function createCategoryClosureTableExistsCategoryUrlValidatorRule(): CategoryUrlValidatorRuleInterface
+    {
+        return new CategoryClosureTableExistsCategoryUrlValidatorRule(
+            $this->getRepository(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Validator\Rule\CategoryClosureTable\CategoryClosureTableValidatorRuleInterface
+     */
+    public function createCategoryNodeExistsCategoryClosureTableValidatorRule(): CategoryClosureTableValidatorRuleInterface
+    {
+        return new CategoryNodeExistsCategoryClosureTableValidatorRule(
+            $this->createCategoryNodeReader(),
+            $this->createErrorAdder(),
+        );
     }
 
     /**

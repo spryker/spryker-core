@@ -862,6 +862,22 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param list<int> $categoryNodeIds
+     *
+     * @return list<int>
+     */
+    public function getCategoryNodeIdsWithZeroDepthCategoryClosureTableEntities(array $categoryNodeIds): array
+    {
+        return $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->filterByFkCategoryNode_In($categoryNodeIds)
+            ->filterByDepth(static::NODE_PATH_ZERO_DEPTH)
+            ->select(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *

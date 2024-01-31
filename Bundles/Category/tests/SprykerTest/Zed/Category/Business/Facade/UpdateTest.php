@@ -174,7 +174,7 @@ class UpdateTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findUrlCategoryNodeAndLocale($categoryTransfer->getCategoryNodeOrFail(), $localeTransfer),
+            $this->tester->findUrlCategoryEntityByNodeAndLocale($categoryTransfer->getCategoryNodeOrFail(), $localeTransfer),
             'Category URL should be successfully created.',
         );
     }
@@ -203,7 +203,7 @@ class UpdateTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findUrlCategoryNodeAndLocale($categoryTransfer->getCategoryNodeOrFail(), $localeTransfer),
+            $this->tester->findUrlCategoryEntityByNodeAndLocale($categoryTransfer->getCategoryNodeOrFail(), $localeTransfer),
             'Category URL should be successfully created.',
         );
     }

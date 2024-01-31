@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
@@ -17,6 +19,8 @@ use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
@@ -412,5 +416,73 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryNodeReorderer()
             ->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
+     */
+    public function createCategoryUrlCollection(
+        CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+    ): CategoryUrlCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCategoryUrlCollectionCreator()
+            ->createCategoryUrlCollection($categoryUrlCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
+     */
+    public function updateCategoryUrlCollection(
+        CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
+    ): CategoryUrlCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCategoryUrlCollectionUpdater()
+            ->updateCategoryUrlCollection($categoryUrlCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
+     */
+    public function createCategoryClosureTableCollection(
+        CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+    ): CategoryClosureTableCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCategoryClosureTableCreator()
+            ->createCategoryClosureTableCollection($categoryClosureTableCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
+     */
+    public function updateCategoryClosureTableCollection(
+        CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
+    ): CategoryClosureTableCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createCategoryClosureTableUpdater()
+            ->updateCategoryClosureTableCollection($categoryClosureTableCollectionRequestTransfer);
     }
 }

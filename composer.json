@@ -111,6 +111,7 @@
         "spryker/category-data-feed": "*",
         "spryker/category-data-import": "*",
         "spryker/category-discount-connector": "*",
+        "spryker/category-dynamic-entity-connector": "*",
         "spryker/category-exporter": "*",
         "spryker/category-extension": "*",
         "spryker/category-gui": "*",
