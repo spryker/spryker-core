@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\OauthUserConnector\PHPMD)
  */
 class OauthUserConnectorBusinessTester extends Actor
 {

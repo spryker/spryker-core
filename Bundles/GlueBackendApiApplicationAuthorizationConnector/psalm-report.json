@@ -1,5 +1,31 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ApiApplicationSchemaContextTransfer::setCustomRoutesContexts expects ArrayObject<Generated\\Shared\\Transfer\\CustomRoutesContextTransfer>, but ArrayObject<int, Generated\\Shared\\Transfer\\CustomRoutesContextTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueBackendApiApplicationAuthorizationConnector/src/Spryker/Zed/GlueBackendApiApplicationAuthorizationConnector/Business/Processor/ProtectedPathAuthorization/Expander/ProtectedPathAuthorizationExpander.php",
+            "snippet": "        $apiApplicationSchemaContextTransfer->setCustomRoutesContexts($customRoutesContextTransfers);",
+            "selected_text": "$customRoutesContextTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ApiApplicationSchemaContextTransfer::setResourceContexts expects ArrayObject<Generated\\Shared\\Transfer\\ResourceContextTransfer>, but ArrayObject<int, Generated\\Shared\\Transfer\\ResourceContextTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueBackendApiApplicationAuthorizationConnector/src/Spryker/Zed/GlueBackendApiApplicationAuthorizationConnector/Business/Processor/ProtectedPathAuthorization/Expander/ProtectedPathAuthorizationExpander.php",
+            "snippet": "        $apiApplicationSchemaContextTransfer->setResourceContexts($resourceContextTransfers);",
+            "selected_text": "$resourceContextTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [],
-    "deprecation": []
+    "deprecation": [],
+    "count": 2
 }

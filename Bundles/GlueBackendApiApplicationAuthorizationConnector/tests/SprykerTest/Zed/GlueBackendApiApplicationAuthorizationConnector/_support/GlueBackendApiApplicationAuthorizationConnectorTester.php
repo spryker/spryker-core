@@ -27,7 +27,7 @@ use Generated\Shared\Transfer\AuthorizationRequestTransfer;
  * @method void pause()
  *
  * @method \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface getFacade()
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\GlueBackendApiApplicationAuthorizationConnector\PHPMD)
  */
 class GlueBackendApiApplicationAuthorizationConnectorTester extends Actor
 {

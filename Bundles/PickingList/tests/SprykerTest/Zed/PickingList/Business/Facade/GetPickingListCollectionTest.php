@@ -153,6 +153,30 @@ class GetPickingListCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testGetPickingListShouldReturnCorrectCollectionOfPickingListEntityFilteredByIdWarehouse(): void
+    {
+        // Arrange
+        $pickingListTransfer = $this->createPickingListWithWarehouse();
+        $this->createPickingListWithWarehouse();
+
+        $pickingListCriteriaTransfer = (new PickingListCriteriaTransfer())
+            ->setPickingListConditions(
+                (new PickingListConditionsTransfer())
+                    ->addIdWarehouse($pickingListTransfer->getWarehouseOrFail()->getIdStockOrFail()),
+            );
+
+        // Act
+        $pickingListCollectionTransfer = $this->tester->getFacade()
+            ->getPickingListCollection($pickingListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $pickingListCollectionTransfer->getPickingLists());
+        $this->assertPickingListCollectionContainsTransferWithId($pickingListCollectionTransfer, $pickingListTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetPickingListShouldReturnCollectionExpandedWithOrderItemsWhenCriteriaMatched(): void
     {
         // Arrange

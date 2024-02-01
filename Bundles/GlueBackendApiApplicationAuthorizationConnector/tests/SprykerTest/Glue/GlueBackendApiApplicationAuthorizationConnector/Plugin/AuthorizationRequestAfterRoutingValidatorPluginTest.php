@@ -11,10 +11,14 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AuthorizationResponseTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestUserTransfer;
+use Generated\Shared\Transfer\RouteAuthorizationConfigTransfer;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeBridge;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueBackendApiApplication\AuthorizationRequestAfterRoutingValidatorPlugin;
+use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedRouteAuthorizationConfigProviderPluginInterface;
+use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacade;
+use Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface;
 use SprykerTest\Glue\GlueBackendApiApplicationAuthorizationConnector\Stub\TestAuthorizationStrategyAwareResourceRoutePlugin;
 use SprykerTest\Glue\GlueBackendApiApplicationAuthorizationConnector\Stub\TestDefaultAuthorizationStrategyAwareResourceRoutePlugin;
 use SprykerTest\Glue\GlueBackendApiApplicationAuthorizationConnector\Stub\TestUnsupportResourcePlugin;
@@ -212,6 +216,35 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testEnsureThatProtectedRouteAuthorizationConfigProviderPluginStackExecuted(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_AUTHORIZATION,
+            $this->mockAuthorizationClientBridge(false),
+        );
+        $this->tester->setDependency(
+            GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR,
+            $this->mockGlueBackendApiApplicationAuthorizationConnectorFacade(true)
+        );
+
+        $glueRequestTransfer = (new GlueRequestTransfer())->setMethod(Request::METHOD_POST);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
+        $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
+        $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
+
+        $this->tester->setDependency(
+            GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::PLUGINS_PROTECTED_ROUTE_AUTHORIZATION_CONFIG_PROVIDER,
+            [$this->getProtectedRouteAuthorizationConfigProviderPluginMock()],
+        );
+
+        // Act
+        (new AuthorizationRequestAfterRoutingValidatorPlugin())->validate($glueRequestTransfer, $stubResource);
+    }
+
+    /**
      * @param bool $isAuthorized
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
@@ -230,5 +263,43 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
             ->willReturn($authorizationResponseTransfer);
 
         return $authorizationClientBridge;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedRouteAuthorizationConfigProviderPluginInterface
+     */
+    protected function getProtectedRouteAuthorizationConfigProviderPluginMock(): ProtectedRouteAuthorizationConfigProviderPluginInterface
+    {
+        $protectedRouteAuthorizationConfigProviderPluginMock = $this
+            ->getMockBuilder(ProtectedRouteAuthorizationConfigProviderPluginInterface::class)
+            ->onlyMethods(['provide'])
+            ->getMock();
+
+        $protectedRouteAuthorizationConfigProviderPluginMock
+            ->expects($this->once())
+            ->method('provide')
+            ->willReturn(new RouteAuthorizationConfigTransfer());
+
+        return $protectedRouteAuthorizationConfigProviderPluginMock;
+    }
+
+    /**
+     * @param bool $isProtected
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
+     */
+    protected function mockGlueBackendApiApplicationAuthorizationConnectorFacade(bool $isProtected): GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
+    {
+        $glueBackendApiApplicationAuthorizationConnectorFacadeMock = $this->getMockBuilder(GlueBackendApiApplicationAuthorizationConnectorFacade::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['isProtected'])
+            ->getMock();
+
+        $glueBackendApiApplicationAuthorizationConnectorFacadeMock
+            ->expects($this->once())
+            ->method('isProtected')
+            ->willReturn($isProtected);
+
+        return $glueBackendApiApplicationAuthorizationConnectorFacadeMock;
     }
 }

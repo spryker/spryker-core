@@ -32,6 +32,7 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
             $this->getConfigExtractorStrategies(),
             $this->getGlueBackendApiApplicationAuthorizationConnectorFacade(),
             $this->getAuthorizationRequestExpanderPlugins(),
+            $this->getProtectedRouteAuthorizationConfigProviderPlugins(),
         );
     }
 
@@ -93,5 +94,13 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
     public function getAuthorizationRequestExpanderPlugins(): array
     {
         return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::PLUGINS_AUTHORIZATION_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedRouteAuthorizationConfigProviderPluginInterface>
+     */
+    protected function getProtectedRouteAuthorizationConfigProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::PLUGINS_PROTECTED_ROUTE_AUTHORIZATION_CONFIG_PROVIDER);
     }
 }

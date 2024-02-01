@@ -6,4 +6,8 @@
 
     <transfer name="GlueRequest">
     </transfer>
+
+    <transfer name="RouteAuthorizationConfig">
+    </transfer>
+
 </transfers>

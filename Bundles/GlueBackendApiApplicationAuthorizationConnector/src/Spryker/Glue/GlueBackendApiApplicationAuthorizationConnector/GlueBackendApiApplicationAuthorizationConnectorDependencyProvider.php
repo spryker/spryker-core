@@ -32,6 +32,11 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
     public const PLUGINS_AUTHORIZATION_REQUEST_EXPANDER = 'PLUGINS_AUTHORIZATION_REQUEST_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PROTECTED_ROUTE_AUTHORIZATION_CONFIG_PROVIDER = 'PLUGINS_PROTECTED_ROUTE_AUTHORIZATION_CONFIG_PROVIDER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
@@ -42,6 +47,7 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
         $container = $this->addAuthorizationFacade($container);
         $container = $this->addGlueBackendApiApplicationAuthorizationConnectorFacade($container);
         $container = $this->addAuthorizationRequestExpanderPlugins($container);
+        $container = $this->addProtectedRouteAuthorizationConfigProviderPlugins($container);
 
         return $container;
     }
@@ -92,6 +98,28 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
      * @return list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\AuthorizationRequestExpanderPluginInterface>
      */
     protected function getAuthorizationRequestExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    protected function addProtectedRouteAuthorizationConfigProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PROTECTED_ROUTE_AUTHORIZATION_CONFIG_PROVIDER, function (Container $container) {
+            return $this->getProtectedRouteAuthorizationConfigProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedRouteAuthorizationConfigProviderPluginInterface>
+     */
+    protected function getProtectedRouteAuthorizationConfigProviderPlugins(): array
     {
         return [];
     }

@@ -64,6 +64,7 @@ class OauthWarehouseBusinessFactory extends AbstractBusinessFactory
     {
         return new WarehouseTokenAuthorizationChecker(
             $this->createStockReader(),
+            $this->getConfig(),
         );
     }
 

@@ -55,6 +55,8 @@ class ClickAndCollectExampleFacade extends AbstractFacade implements ClickAndCol
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\OauthMerchantUser\Business\OauthMerchantUserFacade::getMerchantUserTypeOauthScopes()} instead.
+     *
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
      *

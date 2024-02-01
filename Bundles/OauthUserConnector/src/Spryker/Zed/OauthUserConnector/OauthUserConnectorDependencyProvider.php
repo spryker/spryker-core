@@ -34,6 +34,16 @@ class OauthUserConnectorDependencyProvider extends AbstractBundleDependencyProvi
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_USER_TYPE_OAUTH_SCOPE_PROVIDER = 'PLUGINS_USER_TYPE_OAUTH_SCOPE_PROVIDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_USER_TYPE_OAUTH_SCOPE_AUTHORIZATION_CHECKER = 'PLUGINS_USER_TYPE_OAUTH_SCOPE_AUTHORIZATION_CHECKER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -43,6 +53,8 @@ class OauthUserConnectorDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addUserFacade($container);
         $container = $this->addOauthFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addUserTypeOauthScopeProviderPlugins($container);
+        $container = $this->addUserTypeOauthScopeAuthorizationCheckerPlugins($container);
 
         return $container;
     }
@@ -87,5 +99,49 @@ class OauthUserConnectorDependencyProvider extends AbstractBundleDependencyProvi
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserTypeOauthScopeProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_TYPE_OAUTH_SCOPE_PROVIDER, function () {
+            return $this->getUserTypeOauthScopeProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\OauthUserConnectorExtension\Dependency\Plugin\UserTypeOauthScopeProviderPluginInterface>
+     */
+    protected function getUserTypeOauthScopeProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserTypeOauthScopeAuthorizationCheckerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_TYPE_OAUTH_SCOPE_AUTHORIZATION_CHECKER, function () {
+            return $this->getUserTypeOauthScopeAuthorizationCheckerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\OauthUserConnectorExtension\Dependency\Plugin\UserTypeOauthScopeAuthorizationCheckerPluginInterface>
+     */
+    protected function getUserTypeOauthScopeAuthorizationCheckerPlugins(): array
+    {
+        return [];
     }
 }

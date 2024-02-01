@@ -17,7 +17,7 @@ interface OauthUserConnectorToUserFacadeInterface
      *
      * @return bool
      */
-    public function hasActiveUserByUsername($username): bool;
+    public function hasActiveUserByUsername(string $username): bool;
 
     /**
      * @param string $password
@@ -25,7 +25,7 @@ interface OauthUserConnectorToUserFacadeInterface
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash): bool;
+    public function isValidPassword(string $password, string $hash): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer

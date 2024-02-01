@@ -57,6 +57,20 @@ class OauthWarehouseFacadeTest extends Unit
     protected const GLUE_REQUEST_WAREHOUSE = 'glueRequestWarehouse';
 
     /**
+     * @uses \Spryker\Zed\OauthUserConnector\OauthUserConnectorConfig::SCOPE_BACK_OFFICE_USER
+     *
+     * @var string
+     */
+    protected const SCOPE_BACK_OFFICE_USER = 'back-office-user';
+
+    /**
+     * @uses \Spryker\Zed\OauthWarehouseUser\OauthWarehouseUserConfig::SCOPE_WAREHOUSE_USER
+     *
+     * @var string
+     */
+    protected const SCOPE_WAREHOUSE_USER = 'warehouse-user';
+
+    /**
      * @var \SprykerTest\Zed\OauthWarehouse\OauthWarehouseBusinessTester
      */
     protected OauthWarehouseBusinessTester $tester;
@@ -194,6 +208,30 @@ class OauthWarehouseFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider authorizeWithWarehouseRequestChecksAllowedUserScopesDataProvider
+     *
+     * @param list<string> $allowedUserScopes
+     * @param array<string, mixed> $requestData
+     * @param bool $expectedResult
+     *
+     * @return void
+     */
+    public function testAuthorizeWithWarehouseRequestChecksAllowedUserScopes(array $allowedUserScopes, array $requestData, bool $expectedResult): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getAllowedUserScopes', $allowedUserScopes);
+
+        $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
+            ->setEntity((new AuthorizationEntityTransfer())->setData($requestData));
+
+        // Act
+        $result = $this->tester->getFacade()->authorize($authorizationRequestTransfer);
+
+        // Assert
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    /**
      * @return list<list<mixed>>
      */
     public function getAuthorizeTestData(): array
@@ -222,6 +260,36 @@ class OauthWarehouseFacadeTest extends Unit
             [
                 [],
                 false,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, list<mixed>>
+     */
+    protected function authorizeWithWarehouseRequestChecksAllowedUserScopesDataProvider(): array
+    {
+        return [
+            'no allowed user scopes' => [
+                [],
+                [
+                    static::GLUE_REQUEST_USER => (new GlueRequestUserTransfer())->addScope(static::SCOPE_BACK_OFFICE_USER),
+                ],
+                true,
+            ],
+            'allowed user scope is provided' => [
+                [static::SCOPE_BACK_OFFICE_USER],
+                [
+                    static::GLUE_REQUEST_USER => (new GlueRequestUserTransfer())->addScope(static::SCOPE_BACK_OFFICE_USER),
+                ],
+                true,
+            ],
+            'not allowed user scope is provided' => [
+                [static::SCOPE_BACK_OFFICE_USER],
+                [
+                    static::GLUE_REQUEST_USER => (new GlueRequestUserTransfer())->addScope(static::SCOPE_WAREHOUSE_USER),
+                ],
+                true,
             ],
         ];
     }

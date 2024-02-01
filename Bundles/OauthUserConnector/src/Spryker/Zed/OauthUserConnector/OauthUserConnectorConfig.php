@@ -26,8 +26,13 @@ class OauthUserConnectorConfig extends AbstractBundleConfig
     protected const SCOPE_USER = 'user';
 
     /**
+     * @var string
+     */
+    protected const SCOPE_BACK_OFFICE_USER = 'back-office-user';
+
+    /**
      * Specification:
-     * - Returns user scopes.
+     * - Returns Oauth scopes related to users.
      *
      * @api
      *
@@ -36,5 +41,18 @@ class OauthUserConnectorConfig extends AbstractBundleConfig
     public function getUserScopes(): array
     {
         return [static::SCOPE_USER];
+    }
+
+    /**
+     * Specification:
+     * - Returns Oauth scope related to back-office users.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackOfficeUserScope(): string
+    {
+        return static::SCOPE_BACK_OFFICE_USER;
     }
 }

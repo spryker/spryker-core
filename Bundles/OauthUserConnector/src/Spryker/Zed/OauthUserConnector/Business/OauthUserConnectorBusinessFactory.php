@@ -8,6 +8,10 @@
 namespace Spryker\Zed\OauthUserConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthUserConnector\Business\Checker\BackofficeUserOauthScopeAuthorizationChecker;
+use Spryker\Zed\OauthUserConnector\Business\Checker\BackofficeUserOauthScopeAuthorizationCheckerInterface;
+use Spryker\Zed\OauthUserConnector\Business\Checker\OauthUserScopeAuthorizationChecker;
+use Spryker\Zed\OauthUserConnector\Business\Checker\OauthUserScopeAuthorizationCheckerInterface;
 use Spryker\Zed\OauthUserConnector\Business\Installer\OauthUserScopeInstaller;
 use Spryker\Zed\OauthUserConnector\Business\Installer\OauthUserScopeInstallerInterface;
 use Spryker\Zed\OauthUserConnector\Business\Provider\ScopeProvider;
@@ -40,7 +44,11 @@ class OauthUserConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createScopeProvider(): ScopeProviderInterface
     {
-        return new ScopeProvider($this->getConfig());
+        return new ScopeProvider(
+            $this->getConfig(),
+            $this->getUserTypeOauthScopeProviderPlugins(),
+            $this->getUtilEncodingService(),
+        );
     }
 
     /**
@@ -50,6 +58,26 @@ class OauthUserConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthUserScopeInstaller(
             $this->getOauthFacade(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthUserConnector\Business\Checker\OauthUserScopeAuthorizationCheckerInterface
+     */
+    public function createOauthUserScopeAuthorizationChecker(): OauthUserScopeAuthorizationCheckerInterface
+    {
+        return new OauthUserScopeAuthorizationChecker(
+            $this->getUserTypeOauthScopeAuthorizationCheckerPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthUserConnector\Business\Checker\BackofficeUserOauthScopeAuthorizationCheckerInterface
+     */
+    public function createBackofficeUserOauthScopeAuthorizationChecker(): BackofficeUserOauthScopeAuthorizationCheckerInterface
+    {
+        return new BackofficeUserOauthScopeAuthorizationChecker(
             $this->getConfig(),
         );
     }
@@ -76,5 +104,21 @@ class OauthUserConnectorBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): OauthUserConnectorToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(OauthUserConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\OauthUserConnectorExtension\Dependency\Plugin\UserTypeOauthScopeProviderPluginInterface>
+     */
+    public function getUserTypeOauthScopeProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthUserConnectorDependencyProvider::PLUGINS_USER_TYPE_OAUTH_SCOPE_PROVIDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\OauthUserConnectorExtension\Dependency\Plugin\UserTypeOauthScopeAuthorizationCheckerPluginInterface>
+     */
+    public function getUserTypeOauthScopeAuthorizationCheckerPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthUserConnectorDependencyProvider::PLUGINS_USER_TYPE_OAUTH_SCOPE_AUTHORIZATION_CHECKER);
     }
 }

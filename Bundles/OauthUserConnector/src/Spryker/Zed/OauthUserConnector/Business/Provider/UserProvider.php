@@ -53,6 +53,8 @@ class UserProvider implements UserProviderInterface
      */
     public function getOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
     {
+        $oauthUserTransfer->setIsSuccess(false);
+
         if (!$this->userFacade->hasActiveUserByUsername($oauthUserTransfer->getUsernameOrFail())) {
             return $oauthUserTransfer;
         }
@@ -64,7 +66,7 @@ class UserProvider implements UserProviderInterface
 
         $isValidPassword = $this->userFacade->isValidPassword($oauthUserTransfer->getPasswordOrFail(), $userTransfer->getPasswordOrFail());
         if (!$isValidPassword) {
-            return $oauthUserTransfer->setIsSuccess(false);
+            return $oauthUserTransfer;
         }
 
         $userIdentifierTransfer = (new UserIdentifierTransfer())->fromArray($userTransfer->toArray(), true);
@@ -81,11 +83,7 @@ class UserProvider implements UserProviderInterface
      */
     protected function findUserTransfer(OauthUserTransfer $oauthUserTransfer): ?UserTransfer
     {
-        if (!$oauthUserTransfer->getUsername()) {
-            return null;
-        }
-
-        $userCriteriaTransfer = $this->createUserCriteriaTransfer($oauthUserTransfer->getUsername());
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($oauthUserTransfer->getUsernameOrFail());
         $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
 
         return $userCollectionTransfer->getUsers()->getIterator()->current();

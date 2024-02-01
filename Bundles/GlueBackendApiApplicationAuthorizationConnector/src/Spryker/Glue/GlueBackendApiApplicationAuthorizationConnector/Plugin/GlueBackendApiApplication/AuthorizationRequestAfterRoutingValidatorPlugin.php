@@ -25,6 +25,7 @@ class AuthorizationRequestAfterRoutingValidatorPlugin extends AbstractPlugin imp
      * - Resource can implement `AuthorizationStrategyAwareResourceRoutePluginInterface` or `DefaultAuthorizationStrategyAwareResourceRoutePluginInterface`.
      * - If the plugins have implemented one of these interfaces, the `RouteAuthorizationConfigTransfer` configuration is extracted and used.
      * - `RouteAuthorizationConfigTransfer.strategy` is required. Without a strategy the authorization check can't be executed and return default `GlueRequestValidationTransfer`.
+     * - Executes stack of {@link \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\ProtectedRouteAuthorizationConfigProviderPluginInterface} plugins.
      *
      * @api
      *

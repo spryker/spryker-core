@@ -38,6 +38,7 @@
         <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
         <property name="grantType" type="string"/>
         <property name="requestApplication" type="string"/>
+        <property name="userIdentifier" type="string"/>
     </transfer>
 
     <transfer name="OauthGrantTypeConfiguration">
@@ -59,6 +60,24 @@
     <transfer name="UserConditions" strict="true">
         <property name="usernames" type="string[]" singular="username"/>
         <property name="statuses" type="string[]" singular="status"/>
+    </transfer>
+
+    <transfer name="AuthorizationRequest">
+        <property name="entity" type="AuthorizationEntity"/>
+    </transfer>
+
+    <transfer name="AuthorizationEntity">
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="GlueRequestUser">
+        <property name="scopes" type="string[]" singular="scope"/>
+    </transfer>
+
+    <transfer name="RouteAuthorizationConfig">
+        <property name="strategies" type="string[]" singular="strategy"/>
+        <property name="apiMessage" type="string"/>
+        <property name="httpStatusCode" type="int"/>
     </transfer>
 
 </transfers>

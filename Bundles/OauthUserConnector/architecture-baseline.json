@@ -26,26 +26,5 @@
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OauthUserConnector/Dependency/Facade/OauthUserConnectorToUserFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `username` in method `Spryker\\Zed\\OauthUserConnector\\Dependency\\Facade\\OauthUserConnectorToUserFacadeBridge::hasActiveUserByUsername()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OauthUserConnector/Dependency/Facade/OauthUserConnectorToUserFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `password` in method `Spryker\\Zed\\OauthUserConnector\\Dependency\\Facade\\OauthUserConnectorToUserFacadeBridge::isValidPassword()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OauthUserConnector/Dependency/Facade/OauthUserConnectorToUserFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `hash` in method `Spryker\\Zed\\OauthUserConnector\\Dependency\\Facade\\OauthUserConnectorToUserFacadeBridge::isValidPassword()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
     }
 ]

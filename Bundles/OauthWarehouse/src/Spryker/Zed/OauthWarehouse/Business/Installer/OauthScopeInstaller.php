@@ -46,7 +46,7 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
         $warehouseScopes = $this->oauthWarehouseConfig->getWarehouseScopes();
         $oauthScopeTransfers = $this->getOauthScopeTransfersIndexedByOauthScopeIdentifier($warehouseScopes);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($warehouseScopes, $oauthScopeTransfers) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($warehouseScopes, $oauthScopeTransfers): void {
             $this->executeTransaction($warehouseScopes, $oauthScopeTransfers);
         });
     }

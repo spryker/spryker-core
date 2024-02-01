@@ -5,9 +5,12 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.1",
+        "spryker/authorization-extension": "^1.2.0",
+        "spryker/glue-backend-api-application-authorization-connector-extension": "^1.2.0",
         "spryker/kernel": "^3.52.0",
         "spryker/oauth": "^2.4.0",
         "spryker/oauth-extension": "^1.5.0",
+        "spryker/oauth-user-connector-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.17.0",
         "spryker/util-encoding": "^2.0.0"
@@ -16,6 +19,7 @@
         "spryker/code-sniffer": "*",
         "spryker/installer": "*",
         "spryker/propel": "*",
+        "spryker/symfony": "*",
         "spryker/testify": "*"
     },
     "suggest": {

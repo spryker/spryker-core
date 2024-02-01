@@ -30,7 +30,7 @@ class OauthUserConnectorToUserFacadeBridge implements OauthUserConnectorToUserFa
      *
      * @return bool
      */
-    public function hasActiveUserByUsername($username): bool
+    public function hasActiveUserByUsername(string $username): bool
     {
         return $this->userFacade->hasActiveUserByUsername($username);
     }
@@ -41,7 +41,7 @@ class OauthUserConnectorToUserFacadeBridge implements OauthUserConnectorToUserFa
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash): bool
+    public function isValidPassword(string $password, string $hash): bool
     {
         return $this->userFacade->isValidPassword($password, $hash);
     }

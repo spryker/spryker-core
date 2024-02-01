@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestWarehouseTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Spryker\Zed\OauthWarehouse\Business\Reader\StockReaderInterface;
+use Spryker\Zed\OauthWarehouse\OauthWarehouseConfig;
 
 class WarehouseTokenAuthorizationChecker implements WarehouseTokenAuthorizationCheckerInterface
 {
@@ -30,11 +31,18 @@ class WarehouseTokenAuthorizationChecker implements WarehouseTokenAuthorizationC
     protected StockReaderInterface $stockReader;
 
     /**
-     * @param \Spryker\Zed\OauthWarehouse\Business\Reader\StockReaderInterface $stockReader
+     * @var \Spryker\Zed\OauthWarehouse\OauthWarehouseConfig
      */
-    public function __construct(StockReaderInterface $stockReader)
+    protected OauthWarehouseConfig $oauthWarehouseConfig;
+
+    /**
+     * @param \Spryker\Zed\OauthWarehouse\Business\Reader\StockReaderInterface $stockReader
+     * @param \Spryker\Zed\OauthWarehouse\OauthWarehouseConfig $oauthWarehouseConfig
+     */
+    public function __construct(StockReaderInterface $stockReader, OauthWarehouseConfig $oauthWarehouseConfig)
     {
         $this->stockReader = $stockReader;
+        $this->oauthWarehouseConfig = $oauthWarehouseConfig;
     }
 
     /**
@@ -45,7 +53,7 @@ class WarehouseTokenAuthorizationChecker implements WarehouseTokenAuthorizationC
     public function authorize(AuthorizationRequestTransfer $authorizationRequestTransfer): bool
     {
         if ($this->isUserRequest($authorizationRequestTransfer)) {
-            return true;
+            return $this->isAllowedUserScope($authorizationRequestTransfer);
         }
 
         $glueRequestWarehouseTransfer = $this->findWarehouseRequest($authorizationRequestTransfer);
@@ -68,6 +76,28 @@ class WarehouseTokenAuthorizationChecker implements WarehouseTokenAuthorizationC
         $glueRequestUserTransfer = $authorizationRequestTransfer->getEntityOrFail()->getData()[static::GLUE_REQUEST_USER] ?? null;
 
         return (bool)$glueRequestUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isAllowedUserScope(AuthorizationRequestTransfer $authorizationRequestTransfer): bool
+    {
+        $allowedUserScopes = $this->oauthWarehouseConfig->getAllowedUserScopes();
+        if ($allowedUserScopes === []) {
+            return true;
+        }
+
+        $glueRequestUserTransfer = $authorizationRequestTransfer->getEntityOrFail()->getData()[static::GLUE_REQUEST_USER];
+        foreach ($glueRequestUserTransfer->getScopes() as $scope) {
+            if (in_array($scope, $allowedUserScopes, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

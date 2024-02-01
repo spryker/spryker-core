@@ -303,7 +303,7 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
         $warehouseIds = $pickingListConditionsTransfer->getWarehouseIds();
         if ($warehouseIds !== []) {
             $pickingListQuery->useSpyStockQuery()
-                ->filterByIdStock_In($warehouseUuids)
+                ->filterByIdStock_In($warehouseIds)
                 ->endUse();
         }
 

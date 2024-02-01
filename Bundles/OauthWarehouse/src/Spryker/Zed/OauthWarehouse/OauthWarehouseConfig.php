@@ -43,4 +43,18 @@ class OauthWarehouseConfig extends AbstractBundleConfig
             static::SCOPE_WAREHOUSE,
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns a list of user scopes that are allowed to be authorized.
+     * - If empty, all user scopes are allowed.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getAllowedUserScopes(): array
+    {
+        return [];
+    }
 }

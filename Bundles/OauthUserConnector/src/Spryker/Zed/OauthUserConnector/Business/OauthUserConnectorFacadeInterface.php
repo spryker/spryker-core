@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthUserConnector\Business;
 
+use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 
@@ -51,4 +52,34 @@ interface OauthUserConnectorFacadeInterface
      * @return void
      */
     public function installOauthUserScope(): void;
+
+    /**
+     * Specification:
+     * - Returns true if the request identity is not a user.
+     * - Executes stack of {@link \Spryker\Zed\OauthUserConnectorExtension\Dependency\Plugin\UserTypeOauthScopeAuthorizationCheckerPluginInterface} plugins.
+     * - Returns true if the request identity is user, and at least one of user`s scopes allows access.
+     * - Returns false in other cases.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return bool
+     */
+    public function authorize(AuthorizationRequestTransfer $authorizationRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns false if the request identity is not a user.
+     * - Returns true if user has back-office user scope.
+     * - Returns true if user has only basic scopes.
+     * - Returns false in other cases.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return bool
+     */
+    public function authorizeByBackofficeUserScope(AuthorizationRequestTransfer $authorizationRequestTransfer): bool;
 }

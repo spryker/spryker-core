@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/warehouse-user": "Provides user entity `isWarehouseUser` property to be able to check whether user is warehouse user or not."
+    }
+}

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthUserConnector\Business;
 
+use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -54,5 +55,37 @@ class OauthUserConnectorFacade extends AbstractFacade implements OauthUserConnec
     public function installOauthUserScope(): void
     {
         $this->getFactory()->createOauthUserScopeInstaller()->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return bool
+     */
+    public function authorize(AuthorizationRequestTransfer $authorizationRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createOauthUserScopeAuthorizationChecker()
+            ->authorize($authorizationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return bool
+     */
+    public function authorizeByBackofficeUserScope(AuthorizationRequestTransfer $authorizationRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createBackofficeUserOauthScopeAuthorizationChecker()
+            ->authorize($authorizationRequestTransfer);
     }
 }
