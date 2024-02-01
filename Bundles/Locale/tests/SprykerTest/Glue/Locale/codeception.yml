@@ -23,3 +23,4 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Glue\Testify\Helper\FactoryHelper
                 - \SprykerTest\Glue\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

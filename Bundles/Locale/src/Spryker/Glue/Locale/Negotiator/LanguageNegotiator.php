@@ -9,6 +9,7 @@ namespace Spryker\Glue\Locale\Negotiator;
 
 use Exception;
 use Spryker\Client\Locale\LocaleClientInterface;
+use Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface;
 use Spryker\Service\Locale\LocaleServiceInterface;
 
 class LanguageNegotiator implements LanguageNegotiatorInterface
@@ -24,15 +25,23 @@ class LanguageNegotiator implements LanguageNegotiatorInterface
     protected LocaleServiceInterface $localeService;
 
     /**
+     * @var \Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface
+     */
+    protected LocaleToStoreClientInterface $storeClient;
+
+    /**
      * @param \Spryker\Client\Locale\LocaleClientInterface $localeClient
      * @param \Spryker\Service\Locale\LocaleServiceInterface $localeService
+     * @param \Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface $storeClient
      */
     public function __construct(
         LocaleClientInterface $localeClient,
-        LocaleServiceInterface $localeService
+        LocaleServiceInterface $localeService,
+        LocaleToStoreClientInterface $storeClient
     ) {
         $this->localeClient = $localeClient;
         $this->localeService = $localeService;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -51,7 +60,7 @@ class LanguageNegotiator implements LanguageNegotiatorInterface
         }
 
         if (!$headerAcceptLanguage) {
-            return $this->getDefaultLanguage($storeLocaleCodes);
+            return $this->getDefaultLanguage();
         }
 
         foreach ($storeLocaleCodes as $localeName) {
@@ -63,23 +72,21 @@ class LanguageNegotiator implements LanguageNegotiatorInterface
         $acceptLanguageTransfer = $this->localeService->getAcceptLanguage($headerAcceptLanguage, array_keys($storeLocaleCodes));
 
         if (!$acceptLanguageTransfer || $acceptLanguageTransfer->getType() === null) {
-            return $this->getDefaultLanguage($storeLocaleCodes);
+            return $this->getDefaultLanguage();
         }
 
         if (!isset($storeLocaleCodes[$acceptLanguageTransfer->getType()])) {
-            return $this->getDefaultLanguage($storeLocaleCodes);
+            return $this->getDefaultLanguage();
         }
 
         return $storeLocaleCodes[$acceptLanguageTransfer->getType()];
     }
 
     /**
-     * @param array<string, string> $storeLocaleCodes
-     *
      * @return string
      */
-    protected function getDefaultLanguage(array $storeLocaleCodes): string
+    protected function getDefaultLanguage(): string
     {
-        return (string)array_shift($storeLocaleCodes);
+        return $this->storeClient->getCurrentStore()->getDefaultLocaleIsoCodeOrFail();
     }
 }

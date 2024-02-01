@@ -8,8 +8,10 @@
 namespace SprykerTest\Glue\Locale\Plugin\Application;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Locale\LocaleClient;
 use Spryker\Client\Locale\LocaleClientInterface;
+use Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface;
 use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use SprykerTest\Glue\Locale\LocaleGlueTester;
@@ -44,6 +46,11 @@ class LocaleApplicationPluginTest extends Unit
     /**
      * @var string
      */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
     protected const APPLICATION_REQUEST_STACK = 'request_stack';
 
     /**
@@ -59,28 +66,6 @@ class LocaleApplicationPluginTest extends Unit
     /**
      * @return void
      */
-    public function testProvideShouldAddLocaleToContainerWhileLocaleEqualsAcceptHeaderLanguage(): void
-    {
-        // Arrange
-        $requestStack = $this->createRequestStack(static::LOCALES[static::LOCALE_KEY_DE]);
-        $container = $this->createContainer($requestStack);
-        $localeApplicationPlugin = new LocaleApplicationPlugin();
-
-        $this->tester->mockFactoryMethod('getClient', $this->createLocaleClientMock(static::LOCALES));
-
-        $localeApplicationPlugin->setFactory($this->tester->getFactory());
-
-        // Act
-        $container = $localeApplicationPlugin->provide($container);
-
-        // Assert
-        $this->assertTrue($container->has(static::APPLICATION_LOCALE));
-        $this->assertSame(static::LOCALES[static::LOCALE_KEY_DE], $container->get(static::APPLICATION_LOCALE));
-    }
-
-    /**
-     * @return void
-     */
     public function testProvideShouldAddDefaultLocaleToContainerWhileEmptyAcceptHeaderLanguage(): void
     {
         // Arrange
@@ -88,6 +73,7 @@ class LocaleApplicationPluginTest extends Unit
         $container = $this->createContainer($requestStack);
         $localeApplicationPlugin = new LocaleApplicationPlugin();
 
+        $this->tester->mockFactoryMethod('getStoreClient', $this->createStoreClientMock());
         $this->tester->mockFactoryMethod('getClient', $this->createLocaleClientMock(static::LOCALES));
 
         $localeApplicationPlugin->setFactory($this->tester->getFactory());
@@ -132,6 +118,7 @@ class LocaleApplicationPluginTest extends Unit
         $container = $this->createContainer($requestStack);
         $localeApplicationPlugin = new LocaleApplicationPlugin();
 
+        $this->tester->mockFactoryMethod('getStoreClient', $this->createStoreClientMock());
         $this->tester->mockFactoryMethod('getClient', $this->createLocaleClientMock(static::LOCALES));
 
         $localeApplicationPlugin->setFactory($this->tester->getFactory());
@@ -166,6 +153,7 @@ class LocaleApplicationPluginTest extends Unit
     {
         $request = Request::create('/');
         $request->headers->set('accept-language', $headerAcceptLanguage);
+        $request->headers->set('store', 'DE');
 
         $requestStack = new RequestStack();
         $requestStack->push($request);
@@ -184,5 +172,25 @@ class LocaleApplicationPluginTest extends Unit
         $localeClientMock->method('getLocales')->willReturn($currentStoreLocaleCodes);
 
         return $localeClientMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface
+     */
+    protected function createStoreClientMock(): LocaleToStoreClientInterface
+    {
+        $storeClientMock = $this->getMockBuilder(LocaleToStoreClientInterface::class)->getMock();
+
+        $storeClientMock->method('getCurrentStore')->willReturn(
+            (new StoreTransfer())
+                ->setName(static::STORE_NAME_DE)
+                ->setDefaultLocaleIsoCode(static::LOCALES[static::LOCALE_KEY_DE]),
+        );
+
+        $storeClientMock->method('isDynamicStoreEnabled')->willReturn(
+            $this->tester->isDynamicStoreEnabled(),
+        );
+
+        return $storeClientMock;
     }
 }

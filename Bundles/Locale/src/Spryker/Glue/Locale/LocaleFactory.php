@@ -27,6 +27,7 @@ class LocaleFactory extends AbstractFactory
         return new LanguageNegotiator(
             $this->getClient(),
             $this->getLocaleService(),
+            $this->getStoreClient(),
         );
     }
 

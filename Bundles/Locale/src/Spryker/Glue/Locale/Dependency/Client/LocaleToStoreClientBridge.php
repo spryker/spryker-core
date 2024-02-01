@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\Locale\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class LocaleToStoreClientBridge implements LocaleToStoreClientInterface
 {
     /**
@@ -28,5 +30,13 @@ class LocaleToStoreClientBridge implements LocaleToStoreClientInterface
     public function isDynamicStoreEnabled(): bool
     {
         return $this->storeClient->isDynamicStoreEnabled();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(): StoreTransfer
+    {
+        return $this->storeClient->getCurrentStore();
     }
 }
