@@ -28,7 +28,6 @@
             - 'npm run mp:stylelint'
             - 'npm run mp:lint'
             - 'npm run mp:test --verbose --detectOpenHandles'
-        cache_base_image: false
         run_next_parallel: true
         timeout: 1500
         shell: 'BASH'
@@ -39,5 +38,4 @@
         execute_commands:
             - 'chmod +x *.sh'
             - 'bash travis_check_touched_modules.sh'
-        cache_base_image: false
         shell: 'BASH'
