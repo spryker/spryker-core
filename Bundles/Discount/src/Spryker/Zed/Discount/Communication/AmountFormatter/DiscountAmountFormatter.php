@@ -48,10 +48,11 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
         $calculatorPlugin = $this->calculatorPlugins[$calculatorPluginName];
 
         $discountConfiguratorTransfer = $this->formatDiscountMoneyAmounts($discountConfiguratorTransfer, $calculatorPlugin);
+        $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $defaultIsoCode = null;
-        if ($this->storeFacade->isDynamicStoreEnabled()) {
-            $moveyValueTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getMoneyValueCollection()->offsetGet(0);
-            $defaultIsoCode = $moveyValueTransfer->getCurrency()->getCode();
+        if ($this->storeFacade->isDynamicStoreEnabled() && $discountCalculatorTransfer->getMoneyValueCollection()->count() > 0) {
+            $moneyValueTransfer = $discountCalculatorTransfer->getMoneyValueCollection()->offsetGet(0);
+            $defaultIsoCode = $moneyValueTransfer->getCurrency()->getCode();
         }
 
         $formatterAmount = $this->formatAmount(
