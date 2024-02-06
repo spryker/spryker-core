@@ -1,4 +1,5 @@
 <mp-layout-main [navigationConfig]="navigationConfig">
+    <ng-content top-section select="[top-section]"></ng-content>
     <ng-content header select="[header]"></ng-content>
     <ng-content logo select="[logo]"></ng-content>
     <ng-content></ng-content>

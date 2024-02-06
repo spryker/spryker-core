@@ -20,7 +20,7 @@ class UserAgentFormExpander implements UserAgentFormExpanderInterface
     /**
      * @var string
      */
-    protected const FIELD_IS_AGENT_LABEL = 'This user is an agent';
+    protected const FIELD_IS_AGENT_LABEL = 'This user is an agent in Storefront';
 
     /**
      * @var string

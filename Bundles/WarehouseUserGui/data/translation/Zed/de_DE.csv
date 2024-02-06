@@ -7,10 +7,10 @@
 "List Users","Benutzer auflisten"
 "A warehouse can be assigned to multiple users at a time.","Ein Lagerhaus kann mehreren Benutzern gleichzeitig zugewiesen werden."
 Remove,Entfernen
-Save,Sparen
+Save,Speichern
 "Deselect All","Alle abwählen"
 "Deselected warehouses","Abgewählte Lagerhäuser"
-Inactive,Inactive
+Inactive,Inaktiv
 Active,Aktiv
 "Warehouse ID",Lager-ID
 Name,Name

@@ -1,28 +1,28 @@
-"Add Merchant relation","Verkäuferbeziehung hinzufügen"
+"Add Merchant relation","Händlerbeziehung hinzufügen"
 "Assigned Business Units","Zugewiesene Geschäftseinheiten"
 "Back to Merchant relations","Zurück zu Handelsbeziehungen"
 "Business Unit Owner","Inhaber der Geschäftseinheit"
 Company,Firma
 Confirm,bestätigt
-"Create Merchant Relation","Verkäuferbeziehung erstellen"
-"Edit Merchant Relation","Verkäuferbeziehung bearbeiten"
-"Edit Merchant Relation:","Verkäuferbeziehung bearbeiten:"
+"Create Merchant Relation","Händlerbeziehung erstellen"
+"Edit Merchant Relation","Händlerbeziehung bearbeiten"
+"Edit Merchant Relation:","Händlerbeziehung bearbeiten:"
 ID,ID:
-"List of Merchant relation","Liste der Verkäuferbeziehungen"
-Merchant,Verkäufer
-"Merchant Name",Verkäufername
-"Merchant relation created successfully.","Verkäuferbeziehung erfolgreich erstellt."
-"Merchant relation deleted successfully.","Verkäuferbeziehung erfolgreich gelöscht."
-"Merchant relation has not been created.","Verkäuferbeziehung wurde nicht erstellt."
-"Merchant relation is not found.","Verkäuferbeziehung wurde nicht gefunden."
-"Merchant relation updated successfully.","Verkäuferbeziehung erfolgreich aktualisiert."
-"Merchant Relations",Verkäuferbeziehungen
-"Merchant Relation with ID ""%id%"" doesn\'t exist.","Verkäuferbeziehung mit der ID ""%id%"" existiert nicht."
-Merchants,Verkäufer
-"Overview of Merchant relation","Übersicht der Verkäuferbeziehung"
+"List of Merchant relation","Liste der Händlerbeziehungen"
+Merchant,Händler
+"Merchant Name",Händlername
+"Merchant relation created successfully.","Händlerbeziehung erfolgreich erstellt."
+"Merchant relation deleted successfully.","Händlerbeziehung erfolgreich gelöscht."
+"Merchant relation has not been created.","Händlerbeziehung wurde nicht erstellt."
+"Merchant relation is not found.","Händlerbeziehung wurde nicht gefunden."
+"Merchant relation updated successfully.","Händlerbeziehung erfolgreich aktualisiert."
+"Merchant Relations",Händlerbeziehungen
+"Merchant Relation with ID ""%id%"" doesn\'t exist.","Händlerbeziehung mit der ID ""%id%"" existiert nicht."
+Merchants,Händler
+"Overview of Merchant relation","Übersicht der Händlerbeziehung"
 Save,Speichern
 "Select Company","Firma auswählen"
-"Select merchant","Verkäufer auswählen"
+"Select merchant","Händler auswählen"
 "Select business unit","Geschäftseinheit auswählen"
 "Please select an item in the list","Wählen Sie bitte ein Element aus der Liste aus."
 "Delete Merchant Relation","Händlerbeziehung löschen"

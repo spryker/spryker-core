@@ -3,7 +3,7 @@ Customer,Kunde
 Email,E-Mail
 "Grand Total",Gesamtsumme
 "Order State",Bestellstatus
-"Merchant Reference",Verkäufer-Referenznummer
+"Merchant Reference",Händler-Referenznummer
 "No. of Items",Artikelanzahl
 Orders,Bestellungen
 Reference,Referenz
@@ -32,9 +32,9 @@ New,Neu
 "The state is updated successfully.","Der Status wurde aktualisiert."
 "Only matching states items will be updated.","Es werden nur Elemente mit übereinstimmenden Status aktualisiert."
 "Order's Items state",Artikelstatus
-"Merchant order not found for id %d.","Verkäuferbestellung für ID %d nicht gefunden"
+"Merchant order not found for id %d.","Händlerbestellung für ID %d nicht gefunden"
 "Event name is empty.","Ereignisname ist leer."
-"Merchant order ids are empty.","Verkäuferbestell-IDs sind leer."
+"Merchant order ids are empty.","Händlerbestell-IDs sind leer."
 Method,Versandart
 Carrier,Versandanbieter
 "Delivery address",Lieferadresse

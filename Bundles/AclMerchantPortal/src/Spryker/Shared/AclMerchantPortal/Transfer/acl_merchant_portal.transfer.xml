@@ -121,4 +121,29 @@
         <property name="groups" type="Group[]" singular="group"/>
     </transfer>
 
+    <transfer name="GuiTableDataResponse">
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="AclUserHasGroupCollection" strict="true">
+        <property name="aclUserHasGroups" type="AclUserHasGroup[]" singular="aclUserHasGroup"/>
+    </transfer>
+
+    <transfer name="AclUserHasGroup" strict="true">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="AclUserHasGroupCriteria" strict="true">
+        <property name="aclUserHasGroupConditions" type="AclUserHasGroupConditions"/>
+    </transfer>
+
+    <transfer name="AclUserHasGroupConditions" strict="true">
+        <property name="userIds" type="int[]" singular="idUser"/>
+        <property name="groupNames" type="string[]" singular="groupName"/>
+    </transfer>
+
 </transfers>

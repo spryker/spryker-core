@@ -304,6 +304,7 @@ interface UserFacadeInterface
      * - Uses `UserCriteriaTransfer.UserConditions.usernames` to filter users by usernames (emails).
      * - Uses `UserCriteriaTransfer.UserConditions.statuses` to filter users by statuses.
      * - Uses `UserCriteriaTransfer.UserConditions.uuids` to filter users by uuids if `spy_users.uuid` column exists.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserQueryCriteriaExpanderPluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface} plugins for BC-reasons.
      * - If `UserCriteriaTransfer.UserConditions.throwException` is set to `true`, method will throw {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case of no user was found.

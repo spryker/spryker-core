@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <agent-dashboard-merchant-portal-gui>
+        <label>Merchant Users</label>
+        <title>Merchant Users</title>
+        <icon>user-group</icon>
+        <bundle>agent-dashboard-merchant-portal-gui</bundle>
+        <controller>merchant-users</controller>
+        <action>index</action>
+    </agent-dashboard-merchant-portal-gui>
+</config>

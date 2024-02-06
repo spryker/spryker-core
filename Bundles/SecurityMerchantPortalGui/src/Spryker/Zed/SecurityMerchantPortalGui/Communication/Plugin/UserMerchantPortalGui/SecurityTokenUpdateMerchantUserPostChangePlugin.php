@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\UserMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserPostChangePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\UserMerchantPortalGui\MerchantUserSecurityTokenUpdateMerchantUserPostChangePlugin} instead.
+ *
  * @method \Spryker\Zed\SecurityMerchantPortalGui\Communication\SecurityMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig getConfig()
  */

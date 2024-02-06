@@ -14,6 +14,7 @@ use Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInter
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
+ * @method \Spryker\Zed\MerchantUser\Communication\MerchantUserCommunicationFactory getFactory()
  */
 class MerchantUserUserRoleFilterPlugin extends AbstractPlugin implements UserRoleFilterPluginInterface
 {

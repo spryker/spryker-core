@@ -13,13 +13,13 @@
         "rxjs": "~7.5.7"
     },
     "dependencies": {
-        "@spryker/card": "^1.0.1",
-        "@spryker/collapsible": "^1.0.1",
-        "@spryker/headline": "^1.0.0",
-        "@spryker/icon": "^1.0.1",
-        "@spryker/label": "^1.0.0",
-        "@spryker/styles": "^1.0.1",
-        "@spryker/tabs": "^1.0.1",
+        "@spryker/card": "^1.1.0",
+        "@spryker/collapsible": "^1.1.0",
+        "@spryker/headline": "^1.1.0",
+        "@spryker/icon": "1.2.0",
+        "@spryker/label": "^1.1.0",
+        "@spryker/styles": "1.2.0",
+        "@spryker/tabs": "^1.1.0",
         "@spryker/utils": "^1.0.0",
         "@spryker/web-components": "^1.0.0"
     }

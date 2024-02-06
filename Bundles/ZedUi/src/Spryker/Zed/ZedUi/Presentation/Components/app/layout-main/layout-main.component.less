@@ -6,7 +6,7 @@
 @layout-logo-collapsed-padding-x: var(--spy-layout-logo-collapsed-padding-x, 20px);
 @layout-logo-collapsed-width: var(--spy-layout-logo-collapsed-width, 31px);
 @layout-sidebar-padding-top: var(--spy-layout-sidebar-padding-top, 105px);
-@layout-header-height: var(--spy-layout-header-height, 56px);
+@layout-header-height: var(--spy-layout-header-height, 0);
 @layout-content-padding: var(--spy-layout-content-padding, 40px 80px);
 
 .mp-layout-main {
@@ -26,9 +26,13 @@
             overflow-x: hidden;
         }
 
+        &__top-section {
+            flex-shrink: 0;
+        }
+
         &__header {
             flex-shrink: 0;
-            height: @layout-header-height;
+            min-height: @layout-header-height;
         }
 
         &__content {
@@ -71,5 +75,11 @@
 
     .@{navigation-prefix-cls} {
         overflow-y: auto;
+    }
+
+    .@{layout-prefix-cls}-sider-collapsed {
+        .@{navigation-prefix-cls}__title-text {
+            text-align: center;
+        }
     }
 }

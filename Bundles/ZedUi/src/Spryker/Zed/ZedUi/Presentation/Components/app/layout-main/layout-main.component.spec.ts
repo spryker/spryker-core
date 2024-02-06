@@ -7,6 +7,7 @@ describe('LayoutMainComponent', () => {
     const { testModule, createComponent } = getTestingForComponent(LayoutMainComponent, {
         ngModule: { schemas: [NO_ERRORS_SCHEMA] },
         projectContent: `
+            <span top-section></span>
             <span header></span>
             <span logo></span>
             <span class="default-slot"></span>
@@ -69,6 +70,13 @@ describe('LayoutMainComponent', () => {
             const logoSlot = host.queryCss('.mp-layout-main-cnt__logo [logo]');
 
             expect(logoSlot).toBeTruthy();
+        });
+
+        it('should render `top-section` slot to the `.mp-layout-main-cnt__top-section` element', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const topSectionSlot = host.queryCss('.mp-layout-main-cnt__top-section [top-section]');
+
+            expect(topSectionSlot).toBeTruthy();
         });
 
         it('should render `header` slot to the `.mp-layout-main-cnt__header` element', async () => {

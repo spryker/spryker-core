@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclMerchantPortal\Business;
 
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
@@ -150,5 +151,22 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
         return $this->getFactory()
             ->createAclEntityConfigurationExpander()
             ->expandAclEntityConfiguration($aclEntityMetadataConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
+     */
+    public function expandAgentDashboardMerchantUserTableData(
+        GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+    ): GuiTableDataResponseTransfer {
+        return $this->getFactory()
+            ->createAgentDashboardMerchantUserTableExpander()
+            ->expand($guiTableDataResponseTransfer);
     }
 }

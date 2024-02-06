@@ -1,0 +1,40 @@
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Agent Assist Login' | trans -}}
+{% endblock %}
+
+{% set layoutComponentClass = 'agent-login' %}
+{% set title = 'Agent Assist Login' | trans %}
+{% set submitButtonClass = layoutComponentClass ~ '__submit' %}
+
+{% block content %}
+    <web-mp-agent-login cloak>
+        {% block notification %}
+            {%- include '@ZedUi/Partials/StaticMessages/static-messages.twig' -%}
+        {% endblock %}
+
+        {% if title %}
+            <span title>{{ title }}</span>
+        {% endif %}
+
+        {% block form %}
+            {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+            {{ form_errors(form) }}
+            {{ form_start(form, {attr: {novalidate: ''}}) }}
+            {% block formContent %}
+                {{ form_row(form.username) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.login, {attr: {class: submitButtonClass}}) }}
+            {% endblock %}
+            {{ form_end(form) }}
+        {% endblock %}
+    </web-mp-agent-login>
+{% endblock %}
+
+{% block footerJs %}
+    {{ view.importJsBundle('agent-security-merchant-portal-gui', importConfig) }}
+    {{ parent() }}
+{% endblock %}

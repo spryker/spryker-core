@@ -1,0 +1,15 @@
+Merchant,Merchant
+"Merchant Approval","Merchant Approval"
+"First Name","First Name"
+"Last Name","Last Name"
+Email,Email
+"User Status","User Status"
+"Assist User","Assist User"
+Search,Search
+approved,Approved
+denied,Denied
+waiting-for-approval,"Waiting for Approval"
+"Merchant Users","Merchant Users"
+"Log out Agent","Log out Agent"
+"Start Merchant User Assistance","Start Merchant User Assistance"
+"Log in as ${row.username}","Log in as ${row.username}"

@@ -4,6 +4,7 @@
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="status" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -28,6 +29,16 @@
         <property name="username" type="string"/>
         <property name="status" type="string"/>
         <property name="merchantStatus" type="string"/>
+        <property name="merchantUserSearchConditions" type="MerchantUserSearchConditions" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantUserSearchConditions" strict="true">
+        <property name="merchantName" type="string"/>
+        <property name="userFirstName" type="string"/>
+        <property name="userLastName" type="string"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="MerchantUserResponse">
@@ -104,6 +115,30 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantUserCollection" strict="true">
+        <property name="merchantUsers" type="MerchantUser[]" singular="merchantUser"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
     </transfer>
 
 </transfers>

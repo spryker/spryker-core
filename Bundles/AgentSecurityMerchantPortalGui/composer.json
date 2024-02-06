@@ -1,0 +1,59 @@
+{
+    "name": "spryker/agent-security-merchant-portal-gui",
+    "type": "library",
+    "description": "AgentSecurityMerchantPortalGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.1",
+        "spryker/container": "^1.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/merchant-agent": "^1.0.0",
+        "spryker/merchant-user": "^1.0.0",
+        "spryker/messenger": "^3.0.0",
+        "spryker/security": "^1.8.0",
+        "spryker/security-extension": "^1.0.0",
+        "spryker/security-merchant-portal-gui-extension": "^1.1.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/user": "^3.21.0",
+        "spryker/zed-ui": "^2.4.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/event-dispatcher": "*",
+        "spryker/form": "*",
+        "spryker/propel": "*",
+        "spryker/router": "*",
+        "spryker/session": "*",
+        "spryker/testify": "*",
+        "spryker/validator": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

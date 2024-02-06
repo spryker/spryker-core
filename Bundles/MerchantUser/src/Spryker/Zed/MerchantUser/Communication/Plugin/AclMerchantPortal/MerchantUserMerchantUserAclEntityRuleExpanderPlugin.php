@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
+ * @method \Spryker\Zed\MerchantUser\Communication\MerchantUserCommunicationFactory getFactory()
  */
 class MerchantUserMerchantUserAclEntityRuleExpanderPlugin extends AbstractPlugin implements MerchantUserAclEntityRuleExpanderPluginInterface
 {

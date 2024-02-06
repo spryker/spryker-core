@@ -1,0 +1,6 @@
+parameters:
+    level: 8
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Access to undefined constant .+AuthenticationEvents::AUTHENTICATION_FAILURE.#'

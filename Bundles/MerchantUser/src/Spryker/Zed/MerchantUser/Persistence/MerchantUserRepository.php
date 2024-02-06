@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Generated\Shared\Transfer\MerchantUserCollectionTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -80,6 +84,42 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @module Merchant
+     * @module User
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserCollectionTransfer
+     */
+    public function getMerchantUserCollection(
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+    ): MerchantUserCollectionTransfer {
+        $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery()
+            ->joinWithSpyMerchant()
+            ->joinWithSpyUser();
+
+        $merchantUserQuery = $this->applyMerchantUserSearch($merchantUserQuery, $merchantUserCriteriaTransfer);
+        $merchantUserQuery = $this->applyMerchantUserSorting($merchantUserQuery, $merchantUserCriteriaTransfer);
+
+        $merchantUserCollectionTransfer = new MerchantUserCollectionTransfer();
+        $paginationTransfer = $merchantUserCriteriaTransfer->getPagination();
+
+        if ($paginationTransfer) {
+            $merchantUserQuery = $this->applyPagination($merchantUserQuery, $paginationTransfer);
+            $merchantUserCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $merchantUserEntities = $merchantUserQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantUserMapper()
+            ->mapMerchantUserEntitiesToMerchantUserCollectionTransfer(
+                $merchantUserEntities,
+                $merchantUserCollectionTransfer,
+            );
+    }
+
+    /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
@@ -122,5 +162,108 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
         $merchantUserQuery->orderByIdMerchantUser();
 
         return $merchantUserQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser>
+     */
+    protected function applyMerchantUserSearch(
+        SpyMerchantUserQuery $merchantUserQuery,
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+    ): SpyMerchantUserQuery {
+        $merchantUserSearchConditionsTransfer = $merchantUserCriteriaTransfer->getMerchantUserSearchConditions();
+
+        if (!$merchantUserSearchConditionsTransfer) {
+            return $merchantUserQuery;
+        }
+
+        if ($merchantUserSearchConditionsTransfer->getMerchantName() !== null) {
+            $merchantUserQuery->_or()
+                ->useSpyMerchantQuery()
+                    ->filterByName_Like(sprintf('%%%s%%', $merchantUserSearchConditionsTransfer->getMerchantName()))
+                ->endUse();
+        }
+
+        if ($merchantUserSearchConditionsTransfer->getUserFirstName() !== null) {
+            $merchantUserQuery->_or()
+                ->useSpyUserQuery()
+                    ->filterByFirstName_Like(sprintf('%%%s%%', $merchantUserSearchConditionsTransfer->getUserFirstName()))
+                ->endUse();
+        }
+
+        if ($merchantUserSearchConditionsTransfer->getUserLastName() !== null) {
+            $merchantUserQuery->_or()
+                ->useSpyUserQuery()
+                    ->filterByLastName_Like(sprintf('%%%s%%', $merchantUserSearchConditionsTransfer->getUserLastName()))
+                ->endUse();
+        }
+
+        if ($merchantUserSearchConditionsTransfer->getUsername() !== null) {
+            $merchantUserQuery->_or()
+                ->useSpyUserQuery()
+                    ->filterByUsername_Like(sprintf('%%%s%%', $merchantUserSearchConditionsTransfer->getUsername()))
+                ->endUse();
+        }
+
+        return $merchantUserQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
+     */
+    protected function applyMerchantUserSorting(
+        SpyMerchantUserQuery $merchantUserQuery,
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+    ): SpyMerchantUserQuery {
+        $sortTransfers = $merchantUserCriteriaTransfer->getSortCollection();
+        foreach ($sortTransfers as $sortTransfer) {
+            $merchantUserQuery->orderBy($sortTransfer->getFieldOrFail(), $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC);
+        }
+
+        return $merchantUserQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyPagination(
+        ModelCriteria $modelCriteria,
+        PaginationTransfer $paginationTransfer
+    ): ModelCriteria {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($modelCriteria->count());
+
+            return $modelCriteria
+                ->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail());
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
+            $propelModelPager = $modelCriteria->paginate(
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
+            );
+
+            $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+                ->setFirstIndex($propelModelPager->getFirstIndex())
+                ->setLastIndex($propelModelPager->getLastIndex())
+                ->setFirstPage($propelModelPager->getFirstPage())
+                ->setLastPage($propelModelPager->getLastPage())
+                ->setNextPage($propelModelPager->getNextPage())
+                ->setPreviousPage($propelModelPager->getPreviousPage());
+
+            return $propelModelPager->getQuery();
+        }
+
+        return $modelCriteria;
     }
 }

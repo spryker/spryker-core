@@ -1,0 +1,64 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@agent-bar-padding: var(--spy-agent-bar-padding, 16px 50px 16px 30px);
+@agent-bar-border-bottom: var(--spy-agent-bar-border-bottom, 1px solid @gray-light);
+@agent-bar-content-max-width: var(--spy-agent-bar-content-max-width, 50%);
+@agent-bar-actions-max-width: var(--spy-agent-bar-actions-max-width, 50%);
+@agent-bar-details-margin-right: var(--spy-agent-bar-details-margin-right, 8px);
+@agent-bar-name-padding-left: var(--spy-agent-bar-name-padding-left, 10px);
+@agent-bar-user-name-padding-left: var(--spy-agent-bar-user-name-padding-left, 10px);
+@agent-bar-user-name-margin-top: var(--spy-agent-bar-user-name-margin-top, 8px);
+@agent-bar-user-email-margin-top: var(--spy-agent-bar-user-email-margin-top, 5px);
+@agent-bar-action-col-margin: var(--spy-agent-bar-action-col-margin, 0 8px);
+
+.mp-agent-bar {
+    padding: @agent-bar-padding;
+    display: flex;
+    align-items: center;
+    border-bottom: @agent-bar-border-bottom;
+
+    &__content {
+        max-width: @agent-bar-content-max-width;
+    }
+
+    &__details {
+        margin-right: @agent-bar-details-margin-right;
+        font-weight: @font-weight-medium;
+        font-size: @spy-font-size-sm;
+        letter-spacing: @letter-spacing-base;
+        color: @gray-darker;
+    }
+
+    &__name {
+        font-weight: @font-weight-semi-bold;
+        font-size: @spy-font-size-base;
+        padding-left: @agent-bar-name-padding-left;
+        color: @ink;
+    }
+
+    &__user-name {
+        padding-left: @agent-bar-user-name-padding-left;
+    }
+
+    &__name + &__user-name {
+        margin-top: @agent-bar-user-name-margin-top;
+    }
+
+    &__user-email {
+        margin-top: @agent-bar-user-email-margin-top;
+
+        .@{btn-prefix-cls}-core__btn {
+            font-size: @spy-font-size-sm;
+        }
+    }
+
+    &__actions {
+        max-width: @agent-bar-actions-max-width;
+        margin-left: auto;
+    }
+
+    &__action-col {
+        display: inline-block;
+        margin: @agent-bar-action-col-margin;
+    }
+}

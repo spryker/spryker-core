@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\AclMerchantPortal;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -24,6 +26,8 @@ use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery;
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig;
+use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider;
+use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclFacadeBridge;
 
 /**
  * Inherited Methods
@@ -157,6 +161,22 @@ class AclMerchantPortalBusinessTester extends Actor
         $merchantUserTransfer->setUser($userTransfer);
 
         return $merchantUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer $aclUserHasGroupCollectionTransfer
+     *
+     * @return void
+     */
+    public function mockAclFacade(AclUserHasGroupCollectionTransfer $aclUserHasGroupCollectionTransfer): void
+    {
+        $aclFacadeMock = Stub::makeEmpty(
+            AclMerchantPortalToAclFacadeBridge::class,
+            [
+                'getAclUserHasGroupCollection' => $aclUserHasGroupCollectionTransfer,
+            ],
+        );
+        $this->setDependency(AclMerchantPortalDependencyProvider::FACADE_ACL, $aclFacadeMock);
     }
 
     /**

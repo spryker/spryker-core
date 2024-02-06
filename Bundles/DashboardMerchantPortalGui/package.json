@@ -13,11 +13,11 @@
         "rxjs": "~7.5.7"
     },
     "dependencies": {
-        "@spryker/button": "^1.0.0",
-        "@spryker/card": "^1.0.1",
-        "@spryker/chips": "^1.0.0",
-        "@spryker/headline": "^1.0.0",
-        "@spryker/styles": "^1.0.1",
+        "@spryker/button": "^1.1.0",
+        "@spryker/card": "^1.1.0",
+        "@spryker/chips": "1.1.1",
+        "@spryker/headline": "^1.1.0",
+        "@spryker/styles": "1.2.0",
         "@spryker/utils": "^1.0.0",
         "@spryker/web-components": "^1.0.0"
     }

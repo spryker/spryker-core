@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/merchant-user": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/user": "Provides database table which MerchantAgent module extends."
+    }
+}

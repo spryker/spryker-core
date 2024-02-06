@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Persistence;
 
+use Generated\Shared\Transfer\MerchantUserCollectionTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
@@ -32,4 +33,13 @@ interface MerchantUserRepositoryInterface
      * @return array<\Generated\Shared\Transfer\MerchantUserTransfer>
      */
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserCollectionTransfer
+     */
+    public function getMerchantUserCollection(
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+    ): MerchantUserCollectionTransfer;
 }

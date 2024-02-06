@@ -13,6 +13,10 @@
         </div>
 
         <div class="mp-layout-main-cnt__main">
+            <div class="mp-layout-main-cnt__top-section">
+                <ng-content select="[top-section]"></ng-content>
+            </div>
+
             <spy-header class="mp-layout-main-cnt__header">
                 <ng-content select="[header]"></ng-content>
             </spy-header>

@@ -7,4 +7,10 @@
     <transfer name="Role">
     </transfer>
 
+    <transfer name="Rule">
+    </transfer>
+
+    <transfer name="User">
+    </transfer>
+
 </transfers>

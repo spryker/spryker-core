@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\AclRoleCriteriaTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
+use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -60,5 +63,53 @@ class AclRepository extends AbstractRepository implements AclRepositoryInterface
         return $this->getFactory()
             ->createAclMapper()
             ->mapAclRoleEntityToRoleTransfer($aclRoleEntity, new RoleTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
+     */
+    public function getAclUserHasGroupCollection(
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): AclUserHasGroupCollectionTransfer {
+        $userHasGroupQuery = $this->getFactory()->createUserHasGroupQuery();
+        $userHasGroupQuery = $this->applyAclUserHasGroupFilters($userHasGroupQuery, $aclUserHasGroupCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createAclMapper()
+            ->mapAclUserHasGroupEntitiesToAclUserHasGroupCollectionTransfer(
+                $userHasGroupQuery->find(),
+                new AclUserHasGroupCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery $aclUserHasGroupQuery
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery
+     */
+    protected function applyAclUserHasGroupFilters(
+        SpyAclUserHasGroupQuery $aclUserHasGroupQuery,
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): SpyAclUserHasGroupQuery {
+        $aclUserHasGroupConditionsTransfer = $aclUserHasGroupCriteriaTransfer->getAclUserHasGroupConditions();
+
+        if (!$aclUserHasGroupConditionsTransfer) {
+            return $aclUserHasGroupQuery;
+        }
+
+        if ($aclUserHasGroupConditionsTransfer->getGroupNames()) {
+            $aclUserHasGroupQuery->useSpyAclGroupQuery()
+                    ->filterByName_In($aclUserHasGroupConditionsTransfer->getGroupNames())
+                ->endUse();
+        }
+
+        if ($aclUserHasGroupConditionsTransfer->getUserIds()) {
+            $aclUserHasGroupQuery->filterByFkUser_In($aclUserHasGroupConditionsTransfer->getUserIds());
+        }
+
+        return $aclUserHasGroupQuery;
     }
 }

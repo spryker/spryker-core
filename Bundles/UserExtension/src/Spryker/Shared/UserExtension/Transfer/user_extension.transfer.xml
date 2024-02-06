@@ -7,4 +7,10 @@
     <transfer name="UserCollection" strict="true">
     </transfer>
 
+    <transfer name="QueryCriteria">
+    </transfer>
+
+    <transfer name="UserCriteria">
+    </transfer>
+
 </transfers>

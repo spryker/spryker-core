@@ -71,6 +71,11 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_USER_QUERY_CRITERIA_EXPANDER = 'PLUGINS_USER_QUERY_CRITERIA_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'client session';
 
     /**
@@ -108,6 +113,20 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserTableDataExpanderPlugins($container);
         $container = $this->addUserFormExpanderPlugins($container);
         $container = $this->addUsersTableExtenderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addUserQueryCriteriaExpanderPlugins($container);
 
         return $container;
     }
@@ -353,6 +372,28 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
      */
     protected function getUserExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserQueryCriteriaExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_QUERY_CRITERIA_EXPANDER, function () {
+            return $this->getUserQueryCriteriaExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserQueryCriteriaExpanderPluginInterface>
+     */
+    protected function getUserQueryCriteriaExpanderPlugins(): array
     {
         return [];
     }

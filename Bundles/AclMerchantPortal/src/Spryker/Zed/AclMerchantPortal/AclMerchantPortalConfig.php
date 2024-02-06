@@ -63,6 +63,13 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     protected const AUTH_ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
 
     /**
+     * @var list<string>
+     */
+    protected const BACKOFFICE_ALLOWED_ACL_GROUP_NAMES = [
+        self::ROOT_GROUP,
+    ];
+
+    /**
      * Specification:
      * - Defines set of AclRules to assigned for merchant-specific AclRole.
      *
@@ -492,6 +499,19 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
         return [
             static::ROOT_GROUP,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Retrieves a collection of ACL Group names which are allowed to login to backoffice.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getBackofficeAllowedAclGroupNames(): array
+    {
+        return static::BACKOFFICE_ALLOWED_ACL_GROUP_NAMES;
     }
 
     /**

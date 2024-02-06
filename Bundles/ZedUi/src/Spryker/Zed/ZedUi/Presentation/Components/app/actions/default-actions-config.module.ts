@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { AjaxFormComponent, AjaxFormModule } from '@spryker/ajax-form';
 import { ActionsModule } from '@spryker/actions';
 import { CloseDrawerActionHandlerModule, CloseDrawerActionHandlerService } from '@spryker/actions.close-drawer';
+import { ConfirmationActionHandlerModule, ConfirmationActionHandlerService } from '@spryker/actions.confirmation';
 import { DrawerActionHandlerService, DrawerActionModule } from '@spryker/actions.drawer';
 import { HttpActionHandlerModule, HttpActionHandlerService } from '@spryker/actions.http';
 import { NotificationActionHandlerModule, NotificationActionHandlerService } from '@spryker/actions.notification';
@@ -18,6 +19,7 @@ import { UrlHtmlRendererModule } from '../url-html-renderer/url-html-renderer.mo
 declare module '@spryker/actions' {
     interface ActionsRegistry {
         'close-drawer': CloseDrawerActionHandlerService;
+        confirmation: ConfirmationActionHandlerService;
         drawer: DrawerActionHandlerService;
         http: HttpActionHandlerService;
         notification: NotificationActionHandlerService;
@@ -39,6 +41,7 @@ declare module '@spryker/actions.drawer' {
     imports: [
         ActionsModule.withActions({
             'close-drawer': CloseDrawerActionHandlerService,
+            confirmation: ConfirmationActionHandlerService,
             drawer: DrawerActionHandlerService,
             http: HttpActionHandlerService,
             notification: NotificationActionHandlerService,
@@ -52,6 +55,7 @@ declare module '@spryker/actions.drawer' {
             'url-html-renderer': UrlHtmlRendererComponent,
         }),
         CloseDrawerActionHandlerModule,
+        ConfirmationActionHandlerModule,
         HttpActionHandlerModule,
         NotificationActionHandlerModule,
         RedirectActionHandlerModule,

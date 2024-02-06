@@ -57,6 +57,11 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ACL_ROLE_POST_SAVE = 'PLUGINS_ACL_ROLE_POST_SAVE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ACL_ACCESS_CHECKER_STRATEGY = 'PLUGINS_ACL_ACCESS_CHECKER_STRATEGY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -84,6 +89,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addAclInstallerPlugins($container);
         $container = $this->addAclRolesExpanderPlugins($container);
         $container = $this->addAclRolePostSavePlugins($container);
+        $container = $this->addAclAccessCheckerStrategyPlugins($container);
 
         return $container;
     }
@@ -193,6 +199,28 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface>
      */
     protected function getAclRolePostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAclAccessCheckerStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ACL_ACCESS_CHECKER_STRATEGY, function () {
+            return $this->getAclAccessCheckerStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface>
+     */
+    protected function getAclAccessCheckerStrategyPlugins(): array
     {
         return [];
     }

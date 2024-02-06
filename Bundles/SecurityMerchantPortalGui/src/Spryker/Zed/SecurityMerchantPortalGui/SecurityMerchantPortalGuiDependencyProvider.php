@@ -40,11 +40,23 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     public const PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION = 'PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_CRITERIA_EXPANDER_PLUGIN = 'PLUGINS_MERCHANT_USER_CRITERIA_EXPANDER_PLUGIN';
+
+    /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
      *
      * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
+    /**
+     * @uses \Spryker\Zed\Security\Communication\Loader\Services\AuthorizationCheckerServiceLoader::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     *
+     * @var string
+     */
+    public const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * @var string
@@ -64,7 +76,9 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
         $container = $this->addTokenStorage($container);
+        $container = $this->addAuthorizationCheckerService($container);
         $container = $this->addMerchantUserLoginRestrictionPlugins($container);
+        $container = $this->addMerchantUserCriteriaExpanderPlugins($container);
         $container = $this->addSecurityBlockerClient($container);
 
         return $container;
@@ -133,6 +147,20 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function addMerchantUserCriteriaExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_CRITERIA_EXPANDER_PLUGIN, function () {
+            return $this->getMerchantUserCriteriaExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addMessengerFacade(Container $container): Container
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
@@ -169,6 +197,14 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     }
 
     /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserCriteriaExpanderPluginInterface>
+     */
+    protected function getMerchantUserCriteriaExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -177,6 +213,20 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_SECURITY_TOKEN_STORAGE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAuthorizationCheckerService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
         });
 
         return $container;

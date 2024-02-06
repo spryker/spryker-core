@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AclMerchantPortal\Dependency\Facade;
 
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
@@ -59,4 +61,13 @@ interface AclMerchantPortalToAclFacadeInterface
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getUserGroups(int $idUser): GroupsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
+     */
+    public function getAclUserHasGroupCollection(
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): AclUserHasGroupCollectionTransfer;
 }

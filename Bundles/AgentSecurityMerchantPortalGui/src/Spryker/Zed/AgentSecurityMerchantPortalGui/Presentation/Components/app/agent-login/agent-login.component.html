@@ -1,0 +1,12 @@
+<div class="agent-login">
+    <div class="agent-login__logo">
+        <spy-logo class="agent-login__logo-image"></spy-logo>
+    </div>
+    <spy-card [spyTitle]="title" titlePosition="center">
+        <ng-content></ng-content>
+    </spy-card>
+</div>
+
+<ng-template #title>
+    <ng-content select="[title]"></ng-content>
+</ng-template>

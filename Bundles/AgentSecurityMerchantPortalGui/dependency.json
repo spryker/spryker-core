@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/merchant-agent": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/zed-ui": "If you want to use Zed Ui layout templates."
+    }
+}

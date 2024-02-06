@@ -1,4 +1,4 @@
-"Add Merchant User","Benutzer für Verkäufer anlegen"
+"Add Merchant User","Benutzer für Händler anlegen"
 Back,Zurück
 "Back to Merchant Users","Zurück zu Händlerbenutzern"
 Deactivate,Deaktivieren
@@ -7,16 +7,16 @@ Delete,Löschen
 Deleted,Gelöscht
 Create,Erstellen
 "It will be deleted from everywhere","Wird überall gelöscht"
-"Merchant user ID is incorrect.","Verkäufer-Benutzerbeziehung ID Bestellungsformat."
-"Merchant user was deleted successfully.","Verkäufer-Benutzerbeziehung wurde erfolgreich gelöscht."
-"Merchant user was not deleted.","Verkäufer-Benutzerbeziehung konnte nicht gelöscht."
-"No users can be added till the merchant has been created. Please, add the required merchant information and save it.","Es können keine Benutzer hinzugefügt werden bis ein Verkäufer erstellt wurde. Fügen Sie alle erforderlichen Verkäuferinformationen hinzu und speichern Sie sie."
+"Merchant user ID is incorrect.","Händler-Benutzerbeziehung ID Bestellungsformat."
+"Merchant user was deleted successfully.","Händler-Benutzerbeziehung wurde erfolgreich gelöscht."
+"Merchant user was not deleted.","Händler-Benutzerbeziehung konnte nicht gelöscht."
+"No users can be added till the merchant has been created. Please, add the required merchant information and save it.","Es können keine Benutzer hinzugefügt werden bis ein Händler erstellt wurde. Fügen Sie alle erforderlichen Händlerinformationen hinzu und speichern Sie sie."
 Save,Speichern
 "User status can't be updated.","Der Benutzerstatus kann nicht aktualisiert werden."
 "User status has been updated.","Der Benutzerstatus wurde aktualisiert."
 Users,Benutzer
-"You are trying to delete merchant user","Sie versuchen, die Verkäufer-Benutzerbeziehung zu löschen."
-"Merchant user was successfully created.","Der Verkäuferbenutzer wurde erfolgreich erstellt."
+"You are trying to delete merchant user","Sie versuchen, die Händler-Benutzerbeziehung zu löschen."
+"Merchant user was successfully created.","Der Händlerbenutzer wurde erfolgreich erstellt."
 Edit,Bearbeiten
 Activate,Aktivieren
 Active,Aktiv

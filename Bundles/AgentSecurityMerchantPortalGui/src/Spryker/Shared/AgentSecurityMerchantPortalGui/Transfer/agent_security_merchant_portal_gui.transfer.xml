@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="User">
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="isMerchantAgent" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+    </transfer>
+
+    <transfer name="MerchantUserCriteria">
+        <property name="status" type="string"/>
+        <property name="merchantStatus" type="string"/>
+    </transfer>
+
+</transfers>

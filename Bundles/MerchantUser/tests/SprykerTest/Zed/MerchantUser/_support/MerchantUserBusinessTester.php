@@ -62,4 +62,12 @@ class MerchantUserBusinessTester extends Actor
     {
         return SpyMerchantUserQuery::create();
     }
+
+    /**
+     * @return void
+     */
+    public function ensureMerchantUserTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->createMerchantUserPropelQuery());
+    }
 }

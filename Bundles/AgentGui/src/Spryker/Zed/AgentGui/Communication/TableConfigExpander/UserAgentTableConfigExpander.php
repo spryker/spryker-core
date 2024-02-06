@@ -33,7 +33,7 @@ class UserAgentTableConfigExpander implements UserAgentTableConfigExpanderInterf
     protected function addAgentHeader(TableConfiguration $config): void
     {
         $header = $this->insertAfterHeader($config->getHeader(), SpyUserTableMap::COL_STATUS, [
-            SpyUserTableMap::COL_IS_AGENT => 'Agent',
+            SpyUserTableMap::COL_IS_AGENT => 'Agent Customer',
         ]);
 
         $config->setHeader($header);

@@ -1,4 +1,5 @@
 {% extends '@ZedUi/Layout/merchant-layout.twig' %}
+{% import _self as view %}
 
 {% block body %}
     {% if app.twig.getFunction('navigation') != false %}
@@ -9,6 +10,29 @@
             <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
                 {% block logo %}
                     <web-spy-logo cloak logo></web-spy-logo>
+                {% endblock %}
+
+                {% block topSection %}
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') and is_granted('IS_IMPERSONATOR') %}
+                        {% include '@AgentDashboardMerchantPortalGui/Partials/agent-bar.twig' ignore missing with {
+                            agentDetails: {
+                                name: merchantName | default,
+                                userName: username | default,
+                                userEmail: userEmail | default,
+                            },
+                            actionButtons: [
+                                {
+                                    url: '/agent-security-merchant-portal-gui/login/?_switch_user=_exit',
+                                    title: 'End User Assistance' | trans,
+                                    variant: 'primary',
+                                },
+                                {
+                                    url: '/agent-security-merchant-portal-gui/logout',
+                                    title: 'Log out Agent' | trans,
+                                }
+                            ],
+                        } only %}
+                    {% endif %}
                 {% endblock %}
 
                 {% block header %}

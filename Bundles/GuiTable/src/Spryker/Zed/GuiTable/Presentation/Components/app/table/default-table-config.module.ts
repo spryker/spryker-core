@@ -5,6 +5,11 @@ import {
     TableColumnAutocompleteModule,
     TableColumnAutocompleteConfig,
 } from '@spryker/table.column.autocomplete';
+import {
+    TableColumnButtonActionComponent,
+    TableColumnButtonActionModule,
+    TableColumnButtonActionConfig,
+} from '@spryker/table.column.button-action';
 import { TableColumnChipComponent, TableColumnChipModule, TableColumnChipConfig } from '@spryker/table.column.chip';
 import { TableColumnDateComponent, TableColumnDateModule, TableColumnDateConfig } from '@spryker/table.column.date';
 import {
@@ -78,6 +83,7 @@ declare module '@spryker/table' {
         select: TableColumnSelectConfig;
         dynamic: TableColumnDynamicConfig;
         autocomplete: TableColumnAutocompleteConfig;
+        'button-action': TableColumnButtonActionConfig;
     }
 }
 
@@ -117,6 +123,7 @@ declare module '@spryker/table.feature.filters' {
             select: TableColumnSelectComponent,
             dynamic: TableColumnDynamicComponent,
             autocomplete: TableColumnAutocompleteComponent,
+            'button-action': TableColumnButtonActionComponent,
         }),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
@@ -133,6 +140,7 @@ declare module '@spryker/table.feature.filters' {
         TableColumnSelectModule,
         TableColumnDynamicModule,
         TableColumnAutocompleteModule,
+        TableColumnButtonActionModule,
 
         // Table Filter Modules
         TableFilterSelectModule,

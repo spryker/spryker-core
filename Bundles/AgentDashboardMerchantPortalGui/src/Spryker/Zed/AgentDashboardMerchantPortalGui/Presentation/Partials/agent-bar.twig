@@ -1,0 +1,51 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% set withJsAssets = withJsAssets ?? true %}
+{% set actionButtons = actionButtons | default([]) %}
+{% set agentDetails = agentDetails | default({}) %}
+{% set mainClass = 'mp-agent-bar' %}
+
+{% block template %}
+    <div top-section>
+        <web-mp-agent-bar cloak>
+            {% block content %}
+                {% if agentDetails is not empty %}
+                    <div class="{{ mainClass }}__details">
+                        {% if agentDetails.name ?? false %}
+                            <div class="{{ mainClass }}__name">{{ agentDetails.name }}</div>
+                        {% endif %}
+
+                        {% if agentDetails.userName ?? false %}
+                            <div class="{{ mainClass }}__user-name">{{ agentDetails.userName }}</div>
+                        {% endif %}
+
+                        {% if agentDetails.userEmail ?? false %}
+                            <web-spy-button-link class="{{ mainClass }}__user-email" url="mailto:{{ agentDetails.userEmail }}" variant="link" size="sm">
+                                {{- agentDetails.userEmail -}}
+                            </web-spy-button-link>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block actions %}
+                {% for actionButton in actionButtons %}
+                    <div class="{{ mainClass }}__action-col" actions>
+                        {% block action %}
+                            <web-spy-button-link url="{{ actionButton.url }}" variant="{{ actionButton.variant ?? 'outline' }}" size="sm">
+                                {{- actionButton.title -}}
+                            </web-spy-button-link>
+                        {% endblock %}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        </web-mp-agent-bar>
+
+        {% block jsAssets %}
+            {% if withJsAssets %}
+                {{ view.importJsBundle('agent-dashboard-merchant-portal-gui', importConfig) }}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

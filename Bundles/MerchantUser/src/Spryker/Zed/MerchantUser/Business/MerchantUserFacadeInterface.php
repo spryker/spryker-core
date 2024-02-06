@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Business;
 
+use Generated\Shared\Transfer\MerchantUserCollectionTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
@@ -233,4 +234,24 @@ interface MerchantUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
     public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves merchant user entities expanded by users and merchants filtered by criteria from Persistence.
+     * - Uses `MerchantUserCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `MerchantUserCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `MerchantUserCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `MerchantUserCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Uses `MerchantUserCriteriaTransfer.merchantUserSearchConditions.merchantName` to search by merchant name.
+     * - Uses `MerchantUserCriteriaTransfer.merchantUserSearchConditions.userFirstName` to search by user first name.
+     * - Uses `MerchantUserCriteriaTransfer.merchantUserSearchConditions.userLastName` to search by user last name.
+     * - Uses `MerchantUserCriteriaTransfer.merchantUserSearchConditions.username` to search by username.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserCollectionTransfer
+     */
+    public function getMerchantUserCollection(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): MerchantUserCollectionTransfer;
 }

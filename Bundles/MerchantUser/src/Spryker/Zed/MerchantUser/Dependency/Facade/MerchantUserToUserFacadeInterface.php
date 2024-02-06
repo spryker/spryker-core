@@ -67,4 +67,9 @@ interface MerchantUserToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
     public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser(): bool;
 }

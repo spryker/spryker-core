@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Persistence;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
@@ -36,6 +37,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         if ($userCriteriaTransfer->getUserConditions()) {
             $userQuery = $this->applyUserFilters($userQuery, $userCriteriaTransfer->getUserConditionsOrFail());
         }
+
+        $userQuery = $this->expandUserQuery($userQuery, $userCriteriaTransfer);
 
         $userEntityCollection = $userQuery->find();
 
@@ -77,5 +80,41 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         }
 
         return $userQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\User\Persistence\SpyUserQuery $userQuery
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Orm\Zed\User\Persistence\SpyUserQuery
+     */
+    protected function expandUserQuery(
+        SpyUserQuery $userQuery,
+        UserCriteriaTransfer $userCriteriaTransfer
+    ): SpyUserQuery {
+        $queryCriteriaTransfer = $this->executeUserQueryCriteriaExpanderPlugins($userCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createUserQueryCriteriaMapper()
+            ->mapQueryCriteriaTransferToUserQueryCriteria(
+                $queryCriteriaTransfer,
+                $userQuery,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    protected function executeUserQueryCriteriaExpanderPlugins(
+        UserCriteriaTransfer $userCriteriaTransfer
+    ): QueryCriteriaTransfer {
+        $queryCriteriaTransfer = new QueryCriteriaTransfer();
+        foreach ($this->getFactory()->getUserQueryCriteriaExpanderPlugins() as $userQueryCriteriaExpanderPlugin) {
+            $queryCriteriaTransfer = $userQueryCriteriaExpanderPlugin->expand($queryCriteriaTransfer, $userCriteriaTransfer);
+        }
+
+        return $queryCriteriaTransfer;
     }
 }

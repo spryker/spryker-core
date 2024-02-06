@@ -63,6 +63,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createRuleValidatorHelper(),
             $this->getConfig(),
+            $this->getAclAccessCheckerStrategyPlugins(),
         );
     }
 
@@ -162,5 +163,13 @@ class AclBusinessFactory extends AbstractBusinessFactory
     public function getAclRolePostSavePlugins(): array
     {
         return $this->getProvidedDependency(AclDependencyProvider::PLUGINS_ACL_ROLE_POST_SAVE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface>
+     */
+    public function getAclAccessCheckerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::PLUGINS_ACL_ACCESS_CHECKER_STRATEGY);
     }
 }

@@ -9,11 +9,11 @@
     },
     "dependencies": {
         "@spryker/actions": "^1.0.0",
-        "@spryker/button": "^1.0.0",
+        "@spryker/button": "^1.1.0",
         "@spryker/button.action": "^1.0.0",
-        "@spryker/card": "^1.0.1",
-        "@spryker/headline": "^1.0.0",
-        "@spryker/styles": "^1.0.1",
+        "@spryker/card": "^1.1.0",
+        "@spryker/headline": "^1.1.0",
+        "@spryker/styles": "1.2.0",
         "@spryker/utils": "^1.0.0",
         "@spryker/web-components": "^1.0.0"
     }

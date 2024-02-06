@@ -39,7 +39,11 @@
                 }
             </style>
             <title>
-                {% block headTitle %}{% endblock %}
+                {%- block headTitle -%}
+                    {% block headSubTitle %}{% endblock %}
+                    {{- block('headSubTitle') ? ' - ' -}}
+                    {{ 'Merchant Portal' | trans }}
+                {%- endblock -%}
             </title>
 
             {% block headCss %}

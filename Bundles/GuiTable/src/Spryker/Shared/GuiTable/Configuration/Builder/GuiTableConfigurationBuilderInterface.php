@@ -61,6 +61,11 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @var string
      */
+    public const COLUMN_TYPE_BUTTON_ACTION = 'button-action';
+
+    /**
+     * @var string
+     */
     public const FILTER_TYPE_SELECT = 'select';
 
     /**
@@ -264,6 +269,34 @@ interface GuiTableConfigurationBuilderInterface
         bool $isHideable,
         ?int $limit,
         ?string $color
+    );
+
+    /**
+     * Specification:
+     * - Adds a new `button-action` column.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isSortable
+     * @param bool $isHideable
+     * @param string $text
+     * @param string $actionUrl
+     * @param string|null $modalTitle
+     * @param string|null $modalDescription
+     *
+     * @return $this
+     */
+    public function addColumnButtonAction(
+        string $id,
+        string $title,
+        bool $isSortable,
+        bool $isHideable,
+        string $text,
+        string $actionUrl,
+        ?string $modalTitle = null,
+        ?string $modalDescription = null
     );
 
     /**

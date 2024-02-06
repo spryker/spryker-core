@@ -28,6 +28,8 @@ use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntity\AclEntityMetadataC
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntity\AclEntityMetadataConfigExpanderInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntityConfigurationExpander;
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntityConfigurationExpanderInterface;
+use Spryker\Zed\AclMerchantPortal\Business\Expander\AgentDashboardMerchantUserTableExpander;
+use Spryker\Zed\AclMerchantPortal\Business\Expander\AgentDashboardMerchantUserTableExpanderInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Generator\AclMerchantPortalGenerator;
 use Spryker\Zed\AclMerchantPortal\Business\Generator\AclMerchantPortalGeneratorInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Writer\AclMerchantPortalWriter;
@@ -177,6 +179,14 @@ class AclMerchantPortalBusinessFactory extends AbstractBusinessFactory
         return new AclEntityConfigurationExpander(
             $this->getAclEntityConfigurationExpanderPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclMerchantPortal\Business\Expander\AgentDashboardMerchantUserTableExpanderInterface
+     */
+    public function createAgentDashboardMerchantUserTableExpander(): AgentDashboardMerchantUserTableExpanderInterface
+    {
+        return new AgentDashboardMerchantUserTableExpander($this->getConfig(), $this->getAclFacade());
     }
 
     /**

@@ -104,4 +104,12 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     {
         return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser(): bool
+    {
+        return $this->userFacade->hasCurrentUser();
+    }
 }

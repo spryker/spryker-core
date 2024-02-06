@@ -1,0 +1,36 @@
+{#
+@var merchantUserTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+#}
+
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headTitle %}
+    {{ 'Merchant Users' | trans }}
+{% endblock %}
+
+{% block topSection %}
+    {% include '@AgentDashboardMerchantPortalGui/Partials/agent-bar.twig' with {
+        withJsAssets: false,
+        actionButtons: [{
+            url: '/agent-security-merchant-portal-gui/logout',
+            title: 'Log out Agent' | trans,
+        }],
+    } only %}
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <web-mp-agent-user-list
+        cloak
+        table-id="table-merchant-users"
+        table-config='{{ guiTableConfiguration(merchantUserTableConfiguration) }}'>
+        <h1 title>{{ 'Merchant Users' | trans }}</h1>
+    </web-mp-agent-user-list>
+{% endblock %}
+
+{% block footerJs %}
+    {{ view.importJsBundle('agent-dashboard-merchant-portal-gui', importConfig) }}
+    {{ parent() }}
+{% endblock %}

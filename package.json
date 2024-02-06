@@ -15,7 +15,7 @@
         "formatter:fix": "npm run formatter:run -- --write",
         "formatter:run": "prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json '**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)'",
         "mp:stylelint": "node ./frontend/merchant-portal/stylelint",
-        "mp:lint": "ng lint",
+        "mp:lint": "ng lint --no-eslintrc",
         "mp:test": "ng test"
     },
     "engines": {
@@ -46,8 +46,8 @@
         "@spryker/frontend-config.eslint": "~0.1.0",
         "@types/jest": "~28.1.1",
         "@types/node": "~14.14.33",
-        "@typescript-eslint/eslint-plugin": "~5.44.0",
-        "@typescript-eslint/parser": "~5.44.0",
+        "@typescript-eslint/eslint-plugin": "~5.54.0",
+        "@typescript-eslint/parser": "~5.54.0",
         "commander": "~4.0.1",
         "core-js": "~3.26.1",
         "jest": "~28.1.3",
@@ -56,7 +56,7 @@
         "nx": "~15.0.7",
         "prettier": "~2.7.1",
         "rxjs": "~7.5.7",
-        "eslint": "~8.28.0",
+        "eslint": "~8.35.0",
         "eslint-plugin-deprecation": "~1.3.3",
         "stylelint": "~13.13.1",
         "ts-jest": "~28.0.8",

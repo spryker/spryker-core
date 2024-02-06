@@ -1,13 +1,19 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 @import '~@spryker/styles/src/lib/themes/default/mixins/index.less';
 
-@header-menu-top-margin: var(--spy-header-menu-top-margin, -13px);
+@header-menu-top-margin: var(--spy-header-menu-top-margin, 0);
 @header-menu-user-info-primary-bottom-padding: var(--spy-header-menu-user-info-primary-bottom-padding, 10px);
 @header-menu-user-link-border: var(--spy-header-menu-user-link-border, 2px solid @transparent);
 
 .mp-header-menu {
     display: block;
     margin-top: @header-menu-top-margin;
+
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
 
     &__user-info {
         overflow: hidden;

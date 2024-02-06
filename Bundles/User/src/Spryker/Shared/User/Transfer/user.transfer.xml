@@ -58,4 +58,8 @@
         <property name="throwUserNotFoundException" type="bool" deprecated="Exists for BC reasons only."/>
     </transfer>
 
+    <transfer name="QueryCriteria">
+        <property name="conditions" type="array" singular="condition" strict="true"/>
+    </transfer>
+
 </transfers>

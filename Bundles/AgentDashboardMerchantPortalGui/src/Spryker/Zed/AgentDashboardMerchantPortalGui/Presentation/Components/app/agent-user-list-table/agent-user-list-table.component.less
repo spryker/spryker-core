@@ -1,0 +1,12 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+@import '~@spryker/styles/src/lib/themes/default/mixins/index.less';
+
+@agent-user-list-table-search-min-width: var(--spy-agent-user-list-table-search-min-width, 500px);
+
+.mp-agent-user-list-table {
+    .@{table-search-feature-prefix-cls} {
+        .breakpoint-media-min-mixin(@breakpoints[xl], {
+            min-width: @agent-user-list-table-search-min-width;
+        });
+    }
+}

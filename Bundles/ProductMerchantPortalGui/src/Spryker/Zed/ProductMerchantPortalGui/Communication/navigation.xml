@@ -3,7 +3,7 @@
     <product-merchant-portal-gui>
         <label>Products</label>
         <title>Products</title>
-        <icon>offers</icon>
+        <icon>products</icon>
         <bundle>product-merchant-portal-gui</bundle>
         <controller>products</controller>
         <action>index</action>

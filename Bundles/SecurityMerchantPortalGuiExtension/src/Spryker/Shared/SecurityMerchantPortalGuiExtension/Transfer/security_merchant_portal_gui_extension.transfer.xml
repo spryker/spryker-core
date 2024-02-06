@@ -4,4 +4,7 @@
     <transfer name="MerchantUser">
     </transfer>
 
+    <transfer name="MerchantUserCriteria">
+    </transfer>
+
 </transfers>

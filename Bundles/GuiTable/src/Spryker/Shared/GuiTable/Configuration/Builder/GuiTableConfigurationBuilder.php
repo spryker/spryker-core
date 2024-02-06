@@ -47,6 +47,26 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_COLUMN_BUTTON_ACTION_VARIANT = 'outline';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_COLUMN_BUTTON_ACTION_SIZE = 'sm';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_MODAL_OK_BUTTON_VARIANT = 'primary';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CHIP_MAX_WIDTH = '220px';
+
+    /**
      * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     protected array $columns = [];
@@ -305,6 +325,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setSortable($isSortable)
             ->setHideable($isHideable)
             ->addTypeOption('color', $color)
+            ->addTypeOption('maxWidth', static::DEFAULT_CHIP_MAX_WIDTH)
             ->addTypeOptionMapping('color', $colorMapping);
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
@@ -347,6 +368,58 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ]);
         }
 
+        $this->addColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isSortable
+     * @param bool $isHideable
+     * @param string $text
+     * @param string $actionUrl
+     * @param string|null $modalTitle
+     * @param string|null $modalDescription
+     *
+     * @return $this
+     */
+    public function addColumnButtonAction(
+        string $id,
+        string $title,
+        bool $isSortable,
+        bool $isHideable,
+        string $text,
+        string $actionUrl,
+        ?string $modalTitle = null,
+        ?string $modalDescription = null
+    ) {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_BUTTON_ACTION)
+            ->setSortable($isSortable)
+            ->setHideable($isHideable)
+            ->addTypeOption('text', $text)
+            ->addTypeOption('variant', static::DEFAULT_COLUMN_BUTTON_ACTION_VARIANT)
+            ->addTypeOption('size', static::DEFAULT_COLUMN_BUTTON_ACTION_SIZE);
+
+        if ($modalTitle !== null && $modalDescription !== null) {
+            $guiTableColumnConfigurationTransfer->addTypeOption(
+                'action',
+                $this->getTypeOptionConfirmationRedirect($actionUrl, $modalTitle, $modalDescription),
+            );
+            $this->addColumn($guiTableColumnConfigurationTransfer);
+
+            return $this;
+        }
+
+        $guiTableColumnConfigurationTransfer->addTypeOption('action', $this->getTypeOptionRedirect($actionUrl));
         $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
@@ -1457,5 +1530,44 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;
 
         return $this;
+    }
+
+    /**
+     * @param string $actionUrl
+     * @param string $modalTitle
+     * @param string $modalDescription
+     *
+     * @return array<string, mixed>
+     */
+    protected function getTypeOptionConfirmationRedirect(
+        string $actionUrl,
+        string $modalTitle,
+        string $modalDescription
+    ): array {
+        return [
+            'type' => 'confirmation',
+            'action' => [
+                'type' => 'redirect',
+                'url' => $actionUrl,
+            ],
+            'modal' => [
+                'title' => $modalTitle,
+                'description' => $modalDescription,
+                'okVariant' => static::DEFAULT_MODAL_OK_BUTTON_VARIANT,
+            ],
+        ];
+    }
+
+    /**
+     * @param string $actionUrl
+     *
+     * @return array<string, string>
+     */
+    protected function getTypeOptionRedirect(string $actionUrl): array
+    {
+        return [
+            'type' => 'redirect',
+            'url' => $actionUrl,
+        ];
     }
 }

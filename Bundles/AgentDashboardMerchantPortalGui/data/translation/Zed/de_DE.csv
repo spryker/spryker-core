@@ -1,0 +1,15 @@
+Merchant,Händler
+"Merchant Approval",Händler-Genehmigung
+"First Name",Vorname
+"Last Name",Nachname
+Email,E-Mail
+"User Status",Benutzerstatus
+"Assist User","Als Benutzer einloggen"
+Search,Suche
+approved,Genehmigt
+denied,Abgelehnt
+waiting-for-approval,"Warten auf Genehmigung"
+"Merchant Users",Händler-Benutzer
+"Log out Agent","Abmelden Assistent"
+"Start Merchant User Assistance","Händler-Benutzer Support starten"
+"Log in as ${row.username}","Anmelden als ${row.username}"

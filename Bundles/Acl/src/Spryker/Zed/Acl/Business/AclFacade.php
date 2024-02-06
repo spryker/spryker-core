@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
@@ -612,5 +614,20 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
         return $this->getFactory()
             ->createRuleModel()
             ->isIgnorable($bundle, $controller, $action);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
+     */
+    public function getAclUserHasGroupCollection(
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): AclUserHasGroupCollectionTransfer {
+        return $this->getRepository()->getAclUserHasGroupCollection($aclUserHasGroupCriteriaTransfer);
     }
 }

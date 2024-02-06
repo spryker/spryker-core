@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclMerchantPortal\Business;
 
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
@@ -148,4 +149,20 @@ interface AclMerchantPortalFacadeInterface
     public function expandAclEntityConfiguration(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
+
+    /**
+     * Specification:
+     * - Verifies whether users are associated with ACL groups listed in
+     * {@link \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig::getBackofficeAllowedAclGroupNames()}.
+     * - Sets `null` to the response data under the `assistUser` keys for users belonging to these groups.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
+     */
+    public function expandAgentDashboardMerchantUserTableData(
+        GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+    ): GuiTableDataResponseTransfer;
 }

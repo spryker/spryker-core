@@ -73,6 +73,20 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addUserFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_USER, function (Container $container) {

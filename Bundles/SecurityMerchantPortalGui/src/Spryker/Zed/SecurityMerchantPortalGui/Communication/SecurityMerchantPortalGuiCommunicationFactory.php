@@ -34,6 +34,7 @@ use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyPro
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -51,6 +52,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     {
         return new MerchantUserProvider(
             $this->getMerchantUserLoginRestrictionPlugins(),
+            $this->getMerchantUserCriteriaExpanderPlugins(),
         );
     }
 
@@ -112,7 +114,10 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
      */
     public function createSecurityTokenUpdater(): SecurityTokenUpdaterInterface
     {
-        return new SecurityTokenUpdater($this->getTokenStorageService());
+        return new SecurityTokenUpdater(
+            $this->getTokenStorageService(),
+            $this->getAuthorizationCheckerService(),
+        );
     }
 
     /**
@@ -153,6 +158,14 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getMerchantUserLoginRestrictionPlugins(): array
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserCriteriaExpanderPluginInterface>
+     */
+    public function getMerchantUserCriteriaExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_CRITERIA_EXPANDER_PLUGIN);
     }
 
     /**
@@ -199,5 +212,13 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getSecurityBlockerClient(): SecurityMerchantPortalGuiToSecurityBlockerClientInterface
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::CLIENT_SECURITY_BLOCKER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    public function getAuthorizationCheckerService(): AuthorizationCheckerInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
     }
 }

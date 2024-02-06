@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
@@ -483,4 +485,21 @@ interface AclFacadeInterface
      * @return bool
      */
     public function isIgnorable($bundle, $controller, $action);
+
+    /**
+     * Specification:
+     * - Retrieves ACL user group entities from Persistence.
+     * - Uses `AclUserHasGroupCriteria.aclUserHasGroupConditions.groupNames` to filter by ACL group names.
+     * - Uses `AclUserHasGroupCriteria.aclUserHasGroupConditions.userIds` to filter by user IDs.
+     * - Returns `AclUserHasGroupCollectionTransfer` filled with found ACL user group.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
+     */
+    public function getAclUserHasGroupCollection(
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): AclUserHasGroupCollectionTransfer;
 }

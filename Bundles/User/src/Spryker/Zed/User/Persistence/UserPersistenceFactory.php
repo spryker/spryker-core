@@ -10,6 +10,8 @@ namespace Spryker\Zed\User\Persistence;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\User\Persistence\Propel\Mapper\UserMapper;
+use Spryker\Zed\User\Persistence\Propel\Mapper\UserQueryCriteriaMapper;
+use Spryker\Zed\User\UserDependencyProvider;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
@@ -32,5 +34,21 @@ class UserPersistenceFactory extends AbstractPersistenceFactory
     public function createUserMapper(): UserMapper
     {
         return new UserMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Persistence\Propel\Mapper\UserQueryCriteriaMapper
+     */
+    public function createUserQueryCriteriaMapper(): UserQueryCriteriaMapper
+    {
+        return new UserQueryCriteriaMapper();
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserQueryCriteriaExpanderPluginInterface>
+     */
+    public function getUserQueryCriteriaExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_QUERY_CRITERIA_EXPANDER);
     }
 }

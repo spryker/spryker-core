@@ -59,24 +59,32 @@ class Rule implements RuleInterface
     protected $rulesTransferCache = [];
 
     /**
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface>
+     */
+    protected array $aclAccessCheckerStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $facadeUser
      * @param \Spryker\Zed\Acl\Business\Model\RuleValidatorInterface $rulesValidator
      * @param \Spryker\Zed\Acl\AclConfig $config
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclAccessCheckerStrategyPluginInterface> $aclAccessCheckerStrategyPlugins
      */
     public function __construct(
         GroupInterface $group,
         AclQueryContainerInterface $queryContainer,
         AclToUserInterface $facadeUser,
         RuleValidatorInterface $rulesValidator,
-        AclConfig $config
+        AclConfig $config,
+        array $aclAccessCheckerStrategyPlugins
     ) {
         $this->group = $group;
         $this->queryContainer = $queryContainer;
         $this->userFacade = $facadeUser;
         $this->rulesValidator = $rulesValidator;
         $this->config = $config;
+        $this->aclAccessCheckerStrategyPlugins = $aclAccessCheckerStrategyPlugins;
     }
 
     /**
@@ -328,6 +336,11 @@ class Rule implements RuleInterface
 
         $this->provideUserRuleWhitelist();
 
+        $isAllowed = $this->executeAclAccessCheckerStrategyPlugins($userTransfer, $bundle, $controller, $action);
+        if ($isAllowed !== null) {
+            return $isAllowed;
+        }
+
         foreach ($groupsTransfer->getGroups() as $groupTransfer) {
             $rulesTransfer = $this->getRulesTransferByIdGroup($groupTransfer->getIdAclGroup());
 
@@ -392,5 +405,33 @@ class Rule implements RuleInterface
             $rulesTransfer->fromArray($rule, true);
             $this->rulesValidator->addRule($rulesTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     *
+     * @return bool|null
+     */
+    protected function executeAclAccessCheckerStrategyPlugins(
+        UserTransfer $userTransfer,
+        string $bundle,
+        string $controller,
+        string $action
+    ): ?bool {
+        $isAllowed = null;
+        $ruleTransfer = (new RuleTransfer())->setBundle($bundle)->setAction($action)->setController($controller);
+
+        foreach ($this->aclAccessCheckerStrategyPlugins as $aclAccessCheckerStrategyPlugin) {
+            if ($aclAccessCheckerStrategyPlugin->isApplicable($userTransfer, $ruleTransfer)) {
+                $isAllowed = $aclAccessCheckerStrategyPlugin->checkAccess($userTransfer, $ruleTransfer);
+
+                break;
+            }
+        }
+
+        return $isAllowed;
     }
 }

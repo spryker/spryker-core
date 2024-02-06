@@ -1,0 +1,15 @@
+{
+    "name": "mp-agent-login",
+    "version": "0.0.1",
+    "private": true,
+    "peerDependencies": {
+        "@angular/common": "^15.0.3",
+        "@angular/core": "^15.0.3"
+    },
+    "dependencies": {
+        "@spryker/card": "^1.1.0",
+        "@spryker/logo": "^1.1.0",
+        "@spryker/styles": "1.2.0",
+        "@spryker/web-components": "^1.0.0"
+    }
+}

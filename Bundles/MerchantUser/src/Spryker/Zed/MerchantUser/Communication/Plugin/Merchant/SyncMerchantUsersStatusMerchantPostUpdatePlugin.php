@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInte
 /**
  * @method \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantUser\MerchantUserConfig getConfig()
+ * @method \Spryker\Zed\MerchantUser\Communication\MerchantUserCommunicationFactory getFactory()
  */
 class SyncMerchantUsersStatusMerchantPostUpdatePlugin extends AbstractPlugin implements MerchantPostUpdatePluginInterface
 {

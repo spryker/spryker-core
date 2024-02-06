@@ -38,11 +38,18 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
     protected array $merchantUserLoginRestrictionPlugins;
 
     /**
-     * @param array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface> $merchantUserLoginRestrictionPlugins
+     * @var array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserCriteriaExpanderPluginInterface>
      */
-    public function __construct(array $merchantUserLoginRestrictionPlugins)
+    protected array $merchantUserCriteriaExpanderPlugins;
+
+    /**
+     * @param array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface> $merchantUserLoginRestrictionPlugins
+     * @param array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserCriteriaExpanderPluginInterface> $merchantUserCriteriaExpanderPlugins
+     */
+    public function __construct(array $merchantUserLoginRestrictionPlugins, array $merchantUserCriteriaExpanderPlugins)
     {
         $this->merchantUserLoginRestrictionPlugins = $merchantUserLoginRestrictionPlugins;
+        $this->merchantUserCriteriaExpanderPlugins = $merchantUserCriteriaExpanderPlugins;
     }
 
     /**
@@ -121,15 +128,15 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      */
     protected function findMerchantUser(string $username): ?MerchantUserTransfer
     {
-        return $this->getFactory()
-            ->getMerchantUserFacade()
-            ->findMerchantUser(
-                (new MerchantUserCriteriaTransfer())
-                    ->setUsername($username)
-                    ->setWithUser(true)
-                    ->setStatus('active')
-                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED),
-            );
+        $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())
+            ->setUsername($username)
+            ->setWithUser(true)
+            ->setStatus('active')
+            ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED);
+
+        $merchantUserCriteriaTransfer = $this->executeMerchantUserCriteriaExpanderPlugins($merchantUserCriteriaTransfer);
+
+        return $this->getFactory()->getMerchantUserFacade()->findMerchantUser($merchantUserCriteriaTransfer);
     }
 
     /**
@@ -153,5 +160,20 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
     protected function isSymfonyVersion5(): bool
     {
         return class_exists(AuthenticationProviderManager::class);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserCriteriaTransfer
+     */
+    protected function executeMerchantUserCriteriaExpanderPlugins(
+        MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
+    ): MerchantUserCriteriaTransfer {
+        foreach ($this->merchantUserCriteriaExpanderPlugins as $merchantUserCriteriaExpanderPlugin) {
+            $merchantUserCriteriaTransfer = $merchantUserCriteriaExpanderPlugin->expand($merchantUserCriteriaTransfer);
+        }
+
+        return $merchantUserCriteriaTransfer;
     }
 }

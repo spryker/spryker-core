@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Acl;
 
 use Codeception\Actor;
+use Orm\Zed\Acl\Persistence\SpyAclUserHasGroup;
+use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,34 @@ use Codeception\Actor;
 class AclBusinessTester extends Actor
 {
     use _generated\AclBusinessTesterActions;
+
+    /**
+     * @param int $idUser
+     * @param int $idAclGroup
+     *
+     * @return void
+     */
+    public function haveAclUserHasGroup(int $idUser, int $idAclGroup): void
+    {
+        (new SpyAclUserHasGroup())
+            ->setFkUser($idUser)
+            ->setFkAclGroup($idAclGroup)
+            ->save();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureAclUserHasGroupTableIsEmpty(): void
+    {
+        $this->getAclUserHasGroupQuery()->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery
+     */
+    protected function getAclUserHasGroupQuery(): SpyAclUserHasGroupQuery
+    {
+        return SpyAclUserHasGroupQuery::create();
+    }
 }

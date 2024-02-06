@@ -1,0 +1,28 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@agent-login-max-width: var(--spy-agent-login-max-width, 420px);
+@agent-login-logo-padding-top: var(--spy-agent-login-logo-padding-top, 20px);
+@agent-login-logo-padding-bottom: var(--spy-agent-login-logo-padding-bottom, 22px);
+@agent-login-logo-width: var(--spy-agent-login-logo-width, 200px);
+@agent-login-logo-image-height: var(--spy-agent-login-logo-image-height, 72px);
+
+.agent-login {
+    max-width: @agent-login-max-width;
+    margin: 0 auto;
+
+    &__logo {
+        padding-top: @agent-login-logo-padding-top;
+        padding-bottom: @agent-login-logo-padding-bottom;
+        width: @agent-login-logo-width;
+        margin: 0 auto;
+        text-align: right;
+
+        &-image {
+            height: @agent-login-logo-image-height;
+        }
+    }
+
+    &__submit {
+        width: 100%;
+    }
+}

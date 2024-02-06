@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantUserCriteria">
+        <property name="merchantUserSearchConditions" type="MerchantUserSearchConditions" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantUserSearchConditions" strict="true">
+        <property name="merchantName" type="string"/>
+        <property name="userFirstName" type="string"/>
+        <property name="userLastName" type="string"/>
+        <property name="username" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantUserCollection" strict="true">
+        <property name="merchantUsers" type="MerchantUser[]" singular="merchantUser"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="merchant" type="Merchant"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="name" type="string"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="username" type="string"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableConfiguration">
+    </transfer>
+
+    <transfer name="GuiTableDataRequest" strict="true">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="page" type="int" strict="true"/>
+        <property name="pageSize" type="int" strict="true"/>
+        <property name="total" type="int" strict="true"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="MerchantUserTableCriteria" strict="true">
+        <property name="searchTerm" type="string"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+</transfers>

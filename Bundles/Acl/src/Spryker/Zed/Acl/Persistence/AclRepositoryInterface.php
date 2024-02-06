@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Acl\Persistence;
 
 use Generated\Shared\Transfer\AclRoleCriteriaTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer;
+use Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
@@ -27,4 +29,13 @@ interface AclRepositoryInterface
      * @return \Generated\Shared\Transfer\RoleTransfer|null
      */
     public function findRole(AclRoleCriteriaTransfer $aclRoleCriteriaTransfer): ?RoleTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
+     */
+    public function getAclUserHasGroupCollection(
+        AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
+    ): AclUserHasGroupCollectionTransfer;
 }

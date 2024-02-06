@@ -8,9 +8,12 @@
 namespace Spryker\Zed\MerchantUser\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserCollectionTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
+use Orm\Zed\User\Persistence\SpyUser;
 use Propel\Runtime\Collection\Collection;
 
 class MerchantUserMapper
@@ -18,19 +21,29 @@ class MerchantUserMapper
     /**
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUser $merchantUserEntity
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     * @param bool $withUser
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
     public function mapMerchantUserEntityToMerchantUserTransfer(
         SpyMerchantUser $merchantUserEntity,
-        MerchantUserTransfer $merchantUserTransfer
+        MerchantUserTransfer $merchantUserTransfer,
+        bool $withUser = false
     ): MerchantUserTransfer {
-        return $merchantUserTransfer->fromArray($merchantUserEntity->toArray(), true)
+        $merchantUserTransfer = $merchantUserTransfer->fromArray($merchantUserEntity->toArray(), true)
             ->setIdMerchant($merchantUserEntity->getFkMerchant())
             ->setIdUser($merchantUserEntity->getFkUser())
             ->setMerchant(
                 $this->mapMerchantEntityToMerchantTransfer($merchantUserEntity->getSpyMerchant(), new MerchantTransfer()),
             );
+
+        if ($withUser) {
+            $merchantUserTransfer->setUser(
+                $this->mapUserEntityToUserTransfer($merchantUserEntity->getSpyUser(), new UserTransfer()),
+            );
+        }
+
+        return $merchantUserTransfer;
     }
 
     /**
@@ -44,6 +57,19 @@ class MerchantUserMapper
         MerchantTransfer $merchantTransfer
     ): MerchantTransfer {
         return $merchantTransfer->fromArray($merchantEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\User\Persistence\SpyUser $userEntity
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function mapUserEntityToUserTransfer(
+        SpyUser $userEntity,
+        UserTransfer $userTransfer
+    ): UserTransfer {
+        return $userTransfer->fromArray($userEntity->toArray(), true);
     }
 
     /**
@@ -79,5 +105,24 @@ class MerchantUserMapper
         }
 
         return $merchantUserTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserEntities
+     * @param \Generated\Shared\Transfer\MerchantUserCollectionTransfer $merchantUserCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserCollectionTransfer
+     */
+    public function mapMerchantUserEntitiesToMerchantUserCollectionTransfer(
+        Collection $merchantUserEntities,
+        MerchantUserCollectionTransfer $merchantUserCollectionTransfer
+    ): MerchantUserCollectionTransfer {
+        foreach ($merchantUserEntities as $merchantUserEntity) {
+            $merchantUserCollectionTransfer->addMerchantUser(
+                $this->mapMerchantUserEntityToMerchantUserTransfer($merchantUserEntity, new MerchantUserTransfer(), true),
+            );
+        }
+
+        return $merchantUserCollectionTransfer;
     }
 }

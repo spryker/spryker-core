@@ -26,6 +26,7 @@ suites:
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
 
     Communication:
         path: Communication

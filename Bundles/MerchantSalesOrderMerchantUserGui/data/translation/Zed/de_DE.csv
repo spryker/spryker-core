@@ -51,7 +51,7 @@ State,Status
 Sku,SKU
 "Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
 "Shipment has not been created.","Es wurde keine Lieferung erstellt."
-"Merchant sales order #%d not found.","Verkäufer-Bestellnummer %d wurde nicht gefunden."
+"Merchant sales order #%d not found.","Händler-Bestellnummer %d wurde nicht gefunden."
 "Shipment has been successfully updated.","Sendung wurde erfolgreich bearbeitet."
 "Shipment has not been updated.","Die Lieferung wurde nicht aktualisiert."
 "Shipment #%d not found.","Die Lieferung #%d wurde nicht gefunden."
