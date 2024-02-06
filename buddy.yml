@@ -8,7 +8,7 @@
   auto_clear_cache: true
   fail_on_prepare_env_warning: true
   concurrent_pipeline_runs: true
-  resources: 'XLARGE'
+  resources: 'X2LARGE'
   actions:
       - action: 'Build Project'
         type: 'BUILD'
