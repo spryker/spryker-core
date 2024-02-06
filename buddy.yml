@@ -1,0 +1,40 @@
+- pipeline: 'Spryker'
+  events:
+      - type: 'PUSH'
+        refs:
+            - 'refs/pull/*'
+            - 'refs/heads/master'
+  terminate_stale_runs: true
+  auto_clear_cache: true
+  fail_on_prepare_env_warning: true
+  concurrent_pipeline_runs: true
+  resources: 'X2LARGE'
+  actions:
+      - action: 'Build Project'
+        type: 'BUILD'
+        main_service_name: 'post'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
+        shell: 'BASH'
+      - action: 'JS Validation'
+        type: 'BUILD'
+        docker_image_name: 'library/node'
+        docker_image_tag: '18'
+        execute_commands:
+            - 'npm ci'
+            - 'npm run formatter'
+            - 'npm run mp:stylelint'
+            - 'npm run mp:lint'
+            - 'npm run mp:test --verbose'
+        timeout: 1500
+        shell: 'BASH'
+      - action: 'PHP Validation'
+        type: 'BUILD'
+        docker_image_name: 'spryker/php'
+        docker_image_tag: '8.1'
+        execute_commands:
+            - 'chmod +x *.sh'
+            - 'bash travis_check_touched_modules.sh'
+        shell: 'BASH'
