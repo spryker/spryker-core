@@ -27,7 +27,9 @@ use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\SalesPayment\PHPMD)
+ *
+ * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade(?string $moduleName = NULL)
  */
 class SalesPaymentBusinessTester extends Actor
 {

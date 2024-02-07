@@ -12,11 +12,15 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizationFailedTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizedTransfer;
+use Generated\Shared\Transfer\PaymentCanceledTransfer;
+use Generated\Shared\Transfer\PaymentCancellationFailedTransfer;
 use Generated\Shared\Transfer\PaymentCancelReservationFailedTransfer;
+use Generated\Shared\Transfer\PaymentCapturedTransfer;
+use Generated\Shared\Transfer\PaymentCaptureFailedTransfer;
 use Generated\Shared\Transfer\PaymentConfirmationFailedTransfer;
 use Generated\Shared\Transfer\PaymentConfirmedTransfer;
-use Generated\Shared\Transfer\PaymentPreauthorizationFailedTransfer;
-use Generated\Shared\Transfer\PaymentPreauthorizedTransfer;
 use Generated\Shared\Transfer\PaymentRefundedTransfer;
 use Generated\Shared\Transfer\PaymentRefundFailedTransfer;
 use Generated\Shared\Transfer\PaymentReservationCanceledTransfer;
@@ -40,23 +44,6 @@ class PaymentConfig extends AbstractBundleConfig
      * @var string
      */
     protected const BASE_URL_YVES = 'APPLICATION:BASE_URL_YVES';
-
-    /**
-     * @var array<string, string>
-     */
-    protected const SUPPORTED_ORDER_PAYMENT_EVENT_TRANSFERS_LIST = [
-        PaymentReservationCanceledTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_RESERVATION_SUCCESSFUL,
-        PaymentCancelReservationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_RESERVATION_FAILED,
-
-        PaymentConfirmedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CONFIRMATION_SUCCESSFUL,
-        PaymentConfirmationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CONFIRMATION_FAILED,
-
-        PaymentPreauthorizedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_AUTHORIZATION_SUCCESSFUL,
-        PaymentPreauthorizationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_AUTHORIZATION_FAILED,
-
-        PaymentRefundedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_REFUND_SUCCESSFUL,
-        PaymentRefundFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_REFUND_FAILED,
-    ];
 
     /**
      * Specification:
@@ -88,13 +75,34 @@ class PaymentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns a map of the payment messages and state machine's processes names.
+     *
      * @api
      *
      * @return array<string, string>
      */
     public function getSupportedOrderPaymentEventTransfersList(): array
     {
-        return static::SUPPORTED_ORDER_PAYMENT_EVENT_TRANSFERS_LIST;
+        return [
+            PaymentAuthorizedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_AUTHORIZATION_SUCCESSFUL,
+            PaymentAuthorizationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_AUTHORIZATION_FAILED,
+
+            PaymentCanceledTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_SUCCESSFUL,
+            PaymentCancellationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_FAILED,
+
+            PaymentCapturedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CAPTURE_SUCCESSFUL,
+            PaymentCaptureFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CAPTURE_FAILED,
+
+            PaymentRefundedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_REFUND_SUCCESSFUL,
+            PaymentRefundFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_REFUND_FAILED,
+
+            // @deprecated
+            PaymentConfirmedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CONFIRMATION_SUCCESSFUL,
+            PaymentConfirmationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CONFIRMATION_FAILED,
+            PaymentReservationCanceledTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_RESERVATION_SUCCESSFUL,
+            PaymentCancelReservationFailedTransfer::class => PaymentStateMachineEvents::OMS_PAYMENT_CANCEL_RESERVATION_FAILED,
+        ];
     }
 
     /**

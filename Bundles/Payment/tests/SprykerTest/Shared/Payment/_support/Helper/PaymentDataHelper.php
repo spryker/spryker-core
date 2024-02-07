@@ -8,12 +8,12 @@
 namespace SprykerTest\Shared\Payment\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\PaymentMethodAddedBuilder;
+use Generated\Shared\DataBuilder\AddPaymentMethodBuilder;
+use Generated\Shared\DataBuilder\DeletePaymentMethodBuilder;
 use Generated\Shared\DataBuilder\PaymentMethodBuilder;
-use Generated\Shared\DataBuilder\PaymentMethodDeletedBuilder;
 use Generated\Shared\DataBuilder\PaymentProviderBuilder;
-use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
-use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
@@ -112,6 +112,7 @@ class PaymentDataHelper extends Module
      */
     public function findPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
     {
+        $mod = $paymentMethodTransfer->modifiedToArrayNotRecursiveCamelCased();
         $paymentMethodEntity = SpyPaymentMethodQuery::create()
             ->filterByArray($paymentMethodTransfer->modifiedToArrayNotRecursiveCamelCased())
             ->findOne();
@@ -130,11 +131,11 @@ class PaymentDataHelper extends Module
      * @param array<mixed> $seedData
      * @param array<mixed> $messageAttributesSeedData
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodAddedTransfer
+     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
      */
-    public function havePaymentMethodAddedTransfer(array $seedData = [], array $messageAttributesSeedData = []): PaymentMethodAddedTransfer
+    public function haveAddPaymentMethodTransfer(array $seedData = [], array $messageAttributesSeedData = []): AddPaymentMethodTransfer
     {
-        return (new PaymentMethodAddedBuilder($seedData))
+        return (new AddPaymentMethodBuilder($seedData))
             ->withMessageAttributes($messageAttributesSeedData)
             ->build();
     }
@@ -142,10 +143,10 @@ class PaymentDataHelper extends Module
     /**
      * @param array<mixed> $seedData
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodDeletedTransfer
+     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
      */
-    public function havePaymentMethodDeletedTransfer(array $seedData = []): PaymentMethodDeletedTransfer
+    public function haveDeletePaymentMethodTransfer(array $seedData = []): DeletePaymentMethodTransfer
     {
-        return (new PaymentMethodDeletedBuilder($seedData))->build();
+        return (new DeletePaymentMethodBuilder($seedData))->build();
     }
 }

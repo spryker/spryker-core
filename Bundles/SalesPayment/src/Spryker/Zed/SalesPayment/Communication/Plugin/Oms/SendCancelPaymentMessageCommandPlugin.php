@@ -14,13 +14,11 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendCancelPaymentMessageCommandPlugin} instead.
- *
  * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesPayment\Communication\SalesPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesPayment\SalesPaymentConfig getConfig()
  */
-class SendEventPaymentCancelReservationPendingPlugin extends AbstractPlugin implements CommandByOrderInterface
+class SendCancelPaymentMessageCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
     /**
      * {@inheritDoc}

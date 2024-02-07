@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:ignoreFile
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,6 +23,34 @@ use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInt
 class PaymentMethodMessageHandlerPlugin extends AbstractPlugin implements MessageHandlerPluginInterface
 {
     /**
+     * @deprecated Don't use this method directly, this method is only used for BC reasons.
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     *
+     * @return void
+     */
+    public function onPaymentMethodAdded(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): void
+    {
+        $addPaymentMethodTransfer = (new AddPaymentMethodTransfer())->fromArray($paymentMethodAddedTransfer->toArray(), true);
+
+        $this->getFacade()->addPaymentMethod($addPaymentMethodTransfer);
+    }
+
+    /**
+     * @deprecated Don't use this method directly, this method is only used for BC reasons.
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     *
+     * @return void
+     */
+    public function onPaymentMethodDeleted(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void
+    {
+        $deletePaymentMethodTransfer = (new DeletePaymentMethodTransfer())->fromArray($paymentMethodDeletedTransfer->toArray(), true);
+
+        $this->getFacade()->deletePaymentMethod($deletePaymentMethodTransfer);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -30,8 +60,11 @@ class PaymentMethodMessageHandlerPlugin extends AbstractPlugin implements Messag
     public function handles(): iterable
     {
         return [
-            PaymentMethodAddedTransfer::class => [$this->getFacade(), 'addPaymentMethod'],
-            PaymentMethodDeletedTransfer::class => [$this->getFacade(), 'deletePaymentMethod'],
+            AddPaymentMethodTransfer::class => [$this->getFacade(), 'addPaymentMethod'],
+            DeletePaymentMethodTransfer::class => [$this->getFacade(), 'deletePaymentMethod'],
+            // @deprecated
+            PaymentMethodAddedTransfer::class => [$this, 'onPaymentMethodAdded'],
+            PaymentMethodDeletedTransfer::class => [$this, 'onPaymentMethodDeleted'],
         ];
     }
 }

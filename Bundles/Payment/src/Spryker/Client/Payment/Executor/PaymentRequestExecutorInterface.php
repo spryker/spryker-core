@@ -18,6 +18,6 @@ interface PaymentRequestExecutorInterface
      * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
      */
     public function authorizeForeignPayment(
-        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer,
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
     ): PaymentAuthorizeResponseTransfer;
 }

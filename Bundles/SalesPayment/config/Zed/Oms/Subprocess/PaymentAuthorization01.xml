@@ -7,7 +7,7 @@
 
     <process name="PaymentAuthorization">
         <subprocesses>
-            <process>PaymentReservationCancel</process>
+            <process>PaymentCancel</process>
             <process>ItemClose</process>
         </subprocesses>
 
@@ -45,7 +45,7 @@
 
             <transition>
                 <source>payment authorized</source>
-                <target>reservation cancellation ready</target>
+                <target>payment cancellation ready</target>
                 <event>cancel</event>
             </transition>
 
@@ -70,13 +70,13 @@
             <transition>
                 <source>payment authorization canceled</source>
                 <target>canceled</target>
-                <event>start reservation cancellation</event>
+                <event>cancel</event>
             </transition>
         </transitions>
 
         <events>
             <event name="payment authorization successful"/>
-            <event name="payment authorization failed" timeout="1 day"/>
+            <event name="payment authorization failed" timeout="7 day"/>
             <event name="authorize payment" manual="true"/>
             <event name="cancel authorization by timeout" timeout="1 day"/>
         </events>

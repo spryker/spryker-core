@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\PaymentCaptureFailedTransfer;
 use Generated\Shared\Transfer\PaymentConfirmationFailedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
@@ -31,7 +34,9 @@ class PaymentConfirmationFailedMessageHandlerPlugin extends AbstractPlugin imple
      */
     public function onPaymentConfirmationFailed(PaymentConfirmationFailedTransfer $paymentConfirmationFailedTransfer): void
     {
-        $this->getFacade()->triggerPaymentMessageOmsEvent($paymentConfirmationFailedTransfer);
+        $capturePaymentFailedTransfer = (new PaymentCaptureFailedTransfer())->fromArray($paymentConfirmationFailedTransfer->toArray(), true);
+
+        $this->getFacade()->triggerPaymentMessageOmsEvent($capturePaymentFailedTransfer);
     }
 
     /**

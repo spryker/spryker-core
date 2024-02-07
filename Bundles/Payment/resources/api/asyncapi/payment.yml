@@ -1,18 +1,26 @@
 asyncapi: 2.6.0
 info:
     title: 'Payment AsyncAPI definition.'
-    version: 0.1.0
+    version: 0.1.1
 channels:
     payment-events:
         publish:
             message:
                 oneOf:
+                    - $ref: '#/components/messages/PaymentAuthorized'
+                    - $ref: '#/components/messages/PaymentAuthorizationFailed'
+                    - $ref: '#/components/messages/PaymentCaptured'
+                    - $ref: '#/components/messages/PaymentCaptureFailed'
+                    - $ref: '#/components/messages/PaymentRefunded'
+                    - $ref: '#/components/messages/PaymentRefundFailed'
+                    - $ref: '#/components/messages/PaymentCanceled'
+                    - $ref: '#/components/messages/PaymentCancellationFailed'
+
+                    # Deprecated messages
                     - $ref: '#/components/messages/PaymentPreauthorized'
                     - $ref: '#/components/messages/PaymentPreauthorizationFailed'
                     - $ref: '#/components/messages/PaymentConfirmed'
                     - $ref: '#/components/messages/PaymentConfirmationFailed'
-                    - $ref: '#/components/messages/PaymentRefunded'
-                    - $ref: '#/components/messages/PaymentRefundFailed'
                     - $ref: '#/components/messages/PaymentReservationCanceled'
                     - $ref: '#/components/messages/PaymentCancelReservationFailed'
 
@@ -20,11 +28,114 @@ channels:
         publish:
             message:
                 oneOf:
+                    - $ref: '#/components/messages/AddPaymentMethod'
+                    - $ref: '#/components/messages/DeletePaymentMethod'
+
+                    # Deprecated messages
                     - $ref: '#/components/messages/PaymentMethodAdded'
                     - $ref: '#/components/messages/PaymentMethodDeleted'
-
 components:
     messages:
+        AddPaymentMethod:
+            name: AddPaymentMethod
+            x-spryker:
+                alias: PaymentMethodAdded
+                module: Payment
+            summary: 'Handle a new Payment method.'
+            payload:
+                $ref: '#/components/schemas/PaymentMethodPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        DeletePaymentMethod:
+            name: DeletePaymentMethod
+            x-spryker:
+                alias: DeletePaymentMethod
+                module: Payment
+            summary: 'Handle that a Payment method was deleted.'
+            payload:
+                $ref: '#/components/schemas/PaymentMethodPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentAuthorized:
+            name: PaymentAuthorized
+            x-spryker:
+                alias: PaymentPreauthorizationFailed
+                module: Payment
+            summary: 'Handle payment preauthorization event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentAuthorizationFailed:
+            name: PaymentAuthorizationFailed
+            x-spryker:
+                alias: PaymentAuthorizationFailed
+                module: Payment
+            summary: 'Handle payment preauthorization failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentCaptured:
+            name: PaymentCaptured
+            x-spryker:
+                alias: PaymentConfirmed
+                module: Payment
+            summary: 'Handle payment confirmation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentCaptureFailed:
+            name: PaymentCaptureFailed
+            x-spryker:
+                alias: PaymentConfirmationFailed
+                module: Payment
+            summary: 'Handle payment confirmation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentRefunded:
+            name: PaymentRefunded
+            x-spryker:
+                module: Payment
+            summary: 'Handle payment refund event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentRefundFailed:
+            name: PaymentRefundFailed
+            x-spryker:
+                module: Payment
+            summary: 'Handle payment refund failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentCanceled:
+            name: PaymentCanceled
+            x-spryker:
+                alias: PaymentReservationCanceled
+                module: Payment
+            summary: 'Handle payment reservation cancellation event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentCancellationFailed:
+            name: PaymentCancellationFailed
+            x-spryker:
+                alias: PaymentCancelReservationFailed
+                module: Payment
+            summary: 'Handle payment reservation cancellation failure event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        # Deprecated messages
         PaymentMethodAdded:
             name: PaymentMethodAdded
             x-spryker:
@@ -75,24 +186,6 @@ components:
             x-spryker:
                 module: Payment
             summary: 'Handle payment confirmation failure event.'
-            payload:
-                $ref: '#/components/schemas/PaymentPayload'
-            headers:
-                $ref: '#/components/schemas/message-broker/components/schemas/headers'
-        PaymentRefunded:
-            name: PaymentRefunded
-            x-spryker:
-                module: Payment
-            summary: 'Handle payment refund event.'
-            payload:
-                $ref: '#/components/schemas/PaymentPayload'
-            headers:
-                $ref: '#/components/schemas/message-broker/components/schemas/headers'
-        PaymentRefundFailed:
-            name: PaymentRefundFailed
-            x-spryker:
-                module: Payment
-            summary: 'Handle payment refund failure event.'
             payload:
                 $ref: '#/components/schemas/PaymentPayload'
             headers:

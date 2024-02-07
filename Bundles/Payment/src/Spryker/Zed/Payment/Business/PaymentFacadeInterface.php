@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Payment\Business;
 
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Generated\Shared\Transfer\PaymentMethodCollectionRequestTransfer;
@@ -17,6 +19,7 @@ use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
 use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionResponseTransfer;
@@ -47,7 +50,7 @@ interface PaymentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer;
 
     /**
      * Specification:
@@ -75,84 +78,84 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Used to support only foreign payment methods.
-     * - Requires `PaymentMethodAdded.labelName` transfer field to be set.
-     * - Requires `PaymentMethodAdded.groupName` transfer field to be set.
-     * - Requires `PaymentMethodAdded.messageAttributes.storeReference` to be set
+     * - Requires `AddPaymentMethod.labelName` transfer field to be set.
+     * - Requires `AddPaymentMethod.groupName` transfer field to be set.
+     * - Requires `AddPaymentMethod.messageAttributes.storeReference` to be set
      * - Creates payment provider if respective provider doesn't exist in the database.
      * - Creates payment method if the payment method with provided key doesn't exist in the database.
      * - Updates payment method if the payment method with provided key exist in the database.
      * - Sets payment method `is_hidden` flag to `false`.
-     * - Checks if there's a `PaymentMethodAdded.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Checks if there's a `AddPaymentMethod.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      * - Returns `PaymentMethod` transfer filled with payment method data.
      *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::addPaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
+    public function enableForeignPaymentMethod(AddPaymentMethodTransfer|PaymentMethodAddedTransfer $addPaymentMethodTransfer): PaymentMethodTransfer;
 
     /**
      * Specification:
      * - Used to support only foreign payment methods.
-     * - Requires `PaymentMethodAdded.labelName` transfer field to be set.
-     * - Requires `PaymentMethodAdded.groupName` transfer field to be set.
+     * - Requires `AddPaymentMethod.labelName` transfer field to be set.
+     * - Requires `AddPaymentMethod.groupName` transfer field to be set.
      * - Creates payment provider if respective provider doesn't exist in the database.
      * - Creates payment method if the payment method with provided key doesn't exist in the database.
      * - Updates payment method if the payment method with provided key exist in the database.
      * - Sets payment method `is_hidden` flag to `false`.
-     * - Checks if there's a `PaymentMethodAdded.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Checks if there's a `AddPaymentMethod.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      * - Returns `PaymentMethod` transfer filled with payment method data.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function addPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer;
+    public function addPaymentMethod(AddPaymentMethodTransfer|PaymentMethodAddedTransfer $addPaymentMethodTransfer): PaymentMethodTransfer;
 
     /**
      * Specification:
      * - Used to support only foreign payment methods.
-     * - Requires `PaymentMethodDeleted.labelName` transfer field to be set.
-     * - Requires `PaymentMethodDeleted.groupName` transfer field to be set.
-     * - Requires `PaymentMethodDeleted.messageAttributes.storeReference` to be set
+     * - Requires `DeletePaymentMethod.labelName` transfer field to be set.
+     * - Requires `DeletePaymentMethod.groupName` transfer field to be set.
+     * - Requires `DeletePaymentMethod.messageAttributes.storeReference` to be set
      * - Uses the specified data to find a payment method.
      * - Sets payment method `is_hidden` flag to `true` (if it exists in the database).
      * - Creates hidden payment method if its provided key doesn't exist in the database.
-     * - Checks if there's a `PaymentMethodDeleted.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Checks if there's a `DeletePaymentMethod.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::deletePaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodDeletedTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
-    public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void;
+    public function disableForeignPaymentMethod(DeletePaymentMethodTransfer|PaymentMethodDeletedTransfer $deletePaymentMethodTransfer): void;
 
     /**
      * Specification:
      * - Used to support only foreign payment methods.
-     * - Requires `PaymentMethodDeleted.labelName` transfer field to be set.
-     * - Requires `PaymentMethodDeleted.groupName` transfer field to be set.
+     * - Requires `DeletePaymentMethod.labelName` transfer field to be set.
+     * - Requires `DeletePaymentMethod.groupName` transfer field to be set.
      * - Uses the specified data to find a payment method.
      * - Sets payment method `is_hidden` flag to `true` (if it exists in the database).
      * - Creates hidden payment method if its provided key doesn't exist in the database.
-     * - Checks if there's a `PaymentMethodDeleted.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Checks if there's a `DeletePaymentMethod.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodDeletedTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
-    public function deletePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void;
+    public function deletePaymentMethod(DeletePaymentMethodTransfer|PaymentMethodDeletedTransfer $deletePaymentMethodTransfer): void;
 
     /**
      * Specification:
@@ -165,7 +168,7 @@ interface PaymentFacadeInterface
      *
      * @return void
      */
-    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer): void;
 
     /**
      * Specification:
@@ -305,7 +308,7 @@ interface PaymentFacadeInterface
      *
      * @return bool
      */
-    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 
     /**
      * Specification:
@@ -320,7 +323,7 @@ interface PaymentFacadeInterface
      *
      * @return void
      */
-    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void;
 
     /**
      * Specification:
@@ -334,7 +337,7 @@ interface PaymentFacadeInterface
      *
      * @return int
      */
-    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer);
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer): int;
 
     /**
      * Specification:
@@ -348,7 +351,7 @@ interface PaymentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderPayments(OrderTransfer $orderTransfer);
+    public function hydrateOrderPayments(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:
@@ -379,7 +382,7 @@ interface PaymentFacadeInterface
      *
      * @return void
      */
-    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void;
 
     /**
      * Specification:
@@ -444,7 +447,7 @@ interface PaymentFacadeInterface
      * - Finds the appropriate event for the current transfer using `PaymentConfig::getSupportedOrderPaymentEventTransfersList()`.
      * - If nothing is found - throws `InvalidPaymentEventException`.
      * - Otherwise triggers the found OMS event for all order items from `$orderPaymentEventTransfer::getOrderItemIds()`.
-     * - The `$orderPaymentEventTransfer` parameter is a request transfer as provided by order payment event (e.g. PaymentCancelReservationFailedTransfer).
+     * - The `$orderPaymentEventTransfer` parameter is a request transfer as provided by order payment event (e.g. PaymentCancellationFailedTransfer).
      *
      * @api
      *

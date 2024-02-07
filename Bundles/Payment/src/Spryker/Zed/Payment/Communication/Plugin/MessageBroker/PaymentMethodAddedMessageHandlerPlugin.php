@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
@@ -33,7 +34,9 @@ class PaymentMethodAddedMessageHandlerPlugin extends AbstractPlugin implements M
      */
     public function onPaymentMethodAdded(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): void
     {
-        $this->getFacade()->enableForeignPaymentMethod($paymentMethodAddedTransfer);
+        $addPaymentMethodTransfer = (new AddPaymentMethodTransfer())->fromArray($paymentMethodAddedTransfer->toArray(), true);
+
+        $this->getFacade()->enableForeignPaymentMethod($addPaymentMethodTransfer);
     }
 
     /**

@@ -7,11 +7,48 @@ channels:
         subscribe:
             message:
                 oneOf:
+                    - $ref: '#/components/messages/CancelPayment'
+                    - $ref: '#/components/messages/CapturePayment'
+                    - $ref: '#/components/messages/RefundPayment'
+                    # Deprecated
                     - $ref: '#/components/messages/PaymentCancelReservationRequested'
                     - $ref: '#/components/messages/PaymentConfirmationRequested'
                     - $ref: '#/components/messages/PaymentRefundRequested'
+
 components:
     messages:
+        CancelPayment:
+            name: CancelPayment
+            x-spryker:
+                alias: PaymentCancelReservationRequested
+                module: SalesPayment
+            summary: 'Handle payment reservation cancellation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        CapturePayment:
+            name: CapturePayment
+            x-spryker:
+                alias: PaymentConfirmationRequested
+                module: SalesPayment
+            summary: 'Handle payment confirmation request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        RefundPayment:
+            name: RefundPayment
+            x-spryker:
+                alias: PaymentRefundRequested
+                module: SalesPayment
+            summary: 'Handle payment refund request event.'
+            payload:
+                $ref: '#/components/schemas/PaymentPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
+        # Deprecated
         PaymentCancelReservationRequested:
             name: PaymentCancelReservationRequested
             x-spryker:
@@ -39,6 +76,7 @@ components:
                 $ref: '#/components/schemas/PaymentPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
+
     schemas:
         PaymentPayload:
             type: object

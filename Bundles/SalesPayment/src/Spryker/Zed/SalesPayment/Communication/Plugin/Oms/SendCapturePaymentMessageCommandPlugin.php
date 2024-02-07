@@ -14,18 +14,19 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendCancelPaymentMessageCommandPlugin} instead.
- *
  * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesPayment\Communication\SalesPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesPayment\SalesPaymentConfig getConfig()
  */
-class SendEventPaymentCancelReservationPendingPlugin extends AbstractPlugin implements CommandByOrderInterface
+class SendCapturePaymentMessageCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
     /**
      * {@inheritDoc}
      * - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
-     * - Sends the message using `CancelPaymentTransfer` transfer.
+     * - Validates if capturing process can be executed, throws `EventExecutionForbiddenException` on failure.
+     * - Calculates the amount of capture using the costs of the items found by IDs in `EventPayment.orderItemIds`.
+     * - Adds the expense costs of the entire order to the capture amount if this capture request is the first for the order.
+     * - Sends the message using `CapturePayment` transfer.
      *
      * @api
      *
@@ -41,7 +42,7 @@ class SendEventPaymentCancelReservationPendingPlugin extends AbstractPlugin impl
             ->createEventPaymentMapper()
             ->mapOrderEntityAndOrderItemEntitiesToEventPaymentTransfer($orderItems, $orderEntity, new EventPaymentTransfer());
 
-        $this->getFacade()->sendCancelPaymentMessage($eventPaymentTransfer);
+        $this->getFacade()->sendCapturePaymentMessage($eventPaymentTransfer);
 
         return [];
     }

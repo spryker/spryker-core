@@ -16,19 +16,19 @@ interface MessageEmitterInterface
      *
      * @return void
      */
-    public function sendEventPaymentCancelReservationPending(EventPaymentTransfer $eventPaymentTransfer): void;
+    public function sendCancelPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
      *
      * @return void
      */
-    public function sendEventPaymentConfirmationPending(EventPaymentTransfer $eventPaymentTransfer): void;
+    public function sendCapturePaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
      *
      * @return void
      */
-    public function sendEventPaymentRefundPending(EventPaymentTransfer $eventPaymentTransfer): void;
+    public function sendRefundPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
 }

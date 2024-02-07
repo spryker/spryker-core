@@ -22,12 +22,12 @@ interface PaymentStateMachineEvents
     /**
      * @var string
      */
-    public const OMS_PAYMENT_CONFIRMATION_SUCCESSFUL = 'payment confirmation successful';
+    public const OMS_PAYMENT_CAPTURE_SUCCESSFUL = 'payment capture successful';
 
     /**
      * @var string
      */
-    public const OMS_PAYMENT_CONFIRMATION_FAILED = 'payment confirmation failed';
+    public const OMS_PAYMENT_CAPTURE_FAILED = 'payment capture failed';
 
     /**
      * @var string
@@ -42,10 +42,38 @@ interface PaymentStateMachineEvents
     /**
      * @var string
      */
+    public const OMS_PAYMENT_CANCEL_SUCCESSFUL = 'payment cancellation successful';
+
+    /**
+     * @var string
+     */
+    public const OMS_PAYMENT_CANCEL_FAILED = 'payment cancellation failed';
+
+    /**
+     * @var string
+     *
+     * @deprecated Use {@link self::OMS_PAYMENT_CAPTURE_SUCCESSFUL} instead.
+     */
+    public const OMS_PAYMENT_CONFIRMATION_SUCCESSFUL = 'payment confirmation successful';
+
+    /**
+     * @var string
+     *
+     * @deprecated Use {@link self::OMS_PAYMENT_CAPTURE_FAILED} instead.
+     */
+    public const OMS_PAYMENT_CONFIRMATION_FAILED = 'payment confirmation failed';
+
+    /**
+     * @var string
+     *
+     * @deprecated Use {@link self::OMS_PAYMENT_CAPTURE_SUCCESSFUL} instead.
+     */
     public const OMS_PAYMENT_CANCEL_RESERVATION_SUCCESSFUL = 'reservation cancellation successful';
 
     /**
      * @var string
+     *
+     * @deprecated Use {@link self::OMS_PAYMENT_CAPTURE_FAILED} instead.
      */
     public const OMS_PAYMENT_CANCEL_RESERVATION_FAILED = 'reservation cancellation failed';
 }

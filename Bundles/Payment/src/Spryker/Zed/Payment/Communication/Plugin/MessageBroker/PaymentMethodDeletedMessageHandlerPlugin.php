@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
@@ -33,7 +34,9 @@ class PaymentMethodDeletedMessageHandlerPlugin extends AbstractPlugin implements
      */
     public function onPaymentMethodDeleted(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void
     {
-        $this->getFacade()->disableForeignPaymentMethod($paymentMethodDeletedTransfer);
+        $deletePaymentMethodTransfer = (new DeletePaymentMethodTransfer())->fromArray($paymentMethodDeletedTransfer->toArray(), true);
+
+        $this->getFacade()->disableForeignPaymentMethod($deletePaymentMethodTransfer);
     }
 
     /**

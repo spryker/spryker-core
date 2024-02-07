@@ -66,7 +66,7 @@ class SalesPaymentFacade extends AbstractFacade implements SalesPaymentFacadeInt
     {
         $this->getFactory()
             ->createMessageEmitter()
-            ->sendEventPaymentConfirmationPending($eventPaymentTransfer);
+            ->sendCapturePaymentMessage($eventPaymentTransfer);
     }
 
     /**
@@ -82,7 +82,7 @@ class SalesPaymentFacade extends AbstractFacade implements SalesPaymentFacadeInt
     {
         $this->getFactory()
             ->createMessageEmitter()
-            ->sendEventPaymentRefundPending($eventPaymentTransfer);
+            ->sendRefundPaymentMessage($eventPaymentTransfer);
     }
 
     /**
@@ -98,6 +98,54 @@ class SalesPaymentFacade extends AbstractFacade implements SalesPaymentFacadeInt
     {
         $this->getFactory()
             ->createMessageEmitter()
-            ->sendEventPaymentCancelReservationPending($eventPaymentTransfer);
+            ->sendCancelPaymentMessage($eventPaymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendCapturePaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendCapturePaymentMessage($eventPaymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendCancelPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendCancelPaymentMessage($eventPaymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendRefundPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendRefundPaymentMessage($eventPaymentTransfer);
     }
 }

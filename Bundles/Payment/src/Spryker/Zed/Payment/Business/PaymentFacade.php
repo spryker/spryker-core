@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Payment\Business;
 
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Generated\Shared\Transfer\PaymentMethodCollectionRequestTransfer;
@@ -17,6 +19,7 @@ use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
 use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionRequestTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionResponseTransfer;
@@ -47,7 +50,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
         return $this->getFactory()
             ->createPaymentMethodReader()
@@ -80,15 +83,16 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacade::addPaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
+    public function enableForeignPaymentMethod(AddPaymentMethodTransfer|PaymentMethodAddedTransfer $addPaymentMethodTransfer): PaymentMethodTransfer
     {
-        return $this->getFactory()
-            ->createPaymentMethodUpdater()
-            ->enableForeignPaymentMethod($paymentMethodAddedTransfer);
+        $addPaymentMethodTransfer = ($addPaymentMethodTransfer instanceof PaymentMethodAddedTransfer) ? ($this->createAddPaymentMethodTransfer())->fromArray($addPaymentMethodTransfer->toArray()) : $addPaymentMethodTransfer;
+
+        return $this->getFactory()->createPaymentMethodUpdater()
+            ->enableForeignPaymentMethod($addPaymentMethodTransfer);
     }
 
     /**
@@ -96,14 +100,26 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function addPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
+    public function addPaymentMethod(AddPaymentMethodTransfer|PaymentMethodAddedTransfer $addPaymentMethodTransfer): PaymentMethodTransfer
     {
+        $addPaymentMethodTransfer = ($addPaymentMethodTransfer instanceof PaymentMethodAddedTransfer) ? ($this->createAddPaymentMethodTransfer())->fromArray($addPaymentMethodTransfer->toArray()) : $addPaymentMethodTransfer;
+
         return $this->getFactory()->createPaymentMethodUpdater()
-            ->addPaymentMethod($paymentMethodAddedTransfer);
+            ->addPaymentMethod($addPaymentMethodTransfer);
+    }
+
+    /**
+     * @deprecated Will be removed with next major. This is only an intermediate solution to support both transfer types in {@link \Spryker\Zed\Payment\Business\PaymentFacade::addPaymentMethod()}
+     *
+     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
+     */
+    protected function createAddPaymentMethodTransfer(): AddPaymentMethodTransfer
+    {
+        return new AddPaymentMethodTransfer();
     }
 
     /**
@@ -113,15 +129,16 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacade::deletePaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodDeletedTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
-    public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void
+    public function disableForeignPaymentMethod(DeletePaymentMethodTransfer|PaymentMethodDeletedTransfer $deletePaymentMethodTransfer): void
     {
-        $this->getFactory()
-            ->createPaymentMethodUpdater()
-            ->disableForeignPaymentMethod($paymentMethodDeletedTransfer);
+        $deletePaymentMethodTransfer = ($deletePaymentMethodTransfer instanceof PaymentMethodDeletedTransfer) ? ($this->createDeletePaymentMethodTransfer())->fromArray($deletePaymentMethodTransfer->toArray()) : $deletePaymentMethodTransfer;
+
+        $this->getFactory()->createPaymentMethodUpdater()
+            ->disableForeignPaymentMethod($deletePaymentMethodTransfer);
     }
 
     /**
@@ -129,14 +146,26 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodDeletedTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
-    public function deletePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): void
+    public function deletePaymentMethod(DeletePaymentMethodTransfer|PaymentMethodDeletedTransfer $deletePaymentMethodTransfer): void
     {
+        $deletePaymentMethodTransfer = ($deletePaymentMethodTransfer instanceof PaymentMethodDeletedTransfer) ? ($this->createDeletePaymentMethodTransfer())->fromArray($deletePaymentMethodTransfer->toArray()) : $deletePaymentMethodTransfer;
+
         $this->getFactory()->createPaymentMethodUpdater()
-            ->deletePaymentMethod($paymentMethodDeletedTransfer);
+            ->deletePaymentMethod($deletePaymentMethodTransfer);
+    }
+
+    /**
+     * @deprecated Will be removed with next major. This is only an intermediate solution to support both transfer types in {@link \Spryker\Zed\Payment\Business\PaymentFacade::deletePaymentMethod()}
+     *
+     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
+     */
+    protected function createDeletePaymentMethodTransfer(): DeletePaymentMethodTransfer
+    {
+        return new DeletePaymentMethodTransfer();
     }
 
     /**
@@ -148,7 +177,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return void
      */
-    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
             ->createPaymentCalculator()
@@ -303,7 +332,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return bool
      */
-    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()
@@ -322,7 +351,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return void
      */
-    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()
@@ -340,7 +369,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return int
      */
-    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer)
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer): int
     {
         return $this->getFactory()
             ->createSalesPaymentReader()
@@ -358,7 +387,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderPayments(OrderTransfer $orderTransfer)
+    public function hydrateOrderPayments(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createPaymentHydrator()
@@ -377,7 +406,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @return void
      */
-    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse): void
     {
         $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()

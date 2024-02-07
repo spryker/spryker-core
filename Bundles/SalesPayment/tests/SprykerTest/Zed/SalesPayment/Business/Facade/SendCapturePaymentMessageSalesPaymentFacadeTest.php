@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\SalesPayment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CapturePaymentTransfer;
 use Generated\Shared\Transfer\EventPaymentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentConfirmationRequestedTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\SalesPayment\Business\Exception\EventExecutionForbiddenException;
 use Spryker\Zed\SalesPayment\Business\Exception\OrderNotFoundException;
@@ -30,12 +30,12 @@ use SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester;
  * @group Business
  * @group Facade
  * @group Facade
- * @group SendCaptureEventSalesPaymentFacadeTest
+ * @group SendCapturePaymentMessageSalesPaymentFacadeTest
  * Add your own group annotations below this line
  *
  * @property \SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester $tester
  */
-class SendCaptureEventSalesPaymentFacadeTest extends Unit
+class SendCapturePaymentMessageSalesPaymentFacadeTest extends Unit
 {
     /**
      * @var \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
@@ -51,7 +51,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSendEventPaymentConfirmationPendingSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
+    public function testSendCapturePaymentMessageSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
     {
         // Arrange
         $this->mockSalesFacade($orderData);
@@ -61,12 +61,12 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
             ->setOrderItemIds($sentItemIds);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentConfirmationPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendCapturePaymentMessage($eventPaymentTransfer);
 
         // Assert
-        $this->tester->assertMessageWasSent(PaymentConfirmationRequestedTransfer::class);
+        $this->tester->assertMessageWasSent(CapturePaymentTransfer::class);
         $this->tester->assertSentMessageProperties(
-            PaymentConfirmationRequestedTransfer::class,
+            CapturePaymentTransfer::class,
             ['amount' => $expectedAmount, 'orderItemIds' => $sentItemIds],
         );
     }
@@ -79,7 +79,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSendEventPaymentConfirmationPendingThrowCommandExecutionException(array $orderData, array $sentItemIds): void
+    public function testSendCapturePaymentMessageThrowsCommandExecutionException(array $orderData, array $sentItemIds): void
     {
         // Arrange
         $this->mockSalesFacade($orderData);
@@ -92,7 +92,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
         $this->expectException(EventExecutionForbiddenException::class);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentConfirmationPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendCapturePaymentMessage($eventPaymentTransfer);
     }
 
     /**
@@ -111,7 +111,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->sendEventPaymentConfirmationPending($eventPaymentTransfer);
-        $this->tester->assertMessageWasNotSent(PaymentConfirmationRequestedTransfer::class);
+        $this->tester->assertMessageWasNotSent(CapturePaymentTransfer::class);
     }
 
     /**
@@ -164,7 +164,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ],
                             ItemTransfer::STATE_HISTORY => [
                                 [
-                                    ItemStateTransfer::NAME => 'payment confirmed',
+                                    ItemStateTransfer::NAME => 'payment captured',
                                 ],
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
@@ -294,7 +294,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ],
                             ItemTransfer::STATE_HISTORY => [
                                 [
-                                    ItemStateTransfer::NAME => 'payment confirmed',
+                                    ItemStateTransfer::NAME => 'payment captured',
                                 ],
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
@@ -311,7 +311,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ],
                             ItemTransfer::STATE_HISTORY => [
                                 [
-                                    ItemStateTransfer::NAME => 'payment confirmed',
+                                    ItemStateTransfer::NAME => 'payment captured',
                                 ],
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
@@ -343,7 +343,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ],
                             ItemTransfer::STATE_HISTORY => [
                                 [
-                                    ItemStateTransfer::NAME => 'payment confirmed',
+                                    ItemStateTransfer::NAME => 'payment captured',
                                 ],
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
@@ -360,7 +360,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ],
                             ItemTransfer::STATE_HISTORY => [
                                 [
-                                    ItemStateTransfer::NAME => 'payment confirmed',
+                                    ItemStateTransfer::NAME => 'payment captured',
                                 ],
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
@@ -397,7 +397,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ItemTransfer::ID_SALES_ORDER_ITEM => 777,
                             ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 10,
                             ItemTransfer::STATE => [
-                                ItemStateTransfer::NAME => 'payment confirmation pending',
+                                ItemStateTransfer::NAME => 'payment capture pending',
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
                                 [
@@ -417,7 +417,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                             ItemTransfer::ID_SALES_ORDER_ITEM => 777,
                             ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 10,
                             ItemTransfer::STATE => [
-                                ItemStateTransfer::NAME => 'payment confirmation pending',
+                                ItemStateTransfer::NAME => 'payment capture pending',
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
                                 [

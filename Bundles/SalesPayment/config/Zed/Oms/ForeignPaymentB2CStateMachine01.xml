@@ -39,18 +39,18 @@
 
             <transition happy="true">
                 <source>invoiced</source>
-                <target>payment confirmation ready</target>
+                <target>payment capture ready</target>
                 <event>ship</event>
             </transition>
 
             <transition>
                 <source>invoiced</source>
-                <target>reservation cancellation ready</target>
+                <target>payment cancellation ready</target>
                 <event>cancel</event>
             </transition>
 
             <transition happy="true">
-                <source>payment confirmed</source>
+                <source>payment captured</source>
                 <target>delivered</target>
                 <event>deliver</event>
             </transition>

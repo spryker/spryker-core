@@ -87,7 +87,12 @@ class CaptureAmountCalculator implements CaptureAmountCalculatorInterface
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getStateHistory() as $itemStateTransfer) {
-                if (in_array($itemStateTransfer->getName(), $this->salesPaymentConfig->getPaymentConfirmationRequestedStates(), true)) {
+                // BC: This is for backward compatibility with older projects.
+                $captureStatus = $this->salesPaymentConfig->getPaymentConfirmationRequestedStates();
+                if (!$captureStatus) {
+                    $captureStatus = $this->salesPaymentConfig->getCapturePaymentStates();
+                }
+                if (in_array($itemStateTransfer->getName(), $captureStatus, true)) {
                     return true;
                 }
             }

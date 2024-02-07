@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendRefundPaymentMessageCommandPlugin} instead.
+ *
  * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesPayment\Communication\SalesPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesPayment\SalesPaymentConfig getConfig()
@@ -26,7 +28,7 @@ class SendEventPaymentRefundPendingPlugin extends AbstractPlugin implements Comm
      * - Validates if refund process is blocked, throws `EventExecutionForbiddenException` on failure.
      * - Calculates the amount of refund using the costs of the items found by IDs in `EventPayment.orderItemIds`.
      * - Adds the expenses cost of the entire order to refunded amount if this refund request has at least one unreimbursed item left.
-     * - Sends the message using `PaymentRefundRequestedTransfer` transfer.
+     * - Sends the message using `RefundPaymentTransfer` transfer.
      *
      * @api
      *
@@ -42,7 +44,7 @@ class SendEventPaymentRefundPendingPlugin extends AbstractPlugin implements Comm
             ->createEventPaymentMapper()
             ->mapOrderEntityAndOrderItemEntitiesToEventPaymentTransfer($orderItems, $orderEntity, new EventPaymentTransfer());
 
-        $this->getFacade()->sendEventPaymentRefundPending($eventPaymentTransfer);
+        $this->getFacade()->sendRefundPaymentMessage($eventPaymentTransfer);
 
         return [];
     }

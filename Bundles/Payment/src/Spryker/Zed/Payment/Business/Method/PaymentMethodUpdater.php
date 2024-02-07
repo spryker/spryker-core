@@ -10,10 +10,10 @@ namespace Spryker\Zed\Payment\Business\Method;
 use ArrayObject;
 use DateTime;
 use DateTimeZone;
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
-use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
@@ -129,20 +129,20 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater::addPaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function enableForeignPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
+    public function enableForeignPaymentMethod(AddPaymentMethodTransfer $addPaymentMethodTransfer): PaymentMethodTransfer
     {
-        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodAddedTransferToPaymentMethodTransfer(
-            $paymentMethodAddedTransfer,
+        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapAddPaymentMethodTransferToPaymentMethodTransfer(
+            $addPaymentMethodTransfer,
             new PaymentMethodTransfer(),
         );
 
-        $messageAttributes = $paymentMethodAddedTransfer->getMessageAttributesOrFail();
+        $messageAttributes = $addPaymentMethodTransfer->getMessageAttributesOrFail();
         $storeTransfer = $this->storeFacade->getStoreByStoreReference(
-            $paymentMethodAddedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
+            $addPaymentMethodTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
         $existingPaymentMethodTransfer = $this->findExistentPaymentMethod(
             $paymentMethodTransfer,
@@ -166,18 +166,18 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function addPaymentMethod(PaymentMethodAddedTransfer $paymentMethodAddedTransfer): PaymentMethodTransfer
+    public function addPaymentMethod(AddPaymentMethodTransfer $addPaymentMethodTransfer): PaymentMethodTransfer
     {
-        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodAddedTransferToPaymentMethodTransfer(
-            $paymentMethodAddedTransfer,
+        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapAddPaymentMethodTransferToPaymentMethodTransfer(
+            $addPaymentMethodTransfer,
             new PaymentMethodTransfer(),
         );
 
-        $messageAttributes = $paymentMethodAddedTransfer->getMessageAttributesOrFail();
+        $messageAttributes = $addPaymentMethodTransfer->getMessageAttributesOrFail();
         $existingPaymentMethodTransfer = $this->findExistentPaymentMethod($paymentMethodTransfer);
 
         if (
@@ -201,23 +201,23 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater::deletePaymentMethod()} instead.
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function disableForeignPaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer
+    public function disableForeignPaymentMethod(DeletePaymentMethodTransfer $deletePaymentMethodTransfer): PaymentMethodTransfer
     {
-        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodDeletedTransferToPaymentMethodTransfer(
-            $paymentMethodDeletedTransfer,
+        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapDeletePaymentMethodTransferToPaymentMethodTransfer(
+            $deletePaymentMethodTransfer,
             new PaymentMethodTransfer(),
         );
 
         $paymentMethodTransfer->requireLabelName()
             ->requireGroupName();
 
-        $messageAttributes = $paymentMethodDeletedTransfer->getMessageAttributesOrFail();
+        $messageAttributes = $deletePaymentMethodTransfer->getMessageAttributesOrFail();
         $storeTransfer = $this->storeFacade->getStoreByStoreReference(
-            $paymentMethodDeletedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
+            $deletePaymentMethodTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
         $existingPaymentMethodTransfer = $this->findExistentPaymentMethod(
             $paymentMethodTransfer,
@@ -244,21 +244,21 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function deletePaymentMethod(PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer): PaymentMethodTransfer
+    public function deletePaymentMethod(DeletePaymentMethodTransfer $deletePaymentMethodTransfer): PaymentMethodTransfer
     {
-        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapPaymentMethodDeletedTransferToPaymentMethodTransfer(
-            $paymentMethodDeletedTransfer,
+        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapDeletePaymentMethodTransferToPaymentMethodTransfer(
+            $deletePaymentMethodTransfer,
             new PaymentMethodTransfer(),
         );
 
         $paymentMethodTransfer->requireLabelName()
             ->requireGroupName();
 
-        $messageAttributes = $paymentMethodDeletedTransfer->getMessageAttributesOrFail();
+        $messageAttributes = $deletePaymentMethodTransfer->getMessageAttributesOrFail();
         $existingPaymentMethodTransfer = $this->findExistentPaymentMethod($paymentMethodTransfer);
 
         if (

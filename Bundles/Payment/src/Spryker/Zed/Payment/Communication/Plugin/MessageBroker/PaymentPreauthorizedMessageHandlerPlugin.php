@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\PaymentAuthorizedTransfer;
 use Generated\Shared\Transfer\PaymentPreauthorizedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
@@ -31,7 +34,9 @@ class PaymentPreauthorizedMessageHandlerPlugin extends AbstractPlugin implements
      */
     public function onPaymentPreauthorized(PaymentPreauthorizedTransfer $paymentPreauthorizedTransfer): void
     {
-        $this->getFacade()->triggerPaymentMessageOmsEvent($paymentPreauthorizedTransfer);
+        $paymentAuthorizedTransfer = (new PaymentAuthorizedTransfer())->fromArray($paymentPreauthorizedTransfer->toArray(), true);
+
+        $this->getFacade()->triggerPaymentMessageOmsEvent($paymentAuthorizedTransfer);
     }
 
     /**

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SalesPayment\Business\MessageEmitter;
 
+use Generated\Shared\Transfer\CancelPaymentTransfer;
+use Generated\Shared\Transfer\CapturePaymentTransfer;
 use Generated\Shared\Transfer\EventPaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentCancelReservationRequestedTransfer;
-use Generated\Shared\Transfer\PaymentConfirmationRequestedTransfer;
-use Generated\Shared\Transfer\PaymentRefundRequestedTransfer;
+use Generated\Shared\Transfer\RefundPaymentTransfer;
 use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculatorInterface;
 use Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculatorInterface;
 use Spryker\Zed\SalesPayment\Business\Exception\EventExecutionForbiddenException;
@@ -73,17 +73,17 @@ class MessageEmitter implements MessageEmitterInterface
      *
      * @return void
      */
-    public function sendEventPaymentCancelReservationPending(EventPaymentTransfer $eventPaymentTransfer): void
+    public function sendCancelPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
     {
         $orderTransfer = $this->getOrderTransfer($eventPaymentTransfer);
 
-        $paymentCancelReservationRequestedTransfer = (new PaymentCancelReservationRequestedTransfer())
+        $cancelPaymentTransfer = (new CancelPaymentTransfer())
             ->setOrderReference($orderTransfer->getOrderReference())
             ->setOrderItemIds($eventPaymentTransfer->getOrderItemIds())
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setAmount(0);
 
-        $this->messageBrokerFacade->sendMessage($paymentCancelReservationRequestedTransfer);
+        $this->messageBrokerFacade->sendMessage($cancelPaymentTransfer);
     }
 
     /**
@@ -93,7 +93,7 @@ class MessageEmitter implements MessageEmitterInterface
      *
      * @return void
      */
-    public function sendEventPaymentConfirmationPending(EventPaymentTransfer $eventPaymentTransfer): void
+    public function sendCapturePaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
     {
         $orderTransfer = $this->getOrderTransfer($eventPaymentTransfer);
 
@@ -111,13 +111,13 @@ class MessageEmitter implements MessageEmitterInterface
             return;
         }
 
-        $paymentConfirmationRequestedTransfer = (new PaymentConfirmationRequestedTransfer())
+        $capturePaymentTransfer = (new CapturePaymentTransfer())
             ->setOrderReference($orderTransfer->getOrderReference())
             ->setOrderItemIds($eventPaymentTransfer->getOrderItemIds())
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setAmount($captureAmount);
 
-        $this->messageBrokerFacade->sendMessage($paymentConfirmationRequestedTransfer);
+        $this->messageBrokerFacade->sendMessage($capturePaymentTransfer);
     }
 
     /**
@@ -127,7 +127,7 @@ class MessageEmitter implements MessageEmitterInterface
      *
      * @return void
      */
-    public function sendEventPaymentRefundPending(EventPaymentTransfer $eventPaymentTransfer): void
+    public function sendRefundPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void
     {
         $orderTransfer = $this->getOrderTransfer($eventPaymentTransfer);
         $isRefundProcessBlocked = $this->hasOrderAnyItemInStates(
@@ -144,13 +144,13 @@ class MessageEmitter implements MessageEmitterInterface
             return;
         }
 
-        $paymentRefundRequestedTransfer = (new PaymentRefundRequestedTransfer())
+        $refundPaymentTransfer = (new RefundPaymentTransfer())
             ->setOrderReference($orderTransfer->getOrderReference())
             ->setOrderItemIds($eventPaymentTransfer->getOrderItemIds())
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setAmount($refundAmount * -1);
 
-        $this->messageBrokerFacade->sendMessage($paymentRefundRequestedTransfer);
+        $this->messageBrokerFacade->sendMessage($refundPaymentTransfer);
     }
 
     /**

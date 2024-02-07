@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentRefundRequestedTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\RefundPaymentTransfer;
 use Spryker\Zed\SalesPayment\Business\Exception\EventExecutionForbiddenException;
 use Spryker\Zed\SalesPayment\Business\Exception\OrderNotFoundException;
 use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToSalesFacadeInterface;
@@ -30,12 +30,12 @@ use SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester;
  * @group Business
  * @group Facade
  * @group Facade
- * @group SendRefundEventSalesPaymentFacadeTest
+ * @group SendRefundPaymentMessageSalesPaymentFacadeTest
  * Add your own group annotations below this line
  *
  * @property \SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester $tester
  */
-class SendRefundEventSalesPaymentFacadeTest extends Unit
+class SendRefundPaymentMessageSalesPaymentFacadeTest extends Unit
 {
     /**
      * @var \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
@@ -51,7 +51,7 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSendEventPaymentRefundPendingSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
+    public function testSendRefundPaymentMessageSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
     {
         // Arrange
         $this->mockSalesFacade($orderData);
@@ -61,12 +61,12 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
             ->setOrderItemIds($sentItemIds);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentRefundPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendRefundPaymentMessage($eventPaymentTransfer);
 
         // Assert
-        $this->tester->assertMessageWasSent(PaymentRefundRequestedTransfer::class);
+        $this->tester->assertMessageWasSent(RefundPaymentTransfer::class);
         $this->tester->assertSentMessageProperties(
-            PaymentRefundRequestedTransfer::class,
+            RefundPaymentTransfer::class,
             ['amount' => $expectedAmount, 'orderItemIds' => $sentItemIds],
         );
     }
@@ -79,7 +79,7 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testEventPaymentRefundPendingThrowCommandExecutionException(array $orderData, array $sentItemIds): void
+    public function testSendRefundPaymentMessageThrowsCommandExecutionException(array $orderData, array $sentItemIds): void
     {
         // Arrange
         $this->mockSalesFacade($orderData);
@@ -92,13 +92,13 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
         $this->expectException(EventExecutionForbiddenException::class);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentRefundPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendRefundPaymentMessage($eventPaymentTransfer);
     }
 
     /**
      * @return void
      */
-    public function testSendEventPaymentConfirmationPendingThrowOrderNotFoundException(): void
+    public function testSendRefundPaymentMessageThrowsOrderNotFoundException(): void
     {
         // Arrange
         $this->mockSalesFacade([]);
@@ -110,7 +110,7 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
         $this->expectException(OrderNotFoundException::class);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentRefundPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendRefundPaymentMessage($eventPaymentTransfer);
     }
 
     /**
@@ -323,7 +323,7 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
                             ItemTransfer::ID_SALES_ORDER_ITEM => 777,
                             ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 10,
                             ItemTransfer::STATE => [
-                                ItemStateTransfer::NAME => 'payment confirmation pending',
+                                ItemStateTransfer::NAME => 'payment capture pending',
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
                                 [
@@ -343,7 +343,7 @@ class SendRefundEventSalesPaymentFacadeTest extends Unit
                             ItemTransfer::ID_SALES_ORDER_ITEM => 777,
                             ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 10,
                             ItemTransfer::STATE => [
-                                ItemStateTransfer::NAME => 'payment confirmation pending',
+                                ItemStateTransfer::NAME => 'payment capture pending',
                             ],
                             ItemTransfer::PRODUCT_OPTIONS => [
                                 [

@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\SalesPayment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CancelPaymentTransfer;
 use Generated\Shared\Transfer\EventPaymentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentCancelReservationRequestedTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\SalesPayment\Business\Exception\OrderNotFoundException;
 use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToSalesFacadeInterface;
@@ -29,12 +29,12 @@ use SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester;
  * @group Business
  * @group Facade
  * @group Facade
- * @group SendCancelEventSalesPaymentFacadeTest
+ * @group SendCancelPaymentMessageSalesPaymentFacadeTest
  * Add your own group annotations below this line
  *
  * @property \SprykerTest\Zed\SalesPayment\SalesPaymentBusinessTester $tester
  */
-class SendCancelEventSalesPaymentFacadeTest extends Unit
+class SendCancelPaymentMessageSalesPaymentFacadeTest extends Unit
 {
     /**
      * @var \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
@@ -49,7 +49,7 @@ class SendCancelEventSalesPaymentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSendEventPaymentCancelReservationPendingSuccess(array $orderData, array $sentItemIds): void
+    public function testSendCancelPaymentMessageSuccess(array $orderData, array $sentItemIds): void
     {
         // Arrange
         $this->mockSalesFacade($orderData);
@@ -59,12 +59,12 @@ class SendCancelEventSalesPaymentFacadeTest extends Unit
             ->setOrderItemIds($sentItemIds);
 
         // Act
-        $this->tester->getFacade()->sendEventPaymentCancelReservationPending($eventPaymentTransfer);
+        $this->tester->getFacade()->sendCancelPaymentMessage($eventPaymentTransfer);
 
         // Assert
-        $this->tester->assertMessageWasSent(PaymentCancelReservationRequestedTransfer::class);
+        $this->tester->assertMessageWasSent(CancelPaymentTransfer::class);
         $this->tester->assertSentMessageProperties(
-            PaymentCancelReservationRequestedTransfer::class,
+            CancelPaymentTransfer::class,
             ['amount' => 0, 'orderItemIds' => $sentItemIds],
         );
     }
@@ -72,7 +72,7 @@ class SendCancelEventSalesPaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSendEventPaymentConfirmationPendingThrowOrderNotFoundException(): void
+    public function testSendCancelPaymentMessageThrowsOrderNotFoundException(): void
     {
         // Arrange
         $this->mockSalesFacade([]);

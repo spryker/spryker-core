@@ -42,13 +42,15 @@ interface SalesPaymentFacadeInterface
 
     /**
      * Specification:
-     * - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
-     * - Validates if capturing process can be executed, throws `EventExecutionForbiddenException` on failure.
-     * - Calculates the amount of capture using the costs of the items found by IDs in `EventPayment.orderItemIds`.
-     * - Adds the expense costs of the entire order to the capture amount if this capture request is the first for the order.
-     * - Sends the message using `PaymentConfirmationRequested` transfer.
+     *  - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
+     *  - Validates if capturing process can be executed, throws `EventExecutionForbiddenException` on failure.
+     *  - Calculates the amount of capture using the costs of the items found by IDs in `EventPayment.orderItemIds`.
+     *  - Adds the expense costs of the entire order to the capture amount if this capture request is the first for the order.
+     *  - Sends the message using `CapturePayment` transfer.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::sendCapturePaymentMessage()} instead.
      *
      * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
      *
@@ -62,9 +64,11 @@ interface SalesPaymentFacadeInterface
      * - Validates if refund process is blocked, throws `EventExecutionForbiddenException` on failure.
      * - Calculates the amount of refund using the costs of the items found by IDs in `EventPayment.orderItemIds`.
      * - Adds the expenses cost of the entire order to refunded amount if this refund request has at least one unreimbursed item left.
-     * - Sends the message using `PaymentRefundRequestedTransfer` transfer.
+     * - Sends the message using `RefundPaymentTransfer` transfer.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::sendRefundPaymentMessage()} instead.
      *
      * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
      *
@@ -75,7 +79,25 @@ interface SalesPaymentFacadeInterface
     /**
      * Specification:
      * - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
-     * - Sends the message using `PaymentCancelReservationRequestedTransfer` transfer.
+     * - Sends the message using `CancelPaymentTransfer` transfer.
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::sendCancelPaymentMessage()} instead.
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendEventPaymentCancelReservationPending(EventPaymentTransfer $eventPaymentTransfer): void;
+
+    /**
+     * Specification:
+     *  - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
+     *  - Validates if capturing process can be executed, throws `EventExecutionForbiddenException` on failure.
+     *  - Calculates the amount of capture using the costs of the items found by IDs in `EventPayment.orderItemIds`.
+     *  - Adds the expense costs of the entire order to the capture amount if this capture request is the first for the order.
+     *  - Sends the message using `CapturePayment` transfer.
      *
      * @api
      *
@@ -83,5 +105,34 @@ interface SalesPaymentFacadeInterface
      *
      * @return void
      */
-    public function sendEventPaymentCancelReservationPending(EventPaymentTransfer $eventPaymentTransfer): void;
+    public function sendCapturePaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
+
+    /**
+     * Specification:
+     * - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
+     * - Sends the message using `CancelPaymentTransfer` transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendCancelPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
+
+    /**
+     * Specification:
+     * - Attempts to find an existing order using `EventPayment.IdSalesOrder`, throws `OrderNotFoundException` on failure.
+     * - Validates if refund process is blocked, throws `EventExecutionForbiddenException` on failure.
+     * - Calculates the amount of refund using the costs of the items found by IDs in `EventPayment.orderItemIds`.
+     * - Adds the expenses cost of the entire order to refunded amount if this refund request has at least one unreimbursed item left.
+     * - Sends the message using `RefundPaymentTransfer` transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendRefundPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
 }

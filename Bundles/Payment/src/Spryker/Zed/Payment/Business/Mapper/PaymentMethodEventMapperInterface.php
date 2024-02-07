@@ -7,31 +7,31 @@
 
 namespace Spryker\Zed\Payment\Business\Mapper;
 
-use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
-use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 
 interface PaymentMethodEventMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer $addPaymentMethodTransfer
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function mapPaymentMethodAddedTransferToPaymentMethodTransfer(
-        PaymentMethodAddedTransfer $paymentMethodAddedTransfer,
+    public function mapAddPaymentMethodTransferToPaymentMethodTransfer(
+        AddPaymentMethodTransfer $addPaymentMethodTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function mapPaymentMethodDeletedTransferToPaymentMethodTransfer(
-        PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer,
+    public function mapDeletePaymentMethodTransferToPaymentMethodTransfer(
+        DeletePaymentMethodTransfer $deletePaymentMethodTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer;
 }

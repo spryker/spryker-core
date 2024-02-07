@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Payment\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\PaymentCapturedTransfer;
 use Generated\Shared\Transfer\PaymentConfirmedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Payment\Communication\Plugin\MessageBroker\PaymentOperationsMessageHandlerPlugin} instead.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
@@ -31,7 +34,9 @@ class PaymentConfirmedMessageHandlerPlugin extends AbstractPlugin implements Mes
      */
     public function onPaymentConfirmed(PaymentConfirmedTransfer $paymentConfirmedTransfer): void
     {
-        $this->getFacade()->triggerPaymentMessageOmsEvent($paymentConfirmedTransfer);
+        $paymentCapturedTransfer = (new PaymentCapturedTransfer())->fromArray($paymentConfirmedTransfer->toArray(), true);
+
+        $this->getFacade()->triggerPaymentMessageOmsEvent($paymentCapturedTransfer);
     }
 
     /**

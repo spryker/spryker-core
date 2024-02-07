@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Payment\Business\MessageEmitter;
 
+use Generated\Shared\Transfer\CancelPaymentTransfer;
+use Generated\Shared\Transfer\CapturePaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentCancelReservationRequestedTransfer;
-use Generated\Shared\Transfer\PaymentConfirmationRequestedTransfer;
-use Generated\Shared\Transfer\PaymentRefundRequestedTransfer;
+use Generated\Shared\Transfer\RefundPaymentTransfer;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerInterface;
 
 /**
@@ -39,13 +39,13 @@ class MessageEmitter implements MessageEmitterInterface
      */
     public function sendEventPaymentCancelReservationPending(array $orderItemIds, OrderTransfer $orderTransfer): void
     {
-        $paymentCancelReservationRequestedTransfer = (new PaymentCancelReservationRequestedTransfer())
+        $cancelPaymentTransfer = (new CancelPaymentTransfer())
             ->setOrderReference($orderTransfer->getOrderReference())
             ->setOrderItemIds($orderItemIds)
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setAmount(0);
 
-        $this->messageBrokerFacade->sendMessage($paymentCancelReservationRequestedTransfer);
+        $this->messageBrokerFacade->sendMessage($cancelPaymentTransfer);
     }
 
     /**
@@ -61,13 +61,13 @@ class MessageEmitter implements MessageEmitterInterface
         OrderTransfer $orderTransfer
     ): void {
         if ($orderItemsTotal > 0) {
-            $paymentConfirmationRequestedTransfer = (new PaymentConfirmationRequestedTransfer())
+            $capturePaymentTransfer = (new CapturePaymentTransfer())
                 ->setOrderReference($orderTransfer->getOrderReference())
                 ->setOrderItemIds($orderItemIds)
                 ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
                 ->setAmount($orderItemsTotal);
 
-            $this->messageBrokerFacade->sendMessage($paymentConfirmationRequestedTransfer);
+            $this->messageBrokerFacade->sendMessage($capturePaymentTransfer);
         }
     }
 
@@ -84,13 +84,13 @@ class MessageEmitter implements MessageEmitterInterface
         OrderTransfer $orderTransfer
     ): void {
         if ($orderItemsTotal > 0) {
-            $paymentRefundRequestedTransfer = (new PaymentRefundRequestedTransfer())
+            $refundPaymentTransfer = (new RefundPaymentTransfer())
                 ->setOrderReference($orderTransfer->getOrderReference())
                 ->setOrderItemIds($orderItemIds)
                 ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
                 ->setAmount($orderItemsTotal * -1);
 
-            $this->messageBrokerFacade->sendMessage($paymentRefundRequestedTransfer);
+            $this->messageBrokerFacade->sendMessage($refundPaymentTransfer);
         }
     }
 }

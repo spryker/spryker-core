@@ -14,7 +14,7 @@ class SalesPaymentConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const OMS_STATE_PAYMENT_CONFIRMATION_PENDING = 'payment confirmation pending';
+    protected const OMS_STATE_PAYMENT_CAPTURE_PENDING = 'payment capture pending';
 
     /**
      * @var string
@@ -24,7 +24,7 @@ class SalesPaymentConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const OMS_STATE_PAYMENT_CONFIRMED = 'payment confirmed';
+    protected const OMS_STATE_PAYMENT_CAPTURED = 'payment captured';
 
     /**
      * @var string
@@ -44,7 +44,7 @@ class SalesPaymentConfig extends AbstractBundleConfig
     public function getPaymentCaptureRequestBlockingStates(): array
     {
         return [
-            static::OMS_STATE_PAYMENT_CONFIRMATION_PENDING,
+            static::OMS_STATE_PAYMENT_CAPTURE_PENDING,
             static::OMS_STATE_PAYMENT_REFUND_PENDING,
         ];
     }
@@ -52,12 +52,24 @@ class SalesPaymentConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\SalesPaymentConfig::getCapturePaymentStates()} instead.
+     *
      * @return array<string>
      */
     public function getPaymentConfirmationRequestedStates(): array
     {
+        return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getCapturePaymentStates(): array
+    {
         return [
-            static::OMS_STATE_PAYMENT_CONFIRMED,
+            static::OMS_STATE_PAYMENT_CAPTURED,
         ];
     }
 
@@ -69,7 +81,7 @@ class SalesPaymentConfig extends AbstractBundleConfig
     public function getPaymentRefundRequestBlockingStates(): array
     {
         return [
-            static::OMS_STATE_PAYMENT_CONFIRMATION_PENDING,
+            static::OMS_STATE_PAYMENT_CAPTURE_PENDING,
             static::OMS_STATE_PAYMENT_REFUND_PENDING,
         ];
     }

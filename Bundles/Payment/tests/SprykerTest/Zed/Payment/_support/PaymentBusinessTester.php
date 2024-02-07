@@ -11,9 +11,9 @@ use Codeception\Actor;
 use DateTime;
 use Generated\Shared\DataBuilder\PaymentMethodBuilder;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
-use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -85,37 +85,37 @@ class PaymentBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodDeletedTransfer
+     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
      */
-    public function mapPaymentMethodTransferToPaymentMethodDeletedTransfer(
+    public function mapPaymentMethodTransferToDeletePaymentMethodTransfer(
         PaymentMethodTransfer $paymentMethodTransfer,
-        PaymentMethodDeletedTransfer $paymentMethodDeletedTransfer
-    ): PaymentMethodDeletedTransfer {
-        $paymentMethodDeletedTransfer
+        DeletePaymentMethodTransfer $deletePaymentMethodTransfer
+    ): DeletePaymentMethodTransfer {
+        $deletePaymentMethodTransfer
             ->setName($paymentMethodTransfer->getLabelName())
             ->setProviderName($paymentMethodTransfer->getGroupName());
 
-        return $paymentMethodDeletedTransfer;
+        return $deletePaymentMethodTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $paymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer $addPaymentMethodTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodAddedTransfer
+     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
      */
-    public function mapPaymentMethodTransferToPaymentMethodAddedTransfer(
+    public function mapPaymentMethodTransferToAddPaymentMethodTransfer(
         PaymentMethodTransfer $paymentMethodTransfer,
-        PaymentMethodAddedTransfer $paymentMethodAddedTransfer
-    ): PaymentMethodAddedTransfer {
-        $paymentMethodAddedTransfer
+        AddPaymentMethodTransfer $addPaymentMethodTransfer
+    ): AddPaymentMethodTransfer {
+        $addPaymentMethodTransfer
             ->setName($paymentMethodTransfer->getLabelName())
             ->setProviderName($paymentMethodTransfer->getGroupName())
             ->setPaymentAuthorizationEndpoint($paymentMethodTransfer->getPaymentAuthorizationEndpoint());
 
-        return $paymentMethodAddedTransfer;
+        return $addPaymentMethodTransfer;
     }
 
     /**
@@ -138,17 +138,17 @@ class PaymentBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      * @param string $timestamp
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodDeletedTransfer
+     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
      */
-    public function havePaymentMethodDeletedTransferWithTimestamp(
+    public function haveDeletePaymentMethodTransferWithTimestamp(
         PaymentProviderTransfer $paymentProviderTransfer,
         string $timestamp
-    ): PaymentMethodDeletedTransfer {
-        return $this->havePaymentMethodDeletedTransfer([
-            PaymentMethodDeletedTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            PaymentMethodDeletedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
-            PaymentMethodDeletedTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(),
-            PaymentMethodDeletedTransfer::MESSAGE_ATTRIBUTES => [
+    ): DeletePaymentMethodTransfer {
+        return $this->haveDeletePaymentMethodTransfer([
+            DeletePaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+            DeletePaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
+            DeletePaymentMethodTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(),
+            DeletePaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
                 MessageAttributesTransfer::TIMESTAMP => $timestamp,
             ],
@@ -158,18 +158,18 @@ class PaymentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer|null $paymentProviderTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodDeletedTransfer
+     * @return \Generated\Shared\Transfer\DeletePaymentMethodTransfer
      */
-    public function havePaymentMethodDeletedTransferWithoutTimestamp(
+    public function haveDeletePaymentMethodTransferWithoutTimestamp(
         ?PaymentProviderTransfer $paymentProviderTransfer = null
-    ): PaymentMethodDeletedTransfer {
+    ): DeletePaymentMethodTransfer {
         $providerKey = $paymentProviderTransfer ? $paymentProviderTransfer->getPaymentProviderKey() : static::PAYMENT_PROVIDER_KEY;
 
-        return $this->havePaymentMethodDeletedTransfer([
-            PaymentMethodDeletedTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            PaymentMethodDeletedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
-            PaymentMethodDeletedTransfer::PROVIDER_NAME => $providerKey,
-            PaymentMethodDeletedTransfer::MESSAGE_ATTRIBUTES => [
+        return $this->haveDeletePaymentMethodTransfer([
+            DeletePaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+            DeletePaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
+            DeletePaymentMethodTransfer::PROVIDER_NAME => $providerKey,
+            DeletePaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
             ],
         ]);
@@ -179,17 +179,17 @@ class PaymentBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      * @param string $timestamp
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodAddedTransfer
+     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
      */
-    public function havePaymentMethodAddedTransferWithTimestamp(
+    public function haveAddPaymentMethodTransferWithTimestamp(
         PaymentProviderTransfer $paymentProviderTransfer,
         string $timestamp
-    ): PaymentMethodAddedTransfer {
-        return $this->havePaymentMethodAddedTransfer([
-            PaymentMethodAddedTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            PaymentMethodAddedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
-            PaymentMethodAddedTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(),
-            PaymentMethodAddedTransfer::MESSAGE_ATTRIBUTES => [
+    ): AddPaymentMethodTransfer {
+        return $this->haveAddPaymentMethodTransfer([
+            AddPaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+            AddPaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
+            AddPaymentMethodTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(),
+            AddPaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
                 MessageAttributesTransfer::TIMESTAMP => $timestamp,
             ],
@@ -199,15 +199,15 @@ class PaymentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodAddedTransfer
+     * @return \Generated\Shared\Transfer\AddPaymentMethodTransfer
      */
-    public function havePaymentMethodAddedTransferWithoutTimestamp(
+    public function haveAddPaymentMethodTransferWithoutTimestamp(
         PaymentProviderTransfer $paymentProviderTransfer
-    ): PaymentMethodAddedTransfer {
-        return $this->havePaymentMethodAddedTransfer([
-            PaymentMethodAddedTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            PaymentMethodAddedTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
-            PaymentMethodAddedTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(), PaymentMethodDeletedTransfer::MESSAGE_ATTRIBUTES => [
+    ): AddPaymentMethodTransfer {
+        return $this->haveAddPaymentMethodTransfer([
+            AddPaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+            AddPaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
+            AddPaymentMethodTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(), DeletePaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
             ],
         ]);
@@ -302,19 +302,19 @@ class PaymentBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      * @param bool $addStore
      *
      * @return void
      */
     public function assertDisabledPaymentMethodWasCreatedWithSoftDeletion(
-        PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer,
+        DeletePaymentMethodTransfer $deletePaymentMethodTransfer,
         bool $addStore = true
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())
             ->setPaymentMethodKey(
                 $this->generatePaymentMethodKey(
-                    $messagePaymentMethodDeletedTransfer->getProviderName(),
+                    $deletePaymentMethodTransfer->getProviderName(),
                     $addStore,
                 ),
             );
@@ -337,28 +337,28 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertSame(
-            $messagePaymentMethodDeletedTransfer->getName(),
+            $deletePaymentMethodTransfer->getName(),
             $createdPaymentMethodTransfer->getName(),
             'The disabled Payment Method must have the same name of the original Payment Method Deleted Transfer',
         );
 
         $this->assertSame(
-            $messagePaymentMethodDeletedTransfer->getProviderName(),
+            $deletePaymentMethodTransfer->getProviderName(),
             $createdPaymentMethodTransfer->getGroupName(),
             'The disabled Payment Method must have the same provider name of the original Payment Method Deleted Transfer',
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $disabledPaymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return void
      */
     public function assertDisabledPaymentMethodDidNotChange(
-        PaymentMethodTransfer $disabledPaymentMethodTransfer
+        PaymentMethodTransfer $paymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $disabledPaymentMethodTransfer->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -369,24 +369,24 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertEquals(
-            str_replace('T', ' ', $disabledPaymentMethodTransfer->getLastMessageTimestamp()),
+            str_replace('T', ' ', $paymentMethodTransfer->getLastMessageTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The disabled Payment Method\'s last message timestamp must remain the same',
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $disabledPaymentMethod
-     * @param \Generated\Shared\Transfer\PaymentMethodAddedTransfer $messagePaymentMethodAddedTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer $addPaymentMethodTransfer
      *
      * @return void
      */
     public function assertDisabledPaymentMethodWasEnabledAndTimestampChanged(
-        PaymentMethodTransfer $disabledPaymentMethod,
-        PaymentMethodAddedTransfer $messagePaymentMethodAddedTransfer
+        PaymentMethodTransfer $paymentMethodTransfer,
+        AddPaymentMethodTransfer $addPaymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $disabledPaymentMethod->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -397,22 +397,22 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertEquals(
-            str_replace('T', ' ', $messagePaymentMethodAddedTransfer->getMessageAttributes()->getTimestamp()),
+            str_replace('T', ' ', $addPaymentMethodTransfer->getMessageAttributes()->getTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The disabled Payment Method\'s last message timestamp equals to message timestamp',
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $disabledPaymentMethod
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return void
      */
     public function assertDisabledPaymentMethodWasEnabledAndTimestampWasUpdated(
-        PaymentMethodTransfer $disabledPaymentMethod
+        PaymentMethodTransfer $paymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $disabledPaymentMethod->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -423,13 +423,13 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertNotEquals(
-            str_replace('T', ' ', $disabledPaymentMethod->getLastMessageTimestamp()),
+            str_replace('T', ' ', $paymentMethodTransfer->getLastMessageTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The disabled Payment Method\'s last message timestamp must had to be updated',
         );
 
         $disabledPaymentMethodDatetime = new DateTime(
-            $disabledPaymentMethod->getLastMessageTimestamp(),
+            $paymentMethodTransfer->getLastMessageTimestamp(),
         );
 
         $paymentMethodFoundDatetime = new DateTime(
@@ -443,15 +443,15 @@ class PaymentBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $enabledPaymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return void
      */
     public function assertEnabledPaymentMethodDidNotChange(
-        PaymentMethodTransfer $enabledPaymentMethodTransfer
+        PaymentMethodTransfer $paymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $enabledPaymentMethodTransfer->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -462,24 +462,24 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertEquals(
-            str_replace('T', ' ', $enabledPaymentMethodTransfer->getLastMessageTimestamp()),
+            str_replace('T', ' ', $paymentMethodTransfer->getLastMessageTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The enabled Payment Method\'s last message timestamp must remain the same',
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $enabledPaymentMethod
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
     public function assertEnabledPaymentMethodWasDisabledAndTimestampChanged(
-        PaymentMethodTransfer $enabledPaymentMethod,
-        PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+        PaymentMethodTransfer $paymentMethodTransfer,
+        DeletePaymentMethodTransfer $deletePaymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $enabledPaymentMethod->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -490,24 +490,24 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertEquals(
-            str_replace('T', ' ', $messagePaymentMethodDeletedTransfer->getMessageAttributes()->getTimestamp()),
+            str_replace('T', ' ', $deletePaymentMethodTransfer->getMessageAttributes()->getTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The enabled Payment Method\'s last message timestamp equals to message timestamp',
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $enabledPaymentMethod
-     * @param \Generated\Shared\Transfer\PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\DeletePaymentMethodTransfer $deletePaymentMethodTransfer
      *
      * @return void
      */
     public function assertEnabledPaymentMethodWasDisabledAndTimestampWasUpdated(
-        PaymentMethodTransfer $enabledPaymentMethod,
-        PaymentMethodDeletedTransfer $messagePaymentMethodDeletedTransfer
+        PaymentMethodTransfer $paymentMethodTransfer,
+        DeletePaymentMethodTransfer $deletePaymentMethodTransfer
     ): void {
         $filterPaymentMethodTransfer = (new PaymentMethodTransfer())->setIdPaymentMethod(
-            $enabledPaymentMethod->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
         );
 
         $paymentMethodFound = $this->findPaymentMethod($filterPaymentMethodTransfer);
@@ -518,13 +518,13 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertNotEquals(
-            str_replace('T', ' ', $enabledPaymentMethod->getLastMessageTimestamp()),
+            str_replace('T', ' ', $paymentMethodTransfer->getLastMessageTimestamp()),
             $paymentMethodFound->getLastMessageTimestamp(),
             'The enabled Payment Method\'s last message timestamp must had to be updated',
         );
 
         $enabledPaymentMethodDatetime = new DateTime(
-            $enabledPaymentMethod->getLastMessageTimestamp(),
+            $paymentMethodTransfer->getLastMessageTimestamp(),
         );
 
         $paymentMethodFoundDatetime = new DateTime(
@@ -538,14 +538,14 @@ class PaymentBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $existentPaymentMethod
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      * @param string $providerName *
      * @param bool $addStore
      *
      * @return void
      */
     public function assertRightPaymentMethodWasUpdated(
-        PaymentMethodTransfer $existentPaymentMethod,
+        PaymentMethodTransfer $paymentMethodTransfer,
         string $providerName,
         bool $addStore = true
     ): void {
@@ -564,13 +564,13 @@ class PaymentBusinessTester extends Actor
         );
 
         $this->assertNotEquals(
-            $existentPaymentMethod->getIsHidden(),
+            $paymentMethodTransfer->getIsHidden(),
             $paymentMethodFound->getIsHidden(),
             'The existent Payment Method must remain unchanged',
         );
 
         $this->assertNotEquals(
-            $existentPaymentMethod->getIdPaymentMethod(),
+            $paymentMethodTransfer->getIdPaymentMethod(),
             $paymentMethodFound->getIdPaymentMethod(),
             'The updated Payment Method must not be the existent Payment Method',
         );

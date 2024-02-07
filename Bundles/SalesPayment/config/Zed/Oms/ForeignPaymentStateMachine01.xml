@@ -9,11 +9,11 @@
 
         <subprocesses>
             <process>PaymentAuthorization</process>
-            <process>PaymentConfirmation</process>
+            <process>PaymentCapture</process>
             <process>ItemSupply</process>
             <process>ItemReturn</process>
             <process>PaymentRefund</process>
-            <process>PaymentReservationCancel</process>
+            <process>PaymentCancel</process>
             <process>ItemClose</process>
         </subprocesses>
 
@@ -39,18 +39,18 @@
 
             <transition happy="true">
                 <source>invoiced</source>
-                <target>payment confirmation ready</target>
+                <target>payment capture ready</target>
                 <event>ship</event>
             </transition>
 
             <transition>
                 <source>invoiced</source>
-                <target>reservation cancellation ready</target>
+                <target>payment cancellation ready</target>
                 <event>cancel</event>
             </transition>
 
             <transition happy="true">
-                <source>payment confirmed</source>
+                <source>payment captured</source>
                 <target>delivered</target>
                 <event>deliver</event>
             </transition>
@@ -69,11 +69,11 @@
     </process>
 
     <process name="PaymentAuthorization" file="Subprocess/PaymentAuthorization01.xml"/>
-    <process name="PaymentConfirmation" file="Subprocess/PaymentConfirmation01.xml"/>
+    <process name="PaymentCapture" file="Subprocess/PaymentCapture01.xml"/>
     <process name="ItemSupply" file="Subprocess/ItemSupply01.xml"/>
     <process name="ItemReturn" file="Subprocess/ItemReturn01.xml"/>
     <process name="PaymentRefund" file="Subprocess/PaymentRefund01.xml"/>
-    <process name="PaymentReservationCancel" file="Subprocess/PaymentReservationCancel01.xml"/>
+    <process name="PaymentCancel" file="Subprocess/PaymentCancel01.xml"/>
     <process name="ItemClose" file="Subprocess/ItemClose01.xml"/>
 
 </statemachine>

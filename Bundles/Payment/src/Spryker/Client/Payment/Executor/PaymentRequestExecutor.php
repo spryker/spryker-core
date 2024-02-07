@@ -48,7 +48,7 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
     public function __construct(
         PaymentToUtilEncodingServiceInterface $utilEncodingService,
         PaymentToHttpClientAdapterInterface $httpClient,
-        PaymentConfig $config,
+        PaymentConfig $config
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->httpClient = $httpClient;
@@ -61,7 +61,7 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
      * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
      */
     public function authorizeForeignPayment(
-        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer,
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
     ): PaymentAuthorizeResponseTransfer {
         try {
             $response = $this->httpClient->request(
