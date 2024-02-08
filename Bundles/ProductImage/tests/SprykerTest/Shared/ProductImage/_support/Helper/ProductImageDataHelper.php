@@ -68,8 +68,12 @@ class ProductImageDataHelper extends Module
             ->seed($productImageOverride + $productImageSeed)
             ->build();
 
-        $productImageTransfer->setExternalUrlLarge(static::URL_SMALL)
-            ->setExternalUrlSmall(static::URL_LARGE);
+        if ($productImageTransfer->getExternalUrlLarge() === null) {
+            $productImageTransfer->setExternalUrlLarge(static::URL_LARGE);
+        }
+        if ($productImageTransfer->getExternalUrlSmall() === null) {
+            $productImageTransfer->setExternalUrlSmall(static::URL_SMALL);
+        }
 
         $productImageSetSeed = [
             ProductImageSetTransfer::NAME => static::NAME,
