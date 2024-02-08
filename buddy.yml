@@ -37,4 +37,5 @@
         execute_commands:
             - 'chmod +x *.sh'
             - 'bash travis_check_touched_modules.sh'
+            - 'echo "Finished checking touched modules"'
         shell: 'BASH'
