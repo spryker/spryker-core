@@ -45,6 +45,10 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): DynamicEntityCollectionResponseTransfer {
+        if ((bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable() === false) {
+            return $dynamicEntityCollectionResponseTransfer;
+        }
+
         $indexedDefinitions = $this->getDefinitionsIndexedByTableAlias($dynamicEntityConfigurationTransfer);
         $indexedChildRelations = $this->getChildTableAliasesIndexByRelationName($dynamicEntityConfigurationTransfer);
 

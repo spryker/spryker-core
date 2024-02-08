@@ -214,10 +214,15 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             $dynamicEntityConfigurationTransfer,
         );
 
+        $dynamicEntityIsCreatable = (bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable();
         foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $dynamicEntityConditionsTransfer = $this->addIdentifierToDynamicEntityConditionsTransfer($dynamicEntityTransfer, $identifierFieldVisibleName);
+            $dynamicEntityConditionsTransfer = $this->addIdentifierToDynamicEntityConditionsTransfer(
+                $dynamicEntityTransfer,
+                $identifierFieldVisibleName,
+                $dynamicEntityIsCreatable,
+            );
 
-            if ($dynamicEntityConditionsTransfer === null) {
+            if ($dynamicEntityConditionsTransfer === null && !$dynamicEntityIsCreatable) {
                 $this->addErrorToResponseTransfer(
                     $dynamicEntityCollectionResponseTransfer,
                     static::GLOSSARY_KEY_ERROR_MISSING_IDENTIFIER,
@@ -225,6 +230,10 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 );
 
                 continue;
+            }
+
+            if ($dynamicEntityConditionsTransfer === null) {
+                $dynamicEntityConditionsTransfer = new DynamicEntityConditionsTransfer();
             }
 
             $activeRecord = $this->resolveActiveRecord(
@@ -243,6 +252,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
 
                 continue;
             }
+
+            $activeRecord = $this->resetFieldValues(
+                $activeRecord,
+                $dynamicEntityTransfer,
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityCollectionRequestTransfer,
+            );
 
             if (
                 $dynamicEntityCollectionRequestTransfer->getIsCreatable() === true &&
@@ -525,14 +541,21 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param string $identifierFieldVisibleName
+     * @param bool $isCreatable
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConditionsTransfer|null
      */
     protected function addIdentifierToDynamicEntityConditionsTransfer(
         DynamicEntityTransfer $dynamicEntityTransfer,
-        string $identifierFieldVisibleName
+        string $identifierFieldVisibleName,
+        bool $isCreatable
     ): ?DynamicEntityConditionsTransfer {
-        if (!isset($dynamicEntityTransfer->getFields()[static::IDENTIFIER]) && !isset($dynamicEntityTransfer->getFields()[$identifierFieldVisibleName])) {
+        $identifierValue = null;
+        if (isset($dynamicEntityTransfer->getFields()[static::IDENTIFIER]) || isset($dynamicEntityTransfer->getFields()[$identifierFieldVisibleName])) {
+            $identifierValue = $dynamicEntityTransfer->getFields()[static::IDENTIFIER] ?? $dynamicEntityTransfer->getFields()[$identifierFieldVisibleName];
+        }
+
+        if ($identifierValue === null && $isCreatable === false) {
             return null;
         }
 
@@ -540,7 +563,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $dynamicEntityConditionsTransfer->addFieldCondition(
             (new DynamicEntityFieldConditionTransfer())
                 ->setName($identifierFieldVisibleName)
-                ->setValue($dynamicEntityTransfer->getFields()[static::IDENTIFIER] ?? $dynamicEntityTransfer->getFields()[$identifierFieldVisibleName]),
+                ->setValue($identifierValue),
         );
 
         return $dynamicEntityConditionsTransfer;
@@ -661,5 +684,29 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         }
 
         return $entityClassName;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     */
+    protected function resetFieldValues(
+        ActiveRecordInterface $activeRecord,
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+    ): ActiveRecordInterface {
+        $resetNotProvidedFields = (bool)$dynamicEntityCollectionRequestTransfer->getResetNotProvidedFieldValues();
+        if ($activeRecord->isNew() === true || !$resetNotProvidedFields) {
+            return $activeRecord;
+        }
+
+        return $this->getFactory()
+            ->createDynamicEntityResetter()
+            ->resetNotProvidedFields($activeRecord, $dynamicEntityTransfer, $dynamicEntityConfigurationTransfer);
     }
 }

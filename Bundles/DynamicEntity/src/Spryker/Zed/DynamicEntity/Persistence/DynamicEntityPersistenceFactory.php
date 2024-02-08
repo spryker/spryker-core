@@ -24,6 +24,8 @@ use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapperInterface
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql\DuplicateEntryExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\DuplicateKeyExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Propel\Mapper\DynamicEntityMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetter;
+use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -134,5 +136,13 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createDuplicateKeyExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
     {
         return new DuplicateKeyExceptionToErrorMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface
+     */
+    public function createDynamicEntityResetter(): DynamicEntityResetterInterface
+    {
+        return new DynamicEntityResetter();
     }
 }

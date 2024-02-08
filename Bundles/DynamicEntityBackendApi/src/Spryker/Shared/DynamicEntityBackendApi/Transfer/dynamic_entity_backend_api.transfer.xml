@@ -3,6 +3,7 @@
 
     <transfer name="DynamicEntityCollectionRequest" strict="true">
         <property name="isCreatable" type="bool"/>
+        <property name="resetNotProvidedFieldValues" type="bool"/>
         <property name="tableAlias" type="string"/>
         <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
     </transfer>

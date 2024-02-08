@@ -5,3 +5,4 @@ parameters:
             - '#Call to an undefined method .+ActiveRecordInterface::isNew\(\).#'
             - '#Call to an undefined method .+ActiveRecordInterface::getByName\(\).#'
             - '#Call to an undefined method .+ActiveRecordInterface::getPrimaryKey\(\).#'
+            - '#Call to an undefined method .+ActiveRecordInterface::setByName\(\).#'

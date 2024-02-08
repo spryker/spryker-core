@@ -273,6 +273,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         //Arrange
         $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId());
         $glueRequestTransfer = $this->tester->haveGlueRequestTransfer();
+        $glueRequestTransfer->setMethod(Request::METHOD_PATCH);
 
         $content = [
             $this->tester::KEY_DATA => [
@@ -417,13 +418,16 @@ class DynamicEntityBackendApiControllerTest extends Unit
     public function testPutActionUpdatesCollection(): void
     {
         //Arrange
-        $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId());
+        $dynamicEntityDefinition = $this->tester->buildDefinitionWithAutoIncrementedId();
+        $this->createFooEntity($dynamicEntityDefinition);
+        $originalFooEntity = $this->findEntityByDefinition($dynamicEntityDefinition);
         $glueRequestTransfer = $this->tester->haveGlueRequestTransfer();
         $glueRequestTransfer->getResource()->setMethod(Request::METHOD_PUT);
 
         $content = [
             $this->tester::KEY_DATA => [
                 [
+                    $this->tester::TABLE_ID_DYNAMIC_ENTITY_CONFIGURATION_COLUMN => $originalFooEntity->getIdDynamicEntityConfiguration(),
                     $this->tester::TABLE_ALIAS_COLUMN => $this->tester::FOO_TABLE_ALIAS,
                     $this->tester::TABLE_NAME_COLUMN => $this->tester::TABLE_NAME,
                     $this->tester::DEFINITION_COLUMN => $this->tester::DEFINITION_UPDATED_VALUE,
@@ -439,8 +443,8 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $this->assertEmpty($glueResponseTransfer->getErrors());
         $this->assertNotNull($glueResponseTransfer->getContent());
 
-        $fooEntity = $this->findEntityByTableAlias($this->tester::FOO_TABLE_ALIAS);
-        $this->assertEquals($this->tester::DEFINITION_UPDATED_VALUE, $fooEntity->getDefinition());
+        $updatedFooEntity = $this->findEntityByTableAlias($this->tester::FOO_TABLE_ALIAS);
+        $this->assertEquals($this->tester::DEFINITION_UPDATED_VALUE, $updatedFooEntity->getDefinition());
     }
 
     /**
@@ -483,15 +487,18 @@ class DynamicEntityBackendApiControllerTest extends Unit
     public function testPutActionUpdatesById(): void
     {
         //Arrange
-        $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId());
+        $dynamicEntityDefinition = $this->tester->buildDefinitionWithAutoIncrementedId();
+        $this->createFooEntity($dynamicEntityDefinition);
+        $originalFooEntity = $this->findEntityByDefinition($dynamicEntityDefinition);
         $glueRequestTransfer = $this->tester->haveGlueRequestTransfer();
         $glueRequestTransfer->getResource()
             ->setMethod(Request::METHOD_PUT)
-            ->setId($this->tester::FOO_TABLE_ALIAS);
+            ->setId($originalFooEntity->getIdDynamicEntityConfiguration());
 
         $content = [
             $this->tester::KEY_DATA => [
                 $this->tester::TABLE_NAME_COLUMN => $this->tester::TABLE_NAME,
+                $this->tester::TABLE_ALIAS_COLUMN => $this->tester::BAR_TABLE_ALIAS,
                 $this->tester::DEFINITION_COLUMN => $this->tester::DEFINITION_UPDATED_VALUE,
             ],
         ];
@@ -504,8 +511,8 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $this->assertEmpty($glueResponseTransfer->getErrors());
         $this->assertNotNull($glueResponseTransfer->getContent());
 
-        $fooEntity = $this->findEntityByTableAlias($this->tester::FOO_TABLE_ALIAS);
-        $this->assertEquals($this->tester::DEFINITION_UPDATED_VALUE, $fooEntity->getDefinition());
+        $updatedFooEntity = $this->findEntityByTableAlias($this->tester::BAR_TABLE_ALIAS);
+        $this->assertEquals($this->tester::DEFINITION_UPDATED_VALUE, $updatedFooEntity->getDefinition());
     }
 
     /**
@@ -555,6 +562,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $content = [
             $this->tester::KEY_DATA => [
                 $this->tester::TABLE_NAME_COLUMN => $this->tester::BAR_TABLE_NAME,
+                $this->tester::TABLE_ALIAS_COLUMN => $this->tester::BAR_TABLE_ALIAS,
                 $this->tester::DEFINITION_COLUMN => $this->tester::DEFINITION_CREATED_VALUE,
             ],
         ];
@@ -659,6 +667,18 @@ class DynamicEntityBackendApiControllerTest extends Unit
     {
         return SpyDynamicEntityConfigurationQuery::create()
             ->filterByTableAlias($tableAlias)
+            ->findOne();
+    }
+
+    /**
+     * @param string $definition
+     *
+     * @return \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration|null
+     */
+    protected function findEntityByDefinition(string $definition): ?SpyDynamicEntityConfiguration
+    {
+        return SpyDynamicEntityConfigurationQuery::create()
+            ->filterByDefinition($definition)
             ->findOne();
     }
 }

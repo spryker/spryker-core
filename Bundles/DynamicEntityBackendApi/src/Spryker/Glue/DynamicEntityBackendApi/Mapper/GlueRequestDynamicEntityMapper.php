@@ -120,13 +120,20 @@ class GlueRequestDynamicEntityMapper
      */
     protected function createDynamicEntityCollectionRequestTransfer(GlueRequestTransfer $glueRequestTransfer): DynamicEntityCollectionRequestTransfer
     {
-        $dynamicEntityCollectionRequestTransfer = new DynamicEntityCollectionRequestTransfer();
-        $dynamicEntityCollectionRequestTransfer->setTableAlias(
-            $this->extractTableAlias($glueRequestTransfer->getPathOrFail()),
-        );
+        $dynamicEntityCollectionRequestTransfer = (new DynamicEntityCollectionRequestTransfer())
+            ->setTableAlias(
+                $this->extractTableAlias($glueRequestTransfer->getPathOrFail()),
+            );
 
-        if ($glueRequestTransfer->getResourceOrFail()->getMethod() === Request::METHOD_PUT) {
-            $dynamicEntityCollectionRequestTransfer->setIsCreatable(true);
+        $httpMethod = $glueRequestTransfer->getResourceOrFail()->getMethod();
+        if ($httpMethod === Request::METHOD_POST || $httpMethod === Request::METHOD_PUT) {
+            $dynamicEntityCollectionRequestTransfer
+                ->setIsCreatable(true);
+        }
+
+        if ($httpMethod === Request::METHOD_PUT) {
+            $dynamicEntityCollectionRequestTransfer
+                ->setResetNotProvidedFieldValues(true);
         }
 
         return $dynamicEntityCollectionRequestTransfer;

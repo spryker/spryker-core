@@ -86,6 +86,7 @@
         <property name="tableAlias" type="string"/>
         <property name="dynamicEntities" type="DynamicEntity[]" singular="dynamicEntity"/>
         <property name="isCreatable" type="bool"/>
+        <property name="resetNotProvidedFieldValues" type="bool"/>
     </transfer>
 
     <transfer name="DynamicEntityCollectionResponse" strict="true">

@@ -74,6 +74,11 @@ class DynamicEntityBackendApiTester extends Actor
     /**
      * @var string
      */
+    public const TABLE_ID_DYNAMIC_ENTITY_CONFIGURATION_COLUMN = 'id_dynamic_entity_configuration';
+
+    /**
+     * @var string
+     */
     public const TABLE_NAME_COLUMN = 'table_name';
 
     /**
@@ -178,48 +183,86 @@ class DynamicEntityBackendApiTester extends Actor
     ): string {
         $definitions = [
             'identifier' => 'table_alias',
-            'fields' => [
-                [
-                    'fieldName' => 'id_dynamic_entity_configuration',
-                    'fieldVisibleName' => 'id_dynamic_entity_configuration',
-                    'type' => 'integer',
-                    'isEditable' => false,
-                    'isCreatable' => false,
-                    'validation' => [
-                        'isRequired' => false,
-                    ],
-                ], [
-                    'fieldName' => 'table_alias',
-                    'fieldVisibleName' => 'table_alias',
-                    'type' => 'string',
-                    'isEditable' => $isEditable,
-                    'isCreatable' => $isCreatable,
-                    'validation' => [
-                        'isRequired' => false,
-                    ],
-                ], [
-                    'fieldName' => 'table_name',
-                    'fieldVisibleName' => 'table_name',
-                    'type' => 'string',
-                    'isEditable' => true,
-                    'isCreatable' => true,
-                    'validation' => [
-                        'isRequired' => $isRequired,
-                    ],
-                ], [
-                    'fieldName' => 'definition',
-                    'fieldVisibleName' => 'definition',
-                    'type' => 'string',
-                    'isEditable' => true,
-                    'isCreatable' => true,
-                    'validation' => [
-                        'isRequired' => false,
-                    ],
-                ],
-            ],
+            'fields' => $this->getDynamicEntityDefinitionFields($isCreatable, $isRequired, $isEditable),
         ];
 
         return json_encode($definitions);
+    }
+
+    /**
+     * @param bool $isCreatable
+     * @param bool $isRequired
+     * @param bool $isEditable
+     *
+     * @return string
+     */
+    public function buildDefinitionWithAutoIncrementedId(
+        bool $isCreatable = true,
+        bool $isRequired = false,
+        bool $isEditable = true
+    ): string {
+        $definitions = [
+            'identifier' => 'id_dynamic_entity_configuration',
+            'fields' => $this->getDynamicEntityDefinitionFields($isCreatable, $isRequired, $isEditable),
+        ];
+
+        return json_encode($definitions);
+    }
+
+    /**
+     * @param bool $isCreatable
+     * @param bool $isRequired
+     * @param bool $isEditable
+     *
+     * @return array
+     */
+    protected function getDynamicEntityDefinitionFields(
+        bool $isCreatable = true,
+        bool $isRequired = false,
+        bool $isEditable = true
+    ): array {
+        return [
+            [
+                'fieldName' => 'id_dynamic_entity_configuration',
+                'fieldVisibleName' => 'id_dynamic_entity_configuration',
+                'type' => 'integer',
+                'isEditable' => false,
+                'isCreatable' => false,
+                'validation' => [
+                    'isRequired' => false,
+                ],
+            ],
+            [
+                'fieldName' => 'table_alias',
+                'fieldVisibleName' => 'table_alias',
+                'type' => 'string',
+                'isEditable' => $isEditable,
+                'isCreatable' => $isCreatable,
+                'validation' => [
+                    'isRequired' => false,
+                ],
+            ],
+            [
+                'fieldName' => 'table_name',
+                'fieldVisibleName' => 'table_name',
+                'type' => 'string',
+                'isEditable' => true,
+                'isCreatable' => true,
+                'validation' => [
+                    'isRequired' => $isRequired,
+                ],
+            ],
+            [
+                'fieldName' => 'definition',
+                'fieldVisibleName' => 'definition',
+                'type' => 'string',
+                'isEditable' => true,
+                'isCreatable' => true,
+                'validation' => [
+                    'isRequired' => false,
+                ],
+            ],
+        ];
     }
 
     /**

@@ -170,6 +170,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createEditableRelationValidator(),
+            $this->createRequiredFieldValidator(),
             $this->createRequestFieldValidator(),
             $this->createIntegerFieldTypeValidator(),
             $this->createStringFieldTypeValidator(),

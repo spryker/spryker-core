@@ -58,7 +58,7 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
 
         $dynamicEntityCollectionRequestTransfersByTableAlias = [];
         foreach ($flattenFieldsByAlias as $tableAlias => $entityFieldsCollection) {
-            $dynamicEntityCollectionRequestTransfersByTableAlias[$tableAlias] = $this->createDynamicEntityCollectionRequestTransfer($tableAlias, $entityFieldsCollection);
+            $dynamicEntityCollectionRequestTransfersByTableAlias[$tableAlias] = $this->createDynamicEntityCollectionRequestTransfer($tableAlias, $entityFieldsCollection, $dynamicEntityCollectionRequestTransfer);
         }
 
         return $dynamicEntityCollectionRequestTransfersByTableAlias;
@@ -109,13 +109,18 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
     /**
      * @param string $tableAlias
      * @param array<int, array<mixed>> $entityFieldsCollection
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
      */
-    protected function createDynamicEntityCollectionRequestTransfer(string $tableAlias, array $entityFieldsCollection): DynamicEntityCollectionRequestTransfer
-    {
+    protected function createDynamicEntityCollectionRequestTransfer(
+        string $tableAlias,
+        array $entityFieldsCollection,
+        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
+    ): DynamicEntityCollectionRequestTransfer {
         $dynamicEntityCollectionRequestTransfer = (new DynamicEntityCollectionRequestTransfer())
-            ->setIsCreatable(false)
+            ->setIsCreatable($originalDynamicEntityCollectionRequestTransfer->getIsCreatable())
+            ->setResetNotProvidedFieldValues($originalDynamicEntityCollectionRequestTransfer->getResetNotProvidedFieldValues())
             ->setTableAlias($tableAlias);
 
         foreach ($entityFieldsCollection as $fields) {
