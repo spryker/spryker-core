@@ -8,6 +8,10 @@
 namespace SprykerTest\Client\Currency;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Currency\CurrencyDependencyProvider;
+use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +30,36 @@ use Codeception\Actor;
 class CurrencyClientTester extends Actor
 {
     use _generated\CurrencyClientTesterActions;
+
+    /**
+     * @var string
+     */
+    public const CURRENCY_EUR = 'EUR';
+
+    /**
+     * @var string
+     */
+    public const CURRENCY_USD = 'USD';
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_STORE = 'DE';
+
+    /**
+     * @return void
+     */
+    public function mockStoreClientDependency(): void
+    {
+        $currencyToStoreClientMock = Stub::makeEmpty(CurrencyToStoreClientInterface::class);
+        $currencyToStoreClientMock->method('getCurrentStore')
+            ->willReturn(
+                (new StoreTransfer())
+                    ->setName(static::DEFAULT_STORE)
+                    ->setAvailableCurrencyIsoCodes([static::CURRENCY_EUR, static::CURRENCY_USD])
+                    ->setDefaultCurrencyIsoCode(static::CURRENCY_USD),
+            );
+
+        $this->setDependency(CurrencyDependencyProvider::CLIENT_STORE, $currencyToStoreClientMock);
+    }
 }

@@ -121,6 +121,6 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function getCurrencyIsoCode(): string
     {
-        return $this->getFactory()->getStore()->getCurrencyIsoCode();
+        return (string)$this->getClient()->getCurrent()->getCode();
     }
 }

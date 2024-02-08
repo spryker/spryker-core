@@ -63,7 +63,8 @@ class MoneyYvesTester extends Actor
     {
         $storeTransfer = (new StoreTransfer())
             ->setName(static::DEFAULT_STORE)
-            ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY]);
+            ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY])
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
 
         return Stub::makeEmpty(CurrencyToStoreClientInterface::class, [
             'getCurrentStore' => $storeTransfer,

@@ -198,7 +198,8 @@ class TwigMoneyServiceProviderTest extends Unit
         $currencyToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())
                 ->setName(static::DEFAULT_STORE)
-                ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY]));
+                ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY])
+                ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY));
 
         return $currencyToStoreClientMock;
     }

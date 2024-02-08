@@ -11,6 +11,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
+ * @method \Spryker\Client\Currency\CurrencyClient getClient()
  */
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {
@@ -21,7 +22,7 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
      */
     public function fromIsoCode($isoCode)
     {
-        return $this->getFactory()->createCurrencyBuilder()->fromIsoCode($isoCode);
+        return $this->getClient()->fromIsoCode($isoCode);
     }
 
     /**
@@ -29,6 +30,6 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
      */
     public function getCurrent()
     {
-        return $this->getFactory()->createCurrencyBuilder()->getCurrent();
+        return $this->getClient()->getCurrent();
     }
 }
