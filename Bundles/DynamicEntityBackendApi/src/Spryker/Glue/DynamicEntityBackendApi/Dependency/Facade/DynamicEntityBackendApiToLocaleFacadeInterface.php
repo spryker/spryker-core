@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\DynamicEntityBackendApi\Dependency\Client;
+namespace Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade;
 
-interface DynamicEntityBackendApiToLocaleClientInterface
+interface DynamicEntityBackendApiToLocaleFacadeInterface
 {
     /**
      * @return string
      */
-    public function getCurrentLocale(): string;
+    public function getCurrentLocaleName(): string;
 }

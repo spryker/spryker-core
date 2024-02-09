@@ -15,8 +15,8 @@ use Psr\Log\LoggerInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Builder\Route\RouteBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Builder\Route\RouteBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientInterface;
-use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DocumentationSchemaExpander;
@@ -132,7 +132,7 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
         return new GlueResponseDynamicEntityMapper(
             $this->getServiceUtilEncoding(),
             $this->getGlossaryStorageClient(),
-            $this->getLocaleClient(),
+            $this->getLocaleFacade(),
         );
     }
 
@@ -156,11 +156,11 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return \Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeInterface
      */
-    public function getLocaleClient(): DynamicEntityBackendApiToLocaleClientInterface
+    public function getLocaleFacade(): DynamicEntityBackendApiToLocaleFacadeInterface
     {
-        return $this->getProvidedDependency(DynamicEntityBackendApiDependencyProvider::CLIENT_LOCALE);
+        return $this->getProvidedDependency(DynamicEntityBackendApiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

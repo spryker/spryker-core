@@ -8,8 +8,8 @@
 namespace Spryker\Glue\DynamicEntityBackendApi;
 
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientBridge;
-use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeBridge;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToStorageFacadeBridge;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider;
@@ -43,7 +43,7 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
     /**
      * @var string
      */
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
@@ -56,7 +56,7 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
         $container = $this->addDynamicEntityFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addGlossaryStorageClient($container);
-        $container = $this->addLocaleClient($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addStorageFacade($container);
 
         return $container;
@@ -115,11 +115,11 @@ class DynamicEntityBackendApiDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
      */
-    protected function addLocaleClient(Container $container): Container
+    protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::CLIENT_LOCALE, function (Container $container) {
-            return new DynamicEntityBackendApiToLocaleClientBridge(
-                $container->getLocator()->locale()->client(),
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new DynamicEntityBackendApiToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
             );
         });
 

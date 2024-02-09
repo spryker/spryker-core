@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientInterface;
-use Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceInterface;
 use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
 use Spryker\Shared\DynamicEntityBackendApi\Transfer\DynamicEntityAttributes;
@@ -181,23 +181,23 @@ class GlueResponseDynamicEntityMapper
     protected DynamicEntityBackendApiToGlossaryStorageClientInterface $glossaryStorageClient;
 
     /**
-     * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface
+     * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeInterface
      */
-    protected DynamicEntityBackendApiToLocaleClientInterface $localeClient;
+    protected DynamicEntityBackendApiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Service\DynamicEntityBackendApiToUtilEncodingServiceInterface $serviceUtilEncoding
      * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Client\DynamicEntityBackendApiToLocaleClientInterface $localeClient
+     * @param \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         DynamicEntityBackendApiToUtilEncodingServiceInterface $serviceUtilEncoding,
         DynamicEntityBackendApiToGlossaryStorageClientInterface $glossaryStorageClient,
-        DynamicEntityBackendApiToLocaleClientInterface $localeClient
+        DynamicEntityBackendApiToLocaleFacadeInterface $localeFacade
     ) {
         $this->serviceUtilEncoding = $serviceUtilEncoding;
         $this->glossaryStorageClient = $glossaryStorageClient;
-        $this->localeClient = $localeClient;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -309,7 +309,7 @@ class GlueResponseDynamicEntityMapper
     ): GlueResponseTransfer {
         $errorMessage = $this->glossaryStorageClient->translate(
             $message,
-            $this->localeClient->getCurrentLocale(),
+            $this->localeFacade->getCurrentLocaleName(),
             $parameters,
         );
 
