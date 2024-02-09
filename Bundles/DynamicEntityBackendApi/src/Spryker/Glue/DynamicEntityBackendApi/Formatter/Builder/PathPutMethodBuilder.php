@@ -155,7 +155,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildRequestBody(
             static::REQUEST_DATA_UPSERT_ENTITY_DESCRIPTION,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -231,7 +231,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -271,7 +271,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -311,7 +311,7 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,

@@ -86,17 +86,18 @@ return [
             'name' => 'include',
             'in' => 'query',
             'description' => 'Parameter is used to include related resources.
-            Possible values are: test-child-relation-0. Use for `GET {{url}}/{{resource}}?include={{relation}}-> {200, { ...default+fields... + {{relation}} }}`.
-            It works also in deep relations like `{{url}}/{{resource}}?include={{relation}}.{{relation}}-> {200, { ...default+fields... + {{relation}}: { ...default+fields... + {{relation}}: { ...default+fields... } } }}`.
-            Examples:  `{{url}}/test-resource?include=test-child-relation-0-> {200, { ...default_fields... + test-child-relation-0: {...relation_fields...} }}`;   `{{url}}/test-resource?include=test-child-relation-1-> {200, { ...default_fields... + test-child-relation-1: {...relation_fields...} }}`;   `{{url}}/test-resource?include=test-child-relation-2-> {200, { ...default_fields... + test-child-relation-2: {...relation_fields...} }}`;  ',
+    Possible values are:`test-child-relation-0, test-child-relation-1, test-child-relation-2`.
+    Use for `GET {{url}}/{{resource}}?include={{relation}},{{relation}} -> {200, { ...default+fields... + {{relation}},{{relation}} }}`.',
             'required' => false,
             'schema' =>
              [
               'type' => 'string',
-              'example' => 'test-child-relation-0',
+              'example' => 'test-child-relation-0 (or test-child-relation-1,test-child-relation-2)',
               'enum' =>
                [
                 0 => 'test-child-relation-0',
+                1 => 'test-child-relation-1',
+                2 => 'test-child-relation-2',
               ],
             ],
           ],
@@ -175,73 +176,6 @@ return [
                                     ],
                                   ],
                                 ],
-                              ],
-                            ],
-                          ],
-                          1 =>
-                           [
-                            'type' => 'object',
-                            'properties' =>
-                             [
-                              'test' =>
-                               [
-                                'type' => 'string',
-                              ],
-                              'test-child-relation-0' =>
-                               [
-                                'type' => 'array',
-                                'items' =>
-                                 [
-                                  'type' => 'object',
-                                  'properties' =>
-                                   [
-                                    'test' =>
-                                     [
-                                      'type' => 'string',
-                                    ],
-                                  ],
-                                ],
-                              ],
-                              'test-child-relation-1' =>
-                               [
-                                'type' => 'array',
-                                'items' =>
-                                 [
-                                  'type' => 'object',
-                                  'properties' =>
-                                   [
-                                    'test' =>
-                                     [
-                                      'type' => 'string',
-                                    ],
-                                  ],
-                                ],
-                              ],
-                              'test-child-relation-2' =>
-                               [
-                                'type' => 'array',
-                                'items' =>
-                                 [
-                                  'type' => 'object',
-                                  'properties' =>
-                                   [
-                                    'test' =>
-                                     [
-                                      'type' => 'string',
-                                    ],
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                          2 =>
-                           [
-                            'type' => 'object',
-                            'properties' =>
-                             [
-                              'test' =>
-                               [
-                                'type' => 'string',
                               ],
                             ],
                           ],
@@ -403,73 +337,6 @@ return [
                                   ],
                                 ],
                               ],
-                            ],
-                          ],
-                        ],
-                        1 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
-                            ],
-                            'test-child-relation-0' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                            'test-child-relation-1' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                            'test-child-relation-2' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                        2 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
                             ],
                           ],
                         ],

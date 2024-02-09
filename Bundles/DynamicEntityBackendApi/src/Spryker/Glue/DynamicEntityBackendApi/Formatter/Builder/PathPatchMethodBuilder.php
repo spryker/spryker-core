@@ -205,7 +205,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -242,7 +242,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -282,7 +282,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -322,7 +322,7 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
 
         return $this->buildSuccessResponse(
             $responseDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,

@@ -188,29 +188,6 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param string|null $parentRelationName
-     *
-     * @return int
-     */
-    protected function calculateDeepLevelInConfiguration(
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        ?string $parentRelationName = null
-    ): int {
-        $deepLevel = 0;
-        /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childRelation */
-        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
-            if ($childRelation->getNameOrFail() === $parentRelationName) {
-                continue;
-            }
-
-            $deepLevel = max($deepLevel, $this->calculateDeepLevelInConfiguration($childRelation->getChildDynamicEntityConfigurationOrFail(), $childRelation->getNameOrFail()));
-        }
-
-        return $deepLevel + 1;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param bool $skipIdentifier
      * @param bool $filterIsCreatable
      * @param bool $filterIsEditable
@@ -223,22 +200,16 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         bool $filterIsCreatable = false,
         bool $filterIsEditable = false
     ): array {
-        $dynamicEntityConfigurationTransfers = $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer);
-
-        $oneOfCombinationsFields = [];
-
-        foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
-            $oneOfCombinationsFields[] = $this->schemaBuilder->buildRootOneOfItem(
-                $this->prepareFieldsArrayRecursively(
+        return [
+            $this->schemaBuilder->buildRootOneOfItem(
+                $this->prepareFieldsArrayWithChilds(
                     $dynamicEntityConfigurationTransfer,
                     $skipIdentifier,
                     $filterIsCreatable,
                     $filterIsEditable,
                 ),
-            );
-        }
-
-        return $oneOfCombinationsFields;
+            ),
+        ];
     }
 
     /**
@@ -249,7 +220,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
      *
      * @return array<string, mixed>
      */
-    protected function prepareFieldsArrayRecursively(
+    protected function prepareFieldsArrayWithChilds(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         bool $skipIdentifier = false,
         bool $filterIsCreatable = false,
@@ -268,8 +239,8 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
                 static::KEY_TYPE => static::SCHEMA_TYPE_ARRAY,
                 static::KEY_SCHEMA_ITEMS => [
                     static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
-                    static::KEY_SCHEMA_PROPERTIES => $this->prepareFieldsArrayRecursively(
-                        $childRelation->getChildDynamicEntityConfigurationOrFail(),
+                    static::KEY_SCHEMA_PROPERTIES => $this->prepareFieldsArray(
+                        $childRelation->getChildDynamicEntityConfigurationOrFail()->getDynamicEntityDefinitionOrFail(),
                         $skipIdentifier,
                         $filterIsCreatable,
                         $filterIsEditable,
@@ -484,7 +455,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         if (!$this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
             return $this->buildRequestBody(
                 $description,
-                $this->prepareFieldsArrayRecursively(
+                $this->prepareFieldsArrayWithChilds(
                     $dynamicEntityConfigurationTransfer,
                     $skipIdentifier,
                     $filterIsCreatable,
@@ -496,7 +467,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         return $this->buildRequestBody(
             $description,
             $this->buildOneOfRequestItems(
-                $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer),
+                [$dynamicEntityConfigurationTransfer],
             ),
             false,
             true,
@@ -626,7 +597,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         if (!$this->haveChildRelations($dynamicEntityConfigurationTransfer)) {
             return $this->buildSuccessResponse(
                 $responseDescriptionValue,
-                $this->prepareFieldsArrayRecursively($dynamicEntityConfigurationTransfer),
+                $this->prepareFieldsArrayWithChilds($dynamicEntityConfigurationTransfer),
                 $httpCode,
             );
         }
@@ -634,33 +605,12 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         return $this->buildSuccessResponse(
             $responseDescriptionValue,
             $this->buildOneOfResponseItems(
-                $this->buildDynamicEntityConfigurationTransferWithCombinations($dynamicEntityConfigurationTransfer),
+                [$dynamicEntityConfigurationTransfer],
             ),
             $httpCode,
             false,
             true,
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
-     */
-    protected function buildDynamicEntityConfigurationTransferWithCombinations(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
-    {
-        $deepLevel = $this->calculateDeepLevelInConfiguration($dynamicEntityConfigurationTransfer);
-
-        $dynamicEntityConfigurationTransfers = [];
-
-        while ($deepLevel > -1) {
-            $copyDynamicEntityConfigurationTransfer = (new DynamicEntityConfigurationTransfer())->fromArray($dynamicEntityConfigurationTransfer->toArray(), true);
-            $copyDynamicEntityConfigurationTransfer = $this->treeBuilder->buildDynamicEntityConfigurationTransferTree($copyDynamicEntityConfigurationTransfer, $deepLevel);
-            $dynamicEntityConfigurationTransfers[] = $copyDynamicEntityConfigurationTransfer;
-            $deepLevel--;
-        }
-
-        return $dynamicEntityConfigurationTransfers;
     }
 
     /**
@@ -680,7 +630,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         $items = [];
         foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
             $items[] = $this->schemaBuilder->buildResponseRootOneOfItem(
-                $this->prepareFieldsArrayRecursively(
+                $this->prepareFieldsArrayWithChilds(
                     $dynamicEntityConfigurationTransfer,
                     $skipIdentifier,
                     $filterIsCreatable,
@@ -727,7 +677,7 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         /** @var \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer */
         foreach ($dynamicEntityConfigurationTransfers as $dynamicEntityConfigurationTransfer) {
             $items[] = $this->schemaBuilder->buildRequestRootOneOfItem(
-                $this->prepareFieldsArrayRecursively(
+                $this->prepareFieldsArrayWithChilds(
                     $dynamicEntityConfigurationTransfer,
                     $skipIdentifier,
                     $filterIsCreatable,

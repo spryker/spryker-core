@@ -83,43 +83,6 @@ return [
                           ],
                         ],
                       ],
-                      1 =>
-                       [
-                        'type' => 'object',
-                        'properties' =>
-                         [
-                          'test' =>
-                           [
-                            'type' => 'string',
-                          ],
-                          'test-child-relation' =>
-                           [
-                            'type' => 'array',
-                            'items' =>
-                             [
-                              'type' => 'object',
-                              'properties' =>
-                               [
-                                'test' =>
-                                 [
-                                  'type' => 'string',
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                      ],
-                      2 =>
-                       [
-                        'type' => 'object',
-                        'properties' =>
-                         [
-                          'test' =>
-                           [
-                            'type' => 'string',
-                          ],
-                        ],
-                      ],
                     ],
                   ],
                 ],
@@ -168,43 +131,6 @@ return [
                                   ],
                                 ],
                               ],
-                            ],
-                          ],
-                        ],
-                        1 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
-                            ],
-                            'test-child-relation' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                        2 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
                             ],
                           ],
                         ],
@@ -337,43 +263,6 @@ return [
                           ],
                         ],
                       ],
-                      1 =>
-                       [
-                        'type' => 'object',
-                        'properties' =>
-                         [
-                          'test' =>
-                           [
-                            'type' => 'string',
-                          ],
-                          'test-child-relation' =>
-                           [
-                            'type' => 'array',
-                            'items' =>
-                             [
-                              'type' => 'object',
-                              'properties' =>
-                               [
-                                'test' =>
-                                 [
-                                  'type' => 'string',
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                      ],
-                      2 =>
-                       [
-                        'type' => 'object',
-                        'properties' =>
-                         [
-                          'test' =>
-                           [
-                            'type' => 'string',
-                          ],
-                        ],
-                      ],
                     ],
                   ],
                 ],
@@ -422,43 +311,6 @@ return [
                                   ],
                                 ],
                               ],
-                            ],
-                          ],
-                        ],
-                        1 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
-                            ],
-                            'test-child-relation' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                        2 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
                             ],
                           ],
                         ],

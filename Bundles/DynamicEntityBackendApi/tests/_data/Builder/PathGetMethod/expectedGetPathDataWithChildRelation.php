@@ -86,9 +86,8 @@ return [
             'name' => 'include',
             'in' => 'query',
             'description' => 'Parameter is used to include related resources.
-            Possible values are: test-child-relation. Use for `GET {{url}}/{{resource}}?include={{relation}}-> {200, { ...default+fields... + {{relation}} }}`.
-            It works also in deep relations like `{{url}}/{{resource}}?include={{relation}}.{{relation}}-> {200, { ...default+fields... + {{relation}}: { ...default+fields... + {{relation}}: { ...default+fields... } } }}`.
-            Examples:  `{{url}}/test-resource?include=test-child-relation-> {200, { ...default_fields... + test-child-relation: {...relation_fields...} }}`;  ',
+    Possible values are:`test-child-relation`.
+    Use for `GET {{url}}/{{resource}}?include={{relation}},{{relation}} -> {200, { ...default+fields... + {{relation}},{{relation}} }}`.',
             'required' => false,
             'schema' =>
              [
@@ -145,43 +144,6 @@ return [
                                     ],
                                   ],
                                 ],
-                              ],
-                            ],
-                          ],
-                          1 =>
-                           [
-                            'type' => 'object',
-                            'properties' =>
-                             [
-                              'test' =>
-                               [
-                                'type' => 'string',
-                              ],
-                              'test-child-relation' =>
-                               [
-                                'type' => 'array',
-                                'items' =>
-                                 [
-                                  'type' => 'object',
-                                  'properties' =>
-                                   [
-                                    'test' =>
-                                     [
-                                      'type' => 'string',
-                                    ],
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                          2 =>
-                           [
-                            'type' => 'object',
-                            'properties' =>
-                             [
-                              'test' =>
-                               [
-                                'type' => 'string',
                               ],
                             ],
                           ],
@@ -313,43 +275,6 @@ return [
                                   ],
                                 ],
                               ],
-                            ],
-                          ],
-                        ],
-                        1 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
-                            ],
-                            'test-child-relation' =>
-                             [
-                              'type' => 'array',
-                              'items' =>
-                               [
-                                'type' => 'object',
-                                'properties' =>
-                                 [
-                                  'test' =>
-                                   [
-                                    'type' => 'string',
-                                  ],
-                                ],
-                              ],
-                            ],
-                          ],
-                        ],
-                        2 =>
-                         [
-                          'type' => 'object',
-                          'properties' =>
-                           [
-                            'test' =>
-                             [
-                              'type' => 'string',
                             ],
                           ],
                         ],

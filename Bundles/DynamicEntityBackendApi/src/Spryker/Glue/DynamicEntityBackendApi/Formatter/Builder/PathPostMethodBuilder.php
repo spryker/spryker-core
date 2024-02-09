@@ -135,7 +135,7 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
 
         return $this->buildRequestBody(
             $requestDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,
@@ -173,7 +173,7 @@ class PathPostMethodBuilder extends AbstractPathMethodBuilder implements PathMet
 
         return $this->buildSuccessResponse(
             $responseSchemaDescription,
-            $this->prepareFieldsArrayRecursively(
+            $this->prepareFieldsArrayWithChilds(
                 $dynamicEntityConfigurationTransfer,
                 $skipIdentifier,
                 $filterIsCreated,

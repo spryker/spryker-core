@@ -132,7 +132,7 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             $this->createDynamicEntityConfigurationCriteriaTransfer(),
         );
 
-        return $this->buildDynamicEntityConfigurationTransfersRecursively($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->getArrayCopy());
+        return $this->buildDynamicEntityConfigurationTransfers($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->getArrayCopy());
     }
 
     /**
@@ -140,7 +140,7 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
      *
      * @return array<\Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
      */
-    protected function buildDynamicEntityConfigurationTransfersRecursively(array $dynamicEntityConfigurationsTransfers = []): array
+    protected function buildDynamicEntityConfigurationTransfers(array $dynamicEntityConfigurationsTransfers = []): array
     {
         $dynamicEntityConfigurationTransfers = [];
         foreach ($dynamicEntityConfigurationsTransfers as $dynamicEntityConfigurationTransfer) {
@@ -196,17 +196,8 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
             if (array_key_exists($dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail(), $dynamicEntityConfigurationTransfers) === false) {
                 continue;
             }
-
-            $dynamicEntityConfigurationTransfer = $this->buildDynamicEntityConfigurationTransferWithChildRelations(
-                $dynamicEntityConfigurationTransfers[$dynamicEntityConfigurationRelationTransfer->getChildDynamicEntityConfigurationOrFail()->getIdDynamicEntityConfigurationOrFail()],
-                $dynamicEntityConfigurationTransfers,
-                $dynamicEntityConfiguration->getTableAliasOrFail(),
-            );
-
-            if ($dynamicEntityConfigurationTransfer !== null) {
-                $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfigurationTransfer);
-                $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
-            }
+            $dynamicEntityConfigurationRelationTransfer->setChildDynamicEntityConfiguration($dynamicEntityConfiguration);
+            $newRelations[] = $dynamicEntityConfigurationRelationTransfer;
         }
 
         return $newRelations === [] ? $dynamicEntityConfiguration : $dynamicEntityConfiguration->setChildRelations(new ArrayObject($newRelations));

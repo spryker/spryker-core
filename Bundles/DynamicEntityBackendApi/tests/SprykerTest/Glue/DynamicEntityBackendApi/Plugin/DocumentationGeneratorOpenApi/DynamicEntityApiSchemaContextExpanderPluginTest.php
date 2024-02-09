@@ -166,7 +166,6 @@ class DynamicEntityApiSchemaContextExpanderPluginTest extends Unit
         $this->assertSame(static::RESOURCE_NAME_2, $copyArrayDynamicEntityConfigurations[1]->getTableAlias());
         $this->assertCount(1, $copyArrayDynamicEntityConfigurations[0]->getChildRelations());
         $this->assertSame(static::RELATION_NAME, $copyArrayDynamicEntityConfigurations[0]->getChildRelations()->getArrayCopy()[0]->getName());
-        $this->assertSame(static::RESOURCE_NAME_2, $copyArrayDynamicEntityConfigurations[0]->getChildRelations()->getArrayCopy()[0]->getChildDynamicEntityConfiguration()->getTableAlias());
         $this->assertCount(0, $copyArrayDynamicEntityConfigurations[1]->getChildRelations());
     }
 
