@@ -25,14 +25,6 @@ class TaxAppToStoreFacadeBridge implements TaxAppToStoreFacadeInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer
-    {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
      * @param string $storeReference
      *
      * @return \Generated\Shared\Transfer\StoreTransfer

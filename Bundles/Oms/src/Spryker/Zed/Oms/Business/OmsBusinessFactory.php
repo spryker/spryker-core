@@ -582,7 +582,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderStatusChangedMessageSender(): OrderStatusChangedMessageSender
     {
-        return new OrderStatusChangedMessageSender($this->getMessageBrokerFacade(), $this->getStoreFacade(), $this->getSalesFacade(), $this->getConfig(), $this->getQueryContainer());
+        return new OrderStatusChangedMessageSender(
+            $this->getMessageBrokerFacade(),
+            $this->getStoreFacade(),
+            $this->getSalesFacade(),
+            $this->getConfig(),
+            $this->getQueryContainer(),
+        );
     }
 
     /**

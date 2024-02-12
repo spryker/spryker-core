@@ -114,7 +114,7 @@ class Calculator implements CalculatorInterface
         $idStore = $storeTransfer->getIdStore();
 
         if (!$idStore) {
-            $idStore = $this->storeFacade->getCurrentStore()->getIdStoreOrFail();
+            $idStore = $this->storeFacade->getStoreByName($storeTransfer->getNameOrFail())->getIdStoreOrFail();
         }
 
         return $this->configReader->getTaxAppConfigByIdStore($idStore);

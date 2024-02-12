@@ -96,6 +96,7 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
         $orderStatusChangedTransfer = new OrderStatusChangedTransfer();
         $orderStatusChangedTransfer->fromArray($filteredDataFromOrder);
         $orderStatusChangedTransfer->setUserName($orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName());
+        $orderStatusChangedTransfer->setStoreName($orderTransfer->getStoreOrFail());
 
         $states = $orderTransfer->getItemStates();
         $state = !$states ? null : end($states);
@@ -129,8 +130,10 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
      */
     protected function setMessageAttributesTransfer(OrderStatusChangedTransfer $orderStatusChangedTransfer): void
     {
+        $storeTransfer = $this->storeFacade->getStoreByName($orderStatusChangedTransfer->getStoreNameOrFail());
+
         $messageAttributes = new MessageAttributesTransfer();
-        $messageAttributes->setStoreReference($this->storeFacade->getCurrentStore()->getStoreReference());
+        $messageAttributes->setStoreReference($storeTransfer->getStoreReference());
 
         $orderStatusChangedTransfer->setMessageAttributes($messageAttributes);
     }

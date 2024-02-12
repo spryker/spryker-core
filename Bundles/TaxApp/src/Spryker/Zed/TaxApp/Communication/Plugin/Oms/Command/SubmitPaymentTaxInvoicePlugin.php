@@ -36,6 +36,8 @@ class SubmitPaymentTaxInvoicePlugin extends AbstractPlugin implements CommandByO
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
+        $orderTransfer->setStore($orderEntity->getStore());
+
         $this->getFacade()->sendSubmitPaymentTaxInvoiceMessage($orderTransfer);
 
         return [];

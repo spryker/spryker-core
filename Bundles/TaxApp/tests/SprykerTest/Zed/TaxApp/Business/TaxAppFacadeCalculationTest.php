@@ -419,4 +419,29 @@ class TaxAppFacadeCalculationTest extends Unit
         // Assert
         $this->assertFalse($calculableObjectTransfer->getOriginalQuote()->getHideTaxInCart());
     }
+
+    /**
+     * @return void
+     */
+    public function testCalculateObjectHasTaxTotalWhenStoreIdIsNotProvided(): void
+    {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE', StoreTransfer::NAME => 'DE'], false);
+        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
+
+        $storeTransfer->setIdStore(null);
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($storeTransfer);
+        $this->tester->setQuoteTaxMetadataExpanderPlugins();
+
+        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
+
+        $clientMock = $this->createMock(TaxAppClient::class);
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
+
+        $this->tester->mockOauthClient();
+
+        $this->tester->getFacade()->recalculate($calculableObjectTransfer);
+
+        $this->assertGreaterThanOrEqual(0, $taxCalculationResponseTransfer->getSale()->getTaxTotal());
+    }
 }

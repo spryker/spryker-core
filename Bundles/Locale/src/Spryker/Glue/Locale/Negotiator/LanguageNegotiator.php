@@ -60,7 +60,7 @@ class LanguageNegotiator implements LanguageNegotiatorInterface
         }
 
         if (!$headerAcceptLanguage) {
-            return $this->getDefaultLanguage();
+            return $this->getDefaultLanguage($storeLocaleCodes);
         }
 
         foreach ($storeLocaleCodes as $localeName) {
@@ -72,21 +72,23 @@ class LanguageNegotiator implements LanguageNegotiatorInterface
         $acceptLanguageTransfer = $this->localeService->getAcceptLanguage($headerAcceptLanguage, array_keys($storeLocaleCodes));
 
         if (!$acceptLanguageTransfer || $acceptLanguageTransfer->getType() === null) {
-            return $this->getDefaultLanguage();
+            return $this->getDefaultLanguage($storeLocaleCodes);
         }
 
         if (!isset($storeLocaleCodes[$acceptLanguageTransfer->getType()])) {
-            return $this->getDefaultLanguage();
+            return $this->getDefaultLanguage($storeLocaleCodes);
         }
 
         return $storeLocaleCodes[$acceptLanguageTransfer->getType()];
     }
 
     /**
+     * @param array<string, string> $storeLocaleCodes
+     *
      * @return string
      */
-    protected function getDefaultLanguage(): string
+    protected function getDefaultLanguage(array $storeLocaleCodes): string
     {
-        return $this->storeClient->getCurrentStore()->getDefaultLocaleIsoCodeOrFail();
+        return $this->storeClient->getCurrentStore()->getDefaultLocaleIsoCode() ?? (string)array_shift($storeLocaleCodes);
     }
 }

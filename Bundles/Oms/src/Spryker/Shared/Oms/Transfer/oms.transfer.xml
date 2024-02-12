@@ -219,6 +219,7 @@
         <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
         <property name="merchants" type="OrderMerchant[]" singular="merchant"/>
         <property name="status" type="string"/>
+        <property name="storeName" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>

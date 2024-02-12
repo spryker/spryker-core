@@ -90,20 +90,25 @@ class PaymentSubmitTaxInvoiceSender implements PaymentSubmitTaxInvoiceSenderInte
         $submitPaymentTaxInvoiceTransfer = new SubmitPaymentTaxInvoiceTransfer();
         $submitPaymentTaxInvoiceTransfer->setSale($taxAppSaleTransfer);
 
-        $this->setMessageAttributesTransfer($submitPaymentTaxInvoiceTransfer);
+        $this->setMessageAttributesTransfer($submitPaymentTaxInvoiceTransfer, $orderTransfer);
 
         $this->messageBrokerFacade->sendMessage($submitPaymentTaxInvoiceTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SubmitPaymentTaxInvoiceTransfer $submitPaymentTaxInvoiceTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return void
      */
-    protected function setMessageAttributesTransfer(SubmitPaymentTaxInvoiceTransfer $submitPaymentTaxInvoiceTransfer): void
-    {
+    protected function setMessageAttributesTransfer(
+        SubmitPaymentTaxInvoiceTransfer $submitPaymentTaxInvoiceTransfer,
+        OrderTransfer $orderTransfer
+    ): void {
+        $storeTransfer = $this->storeFacade->getStoreByName($orderTransfer->getStoreOrFail());
+
         $messageAttributesTransfer = new MessageAttributesTransfer();
-        $messageAttributesTransfer->setStoreReference($this->storeFacade->getCurrentStore()->getStoreReference());
+        $messageAttributesTransfer->setStoreReference($storeTransfer->getStoreReference());
 
         $submitPaymentTaxInvoiceTransfer->setMessageAttributes($messageAttributesTransfer);
     }

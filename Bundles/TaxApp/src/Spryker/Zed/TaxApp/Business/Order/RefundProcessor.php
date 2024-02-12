@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxApp\Business\Order;
 
 use ArrayObject;
 use DateTime;
-use Exception;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxAppSaleTransfer;
 use Generated\Shared\Transfer\TaxRefundRequestTransfer;
@@ -103,13 +102,13 @@ class RefundProcessor implements RefundProcessorInterface
             return;
         }
 
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($orderTransfer->getStoreOrFail());
-        } catch (Exception $e) {
-            $this->getLogger()->warning('Store from order not found, using current store instead');
-            $storeTransfer = $this->storeFacade->getCurrentStore();
+        if ($orderTransfer->getStore() === null) {
+            $this->getLogger()->warning('Store from order not found');
+
+            return;
         }
 
+        $storeTransfer = $this->storeFacade->getStoreByName($orderTransfer->getStoreOrFail());
         $taxAppConfigTransfer = $this->configReader->getTaxAppConfigByIdStore($storeTransfer->getIdStoreOrFail());
 
         if ($taxAppConfigTransfer === null || !$taxAppConfigTransfer->getIsActive()) {

@@ -44,7 +44,7 @@ interface TaxAppFacadeInterface
 
     /**
      * Specification:
-     * - Requires `CalculableObject.store` to be set.
+     * - Requires `CalculableObject.store.name` to be set.
      * - Executes {@link \Spryker\Zed\TaxAppExtension\Dependency\Plugin\CalculableObjectTaxAppExpanderPluginInterface} plugins stack.
      * - Does nothing if `CalculableObjectTransfer.expenses` does not have items of `ShipmentConfig::SHIPMENT_EXPENSE_TYPE` type.
      * - Dispatch tax quotation request to ACP Apps.
@@ -65,7 +65,7 @@ interface TaxAppFacadeInterface
 
     /**
      * Specification:
-     * - Requires `OrderTransfer.idSalesOrder` to be set.
+     * - Requires `OrderTransfer.idSalesOrder`, `OrderTransfer.store.name` to be set.
      * - Executes {@link \Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface} plugins stack.
      * - Sends `SubmitPaymentTaxInvoice` message to the message broker.
      *
