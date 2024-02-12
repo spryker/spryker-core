@@ -155,6 +155,38 @@ class WriteCollectionByCategoryStoreEventsTest extends Unit
     /**
      * @return void
      */
+    public function testWriteCollectionByCategoryStoreEventsWithOneStoreRelation(): void
+    {
+        // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+        $categoryTransfer = $this->getCategoryTransfer();
+
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->tester->assignProductToCategory(
+            $categoryTransfer->getIdCategory(),
+            $productConcreteTransfer->getFkProductAbstract(),
+        );
+
+        $eventEntityTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyCategoryStoreTableMap::COL_FK_CATEGORY => $categoryTransfer->getIdCategory(),
+            ]),
+        ];
+
+        // Act
+        $this->tester->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
+
+        // Assert
+        $this->tester->assertCount(
+            1,
+            $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testWriteCollectionByCategoryStoreEventsWithTwoStoreRelations(): void
     {
         // Arrange
@@ -196,25 +228,14 @@ class WriteCollectionByCategoryStoreEventsTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCollectionByCategoryStoreEventsWithoutCurrentStoreRelation(): void
+    public function testWriteCollectionByCategoryStoreEventsWithoutStoreRelation(): void
     {
         // Arrange
         $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
-        $storeTransfer = $this->tester->haveStore(
-            [
-                StoreTransfer::NAME => static::STORE_AT,
-                StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_DE, static::LOCALE_EN],
-            ],
-        );
 
         $categoryTransfer = $this->tester->haveLocalizedCategory([
             CategoryTransfer::PARENT_CATEGORY_NODE => $this->tester->getRootCategoryNode()->toArray(),
         ]);
-
-        $this->tester->haveCategoryStoreRelation(
-            $categoryTransfer->getIdCategory(),
-            $storeTransfer->getIdStore(),
-        );
 
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
@@ -230,6 +251,8 @@ class WriteCollectionByCategoryStoreEventsTest extends Unit
 
         // Act
         $this->tester->getFacade()->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
+
+        $collection = $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer);
 
         // Assert
         $this->tester->assertCount(

@@ -269,8 +269,9 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected function findProductCategories(array $productAbstractIds): array
     {
         $mappedProductCategoryTransfers = [];
+
         $productCategoryTransfers = $this->productCategoryStorageRepository
-            ->getProductCategoryWithCategoryNodes($productAbstractIds, $this->storeFacade->getCurrentStore()->getNameOrFail());
+            ->getProductCategoryWithCategoryNodes($productAbstractIds);
 
         foreach ($productCategoryTransfers as $productCategoryTransfer) {
             $mappedProductCategoryTransfers[$productCategoryTransfer->getFkProductAbstract()][] = $productCategoryTransfer;

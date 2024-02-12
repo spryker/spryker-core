@@ -37,11 +37,10 @@ interface ProductCategoryStorageRepositoryInterface
 
     /**
      * @param array<int> $productAbstractIds
-     * @param string $storeName
      *
      * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
-    public function getProductCategoryWithCategoryNodes(array $productAbstractIds, string $storeName): array;
+    public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array;
 
     /**
      * @param array<int> $productAbstractIds
