@@ -189,6 +189,8 @@ use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinder;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManager;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaver;
+use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaverInterface;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
@@ -2114,7 +2116,12 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPhpstanConfigFileManager(): PhpstanConfigFileManagerInterface
     {
-        return new PhpstanConfigFileManager($this->getFilesystem(), $this->getConfig(), $this->getConfigLoader());
+        return new PhpstanConfigFileManager(
+            $this->getFilesystem(),
+            $this->getConfig(),
+            $this->getConfigLoader(),
+            $this->createPhpstanConfigFileSaver(),
+        );
     }
 
     /**
@@ -2175,5 +2182,23 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new TargetDirectoryResolver(
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaverInterface
+     */
+    public function createPhpstanConfigFileSaver(): PhpstanConfigFileSaverInterface
+    {
+        return new PhpstanConfigFileSaver(
+            $this->getPhpstanFileAdapters(),
+        );
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getPhpstanFileAdapters(): array
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::PHPSTAN_ADAPTERS);
     }
 }

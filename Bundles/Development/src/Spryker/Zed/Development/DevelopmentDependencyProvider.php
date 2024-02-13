@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development;
 
+use Nette\DI\Config\Adapters\NeonAdapter;
+use Nette\DI\Config\Adapters\PhpAdapter;
 use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeBridge;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
@@ -58,6 +60,11 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     public const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
 
     /**
+     * @var string
+     */
+    public const PHPSTAN_ADAPTERS = 'PHPSTAN_ADAPTERS';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -89,6 +96,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         $container = $this->addModuleFinderFacade($container);
+        $container = $this->addPhpstanAdapters($container);
 
         return $container;
     }
@@ -154,6 +162,23 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
             );
 
             return $developmentToModuleFinderFacadeBridge;
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPhpstanAdapters(Container $container): Container
+    {
+        $container->set(static::PHPSTAN_ADAPTERS, function (Container $container) {
+            return [
+                'php' => PhpAdapter::class,
+                'neon' => NeonAdapter::class,
+            ];
         });
 
         return $container;

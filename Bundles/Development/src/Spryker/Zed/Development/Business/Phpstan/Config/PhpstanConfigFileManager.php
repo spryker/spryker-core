@@ -16,28 +16,39 @@ class PhpstanConfigFileManager implements PhpstanConfigFileManagerInterface
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $config;
+    protected DevelopmentConfig $config;
 
     /**
      * @var \Nette\DI\Config\Loader
      */
-    protected $configLoader;
+    protected Loader $configLoader;
+
+    /**
+     * @var \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaverInterface
+     */
+    protected PhpstanConfigFileSaverInterface $phpstanConfigFileSaver;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      * @param \Nette\DI\Config\Loader $configLoader
+     * @param \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaverInterface $phpstanConfigFileSaver
      */
-    public function __construct(Filesystem $filesystem, DevelopmentConfig $config, Loader $configLoader)
-    {
+    public function __construct(
+        Filesystem $filesystem,
+        DevelopmentConfig $config,
+        Loader $configLoader,
+        PhpstanConfigFileSaverInterface $phpstanConfigFileSaver
+    ) {
         $this->filesystem = $filesystem;
         $this->config = $config;
         $this->configLoader = $configLoader;
+        $this->phpstanConfigFileSaver = $phpstanConfigFileSaver;
     }
 
     /**
@@ -113,7 +124,10 @@ class PhpstanConfigFileManager implements PhpstanConfigFileManagerInterface
         }
 
         $newConfigFilePath = $directory . $newConfigFileName;
-        $this->configLoader->save($mergedConfig, $newConfigFilePath . $this->config->getPhpstanConfigFilename());
+        $this->phpstanConfigFileSaver->save(
+            $newConfigFilePath . $this->config->getPhpstanConfigFilename(),
+            $mergedConfig,
+        );
 
         return $newConfigFilePath;
     }
