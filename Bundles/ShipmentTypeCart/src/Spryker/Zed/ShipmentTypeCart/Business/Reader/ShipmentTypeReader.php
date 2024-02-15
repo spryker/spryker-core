@@ -44,4 +44,19 @@ class ShipmentTypeReader implements ShipmentTypeReaderInterface
 
         return $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
     }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getShipmentTypeCollection(string $storeName): ShipmentTypeCollectionTransfer
+    {
+        $shipmentTypeConditionsTransfer = (new ShipmentTypeConditionsTransfer())
+            ->addStoreName($storeName);
+
+        $shipmentTypeCriteriaTransfer = (new ShipmentTypeCriteriaTransfer())->setShipmentTypeConditions($shipmentTypeConditionsTransfer);
+
+        return $this->shipmentTypeFacade->getShipmentTypeCollection($shipmentTypeCriteriaTransfer);
+    }
 }

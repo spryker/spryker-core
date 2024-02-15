@@ -49,6 +49,11 @@ class ShipmentTypeAvailableCheckoutValidationRule implements ShipmentTypeCheckou
         $indexedShipmentTypeTransfers = $this->getShipmentTypeTransfersIndexedByShipmentTypeUuid($quoteTransfer->getItems());
 
         $shipmentTypeUuids = array_keys($indexedShipmentTypeTransfers);
+
+        if ($this->hasStoreShipmentTypes($quoteTransfer->getStoreOrFail()->getNameOrFail()) === false) {
+            return true;
+        }
+
         $shipmentTypeCollectionTransfer = $this->shipmentTypeReader->getActiveShipmentTypeCollection(
             $shipmentTypeUuids,
             $quoteTransfer->getStoreOrFail()->getNameOrFail(),
@@ -117,5 +122,19 @@ class ShipmentTypeAvailableCheckoutValidationRule implements ShipmentTypeCheckou
         }
 
         return $shipmentTypeUuids;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function hasStoreShipmentTypes(string $storeName): bool
+    {
+        $shipmentTypeCollectionTransfer = $this->shipmentTypeReader->getShipmentTypeCollection(
+            $storeName,
+        );
+
+        return $shipmentTypeCollectionTransfer->getShipmentTypes()->count() > 0;
     }
 }

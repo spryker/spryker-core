@@ -16,10 +16,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use Spryker\Zed\ShipmentTypeCart\Business\Reader\ShipmentTypeReaderInterface;
 use SprykerTest\Zed\ShipmentTypeCart\ShipmentTypeCartBusinessTester;
 
 /**
@@ -137,6 +139,13 @@ class IsQuoteReadyForCheckoutMultiShipmentTest extends Unit
             ShipmentTypeTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransferDe),
         ]);
 
+        $shipmentTypeReaderMock = $this->getMockBuilder(ShipmentTypeReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $shipmentTypeReaderMock->method('getActiveShipmentTypeCollection')->willReturn((new ShipmentTypeCollectionTransfer()));
+        $shipmentTypeReaderMock->method('getShipmentTypeCollection')->willReturn(new ShipmentTypeCollectionTransfer());
+        $this->tester->mockFactoryMethod('createShipmentTypeReader', $shipmentTypeReaderMock);
+
         $quoteTransfer = (new QuoteBuilder())
             ->withStore($storeTransferAt->toArray())
             ->withItem($this->createItemBuilder($shipmentTypeTransfer))
@@ -147,13 +156,44 @@ class IsQuoteReadyForCheckoutMultiShipmentTest extends Unit
         $result = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($result);
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->tester->assertCheckoutErrorTransfer(
-            $checkoutResponseTransfer->getErrors()->getIterator()->current(),
-            $shipmentTypeTransfer,
+        $this->assertTrue($result);
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteReadyForCheckoutReturnsNoErrorWhenStoreWithoutAnyShipmentTypes(): void
+    {
+        // Arrange
+        $shipmentTypeReaderMock = $this->getMockBuilder(ShipmentTypeReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $shipmentTypeReaderMock->method('getActiveShipmentTypeCollection')->willReturn(new ShipmentTypeCollectionTransfer());
+        $shipmentTypeReaderMock->method('getShipmentTypeCollection')->willReturn(new ShipmentTypeCollectionTransfer());
+        $this->tester->mockFactoryMethod('createShipmentTypeReader', $shipmentTypeReaderMock);
+        $storeTransfer = $this->tester->haveStore();
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore($storeTransfer);
+
+        $quoteTransfer->setShipment(
+            (new ShipmentTransfer())->setMethod(
+                (new ShipmentMethodTransfer())->setShipmentType(
+                    (new ShipmentTypeTransfer())->setName('Delivery')->setKey('delivery'),
+                )->setShipmentMethodKey('delivery'),
+            ),
         );
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
+
+        // Act
+        $result = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
     /**

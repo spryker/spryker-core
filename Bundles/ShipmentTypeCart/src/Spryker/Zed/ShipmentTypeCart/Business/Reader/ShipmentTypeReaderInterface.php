@@ -18,4 +18,11 @@ interface ShipmentTypeReaderInterface
      * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
      */
     public function getActiveShipmentTypeCollection(array $shipmentTypeUuids, string $storeName): ShipmentTypeCollectionTransfer;
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTypeCollectionTransfer
+     */
+    public function getShipmentTypeCollection(string $storeName): ShipmentTypeCollectionTransfer;
 }
