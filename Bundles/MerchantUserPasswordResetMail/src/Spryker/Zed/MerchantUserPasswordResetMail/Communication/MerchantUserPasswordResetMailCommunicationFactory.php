@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantUserPasswordResetMail\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToMailFacadeInterface;
 use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToMerchantUserFacadeInterface;
-use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToStoreFacadeInterface;
 use Spryker\Zed\MerchantUserPasswordResetMail\MerchantUserPasswordResetMailDependencyProvider;
 
 /**
@@ -32,13 +31,5 @@ class MerchantUserPasswordResetMailCommunicationFactory extends AbstractCommunic
     public function getMerchantUserFacade(): MerchantUserPasswordResetMailToMerchantUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserPasswordResetMailDependencyProvider::FACADE_MERCHANT_USER);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToStoreFacadeInterface
-     */
-    public function getStoreFacade(): MerchantUserPasswordResetMailToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantUserPasswordResetMailDependencyProvider::FACADE_STORE);
     }
 }

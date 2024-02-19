@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
 use Spryker\Zed\MerchantUserPasswordResetMail\Communication\Plugin\UserPasswordReset\MailMerchantUserPasswordResetRequestStrategyPlugin;
 use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToMailFacadeBridge;
-use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToStoreFacadeInterface;
 use Spryker\Zed\MerchantUserPasswordResetMail\MerchantUserPasswordResetMailDependencyProvider;
 
 /**
@@ -34,26 +33,6 @@ class MailMerchantUserPasswordResetRequestStrategyPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToStoreFacadeInterface|null
-     */
-    protected ?MerchantUserPasswordResetMailToStoreFacadeInterface $storeFacadeMock;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->storeFacadeMock = $this->createMock(MerchantUserPasswordResetMailToStoreFacadeInterface::class);
-
-        $this->tester->setDependency(
-            MerchantUserPasswordResetMailDependencyProvider::FACADE_STORE,
-            $this->storeFacadeMock,
-        );
-    }
-
-    /**
      * @return void
      */
     public function testMailMerchantUserPasswordResetRequestStrategyPluginCallsMailFacade(): void
@@ -70,27 +49,6 @@ class MailMerchantUserPasswordResetRequestStrategyPluginTest extends Unit
         // Assert
         $mailFacade->expects($this->once())
             ->method('handleMail');
-
-        // Act
-        $mailMerchantUserPasswordResetPlugin->handleUserPasswordResetRequest($userPasswordResetRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testMailMerchantUserPasswordResetRequestStrategyPluginCallsStoreFacade(): void
-    {
-        // Arrange
-        $userTransfer = $this->tester->haveUser();
-        $userPasswordResetRequestTransfer = (new UserPasswordResetRequestTransfer())
-            ->setUser($userTransfer)
-            ->setResetPasswordLink('');
-        $mailMerchantUserPasswordResetPlugin = new MailMerchantUserPasswordResetRequestStrategyPlugin();
-
-        // Assert
-        $storeTransfer = $this->storeFacadeMock
-            ->expects($this->once())
-            ->method('getCurrentStore');
 
         // Act
         $mailMerchantUserPasswordResetPlugin->handleUserPasswordResetRequest($userPasswordResetRequestTransfer);

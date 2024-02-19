@@ -67,10 +67,6 @@ class MailMerchantUserPasswordResetRequestStrategyPlugin extends AbstractPlugin 
             ->handleMail(
                 (new MailTransfer())
                     ->fromArray($userPasswordResetRequestTransfer->toArray(), true)
-                    ->setStoreName($this->getFactory()
-                        ->getStoreFacade()
-                        ->getCurrentStore(true)
-                        ->getNameOrFail())
                     ->setType(static::MAIL_TYPE),
             );
     }

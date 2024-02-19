@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToMailFacadeBridge;
 use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToMerchantUserFacadeBridge;
-use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPasswordResetMailToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantUserPasswordResetMail\MerchantUserPasswordResetMailConfig getConfig()
@@ -29,11 +28,6 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
-     * @var string
-     */
-    public const FACADE_STORE = 'FACADE_STORE';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -44,7 +38,6 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
 
         $container = $this->addMailFacade($container);
         $container = $this->addMerchantUserFacade($container);
-        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -77,22 +70,6 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
                 $container->getLocator()->merchantUser()->facade(),
             );
         });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, $container->factory(function (Container $container) {
-            return new MerchantUserPasswordResetMailToStoreFacadeBridge(
-                $container->getLocator()->store()->facade(),
-            );
-        }));
 
         return $container;
     }
