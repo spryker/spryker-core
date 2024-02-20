@@ -152,6 +152,11 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
     /**
      * @var string
      */
+    protected const SECURITY_REMEMBER_ME_AUTHENTICATOR = 'security.secured.remember_me.authenticator';
+
+    /**
+     * @var string
+     */
     protected const PARAMETER_SWITCH_USER = '_switch_user';
 
     /**
@@ -261,6 +266,10 @@ class AuthenticationListenerPrototypesServiceLoader implements ServiceLoaderInte
 
                 /** @var \Symfony\Component\Security\Http\Firewall\FirewallListenerInterface $class */
                 $class = $options[static::OPTION_LISTENER_CLASS] ?? AuthenticatorManagerListener::class;
+
+                if ($container->has(static::SECURITY_REMEMBER_ME_AUTHENTICATOR)) {
+                    $options[static::KEY_AUTHENTICATORS] = array_merge($options[static::KEY_AUTHENTICATORS], [static::SECURITY_REMEMBER_ME_AUTHENTICATOR]);
+                }
 
                 return new $class(
                     $this->authenticatorManager->create($container, $firewallName, $options),

@@ -8,7 +8,7 @@
 namespace SprykerTest\Yves\Application\Helper;
 
 use Codeception\TestInterface;
-use Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin;
+use Spryker\Yves\Http\Plugin\Application\YvesHttpApplicationPlugin;
 use SprykerTest\Shared\Application\Helper\AbstractApplicationHelper;
 
 class ApplicationHelper extends AbstractApplicationHelper
@@ -22,6 +22,6 @@ class ApplicationHelper extends AbstractApplicationHelper
     {
         parent::_before($test);
 
-        $this->addApplicationPlugin(new HttpApplicationPlugin());
+        $this->addApplicationPlugin(new YvesHttpApplicationPlugin());
     }
 }
