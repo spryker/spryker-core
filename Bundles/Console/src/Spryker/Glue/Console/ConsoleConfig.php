@@ -23,4 +23,14 @@ class ConsoleConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->shouldCatchExceptions();
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDebugModeEnabled();
+    }
 }

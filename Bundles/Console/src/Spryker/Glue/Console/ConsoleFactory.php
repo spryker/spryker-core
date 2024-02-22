@@ -8,13 +8,36 @@
 namespace Spryker\Glue\Console;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application;
+use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Console\Hook\ConsoleRunnerHook;
 use Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface;
+use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @method \Spryker\Glue\Console\ConsoleConfig getConfig()
+ */
 class ConsoleFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createApplication(): ApplicationInterface
+    {
+        return new Application($this->createServiceContainer(), $this->getApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function createServiceContainer(): ContainerInterface
+    {
+        return new ContainerProxy(['logger' => null, 'debug' => $this->getConfig()->isDebugModeEnabled(), 'charset' => 'UTF-8']);
+    }
+
     /**
      * @return \Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface
      */

@@ -182,6 +182,10 @@ class ConsoleBootstrap extends Application
         }
 
         if (!$this->booted) {
+            $this->getFactory()
+                ->createApplication()
+                ->boot();
+
             $this->booted = true;
             $this->bootPlugins();
         }
