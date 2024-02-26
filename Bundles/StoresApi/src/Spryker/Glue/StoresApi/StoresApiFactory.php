@@ -28,6 +28,10 @@ use Spryker\Glue\StoresApi\Processor\Reader\StoresCountryReader;
 use Spryker\Glue\StoresApi\Processor\Reader\StoresCountryReaderInterface;
 use Spryker\Glue\StoresApi\Processor\Reader\StoresCurrencyReader;
 use Spryker\Glue\StoresApi\Processor\Reader\StoresCurrencyReaderInterface;
+use Spryker\Glue\StoresApi\Processor\Resolver\StoreResolver;
+use Spryker\Glue\StoresApi\Processor\Resolver\StoreResolverInterface;
+use Spryker\Glue\StoresApi\Processor\StoreProvider\StoreProvider;
+use Spryker\Glue\StoresApi\Processor\StoreProvider\StoreProviderInterface;
 use Spryker\Glue\StoresApi\Processor\Validator\StoreValidator;
 use Spryker\Glue\StoresApi\Processor\Validator\StoreValidatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -173,5 +177,24 @@ class StoresApiFactory extends AbstractStorefrontApiFactory
             $this->getStoreClient(),
             $this->getStoreStorageClient(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\StoresApi\Processor\Resolver\StoreResolverInterface
+     */
+    public function createStoreResolver(): StoreResolverInterface
+    {
+        return new StoreResolver(
+            $this->getStoreStorageClient(),
+            $this->createRequest(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\StoresApi\Processor\StoreProvider\StoreProviderInterface
+     */
+    public function createStoreProvider(): StoreProviderInterface
+    {
+        return new StoreProvider($this->createStoreResolver());
     }
 }

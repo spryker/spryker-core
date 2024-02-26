@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\GlueApplication\Cache\Reader;
 
+use Closure;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Resource\PreFlightResource;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class ControllerCacheReader implements ControllerCacheReaderInterface
 {
@@ -71,6 +73,13 @@ class ControllerCacheReader implements ControllerCacheReaderInterface
             return null;
         }
         $controllerCache = unserialize($controllerCache);
+
+        if ($executableResource instanceof Closure) {
+            $glueResponseTransfer = $executableResource();
+            if ($glueResponseTransfer->getHttpStatusOrFail() === Response::HTTP_NOT_FOUND) {
+                return [];
+            }
+        }
 
         /** @phpstan-var array<int, string> $executableResource */
         $controllerConfigurationKey = $this->generateControllerConfigurationKey($executableResource[1], $resource, $glueRequestTransfer);

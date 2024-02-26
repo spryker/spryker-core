@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication;
+namespace Spryker\Glue\StoresApi\Plugin\GlueBackendApiApplication;
 
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
@@ -18,7 +18,7 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
 {
     /**
      * {@inheritDoc}
-     * - Gets store name from the Request header or from the Request parameter.
+     * - Provides store service.
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *

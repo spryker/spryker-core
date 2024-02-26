@@ -67,7 +67,7 @@ class ControllerCacheReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionParametersReturnEmptyArrayIfMissingResource(): void
+    public function testGetActionParametersReturnsEmptyArrayIfMissingResource(): void
     {
         //Arrange
         $resourceMock = $this->createMock(MissingResource::class);
@@ -80,6 +80,30 @@ class ControllerCacheReaderTest extends Unit
 
         //Act
         $parameters = $controllerCacheReader->getActionParameters([], $resourceMock, $glueRequestTransfer);
+
+        //Assert
+        $this->assertEmpty($parameters);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActionParametersReturnsEmptyArrayWhenNotFoundResponseCode(): void
+    {
+        //Arrange
+        $resourceMock = $this->createMock(ResourceInterface::class);
+        $glueRequestTransfer = new GlueRequestTransfer();
+        $mockExecutableResource = function () {
+            return $this->tester->createErrorGlueResponseTransfer();
+        };
+        $controllerCacheReader = new ControllerCacheReader(
+            $this->createMock(ControllerCacheWriterInterface::class),
+            $this->createMock(GlueApplicationConfig::class),
+        );
+
+        //Act
+        $controllerCacheReader = new ControllerCacheReader($this->createControllerCacheWriterMock(), $this->createConfigMock());
+        $parameters = $controllerCacheReader->getActionParameters($mockExecutableResource, $resourceMock, $glueRequestTransfer);
 
         //Assert
         $this->assertEmpty($parameters);

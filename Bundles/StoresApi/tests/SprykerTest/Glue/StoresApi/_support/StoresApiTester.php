@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPlug
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\StoresApi\Plugin\GlueApplication\StoreValidatorPlugin;
+use Spryker\Glue\StoresApi\Plugin\GlueBackendApiApplication\StoreApplicationPlugin as BackendStoreApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoreApplicationPlugin;
 use Spryker\Glue\StoresApi\Plugin\GlueStorefrontApiApplication\StoresResource;
 use Spryker\Service\Container\ContainerInterface;
@@ -60,6 +61,14 @@ class StoresApiTester extends Actor
     public function createStoreApplicationPlugin(): ApplicationPluginInterface
     {
         return new StoreApplicationPlugin();
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface
+     */
+    public function createBackendStoreApplicationPlugin(): ApplicationPluginInterface
+    {
+        return new BackendStoreApplicationPlugin();
     }
 
     /**

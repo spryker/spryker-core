@@ -50,6 +50,7 @@ class RouteMatcherCollection implements RouteMatcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param bool $cacheAlreadyWarmed
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
      */

@@ -84,7 +84,7 @@ class StoreValidatorPluginTest extends Unit
      */
     protected function getMockStoresApiFactory(
         string $currentStoreName,
-        string $storeName,
+        string $storeName
     ): StoresApiFactory {
         $mockFactory = $this->createMock(StoresApiFactory::class);
         $mockFactory->method('createStoreRequestValidator')
@@ -116,7 +116,7 @@ class StoreValidatorPluginTest extends Unit
      */
     protected function createStoreValidator(
         string $currentStoreName,
-        string $storeName,
+        string $storeName
     ): StoreValidatorInterface {
         return new StoreValidator(
             $this->getMockStoreClient($currentStoreName),
@@ -147,7 +147,7 @@ class StoreValidatorPluginTest extends Unit
      */
     protected function validate(
         string $currentStoreName,
-        string $storeName,
+        string $storeName
     ): GlueRequestValidationTransfer {
         $mockFactory = $this->getMockStoresApiFactory($currentStoreName, $storeName);
         $storeValidatorPlugin = $this->tester->createStoreValidatorPlugin();

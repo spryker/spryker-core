@@ -10,11 +10,13 @@ namespace SprykerTest\Glue\GlueApplication;
 use Codeception\Actor;
 use Codeception\Configuration;
 use Generated\Shared\Transfer\ApiControllerConfigurationTransfer;
+use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method void wantToTest($text)
@@ -171,6 +173,21 @@ class GlueApplicationTester extends Actor
             ->setContent(static::RESPONSE_CONTENT);
 
         return $glueResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function createErrorGlueResponseTransfer(): GlueResponseTransfer
+    {
+        $glueErrorTransfer = (new GlueErrorTransfer())
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setCode(GlueApplicationConfig::ERROR_CODE_METHOD_NOT_FOUND)
+            ->setMessage(GlueApplicationConfig::ERROR_MESSAGE_METHOD_NOT_FOUND);
+
+        return (new GlueResponseTransfer())
+            ->setHttpStatus(Response::HTTP_NOT_FOUND)
+            ->addError($glueErrorTransfer);
     }
 
     /**

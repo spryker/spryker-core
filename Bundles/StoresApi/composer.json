@@ -25,7 +25,6 @@
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/container": "Add this module when you want to use the Container.",
         "spryker/glue-application": "If you want to use plugins with glue application."
     },
     "autoload": {

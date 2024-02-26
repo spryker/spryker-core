@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\StoresApi\Plugin\GlueStorefrontApiApplication;
+namespace SprykerTest\Glue\StoresApi\Plugin\GlueBackendApiApplication;
 
 use Codeception\Test\Unit;
 use Spryker\Glue\StoresApi\Dependency\Client\StoresApiToStoreStorageClientInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Glue
  * @group StoresApi
  * @group Plugin
- * @group GlueStorefrontApiApplication
+ * @group GlueBackendApiApplication
  * @group StoreApplicationPluginTest
  * Add your own group annotations below this line
  */
