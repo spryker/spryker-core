@@ -66,7 +66,10 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
                 ->setStatus(Response::HTTP_NOT_ACCEPTABLE);
         }
 
-        if (!isset($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE])) {
+        if (
+            isset($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE]) &&
+            !$this->isHeaderContentTypeValid($headerData)
+        ) {
             return (new RestErrorMessageTransfer())
                 ->setDetail('Unsupported media type.')
                 ->setStatus(Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
@@ -130,5 +133,23 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
         }
 
         return null;
+    }
+
+    /**
+     * @param array<int|string, array<int, string|null>|string|null> $headerData
+     *
+     * @return bool
+     */
+    protected function isHeaderContentTypeValid(array $headerData): bool
+    {
+        if (is_string($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE])) {
+            return trim($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE]) !== '';
+        }
+
+        if (is_array($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE]) && isset($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE][0])) {
+            return trim($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE][0]) !== '';
+        }
+
+        return false;
     }
 }

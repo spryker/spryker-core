@@ -37,7 +37,13 @@ class RequestBuilder implements RequestBuilderInterface
         }
 
         if ($this->request->headers->all()) {
-            $glueRequestTransfer->setMeta($this->request->headers->all());
+            $meta = $this->request->headers->all();
+            // Fixes the compatibility issue with `symfony/http-foundation ^6.4.3`.
+            if (!isset($meta['content-type'])) {
+                 $meta['content-type'] = [''];
+            }
+
+            $glueRequestTransfer->setMeta($meta);
         }
 
         if ($this->request->query->all()) {

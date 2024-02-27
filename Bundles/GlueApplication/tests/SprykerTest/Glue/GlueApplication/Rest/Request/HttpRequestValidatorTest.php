@@ -76,7 +76,45 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenAcceptHeaderMissingShouldReturnUnsupportedMediaTypeError(): void
+    public function testValidateWhenContentTypeHeaderEmptyStringShouldReturnUnsupportedMediaTypeError(): void
+    {
+        $request = Request::create('/');
+
+        $request = $this->createRequestWithHeaders([
+            'HTTP_CONTENT-TYPE' => '',
+            'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+        ]);
+
+        $httpRequestValidator = $this->createHttpRequestValidator();
+
+        $restErrorMessageTransfer = $httpRequestValidator->validate($request);
+
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWhenContentTypeHeaderWithSpacesShouldReturnUnsupportedMediaTypeError(): void
+    {
+        $request = Request::create('/');
+
+        $request = $this->createRequestWithHeaders([
+            'HTTP_CONTENT-TYPE' => '        ',
+            'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+        ]);
+
+        $httpRequestValidator = $this->createHttpRequestValidator();
+
+        $restErrorMessageTransfer = $httpRequestValidator->validate($request);
+
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWhenContentTypeHeaderMissingShouldReturnNull(): void
     {
         $request = Request::create('/');
 
@@ -84,7 +122,7 @@ class HttpRequestValidatorTest extends Unit
 
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
-        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
+        $this->assertNull($restErrorMessageTransfer);
     }
 
     /**
