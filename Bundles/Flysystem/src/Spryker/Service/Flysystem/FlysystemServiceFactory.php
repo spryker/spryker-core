@@ -20,13 +20,6 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @var string
-     */
-    public const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
-
-    /**
      * @return \Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface
      */
     public function createFilesystemProvider(): FilesystemProviderInterface

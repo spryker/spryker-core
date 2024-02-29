@@ -45,6 +45,7 @@ class FlysystemServiceTester extends Actor
                         'listContents' => function () {
                             return Stub::make(DirectoryListing::class, [
                                 'non-existent-transfer-property' => 'foo',
+                                'listing' => [],
                             ]);
                         },
                     ]);

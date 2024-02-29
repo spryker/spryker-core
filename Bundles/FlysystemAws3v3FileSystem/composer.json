@@ -4,7 +4,7 @@
     "description": "FlysystemAws3v3FileSystem module",
     "license": "proprietary",
     "require": {
-        "league/flysystem": "^2.1.0",
+        "league/flysystem-aws-s3-v3": "^3.0.0",
         "php": ">=8.1",
         "spryker/kernel": "^3.30.0"
     },
@@ -33,15 +33,9 @@
         "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
         "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:thephpleague/flysystem.git"
-        }
-    ],
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     },
     "config": {

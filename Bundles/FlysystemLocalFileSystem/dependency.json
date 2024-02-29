@@ -1,0 +1,5 @@
+{
+    "exclude": {
+        "league/flysystem": "league/flysystem-local has league/flysystem as dependency."
+    }
+}
