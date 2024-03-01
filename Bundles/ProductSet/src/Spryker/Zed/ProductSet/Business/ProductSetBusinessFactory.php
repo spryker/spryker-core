@@ -33,6 +33,7 @@ use Spryker\Zed\ProductSet\ProductSetDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSet\ProductSetConfig getConfig()
+ * @method \Spryker\Zed\ProductSet\Persistence\ProductSetRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface getQueryContainer()
  */
 class ProductSetBusinessFactory extends AbstractBusinessFactory
@@ -199,7 +200,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetUrlUpdater()
     {
-        return new ProductSetUrlUpdater($this->createProductSetUrlReader(), $this->getUrlFacade());
+        return new ProductSetUrlUpdater($this->getRepository(), $this->getUrlFacade(), $this->createProductSetUrlCreator());
     }
 
     /**

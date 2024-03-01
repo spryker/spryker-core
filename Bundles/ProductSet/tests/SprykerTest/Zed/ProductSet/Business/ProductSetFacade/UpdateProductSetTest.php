@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
+use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Shared\ProductSet\ProductSetConfig;
 use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
@@ -126,6 +127,53 @@ class UpdateProductSetTest extends Unit
             '/updated/product/set/url',
             $actualProductSetTransfer->getLocalizedData()[0]->getUrl(),
             'ProductSet should have expected URL.',
+        );
+
+        $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductSetUpdatesNewUrlForLocale(): void
+    {
+        // Arrange
+        $productSetTransfer = $this->tester->generateProductSetTransfer();
+        $productSetTransfer = $this->tester->getFacade()->createProductSet($productSetTransfer);
+        $localeTransfer = $this->tester->haveLocale();
+        $updatedProductSetDataTransfer = (new ProductSetDataBuilder())->build();
+        $updatedProductSetDataTransfer->setFkProductSet($productSetTransfer->getIdProductSet());
+        $updatedProductSetDataTransfer->setFkLocale($localeTransfer->getIdLocale());
+        $localizedProductSetTransfer = (new LocalizedProductSetTransfer())
+            ->setUrl('/updated/product/set/new-url')
+            ->setLocale($localeTransfer)
+            ->setProductSetData($updatedProductSetDataTransfer);
+
+        $productSetTransfer->addLocalizedData($localizedProductSetTransfer);
+
+        // Act
+        $productSetTransfer = $this->tester->getFacade()->updateProductSet($productSetTransfer);
+
+        // Assert
+        $actualProductSetTransfer = $this->tester->getFacade()->findProductSet($productSetTransfer);
+
+        $this->assertCount(count($productSetTransfer->getLocalizedData()), $actualProductSetTransfer->getLocalizedData());
+        $this->assertContains(
+            $localeTransfer->getIdLocale(),
+            array_map(
+                fn (LocalizedProductSetTransfer $localizedProductSetTransfer): int => $localizedProductSetTransfer->getLocale()->getIdLocale(),
+                $actualProductSetTransfer->getLocalizedData()->getArrayCopy(),
+            ),
+            'ProductSet should have expected LocaleId.',
+        );
+
+        $this->assertContains(
+            '/updated/product/set/new-url',
+            array_map(
+                fn (LocalizedProductSetTransfer $localizedProductSetTransfer): string => $localizedProductSetTransfer->getUrl(),
+                $actualProductSetTransfer->getLocalizedData()->getArrayCopy(),
+            ),
+            'ProductSet should have expected Url.',
         );
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');

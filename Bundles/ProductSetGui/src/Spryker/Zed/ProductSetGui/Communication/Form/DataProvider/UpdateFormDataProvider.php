@@ -127,6 +127,11 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
             $localizedProductSetTransfer = $this->getLocalizeDataTransfer($productSetTransfer, $localeTransfer->getIdLocale());
 
             if (!$localizedProductSetTransfer) {
+                $result[] = [
+                    LocalizedGeneralFormType::FIELD_URL_PREFIX => $this->getUrlPrefix($localeTransfer),
+                    LocalizedGeneralFormType::FIELD_FK_LOCALE => $localeTransfer->getIdLocale(),
+                ];
+
                 continue;
             }
 

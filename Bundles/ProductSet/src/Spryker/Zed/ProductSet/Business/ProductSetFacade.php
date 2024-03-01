@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductSet\Business\ProductSetBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductSet\Persistence\ProductSetRepositoryInterface getRepository()
  */
 class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterface
 {

@@ -8,30 +8,39 @@
 namespace Spryker\Zed\ProductSet\Business\Model\Data\Url;
 
 use Generated\Shared\Transfer\LocalizedProductSetTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface;
+use Spryker\Zed\ProductSet\Persistence\ProductSetRepositoryInterface;
 
 class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface
+     * @var \Spryker\Zed\ProductSet\Persistence\ProductSetRepositoryInterface
      */
-    protected $productSetUrlReader;
+    protected ProductSetRepositoryInterface $repository;
 
     /**
      * @var \Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface
      */
-    protected $urlFacade;
+    protected ProductSetToUrlInterface $urlFacade;
 
     /**
-     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface $productSetUrlReader
-     * @param \Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface $urlFacade
+     * @var \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlCreatorInterface
      */
-    public function __construct(ProductSetUrlReaderInterface $productSetUrlReader, ProductSetToUrlInterface $urlFacade)
-    {
-        $this->productSetUrlReader = $productSetUrlReader;
+    protected ProductSetUrlCreatorInterface $productSetUrlCreator;
+
+    /**
+     * @param \Spryker\Zed\ProductSet\Persistence\ProductSetRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface $urlFacade
+     * @param \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlCreatorInterface $productSetUrlCreator
+     */
+    public function __construct(
+        ProductSetRepositoryInterface $repository,
+        ProductSetToUrlInterface $urlFacade,
+        ProductSetUrlCreatorInterface $productSetUrlCreator
+    ) {
+        $this->repository = $repository;
         $this->urlFacade = $urlFacade;
+        $this->productSetUrlCreator = $productSetUrlCreator;
     }
 
     /**
@@ -45,14 +54,15 @@ class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
         $this->assertProductSetForCreateUrl($localizedProductSetTransfer);
 
         $idLocale = $localizedProductSetTransfer->getLocale()->getIdLocale();
+        $urlTransfer = $this->repository->findProductSetUrl($idProductSet, $idLocale);
+        if ($urlTransfer) {
+            $urlTransfer->setUrl($localizedProductSetTransfer->getUrl());
+            $this->urlFacade->updateUrl($urlTransfer);
 
-        $urlEntity = $this->productSetUrlReader->getProductSetUrlEntity($idProductSet, $idLocale);
+            return $localizedProductSetTransfer;
+        }
 
-        $urlTransfer = $this->createUrlTransfer($urlEntity, $localizedProductSetTransfer);
-
-        $this->urlFacade->updateUrl($urlTransfer);
-
-        return $localizedProductSetTransfer;
+        return $this->productSetUrlCreator->createUrl($localizedProductSetTransfer, $idProductSet);
     }
 
     /**
@@ -67,20 +77,5 @@ class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
             ->requireLocale();
 
         $localizedProductSetTransfer->getLocale()->requireIdLocale();
-    }
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Generated\Shared\Transfer\LocalizedProductSetTransfer $localizedProductSetTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    protected function createUrlTransfer(SpyUrl $urlEntity, LocalizedProductSetTransfer $localizedProductSetTransfer)
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->fromArray($urlEntity->toArray(), true);
-        $urlTransfer->setUrl($localizedProductSetTransfer->getUrl());
-
-        return $urlTransfer;
     }
 }
