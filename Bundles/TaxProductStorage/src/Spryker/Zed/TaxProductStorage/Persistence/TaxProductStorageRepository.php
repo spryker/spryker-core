@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStoragePersistenceFactory getFactory()
@@ -47,6 +49,8 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
     }
 
     /**
+     * @deprecated Use {@link getSynchronizationDataTransfersFromTaxProductStorages()} instead.
+     *
      * @param array<int> $productAbstractIds
      * @param string|null $keyColumn
      *
@@ -69,6 +73,32 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
         return $this->getFactory()
             ->createTaxProductStorageMapper()
             ->mapSpyTaxProductStorageToSynchronizationDataTransfer($spyTaxProductStorages);
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSynchronizationDataTransfersFromTaxProductStorages(
+        array $productAbstractIds,
+        ?FilterTransfer $filterTransfer = null
+    ): array {
+        $query = $this->getFactory()
+            ->createTaxProductStorageQuery();
+
+        if (count($productAbstractIds)) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        $taxProductStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createTaxProductStorageMapper()
+            ->mapSpyTaxProductStorageToSynchronizationDataTransfer($taxProductStorageEntities);
     }
 
     /**

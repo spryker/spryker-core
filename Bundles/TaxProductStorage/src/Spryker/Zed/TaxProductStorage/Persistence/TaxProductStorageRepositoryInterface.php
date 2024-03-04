@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 
@@ -20,12 +21,25 @@ interface TaxProductStorageRepositoryInterface
     public function getTaxProductTransfersFromProductAbstractsByIds(array $productAbstractIds): array;
 
     /**
+     * @deprecated Use {@link getSynchronizationDataTransfersFromTaxProductStorages()} instead.
+     *
      * @param array<int> $productAbstractIds
      * @param string|null $keyColumn
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds(array $productAbstractIds, ?string $keyColumn = null): array;
+
+    /**
+     * @param array<int> $productAbstractIds
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
+     */
+    public function getSynchronizationDataTransfersFromTaxProductStorages(
+        array $productAbstractIds,
+        ?FilterTransfer $filterTransfer = null
+    ): array;
 
     /**
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
