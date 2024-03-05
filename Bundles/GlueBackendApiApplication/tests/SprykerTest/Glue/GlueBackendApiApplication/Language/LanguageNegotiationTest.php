@@ -11,9 +11,10 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AcceptLanguageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface;
+use Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceBridge;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface;
 use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiation;
-use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiationInterface;
+use SprykerTest\Glue\GlueBackendApiApplication\GlueBackendApiApplicationTester;
 
 /**
  * Auto-generated group annotations
@@ -36,15 +37,17 @@ class LanguageNegotiationTest extends Unit
     ];
 
     /**
-     * @return \Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiationInterface
+     * @var list<string>
      */
-    protected function createLanguageNegotiation(): LanguageNegotiationInterface
-    {
-        return new LanguageNegotiation(
-            $this->createStoreFacadeMock(),
-            $this->createLocaleServiceMock(),
-        );
-    }
+    protected const AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE = [
+        'de_DE',
+        'en_US',
+    ];
+
+    /**
+     * @var \SprykerTest\Glue\GlueBackendApiApplication\GlueBackendApiApplicationTester
+     */
+    protected GlueBackendApiApplicationTester $tester;
 
     /**
      * @dataProvider languageIsoCodeDataProvider
@@ -58,7 +61,8 @@ class LanguageNegotiationTest extends Unit
     public function testGetLanguageIsoCode(string $acceptLanguage, ?AcceptLanguageTransfer $foundAcceptLanguage, string $expectedLanguageIsoCode): void
     {
         // Arrange
-        $storeFacadeMock = $this->createStoreFacadeMock();
+        $storeTransfer = $this->createStoreTransfer(static::AVAILABLE_LOCALE_ISO_CODES);
+        $storeFacadeMock = $this->createStoreFacadeMock($storeTransfer);
         $localeServiceMock = $this->createLocaleServiceMock($foundAcceptLanguage);
 
         $languageNegotiation = new LanguageNegotiation(
@@ -71,6 +75,34 @@ class LanguageNegotiationTest extends Unit
 
         // Assert
         $this->assertSame($expectedLanguageIsoCode, $languageIsoCode);
+    }
+
+    /**
+     * @dataProvider languageIsoCodeDynamicStoreDataProvider
+     *
+     * @param string $acceptLanguage
+     * @param string $expectedLocaleIsoCode
+     *
+     * @return void
+     */
+    public function testGetLanguageIsoCodeReturnsCorrectLocaleForDynamicStore(
+        string $acceptLanguage,
+        string $expectedLocaleIsoCode
+    ): void {
+        // Arrange
+        $storeTransfer = $this->createStoreTransfer(static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE);
+        $storeFacadeMock = $this->createStoreFacadeMock($storeTransfer, true);
+
+        $languageNegotiation = new LanguageNegotiation(
+            $storeFacadeMock,
+            new GlueBackendApiApplicationToLocaleServiceBridge($this->tester->getLocator()->locale()->service()),
+        );
+
+        // Act
+        $languageIsoCode = $languageNegotiation->getLanguageIsoCode($acceptLanguage);
+
+        // Assert
+        $this->assertSame($expectedLocaleIsoCode, $languageIsoCode);
     }
 
     /**
@@ -98,26 +130,56 @@ class LanguageNegotiationTest extends Unit
     }
 
     /**
+     * @return array<string, array<string, string>>
+     */
+    protected function languageIsoCodeDynamicStoreDataProvider(): array
+    {
+        return [
+            'AcceptLanguageUnavailable' => [
+                'acceptLanguage' => '',
+                'expectedLocaleIsoCode' => static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE[0],
+            ],
+            'AcceptLanguageInvalid' => [
+                'acceptLanguage' => 'invalid',
+                'expectedLocaleIsoCode' => static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE[0],
+            ],
+            'AcceptLanguageNegotiableDe' => [
+                'acceptLanguage' => 'de;q=0.8, en;q=0.2',
+                'expectedLocaleIsoCode' => static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE[0],
+            ],
+            'AcceptLanguageNegotiableEn' => [
+                'acceptLanguage' => 'en;q=0.8, de;q=0.2',
+                'expectedLocaleIsoCode' => static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE[1],
+            ],
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param bool $isDynamicStoreEnabled
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface
      */
-    protected function createStoreFacadeMock(): GlueBackendApiApplicationToStoreFacadeInterface
+    protected function createStoreFacadeMock(StoreTransfer $storeTransfer, bool $isDynamicStoreEnabled = false): GlueBackendApiApplicationToStoreFacadeInterface
     {
-        $storeTransfer = $this->createStoreTransfer();
         $storeFacadeMock = $this->getMockBuilder(GlueBackendApiApplicationToStoreFacadeInterface::class)
-            ->setMethods(['getCurrentStore'])
+            ->onlyMethods(['getCurrentStore', 'isDynamicStoreEnabled'])
             ->getMock();
 
         $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
+        $storeFacadeMock->method('isDynamicStoreEnabled')->willReturn($isDynamicStoreEnabled);
 
         return $storeFacadeMock;
     }
 
     /**
+     * @param array<string, string> $availableLocaleIsoCodes
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function createStoreTransfer(): StoreTransfer
+    protected function createStoreTransfer(array $availableLocaleIsoCodes): StoreTransfer
     {
-        return (new StoreTransfer())->setAvailableLocaleIsoCodes(static::AVAILABLE_LOCALE_ISO_CODES);
+        return (new StoreTransfer())->setAvailableLocaleIsoCodes($availableLocaleIsoCodes);
     }
 
     /**
@@ -125,7 +187,7 @@ class LanguageNegotiationTest extends Unit
      *
      * @return \Spryker\Glue\GlueBackendApiApplication\Dependency\Service\GlueBackendApiApplicationToLocaleServiceInterface
      */
-    protected function createLocaleServiceMock(?AcceptLanguageTransfer $foundAcceptLanguage): GlueBackendApiApplicationToLocaleServiceInterface
+    protected function createLocaleServiceMock(?AcceptLanguageTransfer $foundAcceptLanguage = null): GlueBackendApiApplicationToLocaleServiceInterface
     {
         $localeServiceMock = $this->getMockBuilder(GlueBackendApiApplicationToLocaleServiceInterface::class)->getMock();
 

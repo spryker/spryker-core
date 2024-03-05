@@ -43,6 +43,9 @@ class LanguageNegotiation implements LanguageNegotiationInterface
     {
         $storeTransfer = $this->storeFacade->getCurrentStore(true);
         $storeLocaleCodes = $storeTransfer->getAvailableLocaleIsoCodes();
+        if ($this->storeFacade->isDynamicStoreEnabled()) {
+            $storeLocaleCodes = $this->getLocaleCodesIndexedByLanguageCode($storeLocaleCodes);
+        }
 
         if (!$acceptLanguage) {
             return array_shift($storeLocaleCodes);
@@ -59,5 +62,32 @@ class LanguageNegotiation implements LanguageNegotiationInterface
         }
 
         return $storeLocaleCodes[$acceptLanguageTransfer->getType()];
+    }
+
+    /**
+     * @param list<string> $localeCodes
+     *
+     * @return array<string, string>
+     */
+    protected function getLocaleCodesIndexedByLanguageCode(array $localeCodes): array
+    {
+        $indexedLocaleCodes = [];
+        foreach ($localeCodes as $localeCode) {
+            $indexedLocaleCodes[$this->extractLanguageCode($localeCode)] = $localeCode;
+        }
+
+        return $indexedLocaleCodes;
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    protected function extractLanguageCode(string $localeCode): string
+    {
+        $localeCodeParts = explode('_', $localeCode);
+
+        return $localeCodeParts[0];
     }
 }

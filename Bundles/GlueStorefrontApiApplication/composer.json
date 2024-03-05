@@ -14,7 +14,7 @@
         "spryker/locale": "^3.10.0 || ^4.2.0",
         "spryker/oauth-extension": "^1.7.0",
         "spryker/session": "^3.0.0 || ^4.0.0",
-        "spryker/store": "^1.15.0",
+        "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.7.0",
         "spryker/transfer": "^3.27.0"
     },

@@ -33,4 +33,12 @@ class GlueBackendApiApplicationToStoreFacadeBridge implements GlueBackendApiAppl
     {
         return $this->storeFacade->getCurrentStore($fallbackToDefault);
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
+    }
 }

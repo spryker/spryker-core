@@ -588,6 +588,21 @@ abstract class AbstractJsonApiHelper extends RestHelper implements LastConnectio
     /**
      * @part json
      *
+     * @param string $message
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeJsonApiResponseErrorsHaveMessage(string $message, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'message' => $message,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
+     * @part json
+     *
      * @param string $type
      *
      * @return void

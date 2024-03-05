@@ -10,14 +10,19 @@ namespace SprykerTest\Shared\Testify\Fixtures;
 use Codeception\Codecept;
 use Codeception\Suite;
 use ReflectionClass;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 class FixturesRunner extends Codecept
 {
+    use InstancePoolingTrait;
+
     /**
      * @inheritDoc
      */
     public function runSuite(array $settings, string $suite, ?string $test = null): void
     {
+        $this->disableInstancePooling();
+
         $settings['shard'] = $this->options['shard'];
         $suiteManager = new FixturesSuiteManager($this->dispatcher, $suite, $settings, $this->options);
         $suiteManager->initialize();
