@@ -184,12 +184,28 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $nextCursor = null;
         do {
             [$nextCursor, $keys] = $this->redisScan($this->getSearchPattern($pattern), $nextCursor ?? $cursor);
-            $result = array_merge($result, $keys);
+            $result = $this->concatWithLimit($result, $keys, $limit);
         } while ($nextCursor > 0 && count($result) < $limit);
 
         return (new StorageScanResultTransfer())
             ->setCursor((int)$nextCursor)
             ->setKeys(array_unique($result));
+    }
+
+    /**
+     * @param array<string> $keys1
+     * @param array<string> $keys2
+     * @param int|null $limit
+     *
+     * @return array<string>
+     */
+    protected function concatWithLimit(array $keys1, array $keys2, ?int $limit = null): array
+    {
+        if ($limit === null) {
+            return array_merge($keys1, $keys2);
+        }
+
+        return array_merge($keys1, array_slice($keys2, 0, $limit - count($keys1)));
     }
 
     /**

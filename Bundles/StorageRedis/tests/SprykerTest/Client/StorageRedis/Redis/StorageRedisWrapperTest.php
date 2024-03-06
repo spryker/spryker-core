@@ -416,6 +416,93 @@ class StorageRedisWrapperTest extends Unit
     /**
      * @return void
      */
+    public function testScanKeysCallsScanWithCorrectKeyNameAndReturnsStorageScanResultTransfer(): void
+    {
+        // Arrange
+        $expectedParams = [
+            [
+                'connection key', 0, [
+                    'COUNT' => 0,
+                    'MATCH' => 'kv:test:*',
+                ],
+            ],
+        ];
+        $expectedKeys = [
+            'kv:test:1',
+            'kv:test:2',
+            'kv:test:3',
+        ];
+
+        $this->redisClientMock->expects($this->once())
+            ->method('scan')
+            ->withConsecutive(...$expectedParams)
+            ->willReturn([0, $expectedKeys]);
+
+        // Act
+        $storageScanResultTransfer = $this->storageRedisWrapper->scanKeys('test:*', 100, 0);
+
+        // Assert
+        $this->assertCount(3, $storageScanResultTransfer->getKeys());
+        $this->assertSame($expectedKeys, $storageScanResultTransfer->getKeys());
+    }
+
+    /**
+     * @return void
+     */
+    public function testScanKeysReturnsEmptyStorageScanResultTransfer(): void
+    {
+        // Arrange
+        $this->redisClientMock
+            ->method('scan')
+            ->willReturn([0, []]);
+
+        // Act
+        $storageScanResultTransfer = $this->storageRedisWrapper->scanKeys('test:*', 5, 0);
+
+        // Assert
+        $this->assertCount(0, $storageScanResultTransfer->getKeys());
+        $this->assertSame(0, $storageScanResultTransfer->getCursor());
+    }
+
+    /**
+     * @return void
+     */
+    public function testScankeysReturnsStorageScanResultTransferWithLimitedKeys(): void
+    {
+        // Arrange
+        $expectedKeys1 = [
+            'kv:test:1',
+            'kv:test:2',
+            'kv:test:3',
+            'kv:test:4',
+        ];
+        $expectedKeys2 = [
+            'kv:test:5',
+            'kv:test:6',
+        ];
+        $returnCallback = function ($connectionKey, $cursor, $options) use ($expectedKeys1, $expectedKeys2) {
+            if ($cursor === 0) {
+                return [1234, $expectedKeys1];
+            }
+
+            return [0, $expectedKeys2];
+        };
+
+        $this->redisClientMock
+            ->method('scan')
+            ->will($this->returnCallback($returnCallback));
+
+        // Act
+        $storageScanResultTransfer = $this->storageRedisWrapper->scanKeys('test:*', 5, 0);
+
+        // Assert
+        $this->assertCount(5, $storageScanResultTransfer->getKeys());
+        $this->assertSame(array_slice(array_merge($expectedKeys1, $expectedKeys2), 0, 5), $storageScanResultTransfer->getKeys());
+    }
+
+    /**
+     * @return void
+     */
     protected function setupDummyStorage(): void
     {
         $this->dummyStorage = [
