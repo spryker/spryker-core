@@ -20,7 +20,7 @@ class DocumentationGeneratorOpenApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_CONTROLLER_PATTERN = '/*/*/*/src/*/Glue/%1$s/Controller/';
+    protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_CONTROLLER_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';
 
     /**
      * @var string
@@ -30,7 +30,7 @@ class DocumentationGeneratorOpenApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PLUGIN_PATTERN = '/*/*/*/src/*/Glue/%1$s/Plugin/';
+    protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PLUGIN_PATTERN = '/*/*/src/*/Glue/%1$s/Plugin/';
 
     /**
      * @api

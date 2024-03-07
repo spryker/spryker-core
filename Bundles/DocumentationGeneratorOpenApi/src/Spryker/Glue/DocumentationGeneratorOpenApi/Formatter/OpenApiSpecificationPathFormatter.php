@@ -67,8 +67,10 @@ class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterfa
      *
      * @return array<mixed>
      */
-    protected function executeOpenApiSchemaFormatterPlugins(array $formattedData, ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer): array
-    {
+    protected function executeOpenApiSchemaFormatterPlugins(
+        array $formattedData,
+        ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer
+    ): array {
         foreach ($this->openApiSchemaFormatterPlugins as $openApiSchemaFormatterPlugin) {
             $formattedData = $openApiSchemaFormatterPlugin->format($formattedData, $apiApplicationSchemaContextTransfer);
         }
