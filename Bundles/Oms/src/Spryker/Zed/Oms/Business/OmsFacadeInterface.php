@@ -538,10 +538,11 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return void
      */
-    public function saveReservationVersion($sku);
+    public function saveReservationVersion($sku, ?StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:

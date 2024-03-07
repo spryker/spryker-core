@@ -107,6 +107,9 @@ class OmsFacadeReservationsTest extends Unit
     public function testExportReservationShouldExportAllUnExportedReservations(): void
     {
         $testStateMachineProcessName = 'Test01';
+
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], false);
+
         $saveOrderTransfer = $this->tester->haveOrder([
             ItemTransfer::UNIT_PRICE => 100,
             ItemTransfer::SUM_PRICE => 100,
@@ -121,7 +124,7 @@ class OmsFacadeReservationsTest extends Unit
         $this->getOmsFacade()->triggerEvent('authorize', $items, []);
         $this->getOmsFacade()->triggerEvent('pay', $items, []);
 
-        $this->getOmsFacade()->saveReservationVersion($items[0]->getSku());
+        $this->getOmsFacade()->saveReservationVersion($items[0]->getSku(), $storeTransfer);
         $this->getOmsFacade()->exportReservation();
 
         $this->assertGreaterThan(0, $this->getOmsFacade()->getLastExportedReservationVersion());

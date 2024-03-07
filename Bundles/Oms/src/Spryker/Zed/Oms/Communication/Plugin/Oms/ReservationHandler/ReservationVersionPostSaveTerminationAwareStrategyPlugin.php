@@ -61,6 +61,6 @@ class ReservationVersionPostSaveTerminationAwareStrategyPlugin extends AbstractP
      */
     public function handle(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFacade()->saveReservationVersion($reservationRequestTransfer->getSku());
+        $this->getFacade()->saveReservationVersion($reservationRequestTransfer->getSku(), $reservationRequestTransfer->getStore());
     }
 }

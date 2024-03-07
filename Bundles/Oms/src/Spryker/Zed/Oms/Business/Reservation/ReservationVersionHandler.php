@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Reservation;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
@@ -38,12 +39,13 @@ class ReservationVersionHandler implements ReservationVersionHandlerInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return void
      */
-    public function saveReservationVersion($sku)
+    public function saveReservationVersion($sku, ?StoreTransfer $storeTransfer = null)
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $currentStoreTransfer = $storeTransfer ?? $this->storeFacade->getCurrentStore();
 
         /** @var int|null $idOmsProductReservation */
         $idOmsProductReservation = $this->omsQueryContainer

@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\Oms\Business\Reservation;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ReservationVersionHandlerInterface
 {
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return void
      */
-    public function saveReservationVersion($sku);
+    public function saveReservationVersion($sku, ?StoreTransfer $storeTransfer = null);
 }
