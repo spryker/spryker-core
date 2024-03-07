@@ -78,8 +78,6 @@ class HttpRequestValidatorTest extends Unit
      */
     public function testValidateWhenContentTypeHeaderEmptyStringShouldReturnUnsupportedMediaTypeError(): void
     {
-        $request = Request::create('/');
-
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => '',
             'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
@@ -97,8 +95,6 @@ class HttpRequestValidatorTest extends Unit
      */
     public function testValidateWhenContentTypeHeaderWithSpacesShouldReturnUnsupportedMediaTypeError(): void
     {
-        $request = Request::create('/');
-
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => '        ',
             'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',

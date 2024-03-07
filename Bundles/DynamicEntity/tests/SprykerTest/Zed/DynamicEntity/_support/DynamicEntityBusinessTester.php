@@ -50,6 +50,36 @@ class DynamicEntityBusinessTester extends Actor
     use _generated\DynamicEntityBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    public const BAR_TABLE_ALIAS = 'BAR';
+
+    /**
+     * @var string
+     */
+    public const IN_FILTER_CONDITION = '{"in": ["BAR", "FOO"]}';
+
+    /**
+     * @var string
+     */
+    public const TABLE_ALIAS_FIELD_NAME = 'table_alias';
+
+    /**
+     * @var string
+     */
+    public const FOO_TABLE_ALIAS_1 = 'FOO';
+
+    /**
+     * @var string
+     */
+    public const TABLE_NAME = 'spy_dynamic_entity_configuration';
+
+    /**
+     * @var string
+     */
+    public const FOO_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"id_dynamic_entity_configuration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isEditable":false,"isCreatable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
+
+    /**
      * @param string|null $tableName
      * @param string|null $tableAlias
      * @param int|null $id

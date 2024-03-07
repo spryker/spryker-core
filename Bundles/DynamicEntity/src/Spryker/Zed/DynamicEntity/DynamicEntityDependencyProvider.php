@@ -9,6 +9,7 @@ namespace Spryker\Zed\DynamicEntity;
 
 use Propel\Runtime\Propel;
 use Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionAdapter;
+use Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -33,6 +34,11 @@ class DynamicEntityDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_DYNAMIC_ENTITY_POST_UPDATE = 'PLUGINS_DYNAMIC_ENTITY_POST_UPDATE';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -44,6 +50,20 @@ class DynamicEntityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDynamicEntityPostCreatePlugins($container);
         $container = $this->addDynamicEntityPostUpdatePlugins($container);
         $container = $this->addConnection($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -104,5 +124,21 @@ class DynamicEntityDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDynamicEntityPostUpdatePlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new DynamicEntityToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
     }
 }

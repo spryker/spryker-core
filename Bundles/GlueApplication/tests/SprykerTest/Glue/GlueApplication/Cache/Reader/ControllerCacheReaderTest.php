@@ -96,13 +96,9 @@ class ControllerCacheReaderTest extends Unit
         $mockExecutableResource = function () {
             return $this->tester->createErrorGlueResponseTransfer();
         };
-        $controllerCacheReader = new ControllerCacheReader(
-            $this->createMock(ControllerCacheWriterInterface::class),
-            $this->createMock(GlueApplicationConfig::class),
-        );
+        $controllerCacheReader = new ControllerCacheReader($this->createControllerCacheWriterMock(), $this->createConfigMock());
 
         //Act
-        $controllerCacheReader = new ControllerCacheReader($this->createControllerCacheWriterMock(), $this->createConfigMock());
         $parameters = $controllerCacheReader->getActionParameters($mockExecutableResource, $resourceMock, $glueRequestTransfer);
 
         //Assert

@@ -168,6 +168,7 @@ class RestApiSchemaParametersFormatter implements RestApiSchemaParametersFormatt
                 'example' => [
                     'wishlists.name' => 'Test',
                     'wishlists.quantity' => 1,
+                    'wishlists.uuid' => '{"in": ["Test1","Test2"]}',
                 ],
             ],
         ];

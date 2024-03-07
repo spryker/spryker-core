@@ -20,6 +20,7 @@ use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelation;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationRelationFieldMapping;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceInterface;
 
 class DynamicEntityMapper
 {
@@ -64,6 +65,19 @@ class DynamicEntityMapper
     protected const KEY_RELATION_FIELD_MAPPINGS = 'relationFieldMappings';
 
     /**
+     * @var \Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceInterface
+     */
+    protected DynamicEntityToUtilEncodingServiceInterface $serviceUtilEncoding;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceInterface $serviceUtilEncoding
+     */
+    public function __construct(DynamicEntityToUtilEncodingServiceInterface $serviceUtilEncoding)
+    {
+        $this->serviceUtilEncoding = $serviceUtilEncoding;
+    }
+
+    /**
      * @param \Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfiguration $dynamicEntityConfiguration
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
@@ -106,7 +120,7 @@ class DynamicEntityMapper
         ];
 
         $dynamicEntityConfigurationEntity->setDefinition(
-            json_encode(
+            $this->serviceUtilEncoding->encodeJson(
                 $definitionForEntity,
             ) ?: '',
         );
@@ -352,9 +366,9 @@ class DynamicEntityMapper
         string $definition,
         DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
     ): DynamicEntityDefinitionTransfer {
-        $config = json_decode($definition, true);
+        $config = $this->serviceUtilEncoding->decodeJson($definition, true);
 
-        if (!isset($config[static::FIELDS])) {
+        if (!is_array($config) || !isset($config[static::FIELDS])) {
             return $dynamicEntityDefinitionTransfer;
         }
 

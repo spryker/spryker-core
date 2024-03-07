@@ -10,11 +10,16 @@ namespace Spryker\Zed\DynamicEntity\Persistence;
 use Orm\Zed\DynamicEntity\Persistence\SpyDynamicEntityConfigurationQuery;
 use Propel\Runtime\Map\DatabaseMap;
 use Propel\Runtime\Propel;
+use Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceInterface;
+use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilder;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilderInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFieldCreationFilter;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFieldUpdateFilter;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFilterInterface;
+use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\DefaultFilterStrategy;
+use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface;
+use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\InFilterStrategy;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldCreationPreValidator;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldUpdatePreValidator;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityPreValidatorInterface;
@@ -48,7 +53,7 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createDynamicEntityMapper(): DynamicEntityMapper
     {
-        return new DynamicEntityMapper();
+        return new DynamicEntityMapper($this->getServiceUtilEncoding());
     }
 
     /**
@@ -58,6 +63,7 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     {
         return new DynamicEntityQueryBuilder(
             $this->getPropelDatabaseMap(),
+            $this->getFilterStrategies(),
         );
     }
 
@@ -144,5 +150,40 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createDynamicEntityResetter(): DynamicEntityResetterInterface
     {
         return new DynamicEntityResetter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface
+     */
+    public function createDefaultFilterStrategy(): FilterStrategyInterface
+    {
+        return new DefaultFilterStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface
+     */
+    public function createInFilterStrategy(): FilterStrategyInterface
+    {
+        return new InFilterStrategy($this->getServiceUtilEncoding());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface>
+     */
+    public function getFilterStrategies(): array
+    {
+        return [
+            $this->createInFilterStrategy(),
+            $this->createDefaultFilterStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServiceInterface
+     */
+    public function getServiceUtilEncoding(): DynamicEntityToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(DynamicEntityDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

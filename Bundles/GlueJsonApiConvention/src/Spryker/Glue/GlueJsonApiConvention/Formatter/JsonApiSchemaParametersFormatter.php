@@ -227,6 +227,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
                 'example' => [
                     'wishlists.name' => 'Test',
                     'wishlists.quantity' => 1,
+                    'wishlists.uuid' => '{"in": ["Test1","Test2"]}',
                 ],
             ],
         ];

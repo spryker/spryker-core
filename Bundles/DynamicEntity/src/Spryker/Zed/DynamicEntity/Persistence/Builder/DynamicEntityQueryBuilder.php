@@ -32,11 +32,20 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
     protected DatabaseMap $databaseMap;
 
     /**
-     * @param \Propel\Runtime\Map\DatabaseMap $databaseMap
+     * @var array<\Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface>
      */
-    public function __construct(DatabaseMap $databaseMap)
-    {
+    protected array $filterStrategies;
+
+    /**
+     * @param \Propel\Runtime\Map\DatabaseMap $databaseMap
+     * @param array<\Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface> $filterStrategies
+     */
+    public function __construct(
+        DatabaseMap $databaseMap,
+        array $filterStrategies
+    ) {
         $this->databaseMap = $databaseMap;
+        $this->filterStrategies = $filterStrategies;
     }
 
     /**
@@ -107,15 +116,15 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
      *
      * @return array<string>
      */
-    protected function collectDefinedFieldNames(DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer): array
+    protected function collectDefinedFieldVisibleNames(DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer): array
     {
-        $definedFieldNames = [];
+        $definedFieldVisibleNames = [];
 
         foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinition) {
-            $definedFieldNames[] = $fieldDefinition->getFieldNameOrFail();
+            $definedFieldVisibleNames[] = $fieldDefinition->getFieldVisibleNameOrFail();
         }
 
-        return $definedFieldNames;
+        return $definedFieldVisibleNames;
     }
 
     /**
@@ -134,22 +143,63 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
             return $query;
         }
 
-        $definedFieldNames = $this->collectDefinedFieldNames($dynamicEntityDefinitionTransfer);
+        $definedFieldNames = $this->collectDefinedFieldVisibleNames($dynamicEntityDefinitionTransfer);
 
         foreach ($dynamicEntityConditionsTransfer->getFieldConditions() as $fieldCondition) {
             $fieldConditionName = $fieldCondition->getNameOrFail();
 
             if ($fieldConditionName === static::IDENTIFIER_KEY) {
-                $fieldConditionName = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+                $fieldConditionName = $this->getVisibleIdentifier($dynamicEntityDefinitionTransfer, $fieldConditionName);
             }
 
             if (!in_array($fieldConditionName, $definedFieldNames)) {
                 continue;
             }
 
-            $query->filterBy($this->convertSnakeCaseToCamelCase($fieldConditionName), $fieldCondition->getValue());
+            $query = $this->applyConditionToQuery($query, $this->convertSnakeCaseToCamelCase($fieldConditionName), $fieldCondition->getValue());
         }
 
         return $query;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param string $fieldConditionName
+     * @param string|null $fieldConditionValue
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyConditionToQuery(
+        ModelCriteria $query,
+        string $fieldConditionName,
+        ?string $fieldConditionValue
+    ): ModelCriteria {
+        foreach ($this->filterStrategies as $filterStrategy) {
+            if ($filterStrategy->isApplicable($fieldConditionValue)) {
+                return $filterStrategy->applyConditionToQuery($query, $fieldConditionName, $fieldConditionValue);
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param string $fieldConditionName
+     *
+     * @return string
+     */
+    protected function getVisibleIdentifier(
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        string $fieldConditionName
+    ): string {
+        $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinition) {
+            if ($fieldDefinition->getFieldNameOrFail() === $identifier) {
+                $fieldConditionName = $fieldDefinition->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $fieldConditionName;
     }
 }

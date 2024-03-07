@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
+use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 
@@ -29,12 +30,27 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
     /**
      * @var string
      */
+    protected const ERROR_MESSAGE_FILTER_FIELD_NOT_FOUND = 'dynamic_entity.validation.filter_field_not_found';
+
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_ALIAS_NAME = '%aliasName%';
 
     /**
      * @var string
      */
     protected const PLACEHOLDER_RELATION_NAME = '%relationName%';
+
+    /**
+     * @var string
+     */
+    protected const PLACEHOLDER_FILTER_FIELD = '%filterField%';
+
+    /**
+     * @var string
+     */
+    protected const IDENTIFIER_KEY = 'identifier';
 
     /**
      * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
@@ -61,7 +77,12 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
     ): ?ErrorTransfer {
         $tableAlias = $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail();
         if ($dynamicEntityConfigurationCollectionTransfer->getDynamicEntityConfigurations()->count() === 0) {
-            return $this->createConfigurationNotFoundErrorTransfer($tableAlias);
+            return $this->createErrorTransfer(
+                static::ERROR_MESSAGE_CONFIGURATION_NOT_FOUND,
+                [
+                    static::PLACEHOLDER_ALIAS_NAME => $tableAlias,
+                ],
+            );
         }
 
         $rootDynamicEntityConfigurationTranfer = $this->getDynamicEntityConfigurationEntityByTableAlias(
@@ -70,7 +91,21 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
         );
 
         if ($rootDynamicEntityConfigurationTranfer === null) {
-            return $this->createConfigurationNotFoundErrorTransfer($tableAlias);
+            return $this->createErrorTransfer(
+                static::ERROR_MESSAGE_CONFIGURATION_NOT_FOUND,
+                [
+                    static::PLACEHOLDER_ALIAS_NAME => $tableAlias,
+                ],
+            );
+        }
+
+        $filterFieldValidationError = $this->validateFilterField(
+            $dynamicEntityCriteriaTransfer,
+            $rootDynamicEntityConfigurationTranfer,
+        );
+
+        if ($filterFieldValidationError !== null) {
+            return $filterFieldValidationError;
         }
 
         return $this->validateRelationChainsSequence(
@@ -221,16 +256,89 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
     }
 
     /**
-     * @param string $tableAlias
+     * @param string $message
+     * @param array<string, string> $parameters
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer
      */
-    protected function createConfigurationNotFoundErrorTransfer(string $tableAlias): ErrorTransfer
-    {
+    protected function createErrorTransfer(
+        string $message,
+        array $parameters = []
+    ): ErrorTransfer {
         return (new ErrorTransfer())
-            ->setMessage(static::ERROR_MESSAGE_CONFIGURATION_NOT_FOUND)
-            ->setParameters([
-                static::PLACEHOLDER_ALIAS_NAME => $tableAlias,
-            ]);
+            ->setMessage($message)
+            ->setParameters($parameters);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTranfer
+     *
+     * @return \Generated\Shared\Transfer\ErrorTransfer|null
+     */
+    protected function validateFilterField(
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTranfer
+    ): ?ErrorTransfer {
+        $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTranfer->getDynamicEntityDefinitionOrFail();
+        $definedFieldNames = $this->collectDefinedFieldVisibleNames($dynamicEntityDefinitionTransfer);
+
+        foreach ($dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getFieldConditions() as $fieldCondition) {
+            $fieldConditionName = $fieldCondition->getNameOrFail();
+
+            if ($fieldConditionName === static::IDENTIFIER_KEY) {
+                $fieldConditionName = $this->getVisibleIdentifier($dynamicEntityDefinitionTransfer, $fieldConditionName);
+            }
+
+            if (!in_array($fieldConditionName, $definedFieldNames)) {
+                $tableAlias = $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail();
+
+                return $this->createErrorTransfer(
+                    static::ERROR_MESSAGE_FILTER_FIELD_NOT_FOUND,
+                    [
+                        static::PLACEHOLDER_FILTER_FIELD => $fieldConditionName,
+                        static::PLACEHOLDER_ALIAS_NAME => $tableAlias,
+                    ],
+                );
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     *
+     * @return array<string>
+     */
+    protected function collectDefinedFieldVisibleNames(DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer): array
+    {
+        $definedFieldVisibleNames = [];
+
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinition) {
+            $definedFieldVisibleNames[] = $fieldDefinition->getFieldVisibleNameOrFail();
+        }
+
+        return $definedFieldVisibleNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param string $fieldConditionName
+     *
+     * @return string
+     */
+    protected function getVisibleIdentifier(
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        string $fieldConditionName
+    ): string {
+        $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinition) {
+            if ($fieldDefinition->getFieldNameOrFail() === $identifier) {
+                $fieldConditionName = $fieldDefinition->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $fieldConditionName;
     }
 }
