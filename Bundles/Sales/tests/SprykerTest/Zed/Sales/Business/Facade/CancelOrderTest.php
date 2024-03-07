@@ -51,6 +51,11 @@ class CancelOrderTest extends Unit
     /**
      * @var string
      */
+    protected const FAKE_ORDER_REFERENCE = 'FAKE_ORDER_REFERENCE';
+
+    /**
+     * @var string
+     */
     protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
 
     /**
@@ -140,6 +145,36 @@ class CancelOrderTest extends Unit
     /**
      * @return void
      */
+    public function testCancelOrderWithOrderReferenceIsSuccessful(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setOrderReference($orderTransfer->getOrderReference())
+            ->setCustomer($orderTransfer->getCustomer());
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertTrue($orderCancelResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::CANCELLED_STATE_NAME,
+            $orderCancelResponseTransfer->getOrder()->getItems()->getIterator()->current()->getState()->getName(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCancelOrderWithCancellableOrderItemsForAnotherCustomer(): void
     {
         // Arrange
@@ -170,13 +205,38 @@ class CancelOrderTest extends Unit
     /**
      * @return void
      */
-    public function testCancelOrderWithFakeOrderReference(): void
+    public function testCancelOrderWithFakeIdSalesOrder(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
 
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
             ->setIdSalesOrder(static::FAKE_ID_SALES_ORDER)
+            ->setCustomer($orderTransfer->getCustomer());
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND,
+            $orderCancelResponseTransfer->getMessages()[0]->getValue(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelOrderWithFakeOrderReferenceResultsToNotFoundError(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setOrderReference(static::FAKE_ORDER_REFERENCE)
             ->setCustomer($orderTransfer->getCustomer());
 
         // Act
@@ -220,7 +280,7 @@ class CancelOrderTest extends Unit
     /**
      * @return void
      */
-    public function testCancelOrderWithoutRequiredOrderReferenceField(): void
+    public function testCancelOrderWithoutRequiredOrderReferenceAndIdSalesOrderPropertiesThrowsException(): void
     {
         // Arrange
         $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())

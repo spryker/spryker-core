@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class OrderWriter implements OrderWriterInterface
 {
@@ -45,26 +47,50 @@ class OrderWriter implements OrderWriterInterface
     protected $orderReader;
 
     /**
+     * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
+     */
+    protected SalesRepositoryInterface $salesRepository;
+
+    /**
      * @param \Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
      * @param \Spryker\Zed\Sales\Business\Order\OrderReaderInterface $orderReader
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      */
     public function __construct(
         OmsEventTriggererInterface $omsEventTriggerer,
-        OrderReaderInterface $orderReader
+        OrderReaderInterface $orderReader,
+        SalesRepositoryInterface $salesRepository
     ) {
         $this->omsEventTriggerer = $omsEventTriggerer;
         $this->orderReader = $orderReader;
+        $this->salesRepository = $salesRepository;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer
     {
-        $orderCancelRequestTransfer->requireIdSalesOrder();
-        $orderTransfer = $this->orderReader->findOrderByIdSalesOrder($orderCancelRequestTransfer->getIdSalesOrder());
+        if ($orderCancelRequestTransfer->getIdSalesOrder() === null && $orderCancelRequestTransfer->getOrderReference() === null) {
+            throw new RequiredTransferPropertyException(
+                'OrderCancelRequestTransfer.idSalesOrder or OrderCancelRequestTransfer.orderReference and customer are required for cancelOrder',
+            );
+        }
+
+        $idSalesOrder = $orderCancelRequestTransfer->getIdSalesOrder();
+
+        if ($idSalesOrder === null) {
+            $idSalesOrder = (int)$this->salesRepository->findCustomerOrderIdByOrderReference(
+                (string)$orderCancelRequestTransfer->getCustomerOrFail()->getCustomerReferenceOrFail(),
+                $orderCancelRequestTransfer->getOrderReferenceOrFail(),
+            );
+        }
+
+        $orderTransfer = $this->orderReader->findOrderByIdSalesOrder($idSalesOrder);
 
         if (!$orderTransfer || !$this->isApplicableForCustomer($orderCancelRequestTransfer, $orderTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND);
@@ -88,7 +114,7 @@ class OrderWriter implements OrderWriterInterface
 
         return (new OrderCancelResponseTransfer())
             ->setIsSuccessful(true)
-            ->setOrder($this->orderReader->findOrderByIdSalesOrder($orderCancelRequestTransfer->getIdSalesOrder()));
+            ->setOrder($this->orderReader->findOrderByIdSalesOrder($idSalesOrder));
     }
 
     /**

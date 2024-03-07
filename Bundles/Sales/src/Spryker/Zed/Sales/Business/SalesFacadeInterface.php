@@ -472,7 +472,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Requires OrderCancelRequestTransfer::orderReference to be set.
+     * - Requires OrderCancelRequestTransfer::orderReference or OrderCancelRequestTransfer::idSalesOrder to be set.
      * - Requires CustomerTransfer:customerReference to be set.
      * - Requires ItemTransfer::idSalesOrderItem to be set.
      * - Retrieves OrderTransfer filtered by orderReference and customerReference.

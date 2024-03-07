@@ -21,7 +21,7 @@
             <state name="payment authorized" display="oms.state.in-progress">
                 <flag>cancellable</flag>
             </state>
-            <state name="payment authorization canceled" display="oms.state.in-progress"/>
+            <state name="payment authorization canceled" display="oms.state.canceled"/>
         </states>
 
         <transitions>
@@ -69,7 +69,7 @@
 
             <transition>
                 <source>payment authorization canceled</source>
-                <target>canceled</target>
+                <target>payment cancellation ready</target>
                 <event>cancel</event>
             </transition>
         </transitions>

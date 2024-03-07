@@ -406,6 +406,7 @@
 
     <transfer name="OrderCancelRequest">
         <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string" strict="true"/>
         <property name="customer" type="Customer"/>
     </transfer>
 
