@@ -14,6 +14,11 @@ use Generated\Shared\Transfer\DynamicEntityTransfer;
 class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRequestBuilderInterface
 {
     /**
+     * @var string
+     */
+    protected const FORMAT_RELATION_CHAIN_ELEMENT = '%s%s.';
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      *
      * @return array<string>
@@ -26,11 +31,14 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
             $relationChains = $this->processEntityKeys($dynamicEntityTransfer->getFields(), []);
 
             foreach ($relationChains as $relationChain) {
-                $allRelationChains[] = implode('.', $relationChain);
+                $allRelationChains = array_merge(
+                    $allRelationChains,
+                    $this->processRelationChain([], $relationChain),
+                );
             }
         }
 
-        return $allRelationChains;
+        return array_unique($allRelationChains);
     }
 
     /**
@@ -133,27 +141,65 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
     }
 
     /**
-     * @param array<mixed> $fields
-     * @param array<string, string> $relationChain
-     * @param string|null $indexField
+     * @param array<string, mixed> $fields
+     * @param array<string> $relationChain
+     * @param string|null $parentField
      *
-     * @return array<string, array<string>>
+     * @return array<mixed>
      */
-    protected function processEntityKeys(array $fields, array $relationChain, ?string $indexField = null): array
+    protected function processEntityKeys(array $fields, array $relationChain, ?string $parentField = null): array
     {
         foreach ($fields as $field => $value) {
             if (!is_array($value)) {
                 continue;
             }
 
-            $index = $indexField ?? $field;
-            $relationChain[$index][] = $field;
+            $currentRelationChain = [
+                $field,
+            ];
+
             foreach ($value as $subfields) {
-                $relationChain = $this->processEntityKeys($subfields, $relationChain, $field);
+                $currentRelationChain = $this->processEntityKeys($subfields, $currentRelationChain, $field);
             }
+
+            $relationChain[] = $currentRelationChain;
         }
 
         return $relationChain;
+    }
+
+    /**
+     * @param array<string> $resultRelationChain
+     * @param array<mixed> $relationChain
+     * @param string|null $parentField
+     *
+     * @return array<string>
+     */
+    protected function processRelationChain(array $resultRelationChain, array $relationChain, ?string $parentField = null): array
+    {
+        $currentKey = array_shift($relationChain);
+        $chain = sprintf(
+            static::FORMAT_RELATION_CHAIN_ELEMENT,
+            ($parentField ?? ''),
+            $currentKey,
+        );
+
+        if ($relationChain === []) {
+            $resultRelationChain[] = rtrim($chain, '.');
+
+            return $resultRelationChain;
+        }
+
+        foreach ($relationChain as $nextChain) {
+            $chainResult = $this->processRelationChain($resultRelationChain, $nextChain, $chain);
+
+            $resultRelationChain = array_merge(
+                $resultRelationChain,
+                $chainResult,
+            );
+        }
+
+        return $resultRelationChain;
     }
 
     /**

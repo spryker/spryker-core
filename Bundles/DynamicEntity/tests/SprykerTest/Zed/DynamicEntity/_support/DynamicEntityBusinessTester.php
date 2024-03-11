@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace SprykerTest\Zed\DynamicEntity;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
@@ -78,6 +79,20 @@ class DynamicEntityBusinessTester extends Actor
      * @var string
      */
     public const FOO_DEFINITION = '{"identifier":"id_dynamic_entity_configuration","fields":[{"fieldName":"id_dynamic_entity_configuration","fieldVisibleName":"id_dynamic_entity_configuration","isEditable":true,"isCreatable":false,"type":"integer","validation":{"isRequired":false}},{"fieldName":"table_alias","fieldVisibleName":"table_alias","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"table_name","fieldVisibleName":"table_name","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}},{"fieldName":"is_active","fieldVisibleName":"is_active","isEditable":false,"isCreatable":true,"type":"boolean","validation":{"isRequired":false}},{"fieldName":"definition","fieldVisibleName":"definition","type":"string","isEditable":true,"isCreatable":true,"validation":{"isRequired":false}}]}';
+
+    /**
+     * @var string
+     */
+    public const TEST_TABLE_ALIAS = 'test_table_alias';
+
+    /**
+     * @var array<string>
+     */
+    public const RELATION_TEST_CHAINS = [
+        'productAbstractProducts.productSearch',
+        'productAbstractProducts.productStocks',
+        'productAbstractProducts.productLocalizedAttributes.thisIsTest',
+    ];
 
     /**
      * @param string|null $tableName
@@ -694,6 +709,56 @@ DEFINITION;
             ->filterByIdDynamicEntityConfigurationRelation($idDynamicEntityConfigurationRelation)
             ->find()
             ->getData()[0];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
+     */
+    public function createDynamicEntityCollectionRequestTransferWithComplexData(): DynamicEntityCollectionRequestTransfer
+    {
+        $dynamicEntityCollectionRequestTransfer = $this
+            ->createDynamicEntityCollectionRequestTransfer(static::TEST_TABLE_ALIAS);
+
+        $dynamicEntityCollectionRequestTransfer->setDynamicEntities(new ArrayObject([
+            $this->createDynamicEntityTransferWithComplexTestFields(),
+        ]));
+
+        return $dynamicEntityCollectionRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
+     */
+    protected function createDynamicEntityTransferWithComplexTestFields(): DynamicEntityTransfer
+    {
+        return (new DynamicEntityTransfer())
+            ->setFields([
+                'productAbstractProducts' => [
+                    [
+                        'test_field' => 'test_value',
+                        'productSearch' => [
+                            [
+                                'test_field' => 'test_value',
+                            ],
+                        ],
+                        'productStocks' => [
+                            [
+                                'test_field' => 'test_value',
+                            ],
+                        ],
+                        'productLocalizedAttributes' => [
+                            [
+                                'test_field' => 'test_value',
+                                'thisIsTest' => [
+                                    [
+                                        'test_field' => 'test_value',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
     }
 
     /**
