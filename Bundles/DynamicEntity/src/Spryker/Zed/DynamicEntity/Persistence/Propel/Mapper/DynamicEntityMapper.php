@@ -157,6 +157,28 @@ class DynamicEntityMapper
     }
 
     /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entityRecord
+     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
+     */
+    public function mapEntityRecordToDynamicEntityTransfer(
+        ActiveRecordInterface $entityRecord,
+        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
+        DynamicEntityTransfer $dynamicEntityTransfer
+    ): DynamicEntityTransfer {
+        $indexedFieldDefinitions = $this->indexDynamicEntityFieldDefinitionsByTableFieldName($dynamicEntityDefinitionTransfer);
+        $identifierVisibleName = $this->getIdentifierVisibleName($dynamicEntityDefinitionTransfer->getIdentifierOrFail(), $dynamicEntityDefinitionTransfer);
+        $dynamicEntityFields = $this->mapRecordFieldsToDynamicEntityFieldsArray($entityRecord, $indexedFieldDefinitions);
+        $dynamicEntityTransfer
+            ->setFields($dynamicEntityFields)
+            ->setIdentifier($dynamicEntityFields[$identifierVisibleName]);
+
+        return $dynamicEntityTransfer;
+    }
+
+    /**
      * @param array<mixed> $dynamicEntityConfigurationData
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
      *

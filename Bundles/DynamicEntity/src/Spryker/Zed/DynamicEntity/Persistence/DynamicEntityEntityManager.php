@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
-use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
@@ -456,8 +455,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         ActiveRecordInterface $activeRecord,
         bool $isChildEntity = false
     ): DynamicEntityCollectionResponseTransfer {
-        $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
-
         /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord */
         $activeRecord = $this->getFactory()->createDynamicEntityMapper()->mapDynamicEntityTransferToDynamicEntity(
             $dynamicEntityTransfer,
@@ -477,8 +474,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             throw $exception;
         }
 
-        $dynamicEntityTransfer = $this->buildDynamicEntityFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord);
-        $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $dynamicEntityDefinitionTransfer, $activeRecord, $dynamicEntityConfigurationTransfer);
+        $dynamicEntityTransfer = $this->getFactory()->createDynamicEntityMapper()->mapEntityRecordToDynamicEntityTransfer(
+            $activeRecord,
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
+            $dynamicEntityTransfer,
+        );
 
         if ($isChildEntity === false) {
             $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
@@ -589,63 +589,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             ->setParameters($customErrorParameters);
 
         return $dynamicEntityCollectionResponseTransfer->addError($errorMessageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
-     */
-    protected function addIdentifierToFields(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
-        ActiveRecordInterface $activeRecord,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityTransfer {
-        $identifier = $dynamicEntityDefinitionTransfer->getIdentifierOrFail();
-
-        $identifierVisibleName = $this->getIdentifierVisibleName($identifier, $dynamicEntityConfigurationTransfer);
-
-        $identifierValue = $activeRecord->getByName($identifier);
-        $dynamicEntityTransfer->setFields(array_merge(
-            $dynamicEntityTransfer->getFields(),
-            [$identifierVisibleName => $identifierValue],
-        ));
-        $dynamicEntityTransfer->setIdentifier($identifierValue);
-
-        return $dynamicEntityTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
-     */
-    protected function buildDynamicEntityFields(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
-        ActiveRecordInterface $activeRecord
-    ): DynamicEntityTransfer {
-        $activeRecord = $activeRecord->toArray();
-        $entityFields = [];
-        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
-            $fieldName = $fieldDefinitionTransfer->getFieldNameOrFail();
-            $fieldVisibleName = $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
-            $fieldValue = $activeRecord[$fieldName];
-            $entityFields[$fieldVisibleName] = $fieldValue;
-        }
-
-        $dynamicEntityTransfer->setFields(array_merge(
-            $dynamicEntityTransfer->getFields(),
-            $entityFields,
-        ));
-
-        return $dynamicEntityTransfer;
     }
 
     /**
