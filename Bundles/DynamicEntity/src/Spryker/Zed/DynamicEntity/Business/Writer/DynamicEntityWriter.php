@@ -10,11 +10,9 @@ namespace Spryker\Zed\DynamicEntity\Business\Writer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
-use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
-use Generated\Shared\Transfer\DynamicEntityTransfer;
-use Generated\Shared\Transfer\RawDynamicEntityTransfer;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface;
 
@@ -31,6 +29,11 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
     protected DynamicEntityToConnectionInterface $propelConnection;
 
     /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
+     */
+    protected DynamicEntityMapperInterface $dynamicEntityMapper;
+
+    /**
      * @var array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface>
      */
     protected array $dynamicEntityPostCreatePlugins;
@@ -43,17 +46,20 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
     /**
      * @param \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityEntityManagerInterface $entityManager
      * @param \Spryker\Zed\DynamicEntity\Dependency\External\DynamicEntityToConnectionInterface $propelConnection
+     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
      * @param array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface> $dynamicEntityPostCreatePlugins
      * @param array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostUpdatePluginInterface> $dynamicEntityPostUpdatePlugins
      */
     public function __construct(
         DynamicEntityEntityManagerInterface $entityManager,
         DynamicEntityToConnectionInterface $propelConnection,
+        DynamicEntityMapperInterface $dynamicEntityMapper,
         array $dynamicEntityPostCreatePlugins,
         array $dynamicEntityPostUpdatePlugins = []
     ) {
         $this->entityManager = $entityManager;
         $this->propelConnection = $propelConnection;
+        $this->dynamicEntityMapper = $dynamicEntityMapper;
         $this->dynamicEntityPostCreatePlugins = $dynamicEntityPostCreatePlugins;
         $this->dynamicEntityPostUpdatePlugins = $dynamicEntityPostUpdatePlugins;
     }
@@ -157,20 +163,42 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): DynamicEntityPostEditResponseTransfer {
-        $dynamicEntityPostEditResponseTransfer = new DynamicEntityPostEditResponseTransfer();
-        foreach ($this->dynamicEntityPostCreatePlugins as $dynamicEntityPostCreatePlugin) {
-            $dynamicEntityPostCreatePlugin->postCreate(
-                $this->createDynamicEntityPostEditRequestTransfer(
-                    $dynamicEntityConfigurationTransfer,
-                    $dynamicEntityCollectionResponseTransfer,
-                ),
+        $dynamicEntityPostEditRequestTransfers = $this->dynamicEntityMapper
+            ->mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityCollectionResponseTransfer,
             );
+
+        foreach ($dynamicEntityPostEditRequestTransfers as $dynamicEntityPostEditRequestTransfer) {
+            $dynamicEntityPostEditResponseTransfer = $this->executeDynamicEntityPostCreatePluginsForPostEditRequestTransfer($dynamicEntityPostEditRequestTransfer);
+
             if (count($dynamicEntityPostEditResponseTransfer->getErrors()) > 0) {
                 return $dynamicEntityPostEditResponseTransfer;
             }
         }
 
-        return $dynamicEntityPostEditResponseTransfer;
+        return $dynamicEntityPostEditResponseTransfer ?? new DynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    protected function executeDynamicEntityPostCreatePluginsForPostEditRequestTransfer(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer {
+        foreach ($this->dynamicEntityPostCreatePlugins as $dynamicEntityPostCreatePlugin) {
+            $dynamicEntityPostEditResponseTransfer = $dynamicEntityPostCreatePlugin->postCreate(
+                $dynamicEntityPostEditRequestTransfer,
+            );
+
+            if (count($dynamicEntityPostEditResponseTransfer->getErrors()) > 0) {
+                return $dynamicEntityPostEditResponseTransfer;
+            }
+        }
+
+        return $dynamicEntityPostEditResponseTransfer ?? new DynamicEntityPostEditResponseTransfer();
     }
 
     /**
@@ -183,13 +211,34 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): DynamicEntityPostEditResponseTransfer {
-        $dynamicEntityPostEditResponseTransfer = new DynamicEntityPostEditResponseTransfer();
+        $dynamicEntityPostEditRequestTransfers = $this->dynamicEntityMapper
+            ->mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityCollectionResponseTransfer,
+            );
+
+        foreach ($dynamicEntityPostEditRequestTransfers as $dynamicEntityPostEditRequestTransfer) {
+            $dynamicEntityPostEditResponseTransfer = $this->executeDynamicEntityPostUpdatePluginsForPostEditRequestTransfer($dynamicEntityPostEditRequestTransfer);
+
+            if (count($dynamicEntityPostEditResponseTransfer->getErrors()) > 0) {
+                return $dynamicEntityPostEditResponseTransfer;
+            }
+        }
+
+        return $dynamicEntityPostEditResponseTransfer ?? new DynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    protected function executeDynamicEntityPostUpdatePluginsForPostEditRequestTransfer(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer {
         foreach ($this->dynamicEntityPostUpdatePlugins as $dynamicEntityPostUpdatePlugin) {
             $dynamicEntityPostEditResponseTransfer = $dynamicEntityPostUpdatePlugin->postUpdate(
-                $this->createDynamicEntityPostEditRequestTransfer(
-                    $dynamicEntityConfigurationTransfer,
-                    $dynamicEntityCollectionResponseTransfer,
-                ),
+                $dynamicEntityPostEditRequestTransfer,
             );
 
             if (count($dynamicEntityPostEditResponseTransfer->getErrors()) > 0) {
@@ -197,64 +246,6 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
             }
         }
 
-        return $dynamicEntityPostEditResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer
-     */
-    protected function createDynamicEntityPostEditRequestTransfer(
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-    ): DynamicEntityPostEditRequestTransfer {
-        $dynamicEntityPostEditRequestTransfer = new DynamicEntityPostEditRequestTransfer();
-        $indexedFieldDefinitions = $this->getFieldNamesIndexedByFieldVisibleName($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail());
-        foreach ($dynamicEntityCollectionResponseTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $dynamicEntityFields = $this->getFieldValuesIndexedByFieldName($dynamicEntityTransfer, $indexedFieldDefinitions);
-            $dynamicEntityPostEditRequestTransfer->addRawDynamicEntity(
-                (new RawDynamicEntityTransfer())->setFields($dynamicEntityFields),
-            );
-        }
-
-        return $dynamicEntityPostEditRequestTransfer
-            ->setTableName($dynamicEntityConfigurationTransfer->getTableNameOrFail());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param array<string, string> $indexedFieldDefinitions
-     *
-     * @return array<string, string>
-     */
-    protected function getFieldValuesIndexedByFieldName(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        array $indexedFieldDefinitions
-    ): array {
-        $dynamicEntityFields = [];
-
-        foreach ($dynamicEntityTransfer->getFields() as $fieldName => $fieldValue) {
-            $dynamicEntityFields[$indexedFieldDefinitions[$fieldName]] = $fieldValue;
-        }
-
-        return $dynamicEntityFields;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
-     *
-     * @return array<string, string>
-     */
-    protected function getFieldNamesIndexedByFieldVisibleName(DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer): array
-    {
-        $result = [];
-
-        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinition) {
-            $result[$fieldDefinition->getFieldVisibleNameOrFail()] = $fieldDefinition->getFieldNameOrFail();
-        }
-
-        return $result;
+        return $dynamicEntityPostEditResponseTransfer ?? new DynamicEntityPostEditResponseTransfer();
     }
 }

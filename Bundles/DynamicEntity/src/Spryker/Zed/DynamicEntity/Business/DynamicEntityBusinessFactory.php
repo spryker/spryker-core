@@ -17,6 +17,10 @@ use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpander;
+use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexer;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstallerInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\Validator\FieldMappingValidator;
@@ -114,6 +118,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
         return new DynamicEntityWriter(
             $this->getEntityManager(),
             $this->getConnection(),
+            $this->createDynamicEntityMapper(),
             $this->getDynamicEntityPostCreatePlugins(),
             $this->getDynamicEntityPostUpdatePlugins(),
         );
@@ -376,7 +381,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDynamicEntityMapper(): DynamicEntityMapperInterface
     {
-        return new DynamicEntityMapper();
+        return new DynamicEntityMapper(
+            $this->createPostEditRequestExpander(),
+        );
     }
 
     /**
@@ -452,6 +459,24 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new DynamicEntityConfigurationTreeValidator(
             $this->createDynamicEntityMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface
+     */
+    public function createDynamicEntityIndexer(): DynamicEntityIndexerInterface
+    {
+        return new DynamicEntityIndexer();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface
+     */
+    public function createPostEditRequestExpander(): DynamicEntityPostEditRequestExpanderInterface
+    {
+        return new DynamicEntityPostEditRequestExpander(
+            $this->createDynamicEntityIndexer(),
         );
     }
 }

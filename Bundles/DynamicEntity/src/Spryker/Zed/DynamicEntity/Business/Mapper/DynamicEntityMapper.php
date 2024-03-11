@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
@@ -15,7 +16,9 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
+use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface;
 
 class DynamicEntityMapper implements DynamicEntityMapperInterface
 {
@@ -38,6 +41,19 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
      * @var string
      */
     protected const DEFINITION = 'definition';
+
+    /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface
+     */
+    protected DynamicEntityPostEditRequestExpanderInterface $dynamicEntityPostEditRequestExpander;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface $dynamicEntityPostEditRequestExpander
+     */
+    public function __construct(DynamicEntityPostEditRequestExpanderInterface $dynamicEntityPostEditRequestExpander)
+    {
+        $this->dynamicEntityPostEditRequestExpander = $dynamicEntityPostEditRequestExpander;
+    }
 
     /**
      * @param array<string, mixed> $dynamicEntityConfiguration
@@ -247,6 +263,49 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         return (new DynamicEntityCriteriaTransfer())
             ->setDynamicEntityConditions($dynamicEntityConditionsTransfer)
             ->setRelationChains($implodedRelationChains);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer>
+     */
+    public function mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+    ): array {
+        $dynamicEntityPostEditRequestTransfers = $this->addPostEditRequestTransfer(
+            [],
+            $dynamicEntityConfigurationTransfer->getTableNameOrFail(),
+        );
+
+        $dynamicEntityPostEditRequestTransfers = $this->dynamicEntityPostEditRequestExpander
+            ->expandDynamicEntityCollectionResponseTransferWithRawDynamicEntityTransfers(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityCollectionResponseTransfer->getDynamicEntities(),
+                $dynamicEntityPostEditRequestTransfers,
+            );
+
+        return $dynamicEntityPostEditRequestTransfers;
+    }
+
+    /**
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer> $dynamicEntityPostEditRequestTransfers
+     * @param string $tableName
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer>
+     */
+    protected function addPostEditRequestTransfer(array $dynamicEntityPostEditRequestTransfers, string $tableName): array
+    {
+        if (isset($dynamicEntityPostEditRequestTransfers[$tableName])) {
+            return $dynamicEntityPostEditRequestTransfers;
+        }
+
+        $dynamicEntityPostEditRequestTransfers[$tableName] = (new DynamicEntityPostEditRequestTransfer())
+            ->setTableName($tableName);
+
+        return $dynamicEntityPostEditRequestTransfers;
     }
 
     /**

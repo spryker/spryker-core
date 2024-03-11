@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
@@ -69,4 +70,15 @@ interface DynamicEntityMapperInterface
     public function mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
     ): DynamicEntityCriteriaTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer>
+     */
+    public function mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+    ): array;
 }
