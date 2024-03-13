@@ -112,6 +112,10 @@ class UrlDataHelper extends Module
             ->seed($urlOverride)
             ->build();
 
+        if ($urlTransfer->getUrlPrefix() !== null) {
+            $urlTransfer->setUrl($urlTransfer->getUrlPrefix() . $urlTransfer->getUrl());
+        }
+
         if ($urlTransfer->getFkLocale() === null) {
             $currentLocaleTransfer = $this->getLocaleFacade()->getCurrentLocale();
 

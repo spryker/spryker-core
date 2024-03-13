@@ -13,10 +13,12 @@ use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantUserHelper extends Module
 {
     use DataCleanupHelperTrait;
+    use LocatorHelperTrait;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
@@ -40,6 +42,29 @@ class MerchantUserHelper extends Module
             ->setIdMerchant($merchantUserEntity->getFkMerchant())
             ->setIdUser($merchantUserEntity->getFkUser())
             ->setMerchant($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function haveMerchantUserWithAclEntities(
+        MerchantTransfer $merchantTransfer,
+        UserTransfer $userTransfer
+    ): MerchantUserTransfer {
+        $merchantUserTransfer = (new MerchantUserTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->setIdUser($userTransfer->getIdUserOrFail())
+            ->setMerchant($merchantTransfer)
+            ->setUser($userTransfer);
+
+        return $this->getLocator()
+            ->merchantUser()
+            ->facade()
+            ->createMerchantUser($merchantUserTransfer)
+            ->getMerchantUser();
     }
 
     /**

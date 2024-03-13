@@ -1,0 +1,6 @@
+{
+    "include": {
+        "codeception/codeception": "Provides an adapter for codeception to use the spryker test environment.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

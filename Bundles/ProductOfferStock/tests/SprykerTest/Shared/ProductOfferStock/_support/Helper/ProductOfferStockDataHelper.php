@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\ProductOfferStock\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductOfferStockBuilder;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 use SprykerTest\Shared\Stock\Helper\StockDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -21,15 +22,20 @@ class ProductOfferStockDataHelper extends Module
 
     /**
      * @param array $seed
+     * @param array<list<mixed>>|null $stockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function haveProductOfferStock(array $seed = []): ProductOfferStockTransfer
+    public function haveProductOfferStock(array $seed = [], ?array $stockTransfers = null): ProductOfferStockTransfer
     {
         $productOfferStockBuilder = new ProductOfferStockBuilder($seed);
         $productOfferStockTransfer = $productOfferStockBuilder->build();
 
-        $productOfferStockTransfer = $this->setProductOfferStockDependencies($seed, $productOfferStockTransfer);
+        $productOfferStockTransfer = $this->setProductOfferStockDependencies(
+            $seed,
+            $productOfferStockTransfer,
+            $stockTransfers,
+        );
 
         $productOfferStockEntity = (new SpyProductOfferStock());
         $productOfferStockEntity->fromArray($productOfferStockTransfer->toArray());
@@ -49,11 +55,21 @@ class ProductOfferStockDataHelper extends Module
     /**
      * @param array $seed
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
+     * @param array<list<mixed>>|null $stockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    protected function setProductOfferStockDependencies(array $seed, ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer
-    {
+    protected function setProductOfferStockDependencies(
+        array $seed,
+        ProductOfferStockTransfer $productOfferStockTransfer,
+        ?array $stockTransfers = null
+    ): ProductOfferStockTransfer {
+        if ($stockTransfers) {
+            $productOfferStockTransfer->setStock((new StockTransfer())->fromArray($stockTransfers[0], true));
+
+            return $productOfferStockTransfer;
+        }
+
         $productOfferStockTransfer->setStock(
             $this->getStockDataHelper()->haveStock($seed[ProductOfferStockTransfer::STOCK] ?? []),
         );

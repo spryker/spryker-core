@@ -155,7 +155,7 @@ class ProductDataHelper extends Module
 
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))
-            ->withLocalizedAttributes($localizedAttributes)
+            ->withLocalizedAttributes($productAbstractOverride[ProductAbstractTransfer::LOCALIZED_ATTRIBUTES] ?? $localizedAttributes)
             ->withStoreRelation($allStoresRelation)
             ->build();
 

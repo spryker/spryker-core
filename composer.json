@@ -1001,6 +1001,7 @@
         "spryker/tax-storage": "*",
         "spryker/testify": "*",
         "spryker/testify-async-api": "*",
+        "spryker/testify-backend-api": "*",
         "spryker/touch": "*",
         "spryker/transfer": "*",
         "spryker/translator": "*",
