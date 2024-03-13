@@ -142,7 +142,7 @@ interface SessionRedisConstants
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL} instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_SCHEME} instead.
      *
      * @var string
      */
