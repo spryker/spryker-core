@@ -114,6 +114,7 @@
         <property name="patch" type="GlueResourceMethodConfiguration"/>
         <property name="delete" type="GlueResourceMethodConfiguration"/>
         <property name="options" type="GlueResourceMethodConfiguration"/>
+        <property name="put" type="GlueResourceMethodConfiguration"/>
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
