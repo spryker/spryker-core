@@ -375,7 +375,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                     true,
                 );
 
-                if ($childDynamicEntity->getChildRelations()->count() > 0) {
+                if ($childDynamicEntity->getChildRelations()->count() > 0 && $activeRecord->getPrimaryKey() !== null) {
                     $dynamicEntityCollectionResponseTransfer = $this->createChildDynamicEntitiesCollection(
                         $childDynamicEntity,
                         $dynamicEntityCollectionResponseTransfer,
