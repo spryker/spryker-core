@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\DynamicStoreRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 
 interface StoresResourceMapperInterface
@@ -17,5 +18,17 @@ interface StoresResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreToStoresRestAttribute(array $countries, array $currencies): StoresRestAttributesTransfer;
+    public function mapStoreToStoresRestAttribute(
+        array $countries,
+        array $currencies
+    ): StoresRestAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicStoreRestAttributesTransfer
+     */
+    public function mapStoresRestAttributesTransferToDynamicStoreRestAttributesTransfer(
+        StoresRestAttributesTransfer $storesRestAttributesTransfer
+    ): DynamicStoreRestAttributesTransfer;
 }

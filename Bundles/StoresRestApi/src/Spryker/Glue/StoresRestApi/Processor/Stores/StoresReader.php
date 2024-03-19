@@ -120,15 +120,21 @@ class StoresReader implements StoresReaderInterface
         StoreTransfer $storeTransfer,
         RestResponseInterface $restResponse
     ): RestResponseInterface {
-        $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
+        $restAttributesTransfer = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
             $this->countryReader->getStoresCountryAttributes($storeTransfer->getCountries()),
             $this->currencyReader->getStoresCurrencyAttributes($storeTransfer->getAvailableCurrencyIsoCodes()),
         );
 
+        if ($this->storeClient->isDynamicStoreEnabled()) {
+            $restAttributesTransfer = $this->storesResourceMapper->mapStoresRestAttributesTransferToDynamicStoreRestAttributesTransfer(
+                $restAttributesTransfer,
+            );
+        }
+
         $restResource = $this->restResourceBuilder->createRestResource(
             StoresRestApiConfig::RESOURCE_STORES,
             $storeTransfer->getName(),
-            $storesRestAttributes,
+            $restAttributesTransfer,
         );
 
         return $restResponse->addResource($restResource);

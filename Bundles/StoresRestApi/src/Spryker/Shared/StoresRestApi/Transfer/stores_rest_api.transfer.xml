@@ -9,6 +9,13 @@
         <property name="countries" type="StoreCountryRestAttributes[]" singular="country"/>
     </transfer>
 
+    <transfer name="DynamicStoreRestAttributes">
+        <property name="defaultCurrency" type="string"/>
+        <property name="currencies" type="StoreCurrencyRestAttributes[]" singular="currency"/>
+        <property name="locales" type="DynamicStoreLocaleRestAttributes[]" singular="locale"/>
+        <property name="countries" type="StoreCountryRestAttributes[]" singular="country"/>
+    </transfer>
+
     <transfer name="StoreCountryRestAttributes">
         <property name="iso2Code" type="string"/>
         <property name="iso3Code" type="string"/>
@@ -25,6 +32,10 @@
 
     <transfer name="StoreLocaleRestAttributes">
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="DynamicStoreLocaleRestAttributes">
         <property name="name" type="string"/>
     </transfer>
 

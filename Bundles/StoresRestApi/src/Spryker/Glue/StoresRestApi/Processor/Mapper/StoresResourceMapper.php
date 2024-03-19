@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\DynamicStoreRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 
@@ -31,8 +32,10 @@ class StoresResourceMapper implements StoresResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreToStoresRestAttribute(array $countries, array $currencies): StoresRestAttributesTransfer
-    {
+    public function mapStoreToStoresRestAttribute(
+        array $countries,
+        array $currencies
+    ): StoresRestAttributesTransfer {
         $storesRestAttributes = new StoresRestAttributesTransfer();
 
         $storesRestAttributes = $this->addLocaleToStoresRestAttributes(
@@ -58,6 +61,17 @@ class StoresResourceMapper implements StoresResourceMapperInterface
         );
 
         return $storesRestAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicStoreRestAttributesTransfer
+     */
+    public function mapStoresRestAttributesTransferToDynamicStoreRestAttributesTransfer(
+        StoresRestAttributesTransfer $storesRestAttributesTransfer
+    ): DynamicStoreRestAttributesTransfer {
+        return (new DynamicStoreRestAttributesTransfer())->fromArray($storesRestAttributesTransfer->toArray(), true);
     }
 
     /**
