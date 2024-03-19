@@ -85,6 +85,41 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function updateCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        $companyBusinessUnitEntity = $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->findOneByIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+
+        if ($companyBusinessUnitEntity === null) {
+            return $companyBusinessUnitTransfer;
+        }
+
+        $companyBusinessUnitEntity = $this->getMapper()->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
+            $companyBusinessUnitTransfer,
+            $companyBusinessUnitEntity,
+        );
+        $companyBusinessUnitEntity->save();
+
+        if (
+            $companyBusinessUnitTransfer->isPropertyModified(CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT) &&
+            $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() === null
+        ) {
+            $this->clearParentBusinessUnitByCompanyBusinessUnitId($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        }
+
+        return $this->getMapper()->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+            $companyBusinessUnitEntity,
+            new CompanyBusinessUnitTransfer(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper\CompanyBusinessUnitMapperInterface
      */
     protected function getMapper(): CompanyBusinessUnitMapperInterface

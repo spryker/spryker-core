@@ -44,6 +44,11 @@ class CompanyBusinessUnitTable extends AbstractTable
     /**
      * @var string
      */
+    protected const COL_PHONE = SpyCompanyBusinessUnitTableMap::COL_PHONE;
+
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
     /**
@@ -102,6 +107,7 @@ class CompanyBusinessUnitTable extends AbstractTable
             static::COL_ADDRESS => 'Address',
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
+            static::COL_PHONE => 'Phone',
             static::COL_ACTIONS => 'Actions',
         ]);
 
@@ -145,6 +151,7 @@ class CompanyBusinessUnitTable extends AbstractTable
                 static::COL_ADDRESS => $this->formatAddress($item),
                 static::COL_IBAN => $item->getIban(),
                 static::COL_BIC => $item->getBic(),
+                static::COL_PHONE => $item->getPhone(),
                 static::COL_ACTIONS => $this->buildLinks($item),
             ];
         }

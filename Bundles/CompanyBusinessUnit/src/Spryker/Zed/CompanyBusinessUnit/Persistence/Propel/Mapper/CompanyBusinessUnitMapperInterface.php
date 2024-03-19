@@ -45,4 +45,15 @@ interface CompanyBusinessUnitMapperInterface
         SpyCompanyBusinessUnit $companyBusinessUnitEntity,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
+     *
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit
+     */
+    public function mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        SpyCompanyBusinessUnit $companyBusinessUnitEntity
+    ): SpyCompanyBusinessUnit;
 }

@@ -33,4 +33,13 @@ interface CompanyBusinessUnitEntityManagerInterface
      * @return void
      */
     public function clearParentBusinessUnit(int $idCompanyBusinessUnit): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function updateCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer;
 }

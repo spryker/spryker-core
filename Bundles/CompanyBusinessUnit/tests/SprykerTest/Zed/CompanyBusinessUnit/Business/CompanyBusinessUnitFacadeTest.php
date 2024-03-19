@@ -524,4 +524,26 @@ class CompanyBusinessUnitFacadeTest extends Unit
         // Assert
         $this->assertNull($companyBusinessUnitTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testUpdateShouldPersistNullablePhoneNumber(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransferOriginal = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+            ->fromArray($companyBusinessUnitTransferOriginal->toArray());
+        $companyBusinessUnitTransfer->setPhone(null);
+
+        // Act
+        $this->tester->getFacade()->update($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->tester->getFacade()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
+        // Assert
+        $this->assertNotNull($companyBusinessUnitTransferOriginal->getPhone());
+        $this->assertNull($companyBusinessUnitTransfer->getPhone());
+    }
 }

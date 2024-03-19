@@ -50,6 +50,7 @@ class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
+            ->addPhoneField($builder)
             ->addPluginForms($builder);
     }
 

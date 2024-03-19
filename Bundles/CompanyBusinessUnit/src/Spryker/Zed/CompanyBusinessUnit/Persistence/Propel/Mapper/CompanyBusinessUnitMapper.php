@@ -73,6 +73,19 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
+     *
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit
+     */
+    public function mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        SpyCompanyBusinessUnit $companyBusinessUnitEntity
+    ): SpyCompanyBusinessUnit {
+        return $companyBusinessUnitEntity->fromArray($companyBusinessUnitTransfer->toArray());
+    }
+
+    /**
      * @param \Orm\Zed\Company\Persistence\SpyCompany $companyEntity
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *

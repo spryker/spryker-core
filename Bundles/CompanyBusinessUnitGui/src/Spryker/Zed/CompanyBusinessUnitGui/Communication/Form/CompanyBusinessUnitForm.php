@@ -68,6 +68,11 @@ class CompanyBusinessUnitForm extends AbstractType
     public const FIELD_BIC = 'bic';
 
     /**
+     * @var string
+     */
+    protected const FIELD_PHONE = 'phone';
+
+    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -90,6 +95,7 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
+            ->addPhoneField($builder)
             ->addPluginForms($builder);
 
         $builder->addEventListener(
@@ -248,6 +254,25 @@ class CompanyBusinessUnitForm extends AbstractType
         foreach ($this->getFactory()->getCompanyBusinessUnitFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPhoneField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_PHONE, TextType::class, [
+            'label' => 'Phone',
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
+            'empty_data' => '',
+        ]);
 
         return $this;
     }

@@ -188,7 +188,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return $companyBusinessUnitResponseTransfer;
         }
 
-        $companyBusinessUnitTransfer = $this->entityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->entityManager->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->companyBusinessUnitPluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
