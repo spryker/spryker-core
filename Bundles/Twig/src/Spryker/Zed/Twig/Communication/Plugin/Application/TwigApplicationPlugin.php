@@ -112,7 +112,7 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function getTwigOptions(ContainerInterface $container): array
     {
-        $isDebugOn = $container->get(static::SERVICE_DEBUG);
+        $isDebugOn = $container->has(static::SERVICE_DEBUG) && $container->get(static::SERVICE_DEBUG);
         $twigOptions = $this->getConfig()->getTwigOptions();
         $globalOptions = [
             'charset' => $container->get(static::SERVICE_CHARSET),
