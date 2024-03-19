@@ -59,7 +59,10 @@ class GracefulRunner implements GracefulRunnerInterface
             }
         }
 
-        $signalHandler->unregister($this->config->getSignalsToAddHandlerTo());
+        if (!method_exists($signalHandler, '__destruct')) {
+            /** @phpstan-ignore-next-line */
+            $signalHandler->unregister($this->config->getSignalsToAddHandlerTo());
+        }
 
         return $this->executedIterations;
     }
