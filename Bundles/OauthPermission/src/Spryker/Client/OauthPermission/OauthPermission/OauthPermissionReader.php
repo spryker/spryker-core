@@ -51,7 +51,11 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
             return new PermissionCollectionTransfer();
         }
 
-        [$type, $accessToken] = $this->extractToken($authorizationToken);
+        $accessToken = $this->extractToken($authorizationToken);
+
+        if (!$accessToken) {
+            return new PermissionCollectionTransfer();
+        }
 
         $oauthAccessTokenDataTransfer = $this->oauthService->extractAccessTokenData($accessToken);
 
@@ -85,11 +89,16 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     /**
      * @param string $authorizationToken
      *
-     * @return array<string>
+     * @return string|null
      */
-    protected function extractToken(string $authorizationToken): array
+    protected function extractToken(string $authorizationToken): ?string
     {
-        /** @phpstan-var array<string> */
-        return preg_split('/\s+/', $authorizationToken);
+        $explodedToken = explode(' ', $authorizationToken);
+
+        if (count($explodedToken) < 2) {
+            return null;
+        }
+
+        return end($explodedToken);
     }
 }
