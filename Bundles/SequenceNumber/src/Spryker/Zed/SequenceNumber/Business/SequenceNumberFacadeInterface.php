@@ -14,6 +14,8 @@ interface SequenceNumberFacadeInterface
     /**
      * Specification:
      * - Generates a unique sequence value
+     * - Selects and locks row to the transaction end.
+     * - Avoid using inside transactions due to performance reasons.
      *
      * @api
      *

@@ -147,20 +147,23 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     {
         $this->assertOrderRequirements($quoteTransfer);
 
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
-            $this->saveOrderSalesTransaction($quoteTransfer, $saveOrderTransfer);
+        $orderReference = $this->orderReferenceGenerator->generateOrderReference($quoteTransfer);
+
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer, $orderReference) {
+            $this->saveOrderSalesTransaction($quoteTransfer, $saveOrderTransfer, $orderReference);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param string $orderReference
      *
      * @return void
      */
-    protected function saveOrderSalesTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    protected function saveOrderSalesTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer, string $orderReference): void
     {
-        $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
+        $salesOrderEntity = $this->saveOrderEntity($quoteTransfer, $orderReference);
 
         $this->saveOrderTotals($quoteTransfer, $salesOrderEntity->getIdSalesOrder());
         $this->saveOrderItems($quoteTransfer, $salesOrderEntity);
@@ -208,13 +211,14 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $orderReference
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function saveOrderEntity(QuoteTransfer $quoteTransfer)
+    protected function saveOrderEntity(QuoteTransfer $quoteTransfer, string $orderReference)
     {
         $salesOrderEntity = $this->createSalesOrderEntity();
-        $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity);
+        $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity, $orderReference);
         $this->hydrateAddresses($quoteTransfer, $salesOrderEntity);
         $this->addLocale($salesOrderEntity);
         $salesOrderEntity->save();
@@ -289,17 +293,18 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param string $orderReference
      *
      * @return void
      */
-    protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
+    protected function hydrateSalesOrderEntity(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity, string $orderReference)
     {
         $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
         $salesOrderEntity->setStore($this->storeFacade->getCurrentStore()->getNameOrFail());
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-        $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
+        $salesOrderEntity->setOrderReference($orderReference);
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
 
         $this->hydrateSalesOrderEntityFromPlugins($quoteTransfer, $salesOrderEntity);

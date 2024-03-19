@@ -109,21 +109,23 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->assertOrderRequirements($quoteTransfer);
+        $orderReference = $this->orderReferenceGenerator->generateOrderReference($quoteTransfer);
 
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
-            $this->saveOrderTransaction($quoteTransfer, $saveOrderTransfer);
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer, $orderReference) {
+            $this->saveOrderTransaction($quoteTransfer, $saveOrderTransfer, $orderReference);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param string $orderReference
      *
      * @return void
      */
-    protected function saveOrderTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    protected function saveOrderTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer, string $orderReference): void
     {
-        $salesOrderEntityTransfer = $this->saveOrderEntity($quoteTransfer);
+        $salesOrderEntityTransfer = $this->saveOrderEntity($quoteTransfer, $orderReference);
         $saveOrderTransfer = $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderEntityTransfer);
         $this->executeOrderPostSavePlugins($saveOrderTransfer, $quoteTransfer);
     }
@@ -145,13 +147,14 @@ class SalesOrderWriter implements SalesOrderWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $orderReference
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    protected function saveOrderEntity(QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
+    protected function saveOrderEntity(QuoteTransfer $quoteTransfer, string $orderReference): SpySalesOrderEntityTransfer
     {
         $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
-        $salesOrderEntityTransfer = $this->hydrateSalesOrderEntityTransfer($quoteTransfer, $salesOrderEntityTransfer);
+        $salesOrderEntityTransfer = $this->hydrateSalesOrderEntityTransfer($quoteTransfer, $salesOrderEntityTransfer, $orderReference);
         $salesOrderEntityTransfer = $this->hydrateAddresses($quoteTransfer, $salesOrderEntityTransfer);
         $salesOrderEntityTransfer = $this->addLocale($salesOrderEntityTransfer);
         $salesOrderEntityTransfer = $this->entityManager->saveOrderEntity($salesOrderEntityTransfer);
@@ -162,19 +165,21 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
+     * @param string $orderReference
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
     protected function hydrateSalesOrderEntityTransfer(
         QuoteTransfer $quoteTransfer,
-        SpySalesOrderEntityTransfer $salesOrderEntityTransfer
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
+        string $orderReference
     ): SpySalesOrderEntityTransfer {
         $salesOrderEntityTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $salesOrderEntityTransfer = $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntityTransfer);
         $salesOrderEntityTransfer->setPriceMode($quoteTransfer->getPriceMode());
         $salesOrderEntityTransfer->setStore($this->storeFacade->getCurrentStore()->getName());
         $salesOrderEntityTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-        $salesOrderEntityTransfer->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
+        $salesOrderEntityTransfer->setOrderReference($orderReference);
         $salesOrderEntityTransfer->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
 
         $salesOrderEntityTransfer = $this->executeOrderExpanderPreSavePlugins($quoteTransfer, $salesOrderEntityTransfer);
