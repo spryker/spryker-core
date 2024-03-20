@@ -26,13 +26,6 @@ interface SharedCartToMultiCartClientInterface
     public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void;
 
     /**
-     * @param int $idQuote
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    public function findQuoteById(int $idQuote): ?QuoteTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

@@ -12,7 +12,6 @@ use Spryker\Client\SharedCart\CartDeleteChecker\CartDeleteChecker;
 use Spryker\Client\SharedCart\CartDeleteChecker\CartDeleteCheckerInterface;
 use Spryker\Client\SharedCart\CartSharer\CartSharer;
 use Spryker\Client\SharedCart\CartSharer\CartSharerInterface;
-use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
@@ -69,14 +68,6 @@ class SharedCartFactory extends AbstractFactory
         return new SwitchDefaultCartByResourceShare(
             $this->getMultiCartClient(),
         );
-    }
-
-    /**
-     * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface
-     */
-    public function getCartClient(): SharedCartToCartClientInterface
-    {
-        return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_CART);
     }
 
     /**

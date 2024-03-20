@@ -45,16 +45,6 @@ class SharedCartToMultiCartClientBridge implements SharedCartToMultiCartClientIn
     }
 
     /**
-     * @param int $idQuote
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    public function findQuoteById(int $idQuote): ?QuoteTransfer
-    {
-        return $this->multiCartClient->findQuoteById($idQuote);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

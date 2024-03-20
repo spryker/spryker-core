@@ -9,7 +9,6 @@ namespace Spryker\Client\SharedCart;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientBridge;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientBridge;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientBridge;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientBridge;
@@ -46,11 +45,6 @@ class SharedCartDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
-    public const CLIENT_CART = 'CLIENT_CART';
-
-    /**
-     * @var string
-     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
@@ -61,27 +55,12 @@ class SharedCartDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
-        $container = $this->addCartClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addMultiCartClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuoteClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCartClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_CART, function (Container $container) {
-            return new SharedCartToCartClientBridge($container->getLocator()->cart()->client());
-        });
 
         return $container;
     }

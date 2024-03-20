@@ -20,6 +20,13 @@ use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 class CartHandler implements CartHandlerInterface
 {
     /**
+     * @uses Spryker\Client\SharedCart\Plugin\ProductSeparatePersistentCartChangeExpanderPlugin::PARAM_SEPARATE_PRODUCT
+     *
+     * @var string
+     */
+    protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+
+    /**
      * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface
      */
     protected $cartClient;
@@ -82,7 +89,7 @@ class CartHandler implements CartHandlerInterface
             );
         }
 
-        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer, [static::PARAM_SEPARATE_PRODUCT => true]);
         $this->addErrorMessages();
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
