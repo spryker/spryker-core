@@ -30,6 +30,11 @@ class PriceProductScheduleBusinessTester extends Actor
     use _generated\PriceProductScheduleBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    public const SERVICE_STORE = 'store';
+
+    /**
      * @return void
      */
     public function ensureDatabaseTableIsEmpty(): void

@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ZedRequest;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerInterface;
+use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -30,6 +32,22 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class ZedRequestCommunicationTester extends Actor
 {
     use _generated\ZedRequestCommunicationTesterActions;
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreInterface
+     */
+    public function createStoreMock(): ZedRequestToStoreInterface
+    {
+        return Stub::makeEmpty(ZedRequestToStoreInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerInterface
+     */
+    public function createMessengerMock(): ZedRequestToMessengerInterface
+    {
+        return Stub::makeEmpty(ZedRequestToMessengerInterface::class);
+    }
 
     /**
      * @param callable $controller

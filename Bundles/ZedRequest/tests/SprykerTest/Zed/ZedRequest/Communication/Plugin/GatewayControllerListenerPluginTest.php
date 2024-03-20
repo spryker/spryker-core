@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ZedRequest\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use LogicException;
 use ReflectionClass;
 use ReflectionObject;
@@ -213,6 +215,62 @@ class GatewayControllerListenerPluginTest extends Unit
     }
 
     /**
+     * @dataProvider storeDataCombitationsDataProvider
+     *
+     * @param string|null $currency
+     * @param string|null $locale
+     * @param bool $isDynamicStoreEnabled
+     *
+     * @return void
+     */
+    public function testOnKernelControllerDoesNotSetStoreData(?string $currency, ?string $locale, bool $isDynamicStoreEnabled): void
+    {
+        // Assets
+        $controller = new GatewayController();
+        $eventMock = $this->tester->createControllerEvent([$controller, 'goodAction']);
+        $storeMock = $this->tester->createStoreMock();
+
+        //Assert
+        if ($currency === null) {
+            $storeMock->expects($this->never())->method('setCurrencyIsoCode');
+        } elseif (!$isDynamicStoreEnabled) {
+            $storeMock->expects($this->once())->method('setCurrencyIsoCode')->with($currency);
+        }
+
+        if ($locale === null) {
+            $storeMock->expects($this->never())->method('setCurrentLocale');
+        } elseif (!$isDynamicStoreEnabled) {
+            $storeMock->expects($this->once())->method('setCurrentLocale')->with($locale);
+        }
+
+        // Assets
+        $controllerListenerPlugin = new GatewayControllerListenerPlugin();
+        $this->tester->mockFactoryMethod('getMessengerFacade', $this->tester->createMessengerMock());
+        $this->tester->mockFactoryMethod('getStore', $storeMock);
+        $this->tester->mockFactoryMethod('getIsDynamicStoreModeEnabled', $isDynamicStoreEnabled);
+        $controllerListenerPlugin->setFactory($this->tester->getFactory());
+        $this->initTransferServer($this->getTransferMock());
+        $request = TransferServer::getInstance()->getRequest();
+
+        if ($currency) {
+            $request->addMetaTransfer('currency', (new CurrencyTransfer())->setCode($currency));
+        }
+        if ($locale) {
+            $request->addMetaTransfer('locale', (new LocaleTransfer())->setLocaleName($locale));
+        }
+        TransferServer::getInstance()->setFixtureRequest($request);
+
+        $controllerListenerPlugin->onKernelController($eventMock);
+        $controllerCallable = $eventMock->getController();
+
+        // Action
+        $response = call_user_func($controllerCallable);
+
+        //Assert
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
+
+    /**
      * @return void
      */
     public function testTransformMessagesFromController(): void
@@ -231,6 +289,18 @@ class GatewayControllerListenerPluginTest extends Unit
         $this->assertArrayHasKey('errorMessages', $responseContent);
         $this->assertArrayHasKey('successMessages', $responseContent);
         $this->assertArrayHasKey('success', $responseContent);
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function storeDataCombitationsDataProvider(): array
+    {
+        return [
+            'Store data should be set' => ['EUR', 'de_DE', false],
+            'Store data shouldn\'t be set' => ['EUR', 'de_DE', true],
+            'Store data should\'t be set' => [null, null, false],
+        ];
     }
 
     /**

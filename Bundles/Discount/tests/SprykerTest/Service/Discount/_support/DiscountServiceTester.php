@@ -24,7 +24,7 @@ use Spryker\Service\Discount\DiscountServiceInterface;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Service\Discount\PHPMD)
  */
 class DiscountServiceTester extends Actor
 {

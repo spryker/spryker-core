@@ -12,6 +12,8 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
+use Spryker\Client\Search\SearchDependencyProvider;
+use SprykerTest\Client\Search\SearchClientTester;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +30,11 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpan
 class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
     /**
+     * @var \SprykerTest\Client\Search\SearchClientTester
+     */
+    protected SearchClientTester $tester;
+
+    /**
      * @dataProvider localizedQueryExpanderDataProvider
      *
      * @param \Elastica\Query $expectedQuery
@@ -42,6 +49,31 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         $query = $query->getSearchQuery();
 
+        $this->assertEquals($expectedQuery, $query);
+    }
+
+    /**
+     * @dataProvider localizedQueryExpanderDataProvider
+     *
+     * @param \Elastica\Query $expectedQuery
+     *
+     * @return void
+     */
+    public function testLocalizedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParametersWithCurrentLocale(Query $expectedQuery): void
+    {
+        // Arrange
+        $queryExpander = new LocalizedQueryExpanderPlugin();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientInterface $searchToLocaleClientMock */
+        $searchToLocaleClientMock = $this->tester->createLocaleClient();
+        $searchToLocaleClientMock->expects($this->once())->method('getCurrentLocale')->willReturn($this->tester::LOCALE);
+        $this->tester->setDependency(SearchDependencyProvider::CLIENT_LOCALE, $searchToLocaleClientMock);
+
+        $query = $queryExpander->expandQuery($this->createBaseQueryPlugin());
+
+        // Act
+        $query = $query->getSearchQuery();
+
+        // Assert
         $this->assertEquals($expectedQuery, $query);
     }
 
@@ -62,7 +94,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     {
         $expectedQuery = (new Query())
             ->setQuery((new BoolQuery())
-            ->addMust($this->getMatchQuery()->setField(PageIndexMap::LOCALE, 'ab_CD')));
+            ->addMust($this->getMatchQuery()->setField(PageIndexMap::LOCALE, SearchClientTester::LOCALE)));
 
         return [$expectedQuery];
     }
@@ -79,7 +111,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         $queryExpander
             ->method('getCurrentLocale')
-            ->willReturn('ab_CD');
+            ->willReturn($this->tester::LOCALE);
 
         $queryExpander->setFactory($this->getSearchFactory());
 

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Communication\Controller;
 
+use Spryker\Shared\Discount\DiscountConstants;
 use SprykerTest\Zed\Discount\DiscountCommunicationTester;
 
 /**
@@ -47,5 +48,28 @@ class IndexControllerCest
         $i->click('Create new Discount');
         $i->seeResponseCodeIs(200);
         $i->canSeeCurrentUrlEquals('/discount/index/create');
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
+     *
+     * @return void
+     */
+    public function testICanSeeAllCurrenciesInMoneyCollection(DiscountCommunicationTester $i): void
+    {
+        $i->registerStoreRelationToggleFormTypePlugin();
+        $i->registerMoneyCollectionFormTypePlugin();
+
+        $i->amOnPage('/discount/index/list');
+        $i->click('Create new Discount');
+        $i->seeResponseCodeIs(200);
+        $i->canSeeCurrentUrlEquals('/discount/index/create');
+        $i->amOnPage('#tab-content-discount');
+
+        $codes = $i->getAllAvailableCurrencyCodes();
+
+        foreach ($codes as $code) {
+            $i->see($code, sprintf('#%s table', DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE));
+        }
     }
 }

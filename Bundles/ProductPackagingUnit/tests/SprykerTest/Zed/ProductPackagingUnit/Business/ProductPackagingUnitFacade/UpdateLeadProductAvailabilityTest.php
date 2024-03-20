@@ -50,7 +50,18 @@ class UpdateLeadProductAvailabilityTest extends Unit
         // Arrange
         $boxProductConcreteTransfer = $this->createProductPackagingUnitProductConcrete();
 
+        // Act
         $this->tester->getFacade()->updateLeadProductAvailability($boxProductConcreteTransfer->getSku());
+        /** @var \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory $factory */
+        $factory = $this->tester->getFactory();
+        $productConcreteAvailabilityTransfer = $factory->getAvailabilityFacade()
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
+                $boxProductConcreteTransfer->getSku(),
+                $this->tester->getAllowedStore(),
+            );
+
+        // Assert
+        $this->assertNotNull($productConcreteAvailabilityTransfer->getAvailability());
     }
 
     /**

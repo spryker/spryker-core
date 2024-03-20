@@ -12,6 +12,7 @@ use Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface;
 use Spryker\Glue\Locale\Negotiator\LanguageNegotiator;
 use Spryker\Glue\Locale\Negotiator\LanguageNegotiatorInterface;
 use Spryker\Service\Locale\LocaleServiceInterface;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\Locale\LocaleClientInterface getClient()
@@ -45,5 +46,15 @@ class LocaleFactory extends AbstractFactory
     public function getLocaleService(): LocaleServiceInterface
     {
         return $this->getProvidedDependency(LocaleDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(LocaleDependencyProvider::STORE);
     }
 }

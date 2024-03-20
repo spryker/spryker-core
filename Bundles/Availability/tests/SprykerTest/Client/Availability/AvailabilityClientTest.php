@@ -9,11 +9,15 @@ namespace SprykerTest\Client\Availability;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Availability\AvailabilityClient;
 use Spryker\Client\Availability\AvailabilityClientInterface;
 use Spryker\Client\Availability\AvailabilityDependencyProvider;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface;
 use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
+use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
+use Spryker\Client\Availability\Storage\AvailabilityStorage;
 
 /**
  * Auto-generated group annotations
@@ -111,6 +115,168 @@ class AvailabilityClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductAvailabilityCallGenerateKeyContainsStoreName(): void
+    {
+        // Arrange
+        $availabilityResourceKeyBuilderMock = $this->getAvailabilityResourceKeyBuilderMock();
+
+        // Assert
+        $availabilityResourceKeyBuilderMock->method('generateKey')
+            ->with(
+                $this->greaterThan(0),
+                $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
+                $this->stringContains($this->tester::DEFAULT_STORE_NAME),
+            )
+            ->willReturn($this->tester::MOCK_RETURN_KEY);
+
+        $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
+
+        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
+            ->willReturn(true);
+
+        $availabilityToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
+
+        $availabilityStorageMock = $this->createAvailabilityStorageMock(
+            [],
+            $availabilityResourceKeyBuilderMock,
+            $this->tester::DEFAULT_LOCALE_NAME,
+            $availabilityToStoreClientMock,
+        );
+
+        $factoryMock = $this->getFactoryMock($availabilityStorageMock);
+
+        // Act
+        $actualProductAvailability = $this->getAvailabilityClientWithMockFactory($factoryMock)->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+
+        // Assert
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAvailabilityCallGenerateKeyDoesNotContainStoreName(): void
+    {
+        // Arrange
+        $availabilityResourceKeyBuilderMock = $this->getAvailabilityResourceKeyBuilderMock();
+
+        // Assert
+        $availabilityResourceKeyBuilderMock->method('generateKey')
+            ->with(
+                $this->greaterThan(0),
+                $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
+                $this->isNull(),
+            )
+            ->willReturn($this->tester::MOCK_RETURN_KEY);
+
+        $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
+
+        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
+            ->willReturn(false);
+
+        $availabilityToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
+
+        $availabilityStorageMock = $this->createAvailabilityStorageMock(
+            [],
+            $availabilityResourceKeyBuilderMock,
+            $this->tester::DEFAULT_LOCALE_NAME,
+            $availabilityToStoreClientMock,
+        );
+
+        $factoryMock = $this->getFactoryMock($availabilityStorageMock);
+        // Act
+        $actualProductAvailability = $this->getAvailabilityClientWithMockFactory($factoryMock)->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+
+        // Assert
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAvailabilityCallGenerateKeyContainsStoreName(): void
+    {
+        // Arrange
+        $availabilityResourceKeyBuilderMock = $this->getAvailabilityResourceKeyBuilderMock();
+
+        // Assert
+        $availabilityResourceKeyBuilderMock->method('generateKey')
+            ->with(
+                $this->greaterThan(0),
+                $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
+                $this->stringContains($this->tester::DEFAULT_STORE_NAME),
+            )
+            ->willReturn($this->tester::MOCK_RETURN_KEY);
+
+        $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
+
+        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
+            ->willReturn(true);
+
+        $availabilityToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
+
+        $availabilityStorageMock = $this->createAvailabilityStorageMock(
+            [],
+            $availabilityResourceKeyBuilderMock,
+            $this->tester::DEFAULT_LOCALE_NAME,
+            $availabilityToStoreClientMock,
+        );
+
+        $factoryMock = $this->getFactoryMock($availabilityStorageMock);
+
+        // Act
+        $actualProductAvailability = $this->getAvailabilityClientWithMockFactory($factoryMock)->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+
+        // Assert
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAvailabilityCallGenerateKeyDoesNotContainStoreName(): void
+    {
+        // Arrange
+        $availabilityResourceKeyBuilderMock = $this->getAvailabilityResourceKeyBuilderMock();
+
+        // Assert
+        $availabilityResourceKeyBuilderMock->method('generateKey')
+            ->with(
+                $this->greaterThan(0),
+                $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
+                $this->isNull(),
+            )
+            ->willReturn($this->tester::MOCK_RETURN_KEY);
+
+        $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
+
+        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
+            ->willReturn(false);
+
+        $availabilityToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
+
+        $availabilityStorageMock = $this->createAvailabilityStorageMock(
+            [],
+            $availabilityResourceKeyBuilderMock,
+            $this->tester::DEFAULT_LOCALE_NAME,
+            $availabilityToStoreClientMock,
+        );
+
+        $factoryMock = $this->getFactoryMock($availabilityStorageMock);
+        // Act
+        $actualProductAvailability = $this->getAvailabilityClientWithMockFactory($factoryMock)->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+
+        // Assert
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+    }
+
+    /**
      * @param array|null $returnedProductAvailability
      *
      * @return void
@@ -128,5 +294,112 @@ class AvailabilityClientTest extends Unit
     protected function createAvailabilityClient(): AvailabilityClientInterface
     {
         return new AvailabilityClient();
+    }
+
+    /**
+     * @param \SprykerTest\Client\Availability\AvailabilityFactory $factoryMock
+     *
+     * @return \Spryker\Client\Availability\AvailabilityClient
+     */
+    protected function getAvailabilityClientWithMockFactory($factoryMock): AvailabilityClient
+    {
+        $availabilityClientMock = $this->getMockBuilder(AvailabilityClient::class)
+            ->setMethods(['getFactory'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $availabilityClientMock->expects($this->any())
+            ->method('getFactory')
+            ->will($this->returnValue($factoryMock));
+
+        return $availabilityClientMock;
+    }
+
+    /**
+     * @param \Spryker\Client\Availability\Storage\AvailabilityStorage $availabilityStorageMock
+     *
+     * @return \SprykerTest\Client\Availability\AvailabilityFactory
+     */
+    protected function getFactoryMock($availabilityStorageMock): AvailabilityFactory
+    {
+        $factoryMock = $this->getMockBuilder(AvailabilityFactory::class)
+            ->setMethods(['createCurrentLocaleAvailabilityStorage'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $factoryMock->method('createCurrentLocaleAvailabilityStorage')
+            ->willReturn($availabilityStorageMock);
+
+        return $factoryMock;
+    }
+
+    /**
+     * @param array $storageReturn
+     * @param $availabilityResourceKeyBuilderMock
+     * @param $currentLocale
+     * @param $availabilityToStoreClientMock
+     *
+     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
+     */
+    protected function createAvailabilityStorageMock(
+        array $storageReturn = [],
+        $availabilityResourceKeyBuilderMock = null,
+        $currentLocale = 'en_US',
+        $availabilityToStoreClientMock = null
+    ): AvailabilityStorage {
+        if ($availabilityResourceKeyBuilderMock === null) {
+            $availabilityResourceKeyBuilderMock = $this->getAvailabilityResourceKeyBuilderMock();
+        }
+
+        if ($availabilityToStoreClientMock === null) {
+            $availabilityToStoreClientMock = $this->getStorageClientMock($storageReturn);
+        }
+        $availabilityStorageMock = new AvailabilityStorage(
+            $this->getStorageClientMock($storageReturn),
+            $availabilityResourceKeyBuilderMock,
+            $currentLocale,
+            $availabilityToStoreClientMock,
+        );
+
+        return $availabilityStorageMock;
+    }
+
+    /**
+     * @param array $storageReturn
+     *
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
+     */
+    protected function getStorageClientMock(array $storageReturn = []): AvailabilityToStorageInterface
+    {
+        $availabilityToStorageBridge = $this->getMockBuilder(AvailabilityToStorageInterface::class)->getMock();
+        $availabilityToStorageBridge->method('get')->willReturn($storageReturn);
+
+        return $availabilityToStorageBridge;
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder
+     */
+    protected function getAvailabilityResourceKeyBuilderMock(): AvailabilityResourceKeyBuilder
+    {
+        $availabilityResourceKeyBuilderMock = $this->getMockBuilder(AvailabilityResourceKeyBuilder::class)
+            ->setMethods(['generateKey'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $availabilityResourceKeyBuilderMock;
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface
+     */
+    protected function getAvailabilityToStoreClientMock(): AvailabilityToStoreClientInterface
+    {
+        $availabilityToStoreClientMock = $this->getMockBuilder(AvailabilityToStoreClientInterface::class)
+            ->setMethods(['isDynamicStoreEnabled', 'getCurrentStore'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $availabilityToStoreClientMock;
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -36,7 +37,7 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade(?string $moduleName = null)
  *
- * @SuppressWarnings(\SprykerTest\Zed\PriceProduct\PHPMD)
+ * @SuppressWarnings(PHPMD)
  */
 class PriceProductBusinessTester extends Actor
 {
@@ -56,6 +57,13 @@ class PriceProductBusinessTester extends Actor
      * @var string
      */
     protected const STORE_NAME = 'DE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
+     * @var string
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
@@ -272,6 +280,17 @@ class PriceProductBusinessTester extends Actor
     public function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    public function havePriceProductFilterTransfer(): PriceProductFilterTransfer
+    {
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setPriceMode(static::PRICE_MODE_NET);
+
+        return $priceProductFilterTransfer;
     }
 
     /**

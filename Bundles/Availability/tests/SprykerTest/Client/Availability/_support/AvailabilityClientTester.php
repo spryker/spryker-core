@@ -34,7 +34,22 @@ class AvailabilityClientTester extends Actor
     /**
      * @var string
      */
-    protected const DEFAULT_STORE_NAME = 'DE';
+    public const DEFAULT_LOCALE_NAME = 'en_US';
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    public const MOCK_RETURN_KEY = 'mocked.key';
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_LOCALE_SHORT_NAME = 'en';
 
     /**
      * @var string

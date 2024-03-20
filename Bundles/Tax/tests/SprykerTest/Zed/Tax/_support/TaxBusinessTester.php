@@ -33,6 +33,11 @@ class TaxBusinessTester extends Actor
     use _generated\TaxBusinessTesterActions;
 
     /**
+     * @var array
+     */
+    public const COUNTRIES = ['DE', 'AT'];
+
+    /**
      * @var int
      */
     public const DEFAULT_QUANTITY = 1;

@@ -42,7 +42,7 @@ use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade(?string $moduleName = NULL)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Discount\PHPMD)
  */
 class DiscountBusinessTester extends Actor
 {

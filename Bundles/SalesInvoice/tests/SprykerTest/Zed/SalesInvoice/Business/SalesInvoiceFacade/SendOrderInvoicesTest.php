@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SalesInvoice\Business\SalesInvoiceFacade;
 
 use Codeception\Stub;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderInvoiceSendRequestTransfer;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface;
@@ -131,12 +132,14 @@ class SendOrderInvoicesTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface
+     * @return \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMailFacadeMock(): SalesInvoiceToMailFacadeInterface
     {
-        /** @var \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface $mailFacadeMock */
         $mailFacadeMock = Stub::makeEmpty(SalesInvoiceToMailFacadeInterface::class);
+        $mailFacadeMock->method('handleMail')->with($this->callback(function ($mailTransfer) {
+            return $mailTransfer instanceof MailTransfer && in_array(null, $mailTransfer->toArray());
+        }));
 
         return $mailFacadeMock;
     }

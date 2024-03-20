@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Search;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientInterface;
 
 /**
  * @method void wantToTest($text)
@@ -27,4 +29,17 @@ use Codeception\Actor;
 class SearchClientTester extends Actor
 {
     use _generated\SearchClientTesterActions;
+
+    /**
+     * @var string
+     */
+    public const LOCALE = 'ab_CD';
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientInterface
+     */
+    public function createLocaleClient(): SearchToLocaleClientInterface
+    {
+        return Stub::makeEmpty(SearchToLocaleClientInterface::class);
+    }
 }

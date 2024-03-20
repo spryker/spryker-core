@@ -16,6 +16,7 @@ use Generated\Shared\DataBuilder\ItemMetadataBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OmsEventTriggeredTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -54,11 +55,26 @@ use Spryker\Zed\Store\Communication\Plugin\MessageBroker\StoreReferenceMessageVa
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  *
- * @SuppressWarnings(\SprykerTest\Zed\Oms\PHPMD)
+ * @SuppressWarnings(PHPMD)
  */
 class OmsBusinessTester extends Actor
 {
     use _generated\OmsBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
+    /**
+     * @var string
+     */
+    public const FAKE_BILLING_ADDRESS = 'TestAddress 1';
+
+    /**
+     * @var string
+     */
+    public const FAKE_SKU = 'FAKE_SKU';
 
     /**
      * @return void
@@ -444,5 +460,18 @@ class OmsBusinessTester extends Actor
         $this->setDependency('PLUGINS_OMS_EVENT_TRIGGERED_LISTENER', [$omsEventTriggeredListener]);
 
         return $omsEventTriggeredListener;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    {
+        return $this->getLocator()->sales()->facade()
+            ->getOrder(
+                (new OrderFilterTransfer())->setSalesOrderId($idSalesOrder),
+            );
     }
 }

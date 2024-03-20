@@ -27,31 +27,6 @@ use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
 class LocaleLocalePluginTest extends Unit
 {
     /**
-     * @var string
-     */
-    protected const LOCALE = 'en_US';
-
-    /**
-     * @var string
-     */
-    protected const LOCALE_DE = 'de_DE';
-
-    /**
-     * @var string
-     */
-    protected const SERVICE_STORE = 'store';
-
-    /**
-     * @var string
-     */
-    protected const DEFAULT_STORE = 'DE';
-
-    /**
-     * @var string
-     */
-    protected const CURRENCY_EUR = 'EUR';
-
-    /**
      * @var \Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin
      */
     protected $localeLocalePlugin;
@@ -88,7 +63,7 @@ class LocaleLocalePluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(LocaleDependencyProvider::LOCALE_CURRENT, static::LOCALE);
+        $this->tester->setDependency(LocaleDependencyProvider::LOCALE_CURRENT, $this->tester::LOCALE);
 
         $this->localeLocalePlugin = new LocaleLocalePlugin();
 
@@ -111,7 +86,7 @@ class LocaleLocalePluginTest extends Unit
         }
 
         $this->container = $this->tester->getContainer();
-        $this->container->set(static::SERVICE_STORE, static::DEFAULT_STORE);
+        $this->container->set($this->tester::SERVICE_STORE, $this->tester::DEFAULT_STORE);
     }
 
     /**
@@ -208,9 +183,9 @@ class LocaleLocalePluginTest extends Unit
     {
         $localeClientMock = $this->createMock(LocaleClient::class);
         $localeClientMock->method('getLocales')
-            ->willReturn([static::LOCALE, static::LOCALE_DE]);
+            ->willReturn([$this->tester::LOCALE, $this->tester::LOCALE_DE]);
         $localeClientMock->method('getCurrentLocale')
-            ->willReturn(static::LOCALE);
+            ->willReturn($this->tester::LOCALE);
 
         return $localeClientMock;
     }
@@ -223,8 +198,8 @@ class LocaleLocalePluginTest extends Unit
         $localeToStoreClientMock = $this->createMock(LocaleToStoreClientInterface::class);
         $localeToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())
-                ->setName(static::DEFAULT_STORE)
-                ->setAvailableLocaleIsoCodes([static::LOCALE]));
+                ->setName($this->tester::DEFAULT_STORE)
+                ->setAvailableLocaleIsoCodes([$this->tester::LOCALE]));
 
         return $localeToStoreClientMock;
     }

@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\MultiCart;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -27,4 +29,26 @@ use Codeception\Actor;
 class MultiCartClientTester extends Actor
 {
     use _generated\MultiCartClientTesterActions;
+
+    /**
+     * @uses \Spryker\Client\MultiCart\Storage\MultiCartStorage::SESSION_KEY_QUOTE_COLLECTION
+     *
+     * @var string
+     */
+    public const SESSION_KEY_QUOTE_COLLECTION = 'SESSION_KEY_QUOTE_COLLECTION';
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function haveQuote(array $override = []): QuoteTransfer
+    {
+        return (new QuoteBuilder())
+            ->withStore($override)
+            ->withItem($override)
+            ->withCustomer()
+            ->withTotals()
+            ->build();
+    }
 }

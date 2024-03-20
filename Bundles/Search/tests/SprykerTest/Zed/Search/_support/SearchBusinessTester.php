@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Search;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Psr\Log\LoggerInterface;
+use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
+use Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface;
+use Spryker\Zed\SearchExtension\Dependency\Plugin\StoreAwareInstallPluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -28,4 +33,41 @@ use Codeception\Actor;
 class SearchBusinessTester extends Actor
 {
     use _generated\SearchBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const STORE = 'DE';
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function createLogger(): LoggerInterface
+    {
+        return Stub::makeEmpty(LoggerInterface::class);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface
+     */
+    public function createInstallPlugin(): InstallPluginInterface
+    {
+        return Stub::makeEmpty(InstallPluginInterface::class);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\StoreAwareInstallPluginInterface
+     */
+    public function createStoreAwareInstallPlugin(): StoreAwareInstallPluginInterface
+    {
+        return Stub::makeEmpty(StoreAwareInstallPluginInterface::class);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    public function createSearchInstaller(): SearchInstallerInterface
+    {
+        return Stub::makeEmpty(SearchInstallerInterface::class);
+    }
 }

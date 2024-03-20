@@ -35,6 +35,7 @@ suites:
                 - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
 
     Communication:
         path: Communication

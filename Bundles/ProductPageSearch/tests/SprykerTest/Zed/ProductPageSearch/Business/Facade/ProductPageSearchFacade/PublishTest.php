@@ -63,9 +63,13 @@ class PublishTest extends Unit
     protected ProductPageSearchBusinessTester $tester;
 
     /**
+     * @dataProvider getConfigCombinationsDataProvider
+     *
+     * @param array $configPrameters
+     *
      * @return void
      */
-    public function testShouldNotOverwriteDifferentStoreDataWithSameLocale(): void
+    public function testShouldNotOverwriteDifferentStoreDataWithSameLocale(array $configPrameters = []): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -85,7 +89,11 @@ class PublishTest extends Unit
                 ProductPageSearchConfig::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataLoaderExpanderPlugin(),
             ],
         );
-        $this->tester->mockConfigMethod('isSendingToQueue', false);
+
+        foreach ($configPrameters as $methodName => $value) {
+            $this->tester->mockConfigMethod($methodName, $value);
+        }
+
         $this->tester->setDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH, Stub::make(
             ProductPageSearchToSearchBridge::class,
             [
@@ -142,5 +150,21 @@ class PublishTest extends Unit
         // Assert
         $productAbstractPageSearchTransfer = $this->tester->findProductPageSearchTransfer($productAbstractTransfer->getIdProductAbstract(), static::STORE_DE);
         $this->assertSame(static::GROSS_PRICE_DE, $productAbstractPageSearchTransfer->getPriceOrFail());
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getConfigCombinationsDataProvider(): array
+    {
+        return [
+            'with opposite config' => [
+                [
+                    'isProductAbstractAddToCartEnabled' => true,
+                    'isSendingToQueue' => false,
+                ],
+            ],
+            'without custom config' => [[]],
+        ];
     }
 }

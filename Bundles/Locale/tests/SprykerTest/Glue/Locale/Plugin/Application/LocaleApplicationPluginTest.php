@@ -14,6 +14,7 @@ use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientInterface;
 use Spryker\Glue\Locale\Plugin\Application\LocaleApplicationPlugin;
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Store;
 use SprykerTest\Glue\Locale\LocaleGlueTester;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -120,6 +121,34 @@ class LocaleApplicationPluginTest extends Unit
 
         $this->tester->mockFactoryMethod('getStoreClient', $this->createStoreClientMock());
         $this->tester->mockFactoryMethod('getClient', $this->createLocaleClientMock(static::LOCALES));
+
+        $localeApplicationPlugin->setFactory($this->tester->getFactory());
+
+        // Act
+        $container = $localeApplicationPlugin->provide($container);
+
+        // Assert
+        $this->assertTrue($container->has(static::APPLICATION_LOCALE));
+        $this->assertSame(static::LOCALES[static::LOCALE_KEY_DE], $container->get(static::APPLICATION_LOCALE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideAddsLocaleToContainerForDynamicStore(): void
+    {
+        // Arrange
+        $requestStack = $this->createRequestStack(static::LOCALES[static::LOCALE_KEY_DE]);
+        $container = $this->createContainer($requestStack);
+        $localeApplicationPlugin = new LocaleApplicationPlugin();
+        $storeClientMock = $this->createMock(LocaleToStoreClientInterface::class);
+        $storeMock = $this->createMock(Store::class);
+        $storeMock->expects($this->never())->method('setCurrentLocale');
+
+        $this->tester->mockFactoryMethod('getClient', $this->createLocaleClientMock(static::LOCALES));
+        $storeClientMock->method('isDynamicStoreEnabled')->willReturn(true);
+        $this->tester->mockFactoryMethod('getStoreClient', $storeClientMock);
+        $this->tester->mockFactoryMethod('getStore', $storeMock);
 
         $localeApplicationPlugin->setFactory($this->tester->getFactory());
 

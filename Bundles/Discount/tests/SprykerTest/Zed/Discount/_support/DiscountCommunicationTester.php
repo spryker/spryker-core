@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
@@ -25,7 +28,7 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Discount\PHPMD)
  */
 class DiscountCommunicationTester extends Actor
 {
@@ -51,5 +54,40 @@ class DiscountCommunicationTester extends Actor
         ]);
 
         $this->setDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE, $moneyCollectionTypeMock);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    public function haveDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
+    {
+        $discountConfigurator = (new DiscountConfiguratorBuilder())
+            ->withDiscountCalculator()
+            ->build();
+
+        $discountConfigurator->getDiscountCalculator()->addMoneyValue(
+            (new MoneyValueBuilder())
+                ->withCurrency()
+                ->build(),
+        );
+
+        return $discountConfigurator;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllAvailableCurrencyCodes(): array
+    {
+        $codes = [];
+        $storeWithCurrenciesTransfers = $this->getLocator()->currency()->facade()->getAllStoresWithCurrencies();
+
+        foreach ($storeWithCurrenciesTransfers as $storeWithCurrenciesTransfer) {
+            foreach ($storeWithCurrenciesTransfer->getCurrencies() as $currencyTransfer) {
+                $codes[] = $currencyTransfer->getSymbol();
+            }
+        }
+
+        return $codes;
     }
 }

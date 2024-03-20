@@ -11,7 +11,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\Config\Application\Environment as ApplicationEnvironment;
-use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -95,7 +94,7 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
             return;
         }
 
-        Store::getInstance()->setCurrentLocale($locale);
+        $this->getFactory()->getStore()->setCurrentLocale($locale);
     }
 
     /**

@@ -26,4 +26,9 @@ use Codeception\Actor;
 class ApplicationSharedTester extends Actor
 {
     use _generated\ApplicationSharedTesterActions;
+
+    /**
+     * @var string
+     */
+    public const EXTRA = 'extra';
 }

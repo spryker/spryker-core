@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\AvailabilityNotification\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\AvailabilityNotificationDataBuilder;
 use Generated\Shared\DataBuilder\AvailabilityNotificationSubscriptionBuilder;
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -60,6 +62,21 @@ class AvailabilityNotificationDataHelper extends Module
         $result = $this->getAvailabilityNotificationSubscriptionFacade()->subscribe($availabilityNotificationSubscription);
 
         return $result->getAvailabilityNotificationSubscription();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationDataTransfer
+     */
+    public function haveAvailabilityNotificationDataTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $seedData = []
+    ): AvailabilityNotificationDataTransfer {
+        return (new AvailabilityNotificationDataBuilder($seedData))
+            ->build()
+            ->setSku($productConcreteTransfer->getSku());
     }
 
     /**

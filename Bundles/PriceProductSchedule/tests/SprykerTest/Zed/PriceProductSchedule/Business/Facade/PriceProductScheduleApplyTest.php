@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +29,8 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class PriceProductScheduleApplyTest extends Unit
 {
+    use ContainerHelperTrait;
+
     /**
      * @var string
      */
@@ -279,6 +282,92 @@ class PriceProductScheduleApplyTest extends Unit
 
             $this->tester->havePriceProductSchedule($priceProductScheduleData);
         }
+
+        // Act
+        $this->priceProductScheduleFacade->applyScheduledPrices();
+
+        // Assert
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
+
+        foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
+            $this->assertTrue(
+                $priceProductScheduleEntity->isCurrent(),
+                sprintf(
+                    'Scheduled price with id: #%s, active from: %s, active to: %s should have been set as current.',
+                    $priceProductScheduleEntity->getIdPriceProductSchedule(),
+                    $priceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
+                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                ),
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductScheduleWithDifferentConcreteProductsPriceTypesAndCurrenciesShouldApplyIfStoreServiceEmpty(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('This test requires DynamicStore to be enabled.');
+        }
+
+        // Assign
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $priceTypeTransfer = $this->tester->havePriceType();
+        $currencyId = $this->tester->haveCurrency();
+
+        $priceProductScheduleData1 = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
+        ];
+
+        $priceProductScheduleData1[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+        $priceProductScheduleData1[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::FK_CURRENCY] = $currencyId;
+
+        $this->tester->havePriceProductSchedule($priceProductScheduleData1);
+
+        $priceProductScheduleData2 = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-12 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+6 days')),
+        ];
+
+        $priceProductScheduleData2[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+
+        $this->tester->havePriceProductSchedule($priceProductScheduleData2);
+
+        $priceProductScheduleData3 = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-2 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
+        ];
+
+        $priceProductScheduleData3[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+        $priceProductScheduleData3[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] = [
+            PriceTypeTransfer::NAME => $priceTypeTransfer->getName(),
+            PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
+        ];
+
+        $this->tester->havePriceProductSchedule($priceProductScheduleData3);
+
+        $priceProductScheduleData4 = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+9 days')),
+        ];
+
+        $priceProductScheduleData4[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT] = $productConcreteTransfer->getIdProductConcrete();
+        $priceProductScheduleData4[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] = [
+            PriceTypeTransfer::NAME => $priceTypeTransfer->getName(),
+            PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
+        ];
+
+        $this->tester->havePriceProductSchedule($priceProductScheduleData4);
+        $this->getContainerHelper()
+            ->getContainer()
+            ->remove($this->tester::SERVICE_STORE);
 
         // Act
         $this->priceProductScheduleFacade->applyScheduledPrices();

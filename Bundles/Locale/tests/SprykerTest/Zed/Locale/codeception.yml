@@ -26,3 +26,10 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+    Communication:
+        path: Communication
+        actor: LocaleCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Service\Container\Helper\ContainerHelper

@@ -10,6 +10,7 @@ namespace Spryker\Glue\Locale;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Locale\Dependency\Client\LocaleToStoreClientBridge;
+use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Glue\Locale\LocaleConfig getConfig()
@@ -27,6 +28,13 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_LOCALE = 'SERVICE_LOCALE';
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @var string
+     */
+    public const STORE = 'STORE';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -37,6 +45,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleService($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -69,5 +78,31 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStore(Container $container): Container
+    {
+        $container->set(static::STORE, function () {
+            return $this->getStore();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return Store::getInstance();
     }
 }

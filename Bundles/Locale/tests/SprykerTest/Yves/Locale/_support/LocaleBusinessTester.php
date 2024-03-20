@@ -26,4 +26,39 @@ use Codeception\Actor;
 class LocaleBusinessTester extends Actor
 {
     use _generated\LocaleBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    public const BC_FEATURE_FLAG_LOCALE_LISTENER = 'BC_FEATURE_FLAG_LOCALE_LISTENER';
+
+    /**
+     * @var string
+     */
+    public const LOCALE = 'en_US';
+
+    /**
+     * @var string
+     */
+    public const LOCALE_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_STORE = 'store';
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    public const CURRENCY_EUR = 'EUR';
 }

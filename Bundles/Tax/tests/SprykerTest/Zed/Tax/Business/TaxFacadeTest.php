@@ -5,15 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Tax\Business\Facade;
+namespace SprykerTest\Zed\Tax\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxSetConditionsTransfer;
 use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface;
+use Spryker\Zed\Tax\TaxDependencyProvider;
 use SprykerTest\Zed\Tax\TaxBusinessTester;
 
 /**
@@ -24,15 +27,42 @@ use SprykerTest\Zed\Tax\TaxBusinessTester;
  * @group Tax
  * @group Business
  * @group Facade
- * @group GetTaxSetCollectionTest
+ * @group TaxFacadeTest
  * Add your own group annotations below this line
  */
-class GetTaxSetCollectionTest extends Unit
+class TaxFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Tax\TaxBusinessTester
      */
     protected TaxBusinessTester $tester;
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultTaxCountryIso2CodeReturnsDefaultCountryIso2Code(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === true) {
+            $this->markTestSkipped('This test requires DynamicStore to be disabled.');
+        }
+
+        // Arrange
+        $storeMock = $this->createMock(TaxToStoreFacadeInterface::class);
+        $storeMock->method('getCurrentStore')->willReturn(
+            (new StoreTransfer())
+                ->setCountries($this->tester::COUNTRIES),
+        );
+        $this->tester->setDependency(
+            TaxDependencyProvider::FACADE_STORE,
+            $storeMock,
+        );
+
+        // Act
+        $defaultTaxCountryIso2Code = $this->tester->getFacade()->getDefaultTaxCountryIso2Code();
+
+        // Assert
+        $this->assertSame($this->tester::COUNTRIES[0], $defaultTaxCountryIso2Code);
+    }
 
     /**
      * @return void

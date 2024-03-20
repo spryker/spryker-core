@@ -27,6 +27,7 @@
         "spryker/http": "*",
         "spryker/router": "*",
         "spryker/silex": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {
