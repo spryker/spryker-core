@@ -850,6 +850,7 @@
         "spryker/sales-orders-backend-api": "*",
         "spryker/sales-orders-backend-api-extension": "*",
         "spryker/sales-payment": "*",
+        "spryker/sales-payment-detail": "*",
         "spryker/sales-payment-extension": "*",
         "spryker/sales-payment-gui": "*",
         "spryker/sales-product-configuration": "*",

@@ -1,0 +1,38 @@
+asyncapi: 2.6.0
+info:
+    title: Sales Payment Reference
+    version: 0.1.0
+channels:
+    payment-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/PaymentCreated'
+
+components:
+    messages:
+        PaymentCreated:
+            name: PaymentCreated
+            x-spryker:
+                module: SalesPaymentDetail
+            summary: 'Informs about a new Payment was created for an order.'
+            payload:
+                $ref: '#/components/schemas/PaymentCreatedPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+    schemas:
+        PaymentCreatedPayload:
+            type: object
+            properties:
+                entityReference:
+                    description: 'The reference to the entity that was created for this payment.'
+                    type: string
+                paymentReference:
+                    type: string
+                details:
+                    type: string
+            required:
+                - entityReference
+                - paymentReference
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

@@ -1,0 +1,34 @@
+namespace: SprykerTest\AsyncApi\SalesPaymentDetail
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/Spryker/*/SalesPaymentDetail/*'
+suites:
+    AsyncApi:
+        path: SalesPaymentDetailTests
+        actor: SalesPaymentDetailAsyncApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\AsyncApi\SalesPaymentDetail\Helper\SalesPaymentDetailHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/asyncapi.yml
+                      handlers:
+                          - \Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\PaymentCreatedMessageHandlerPlugin
+                - \SprykerTest\AsyncApi\SalesPaymentDetail\Helper\SalesPaymentDetailHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper

@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, callable>' for Spryker\\Zed\\SalesPaymentDetail\\Communication\\Plugin\\MessageBroker\\PaymentCreatedMessageHandlerPlugin::handles is incorrect, got 'Generator<Generated\\Shared\\Transfer\\PaymentCreatedTransfer::class, array{Spryker\\Zed\\SalesPaymentDetail\\Communication\\Plugin\\MessageBroker\\PaymentCreatedMessageHandlerPlugin&static, \"onPaymentCreated\"}, mixed, void>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Communication/Plugin/MessageBroker/PaymentCreatedMessageHandlerPlugin.php",
+            "snippet": "     * @return array<string, callable>",
+            "selected_text": "array<string, callable>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/Propel/Mapper/SalesPaymentDetailMapper.php",
+            "snippet": "     * @param \\Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail $salesPaymentDetailEntity",
+            "selected_text": "\\Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/Propel/Mapper/SalesPaymentDetailMapper.php",
+            "snippet": "    ): SpySalesPaymentDetail {",
+            "selected_text": "SpySalesPaymentDetail",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/Propel/Mapper/SalesPaymentDetailMapper.php",
+            "snippet": "     * @param \\Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail $salesPaymentDetailEntity",
+            "selected_text": "\\Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/SalesPaymentDetailEntityManager.php",
+            "snippet": "        $salesPaymentDetailEntity = $this->getFactory()->createSalesPaymentDetailMapper()->mapSalesPaymentDetailTransferToSalesPaymentDetailEntity($salesPaymentDetailTransfer, new SpySalesPaymentDetail());",
+            "selected_text": "SpySalesPaymentDetail",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetail does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/SalesPaymentDetailEntityManager.php",
+            "snippet": "        $salesPaymentDetailEntity->save();",
+            "selected_text": "$salesPaymentDetailEntity",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetailQuery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/SalesPaymentDetailPersistenceFactory.php",
+            "snippet": "    public function createSalesPaymentDetailQuery(): SpySalesPaymentDetailQuery",
+            "selected_text": "SpySalesPaymentDetailQuery",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 26,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Orm\\Zed\\SalesPaymentDetail\\Persistence\\SpySalesPaymentDetailQuery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentDetail/src/Spryker/Zed/SalesPaymentDetail/Persistence/SalesPaymentDetailRepository.php",
+            "snippet": "        $salesPaymentDetailEntity = $this->getFactory()\n            ->createSalesPaymentDetailQuery()",
+            "selected_text": "$this->getFactory()\n            ->createSalesPaymentDetailQuery()",
+            "error_level": -1,
+            "shortcode": 19
+        }
+    ],
+    "warning": [],
+    "deprecation": [],
+    "count": 8
+}
