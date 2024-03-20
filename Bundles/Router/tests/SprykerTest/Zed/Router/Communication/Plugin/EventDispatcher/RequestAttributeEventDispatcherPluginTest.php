@@ -109,6 +109,7 @@ class RequestAttributeEventDispatcherPluginTest extends Unit
     public function urlStack(): array
     {
         return [
+            ['/', 'application', 'index', 'index'],
             ['/foo', 'foo', 'index', 'index'],
             ['/foo/bar', 'foo', 'bar', 'index'],
             ['/foo/bar/baz', 'foo', 'bar', 'baz'],

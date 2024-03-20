@@ -187,7 +187,7 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function getModule(Request $request, array $requestUriFragments): string
     {
-        if (count($requestUriFragments) < 1) {
+        if ($this->isDefaultModule($requestUriFragments)) {
             return static::DEFAULT_MODULE;
         }
 
@@ -249,5 +249,19 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
                 throw new InvalidArgumentException(sprintf('Required parameter --%s is missing!', $parameter));
             }
         }
+    }
+
+    /**
+     * @param array<int, string> $requestUriFragments
+     *
+     * @return bool
+     */
+    protected function isDefaultModule(array $requestUriFragments): bool
+    {
+        return count($requestUriFragments) < 1 ||
+        (
+            isset($requestUriFragments[static::POSITION_OF_MODULE])
+            && $requestUriFragments[static::POSITION_OF_MODULE] === ''
+        );
     }
 }
