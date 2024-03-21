@@ -245,6 +245,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -278,6 +279,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -311,6 +313,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -343,6 +346,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -377,6 +381,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -409,6 +414,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -441,6 +447,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -500,6 +507,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -596,6 +604,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->getFacade()->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
@@ -689,6 +698,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
     }
 

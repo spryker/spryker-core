@@ -18,6 +18,7 @@ use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacade;
 use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -32,6 +33,8 @@ use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
  */
 class ProductStorageFacadeTest extends Unit
 {
+    use ConfigHelperTrait;
+
     /**
      * @var string
      */
@@ -81,7 +84,7 @@ class ProductStorageFacadeTest extends Unit
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->tester->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
 
@@ -194,7 +197,7 @@ class ProductStorageFacadeTest extends Unit
     protected function getProductStorageFacade(
         bool $isProductAttributesWithSingleValueIncluded = true
     ): ProductStorageFacadeInterface {
-        $configMock = $this->tester->mockConfigMethod(
+        $configMock = $this->getConfigHelper()->mockConfigMethod(
             'isProductAttributesWithSingleValueIncluded',
             function () use ($isProductAttributesWithSingleValueIncluded) {
                 return $isProductAttributesWithSingleValueIncluded;

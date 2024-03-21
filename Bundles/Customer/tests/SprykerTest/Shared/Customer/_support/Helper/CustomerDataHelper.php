@@ -18,16 +18,26 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
+use SprykerTest\Service\Container\Helper\ContainerHelper;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Zed\Testify\Helper\BusinessHelper;
+use SprykerTest\Zed\Testify\Helper\Business\BusinessHelper;
 
 class CustomerDataHelper extends Module
 {
     use DependencyHelperTrait;
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
+    use ConfigHelperTrait;
+    use ContainerHelperTrait;
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_STORE = 'store';
 
     /**
      * @param array $override
@@ -129,14 +139,27 @@ class CustomerDataHelper extends Module
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
-    protected function getCustomerFacade(): CustomerFacadeInterface
+    public function getCustomerFacade(): CustomerFacadeInterface
     {
         $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
         $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
 
+        if ($this->isDefaultCustomerFacadeSufficient()) {
+            return $this->getLocatorHelper()->getLocator()->customer()->facade();
+        }
+
+        $this->getConfigHelper()->mockConfigMethod(
+            'getCustomerSequenceNumberPrefix',
+            'customer',
+            'Customer',
+            'Zed',
+        );
+
         if ($this->hasModule('\\' . BusinessHelper::class)) {
             /** @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade */
-            $customerFacade = $this->getBusinessHelper()->getFacade();
+            $customerFacade = $this->getBusinessHelper()->getFacade('Customer');
+
+            $this->getLocatorHelper()->addToLocatorCache('customer-facade', $customerFacade);
 
             return $customerFacade;
         }
@@ -145,11 +168,20 @@ class CustomerDataHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Zed\Testify\Helper\BusinessHelper
+     * @return bool
+     */
+    protected function isDefaultCustomerFacadeSufficient(): bool
+    {
+        return ($this->hasModule('\\' . ContainerHelper::class) && $this->getContainerHelper()->getContainer()->has(static::SERVICE_STORE))
+            || $this->getLocatorHelper()->isProjectNamespaceEnabled();
+    }
+
+    /**
+     * @return \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
      */
     protected function getBusinessHelper(): BusinessHelper
     {
-        /** @var \SprykerTest\Zed\Testify\Helper\BusinessHelper $businessHelper */
+        /** @var \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper $businessHelper */
         $businessHelper = $this->getModule('\\' . BusinessHelper::class);
 
         return $businessHelper;

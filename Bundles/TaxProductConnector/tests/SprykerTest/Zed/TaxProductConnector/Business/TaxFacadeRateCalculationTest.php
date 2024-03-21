@@ -56,6 +56,9 @@ class TaxFacadeRateCalculationTest extends Unit
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
         $quoteTransfer->addItem($itemTransfer);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $quoteTransfer->setStore($storeTransfer);
+        $this->tester->addCurrentStore($storeTransfer);
 
         $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);

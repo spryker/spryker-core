@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -38,9 +39,9 @@ class PriceProductScheduleDateTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $storeFacade;
+    protected StoreTransfer $storeTransfer;
 
     /**
      * @return void
@@ -52,7 +53,7 @@ class PriceProductScheduleDateTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
     }
 
     /**
@@ -350,7 +351,6 @@ class PriceProductScheduleDateTest extends Unit
     {
         $productConcreteTransfer = $this->tester->haveProduct();
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         return [
@@ -360,7 +360,7 @@ class PriceProductScheduleDateTest extends Unit
                 PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
             ],
             PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                 MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 MoneyValueTransfer::GROSS_AMOUNT => 120,
                 MoneyValueTransfer::NET_AMOUNT => 100,
@@ -375,7 +375,6 @@ class PriceProductScheduleDateTest extends Unit
     {
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         return [
@@ -385,7 +384,7 @@ class PriceProductScheduleDateTest extends Unit
                 PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
             ],
             PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                 MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 MoneyValueTransfer::GROSS_AMOUNT => 120,
                 MoneyValueTransfer::NET_AMOUNT => 100,

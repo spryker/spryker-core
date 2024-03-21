@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
@@ -528,6 +529,10 @@ class PriceProductOfferFacadeTest extends Unit
      */
     public function testExpandWishlistItemWithPrices(): void
     {
+        /*
+         * Used in a context of {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']));
         // Arrange
         $this->tester->ensurePriceProductOfferTableIsEmpty();
         $priceProduct = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);

@@ -37,4 +37,4 @@ suites:
                 - \SprykerTest\Zed\TaxApp\Helper\TaxAppBusinessAssertionHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper

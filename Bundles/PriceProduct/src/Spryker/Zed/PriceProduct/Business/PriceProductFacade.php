@@ -158,6 +158,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @deprecated Will be removed in the next major. There is no use of this method in the core, and it wasn't updated for DMS ON mode usage.
+     *
      * @param string $sku
      * @param string|null $priceType
      *
@@ -220,6 +222,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. There is no use of this method, and it's not compatible with Dynamic Store mode.
      *
      * @param string $sku
      * @param string $priceType
@@ -361,6 +365,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major. There is no use of this method in the current code base, and it's not compatible with Dynamic Store mode.
      *
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName

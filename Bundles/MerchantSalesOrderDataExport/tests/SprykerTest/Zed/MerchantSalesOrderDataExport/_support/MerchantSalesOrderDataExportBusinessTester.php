@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
@@ -72,12 +73,13 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
 
     /**
      * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function createMerchantOrder(string $merchantReference): void
+    public function createMerchantOrder(string $merchantReference, StoreTransfer $storeTransfer): void
     {
-        $salesOrder = $this->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesOrder = $this->haveOrder([StoreTransfer::NAME => $storeTransfer->getName()], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $this->haveMerchantOrder([
             MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
             MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantReference,
@@ -86,12 +88,13 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
 
     /**
      * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function createMerchantOrderItem(string $merchantReference): void
+    public function createMerchantOrderItem(string $merchantReference, StoreTransfer $storeTransfer): void
     {
-        $salesOrder = $this->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesOrder = $this->haveOrder([StoreTransfer::NAME => $storeTransfer->getName()], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $merchantOrderTransfer = $this->haveMerchantOrder([
             MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
             MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantReference,
@@ -105,12 +108,13 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
 
     /**
      * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function createMerchantOrderExpense(string $merchantReference): void
+    public function createMerchantOrderExpense(string $merchantReference, StoreTransfer $storeTransfer): void
     {
-        $salesOrder = $this->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesOrder = $this->haveOrder([StoreTransfer::NAME => $storeTransfer->getName()], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $this->haveMerchantOrder([
             MerchantOrderTransfer::ID_ORDER => $salesOrder->getIdSalesOrder(),
             MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantReference,
@@ -149,10 +153,11 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
     /**
      * @param string $dataEntity
      * @param int $timestamp
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
      */
-    public function createDataExportConfigurationTransfer(string $dataEntity, int $timestamp): DataExportConfigurationTransfer
+    public function createDataExportConfigurationTransfer(string $dataEntity, int $timestamp, StoreTransfer $storeTransfer): DataExportConfigurationTransfer
     {
         $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())
             ->setType(static::FORMATTER_TYPE);
@@ -178,7 +183,7 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
                     'from' => (new DateTime('-1 minute'))->format('Y-m-d H:i:s'),
                     'to' => (new DateTime('+1 minute'))->format('Y-m-d H:i:s'),
                 ],
-                'store_name' => ['DE'],
+                'store_name' => [$storeTransfer->getName()],
             ])
             ->setHooks([
                 'data_entity' => $dataEntity,

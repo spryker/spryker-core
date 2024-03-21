@@ -30,3 +30,5 @@ suites:
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
                 - \SprykerTest\Shared\ShipmentType\Helper\ShipmentTypeHelper
                 - \SprykerTest\Shared\SalesShipmentType\Helper\SalesShipmentTypeHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper

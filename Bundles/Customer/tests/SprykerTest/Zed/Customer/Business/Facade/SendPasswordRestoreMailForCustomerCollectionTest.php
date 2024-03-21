@@ -33,11 +33,11 @@ class SendPasswordRestoreMailForCustomerCollectionTest extends AbstractCustomerF
         ]);
 
         //Act
-        $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
+        $this->tester->getCustomerFacade()->sendPasswordRestoreMailForCustomerCollection(
             (new CustomerCollectionTransfer())->addCustomer($customerTransfer),
         );
 
-        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
         // Assert
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRestorePasswordKey());
     }

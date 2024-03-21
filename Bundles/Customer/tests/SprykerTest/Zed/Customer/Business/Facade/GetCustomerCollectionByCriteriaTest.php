@@ -47,7 +47,7 @@ class GetCustomerCollectionByCriteriaTest extends AbstractCustomerFacadeTest
         // Assert
         $this->assertSame(
             $expectedCount,
-            $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count(),
+            $this->tester->getCustomerFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count(),
         );
     }
 
@@ -123,7 +123,7 @@ class GetCustomerCollectionByCriteriaTest extends AbstractCustomerFacadeTest
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $this->tester->addCleanup(function () use ($customerTransfer): void {
-            $this->tester->getFacade()->deleteCustomer($customerTransfer);
+            $this->tester->getCustomerFacade()->deleteCustomer($customerTransfer);
         });
     }
 
@@ -140,7 +140,7 @@ class GetCustomerCollectionByCriteriaTest extends AbstractCustomerFacadeTest
             ->addIdCustomer($customerTransfer->getIdCustomerOrFail());
 
         // Act
-        $customerCollectionTransfer = $this->tester->getFacade()->getCustomerCollectionByCriteria(
+        $customerCollectionTransfer = $this->tester->getCustomerFacade()->getCustomerCollectionByCriteria(
             $customerCriteriaFilterTransfer,
         );
 

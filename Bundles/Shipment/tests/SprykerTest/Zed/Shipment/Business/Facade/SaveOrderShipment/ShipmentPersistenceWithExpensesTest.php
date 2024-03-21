@@ -152,6 +152,7 @@ class ShipmentPersistenceWithExpensesTest extends Unit
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         return [$quoteTransfer];
@@ -181,6 +182,7 @@ class ShipmentPersistenceWithExpensesTest extends Unit
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $quoteTransfer->addItem($itemTransfer);
@@ -230,6 +232,7 @@ class ShipmentPersistenceWithExpensesTest extends Unit
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $quoteTransfer->addItem($itemTransfer1);

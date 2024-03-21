@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -60,7 +61,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($quoteTransfer->getItems(), $quoteTransfer->getShippingAddress());
+        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($quoteTransfer->getItems(), $quoteTransfer->getShippingAddress(), $quoteTransfer->getStore());
         $quoteTransfer->setItems($itemTransfers);
     }
 
@@ -71,7 +72,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculateWithCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
-        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getShippingAddress());
+        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getShippingAddress(), $calculableObjectTransfer->getStore());
         $calculableObjectTransfer->setItems($itemTransfers);
 
         return $calculableObjectTransfer;
@@ -80,12 +81,16 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function recalculateWithItemsAndShippingAddress(ArrayObject $itemTransfers, ?AddressTransfer $shippingAddressTransfer): ArrayObject
-    {
-        $countryIso2Code = $this->getShippingCountryIso2Code($shippingAddressTransfer);
+    protected function recalculateWithItemsAndShippingAddress(
+        ArrayObject $itemTransfers,
+        ?AddressTransfer $shippingAddressTransfer,
+        ?StoreTransfer $storeTransfer = null
+    ): ArrayObject {
+        $countryIso2Code = $this->getShippingCountryIso2Code($shippingAddressTransfer, $storeTransfer);
         $allIdProductAbstracts = $this->getAllIdAbstractProducts($itemTransfers);
 
         $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code(
@@ -98,13 +103,14 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return string
      */
-    protected function getShippingCountryIso2Code(?AddressTransfer $shippingAddressTransfer): string
+    protected function getShippingCountryIso2Code(?AddressTransfer $shippingAddressTransfer, ?StoreTransfer $storeTransfer = null): string
     {
         if (!$shippingAddressTransfer || !$shippingAddressTransfer->getIso2Code()) {
-            return $this->getDefaultTaxCountryIso2Code();
+            return $this->getDefaultTaxCountryIso2Code($storeTransfer);
         }
 
         return $shippingAddressTransfer->getIso2Code();
@@ -174,11 +180,22 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
      * @return string
      */
-    protected function getDefaultTaxCountryIso2Code(): string
+    protected function getDefaultTaxCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
         if ($this->defaultTaxCountryIso2Code === null) {
+            if ($storeTransfer) {
+                $countries = $storeTransfer->getCountries();
+
+                if ($countries) {
+                    $this->defaultTaxCountryIso2Code = reset($countries);
+
+                    return $this->defaultTaxCountryIso2Code;
+                }
+            }
             $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 

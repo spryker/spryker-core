@@ -29,4 +29,4 @@ suites:
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper

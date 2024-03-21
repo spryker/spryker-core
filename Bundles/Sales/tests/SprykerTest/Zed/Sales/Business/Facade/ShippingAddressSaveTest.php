@@ -139,6 +139,7 @@ class ShippingAddressSaveTest extends Unit
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         return [$quoteTransfer, new SaveOrderTransfer()];
@@ -155,6 +156,7 @@ class ShippingAddressSaveTest extends Unit
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         return [$quoteTransfer, new SaveOrderTransfer()];

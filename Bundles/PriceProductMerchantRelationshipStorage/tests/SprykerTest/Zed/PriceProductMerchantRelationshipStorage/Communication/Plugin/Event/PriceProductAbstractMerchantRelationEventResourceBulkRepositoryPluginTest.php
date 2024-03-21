@@ -45,6 +45,9 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPluginTest 
      */
     public function testGetDataReturnsTransferAccordingToOffsetAndLimit(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('PriceProductMerchantRelationshipHelper::haveProductAbstractPriceProductMerchantRelationship is not compatible with Dynamic Store. Tech Debt ticket created.');
+        }
         // Arrange
         $this->tester->haveProductAbstractPriceProductMerchantRelationship();
         $priceProductTransfer = $this->tester->haveProductAbstractPriceProductMerchantRelationship();
@@ -68,6 +71,9 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPluginTest 
      */
     public function testGetDataDoesNotDuplicateDataWhenMerchantRelationshipHasTwoBusinessUnits(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('PriceProductMerchantRelationshipHelper::haveProductAbstractPriceProductMerchantRelationship is not compatible with Dynamic Store. Tech Debt ticket created.');
+        }
         // Arrange
         $priceProductTransfer = $this->tester->haveProductAbstractPriceProductMerchantRelationship();
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([

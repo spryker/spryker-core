@@ -22,9 +22,12 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/country": "*",
+        "spryker/currency": "*",
         "spryker/locale": "*",
         "spryker/propel": "*",
         "spryker/quote": "*",
+        "spryker/store-storage": "*",
         "spryker/testify": "*"
     },
     "suggest": {
@@ -35,7 +38,8 @@
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\Store\\Helper\\": "tests/SprykerTest/Shared/Store/_support/Helper/"
+            "SprykerTest\\Shared\\Store\\Helper\\": "tests/SprykerTest/Shared/Store/_support/Helper/",
+            "SprykerTest\\Zed\\Store\\Helper\\": "tests/SprykerTest/Zed/Store/_support/Helper/"
         }
     },
     "autoload-dev": {

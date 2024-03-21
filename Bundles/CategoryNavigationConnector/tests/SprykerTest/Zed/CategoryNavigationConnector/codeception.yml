@@ -27,5 +27,5 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\Navigation\Helper\NavigationDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

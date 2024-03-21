@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -63,9 +64,28 @@ class DiscountOrderHydratePluginTest extends Unit
     protected const FIELD_DISPLAY_NAME = 'display_name';
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\Discount\DiscountCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function _setUp()
+    {
+        parent::_setUp();
+
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /**
+         * @see \Spryker\Zed\Sales\Business\SalesFacade::getCustomerOrder plugin used in context of this facade method that used in the GatewayController
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+    }
 
     /**
      * @return void

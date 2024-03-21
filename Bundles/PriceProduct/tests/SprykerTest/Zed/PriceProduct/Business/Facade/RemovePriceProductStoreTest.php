@@ -34,6 +34,10 @@ class RemovePriceProductStoreTest extends Unit
      */
     public function testRemovePriceProductStoreShouldDeletePriceFromDatabase(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->tester->markTestSkipped('Facade method is deprecated. For the test itself findPriceProductFor method is used, that is not supported for Dynamic Store mode.');
+        }
+
         // Arrange
         $priceProductFacade = $this->tester->getFacade();
 

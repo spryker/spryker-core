@@ -62,6 +62,10 @@ class PersistQuoteTest extends Unit
      */
     public function testPersistQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $expectedQuoteTransfer): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('`findQuoteByCustomer` method is deprecated and is not working with Dynamic Store ON');
+        }
+
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
         $currencyTransfer = (new CurrencyTransfer())

@@ -73,6 +73,7 @@ class PopularProductAbstractCollectionTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
@@ -104,6 +105,7 @@ class PopularProductAbstractCollectionTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $quoteTransfer2 = (new QuoteBuilder())
@@ -117,6 +119,7 @@ class PopularProductAbstractCollectionTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer1, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);

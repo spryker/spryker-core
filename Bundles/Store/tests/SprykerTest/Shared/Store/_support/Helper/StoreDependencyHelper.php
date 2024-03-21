@@ -11,7 +11,13 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Store\StoreDependencyProvider;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
+use Spryker\Client\StoreStorage\Plugin\Store\StoreStorageStoreExpanderPlugin;
+use Spryker\Zed\Country\Communication\Plugin\Store\CountryStoreCollectionExpanderPlugin;
+use Spryker\Zed\Currency\Communication\Plugin\Store\CurrencyStoreCollectionExpanderPlugin;
+use Spryker\Zed\Locale\Communication\Plugin\Store\LocaleStoreCollectionExpanderPlugin;
+use Spryker\Zed\Store\StoreDependencyProvider as ZedStoreDependencyProvider;
 use Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
@@ -72,8 +78,14 @@ class StoreDependencyHelper extends Module
             ->getContainer()
             ->set(static::SERVICE_LOCALE, static::LOCALE_EN);
 
-        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, [
-            $this->createStoreCurrencyLocaleExpandedMock(),
+        $this->setDependency(ZedStoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, [
+            new CurrencyStoreCollectionExpanderPlugin(),
+            new CountryStoreCollectionExpanderPlugin(),
+            new LocaleStoreCollectionExpanderPlugin(),
+        ]);
+
+        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            new StoreStorageStoreExpanderPlugin(),
         ]);
     }
 
@@ -91,6 +103,24 @@ class StoreDependencyHelper extends Module
             ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY]);
 
         return Stub::makeEmpty(StoreCollectionExpanderPluginInterface::class, [
+            'expand' => [$storeTransfer],
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setIdStore(static::STORE_ID)
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY)
+            ->setDefaultLocaleIsoCode(static::LOCALE_EN)
+            ->setAvailableLocaleIsoCodes([static::LOCALE_EN, static::LOCALE_DE])
+            ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY]);
+
+        return Stub::makeEmpty(StoreExpanderPluginInterface::class, [
             'expand' => [$storeTransfer],
         ]);
     }

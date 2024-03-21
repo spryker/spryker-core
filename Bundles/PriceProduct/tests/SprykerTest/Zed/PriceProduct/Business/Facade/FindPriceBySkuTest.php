@@ -33,6 +33,10 @@ class FindPriceBySkuTest extends Unit
      */
     public function testFindPriceBySkuShouldReturnDefaultPriceForGivenProduct(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->tester->markTestSkipped('Facade method is used for table drawing and not used with Dynamic Store ON.');
+        }
+
         // Arrange
         $priceProductTransfer = $this->tester->createProductWithAmount(50, 40);
 

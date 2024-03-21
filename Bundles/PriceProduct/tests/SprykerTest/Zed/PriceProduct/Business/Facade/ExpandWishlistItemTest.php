@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
@@ -27,6 +28,11 @@ use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
 class ExpandWishlistItemTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected PriceProductBusinessTester $tester;
@@ -37,6 +43,10 @@ class ExpandWishlistItemTest extends Unit
     public function testExpandWishlistItemWithPrices(): void
     {
         // Arrange
+        /*
+         * Used in a context of {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]));
         $priceProductFacade = $this->tester->getFacade();
 
         $priceTypeTransfer = new PriceTypeTransfer();

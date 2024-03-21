@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -51,6 +52,11 @@ class CompanyFacadeTest extends Unit
      * @var string
      */
     protected const TEST_FAKE_ID = '777';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Company\CompanyBusinessTester
@@ -194,9 +200,10 @@ class CompanyFacadeTest extends Unit
     public function testUpdateCompanyShouldPersistStoreRelation(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $companyTransfer = $this->tester->haveCompany();
         $storeRelation = (new StoreRelationBuilder([
-            StoreRelationTransfer::ID_STORES => [$this->tester->getCurrentStore()->getIdStore()],
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStoreOrFail()],
         ]))->build();
         $companyTransfer->setStoreRelation($storeRelation);
 

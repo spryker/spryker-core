@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -108,7 +109,7 @@ class SalesDataExportFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $saveOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $saveOrderTransfer = $this->tester->haveOrder([StoreTransfer::NAME => 'DE'], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
         $this->tester->haveOrderExpense($saveOrderTransfer->getIdSalesOrder());
 
         $this->timestamp = time();

@@ -70,7 +70,7 @@ class MerchantTableQueryTest extends Unit
     {
         // Arrange
         $storeRelationTransfer = (new StoreRelationTransfer())
-            ->setIdStores([$this->tester->getCurrentStore()->getIdStore()]);
+            ->setIdStores([$this->tester->getStore()->getIdStore()]);
         $merchantTransfer1 = $this->tester->haveMerchant([
             MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
         ]);

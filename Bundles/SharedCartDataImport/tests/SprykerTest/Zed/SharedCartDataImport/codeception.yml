@@ -30,3 +30,6 @@ suites:
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\SharedCart\Helper\SharedCartHelper
                 - \SprykerTest\Zed\SharedCartDataImport\Helper\SharedCartDataImportHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper

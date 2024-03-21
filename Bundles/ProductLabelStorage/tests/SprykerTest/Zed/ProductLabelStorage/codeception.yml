@@ -33,7 +33,7 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\ProductLabelStorage\Helper\ProductLabelStorageHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
                 - \SprykerTest\Zed\Event\Helper\EventHelper
@@ -61,7 +61,7 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
                 - \SprykerTest\Zed\Event\Helper\EventHelper

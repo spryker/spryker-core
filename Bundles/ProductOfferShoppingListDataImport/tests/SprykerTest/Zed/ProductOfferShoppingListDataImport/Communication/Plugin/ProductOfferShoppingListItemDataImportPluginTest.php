@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\ProductOfferShoppingListDataImport\Communication\Plugin\DataImport\ProductOfferShoppingListItemDataImportPlugin;
 use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataImportConfig;
@@ -62,11 +63,12 @@ class ProductOfferShoppingListItemDataImportPluginTest extends Unit
             ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
         ]);
         $this->tester->haveShoppingListItem([
-            'quantity' => 1,
-            'fkShoppingList' => $shoppingListTransfer->getIdShoppingList(),
-            'idCompanyUser' => $companyUserTransfer->getIdCompanyUser(),
-            'sku' => $productOfferTransfer->getConcreteSku(),
-            'key' => static::TEST_SHOPPING_LIST_ITEM_KEY,
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::SKU => $productOfferTransfer->getConcreteSku(),
+            ShoppingListItemTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ShoppingListItemTransfer::KEY => static::TEST_SHOPPING_LIST_ITEM_KEY,
         ]);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product-offer-shopping-list-item.csv');

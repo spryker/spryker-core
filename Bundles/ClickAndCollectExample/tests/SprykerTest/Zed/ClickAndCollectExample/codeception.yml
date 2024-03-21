@@ -27,7 +27,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
-                - SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
@@ -42,3 +42,5 @@ suites:
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantUser\Helper\MerchantUserHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper

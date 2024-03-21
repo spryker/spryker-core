@@ -49,6 +49,11 @@ class ProductOfferShoppingListFacadeTest extends Unit
     protected const PRODUCT_OFFER_STATUS_APPROVED = 'approved';
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\ProductOfferShoppingList\ProductOfferShoppingListBusinessTester
      */
     protected $tester;
@@ -77,8 +82,11 @@ class ProductOfferShoppingListFacadeTest extends Unit
     public function testCheckProductOfferShoppingListItemReturnsResponseTransferWithIsActiveAndNotApprovedErrors(): void
     {
         // Arrange
-        $storeName = $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        /*
+         * Current store added via Gateway in {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => false,
@@ -103,8 +111,11 @@ class ProductOfferShoppingListFacadeTest extends Unit
     public function testCheckProductOfferShoppingListItemReturnsResponseTransferWithoutError(): void
     {
         // Arrange
-        $storeName = $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        /*
+         * Current store added via Gateway in {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
@@ -131,6 +142,10 @@ class ProductOfferShoppingListFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'AU'], false);
+        /*
+         * Current store added via Gateway in {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]));
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
@@ -195,8 +210,11 @@ class ProductOfferShoppingListFacadeTest extends Unit
     public function testShoppingListItemWithValidStoreSucceeds(): void
     {
         // Arrange
-        $storeName = $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        /*
+         * Current store added via Gateway in {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,

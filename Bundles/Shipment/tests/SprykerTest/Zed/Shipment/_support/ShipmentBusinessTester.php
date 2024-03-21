@@ -382,6 +382,7 @@ class ShipmentBusinessTester extends Actor
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
+            ->withStore()
             ->build();
     }
 

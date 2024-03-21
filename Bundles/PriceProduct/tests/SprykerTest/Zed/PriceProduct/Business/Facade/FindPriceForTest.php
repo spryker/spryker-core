@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
 
 /**
@@ -24,6 +25,11 @@ use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
  */
 class FindPriceForTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -45,7 +51,8 @@ class FindPriceForTest extends Unit
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(PriceProductBusinessTester::USD_ISO_CODE)
-            ->setSku($priceProductTransfer->getSkuProduct());
+            ->setSku($priceProductTransfer->getSkuProduct())
+            ->setStoreName($this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE])->getName());
 
         // Act
         $price = $this->tester->getFacade()->findPriceFor($priceProductFilterTransfer);

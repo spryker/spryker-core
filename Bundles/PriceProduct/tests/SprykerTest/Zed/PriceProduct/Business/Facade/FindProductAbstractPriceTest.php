@@ -36,6 +36,10 @@ class FindProductAbstractPriceTest extends Unit
      */
     public function testFindProductAbstractPriceShouldReturnDefaultPriceForAbstractProduct(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Facade method is deprecated and not working with Dynamic Store.');
+        }
+
         // Arrange
         $priceProductFacade = $this->tester->getFacade();
 

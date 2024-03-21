@@ -29,8 +29,8 @@ class ConfirmRegistrationTest extends AbstractCustomerFacadeTest
         $customerTransfer = $this->tester->createTestCustomerTransfer();
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
-        $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
 
         // Assert
         $this->assertNotNull($customerTransfer->getRegistered());

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -45,9 +46,9 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $storeFacade;
+    protected StoreTransfer $storeTransfer;
 
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
@@ -63,7 +64,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
     }
 
@@ -75,7 +76,6 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'c1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
         $this->tester->havePriceProduct([
@@ -98,7 +98,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 300,
@@ -117,7 +117,8 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getAbstractSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
-            ->setCurrencyIsoCode($currencyTransfer->getCode());
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setStoreName($this->storeTransfer->getName());
         $actualPriceProductTransfer = $this->priceProductFacade
             ->findPriceProductFor($priceProductFilterTransfer);
         $this->assertSame(
@@ -135,7 +136,6 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'c2']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
         $this->tester->havePriceProduct([
@@ -159,7 +159,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 300,
@@ -178,7 +178,8 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
-            ->setCurrencyIsoCode($currencyTransfer->getCode());
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setStoreName($this->storeTransfer->getName());
         $actualPriceProductTransfer = $this->priceProductFacade
             ->findPriceProductFor($priceProductFilterTransfer);
         $this->assertSame(

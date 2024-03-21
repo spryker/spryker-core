@@ -129,6 +129,10 @@ class AbstractDatabaseCollectorTest extends Unit
      */
     public function testExportDataToStoreWritesStorableData(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Collector is not supporting Dynamic Store ON mode');
+        }
+
         // Assign
         $this->abstractDatabaseCollectorMock
             ->expects($this->any())

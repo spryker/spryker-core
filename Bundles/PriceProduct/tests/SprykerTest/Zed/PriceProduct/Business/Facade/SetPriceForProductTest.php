@@ -33,6 +33,10 @@ class SetPriceForProductTest extends Unit
      */
     public function testSetPriceForProductShouldUpdateExistingPrice(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->tester->markTestSkipped('Facade method is used for table drawing and not used with Dynamic Store ON');
+        }
+
         // Arrange
         $priceProductFacade = $this->tester->getFacade();
 

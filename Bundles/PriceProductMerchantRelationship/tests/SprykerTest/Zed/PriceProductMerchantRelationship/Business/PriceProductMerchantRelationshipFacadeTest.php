@@ -35,6 +35,9 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
      */
     public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('The helper is not compatible with Dynamic Store, because it`s using deprecated method that was not updated. Tech Debt ticket registered');
+        }
         $idPriceProductStore = $this
             ->tester
             ->haveProductAbstractPriceProductMerchantRelationship()

@@ -83,6 +83,7 @@ class ExpandProductAbstractPageWithPopularityTest extends Unit
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withStore()
             ->build();
 
         $this->tester->haveOrderFromQuote($quoteTransfer, 'DummyPayment01');

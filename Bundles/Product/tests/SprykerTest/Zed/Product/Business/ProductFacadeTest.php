@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\ProductExportedTransfer;
 use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
 use Generated\Shared\Transfer\ProductUpdatedTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException;
@@ -49,6 +50,11 @@ class ProductFacadeTest extends Unit
      * @var \SprykerTest\Zed\Product\ProductBusinessTester
      */
     protected $tester;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
 
     /**
      * @var array<string, string>
@@ -285,7 +291,7 @@ class ProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->getFacade()->findProductConcreteById($productConcreteIds[0]);
         $productCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
         $productCriteriaTransferWithExistingStore->setIdStore(
-            $this->tester->getStoreFacade()->getCurrentStore()->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE])->getIdStore(),
         );
         $productCriteriaTransferWithExistingStore->setIsActive(true);
         $productCriteriaTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
@@ -638,25 +644,23 @@ class ProductFacadeTest extends Unit
     public function testProductExportEventsSuccessfullyTriggeredWithFullAcceptanceCriteria(): void
     {
         // Arrange
-        $productConcreteTransfer1 = $this->tester->haveFullProduct();
-        $productConcreteTransfer2 = $this->tester->haveFullProduct();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
 
-        $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
 
-        $this->tester->deleteProductFromStore($productConcreteTransfer2, $storeTransfer);
+        $this->tester->deleteProductFromStore($productConcreteTransfer, $storeTransfer);
 
-        $productExportCriteriaTransfer = (new ProductExportCriteriaTransfer())
-            ->setStoreReference($storeTransfer->getStoreReference());
+        $productExportCriteriaTransfer = (new ProductExportCriteriaTransfer());
 
         // Assert
         $this->eventFacade
             ->expects($this->atLeastOnce())
             ->method('triggerBulk')
             ->with(ProductEvents::PRODUCT_CONCRETE_EXPORT, $this->callback(
-                function ($transfers) use ($productConcreteTransfer2) {
+                function ($transfers) use ($productConcreteTransfer) {
                     $this->assertNotEmpty($transfers);
                     $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
-                    $this->assertNotContains($productConcreteTransfer2, $transfers);
+                    $this->assertNotContains($productConcreteTransfer, $transfers);
 
                     return true;
                 },
@@ -675,7 +679,7 @@ class ProductFacadeTest extends Unit
         $productConcreteTransfer1 = $this->tester->haveFullProduct();
         $productConcreteTransfer2 = $this->tester->haveFullProduct();
 
-        $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
 
         $this->tester->deleteProductFromStore($productConcreteTransfer2, $storeTransfer);
 

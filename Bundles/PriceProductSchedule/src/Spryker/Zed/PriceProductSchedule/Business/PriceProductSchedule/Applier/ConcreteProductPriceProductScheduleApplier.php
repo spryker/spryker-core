@@ -95,7 +95,7 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
      */
     protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductConcrete(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $priceProductScheduleTransfer->getStore() ?: $this->storeFacade->getCurrentStore();
 
         return $this->priceProductScheduleRepository
             ->findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(

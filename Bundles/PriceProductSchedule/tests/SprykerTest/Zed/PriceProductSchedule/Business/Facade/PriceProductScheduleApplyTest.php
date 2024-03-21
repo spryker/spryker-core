@@ -77,9 +77,9 @@ class PriceProductScheduleApplyTest extends Unit
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $storeFacade;
+    protected $storeTransfer;
 
     /**
      * @return void
@@ -92,7 +92,7 @@ class PriceProductScheduleApplyTest extends Unit
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
     }
 
     /**
@@ -182,7 +182,6 @@ class PriceProductScheduleApplyTest extends Unit
         // Assign
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         $priceProductScheduleForApplyData = [
@@ -193,7 +192,7 @@ class PriceProductScheduleApplyTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::GROSS_AMOUNT => 250000,
                     MoneyValueTransfer::NET_AMOUNT => 150000,
@@ -213,7 +212,7 @@ class PriceProductScheduleApplyTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::GROSS_AMOUNT => 2500,
                     MoneyValueTransfer::NET_AMOUNT => 1500,
@@ -474,10 +473,14 @@ class PriceProductScheduleApplyTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductScheduleInTheDifferentStoreShouldNotApply(): void
+    public function testPriceProductScheduleInTheDifferentStoreShouldNotApplyIfCurrentStoreDefined(): void
     {
         // Assign
         $otherStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
+        /*
+         * Test context require current store to be set.
+         */
+        $this->tester->addCurrentStore($this->storeTransfer);
         $currencyId = $this->tester->haveCurrency();
         $priceType = $this->tester->havePriceType();
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -515,7 +518,6 @@ class PriceProductScheduleApplyTest extends Unit
     protected function getPriceProductData(): array
     {
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         return [
@@ -524,7 +526,7 @@ class PriceProductScheduleApplyTest extends Unit
                 PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
             ],
             PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                 MoneyValueTransfer::FK_CURRENCY => $currencyId,
             ],
         ];

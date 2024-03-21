@@ -82,6 +82,9 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testImportReservationShouldHaveAmountInReservationTotals(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with Dynamic Store enabled due to missing functionality in tested facade. Bug ticket is added.');
+        }
         // Origin store
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
 
@@ -106,6 +109,9 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testExportReservationShouldExportAllUnExportedReservations(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with Dynamic Store enabled due to missing functionality in tested facade. Bug ticket is added.');
+        }
         $testStateMachineProcessName = 'Test01';
 
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], false);
@@ -135,6 +141,9 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testSumReservedItemsShouldSumAllItemsInReservedState(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with Dynamic Store enabled because tested code is deprecated and it not compatible with Dynamic Store feature');
+        }
         $testSku = 'oms-sku-test-reservation';
 
         $saveOrderTransfer1 = $this->tester->haveOrder(
@@ -218,6 +227,9 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testGetReservationsFromOtherStoresShouldReturnReservations(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with Dynamic Store enabled due to missing functionality in tested facade. Bug ticket is added.');
+        }
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([

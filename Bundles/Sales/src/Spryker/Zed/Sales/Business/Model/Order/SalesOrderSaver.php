@@ -302,7 +302,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
-        $salesOrderEntity->setStore($this->storeFacade->getCurrentStore()->getNameOrFail());
+        $salesOrderEntity->setStore($quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->storeFacade->getCurrentStore()->getNameOrFail());
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($orderReference);
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));

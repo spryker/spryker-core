@@ -124,6 +124,7 @@ class SalesBusinessTester extends Actor
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder($seed))
             ->withItem()
+            ->withStore()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
@@ -201,6 +202,8 @@ class SalesBusinessTester extends Actor
             ->setSubtotal(337)
             ->setTaxTotal((new TaxTotalTransfer())->setAmount(10));
 
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
+
         return (new QuoteTransfer())
             ->setCurrency($currencyTransfer)
             ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
@@ -210,6 +213,7 @@ class SalesBusinessTester extends Actor
             ->setCustomer($customerTransfer)
             ->setShipment($shipmentTransfer)
             ->addItem($itemTransfer)
-            ->setPayment($paymentTransfer);
+            ->setPayment($paymentTransfer)
+            ->setStore($storeTransfer);
     }
 }

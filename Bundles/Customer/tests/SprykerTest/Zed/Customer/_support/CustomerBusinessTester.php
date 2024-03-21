@@ -88,8 +88,8 @@ class CustomerBusinessTester extends Actor
     public function createTestCustomer(): CustomerTransfer
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerResponseTransfer = $this->getFacade()->registerCustomer($customerTransfer);
-        $customerTransfer = $this->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->getCustomerFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
 
         return $customerTransfer;
     }

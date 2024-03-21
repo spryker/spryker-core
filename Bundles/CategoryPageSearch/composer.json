@@ -24,6 +24,7 @@
         "spryker/propel-orm": "*",
         "spryker/publisher": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/search": "*",
         "spryker/storage": "*",
         "spryker/store-extension": "*",

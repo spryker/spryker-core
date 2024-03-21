@@ -28,6 +28,7 @@
         "spryker/event": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/storage-redis": "^1.0.0",
         "spryker/testify": "*"
     },

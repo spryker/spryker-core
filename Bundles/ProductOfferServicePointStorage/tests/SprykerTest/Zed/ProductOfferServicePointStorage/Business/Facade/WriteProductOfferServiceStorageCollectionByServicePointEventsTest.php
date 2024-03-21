@@ -11,7 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOfferServiceTransfer;
 use Spryker\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageDependencyProvider;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageBusinessTester;
+use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +28,9 @@ use SprykerTest\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStor
  */
 class WriteProductOfferServiceStorageCollectionByServicePointEventsTest extends Unit
 {
+    use BusinessHelperTrait;
+    use ConfigHelperTrait;
+
     /**
      * @var string
      */
@@ -138,7 +143,7 @@ class WriteProductOfferServiceStorageCollectionByServicePointEventsTest extends 
     {
         // Arrange
         $productOfferServiceStorageWriterMock = $this->tester->createProductOfferServiceStorageWriterMock();
-        $this->tester->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
+        $this->getBusinessHelper()->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::FAKE_SERVICE_POINT_ID),
         ];
@@ -156,10 +161,10 @@ class WriteProductOfferServiceStorageCollectionByServicePointEventsTest extends 
     public function testShouldPublishByChunks(): void
     {
         // Arrange
-        $this->tester->mockConfigMethod('getReadCollectionBatchSize', 1);
+        $this->getConfigHelper()->mockConfigMethod('getReadCollectionBatchSize', 1);
 
         $productOfferServiceStorageWriterMock = $this->tester->createProductOfferServiceStorageWriterMock();
-        $this->tester->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
+        $this->getBusinessHelper()->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
 
         $serviceTransfer = $this->tester->haveService();
 

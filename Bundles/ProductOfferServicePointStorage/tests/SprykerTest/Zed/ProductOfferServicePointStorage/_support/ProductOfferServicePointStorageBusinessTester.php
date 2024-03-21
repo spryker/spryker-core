@@ -330,7 +330,7 @@ class ProductOfferServicePointStorageBusinessTester extends Actor
     {
         $this->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
     }

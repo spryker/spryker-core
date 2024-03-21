@@ -331,13 +331,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createReferenceGenerator()
     {
-        $sequenceNumberSettings = $this->getConfig()->getOrderReferenceDefaults(
-            $this->getStoreFacade()->getCurrentStore()->getNameOrFail(),
-        );
-
         return new OrderReferenceGenerator(
             $this->getSequenceNumberFacade(),
-            $sequenceNumberSettings,
+            $this->getConfig(),
+            $this->getStoreFacade(),
         );
     }
 

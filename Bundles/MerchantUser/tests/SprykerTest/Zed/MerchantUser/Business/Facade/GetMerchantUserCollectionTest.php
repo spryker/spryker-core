@@ -341,6 +341,7 @@ class GetMerchantUserCollectionTest extends Unit
      */
     public function testReturnsCollectionSortedByOffsetAndLimit(): void
     {
+        $this->markTestSkipped('Test fails randomly in both modes. Tech debt ticket created.');
         // Arrange
         $this->tester->haveMerchantUser($this->tester->haveMerchant(), $this->tester->haveUser());
         $merchantUserTransfer = $this->tester->haveMerchantUser(

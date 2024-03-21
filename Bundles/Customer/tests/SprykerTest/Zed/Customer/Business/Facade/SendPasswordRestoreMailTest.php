@@ -34,11 +34,11 @@ class SendPasswordRestoreMailTest extends AbstractCustomerFacadeTest
     {
         // Arrange
         $customerTransfer = $this->tester->createTestCustomerTransfer();
-        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
-        $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->sendPasswordRestoreMail($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -54,7 +54,7 @@ class SendPasswordRestoreMailTest extends AbstractCustomerFacadeTest
         $customerTransfer->setEmail(static::TESTER_NON_EXISTING_EMAIL);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->sendPasswordRestoreMail($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());

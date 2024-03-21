@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConfig;
@@ -69,7 +70,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($quoteTransfer->getItems(), $quoteTransfer->getExpenses());
+        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($quoteTransfer->getItems(), $quoteTransfer->getExpenses(), $quoteTransfer->getStore());
         $quoteTransfer->setExpenses($expenseTransfers);
     }
 
@@ -80,7 +81,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculateByCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
-        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getExpenses());
+        $expenseTransfers = $this->recalculateByItemTransfersAndExpenseTransfers($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getExpenses(), $calculableObjectTransfer->getStore());
         $calculableObjectTransfer->setExpenses($expenseTransfers);
 
         return $calculableObjectTransfer;
@@ -89,11 +90,15 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
-    protected function recalculateByItemTransfersAndExpenseTransfers(ArrayObject $itemTransfers, ArrayObject $expenseTransfers): ArrayObject
-    {
+    protected function recalculateByItemTransfersAndExpenseTransfers(
+        ArrayObject $itemTransfers,
+        ArrayObject $expenseTransfers,
+        ?StoreTransfer $storeTransfer = null
+    ): ArrayObject {
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($itemTransfers);
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
@@ -101,7 +106,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
                 continue;
             }
 
-            $taxSetTransfer = $this->getTaxSetEffectiveRate($shipmentGroupTransfer->getShipment());
+            $taxSetTransfer = $this->getTaxSetEffectiveRate($shipmentGroupTransfer->getShipment(), $storeTransfer);
 
             $shipmentGroupTransfer = $this->setTaxRateForShipmentGroupItems($shipmentGroupTransfer, $taxSetTransfer);
 
@@ -170,12 +175,13 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    protected function getTaxSetEffectiveRate(ShipmentTransfer $shipmentTransfer): TaxSetTransfer
+    protected function getTaxSetEffectiveRate(ShipmentTransfer $shipmentTransfer, ?StoreTransfer $storeTransfer = null): TaxSetTransfer
     {
-        $taxSetTransfer = $this->findTaxSet($shipmentTransfer);
+        $taxSetTransfer = $this->findTaxSet($shipmentTransfer, $storeTransfer);
 
         if ($taxSetTransfer === null) {
             $taxSetTransfer = (new TaxSetTransfer())
@@ -199,12 +205,13 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
-    protected function findTaxSet(ShipmentTransfer $shipmentTransfer): ?TaxSetTransfer
+    protected function findTaxSet(ShipmentTransfer $shipmentTransfer, ?StoreTransfer $storeTransfer = null): ?TaxSetTransfer
     {
-        $countryIso2Code = $this->getCountryIso2Code($shipmentTransfer->getShippingAddress());
+        $countryIso2Code = $this->getCountryIso2Code($shipmentTransfer->getShippingAddress(), $storeTransfer);
 
         return $this->shipmentRepository
             ->findTaxSetByShipmentMethodAndCountryIso2Code(
@@ -215,24 +222,36 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return string
      */
-    protected function getCountryIso2Code(?AddressTransfer $addressTransfer): string
+    protected function getCountryIso2Code(?AddressTransfer $addressTransfer, ?StoreTransfer $storeTransfer = null): string
     {
         if ($addressTransfer && $addressTransfer->getIso2Code() !== null) {
             return $addressTransfer->getIso2Code();
         }
 
-        return $this->getDefaultTaxCountryIso2Code();
+        return $this->getDefaultTaxCountryIso2Code($storeTransfer);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
      * @return string
      */
-    protected function getDefaultTaxCountryIso2Code(): string
+    protected function getDefaultTaxCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
         if ($this->defaultTaxCountryIso2Code === null) {
+            if ($storeTransfer) {
+                $countries = $storeTransfer->getCountries();
+
+                if ($countries) {
+                    $this->defaultTaxCountryIso2Code = reset($countries);
+
+                    return $this->defaultTaxCountryIso2Code;
+                }
+            }
             $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 

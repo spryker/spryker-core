@@ -28,7 +28,7 @@ class HasEmailTest extends AbstractCustomerFacadeTest
     public function testHasEmailReturnsFalseWithoutCustomer(): void
     {
         // Act
-        $hasEmail = $this->tester->getFacade()->hasEmail(CustomerBusinessTester::TESTER_EMAIL);
+        $hasEmail = $this->tester->getCustomerFacade()->hasEmail(CustomerBusinessTester::TESTER_EMAIL);
 
         // Assert
         $this->assertFalse($hasEmail);
@@ -43,19 +43,7 @@ class HasEmailTest extends AbstractCustomerFacadeTest
         $this->tester->createTestCustomer();
 
         // Act
-        $hasEmail = $this->tester->getFacade()->hasEmail(CustomerBusinessTester::TESTER_EMAIL);
-
-        // Assert
-        $this->assertTrue($hasEmail);
-    }
-
-    /**
-     * @return void
-     */
-    public function testHasEmail(): void
-    {
-        // Arrange
-        $hasEmail = $this->getFacade()->hasEmail('foo@bar.com');
+        $hasEmail = $this->tester->getCustomerFacade()->hasEmail(CustomerBusinessTester::TESTER_EMAIL);
 
         // Assert
         $this->assertTrue($hasEmail);

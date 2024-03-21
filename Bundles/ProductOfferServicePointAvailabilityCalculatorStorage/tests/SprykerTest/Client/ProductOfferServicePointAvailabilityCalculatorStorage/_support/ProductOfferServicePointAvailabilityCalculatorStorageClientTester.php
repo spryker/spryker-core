@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Client\ProductOfferServicePointAvailabilityCalculatorStorage;
 
+use Codeception\Actor;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantTo($text)
  * @method void wantToTest($text)
  * @method void execute($callable)
@@ -25,8 +27,8 @@ use Generated\Shared\Transfer\ProductOfferServicePointAvailabilityRequestItemTra
  * @method void pause($vars = [])
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ProductOfferServicePointAvailabilityCalculatorStorageClientTester extends \Codeception\Actor
+ */
+class ProductOfferServicePointAvailabilityCalculatorStorageClientTester extends Actor
 {
     use _generated\ProductOfferServicePointAvailabilityCalculatorStorageClientTesterActions;
 

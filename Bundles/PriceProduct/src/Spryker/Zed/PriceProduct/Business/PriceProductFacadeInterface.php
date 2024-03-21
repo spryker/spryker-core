@@ -147,6 +147,8 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major. There is no use of this method in the core, and it wasn't updated for Dynamic Store ON mode usage.
+     *
      * @param string $sku
      * @param string|null $priceType
      *
@@ -202,6 +204,8 @@ interface PriceProductFacadeInterface
      * abstract product will be returned instead.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. There is no use of this method, and it's not compatible with Dynamic Store mode.
      *
      * @param string $sku
      * @param string $priceType
@@ -373,6 +377,8 @@ interface PriceProductFacadeInterface
      * - Extracts additional prices array from price data
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major. There is no use of this method in the current code base, and it's not compatible with Dynamic Store mode.
      *
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName

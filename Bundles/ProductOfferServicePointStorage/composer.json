@@ -28,6 +28,7 @@
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/testify": "*"
     },
     "autoload": {

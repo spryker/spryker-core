@@ -53,7 +53,7 @@ class DeleteAddressTest extends AbstractCustomerAddressFacadeTest
 
         // Act
         $this->customerFacade->deleteAddress($addressTransfer);
-        $customerTransfer = $this->tester->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
 
         // Assert
         $this->assertNull($customerTransfer->getDefaultBillingAddress());

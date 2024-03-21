@@ -69,7 +69,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductsSellableForStore()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductsSellableForStore()} instead.
      *
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
@@ -91,7 +91,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductConcretesSellableForStore()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductConcretesSellableForStore()} instead.
      *
      * @param int $idProductConcrete
      *

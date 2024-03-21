@@ -71,6 +71,10 @@ class IndexControllerCest
      */
     public function addCustomer(CustomerCommunicationTester $i): void
     {
+        if ($this->isDynamicStoreEnabled()) {
+            $i->markTestSkipped('This test is not compatible with Dynamic Store enabled due to execution in isolated env without mocking customer reference config value. Tech Debt will be added.');
+        }
+
         $customerTransfer = $this->getCustomerTransfer();
 
         $email = $customerTransfer->getEmail();
@@ -142,6 +146,6 @@ class IndexControllerCest
      */
     protected function isDynamicStoreEnabled(): bool
     {
-        return (bool)getenv('DYNAMIC_STORE_ENABLED');
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

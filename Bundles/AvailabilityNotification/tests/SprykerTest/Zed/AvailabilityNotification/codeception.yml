@@ -29,6 +29,6 @@ suites:
                 - \SprykerTest\Zed\AvailabilityNotification\Helper\AvailabilityNotificationDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

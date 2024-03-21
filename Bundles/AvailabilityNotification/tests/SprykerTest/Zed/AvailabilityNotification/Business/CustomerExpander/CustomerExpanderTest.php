@@ -103,6 +103,10 @@ class CustomerExpanderTest extends Unit
     ): AvailabilityNotificationSubscriptionReaderInterface {
         $this->setAvailabilityNotificationToMailFacadeDependency();
 
+        /*
+         * Needed for haveAvailabilityNotificationSubscription helper method that uses facade that is called in Gateway context.
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => $this->tester::DEFAULT_STORE_NAME]));
         $availabilityNotificationSubscriptionReaderMock = $this->createMock(AvailabilityNotificationSubscriptionReaderInterface::class);
         $availabilityNotificationSubscriptionReaderMock->expects($this->once())
             ->method('getAvailabilityNotifications')
@@ -113,6 +117,7 @@ class CustomerExpanderTest extends Unit
                         $customerTransfer,
                     ),
                 ));
+        $this->tester->removeCurrentStore();
 
         return $availabilityNotificationSubscriptionReaderMock;
     }

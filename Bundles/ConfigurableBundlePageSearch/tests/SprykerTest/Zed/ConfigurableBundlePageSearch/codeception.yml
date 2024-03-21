@@ -25,7 +25,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\ConfigurableBundle\Helper\ConfigurableBundleDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
                 - \SprykerTest\Zed\Event\Helper\EventHelper
@@ -49,7 +49,7 @@ suites:
                 - \SprykerTest\Shared\ConfigurableBundle\Helper\ConfigurableBundleDataHelper
                 - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
                 - \SprykerTest\Zed\Event\Helper\EventHelper

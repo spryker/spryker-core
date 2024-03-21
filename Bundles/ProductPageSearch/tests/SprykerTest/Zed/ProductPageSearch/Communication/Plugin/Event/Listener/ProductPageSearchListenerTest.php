@@ -61,6 +61,8 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -77,6 +79,9 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductPageSearchListenerTest extends Unit
 {
+    use LocatorHelperTrait;
+    use ConfigHelperTrait;
+
     /**
      * @var int
      */
@@ -149,7 +154,7 @@ class ProductPageSearchListenerTest extends Unit
         ];
 
         $this->priceProductTransfer = $this->tester->havePriceProduct($priceProductOverride);
-        $this->tester->mockConfigMethod('isSendingToQueue', false);
+        $this->getConfigHelper()->mockConfigMethod('isSendingToQueue', false);
         $this->mockSearchFacade();
     }
 
@@ -226,7 +231,7 @@ class ProductPageSearchListenerTest extends Unit
         // Prepare
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->getLocatorHelper()->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
         $idProductAbstract = $this->productAbstractTransfer->getIdProductAbstract();

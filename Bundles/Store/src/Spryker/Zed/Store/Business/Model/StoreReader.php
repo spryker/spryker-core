@@ -78,7 +78,7 @@ class StoreReader implements StoreReaderInterface
         }
 
         $storeTransfers = $this->getStoreTransfersByStoreNames(
-            $this->storeRepository->getStoreNamesByCriteria(new StoreCriteriaTransfer()),
+            array_filter($this->storeRepository->getStoreNamesByCriteria(new StoreCriteriaTransfer())),
         );
         $stores = $this->storeExpander->expandStores($storeTransfers);
 

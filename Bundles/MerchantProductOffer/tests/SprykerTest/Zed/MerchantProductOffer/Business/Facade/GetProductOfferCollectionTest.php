@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\MerchantProductOption\Business\Facade;
+namespace SprykerTest\Zed\MerchantProductOffer\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\MerchantProductOffer\MerchantProductOfferBusinessTester;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group Shared
- * @group MerchantProductOption
+ * @group Zed
+ * @group MerchantProductOffer
  * @group Business
  * @group Facade
  * @group GetProductOfferCollectionTest
@@ -64,7 +65,7 @@ class GetProductOfferCollectionTest extends Unit
     public function testGetProductOfferCollectionReturnsCollectionWithOneMerchantProductOptionGroupWhileCriteriasMatched(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $merchantTransfer1 = $this->tester->haveMerchant();
         $merchantTransfer2 = $this->tester->haveMerchant();
 
@@ -105,7 +106,7 @@ class GetProductOfferCollectionTest extends Unit
     {
         // Arrange
         $this->tester->ensureProductOfferTablesAreEmpty();
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $merchantTransfer = $this->tester->haveMerchant();
 
         for ($i = 0; $i < 5; $i++) {

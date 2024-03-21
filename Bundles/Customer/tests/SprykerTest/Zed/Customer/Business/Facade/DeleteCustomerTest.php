@@ -33,7 +33,7 @@ class DeleteCustomerTest extends AbstractCustomerAddressFacadeTest
         $customerTransfer = $this->tester->createTestCustomer();
 
         // Act
-        $isSuccess = $this->tester->getFacade()->deleteCustomer($customerTransfer);
+        $isSuccess = $this->tester->getCustomerFacade()->deleteCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($isSuccess);
@@ -56,7 +56,7 @@ class DeleteCustomerTest extends AbstractCustomerAddressFacadeTest
             ->method('execute');
 
         // Act
-        $this->tester->getFacade()->deleteCustomer($customerTransfer);
+        $this->tester->getCustomerFacade()->deleteCustomer($customerTransfer);
     }
 
     /**

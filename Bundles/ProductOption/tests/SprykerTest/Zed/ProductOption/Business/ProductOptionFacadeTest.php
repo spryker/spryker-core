@@ -19,12 +19,12 @@ use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 
@@ -67,6 +67,11 @@ class ProductOptionFacadeTest extends Unit
      * @var int
      */
     public const DEFAULT_GROSS_PRICE = 200;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
@@ -388,6 +393,11 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionValueShouldReturnPersistedOptionValue(): void
     {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
+        /*
+         * Used in {@link \Spryker\Zed\Cart\Communication\Controller\GatewayController} context
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productOptionFacade = $this->getProductOptionFacade();
 
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
@@ -469,7 +479,7 @@ class ProductOptionFacadeTest extends Unit
         $expectedGrossAmount = 1144;
         $expectedNetAmount = 2233;
 
-        $this->mockStoreFacadeDefaultStore('DE');
+        $this->mockStoreFacadeDefaultStore();
         $this->mockCurrencyFacadeDefaultCurrency('USD');
 
         $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
@@ -875,6 +885,7 @@ class ProductOptionFacadeTest extends Unit
     public function testGetProductOptionCollectionByProductOptionCriteriaWithOneIdReturnsCollection(): void
     {
         // Arrange
+        $this->mockStoreFacadeDefaultStore();
         $productOptionFacade = $this->getProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
@@ -900,6 +911,7 @@ class ProductOptionFacadeTest extends Unit
     public function testGetProductOptionCollectionByProductOptionCriteriaWithTwoIdsReturnsCollection(): void
     {
         // Arrange
+        $this->mockStoreFacadeDefaultStore();
         $productOptionFacade = $this->getProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
@@ -929,6 +941,7 @@ class ProductOptionFacadeTest extends Unit
     public function testGetProductOptionCollectionByProductOptionCriteriaWithDeactivatedProductOptionGroupReturnsEmptyCollection(): void
     {
         // Arrange
+        $this->mockStoreFacadeDefaultStore();
         $productOptionFacade = $this->getProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup([
@@ -963,6 +976,7 @@ class ProductOptionFacadeTest extends Unit
     public function testGetProductOptionCollectionByProductOptionCriteriaWithAssignedProductAbstractReturnsCollection(): void
     {
         // Arrange
+        $this->mockStoreFacadeDefaultStore();
         $product = $this->tester->haveProduct();
         $productOptionFacade = $this->getProductOptionFacade();
 
@@ -1043,7 +1057,7 @@ class ProductOptionFacadeTest extends Unit
      */
     protected function getCurrentIdStore(): int
     {
-        return $this->tester->getLocator()->store()->facade()->getCurrentStore()->getIdStore();
+        return $this->mockStoreFacadeDefaultStore()->getIdStore();
     }
 
     /**
@@ -1108,22 +1122,14 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @uses StoreFacadeInterface::getCurrentStore()
      *
-     * @param string $storeName
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function mockStoreFacadeDefaultStore(string $storeName): void
+    protected function mockStoreFacadeDefaultStore(): StoreTransfer
     {
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getStoreByName($storeName);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
+        $this->tester->addCurrentStore($storeTransfer);
 
-        $storeFacadeMock = $this->getMockBuilder(StoreFacade::class)
-            ->setMethods(['getCurrentStore'])
-            ->getMock();
-
-        $storeFacadeMock
-            ->expects($this->any())
-            ->method('getCurrentStore')
-            ->willReturn($storeTransfer);
+        return $storeTransfer;
     }
 
     /**

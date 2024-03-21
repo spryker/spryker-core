@@ -799,15 +799,20 @@ class ShoppingListItemTest extends Unit
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
 
         $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+            StoreTransfer::NAME => 'DE',
         ]);
+        /*
+         * Used in a context of {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->addIdStores($storeTransfer->getIdStore())
             ->addStores($storeTransfer);
 
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::STORE_RELATION => $storeRelationTransfer,
-            ProductAbstractTransfer::STORE_NAMES => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+            ProductAbstractTransfer::STORE_NAMES => $storeTransfer->getName(),
         ]);
 
         $productConcreteTransfer = $this->tester->haveProductConcrete([
@@ -840,13 +845,21 @@ class ShoppingListItemTest extends Unit
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'AT',
         ]);
+        $storeTransferDE = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        /*
+         * Used in a context of {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($storeTransferDE);
+
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->addIdStores($storeTransfer->getIdStore())
             ->addStores($storeTransfer);
 
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::STORE_RELATION => $storeRelationTransfer,
-            ProductAbstractTransfer::STORE_NAMES => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+            ProductAbstractTransfer::STORE_NAMES => 'DE',
         ]);
 
         $productConcreteTransfer = $this->tester->haveProductConcrete([

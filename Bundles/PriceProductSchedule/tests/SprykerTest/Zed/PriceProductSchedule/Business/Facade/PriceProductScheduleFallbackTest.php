@@ -69,9 +69,9 @@ class PriceProductScheduleFallbackTest extends Unit
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $storeFacade;
+    protected StoreTransfer $storeTransfer;
 
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
@@ -88,7 +88,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
     }
 
@@ -100,7 +100,6 @@ class PriceProductScheduleFallbackTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -138,7 +137,7 @@ class PriceProductScheduleFallbackTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
@@ -154,13 +153,14 @@ class PriceProductScheduleFallbackTest extends Unit
         );
 
         // Act
-        $priceProductScheduleFacade->applyScheduledPrices();
+        $priceProductScheduleFacade->applyScheduledPrices($this->storeTransfer->getName());
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
-            ->setCurrencyIsoCode($currencyTransfer->getCode());
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setStoreName($this->storeTransfer->getName());
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
@@ -184,7 +184,6 @@ class PriceProductScheduleFallbackTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'tes']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -210,7 +209,7 @@ class PriceProductScheduleFallbackTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 1000,
@@ -230,7 +229,7 @@ class PriceProductScheduleFallbackTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 200,
@@ -242,7 +241,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
 
         // Act
-        $priceProductScheduleFacade->applyScheduledPrices();
+        $priceProductScheduleFacade->applyScheduledPrices($this->storeTransfer->getName());
         $priceProductScheduleTransferOne->setActiveTo(new DateTime('-1 hour'));
         $priceProductScheduleFacade->updateAndApplyPriceProductSchedule($priceProductScheduleTransferOne);
 
@@ -250,7 +249,8 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
-            ->setCurrencyIsoCode($currencyTransfer->getCode());
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setStoreName($this->storeTransfer->getName());
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
@@ -285,7 +285,7 @@ class PriceProductScheduleFallbackTest extends Unit
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
-            ->setStoreName($this->storeFacade->getCurrentStore()->getName())
+            ->setStoreName($this->storeTransfer->getName())
             ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
@@ -346,7 +346,8 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
-            ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+            ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode())
+            ->setStoreName($this->storeTransfer->getName());
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
@@ -375,7 +376,6 @@ class PriceProductScheduleFallbackTest extends Unit
     protected function getPriceProductScheduleData(ProductConcreteTransfer $productConcreteTransfer): array
     {
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         return [
@@ -388,7 +388,7 @@ class PriceProductScheduleFallbackTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 ],
             ],

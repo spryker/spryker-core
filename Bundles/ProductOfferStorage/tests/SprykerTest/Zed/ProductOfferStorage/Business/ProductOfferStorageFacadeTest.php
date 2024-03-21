@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductOfferStorage\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
@@ -52,7 +53,7 @@ class ProductOfferStorageFacadeTest extends Unit
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->tester->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
 
@@ -66,7 +67,7 @@ class ProductOfferStorageFacadeTest extends Unit
     {
         // Assign
         $this->tester->clearProductOfferData();
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productTransfer = $this->tester->haveProduct();
 
         $productOfferTransfer = $this->tester->haveProductOffer([
@@ -119,7 +120,7 @@ class ProductOfferStorageFacadeTest extends Unit
     public function testDeleteProductOfferStorageCollectionByProductOfferEvents(): void
     {
         // Assign
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productTransfer = $this->tester->haveProduct();
 
         $productOfferTransfer = $this->tester->haveProductOffer([

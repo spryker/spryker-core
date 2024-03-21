@@ -21,6 +21,8 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader\PriceProdu
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester;
 
 /**
@@ -37,6 +39,9 @@ use SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester;
  */
 class PublishTest extends Unit
 {
+    use LocatorHelperTrait;
+    use ConfigHelperTrait;
+
     /**
      * @var string
      */
@@ -71,6 +76,10 @@ class PublishTest extends Unit
      */
     public function testShouldNotOverwriteDifferentStoreDataWithSameLocale(array $configPrameters = []): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not applicable for dynamic stores yet');
+        }
+
         // Arrange
         $this->tester->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
@@ -80,7 +89,7 @@ class PublishTest extends Unit
         );
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->getLocatorHelper()->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
         $this->tester->setDependency(
@@ -91,7 +100,7 @@ class PublishTest extends Unit
         );
 
         foreach ($configPrameters as $methodName => $value) {
-            $this->tester->mockConfigMethod($methodName, $value);
+            $this->getConfigHelper()->mockConfigMethod($methodName, $value);
         }
 
         $this->tester->setDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH, Stub::make(

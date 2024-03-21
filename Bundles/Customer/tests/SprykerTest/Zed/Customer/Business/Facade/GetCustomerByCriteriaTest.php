@@ -44,7 +44,7 @@ class GetCustomerByCriteriaTest extends AbstractCustomerFacadeTest
         );
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()
+        $customerResponseTransfer = $this->tester->getCustomerFacade()
             ->getCustomerByCriteria($customerCriteriaTransfer);
 
         // Assert
@@ -61,7 +61,7 @@ class GetCustomerByCriteriaTest extends AbstractCustomerFacadeTest
             ->setCustomerReference('DE--NO-PRESENT');
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()
+        $customerResponseTransfer = $this->tester->getCustomerFacade()
             ->getCustomerByCriteria($customerCriteriaTransfer);
 
         // Assert
@@ -89,7 +89,7 @@ class GetCustomerByCriteriaTest extends AbstractCustomerFacadeTest
         );
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()
+        $customerResponseTransfer = $this->tester->getCustomerFacade()
             ->getCustomerByCriteria($customerCriteriaTransfer);
 
         // Assert

@@ -181,7 +181,7 @@ class ProductOfferStorageBusinessTester extends Actor
      */
     public function haveProductOfferWithStore(array $productOfferData = [], array $productData = []): ProductOfferTransfer
     {
-        $storeTransfer = $this->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
         $productConcreteTransfer = $this->haveProduct($productData);
         $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $productConcreteTransfer->getSkuOrFail();
         $productOfferTransfer = $this->haveProductOffer($productOfferData)->addStore($storeTransfer);

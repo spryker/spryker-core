@@ -297,6 +297,8 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement. Default tax rate should be retrieved from the StoreTransfer directly.
+     *
      * @return string
      */
     public function getDefaultTaxCountryIso2Code()

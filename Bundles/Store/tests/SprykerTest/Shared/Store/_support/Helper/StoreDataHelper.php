@@ -31,6 +31,11 @@ class StoreDataHelper extends Module
     protected const DEFAULT_STORE = 'DE';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_AT = 'AT';
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
@@ -68,7 +73,7 @@ class StoreDataHelper extends Module
             (new StoreCache())->cacheStore($storeTransfer);
         }
 
-        $this->getDataCleanupHelper()->addCleanup(function (): void {
+        $this->getDataCleanupHelper()->addCleanup(function () use ($storeTransfer): void {
             $this->clearStoreCache();
         });
 

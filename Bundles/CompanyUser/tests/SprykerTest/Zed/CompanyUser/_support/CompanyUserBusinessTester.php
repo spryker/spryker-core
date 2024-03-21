@@ -11,7 +11,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
  * @method void wantToTest($text)
@@ -63,14 +62,6 @@ class CompanyUserBusinessTester extends Actor
         }
 
         return $this->haveCompanyUser($seedData);
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
-    public function getCustomerFacade(): CustomerFacadeInterface
-    {
-        return $this->getLocator()->customer()->facade();
     }
 
     /**

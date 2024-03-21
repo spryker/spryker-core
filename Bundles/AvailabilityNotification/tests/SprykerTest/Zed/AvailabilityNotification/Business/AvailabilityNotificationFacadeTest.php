@@ -80,6 +80,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testGuestSubscribeShouldSucceed(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::subscribeAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
         );
@@ -96,6 +100,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testCustomerSubscribeShouldSucceed(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::subscribeAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
             $this->tester->haveCustomer(),
@@ -113,6 +121,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testSubscribeFailsWhenEmailIsInvalid(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::subscribeAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
             null,
@@ -133,6 +145,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testSubscribeForAlreadySubscribedTypeShouldSucceed(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::subscribeAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
         );
@@ -149,6 +165,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeBySubscriptionKeyShouldSucceed(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::unsubscribeBySubscriptionKeyAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $this->mockMailDependency();
 
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscription(
@@ -165,6 +185,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeByCustomerReferenceAndSkuShouldSucceed(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::unsubscribeByCustomerReferenceAndSkuAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
             $this->tester->haveCustomer(),
@@ -184,6 +208,10 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeWithIncorrectSubscriptionKeyShouldFail(): void
     {
+        /**
+         * @see \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::unsubscribeBySubscriptionKeyAction()
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
             null,
@@ -212,7 +240,12 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $this->mockMailDependency();
 
+        /*
+         * Method used only for arrange so we add current store only for it and remove after
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $this->tester->removeCurrentStore();
 
         $this->availabilityNotificationFacade->anonymizeSubscription($customer);
 
@@ -235,6 +268,11 @@ class AvailabilityNotificationFacadeTest extends Unit
         $product2 = $this->tester->haveProduct();
         $customer = $this->tester->haveCustomer();
         $this->mockMailDependency();
+
+        /*
+         * Method used only for arrange, so we add current store only for it and remove after
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product1,
@@ -247,6 +285,8 @@ class AvailabilityNotificationFacadeTest extends Unit
                 $customer,
             ),
         );
+        $this->tester->removeCurrentStore();
+
         $expandedCustomerTransfer = $this->availabilityNotificationFacade->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customer);
         $this->assertEmpty(
             array_diff(
@@ -268,6 +308,11 @@ class AvailabilityNotificationFacadeTest extends Unit
         $product2 = $this->tester->haveProduct();
         $customer = $this->tester->haveCustomer();
         $this->mockMailDependency();
+
+        /*
+         * Method used only for arrange, so we add current store only for it and remove after
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]));
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
                 $product1,
@@ -280,6 +325,8 @@ class AvailabilityNotificationFacadeTest extends Unit
                 $customer,
             ),
         );
+        $this->tester->removeCurrentStore();
+
         $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationFacade->getAvailabilityNotifications(
             (new AvailabilityNotificationCriteriaTransfer())->addCustomerReference($customer->getCustomerReference()),
         );

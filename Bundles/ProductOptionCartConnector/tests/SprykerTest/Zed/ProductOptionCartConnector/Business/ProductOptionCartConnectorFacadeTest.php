@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
@@ -62,6 +63,10 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         $this->productOptionCartConnectorFacade = $this->tester->getLocator()->productOptionCartConnector()->facade();
         $this->tester->addDependencies();
+        /*
+         * Used in a context of {@link \Spryker\Zed\Cart\Communication\Controller\GatewayController}
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']));
     }
 
     /**

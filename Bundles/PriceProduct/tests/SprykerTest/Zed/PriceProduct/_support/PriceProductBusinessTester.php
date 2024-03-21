@@ -135,7 +135,7 @@ class PriceProductBusinessTester extends Actor
             $currencyIsoCode = $expandedStoreTransfers[0]->getDefaultCurrencyIsoCode();
         }
 
-        $currencyTransfer = $this->getCurrencyTransfer($currencyIsoCode);
+        $currencyTransfer = $this->getCurrencyTransfer($currencyIsoCode ?: $storeTransfer->getDefaultCurrencyIsoCode());
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossAmount,
@@ -180,7 +180,7 @@ class PriceProductBusinessTester extends Actor
             ->setGroupKey('default');
 
         $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
-        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossPrice,
@@ -217,7 +217,7 @@ class PriceProductBusinessTester extends Actor
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             rand(10, 100),
             rand(1, 9),
-            $this->getStoreFacade()->getCurrentStore(),
+            $this->haveStore([StoreTransfer::NAME => static::STORE_NAME]),
             $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE),
         );
 
@@ -252,7 +252,7 @@ class PriceProductBusinessTester extends Actor
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             rand(10, 100),
             rand(1, 9),
-            $this->getStoreFacade()->getCurrentStore(),
+            $this->haveStore([StoreTransfer::NAME => static::STORE_NAME]),
             $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE),
         );
 

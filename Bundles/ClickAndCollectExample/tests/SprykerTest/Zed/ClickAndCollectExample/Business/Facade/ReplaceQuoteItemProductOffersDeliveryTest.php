@@ -35,6 +35,11 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $productOfferTransfer1 = $this->tester->createReplacementProductOffer(
             $productConcreteTransfer,
@@ -84,6 +89,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $servicePointTransfer = $this->tester->haveServicePoint([
             ServicePointTransfer::IS_ACTIVE => true,
@@ -117,6 +126,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $productOfferTransfer = $this->tester->haveProductOffer([
@@ -155,6 +168,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $servicePointTransfer = $this->tester->haveServicePoint([
             ServicePointTransfer::IS_ACTIVE => true,
@@ -211,6 +228,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $servicePointTransfer = $this->tester->haveServicePoint([
             ServicePointTransfer::IS_ACTIVE => true,
@@ -269,6 +290,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $servicePointTransfer = $this->tester->haveServicePoint([
             ServicePointTransfer::IS_ACTIVE => true,
@@ -342,6 +367,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $servicePointTransfer = $this->tester->haveServicePoint([
             ServicePointTransfer::IS_ACTIVE => true,
@@ -419,6 +448,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $this->tester->createReplacementProductOffer(
             $productConcreteTransfer,
@@ -465,6 +498,10 @@ class ReplaceQuoteItemProductOffersDeliveryTest extends ClickAndCollectExampleFa
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore();
+        /*
+         * Used in the context of {@link \Spryker\Zed\ServicePointCart\Communication\Controller\GatewayController::replaceQuoteItemsAction} or RestApi so there is a current store
+         */
+        $this->tester->addCurrentStore($storeTransfer);
         $productConcreteTransfer = $this->tester->haveProduct();
         $this->tester->createReplacementProductOffer(
             $productConcreteTransfer,

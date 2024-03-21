@@ -60,7 +60,7 @@ class ProductImageStorageFacadeTest extends Unit
 
         $this->tester->setDependency(static::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->tester->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
     }

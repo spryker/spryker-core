@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use ReflectionClass;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
@@ -37,6 +38,11 @@ class GetValidPricesTest extends Unit
     protected const COUNT_PRODUCT_WITH_PRICES = 5;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected PriceProductBusinessTester $tester;
@@ -60,11 +66,16 @@ class GetValidPricesTest extends Unit
             );
         }
         $priceProductFilterTransfers = [];
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
+            $priceProductFilterTransfer = (new PriceProductFilterTransfer())
                 ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
+            if ($this->tester->isDynamicStoreEnabled()) {
+                $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+            }
+            $priceProductFilterTransfers[] = $priceProductFilterTransfer;
         }
 
         // Act
@@ -95,11 +106,18 @@ class GetValidPricesTest extends Unit
             );
         }
         $priceProductFilterTransfers = [];
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
+            $priceProductFilterTransfer = (new PriceProductFilterTransfer())
                 ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
+
+            if ($this->tester->isDynamicStoreEnabled()) {
+                $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+            }
+
+            $priceProductFilterTransfers[] = $priceProductFilterTransfer;
         }
 
         // Act
@@ -122,10 +140,14 @@ class GetValidPricesTest extends Unit
             $productConcreteTransfer->getFkProductAbstract(),
         );
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+        }
 
         // Act
         $resultPriceProductTransfers = $this->tester->getFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -159,10 +181,14 @@ class GetValidPricesTest extends Unit
             $productConcreteTransfer->getIdProductConcrete(),
         );
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+        }
 
         // Act
         $resultPriceProductTransfers = $this->tester->getFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -202,10 +228,14 @@ class GetValidPricesTest extends Unit
             $productConcreteTransfer->getSku(),
         );
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+        }
 
         // Act
         $resultPriceProductTransfers = $this->tester->getFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -246,10 +276,14 @@ class GetValidPricesTest extends Unit
             PriceProductBusinessTester::USD_ISO_CODE,
         );
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(PriceProductBusinessTester::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $priceProductFilterTransfer->setStoreName($storeTransfer->getName());
+        }
 
         // Act
         $resultPriceProductTransfers = $this->tester->getFacade()->getValidPrices([$priceProductFilterTransfer]);

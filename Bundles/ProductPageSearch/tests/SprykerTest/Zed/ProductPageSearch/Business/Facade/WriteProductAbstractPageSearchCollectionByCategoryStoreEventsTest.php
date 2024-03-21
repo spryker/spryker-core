@@ -11,11 +11,13 @@ use Codeception\Stub;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchCollectionFilterPluginInterface;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester;
 
 /**
@@ -31,12 +33,19 @@ use SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester;
  */
 class WriteProductAbstractPageSearchCollectionByCategoryStoreEventsTest extends Unit
 {
+    use LocatorHelperTrait;
+
     /**
      * @uses \Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap::COL_FK_CATEGORY
      *
      * @var string
      */
     protected const COL_FK_CATEGORY = 'spy_category_store.fk_category';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\ProductPageSearch\ProductPageSearchBusinessTester
@@ -54,7 +63,7 @@ class WriteProductAbstractPageSearchCollectionByCategoryStoreEventsTest extends 
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->getLocatorHelper()->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
 
@@ -73,6 +82,9 @@ class WriteProductAbstractPageSearchCollectionByCategoryStoreEventsTest extends 
      */
     public function testWriteProductAbstractPageSearchCollectionByCategoryStoreEventsWritesDataByEvents(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not applicable for dynamic stores yet');
+        }
         // Arrange
         $categoryTransfer = $this->createCategory();
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -85,7 +97,7 @@ class WriteProductAbstractPageSearchCollectionByCategoryStoreEventsTest extends 
         // Assert
         $productPageSearchTransfer = $this->tester->findProductPageSearchTransfer(
             $this->tester->getProductAbstractTransfer()->getIdProductAbstractOrFail(),
-            $this->tester->getStoreFacade()->getCurrentStore()->getNameOrFail(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME])->getName(),
         );
 
         $this->assertNotNull($productPageSearchTransfer);
@@ -119,8 +131,8 @@ class WriteProductAbstractPageSearchCollectionByCategoryStoreEventsTest extends 
      */
     protected function createCategory(): CategoryTransfer
     {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $localeTransfer = $this->tester->getLocaleFacade()->getCurrentLocale();
-        $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
         $categoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $localeTransfer]);
         $this->tester->haveCategoryStoreRelation(
             $categoryTransfer->getIdCategory(),

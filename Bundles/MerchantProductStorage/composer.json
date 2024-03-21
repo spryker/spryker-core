@@ -24,6 +24,7 @@
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/storage": "*",
         "spryker/store": "*",
         "spryker/store-extension": "*",

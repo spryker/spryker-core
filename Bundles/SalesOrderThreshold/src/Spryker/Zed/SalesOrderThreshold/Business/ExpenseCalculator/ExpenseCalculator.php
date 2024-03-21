@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\SalesOrderThreshold\Business\DataSource\SalesOrderThresholdDataSourceStrategyResolverInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface;
@@ -155,7 +156,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
         int $fee
     ): void {
         $calculableObjectTransfer->addExpense(
-            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode()),
+            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode(), $calculableObjectTransfer->getStore()),
         );
     }
 
@@ -163,13 +164,15 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      * @param int $expensePrice
      * @param string $priceMode
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function createExpenseByPriceMode(
         SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer,
         int $expensePrice,
-        string $priceMode
+        string $priceMode,
+        ?StoreTransfer $storeTransfer = null
     ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
             ->setName(sprintf(
@@ -180,7 +183,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
             ->setSumPrice($expensePrice)
             ->setUnitPriceToPayAggregation($expensePrice)
             ->setSumPriceToPayAggregation($expensePrice)
-            ->setTaxRate($this->taxRateReader->getSalesOrderThresholdTaxRate())
+            ->setTaxRate($this->taxRateReader->getSalesOrderThresholdTaxRate($storeTransfer))
             ->setQuantity(1);
 
         if ($priceMode === SalesOrderThresholdConfig::PRICE_MODE_NET) {

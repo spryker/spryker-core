@@ -49,6 +49,11 @@ class ProductBusinessTester extends Actor
     use _generated\ProductBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var array<int>
      */
     protected $productConcreteIds = [];
@@ -227,7 +232,7 @@ class ProductBusinessTester extends Actor
      */
     protected function createStoreRelationTransfer(ProductAbstractTransfer $productAbstractTransfer): StoreRelationTransfer
     {
-        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
 
         $storeRelationTransfer = new StoreRelationTransfer();
         $storeRelationTransfer->setIdEntity($productAbstractTransfer->getIdProductAbstract());

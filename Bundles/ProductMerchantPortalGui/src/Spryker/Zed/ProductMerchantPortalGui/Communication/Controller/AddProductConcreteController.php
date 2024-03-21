@@ -73,7 +73,7 @@ class AddProductConcreteController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::ID_TABLE_PRODUCT_CONCRETE
-     * 
+     *
      * @var string
      */
     protected const ID_TABLE_PRODUCT_CONCRETE = 'product-concrete-table';

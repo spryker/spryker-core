@@ -61,7 +61,7 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Unit
         $quoteTransfer->setIsAddressSavingSkipped(false);
 
         // Act
-        $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
+        $this->tester->getCustomerFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
 
         // Assert
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
@@ -96,7 +96,7 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Unit
         $quoteTransfer->setIsAddressSavingSkipped(true);
 
         // Act
-        $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
+        $this->tester->getCustomerFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
 
         // Assert
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();

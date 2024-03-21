@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\SalesServicePoint\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\SalesServicePoint\SalesServicePointBusinessTester;
 
 /**
@@ -60,6 +61,8 @@ class SaveSalesOrderItemServicePointsFromQuoteTest extends Unit
             ->withCustomer()
             ->withCurrency()
             ->build();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $quoteTransfer->setStore($storeTransfer);
 
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, static::DEFAULT_OMS_PROCESS_NAME);
 
@@ -86,6 +89,8 @@ class SaveSalesOrderItemServicePointsFromQuoteTest extends Unit
             ->withCustomer()
             ->withCurrency()
             ->build();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $quoteTransfer->setStore($storeTransfer);
 
         $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, static::DEFAULT_OMS_PROCESS_NAME);
 

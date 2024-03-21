@@ -284,7 +284,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOffer[]
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|array<\Orm\Zed\ProductOffer\Persistence\SpyProductOffer>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

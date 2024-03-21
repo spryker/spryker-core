@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -90,7 +91,7 @@ class PriceProductScheduleListTableQueryTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceTypeTransfer = $this->tester->havePriceType();
         $idCurrency = $this->tester->haveCurrency();
-        $storeTransfer = $this->tester->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
 
         $priceProductScheduleData = [
             PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData($priceTypeTransfer, $idCurrency, $storeTransfer->getIdStore()),

@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\PriceProductScheduleGui;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface;
 
@@ -31,14 +30,6 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleG
 class PriceProductScheduleGuiCommunicationTester extends Actor
 {
     use _generated\PriceProductScheduleGuiCommunicationTesterActions;
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer
-    {
-        return $this->getLocator()->store()->facade()->getCurrentStore();
-    }
 
     /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface

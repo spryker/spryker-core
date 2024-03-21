@@ -36,6 +36,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="priceMode" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Quote">
@@ -121,6 +122,7 @@
         <property name="name" type="string"/>
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
         <property name="idStore" type="int"/>
+        <property name="countries" type="array" singular="country"/>
     </transfer>
 
     <transfer name="Currency">

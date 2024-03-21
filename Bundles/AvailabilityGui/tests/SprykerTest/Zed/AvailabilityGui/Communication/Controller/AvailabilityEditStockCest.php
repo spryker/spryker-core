@@ -35,7 +35,7 @@ class AvailabilityEditStockCest
     public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example): void
     {
         $productConcreteTransfer = $i->haveFullProduct();
-        $i->haveAvailabilityAbstract($productConcreteTransfer);
+        $i->haveAvailabilityAbstract($productConcreteTransfer, null, AvailabilityPage::AVAILABILITY_ID_STORE);
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
 

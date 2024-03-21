@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\Customer\Business\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
@@ -82,8 +80,11 @@ abstract class AbstractCustomerAddressFacadeTest extends AbstractCustomerFacadeT
     {
         parent::setUp();
 
-        $this->customerFacade = new CustomerFacade();
-        $this->customerFacade->setFactory($this->getBusinessFactory());
+        $this->tester->setDependency(CustomerDependencyProvider::FACADE_MAIL, function ($container) {
+            return $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
+        });
+
+        $this->customerFacade = $this->tester->getCustomerFacade();
     }
 
     /**
@@ -100,7 +101,7 @@ abstract class AbstractCustomerAddressFacadeTest extends AbstractCustomerFacadeT
         $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
 
-        return $this->tester->getFacade()->getCustomer($customerTransfer);
+        return $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
     }
 
     /**
@@ -133,31 +134,5 @@ abstract class AbstractCustomerAddressFacadeTest extends AbstractCustomerFacadeT
         $addressTransfer->setZipCode(static::TESTER_ZIP_CODE);
 
         return $addressTransfer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerBusinessFactory
-     */
-    protected function getBusinessFactory(): CustomerBusinessFactory
-    {
-        $customerBusinessFactory = new CustomerBusinessFactory();
-        $customerBusinessFactory->setContainer($this->getContainer());
-
-        return $customerBusinessFactory;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function getContainer(): Container
-    {
-        $dependencyProvider = new CustomerDependencyProvider();
-        $this->businessLayerDependencies = new Container();
-
-        $dependencyProvider->provideBusinessLayerDependencies($this->businessLayerDependencies);
-
-        $this->businessLayerDependencies[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
-
-        return $this->businessLayerDependencies;
     }
 }

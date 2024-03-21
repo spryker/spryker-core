@@ -242,6 +242,7 @@
         <property name="totals" type="Totals"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Mail">
@@ -258,6 +259,7 @@
         <property name="idStore" type="int"/>
         <property name="selectedCurrencyIsoCode" type="string"/>
         <property name="name" type="string"/>
+        <property name="countries" type="array" singular="country"/>
     </transfer>
 
     <transfer name="Currency">

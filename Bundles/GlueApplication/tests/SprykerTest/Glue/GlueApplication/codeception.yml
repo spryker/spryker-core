@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Glue\GlueApplication\Helper\GlueBootstrap
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Glue\Testify\Helper\FactoryHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

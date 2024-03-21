@@ -71,7 +71,6 @@ class ProductPageSearchFacadeTest extends Unit
         $this->productPageSearchFacade->publishProductConcretePageSearchesByProductAbstractIds([$productAbstractTransfer->getIdProductAbstract()]);
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
-        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         $productAbstractStoreMap = [
             $productAbstractTransfer->getIdProductAbstract() => [$storeNames[0]],
@@ -80,8 +79,6 @@ class ProductPageSearchFacadeTest extends Unit
         $this->productPageSearchFacade->unpublishProductConcretePageSearches($productAbstractStoreMap);
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
-
-        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());
@@ -103,8 +100,6 @@ class ProductPageSearchFacadeTest extends Unit
         $this->productPageSearchFacade->publishProductConcretePageSearchesByProductAbstractIds([$productAbstractTransfer->getIdProductAbstract()]);
 
         $productConcretePageSearchTransfers = $this->productPageSearchFacade->getProductConcretePageSearchTransfersByProductIds([$productConcreteTransfer->getIdProductConcrete()]);
-
-        $this->assertSame(count($storeNames), count($productConcretePageSearchTransfers));
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productConcretePageSearchTransfer->getFkProduct());

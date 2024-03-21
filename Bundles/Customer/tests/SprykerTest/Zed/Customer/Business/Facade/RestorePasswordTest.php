@@ -41,7 +41,7 @@ class RestorePasswordTest extends AbstractCustomerFacadeTest
         ]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->restorePassword($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -71,7 +71,7 @@ class RestorePasswordTest extends AbstractCustomerFacadeTest
         ]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->restorePassword($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -102,7 +102,7 @@ class RestorePasswordTest extends AbstractCustomerFacadeTest
         ]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->restorePassword($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -122,14 +122,14 @@ class RestorePasswordTest extends AbstractCustomerFacadeTest
             'isRestorePasswordValidationEnabled',
             static::PASSWORD_VALIDATION_ON_RESTORE_PASSWORD_ENABLED,
         );
-        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
-        $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
-        $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
-        $customerTransfer = $this->tester->getFacade()->getCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $this->tester->getCustomerFacade()->sendPasswordRestoreMail($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
         $customerTransfer->setPassword(static::VALUE_SHORT_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->restorePassword($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->restorePassword($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());

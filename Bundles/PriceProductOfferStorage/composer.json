@@ -32,6 +32,7 @@
         "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/testify": "*"
     },
     "autoload": {

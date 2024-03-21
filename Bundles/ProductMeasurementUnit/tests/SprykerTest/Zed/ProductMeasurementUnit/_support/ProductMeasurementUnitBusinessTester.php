@@ -93,12 +93,18 @@ class ProductMeasurementUnitBusinessTester extends Actor
     ): CartChangeTransfer {
         $amountSalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 
-        return (new CartChangeTransfer())->addItem(
-            (new ItemTransfer())
-                ->setSku($sku)
-                ->setQuantity($quantity)
-                ->setQuantitySalesUnit($amountSalesUnit),
-        );
+        return (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku($sku)
+                    ->setQuantity($quantity)
+                    ->setQuantitySalesUnit($amountSalesUnit),
+            )
+            ->setQuote(
+                (new QuoteBuilder())
+                    ->withStore($this->haveStore([StoreTransfer::NAME => 'DE'])->toArray())
+                    ->build(),
+            );
     }
 
     /**

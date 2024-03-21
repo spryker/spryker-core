@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
@@ -19,20 +20,28 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     protected $sequenceNumberFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @var \Spryker\Zed\Sales\SalesConfig
      */
-    protected $sequenceNumberSettings;
+    protected SalesConfig $salesConfig;
+
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
+     */
+    protected SalesToStoreInterface $salesFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface $sequenceNumberFacade
-     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $salesFacade
      */
     public function __construct(
         SalesToSequenceNumberInterface $sequenceNumberFacade,
-        SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer
+        SalesConfig $salesConfig,
+        SalesToStoreInterface $salesFacade
     ) {
         $this->sequenceNumberFacade = $sequenceNumberFacade;
-        $this->sequenceNumberSettings = $sequenceNumberSettingsTransfer;
+        $this->salesConfig = $salesConfig;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -42,6 +51,9 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
      */
     public function generateOrderReference(QuoteTransfer $quoteTransfer)
     {
-        return $this->sequenceNumberFacade->generate($this->sequenceNumberSettings);
+        $storeName = $quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->salesFacade->getCurrentStore()->getName();
+        $sequenceNumberSetting = $this->salesConfig->getOrderReferenceDefaults($storeName);
+
+        return $this->sequenceNumberFacade->generate($sequenceNumberSetting);
     }
 }

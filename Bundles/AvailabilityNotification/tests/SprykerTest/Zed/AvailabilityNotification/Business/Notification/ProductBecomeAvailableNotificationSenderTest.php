@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\AvailabilityNotification\Business\Notification;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSender;
 use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
@@ -108,6 +109,10 @@ class ProductBecomeAvailableNotificationSenderTest extends Unit
      */
     protected function createAvailabilityNotificationRepositoryMock(): AvailabilityNotificationRepositoryInterface
     {
+        /*
+         * Needed for haveAvailabilityNotificationSubscription helper method that uses facade that is called in Gateway context.
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => $this->tester::DEFAULT_STORE_NAME]));
         $availabilityNotificationRepositoryMock = $this->createMock(AvailabilityNotificationRepositoryInterface::class);
         $availabilityNotificationRepositoryMock->expects($this->once())
             ->method('getAvailabilityNotifications')
@@ -117,6 +122,7 @@ class ProductBecomeAvailableNotificationSenderTest extends Unit
                         $this->tester->haveProduct(),
                     ),
                 ));
+        $this->tester->removeCurrentStore();
 
         return $availabilityNotificationRepositoryMock;
     }

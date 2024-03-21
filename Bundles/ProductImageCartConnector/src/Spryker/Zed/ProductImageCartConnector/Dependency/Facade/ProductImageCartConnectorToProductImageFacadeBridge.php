@@ -26,7 +26,6 @@ class ProductImageCartConnectorToProductImageFacadeBridge implements ProductImag
     }
 
     /**
-     *
      * @deprecated Use {@link \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageFacadeBridge::getConcreteProductImageSetCollection()} instead.
      *
      * @param array<int> $productIds

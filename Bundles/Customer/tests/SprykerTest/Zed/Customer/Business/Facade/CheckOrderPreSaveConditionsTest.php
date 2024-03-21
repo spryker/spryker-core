@@ -51,7 +51,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
@@ -76,7 +76,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
@@ -97,7 +97,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
@@ -118,7 +118,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
@@ -142,7 +142,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
@@ -162,7 +162,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
@@ -185,7 +185,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
@@ -205,7 +205,7 @@ class CheckOrderPreSaveConditionsTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         // Act
-        $this->tester->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        $this->tester->getCustomerFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));

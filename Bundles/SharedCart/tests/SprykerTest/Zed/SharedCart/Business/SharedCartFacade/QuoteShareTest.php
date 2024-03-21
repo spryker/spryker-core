@@ -96,6 +96,12 @@ class QuoteShareTest extends Unit
     public function testCompanyUserShouldNotHaveAccessToForeignCartsByDefault(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /*
+         * Used in a context of {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::createShoppingListFromQuoteAction}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         $customerTransfer1 = $this->tester->haveCustomer();
         $quoteTransfer = $this->tester->createQuote($customerTransfer1);
 
@@ -115,6 +121,12 @@ class QuoteShareTest extends Unit
     public function testShareCartWithCompanyUserShouldGiveAccessToRead(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /*
+         * Used in a context of {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::createShoppingListFromQuoteAction}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         $customerTransfer1 = $this->tester->haveCustomer();
         $quoteTransfer = $this->tester->createQuote($customerTransfer1);
 
@@ -142,6 +154,12 @@ class QuoteShareTest extends Unit
     public function testRemoveCompanyUserPermissionGroupShouldDisallowToRead(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /*
+         * Used in a context of {@link \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::createShoppingListFromQuoteAction}
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         $customerTransfer1 = $this->tester->haveCustomer();
         $quoteTransfer = $this->tester->createQuote($customerTransfer1);
 

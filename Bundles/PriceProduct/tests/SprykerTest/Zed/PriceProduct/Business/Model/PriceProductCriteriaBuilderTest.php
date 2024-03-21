@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProduct\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderWithCache;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
@@ -77,6 +78,10 @@ class PriceProductCriteriaBuilderTest extends Unit
     public function testBuildCriteriaFromFilterGetsDefaultCurrencyIfStoreNameIsNotProvided(): void
     {
         //Arrange
+        /*
+         * CurrencyFacade::getDefaultCurrencyForCurrentStore() requires a store to be set.
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']));
         $priceProductFilterTransfer = $this->tester->havePriceProductFilterTransfer();
         $expectedCurrencyTransfer = $this->tester->getLocator()->currency()->facade()
             ->getDefaultCurrencyForCurrentStore();

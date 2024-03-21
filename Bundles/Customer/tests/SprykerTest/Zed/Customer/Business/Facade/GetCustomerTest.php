@@ -27,11 +27,11 @@ class GetCustomerTest extends AbstractCustomerFacadeTest
     {
         // Arrange
         $customerTransfer = $this->tester->createTestCustomerTransfer();
-        $customerResponseTransfer = $this->tester->getFacade()->registerCustomer($customerTransfer);
-        $customerTransfer = $this->tester->getFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
 
         // Act
-        $customerTransfer = $this->tester->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
 
         // Assert
         $this->assertNotNull($customerTransfer->getIdCustomer());

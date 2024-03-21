@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -39,9 +40,9 @@ class PriceProductSchedulePriceTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $storeFacade;
+    protected StoreTransfer $storeTransfer;
 
     /**
      * @return void
@@ -53,7 +54,7 @@ class PriceProductSchedulePriceTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
     }
 
     /**
@@ -135,7 +136,6 @@ class PriceProductSchedulePriceTest extends Unit
     {
         $productConcreteTransfer = $this->tester->haveProduct();
         $currencyId = $this->tester->haveCurrency();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceType = $this->tester->havePriceType();
 
         return [
@@ -148,7 +148,7 @@ class PriceProductSchedulePriceTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_STORE => $this->storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 ],
             ],

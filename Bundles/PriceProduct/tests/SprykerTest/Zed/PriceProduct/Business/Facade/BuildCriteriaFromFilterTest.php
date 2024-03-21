@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
 
 /**
@@ -25,6 +26,11 @@ use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
 class BuildCriteriaFromFilterTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected PriceProductBusinessTester $tester;
@@ -35,9 +41,11 @@ class BuildCriteriaFromFilterTest extends Unit
     public function testBuildCriteriaFromFilter(): void
     {
         // Arrange
+        /** @var \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer */
         $priceProductFilterTransfer = (new PriceProductFilterBuilder([
             'quantity' => rand(1, 100),
         ]))->build();
+        $priceProductFilterTransfer->setStoreName($this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE])->getName());
 
         // Act
         $priceProductCriteriaTransfer = $this->tester->getFacade()

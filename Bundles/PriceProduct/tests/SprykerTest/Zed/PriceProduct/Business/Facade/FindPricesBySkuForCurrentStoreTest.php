@@ -35,6 +35,10 @@ class FindPricesBySkuForCurrentStoreTest extends Unit
      */
     public function testPriceFindPricesBySkuShouldReturnPricesForCurrentStoreConfiguration(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Current store is only available via gateway call or if there is a get param, that is not the case for this facade method');
+        }
+
         // Arrange
         $priceProductFacade = $this->tester->getFacade();
 

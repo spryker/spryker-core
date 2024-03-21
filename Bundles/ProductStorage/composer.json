@@ -30,6 +30,7 @@
         "spryker/product-attribute": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/testify": "*",
         "spryker/url-storage": "*"
     },

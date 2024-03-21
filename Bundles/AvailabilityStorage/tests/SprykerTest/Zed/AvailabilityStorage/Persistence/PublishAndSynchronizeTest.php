@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\AvailabilityStorage\Persistence;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Spryker\Client\Storage\StorageDependencyProvider;
 use Spryker\DecimalObject\Decimal;
@@ -89,7 +90,7 @@ class PublishAndSynchronizeTest extends Unit
             static::ID_STORE,
         );
 
-        $this->tester->haveAvailabilityConcrete($this->productConcreteTransfer->getSku());
+        $this->tester->haveAvailabilityConcrete($this->productConcreteTransfer->getSku(), $this->tester->haveStore([StoreTransfer::NAME => 'DE']));
     }
 
     /**

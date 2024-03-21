@@ -73,6 +73,9 @@ class ReservationReaderTest extends Unit
      */
     public function testSumReservedProductQuantitiesShouldSumAllItemsInReservedStateIncludedSubProcesses(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with dynamic store enabled.');
+        }
         // Arrange
         $salesOrderEntity = $this->tester->createOrderWithOrderItemsInStateAndProcessForStore(
             static::STORE_NAME_DE,

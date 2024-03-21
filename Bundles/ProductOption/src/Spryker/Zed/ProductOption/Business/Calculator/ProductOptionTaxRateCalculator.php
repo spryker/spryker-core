@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -50,7 +51,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        $itemTransfers = $this->recalculateByShippingAddressAndItemTransfers($quoteTransfer->getShippingAddress(), $quoteTransfer->getItems());
+        $itemTransfers = $this->recalculateByShippingAddressAndItemTransfers($quoteTransfer->getShippingAddress(), $quoteTransfer->getItems(), $quoteTransfer->getStore());
         $quoteTransfer->setItems($itemTransfers);
     }
 
@@ -61,7 +62,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     public function recalculateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
-        $itemTransfers = $this->recalculateByShippingAddressAndItemTransfers($calculableObjectTransfer->getShippingAddress(), $calculableObjectTransfer->getItems());
+        $itemTransfers = $this->recalculateByShippingAddressAndItemTransfers($calculableObjectTransfer->getShippingAddress(), $calculableObjectTransfer->getItems(), $calculableObjectTransfer->getStore());
         $calculableObjectTransfer->setItems($itemTransfers);
 
         return $calculableObjectTransfer;
@@ -70,12 +71,16 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function recalculateByShippingAddressAndItemTransfers(?AddressTransfer $shippingAddressTransfer, ArrayObject $itemTransfers): ArrayObject
-    {
-        $countryIso2Code = $this->getShippingCountryIsoCode($shippingAddressTransfer);
+    protected function recalculateByShippingAddressAndItemTransfers(
+        ?AddressTransfer $shippingAddressTransfer,
+        ArrayObject $itemTransfers,
+        ?StoreTransfer $storeTransfer = null
+    ): ArrayObject {
+        $countryIso2Code = $this->getShippingCountryIsoCode($shippingAddressTransfer, $storeTransfer);
         $productOptionValueIds = $this->getAllProductOptionValueIds($itemTransfers);
 
         $taxRates = $this->findTaxRatesByIdOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code);
@@ -85,12 +90,21 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return string
      */
-    protected function getShippingCountryIsoCode(?AddressTransfer $shippingAddressTransfer): string
+    protected function getShippingCountryIsoCode(?AddressTransfer $shippingAddressTransfer, ?StoreTransfer $storeTransfer = null): string
     {
         if ($shippingAddressTransfer === null || !$shippingAddressTransfer->getIso2Code()) {
+            if ($storeTransfer) {
+                $countries = $storeTransfer->getCountries();
+
+                if ($countries) {
+                    return reset($countries);
+                }
+            }
+
             return $this->taxFacade->getDefaultTaxCountryIso2Code();
         }
 

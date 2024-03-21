@@ -36,7 +36,7 @@ class SetDefaultShippingAddressTest extends AbstractCustomerAddressFacadeTest
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
-        $customerTransfer = $this->tester->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();
         $addressTransfer = $addresses[0];

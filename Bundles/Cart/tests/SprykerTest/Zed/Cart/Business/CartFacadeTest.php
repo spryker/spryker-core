@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
@@ -88,6 +89,11 @@ class CartFacadeTest extends Unit
      * @var int
      */
     public const DUMMY_2_PRICE = 100;
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Cart\CartBusinessTester
@@ -342,6 +348,12 @@ class CartFacadeTest extends Unit
         $newCartChangeTransfer = new CartChangeTransfer();
         $newCartChangeTransfer->addItem($newCartItem);
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /*
+         * CartFacade::add() and CartFacade::addToCart() are triggered from GatewayController so there is a current store in the request.
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         //Act
         $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);
         $initialGrossPrice = $quoteTransfer->getItems()->offsetGet(0)->getUnitGrossPrice();
@@ -407,6 +419,12 @@ class CartFacadeTest extends Unit
         $newCartItem->setQuantity(4);
         $newCartChangeTransfer = new CartChangeTransfer();
         $newCartChangeTransfer->addItem($newCartItem);
+
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        /*
+         * CartFacade::add() and CartFacade::removeFromCart() are triggered from GatewayController so there is a current store in the request.
+         */
+        $this->tester->addCurrentStore($storeTransfer);
 
         //Act
         $quoteTransfer = $this->getCartFacade()->add($cartChangeTransfer);

@@ -31,10 +31,19 @@ class MerchantGuiCommunicationTester extends Actor
     use _generated\MerchantGuiCommunicationTesterActions;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getStore(): StoreTransfer
     {
+        if ($this->isDynamicStoreEnabled()) {
+            return $this->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
+        }
+
         return $this->getLocator()->store()->facade()->getCurrentStore();
     }
 }

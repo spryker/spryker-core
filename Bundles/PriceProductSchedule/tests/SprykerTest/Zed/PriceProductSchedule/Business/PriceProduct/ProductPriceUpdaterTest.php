@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 
 /**
@@ -57,6 +58,7 @@ class ProductPriceUpdaterTest extends Unit
         $this->productPriceUpdater = (new PriceProductScheduleBusinessFactory())->createProductPriceUpdater();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
     }
 
     /**
@@ -95,13 +97,14 @@ class ProductPriceUpdaterTest extends Unit
         ]);
 
         // Act
-        $this->productPriceUpdater->updateCurrentPriceProduct($productPrice2, $priceTypeTransfer1);
+        $this->productPriceUpdater->updateCurrentPriceProduct($productPrice2, $priceTypeTransfer1, $this->storeTransfer);
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceTypeName($priceTypeTransfer1->getName())
-            ->setCurrencyIsoCode($currencyTransfer->getCode());
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setStoreName($this->storeTransfer->getName());
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProduct;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
@@ -40,18 +41,21 @@ class PriceProductUpdater implements PriceProductUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceType
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function updateCurrentPriceProduct(
         PriceProductTransfer $priceProductTransfer,
-        PriceTypeTransfer $currentPriceType
+        PriceTypeTransfer $currentPriceType,
+        StoreTransfer $storeTransfer
     ): ?PriceProductTransfer {
         $priceProductTransfer->requireMoneyValue();
         $fallbackMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceTypeName($currentPriceType->getName())
-            ->setCurrencyIsoCode($fallbackMoneyValueTransfer->getCurrency()->getCode());
+            ->setCurrencyIsoCode($fallbackMoneyValueTransfer->getCurrency()->getCode())
+            ->setStoreName($storeTransfer->getName());
 
         if ($priceProductTransfer->getSkuProductAbstract() !== null) {
             $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());

@@ -26,4 +26,6 @@ suites:
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionDataHelper
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

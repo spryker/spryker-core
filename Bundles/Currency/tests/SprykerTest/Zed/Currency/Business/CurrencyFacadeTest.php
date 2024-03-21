@@ -13,10 +13,8 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
-use Spryker\Zed\Currency\CurrencyDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -80,19 +78,6 @@ class CurrencyFacadeTest extends Unit
      * @var \SprykerTest\Zed\Currency\CurrencyBusinessTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $spyStoreQueryMock = $this->getMockBuilder(SpyStoreQuery::class)
-            ->setMethods(['findOneByIdStore'])
-            ->getMock();
-        $this->tester->setDependency(CurrencyDependencyProvider::PROPEL_QUERY_STORE, $spyStoreQueryMock);
-    }
 
     /**
      * @return void

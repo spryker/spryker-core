@@ -35,17 +35,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
-use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
-use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
-use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderItemsSaverPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderSaverPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderTotalsSaverPlugin;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 
 /**
@@ -61,6 +58,11 @@ use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
  */
 class CheckoutFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\Checkout\CheckoutBusinessTester
      */
@@ -79,7 +81,9 @@ class CheckoutFacadeTest extends Unit
         ]);
 
         $this->tester->setDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS, [
-            $this->createSalesOrderSaverPlugin(),
+            $this->createOrderSaverPlugin(),
+            $this->createOrderTotalsSaverPlugin(),
+            $this->createOrderItemsSaverPlugin(),
             $this->createCustomerOrderSavePlugin(),
         ]);
     }
@@ -93,9 +97,13 @@ class CheckoutFacadeTest extends Unit
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
+        $email = 'random.customer@spryker.com';
+        $itemBuilder = (new ItemBuilder([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1]))->withShipment(
+            (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email]),
+        );
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withItem($itemBuilder)
             ->withStore($storeTransfer->toArray())
             ->withCustomer()
             ->withTotals()
@@ -120,7 +128,7 @@ class CheckoutFacadeTest extends Unit
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer, 3);
-        $email = 'frodo.baggins@gmail.com';
+        $email = 'random.customer@spryker.com';
         $itemBuilder = (new ItemBuilder([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1]))->withShipment(
             (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email]),
         );
@@ -206,45 +214,6 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutCreatesOrderItems(): void
-    {
-        // Arrange
-        $productTransfer1 = $this->tester->haveProduct();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer);
-        $productTransfer2 = $this->tester->haveProduct();
-        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer);
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => $productTransfer1->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withAnotherItem([ItemTransfer::SKU => $productTransfer2->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->withStore($storeTransfer->toArray())
-            ->withCustomer()
-            ->withTotals()
-            ->withCurrency()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->build();
-
-        // Act
-        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
-
-        // Assert
-        $this->assertTrue($result->getIsSuccess());
-        $this->assertSame(0, count($result->getErrors()));
-
-        $salesFacade = $this->tester->getLocator()->sales()->facade();
-        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
-        $orderItemsSkuList = $this->getOrderItemsSkuList($orderTransfer);
-
-        $this->assertSame(2, $orderTransfer->getItems()->count());
-        $this->assertArrayHasKey($productTransfer1->getSku(), $orderItemsSkuList);
-        $this->assertArrayHasKey($productTransfer2->getSku(), $orderItemsSkuList);
-    }
-
-    /**
-     * @return void
-     */
     public function testCheckoutCreatesOrderItemsWithItemLevelShippingAddresses(): void
     {
         // Arrange
@@ -282,28 +251,6 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @todo move this code to customer checkout connector, registration can only happen if we have
-     * already installed customer bundle
-     *
-     * @return void
-     */
-    public function testRegistrationIsTriggeredOnNewNonGuestCustomer(): void
-    {
-        // Arrange
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-
-        // Act
-        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
-
-        // Assert
-        $this->assertTrue($result->getIsSuccess());
-        $this->assertSame(0, count($result->getErrors()));
-
-        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertSame(1, $customerQuery->count());
-    }
-
-    /**
      * @return void
      */
     public function testRegistrationIsTriggeredOnNewNonGuestCustomerWithItemLevelShippingAddresses(): void
@@ -320,29 +267,6 @@ class CheckoutFacadeTest extends Unit
 
         $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
         $this->assertSame(1, $customerQuery->count());
-    }
-
-    /**
-     * @todo move this code to customer checkout connector, registration can only happen if we have
-     * already installed customer bundle
-     *
-     * @return void
-     */
-    public function testRegistrationDoesNotCreateACustomerIfGuest(): void
-    {
-        // Arrange
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-        $quoteTransfer->getCustomer()->setIsGuest(true);
-
-        // Act
-        $result = $this->tester->getFacade()->placeOrder($quoteTransfer);
-
-        // Assert
-        $this->assertTrue($result->getIsSuccess());
-        $this->assertSame(0, count($result->getErrors()));
-
-        $customerQuery = SpyCustomerQuery::create()->filterByEmail($quoteTransfer->getCustomer()->getEmail());
-        $this->assertSame(0, $customerQuery->count());
     }
 
     /**
@@ -433,34 +357,6 @@ class CheckoutFacadeTest extends Unit
         $this->assertFalse($result->getIsSuccess());
         $this->assertSame(1, count($result->getErrors()));
         $this->assertSame(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckoutTriggersStateMachine(): void
-    {
-        // Arrange
-        $quoteTransfer = $this->getBaseQuoteTransfer();
-
-        // Act
-        $this->tester->getFacade()->placeOrder($quoteTransfer);
-
-        $omsConfig = new OmsConfig();
-
-        $orderItem1 = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337')
-            ->findOne();
-        $orderItem2 = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338')
-            ->findOne();
-
-        // Assert
-        $this->assertNotNull($orderItem1);
-        $this->assertNotNull($orderItem2);
-
-        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
-        $this->assertEquals($omsConfig->getInitialStatus(), $orderItem2->getState()->getName());
     }
 
     /**
@@ -678,14 +574,36 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
+     * @return \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderSaverPlugin
      */
-    protected function createSalesOrderSaverPlugin(): SalesOrderSaverPlugin
+    protected function createOrderSaverPlugin(): OrderSaverPlugin
     {
-        $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
-        $salesOrderSaverPlugin->setFacade($this->createSalesFacadeMock());
+        $orderSaverPlugin = new OrderSaverPlugin();
+        $orderSaverPlugin->setFacade($this->createSalesFacadeMock());
 
-        return $salesOrderSaverPlugin;
+        return $orderSaverPlugin;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderTotalsSaverPlugin
+     */
+    protected function createOrderTotalsSaverPlugin(): OrderTotalsSaverPlugin
+    {
+        $orderTotalsSaverPlugin = new OrderTotalsSaverPlugin();
+        $orderTotalsSaverPlugin->setFacade($this->createSalesFacadeMock());
+
+        return $orderTotalsSaverPlugin;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderItemsSaverPlugin
+     */
+    protected function createOrderItemsSaverPlugin(): OrderItemsSaverPlugin
+    {
+        $orderItemsSaverPlugin = new OrderItemsSaverPlugin();
+        $orderItemsSaverPlugin->setFacade($this->createSalesFacadeMock());
+
+        return $orderItemsSaverPlugin;
     }
 
     /**
@@ -693,19 +611,8 @@ class CheckoutFacadeTest extends Unit
      */
     protected function createCustomerOrderSavePlugin(): CustomerOrderSavePlugin
     {
-        $container = new Container();
-        $customerDependencyProvider = new CustomerDependencyProvider();
-        $customerDependencyProvider->provideBusinessLayerDependencies($container);
-        $container[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
-
-        $customerFactory = new CustomerBusinessFactory();
-        $customerFactory->setContainer($container);
-
-        $customerFacade = new CustomerFacade();
-        $customerFacade->setFactory($customerFactory);
-
         $customerOrderSavePlugin = new CustomerOrderSavePlugin();
-        $customerOrderSavePlugin->setFacade($customerFacade);
+        $customerOrderSavePlugin->setFacade($this->tester->getCustomerFacade());
 
         return $customerOrderSavePlugin;
     }

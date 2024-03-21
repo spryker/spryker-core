@@ -588,7 +588,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         $this->haveHttpHeader('X-Requested-With', 'Codeception');
         $this->haveHttpHeader('Content-Type', 'application/vnd.api+json');
         $this->haveHttpHeader('Accept', '*/*');
-        $this->haveHttpHeader('Accept-Language', 'en');
+        $this->haveHttpHeader('Accept-Language', 'en_US');
         $this->haveHttpHeader('Store', 'DE');
 
         return $this;

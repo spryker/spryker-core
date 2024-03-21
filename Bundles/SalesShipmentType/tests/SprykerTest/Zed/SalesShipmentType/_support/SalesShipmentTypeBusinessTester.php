@@ -48,7 +48,8 @@ class SalesShipmentTypeBusinessTester extends Actor
             ->withBillingAddress()
             ->withTotals()
             ->withCustomer()
-            ->withCurrency();
+            ->withCurrency()
+            ->withStore();
 
         foreach ($shipmentTypeTransfers as $shipmentTypeTransfer) {
             $quoteBuilder->withItem(

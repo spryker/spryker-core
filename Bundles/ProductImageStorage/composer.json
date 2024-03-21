@@ -18,12 +18,15 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
         "spryker/locale": "*",
         "spryker/product-attribute": "*",
         "spryker/product-storage": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

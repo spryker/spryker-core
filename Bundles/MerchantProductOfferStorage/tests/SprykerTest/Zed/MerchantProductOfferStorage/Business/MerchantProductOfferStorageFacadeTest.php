@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOfferServicesTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferShipmentTypeTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use SprykerTest\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageTester;
@@ -66,7 +67,7 @@ class MerchantProductOfferStorageFacadeTest extends Unit
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+                $this->tester->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
 
@@ -80,7 +81,7 @@ class MerchantProductOfferStorageFacadeTest extends Unit
     {
         // Assign
         $this->tester->clearProductOfferData();
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
         $productTransfer = $this->tester->haveProduct();
 
@@ -111,7 +112,7 @@ class MerchantProductOfferStorageFacadeTest extends Unit
     {
         // Arrange
         $this->tester->clearProductOfferData();
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
         $productTransfer = $this->tester->haveProduct();
 

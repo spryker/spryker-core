@@ -14,10 +14,12 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/propel-orm": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

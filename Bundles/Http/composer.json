@@ -22,6 +22,7 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/event-dispatcher": "*",
+        "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/testify": "*"
     },

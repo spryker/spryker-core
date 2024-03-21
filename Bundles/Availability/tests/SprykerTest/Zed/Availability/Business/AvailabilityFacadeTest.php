@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RawDynamicEntityTransfer;
@@ -617,9 +616,9 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductConcreteAvailability(
-                (new ProductConcreteAvailabilityRequestTransfer())
-                    ->setSku(static::CONCRETE_SKU),
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
+                static::CONCRETE_SKU,
+                $storeTransfer,
             );
 
         $this->assertTrue($productConcreteAvailabilityTransfer->getAvailability()->equals(2));
@@ -630,6 +629,10 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testIsProductConcreteAvailable(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Deprecated code is not used with Dynamic Store');
+        }
+
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConcreteTransfer2 = $this->tester->haveProduct();
@@ -667,6 +670,9 @@ class AvailabilityFacadeTest extends Unit
             ['is_never_out_of_stock' => true],
             $storeTransfer,
         );
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $productConcreteTransfer->addStores($storeTransfer);
+        }
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -690,6 +696,9 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 2],
             $storeTransfer,
         );
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $productConcreteTransfer->addStores($storeTransfer);
+        }
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -713,6 +722,9 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 0],
             $storeTransfer,
         );
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $productConcreteTransfer->addStores($storeTransfer);
+        }
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -730,6 +742,9 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $productConcreteTransfer->addStores($storeTransfer);
+        }
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -762,6 +777,10 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 2],
             $storeTransfer,
         );
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $firstProductConcreteTransfer->addStores($storeTransfer);
+            $secondProductConcreteTransfer->addStores($storeTransfer);
+        }
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -892,6 +911,11 @@ class AvailabilityFacadeTest extends Unit
         $wishlsitItemTransfer = (new WishlistItemTransfer())->setSku($productTransfer1->getSku());
         $productConcreteAvailabilityTransfer = $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
 
+        /**
+         * @see \Spryker\Zed\Wishlist\Business\WishlistFacade is used via GatewayController, so there is a current store in context of this plugin usage.
+         */
+        $this->tester->addCurrentStore($storeTransfer);
+
         // Act
         $wishlsitItemTransfer = $this->tester->getFacade()->expandWishlistItemWithAvailability($wishlsitItemTransfer);
 
@@ -911,6 +935,11 @@ class AvailabilityFacadeTest extends Unit
         $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
         $wishlsitItemTransfer = (new WishlistItemTransfer())->setSku($productTransfer1->getSku());
         $productConcreteAvailabilityTransfer = $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+
+        /**
+         * @see \Spryker\Zed\Wishlist\Business\WishlistFacade is used via GatewayController, so there is a current store in context of this plugin usage.
+         */
+        $this->tester->addCurrentStore($storeTransfer);
 
         // Act
         $wishlsitItemTransfer = $this->tester->getFacade()->expandWishlistItemWithSellable($wishlsitItemTransfer);

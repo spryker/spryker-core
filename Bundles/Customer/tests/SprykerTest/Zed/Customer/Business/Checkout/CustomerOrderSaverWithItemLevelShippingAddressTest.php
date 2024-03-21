@@ -67,7 +67,7 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Unit
             ->setCustomerReference($customerTransfer->getCustomerReference());
 
         // Act
-        $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
+        $this->tester->getCustomerFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
 
         // Assert
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
@@ -103,7 +103,7 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Unit
         }
 
         // Act
-        $this->tester->getFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
+        $this->tester->getCustomerFacade()->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
 
         // Assert
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();

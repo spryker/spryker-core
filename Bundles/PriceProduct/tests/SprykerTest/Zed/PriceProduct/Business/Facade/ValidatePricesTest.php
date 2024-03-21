@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConstants;
 use SprykerTest\Zed\PriceProduct\PriceProductBusinessTester;
 
@@ -33,6 +34,11 @@ class ValidatePricesTest extends Unit
      * @var string
      */
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
 
     /**
      * @uses \Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint::MESSAGE
@@ -138,7 +144,7 @@ class ValidatePricesTest extends Unit
     public function testValidatePricesFailsValidCurrencyAssignedToStoreConstraint(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
         $currencyTransfer = $this->tester->haveCurrencyTransfer();
         $priceProductTransfer = (new PriceProductTransfer())
             ->setPriceType($this->tester->havePriceType())

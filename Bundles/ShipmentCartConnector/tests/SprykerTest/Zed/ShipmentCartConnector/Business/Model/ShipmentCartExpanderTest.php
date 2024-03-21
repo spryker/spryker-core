@@ -59,6 +59,11 @@ class ShipmentCartExpanderTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected StoreTransfer $storeTransfer;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -67,6 +72,7 @@ class ShipmentCartExpanderTest extends Unit
 
         $this->tester->haveCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR]);
         $this->tester->haveCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD]);
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
     }
 
     /**
@@ -239,6 +245,7 @@ class ShipmentCartExpanderTest extends Unit
     ): void {
         // Arrange
         $cartChangeTransfer = $this->haveAvailableShipmentMethods($cartChangeTransfer);
+        $cartChangeTransfer->getQuote()->setStore($this->storeTransfer);
 
         // Act
         $actualCartChangeTransfer = $this->tester->getFacade()->updateShipmentPrice($cartChangeTransfer);

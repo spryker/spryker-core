@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -39,6 +40,10 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
         parent::setUp();
 
         $this->cartsRestApiFacade = $this->tester->getFacade();
+        /*
+         * There is a current Store in context of RestApi usage
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']));
     }
 
     /**

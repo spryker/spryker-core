@@ -25,6 +25,7 @@
         "spryker/code-sniffer": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/testify": "*"
     },
     "suggest": {

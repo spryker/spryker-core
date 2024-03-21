@@ -112,6 +112,14 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @return bool
+     */
+    public function isProjectNamespaceEnabled(): bool
+    {
+        return $this->config['projectNamespaces'] !== [];
+    }
+
+    /**
      * @param array $settings
      *
      * @return void

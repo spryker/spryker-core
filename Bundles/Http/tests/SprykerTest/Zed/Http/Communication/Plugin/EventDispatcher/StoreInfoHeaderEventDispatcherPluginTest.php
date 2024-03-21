@@ -123,6 +123,7 @@ class StoreInfoHeaderEventDispatcherPluginTest extends Unit
     public function testDispatchEventHandlesResponseWithHeaderXLocale(): void
     {
         // Arrange
+        $this->setStoreDependency();
         $this->setLocaleDependency();
 
         $plugin = new EnvironmentInfoHeaderEventDispatcherPlugin();

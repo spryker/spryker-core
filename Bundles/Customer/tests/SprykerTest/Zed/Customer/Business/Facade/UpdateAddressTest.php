@@ -36,7 +36,7 @@ class UpdateAddressTest extends AbstractCustomerAddressFacadeTest
         $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
 
-        $customerTransfer = $this->tester->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();
         $addressTransfer = $addresses[0];

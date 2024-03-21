@@ -16,6 +16,7 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Shared\Price\PriceConfig;
 
@@ -169,6 +170,7 @@ class UpdateShipmentWithNewDataTest extends Unit
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->build();
     }
 }

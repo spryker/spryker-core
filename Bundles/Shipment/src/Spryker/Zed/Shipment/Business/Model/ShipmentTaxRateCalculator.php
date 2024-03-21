@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
@@ -65,7 +66,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         }
 
         $shipmentTransfer = $quoteTransfer->getShipment();
-        $taxRate = $this->getTaxRate($shipmentTransfer, $quoteTransfer->getShippingAddress());
+        $taxRate = $this->getTaxRate($shipmentTransfer, $quoteTransfer->getShippingAddress(), $quoteTransfer->getStore());
 
         $shipmentMethodTransfer = $shipmentTransfer
             ->getMethod()
@@ -88,7 +89,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         }
 
         $shipmentTransfer = $calculableObjectTransfer->getShipment();
-        $taxRate = $this->getTaxRate($shipmentTransfer, $calculableObjectTransfer->getShippingAddress());
+        $taxRate = $this->getTaxRate($shipmentTransfer, $calculableObjectTransfer->getShippingAddress(), $calculableObjectTransfer->getStore());
 
         $shipmentMethodTransfer = $shipmentTransfer
             ->getMethod()
@@ -127,12 +128,13 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return float
      */
-    protected function getTaxRate(ShipmentTransfer $shipmentTransfer, ?AddressTransfer $shippingAddressTransfer): float
+    protected function getTaxRate(ShipmentTransfer $shipmentTransfer, ?AddressTransfer $shippingAddressTransfer, ?StoreTransfer $storeTransfer = null): float
     {
-        $countryIsoCode = $this->getCountryIso2Code($shippingAddressTransfer);
+        $countryIsoCode = $this->getCountryIso2Code($shippingAddressTransfer, $storeTransfer);
         $taxSetEntity = $this->findTaxSet($shipmentTransfer, $countryIsoCode);
         if ($taxSetEntity !== null && isset($taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE])) {
             return (float)$taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE];
@@ -164,13 +166,22 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return string
      */
-    protected function getCountryIso2Code(?AddressTransfer $shippingAddressTransfer): string
+    protected function getCountryIso2Code(?AddressTransfer $shippingAddressTransfer, ?StoreTransfer $storeTransfer = null): string
     {
         if ($shippingAddressTransfer) {
             return $shippingAddressTransfer->getIso2Code();
+        }
+
+        if ($storeTransfer) {
+            $countries = $storeTransfer->getCountries();
+
+            if ($countries) {
+                return reset($countries);
+            }
         }
 
         return $this->taxFacade->getDefaultTaxCountryIso2Code();

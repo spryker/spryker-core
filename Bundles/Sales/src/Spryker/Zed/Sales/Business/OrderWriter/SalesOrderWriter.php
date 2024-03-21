@@ -177,7 +177,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         $salesOrderEntityTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $salesOrderEntityTransfer = $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntityTransfer);
         $salesOrderEntityTransfer->setPriceMode($quoteTransfer->getPriceMode());
-        $salesOrderEntityTransfer->setStore($this->storeFacade->getCurrentStore()->getName());
+        $salesOrderEntityTransfer->setStore($quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->storeFacade->getCurrentStore()->getName());
         $salesOrderEntityTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntityTransfer->setOrderReference($orderReference);
         $salesOrderEntityTransfer->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));

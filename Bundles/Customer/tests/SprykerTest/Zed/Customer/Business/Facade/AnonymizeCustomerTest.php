@@ -31,10 +31,10 @@ class AnonymizeCustomerTest extends AbstractCustomerFacadeTest
         $customerTransfer = $this->tester->haveCustomer(['password' => static::VALUE_VALID_PASSWORD]);
 
         // Act
-        $this->tester->getFacade()->anonymizeCustomer($customerTransfer);
+        $this->tester->getCustomerFacade()->anonymizeCustomer($customerTransfer);
 
         // Assert
         $this->expectException(CustomerNotFoundException::class);
-        $this->tester->getFacade()->getCustomer($customerTransfer);
+        $this->tester->getCustomerFacade()->getCustomer($customerTransfer);
     }
 }

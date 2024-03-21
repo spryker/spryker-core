@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SalesOrderItemServicePointTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\SalesServicePoint\SalesServicePointBusinessTester;
 
 /**
@@ -107,6 +108,7 @@ class ExpandOrderItemsWithServicePointTest extends Unit
      */
     protected function createOrderWithItem(ItemTransfer $itemTransfer): SaveOrderTransfer
     {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $quoteTransfer = (new QuoteBuilder())
             ->withItem($itemTransfer->toArray())
             ->withBillingAddress()
@@ -114,6 +116,7 @@ class ExpandOrderItemsWithServicePointTest extends Unit
             ->withCustomer()
             ->withCurrency()
             ->build();
+        $quoteTransfer->setStore($storeTransfer);
 
         return $this->tester->haveOrderFromQuote($quoteTransfer, static::DEFAULT_OMS_PROCESS_NAME);
     }

@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacade;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacadeInterface;
 
@@ -31,6 +32,11 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFaca
  */
 class ShipmentCheckoutConnectorFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
+
     /**
      * @var \SprykerTest\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorBusinessTester
      */
@@ -111,9 +117,10 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     public function testCheckShipmentWhenValidShipmentGivenShouldPass(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
 
         $priceList = [
-            $this->getDefaultStoreName() => [
+            $storeTransfer->getName() => [
                 'EUR' => [
                     'netAmount' => 10,
                     'grossAmount' => 15,
@@ -155,9 +162,10 @@ class ShipmentCheckoutConnectorFacadeTest extends Unit
     public function testCheckShipmentWhenValidShipmentGivenShouldPassWithItemLevelShipment(): void
     {
         $shipmentCheckoutConnectorFacade = $this->createShipmentCheckoutConnectorFacade();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
 
         $priceList = [
-            $this->getDefaultStoreName() => [
+            $storeTransfer->getName() => [
                 'EUR' => [
                     'netAmount' => 10,
                     'grossAmount' => 15,

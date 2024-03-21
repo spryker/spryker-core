@@ -41,7 +41,7 @@ class ValidateCustomerCheckoutSalutationTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isValid = $this->tester->getFacade()
+        $isValid = $this->tester->getCustomerFacade()
             ->validateCustomerCheckoutSalutation($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
@@ -60,7 +60,7 @@ class ValidateCustomerCheckoutSalutationTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isValid = $this->tester->getFacade()
+        $isValid = $this->tester->getCustomerFacade()
             ->validateCustomerCheckoutSalutation($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
@@ -82,7 +82,7 @@ class ValidateCustomerCheckoutSalutationTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isValid = $this->tester->getFacade()
+        $isValid = $this->tester->getCustomerFacade()
             ->validateCustomerCheckoutSalutation($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
@@ -104,7 +104,7 @@ class ValidateCustomerCheckoutSalutationTest extends AbstractCustomerFacadeTest
         $this->expectException(NullValueException::class);
 
         // Act
-        $this->tester->getFacade()
+        $this->tester->getCustomerFacade()
             ->validateCustomerCheckoutSalutation($quoteTransfer, $checkoutResponseTransfer);
     }
 
@@ -124,7 +124,7 @@ class ValidateCustomerCheckoutSalutationTest extends AbstractCustomerFacadeTest
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isValid = $this->tester->getFacade()
+        $isValid = $this->tester->getCustomerFacade()
             ->validateCustomerAddressCheckoutSalutation($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert

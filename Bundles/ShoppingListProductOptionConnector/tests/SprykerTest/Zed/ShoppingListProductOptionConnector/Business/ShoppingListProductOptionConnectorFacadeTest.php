@@ -179,6 +179,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testSaveShoppingListItemProductOptionsAssignedToGroupSavesWithSetUpActiveOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
@@ -220,6 +223,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testSaveShoppingListItemProductOptionsUnassignedToAnyGroupSavesWithoutAnyOfSetUpOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransferUnassigned->getIdShoppingListItem())
@@ -261,6 +267,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testSaveShoppingListItemProductOptionsSavesWithoutSetUpOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
 
@@ -281,6 +290,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testSaveShoppingListItemProductOptionsAssignedToGroupRemovesOldOptionAndSavesOnlyNewActiveOption(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
@@ -328,6 +340,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testDeleteShoppingListItemProductOptionsByRemovedProductOptionValuesRemovesMarkedForRemovalProductOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
@@ -371,6 +386,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemWithProductOptionsAssignedToGroupExpandsOnlyWithActiveOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransferAssigned->getIdShoppingListItem(), $this->productOptionValueTransferActive->getIdProductOptionValue());
@@ -397,6 +415,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandItemWithProductOption(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransferAssigned->getIdShoppingListItem(), $this->productOptionValueTransferActive->getIdProductOptionValue());
 
@@ -420,6 +441,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandItemWithoutProductOption(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
@@ -438,6 +462,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemWithProductOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is for deprecated functionality and is not compatible with Dynamic Store.');
+        }
         // Arrange
         $shoppingListProductOption1 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransferActive->getIdProductOptionValue())
@@ -494,6 +521,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testRemoveShoppingListItemProductOptions(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with dynamic stores');
+        }
         $shoppingListProductOption1 = (new SpyShoppingListProductOption())
             ->setFkProductOptionValue($this->productOptionValueTransferActive->getIdProductOptionValue())
             ->setFkShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
@@ -522,6 +552,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemWithProductOptionsFirstUnassignedToGroupAndHadHadNotOptionsThenAssignedAgainExpandsAgainWithOption(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with dynamic stores');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getUnassignedShoppingListItemCopy()
             ->addProductOption(
@@ -566,6 +599,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemWithProductOptionsFirstInactiveGroupHadHadNotOptionsThenActiveAgainExpandsAgainWithOption(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with dynamic stores');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
@@ -645,6 +681,9 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemCollectionWithProductOptionsExpandsTransfer(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('This test is not compatible with dynamic stores');
+        }
         // Arrange
         $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(

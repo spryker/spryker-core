@@ -24,6 +24,7 @@
         "spryker/propel": "*",
         "spryker/propel-orm": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
     },

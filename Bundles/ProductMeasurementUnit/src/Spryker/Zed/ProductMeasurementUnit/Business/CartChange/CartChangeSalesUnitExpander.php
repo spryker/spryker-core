@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
@@ -49,7 +50,7 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
             return $cartChangeTransfer;
         }
 
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
         $indexedProductMeasurementSalesUnitIds = $this->productMeasurementUnitRepository->findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(
             $productConcreteSkus,
             $storeTransfer->getIdStore(),
@@ -60,6 +61,20 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer): StoreTransfer
+    {
+        if ($cartChangeTransfer->getQuote() && $cartChangeTransfer->getQuote()->getStore()) {
+            return $cartChangeTransfer->getQuote()->getStore();
+        }
+
+        return $this->storeFacade->getCurrentStore();
     }
 
     /**

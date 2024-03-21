@@ -29,7 +29,7 @@ class FindCustomerByReferenceTest extends AbstractCustomerFacadeTest
         $customerTransfer = $this->tester->haveCustomer(['password' => static::VALUE_VALID_PASSWORD]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\PriceCalculatorPlugin;
@@ -75,6 +76,10 @@ class ReloadQuoteTest extends Unit
         $this->tester->setDependency(CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK, [
             new PriceCalculatorPlugin(),
         ]);
+        /*
+         * There is a current Store in context of RestApi usage
+         */
+        $this->tester->addCurrentStore($this->tester->haveStore([StoreTransfer::NAME => 'DE']));
     }
 
     /**

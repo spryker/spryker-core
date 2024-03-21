@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageDependencyProvider;
 use SprykerTest\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStorageBusinessTester;
+use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -25,6 +26,8 @@ use SprykerTest\Zed\ProductOfferServicePointStorage\ProductOfferServicePointStor
  */
 class WriteProductOfferServiceStorageCollectionByProductOfferStoreEventsTest extends Unit
 {
+    use BusinessHelperTrait;
+
     /**
      * @var string
      */
@@ -146,7 +149,7 @@ class WriteProductOfferServiceStorageCollectionByProductOfferStoreEventsTest ext
     {
         // Arrange
         $productOfferServiceStorageWriterMock = $this->tester->createProductOfferServiceStorageWriterMock();
-        $this->tester->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
+        $this->getBusinessHelper()->mockFactoryMethod('createProductOfferServiceStorageWriter', $productOfferServiceStorageWriterMock);
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 static::COL_FK_SERVICE_POINT => static::FAKE_PRODUCT_OFFER_ID,

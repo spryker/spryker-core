@@ -22,6 +22,7 @@
         "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/rabbit-mq": "*",
         "spryker/store": "*",
         "spryker/store-extension": "*",
         "spryker/testify": "*"

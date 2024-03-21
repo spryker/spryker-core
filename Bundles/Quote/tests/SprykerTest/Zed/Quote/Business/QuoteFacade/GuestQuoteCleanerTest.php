@@ -42,6 +42,10 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteClearAfterLifetimeIsExceeded(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('`findQuoteByCustomer` method is deprecated and is not working with Dynamic Store ON');
+        }
+
         // Arrange
         $customerTransfer = $this->tester->haveAnonymousCustomerWithExpiredQuote();
 
@@ -58,6 +62,10 @@ class GuestQuoteCleanerTest extends Unit
      */
     public function testGuestQuoteNotClearedBeforeLifetimeIsExceeded(): void
     {
+        if ($this->tester->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('`findQuoteByCustomer` method is deprecated and is not working with Dynamic Store ON');
+        }
+
         // Arrange
         $customerTransfer = $this->tester->haveAnonymousCustomerWithNotExpiredQuote();
 

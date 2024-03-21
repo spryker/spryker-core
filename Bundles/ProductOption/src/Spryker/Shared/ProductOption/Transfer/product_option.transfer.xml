@@ -62,6 +62,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Order">
@@ -187,6 +188,7 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="countries" type="array" singular="country"/>
     </transfer>
 
     <transfer name="TaxSetCollection">
@@ -228,6 +230,7 @@
     <transfer name="CalculableObject">
         <property name="items" type="Item[]" singular="item"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="QueryCriteria">

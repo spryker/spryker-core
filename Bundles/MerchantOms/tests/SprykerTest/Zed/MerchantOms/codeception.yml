@@ -49,4 +49,4 @@ suites:
                 - SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper

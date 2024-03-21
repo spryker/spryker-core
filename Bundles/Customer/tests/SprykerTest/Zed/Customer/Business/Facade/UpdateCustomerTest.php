@@ -50,7 +50,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
             ->setNewPassword(static::VALUE_SHORT_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -77,7 +77,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
             ->setNewPassword(static::VALUE_LONG_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -107,7 +107,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->tester->mockConfigMethod('getCustomerPasswordSequenceLimit', static::SEQUENCE_LIMIT_CUSTOMER_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -133,7 +133,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->tester->mockConfigMethod('getCustomerPasswordDenyList', [static::VALUE_DENY_LIST_PASSWORD]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -159,7 +159,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -182,7 +182,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
             ->setNewPassword(static::VALUE_NEW_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -205,7 +205,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->tester->mockConfigMethod('getCustomerPasswordAllowList', [static::VALUE_SHORT_PASSWORD]);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -228,7 +228,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->tester->mockConfigMethod('getCustomerPasswordCharacterSet', static::CHARACTER_SET_REGEXP);
 
         // Act
-        $customerResponseTransfer = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -246,7 +246,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $customerTransfer = $this->tester->createTestCustomer();
         $customerTransfer->setPassword(null);
         $customerTransfer->setLastName(static::TESTER_NAME);
-        $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponse = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
         $this->assertNotNull($customerResponse);
         $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
@@ -263,7 +263,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->mockUtilValidateService(false);
 
         // Act
-        $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponse = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponse->getIsSuccess());
@@ -280,7 +280,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $this->mockUtilValidateService(true);
 
         // Act
-        $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponse = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponse->getIsSuccess());
@@ -298,7 +298,7 @@ class UpdateCustomerTest extends AbstractCustomerFacadeTest
         $customerTransfer->setLastName(static::TESTER_NAME);
 
         // Act
-        $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
+        $customerResponse = $this->tester->getCustomerFacade()->updateCustomer($customerTransfer);
         $customerTransfer = $customerResponse->getCustomerTransfer();
 
         // Assert

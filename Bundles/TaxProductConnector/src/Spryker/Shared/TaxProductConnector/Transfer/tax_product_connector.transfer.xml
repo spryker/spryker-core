@@ -14,6 +14,7 @@
     <transfer name="Quote">
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Item">
@@ -43,9 +44,14 @@
     <transfer name="Country">
     </transfer>
 
+    <transfer name="Store">
+        <property name="countries" type="array" singular="country"/>
+    </transfer>
+
     <transfer name="CalculableObject">
         <property name="items" type="Item[]" singular="item"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="ProductAbstractRelations" strict="true">
