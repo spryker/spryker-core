@@ -56,7 +56,7 @@
         </transitions>
 
         <events>
-            <event name="payment cancellation successful" manual="true"/>
+            <event name="payment cancellation successful"/>
             <event name="payment cancellation failed"/>
             <event name="cancel payment" manual="true"/>
             <event name="start payment cancellation" onEnter="true" command="Payment/Cancel"/>

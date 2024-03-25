@@ -19,7 +19,7 @@
 
         <states>
             <state name="new" display="oms.state.new"/>
-            <state name="invoiced" reserved="true" display="oms.state.waiting">
+            <state name="payment pending" reserved="true" display="oms.state.payment-pending">
                 <flag>cancellable</flag>
             </state>
         </states>
@@ -27,32 +27,50 @@
         <transitions>
             <transition happy="true">
                 <source>new</source>
-                <target>payment authorization pending</target>
+                <target>payment pending</target>
                 <event>created</event>
             </transition>
 
             <transition happy="true">
-                <source>payment authorized</source>
-                <target>invoiced</target>
-                <event>invoice customer</event>
-            </transition>
-
-            <transition happy="true">
-                <source>invoiced</source>
-                <target>payment capture ready</target>
-                <event>ship</event>
+                <source>payment pending</source>
+                <target>payment captured</target>
+                <event>payment capture successful</event>
             </transition>
 
             <transition>
-                <source>invoiced</source>
+                <source>payment pending</source>
+                <target>payment cancellation ready</target>
+                <event>cancel payment by timeout</event>
+            </transition>
+
+            <transition>
+                <source>payment pending</source>
                 <target>payment cancellation ready</target>
                 <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>payment pending</source>
+                <target>payment failed</target>
+                <event>payment capture failed</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment authorized</source>
+                <target>payment capture ready</target>
+                <event>capture payment</event>
             </transition>
 
             <transition happy="true">
                 <source>payment captured</source>
                 <target>delivered</target>
                 <event>deliver</event>
+            </transition>
+
+            <transition>
+                <source>payment failed</source>
+                <target>canceled</target>
+                <event>cancel</event>
             </transition>
 
             <transition>
@@ -64,7 +82,7 @@
 
         <events>
             <event name="created" onEnter="true"/>
-            <event name="invoice customer" manual="true"/>
+            <event name="cancel payment by timeout" timeout="7 day"/>
         </events>
     </process>
 

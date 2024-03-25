@@ -9,17 +9,17 @@
 
         <subprocesses>
             <process>PaymentAuthorization</process>
-            <process>PaymentConfirmation</process>
+            <process>PaymentCapture</process>
             <process>ItemSupply</process>
             <process>ItemReturn</process>
             <process>PaymentRefund</process>
-            <process>PaymentReservationCancel</process>
+            <process>PaymentCancel</process>
             <process>ItemClose</process>
         </subprocesses>
 
         <states>
             <state name="new" display="oms.state.new"/>
-            <state name="invoiced" reserved="true" display="oms.state.waiting">
+            <state name="payment pending" reserved="true" display="oms.state.payment-pending">
                 <flag>cancellable</flag>
             </state>
         </states>
@@ -27,32 +27,50 @@
         <transitions>
             <transition happy="true">
                 <source>new</source>
-                <target>payment authorization pending</target>
+                <target>payment pending</target>
                 <event>created</event>
             </transition>
 
             <transition happy="true">
-                <source>payment authorized</source>
-                <target>invoiced</target>
-                <event>invoice customer</event>
-            </transition>
-
-            <transition happy="true">
-                <source>invoiced</source>
-                <target>payment capture ready</target>
-                <event>ship</event>
+                <source>payment pending</source>
+                <target>payment captured</target>
+                <event>payment capture successful</event>
             </transition>
 
             <transition>
-                <source>invoiced</source>
+                <source>payment pending</source>
+                <target>payment cancellation ready</target>
+                <event>cancel payment by timeout</event>
+            </transition>
+
+            <transition>
+                <source>payment pending</source>
                 <target>payment cancellation ready</target>
                 <event>cancel</event>
+            </transition>
+
+            <transition>
+                <source>payment pending</source>
+                <target>payment failed</target>
+                <event>payment capture failed</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment authorized</source>
+                <target>payment capture ready</target>
+                <event>capture payment</event>
             </transition>
 
             <transition happy="true">
                 <source>payment captured</source>
                 <target>delivered</target>
                 <event>deliver</event>
+            </transition>
+
+            <transition>
+                <source>payment failed</source>
+                <target>canceled</target>
+                <event>cancel</event>
             </transition>
 
             <transition>
@@ -64,16 +82,16 @@
 
         <events>
             <event name="created" onEnter="true"/>
-            <event name="invoice customer" manual="true"/>
+            <event name="cancel payment by timeout" timeout="7 day"/>
         </events>
     </process>
 
     <process name="PaymentAuthorization" file="Subprocess/PaymentAuthorization01.xml"/>
-    <process name="PaymentConfirmation" file="Subprocess/PaymentConfirmation01.xml"/>
+    <process name="PaymentCapture" file="Subprocess/PaymentCapture01.xml"/>
     <process name="ItemSupply" file="Subprocess/ItemSupply01.xml"/>
     <process name="ItemReturn" file="Subprocess/ItemReturn01.xml"/>
     <process name="PaymentRefund" file="Subprocess/PaymentRefund01.xml"/>
-    <process name="PaymentReservationCancel" file="Subprocess/PaymentReservationCancel01.xml"/>
+    <process name="PaymentCancel" file="Subprocess/PaymentCancel01.xml"/>
     <process name="ItemClose" file="Subprocess/ItemClose01.xml"/>
 
 </statemachine>

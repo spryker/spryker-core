@@ -7,10 +7,10 @@
 
     <process name="PaymentCapture">
         <states>
-            <state name="payment capture ready" display="oms.state.payment-pending"/>
-            <state name="payment capture pending" display="oms.state.payment-pending"/>
-            <state name="payment captured" display="oms.state.paid"/>
-            <state name="payment failed" display="oms.state.payment-pending"/>
+            <state name="payment capture ready" reserved="true" display="oms.state.payment-pending"/>
+            <state name="payment capture pending" reserved="true" display="oms.state.payment-pending"/>
+            <state name="payment captured" reserved="true" display="oms.state.paid"/>
+            <state name="payment failed" reserved="true" display="oms.state.payment-pending"/>
         </states>
 
         <transitions>
@@ -46,8 +46,8 @@
         </transitions>
 
         <events>
-            <event name="payment capture successful" manual="true"/>
-            <event name="payment capture failed" timeout="1 day"/>
+            <event name="payment capture successful"/>
+            <event name="payment capture failed"/>
             <event name="retry payment" manual="true"/>
             <event name="capture payment" manual="true"/>
             <event name="start payment capture" onEnter="true" command="Payment/Capture"/>
