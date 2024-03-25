@@ -25,6 +25,7 @@
     </transfer>
 
     <transfer name="MerchantUser">
+        <property name="agentUsername" type="string"/>
     </transfer>
 
     <transfer name="MerchantUserCriteria">

@@ -47,14 +47,7 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $userTransfer = $this->findUserByUsername($identifier);
-
-        if ($userTransfer === null) {
-            $this->throwUserNotFoundException();
-        }
-
-        /** @phpstan-var \Generated\Shared\Transfer\UserTransfer $userTransfer */
-        return $this->getFactory()->createSecurityUser($userTransfer);
+        return $this->createSecurityUserByUsername($identifier);
     }
 
     /**
@@ -64,18 +57,15 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
      */
     public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!$user instanceof AgentMerchantUser) {
-            return $user;
+        if ($user instanceof AgentMerchantUser) {
+            return $this->refreshAgentMerchantUser($user);
         }
 
-        $userTransfer = $this->findUserTransfer($user);
-
-        if ($userTransfer === null) {
-            $this->throwUserNotFoundException();
+        if (is_a($user, $this->getConfig()->getMerchantUserClassName(), true)) {
+            return $this->refreshMerchantUser($user);
         }
 
-        /** @phpstan-var \Generated\Shared\Transfer\UserTransfer $userTransfer */
-        return $this->getFactory()->createSecurityUser($userTransfer);
+        return $user;
     }
 
     /**
@@ -87,6 +77,57 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
     {
         return is_a($class, AgentMerchantUser::class, true)
             || is_a($class, $this->getConfig()->getMerchantUserClassName(), true);
+    }
+
+    /**
+     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUser $user
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected function refreshAgentMerchantUser(AgentMerchantUser $user): UserInterface
+    {
+        return $this->createSecurityUserByUsername(
+            $user->getUserTransfer()->getUsernameOrFail(),
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected function refreshMerchantUser(UserInterface $user): UserInterface
+    {
+        /** @phpstan-var \Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser $user */
+        $username = $user->getMerchantUserTransfer()->getAgentUsername();
+        if (!$username) {
+            return $user;
+        }
+
+        $userTransfer = $this->findUserByUsername($username);
+
+        if ($userTransfer === null) {
+            $this->throwUserNotFoundException();
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected function createSecurityUserByUsername(string $username): UserInterface
+    {
+        $userTransfer = $this->findUserByUsername($username);
+
+        if ($userTransfer === null) {
+            $this->throwUserNotFoundException();
+        }
+
+        /** @phpstan-var \Generated\Shared\Transfer\UserTransfer $userTransfer */
+        return $this->getFactory()->createSecurityUser($userTransfer);
     }
 
     /**
@@ -109,26 +150,7 @@ class AgentMerchantUserProvider extends AbstractPlugin implements UserProviderIn
             ->getUserCollection($userCriteriaTransfer)
             ->getUsers();
 
-        if (!count($userTransfers)) {
-            return null;
-        }
-
         return $userTransfers->getIterator()->current();
-    }
-
-    /**
-     * @param \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Security\AgentMerchantUser $user
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    protected function findUserTransfer(AgentMerchantUser $user): ?UserTransfer
-    {
-        $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
-        if ($currentUserTransfer->getUsernameOrFail() === $user->getUsername()) {
-            return $currentUserTransfer;
-        }
-
-        return $this->findUserByUsername($user->getUsername());
     }
 
     /**

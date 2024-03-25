@@ -25,6 +25,7 @@
         "spryker/form": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
+        "spryker/security-merchant-portal-gui": "*",
         "spryker/session": "*",
         "spryker/testify": "*",
         "spryker/validator": "*"

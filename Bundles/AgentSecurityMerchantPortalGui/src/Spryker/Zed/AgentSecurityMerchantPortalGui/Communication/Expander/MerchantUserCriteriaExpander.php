@@ -14,13 +14,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class MerchantUserCriteriaExpander implements MerchantUserCriteriaExpanderInterface
 {
     /**
-     * @uses \Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter::IS_IMPERSONATOR
-     *
-     * @var string
-     */
-    protected const IS_IMPERSONATOR = 'IS_IMPERSONATOR';
-
-    /**
      * @var \Spryker\Zed\AgentSecurityMerchantPortalGui\AgentSecurityMerchantPortalGuiConfig
      */
     protected AgentSecurityMerchantPortalGuiConfig $agentSecurityMerchantPortalGuiConfig;
