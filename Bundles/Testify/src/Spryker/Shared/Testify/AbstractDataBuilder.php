@@ -271,7 +271,10 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return eval("return static::\$faker->$rule;");
+        if (strpos($rule, '(') !== false) {
+            return eval("return static::\$faker->$rule;");
+        }
+        return eval("return static::\$faker->$rule();");
         // @codingStandardsIgnoreEnd
     }
 
