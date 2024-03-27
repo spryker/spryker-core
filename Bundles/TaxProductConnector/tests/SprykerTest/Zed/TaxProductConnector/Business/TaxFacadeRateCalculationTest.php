@@ -17,8 +17,6 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
-use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface;
-use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
@@ -58,7 +56,6 @@ class TaxFacadeRateCalculationTest extends Unit
         $quoteTransfer->addItem($itemTransfer);
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $quoteTransfer->setStore($storeTransfer);
-        $this->tester->addCurrentStore($storeTransfer);
 
         $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
@@ -72,10 +69,11 @@ class TaxFacadeRateCalculationTest extends Unit
     public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate(): void
     {
         //Arrange
-        $this->tester->setDependency(TaxDependencyProvider::FACADE_STORE, $this->createTaxToStoreFacadeMock());
         $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, static::DE_ISO_CODE);
 
         $quoteTransfer = new QuoteTransfer();
+        $storeTrasfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $quoteTransfer->setStore($storeTrasfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
@@ -150,18 +148,5 @@ class TaxFacadeRateCalculationTest extends Unit
     protected function createTaxProductConnectorFacade(): TaxProductConnectorFacade
     {
         return new TaxProductConnectorFacade();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface
-     */
-    protected function createTaxToStoreFacadeMock(): TaxToStoreFacadeInterface
-    {
-        $taxToStoreFacadeMock = $this->createMock(TaxToStoreFacadeInterface::class);
-        $taxToStoreFacadeMock
-            ->method('getCurrentStore')
-            ->willReturn((new StoreTransfer())->setName(static::DE_ISO_CODE)->addCountry(static::DE_ISO_CODE));
-
-        return $taxToStoreFacadeMock;
     }
 }

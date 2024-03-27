@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConfig;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -49,18 +50,26 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $defaultTaxRate;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    protected ShipmentToStoreInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      */
     public function __construct(
         ShipmentRepositoryInterface $shipmentRepository,
         ShipmentToTaxInterface $taxFacade,
-        ShipmentServiceInterface $shipmentService
+        ShipmentServiceInterface $shipmentService,
+        ShipmentToStoreInterface $storeFacade
     ) {
         $this->shipmentRepository = $shipmentRepository;
         $this->taxFacade = $taxFacade;
         $this->shipmentService = $shipmentService;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -243,7 +252,8 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected function getDefaultTaxCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
         if ($this->defaultTaxCountryIso2Code === null) {
-            if ($storeTransfer) {
+            if ($storeTransfer !== null) {
+                $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
                 $countries = $storeTransfer->getCountries();
 
                 if ($countries) {

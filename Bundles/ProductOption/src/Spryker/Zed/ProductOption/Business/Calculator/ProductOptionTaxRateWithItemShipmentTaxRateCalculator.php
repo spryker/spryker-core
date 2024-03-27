@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -34,15 +35,23 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     protected $defaultTaxCountryIso2Code;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface
+     */
+    protected ProductOptionToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
-        ProductOptionToTaxFacadeInterface $taxFacade
+        ProductOptionToTaxFacadeInterface $taxFacade,
+        ProductOptionToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->taxFacade = $taxFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -133,12 +142,15 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     protected function getDefaultTaxCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
         if ($this->defaultTaxCountryIso2Code === null) {
-            if ($storeTransfer && $storeTransfer->getCountries()) {
+            if ($storeTransfer !== null) {
+                $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
                 $countries = $storeTransfer->getCountries();
 
-                $this->defaultTaxCountryIso2Code = reset($countries);
+                if ($countries) {
+                    $this->defaultTaxCountryIso2Code = reset($countries);
 
-                return $this->defaultTaxCountryIso2Code;
+                    return $this->defaultTaxCountryIso2Code;
+                }
             }
             $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         }

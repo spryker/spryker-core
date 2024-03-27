@@ -223,6 +223,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
         return new TaxRateReader(
             $this->getTaxFacade(),
             $this->getRepository(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -296,8 +297,6 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @return \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface
      */
     public function getStoreFacade(): SalesOrderThresholdToStoreFacadeInterface

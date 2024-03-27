@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToStoreFacadeBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
+use SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +31,11 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
  */
 class TaxRateCalculationTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester
+     */
+    protected TaxProductConnectorBusinessTester $tester;
+
     /**
      * @return void
      */
@@ -78,6 +85,7 @@ class TaxRateCalculationTest extends Unit
             ->setConstructorArgs([
                 $this->createQueryContainerMock(),
                 $this->createTaxFacadeMock(),
+                new TaxProductConnectorToStoreFacadeBridge($this->tester->getLocator()->store()->facade()),
             ])
             ->getMock();
     }

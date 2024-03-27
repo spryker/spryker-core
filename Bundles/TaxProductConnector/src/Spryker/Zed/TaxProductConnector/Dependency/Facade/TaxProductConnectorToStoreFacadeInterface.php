@@ -5,14 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
+namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
-interface SalesOrderThresholdToStoreFacadeInterface
+use Generated\Shared\Transfer\StoreTransfer;
+
+interface TaxProductConnectorToStoreFacadeInterface
 {
     /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName);
+    public function getStoreByName(string $storeName): StoreTransfer;
 }

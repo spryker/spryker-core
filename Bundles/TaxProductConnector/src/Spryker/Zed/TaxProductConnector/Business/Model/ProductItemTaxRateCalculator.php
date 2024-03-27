@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToStoreFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;
@@ -43,15 +44,23 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $defaultTaxRate;
 
     /**
+     * @var \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToStoreFacadeInterface
+     */
+    protected TaxProductConnectorToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
+     * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         TaxProductConnectorQueryContainerInterface $taxQueryContainer,
-        TaxProductConnectorToTaxInterface $taxFacade
+        TaxProductConnectorToTaxInterface $taxFacade,
+        TaxProductConnectorToStoreFacadeInterface $storeFacade
     ) {
         $this->taxQueryContainer = $taxQueryContainer;
         $this->taxFacade = $taxFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -187,7 +196,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getDefaultTaxCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
         if ($this->defaultTaxCountryIso2Code === null) {
-            if ($storeTransfer) {
+            if ($storeTransfer !== null) {
+                $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
                 $countries = $storeTransfer->getCountries();
 
                 if ($countries) {

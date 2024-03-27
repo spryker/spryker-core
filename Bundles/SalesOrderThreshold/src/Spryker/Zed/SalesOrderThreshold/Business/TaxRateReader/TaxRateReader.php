@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToTaxFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
@@ -24,13 +25,23 @@ class TaxRateReader implements TaxRateReaderInterface
     protected $repository;
 
     /**
+     * @var \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface
+     */
+    protected SalesOrderThresholdToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToTaxFacadeInterface $taxFacade
      * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface $repository
+     * @param \Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface $storeFacade
      */
-    public function __construct(SalesOrderThresholdToTaxFacadeInterface $taxFacade, SalesOrderThresholdRepositoryInterface $repository)
-    {
+    public function __construct(
+        SalesOrderThresholdToTaxFacadeInterface $taxFacade,
+        SalesOrderThresholdRepositoryInterface $repository,
+        SalesOrderThresholdToStoreFacadeInterface $storeFacade
+    ) {
         $this->taxFacade = $taxFacade;
         $this->repository = $repository;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -56,8 +67,10 @@ class TaxRateReader implements TaxRateReaderInterface
      */
     protected function getCountryIso2Code(?StoreTransfer $storeTransfer = null): string
     {
-        if ($storeTransfer) {
+        if ($storeTransfer !== null) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
             $countries = $storeTransfer->getCountries();
+
             if ($countries) {
                 return reset($countries);
             }

@@ -102,7 +102,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
     protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer): StoreTransfer
     {
         if ($cartChangeTransfer->getQuote() && $cartChangeTransfer->getQuote()->getStore()) {
-            return $cartChangeTransfer->getQuote()->getStore();
+            return $this->storeFacade->getStoreByName($cartChangeTransfer->getQuote()->getStore()->getName());
         }
 
         return $this->storeFacade->getCurrentStore();

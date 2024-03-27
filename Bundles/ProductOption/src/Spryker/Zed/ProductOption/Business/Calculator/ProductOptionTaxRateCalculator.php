@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -33,15 +34,23 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected $taxFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface
+     */
+    protected ProductOptionToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
-        ProductOptionToTaxFacadeInterface $taxFacade
+        ProductOptionToTaxFacadeInterface $taxFacade,
+        ProductOptionToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->taxFacade = $taxFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -97,7 +106,8 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected function getShippingCountryIsoCode(?AddressTransfer $shippingAddressTransfer, ?StoreTransfer $storeTransfer = null): string
     {
         if ($shippingAddressTransfer === null || !$shippingAddressTransfer->getIso2Code()) {
-            if ($storeTransfer) {
+            if ($storeTransfer !== null) {
+                $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
                 $countries = $storeTransfer->getCountries();
 
                 if ($countries) {

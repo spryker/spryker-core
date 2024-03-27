@@ -305,6 +305,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getTaxFacade(),
             $this->getShipmentService(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -317,6 +318,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getTaxFacade(),
             $this->getShipmentService(),
+            $this->getStoreFacade(),
         );
     }
 

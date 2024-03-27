@@ -24,6 +24,7 @@ use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
@@ -231,6 +232,7 @@ class ShipmentTaxRateCalculationTest extends Unit
             $this->createQueryContainerMock($countryTaxRate),
             $this->createProductOptionToTaxBridgeMock(),
             $this->tester->getShipmentService(),
+            new ShipmentToStoreBridge($this->tester->getLocator()->store()->facade()),
         );
     }
 

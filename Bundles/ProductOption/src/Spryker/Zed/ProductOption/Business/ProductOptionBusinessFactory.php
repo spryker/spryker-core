@@ -139,7 +139,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionTaxRateCalculator()
     {
-        return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+        return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade(), $this->getStoreFacade());
     }
 
     /**
@@ -150,6 +150,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
+            $this->getStoreFacade(),
         );
     }
 

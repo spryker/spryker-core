@@ -10,6 +10,7 @@ namespace Spryker\Zed\TaxProductConnector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToProductBridge;
+use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToStoreFacadeBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
 
 /**
@@ -28,6 +29,11 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_TAX = 'facade tax';
 
     /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var string
@@ -44,6 +50,7 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductFacade($container);
         $container = $this->addTaxFacade($container);
         $container = $this->addShippingAddressValidatorPlugins($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -71,6 +78,20 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_TAX, function (Container $container) {
             return new TaxProductConnectorToTaxBridge($container->getLocator()->tax()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new TaxProductConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

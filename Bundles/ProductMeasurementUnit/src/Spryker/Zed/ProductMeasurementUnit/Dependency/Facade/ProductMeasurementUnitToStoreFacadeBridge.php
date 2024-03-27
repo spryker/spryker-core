@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductMeasurementUnitToStoreFacadeBridge implements ProductMeasurementUnitToStoreFacadeInterface
 {
     /**
@@ -28,5 +30,15 @@ class ProductMeasurementUnitToStoreFacadeBridge implements ProductMeasurementUni
     public function getCurrentStore()
     {
         return $this->storeFacade->getCurrentStore();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName(string $storeName): StoreTransfer
+    {
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

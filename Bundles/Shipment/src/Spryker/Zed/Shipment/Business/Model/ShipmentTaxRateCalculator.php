@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConfig;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -40,18 +41,26 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $shipmentService;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    protected ShipmentToStoreInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
         ShipmentToTaxInterface $taxFacade,
-        ShipmentServiceInterface $shipmentService
+        ShipmentServiceInterface $shipmentService,
+        ShipmentToStoreInterface $storeFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->taxFacade = $taxFacade;
         $this->shipmentService = $shipmentService;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -177,6 +186,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         }
 
         if ($storeTransfer) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
             $countries = $storeTransfer->getCountries();
 
             if ($countries) {

@@ -15,4 +15,11 @@ interface ProductOptionToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore(): StoreTransfer;
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName(string $storeName): StoreTransfer;
 }

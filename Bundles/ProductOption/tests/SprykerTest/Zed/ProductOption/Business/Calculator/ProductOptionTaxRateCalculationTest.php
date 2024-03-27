@@ -14,8 +14,10 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
+use SprykerTest\Zed\ProductOption\ProductOptionBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +32,11 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  */
 class ProductOptionTaxRateCalculationTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
+     */
+    protected ProductOptionBusinessTester $tester;
+
     /**
      * @return void
      */
@@ -79,6 +86,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
             ->setConstructorArgs([
                 $this->createQueryContainerMock(),
                 $this->createProductOptionToTaxBridgeMock(),
+                new ProductOptionToStoreFacadeBridge($this->tester->getLocator()->store()->facade()),
             ])
             ->getMock();
     }

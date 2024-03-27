@@ -46,6 +46,7 @@
 
     <transfer name="Store">
         <property name="countries" type="array" singular="country"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
