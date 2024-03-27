@@ -1,0 +1,45 @@
+"B2B contracts","B2B contracts"
+"Merchant Relation Requests","Merchant Relation Requests"
+navigation.merchant_relation_requests,"Merchant Relation Requests"
+"Merchant Relation Request","Merchant Relation Request"
+Company,Company
+"Business Unit Owner","Business Unit Owner"
+"Business Units","Business Units"
+Created,Created
+Status,Status
+approved,Approved
+canceled,Canceled
+rejected,Rejected
+pending,Pending
+From,From
+To,To
+"Select Company","Select Company"
+"Select Status","Select Status"
+"Allow merchant relation requests","Allow merchant relation requests"
+"This means that you are open to receiving merchant relations requests from customers","This means that you are open to receiving merchant relations requests from customers."
+"This means that you do not accept merchant relations requests from customers","This means that you do not accept merchant relations requests from customers."
+"Manage Request","Manage Request"
+Name,Name
+Email,Email
+Phone,Phone
+"Company Details","Company Details"
+"Created date","Created date"
+"Contact details","Contact details"
+"Additional Details","Additional Details"
+"Company Note","Company Note"
+"Message from the Company","Message from the Company"
+"Message to the company","Message to the company"
+"Create a separate merchant relation per each business unit","Create a separate merchant relation per each business unit"
+"This value should not be blank.","This value should not be blank."
+Approve,Approve
+Reject,Reject
+"Approve Request","Approve Request"
+"Reject Request","Reject Request"
+"Please confirm if you want to proceed with approving the merchant relation request.","Please confirm if you want to proceed with approving the merchant relation request."
+"Please confirm if you want to proceed with rejecting the merchant relation request.","Please confirm if you want to proceed with rejecting the merchant relation request."
+"Confirm approval","Confirm approval"
+"Confirm reject","Confirm reject"
+Cancel,Cancel
+"Internal Comments","Internal Comments"
+"At least one business unit must be included in the merchant relation.","At least one business unit must be included in the merchant relation."
+"No assigned business units","No assigned business units"

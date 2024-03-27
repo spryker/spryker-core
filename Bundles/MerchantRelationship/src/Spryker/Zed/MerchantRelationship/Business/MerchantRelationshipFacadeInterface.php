@@ -78,6 +78,7 @@ interface MerchantRelationshipFacadeInterface
      * - Executes pre-delete plugin stack MerchantRelationshipPreDeletePluginInterface.
      * - Finds a merchant relationship record by ID in DB.
      * - Removes the merchant relationship record.
+     * - Executes a stack of {@link \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface} plugins.
      * - From next major version (Forward Compatibility): Argument `$merchantRelationshipTransfer` will be removed.
      *
      * @api
@@ -122,6 +123,17 @@ interface MerchantRelationshipFacadeInterface
      * Specification:
      * - Returns merchant relations.
      * - Filters by merchant relationship IDs when provided.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.merchantRelationshipIds` to filter by merchant relationship IDs.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.merchantIds` to filter by merchant IDs.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.companyIds` to filter by company IDs.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.ownerCompanyBusinessUnitIds` to filter by owner company business unit IDs.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.isActiveMerchant` to filter by merchant active status.
+     * - Uses `MerchantRelationshipCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.rangeCreatedAt.from` to specify the starting date for filtering by the creation date of the entity.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipConditions.rangeCreatedAt.to` to specify the ending date for filtering by the creation date of the entity.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipSearchConditions.ownerCompanyBusinessUnitName` to search by owner company business unit name.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipSearchConditions.ownerCompanyBusinessUnitCompanyName` to search by owner company business unit company name.
+     * - Uses `MerchantRelationshipCriteriaTransfer.merchantRelationshipSearchConditions.assigneeCompanyBusinessUnitName` to search by assignee company business unit names.
      * - Hydrate owner company business unit and merchant.
      * - Populates name in transfer.
      * - Executes a stack of {@link \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipExpanderPluginInterface} plugins.
@@ -151,4 +163,23 @@ interface MerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantRelationship.fkMerchant` to be set.
+     * - Requires `MerchantRelationship.ownerCompanyBusinessUnit.idCompanyBusinessUnit` to be set.
+     * - Requires `MerchantRelationship.assigneeCompanyBusinessUnits' to be set.
+     * - Expects `MerchantRelationship.assigneeCompanyBusinessUnits.companyBusinessUnits' to be set.
+     * - Requires `MerchantRelationship.assigneeCompanyBusinessUnits.companyBusinessUnits.idCompanyBusinessUnit' to be set.
+     * - Does nothing when merchant's owner company business unit don't have email address.
+     * - Adds assignee company business unit email addresses as recipients BCC.
+     * - Sends a notification email about deleted merchant relationships to company business units.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function sendMerchantRelationshipDeleteMailNotification(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
 }

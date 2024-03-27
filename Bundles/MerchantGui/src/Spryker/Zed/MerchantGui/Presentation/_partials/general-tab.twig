@@ -4,6 +4,9 @@
 {{ form_row(merchantForm.merchant_reference) }}
 {{ form_row(merchantForm.email) }}
 {{ form_row(merchantForm.is_active) }}
+{% include '@MerchantRelationRequestGui/_partials/is-open-for-relation-request-field.twig' ignore missing with {
+    merchantForm: merchantForm,
+} %}
 {{ form_row(merchantForm.storeRelation) }}
 
 {{ form_label(merchantForm.urlCollection) }}

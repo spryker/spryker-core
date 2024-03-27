@@ -28,6 +28,11 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
     protected const COLUMN_IS_DELETED = 'IsDeleted';
 
     /**
+     * @var string
+     */
+    protected const DATE_FORMAT = 'Y-m-d H:i:s.u';
+
+    /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer
@@ -39,7 +44,10 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
             ->mapCommentThreadTransferToCommentThreadEntity($commentThreadTransfer, new SpyCommentThread());
 
         $commentThreadEntity->save();
-        $commentThreadTransfer->setIdCommentThread($commentThreadEntity->getIdCommentThread());
+
+        $commentThreadTransfer
+            ->setIdCommentThread($commentThreadEntity->getIdCommentThread())
+            ->setUuid($commentThreadEntity->getUuid());
 
         return $commentThreadTransfer;
     }
@@ -59,7 +67,9 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
 
         $commentTransfer
             ->setIdComment($commentEntity->getIdComment())
-            ->setUuid($commentEntity->getUuid());
+            ->setUuid($commentEntity->getUuid())
+            ->setCreatedAt($commentEntity->getCreatedAt(static::DATE_FORMAT))
+            ->setUpdatedAt($commentEntity->getUpdatedAt(static::DATE_FORMAT));
 
         return $commentTransfer;
     }
@@ -76,13 +86,12 @@ class CommentEntityManager extends AbstractEntityManager implements CommentEntit
             ->filterByUuid($commentTransfer->getUuid())
             ->findOne();
 
-        $commentEntity = $this->getFactory()
-            ->createCommentMapper()
-            ->mapCommentTransferToCommentEntity($commentTransfer, $commentEntity);
+        $commentMapper = $this->getFactory()->createCommentMapper();
+        $commentEntity = $commentMapper->mapCommentTransferToCommentEntity($commentTransfer, $commentEntity);
 
         $commentEntity->save();
 
-        return $commentTransfer;
+        return $commentMapper->mapCommentEntityToCommentTransfer($commentEntity, $commentTransfer);
     }
 
     /**

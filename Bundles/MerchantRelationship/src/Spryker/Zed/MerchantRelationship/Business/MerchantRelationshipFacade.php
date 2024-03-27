@@ -162,4 +162,20 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
             ->createMerchantRelationshipReader()
             ->findMerchantRelationshipById($merchantRelationshipTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function sendMerchantRelationshipDeleteMailNotification(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    {
+        $this->getFactory()
+            ->createMerchantRelationshipDeleteMailNotificationSender()
+            ->sendMerchantRelationshipDeleteMailNotification($merchantRelationshipTransfer);
+    }
 }

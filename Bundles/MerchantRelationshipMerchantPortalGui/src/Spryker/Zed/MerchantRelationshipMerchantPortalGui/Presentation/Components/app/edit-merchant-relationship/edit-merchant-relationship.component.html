@@ -1,0 +1,19 @@
+<div class="mp-edit-merchant-relationship__header">
+    <spy-headline>
+        <div class="mp-edit-merchant-relationship__headline">
+            <h3 class="mp-edit-merchant-relationship__title">
+                <ng-content select="[title]"></ng-content>
+            </h3>
+            <span class="mp-edit-merchant-relationship__actions">
+                <ng-content select="[action]"></ng-content>
+            </span>
+        </div>
+        <div class="mp-edit-merchant-relationship__created-date">
+            <ng-content select="[created-date]"></ng-content>
+        </div>
+    </spy-headline>
+</div>
+
+<div class="mp-edit-merchant-relationship__content">
+    <ng-content></ng-content>
+</div>

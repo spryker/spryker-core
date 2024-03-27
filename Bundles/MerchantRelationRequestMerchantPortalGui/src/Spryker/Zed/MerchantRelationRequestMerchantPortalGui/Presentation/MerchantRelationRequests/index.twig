@@ -1,0 +1,24 @@
+{#
+@var merchantRelationRequestTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+#}
+
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headTitle %}
+    {{ 'Merchant Relation Requests' | trans }}
+{% endblock %}
+
+{% block content %}
+    <web-mp-merchant-relation-request
+        cloak
+        table-id="table-merchant-relation-request"
+        table-config='{{ guiTableConfiguration(merchantRelationRequestTableConfiguration) }}'>
+        <h1 title>{{ 'Merchant Relation Requests' | trans }}</h1>
+    </web-mp-merchant-relation-request>
+{% endblock %}
+
+{% block footerJs %}
+    {{ view.importJsBundle('merchant-relation-request-merchant-portal-gui', importConfig) }}
+    {{ parent() }}
+{% endblock %}

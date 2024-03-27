@@ -1,0 +1,16 @@
+{{ 'merchant_relation_request.mail.trans.merchant_relation_request_status_change.salutation' | trans({
+    '%first_name%' : mail.getCustomer.getFirstName,
+    '%last_name%' : mail.getCustomer.getLastName,
+}) | raw }}
+
+{{ 'merchant_relation_request.mail.trans.merchant_relation_request_status_change.main_text' | trans({
+    '%merchant_name%' : mail.getMerchantRelationRequest.getMerchant.getName,
+    '%status%': mail.getMerchantRelationRequest.getStatus,
+}) | raw }}
+
+{{ mail.merchantRelationRequestLink }}
+
+{% if mail.getMerchantRelationRequest.getDecisionNote %}
+    {{ 'merchant_relation_request.mail.trans.merchant_relation_request_status_change.decision_note_title' | trans | raw }}
+    {{ mail.getMerchantRelationRequest.getDecisionNote }}
+{% endif %}

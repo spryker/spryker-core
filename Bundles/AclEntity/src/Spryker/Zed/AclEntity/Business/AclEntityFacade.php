@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclEntity\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\AclEntityRuleRequestTransfer;
 use Generated\Shared\Transfer\AclEntityRuleResponseTransfer;
@@ -61,12 +62,17 @@ class AclEntityFacade extends AbstractFacade implements AclEntityFacadeInterface
      * @api
      *
      * @param bool $runValidation
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer|null $aclEntityMetadataConfigRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(bool $runValidation = true): AclEntityMetadataConfigTransfer
-    {
-        return $this->getFactory()->createAclEntityMetadataConfigReader()->getAclEntityMetadataConfig($runValidation);
+    public function getAclEntityMetadataConfig(
+        bool $runValidation = true,
+        ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
+    ): AclEntityMetadataConfigTransfer {
+        return $this->getFactory()
+            ->createAclEntityMetadataConfigReader()
+            ->getAclEntityMetadataConfig($runValidation, $aclEntityMetadataConfigRequestTransfer);
     }
 
     /**

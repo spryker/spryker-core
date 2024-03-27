@@ -11,14 +11,18 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantRelationshipHelper extends Module
 {
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
+    use DependencyHelperTrait;
 
     /**
      * @param array $seedData
@@ -83,13 +87,12 @@ class MerchantRelationshipHelper extends Module
     ): void {
         $this->debug(sprintf('Deleting Merchant Relationship: %d', $merchantRelationshipTransfer->getIdMerchantRelationship()));
 
-        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
-            ->setMerchantRelationship($merchantRelationshipTransfer);
-
-        $this->getMerchantRelationshipFacade()->deleteMerchantRelationship(
-            $merchantRelationshipTransfer,
-            $merchantRelationshipRequestTransfer,
-        );
+        $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
+            ->filterByFkMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationshipOrFail())
+            ->delete();
+        $this->getMerchantRelationshipQuery()
+            ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationshipOrFail())
+            ->delete();
     }
 
     /**
@@ -98,5 +101,21 @@ class MerchantRelationshipHelper extends Module
     protected function getMerchantRelationshipFacade(): MerchantRelationshipFacadeInterface
     {
         return $this->getLocator()->merchantRelationship()->facade();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
+     */
+    protected function getMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
+    {
+        return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
     }
 }

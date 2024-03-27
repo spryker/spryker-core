@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Approve Request' %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <p class="spacing-bottom">{{ 'Please confirm if you want to proceed with approving the merchant relation request.' | trans }}</p>
+            <div>
+                {{ form_start(approveMerchantRelationRequestForm) }}
+                    <div class="form-group">
+                        {{ form_widget(approveMerchantRelationRequestForm.children.isSplitEnabled) }}
+                    </div>
+
+                    <a href="{{ editMerchantRelationRequestUrl }}" class="btn btn-view btn-outline">{{ 'Cancel' | trans }}</a>
+                    {{ form_widget(approveMerchantRelationRequestForm.children.approve, { 'attr' : { 'class': 'btn btn-success safe-submit' }}) }}
+                {{ form_end(approveMerchantRelationRequestForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

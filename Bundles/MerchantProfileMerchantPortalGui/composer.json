@@ -13,6 +13,7 @@
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-profile": "^1.0.0",
+        "spryker/merchant-profile-merchant-portal-gui-extension": "^1.0.0",
         "spryker/merchant-user": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",

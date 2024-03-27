@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantRelationRequest" strict="true">
+        <property name="idMerchantRelationRequest" type="int"/>
+        <property name="commentThread" type="CommentThread"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollection" strict="true">
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+    </transfer>
+
+    <transfer name="CommentsRequest">
+        <property name="ownerType" type="string"/>
+        <property name="ownerIds" type="array" singular="ownerId"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="CommentFilter">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="CommentRequest">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCriteria" strict="true">
+        <property name="merchantRelationRequestConditions" type="MerchantRelationRequestConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="merchantRelationRequestUuid" type="string" strict="true"/>
+        <property name="commentThread" type="CommentThread" strict="true"/>
+    </transfer>
+
+    <transfer name="CommentThreadResponse">
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+</transfers>

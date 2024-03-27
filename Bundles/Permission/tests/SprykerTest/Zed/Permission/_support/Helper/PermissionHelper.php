@@ -34,6 +34,34 @@ class PermissionHelper extends Module
     }
 
     /**
+     * @param string $permissionKey
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    public function havePermissionByKey(string $permissionKey): PermissionTransfer
+    {
+        return $this->havePermission((new class ($permissionKey) implements PermissionPluginInterface {
+            private string $permissionKey;
+
+            /**
+             * @param string $permissionKey
+             */
+            public function __construct(string $permissionKey)
+            {
+                $this->permissionKey = $permissionKey;
+            }
+
+            /**
+             * @return string
+             */
+            public function getKey(): string
+            {
+                return $this->permissionKey;
+            }
+        }));
+    }
+
+    /**
      * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
      *
      * @return void

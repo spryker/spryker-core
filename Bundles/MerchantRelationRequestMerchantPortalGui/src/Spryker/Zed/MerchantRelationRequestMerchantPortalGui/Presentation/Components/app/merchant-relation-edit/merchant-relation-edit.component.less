@@ -1,0 +1,149 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@merchant-relation-edit-indent-small: var(--spy-merchant-relation-edit-indent-small, 10px);
+@merchant-relation-edit-indent-medium: var(--spy-merchant-relation-edit-indent-medium, 17px);
+@merchant-relation-edit-indent-big: var(--spy-merchant-relation-edit-indent-big, 30px);
+@merchant-relation-edit-actions-gap: var(--spy-merchant-relation-edit-actions-gap, 5px);
+@merchant-relation-edit-content-padding: var(
+    --spy-merchant-relation-edit-content-padding,
+    @merchant-relation-edit-indent-big
+);
+@merchant-relation-edit-header-padding: var(
+    --spy-merchant-relation-edit-header-padding,
+    15px @merchant-relation-edit-indent-big
+);
+@merchant-relation-edit-header-title-line-height: var(--spy-merchant-relation-edit-header-title-line-height, 2);
+@merchant-relation-edit-card-padding-bottom: var(
+    --spy-merchant-relation-edit-card-padding-bottom,
+    calc(@merchant-relation-edit-indent-big - @merchant-relation-edit-indent-small)
+);
+
+@merchant-relation-edit-form-row-padding: var(
+    --spy-merchant-relation-edit-form-row-padding,
+    @merchant-relation-edit-indent-medium
+);
+@merchant-relation-edit-form-row-col-min-height: var(
+    --spy-merchant-relation-edit-form-row-col-min-height,
+    calc(@input-height-base + @merchant-relation-edit-form-row-padding * 2)
+);
+@merchant-relation-edit-form-row-col-checkbox-min-height: var(
+    --spy-merchant-relation-edit-form-row-col-checkbox-min-height,
+    calc(@input-height-base + @merchant-relation-edit-form-row-padding * 1.5)
+);
+@merchant-relation-edit-form-row-base-width: var(--spy-merchant-relation-edit-form-row-base-width, 275px);
+@merchant-relation-edit-form-row-date-range-base-width: var(
+    --spy-merchant-relation-edit-form-row-date-range-base-width,
+    444px
+);
+@merchant-relation-edit-approval-status-margin-vertical: var(
+    --spy-merchant-relation-edit-approval-status-margin-vertical,
+    10px
+);
+
+.@{ajax-form-prefix-cls}-container {
+    overflow-y: auto;
+
+    &--loading {
+        overflow: hidden;
+    }
+}
+
+.mp-merchant-relation-edit {
+    display: block;
+    height: 100%;
+    background: @gray-lighter;
+    font: @font-default;
+    letter-spacing: @letter-spacing-base;
+    color: @ink;
+    overflow-y: auto;
+
+    &__header {
+        background: @spy-white;
+        padding: @merchant-relation-edit-header-padding;
+
+        .@{headline-prefix-cls} {
+            padding-bottom: 0;
+        }
+    }
+
+    &__title {
+        color: @ink;
+        font-size: @font-size-lg;
+        font-weight: @font-weight-medium;
+        letter-spacing: @letter-spacing-base;
+        line-height: @merchant-relation-edit-header-title-line-height;
+    }
+
+    &__headline {
+        display: flex;
+        align-items: center;
+    }
+
+    &__created-date {
+        font-size: @spy-font-size-base;
+        font-weight: @font-weight-medium;
+    }
+
+    &__approval-status {
+        margin: 0 @merchant-relation-edit-approval-status-margin-vertical;
+    }
+
+    &__actions {
+        margin-left: auto;
+        display: flex;
+        gap: @merchant-relation-edit-actions-gap;
+    }
+
+    &__content {
+        display: block;
+        padding: @merchant-relation-edit-content-padding;
+    }
+
+    &__card {
+        display: block;
+        padding-bottom: @merchant-relation-edit-card-padding-bottom;
+
+        .@{table-prefix-cls},
+        .@{table-filters-feature-prefix-cls} {
+            background: @gray-lighter;
+        }
+    }
+
+    &__button-hidden {
+        opacity: 0;
+        visibility: 0;
+    }
+
+    &__form-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        margin: calc(@merchant-relation-edit-form-row-padding * -1);
+
+        &-col {
+            flex-basis: @merchant-relation-edit-form-row-base-width;
+            padding: @merchant-relation-edit-form-row-padding;
+            min-height: @merchant-relation-edit-form-row-col-min-height;
+
+            &--checkbox {
+                min-height: @merchant-relation-edit-form-row-col-checkbox-min-height;
+            }
+
+            &--full-width {
+                flex-basis: 100%;
+            }
+
+            &--split-enabled {
+                background: @gray-lighter;
+                min-height: auto;
+                margin: @merchant-relation-edit-indent-medium;
+                padding: 0 @merchant-relation-edit-indent-small;
+                border-radius: @border-radius-base;
+
+                & .ant-form-item-label {
+                    display: none;
+                }
+            }
+        }
+    }
+}

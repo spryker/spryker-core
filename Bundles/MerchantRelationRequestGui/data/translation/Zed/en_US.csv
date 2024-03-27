@@ -1,0 +1,47 @@
+"Allow merchant relation requests","Allow merchant relation requests"
+"Merchant Relation Requests","Merchant Relation Requests"
+navigation.merchant_relation_requests,"Merchant Relation Requests"
+Merchant,Merchant
+"Merchant name","Merchant name"
+Company,Company
+"Business Unit Owner","Business Unit Owner"
+"Assigned Business Units","Assigned Business Units"
+Created,Created
+Status,Status
+Actions,Actions
+Edit,Edit
+approved,Approved
+canceled,Canceled
+rejected,Rejected
+pending,Pending
+"Select Merchant","Select Merchant"
+"Select Company","Select Company"
+"Merchant Relation Request with ID ""%id%"" doesn\'t exist.","Merchant Relation Request with ID ""%id%"" doesn\'t exist."
+"Edit Merchant Relation Request","Edit Merchant Relation Request"
+Back,Back
+Save,Save
+General,General
+"Created date","Created date"
+"Company Details","Company Details"
+"Contact Details","Contact Details"
+Name,Name
+Email,Email
+"Additional Details","Additional Details"
+"Message from the Company","Message from the Company"
+"Company Note","Company Note"
+"Message to the company","Message to the company"
+"CSRF token is not valid.","CSRF token is not valid."
+"Merchant relation request has been approved.","Merchant relation request has been approved."
+"Merchant relation request has been rejected.","Merchant relation request has been rejected."
+"Merchant relation request has been successfully saved.","Merchant relation request has been successfully saved."
+"Confirm approval","Confirm approval"
+"Confirm reject","Confirm reject"
+Cancel,Cancel
+Approve,Approve
+Reject,Reject
+"Create a separate merchant relation per each business unit","Create a separate merchant relation per each business unit"
+"Approve Request","Approve Request"
+"Reject Request","Reject Request"
+"Please confirm if you want to proceed with approving the merchant relation request.","Please confirm if you want to proceed with approving the merchant relation request."
+"Please confirm if you want to proceed with rejecting the merchant relation request.","Please confirm if you want to proceed with rejecting the merchant relation request."
+"Internal Comments","Internal Comments"

@@ -117,7 +117,8 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ->addUrlCollectionField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
             ->addFaxNumberField($builder)
-            ->addAddressCollectionSubform($builder);
+            ->addAddressCollectionSubform($builder)
+            ->executeOnlineProfileMerchantProfileFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -294,6 +295,21 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ],
             'property_path' => 'merchantProfile.faxNumber',
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
+     *
+     * @return $this
+     */
+    protected function executeOnlineProfileMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getOnlineProfileMerchantProfileFormExpanderPlugins() as $formPlugin) {
+            $formPlugin->buildForm($builder, $options);
+        }
 
         return $this;
     }

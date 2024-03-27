@@ -40,16 +40,23 @@ class CommentValidator implements CommentValidatorInterface
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
 
     /**
-     * @var array<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface>
+     * @var list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface>
      */
     protected $commentValidatorPlugins;
 
     /**
-     * @param array<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface> $commentValidatorPlugins
+     * @var list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface>
      */
-    public function __construct(array $commentValidatorPlugins)
+    protected array $commentAuthorValidatorStrategyPlugins;
+
+    /**
+     * @param list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface> $commentValidatorPlugins
+     * @param list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface> $commentAuthorValidatorStrategyPlugins
+     */
+    public function __construct(array $commentValidatorPlugins, array $commentAuthorValidatorStrategyPlugins)
     {
         $this->commentValidatorPlugins = $commentValidatorPlugins;
+        $this->commentAuthorValidatorStrategyPlugins = $commentAuthorValidatorStrategyPlugins;
     }
 
     /**
@@ -111,6 +118,30 @@ class CommentValidator implements CommentValidatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateCommentAuthor(
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentValidationResponseTransfer {
+        foreach ($this->commentAuthorValidatorStrategyPlugins as $commentAuthorValidatorStrategyPlugin) {
+            if (!$commentAuthorValidatorStrategyPlugin->isApplicable($commentRequestTransfer)) {
+                continue;
+            }
+
+            return $commentAuthorValidatorStrategyPlugin->validate($commentRequestTransfer);
+        }
+
+        $commentRequestTransfer->getCommentOrFail()
+            ->requireCustomer()
+            ->getCustomer()
+            ->requireIdCustomer();
+
+        return (new CommentValidationResponseTransfer())->setIsSuccessful(true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
      *
@@ -153,7 +184,7 @@ class CommentValidator implements CommentValidatorInterface
                 ->addMessage($messageTransfer);
         }
 
-        if ($commentTransfer->getCustomer()->getIdCustomer() !== $commentRequestTransfer->getComment()->getCustomer()->getIdCustomer()) {
+        if (!$this->isSameCustomer($commentTransfer, $commentRequestTransfer)) {
             $messageTransfer = $this->createMessageTransfer(static::GLOSSARY_KEY_COMMENT_ACCESS_DENIED);
             $commentValidationResponseTransfer
                 ->setIsSuccessful(false)
@@ -185,6 +216,24 @@ class CommentValidator implements CommentValidatorInterface
         }
 
         return $commentValidationResponseTransfer;
+    }
+
+    /**
+     * @deprecated For BC only. Use {@link \Spryker\Zed\Comment\Communication\Plugin\Comment\CustomerCommentAuthorValidationStrategyPlugin} instead.
+     *
+     * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isSameCustomer(CommentTransfer $commentTransfer, CommentRequestTransfer $commentRequestTransfer): bool
+    {
+        if (!$commentTransfer->getCustomer()) {
+            return true;
+        }
+
+        return $commentRequestTransfer->getCommentOrFail()->getCustomer()
+            && $commentTransfer->getCustomerOrFail()->getIdCustomer() === $commentRequestTransfer->getCommentOrFail()->getCustomerOrFail()->getIdCustomer();
     }
 
     /**

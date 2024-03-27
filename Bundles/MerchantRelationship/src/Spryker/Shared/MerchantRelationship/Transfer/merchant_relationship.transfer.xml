@@ -26,12 +26,17 @@
         <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
         <property name="pagination" type="Pagination"/>
         <property name="sortCollection" type="SortCollection"/>
+        <property name="merchantRelationshipSearchConditions" type="MerchantRelationshipSearchConditions" strict="true"/>
     </transfer>
 
     <transfer name="MerchantRelationshipConditions">
         <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
         <property name="companyIds" type="int[]" singular="idCompany"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="ownerCompanyBusinessUnitIds" type="int[]" singular="idOwnerCompanyBusinessUnit"/>
+        <property name="isActiveMerchant" type="bool" strict="true"/>
+        <property name="rangeCreatedAt" type="CriteriaRangeFilter" strict="true"/>
+        <property name="merchantRelationRequestUuids" type="string[]" singular="merchantRelationRequestUuid" strict="true"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -53,6 +58,11 @@
     <transfer name="Sort">
         <property name="field" type="string"/>
         <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
     </transfer>
 
     <transfer name="MerchantRelationshipValidationErrorCollection">
@@ -82,6 +92,7 @@
         <property name="name" type="string"/>
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="company" type="Company"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
@@ -96,6 +107,7 @@
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantRelationshipFilter">
@@ -118,10 +130,13 @@
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="idCompany" type="int"/>
+        <property name="withoutExpanders" type="bool"/>
+        <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
     </transfer>
 
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+        <property name="modelName" type="string" strict="true"/>
     </transfer>
 
     <transfer name="AclEntityMetadata">
@@ -136,6 +151,48 @@
 
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipSearchConditions" strict="true">
+        <property name="ownerCompanyBusinessUnitName" type="string"/>
+        <property name="ownerCompanyBusinessUnitCompanyName" type="string"/>
+        <property name="assigneeCompanyBusinessUnitName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="recipientBccs" type="MailRecipient[]" singular="recipientBcc"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" strict="true"/>
+        <property name="merchant" type="Merchant" strict="true"/>
+        <property name="merchantUrl" type="string" strict="true"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="fkLocale" type="int"/>
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

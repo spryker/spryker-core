@@ -1,0 +1,134 @@
+{# @var merchantRelationship \Generated\Shared\Transfer\MerchantRelationshipTransfer #}
+
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% macro spyFormRowItem(formField, className, additionalClass = '', attrs = {}) %}
+    <div class="{{ className }}__form-row">
+        <div class="{{ className }}__form-row-col {{ additionalClass }}">
+            {{ form_row(formField, { row_attr: { 'no-spaces': 'true' }, attr: attrs }) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{%- import _self as macros -%}
+
+{% set deleteMerchantRelationUrl = url('/merchant-relationship-merchant-portal-gui/delete-merchant-relationship', {
+    'merchant-relationship-id': merchantRelationship.idMerchantRelationship,
+}) %}
+
+{% set businessUnitList = [] %}
+{% for assigneeCompanyBusinessUnit in form.children.assigneeCompanyBusinessUnits.vars.choices %}
+    {% set businessUnitList = businessUnitList|merge([{
+        businessUnitName: assigneeCompanyBusinessUnit.label,
+        checkboxName: form.children.assigneeCompanyBusinessUnits.vars.full_name,
+        id: assigneeCompanyBusinessUnit.value,
+        addresses: companyBusinessUnitAddressesGroupedByIdCompanyBusinessUnit[assigneeCompanyBusinessUnit.value] | default([])
+    }]) %}
+{% endfor %}
+
+{% block body %}
+    {% set mainClass = 'mp-edit-merchant-relationship' %}
+
+    {% block editMerchantRelationship %}
+
+        {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+        <web-mp-edit-merchant-relationship cloak>
+            {% block title %}
+                <span title>
+                    {{ 'Merchant Relation' | trans }}: {{ merchantRelationship.idMerchantRelationship }}
+                </span>
+            {% endblock %}
+
+            {% block createdDate %}
+                <span created-date>
+                    {{ 'Created date' | trans ~ ': ' ~ merchantRelationship.createdAt | date('d.m.Y H:i') }}
+                </span>
+            {% endblock %}
+
+            {% block action %}
+                <div class="spy-row spy-row-gutter-sm" action>
+                    {% block actionDelete %}
+                        {% set confirmation = {
+                            title: 'Delete merchant relation' | trans,
+                            description: 'Are you sure you want to delete this merchant relation?' | trans,
+                            okText: 'Confirm deletion' | trans,
+                        } %}
+
+                        <div class="spy-col spy-col-gutter-sm">
+                            <web-mp-form-submitter
+                                confirmation="{{ confirmation | json_encode }}"
+                                action="{{ deleteMerchantRelationUrl }}"
+                            >
+                                <web-spy-button size="lg" variant="critical">{{ 'Delete' | trans }}</web-spy-button>
+
+                                <span form>
+                                    {{ form(deleteForm, { attr: { excludeFormTag: true } }) }}
+                                </span>
+                            </web-mp-form-submitter>
+                        </div>
+                    {% endblock %}
+
+                    {% block actionSave %}
+                        <div class="spy-col spy-col-gutter-sm">
+                            {{ form_row(form.save, {
+                                label: 'Save',
+                                attr: { size: 'lg', action: '' },
+                            }) }}
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block content %}
+                {% block companyDetails %}
+                    <web-spy-card spy-title="{{ 'Company Details' | trans }}" class="mp-edit-merchant-relationship__card">
+                        {{ macros.spyFormRowItem(form.children.ownerCompanyBusinessUnit.children.company.children.name, mainClass, mainClass ~ '__form-row-col--full-width') }}
+                        {{ macros.spyFormRowItem(form.children.ownerCompanyBusinessUnit.children.name, mainClass, mainClass ~ '__form-row-col--full-width') }}
+                        {% do form.children.assigneeCompanyBusinessUnits.setRendered %}
+
+                        <div class="{{ mainClass }}__form-row">
+                            <div class="{{ mainClass }}__form-row-col {{ mainClass }}__form-row-col--full-width">
+                                <web-mp-merchant-address-list
+                                    cloak
+                                    business-unit-list="{{ businessUnitList | json_encode }}"
+                                >
+                                    {% block businessUnitTitle %}
+                                        <span business-unit-title>
+                                            {{ 'Business Units' | trans }}
+                                        </span>
+                                    {% endblock %}
+
+                                    {% block businessUnitEmpty %}
+                                        <span business-unit-empty>
+                                            {{ 'No assigned business units' | trans }}
+                                        </span>
+                                    {% endblock %}
+                                </web-mp-merchant-address-list>
+                            </div>
+                        </div>
+                    </web-spy-card>
+                {% endblock %}
+
+                {% block companyComments %}
+                    <web-spy-card spy-title="{{ 'Internal Comments' | trans }}" class="mp-edit-merchant-relationship__card">
+                        {% embed '@CommentMerchantPortalGui/_partials/comment.twig' with {
+                            commentThread: merchantRelationship.commentThread,
+                            ownerId: merchantRelationship.idMerchantRelationship,
+                            ownerType: 'merchant_relationship',
+                        } %}
+                            {% block content %}
+                                <web-mp-comments-thread
+                                    actions="{{ actions | json_encode }}"
+                                    translations="{{ translations | json_encode }}"
+                                    add="{{ add | json_encode }}"
+                                    comments="{{ comments | json_encode }}"
+                                ></web-mp-comments-thread>
+                            {% endblock %}
+                        {% endembed %}
+                    </web-spy-card>
+                {% endblock %}
+            {% endblock %}
+        </web-mp-edit-merchant-relationship>
+        {{ form_end(form, { attr: { excludeFormTag: true } }) }}
+    {% endblock %}
+{% endblock %}

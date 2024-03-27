@@ -1,0 +1,34 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Merchant Relation Requests' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'Merchant Relation Requests' | trans}}</h5>
+        {%- endblock %}
+
+        {% block widget_content %}
+            {{ form_start(merchantRelationRequestListTableFiltersForm, { 'attr' : { 'class': 'js-auto-submit-form form-filter' }}) }}
+                <div class="row">
+                    <div class="col-xs-4">
+                        {{ form_row(merchantRelationRequestListTableFiltersForm.idCompany) }}
+                    </div>
+                    <div class="col-xs-4">
+                        {{ form_row(merchantRelationRequestListTableFiltersForm.idMerchant) }}
+                    </div>
+                </div>
+            {{ form_end(merchantRelationRequestListTableFiltersForm) }}
+
+            {{ merchantRelationRequestListTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-merchant-relation-request-gui-main.js') }}"></script>
+{% endblock %}

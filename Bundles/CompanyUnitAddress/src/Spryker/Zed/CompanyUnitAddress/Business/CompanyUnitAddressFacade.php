@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -147,5 +149,41 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
             ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer
+     */
+    public function expandMerchantRelationshipCollectionWithCompanyUnitAddress(
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+    ): MerchantRelationshipCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationshipExpander()
+            ->expandMerchantRelationshipCollectionWithCompanyUnitAddress(
+                $merchantRelationshipCollectionTransfer,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer
+     */
+    public function expandMerchantRelationRequestCollectionWithAssigneeCompanyBusinessUnitAddress(
+        MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
+    ): MerchantRelationRequestCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationRequestCollectionExpander()
+            ->expandMerchantRelationRequestCollectionWithAssigneeCompanyBusinessUnitAddress($merchantRelationRequestCollectionTransfer);
     }
 }

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 
 interface CompanyUnitAddressFacadeInterface
 {
@@ -129,4 +131,38 @@ interface CompanyUnitAddressFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `MerchantRelationshipCollectionTransfer.merchantRelationships` to be set.
+     * - Requires `MerchantRelationshipCollectionTransfer.merchantRelationships.assigneeCompanyBusinessUnits` to be set.
+     * - Requires `MerchantRelationshipCollectionTransfer.merchantRelationships.assigneeCompanyBusinessUnits.companyBusinessUnits.idCompanyBusinessUnit` to be set.
+     * - Expands `MerchantRelationshipCollectionTransfer.merchantRelationships.assigneeCompanyBusinessUnits` with
+     *   the corresponding company business unit addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer
+     */
+    public function expandMerchantRelationshipCollectionWithCompanyUnitAddress(
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+    ): MerchantRelationshipCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantRelationRequestCollectionTransfer.merchantRelationRequest.assigneeCompanyBusinessUnits.companyBusinessUnitTransfer` to be set.
+     * - Expands `MerchantRelationRequestCollectionTransfer.merchantRelationRequest.assigneeCompanyBusinessUnits` with
+     * the corresponding company business unit addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer
+     */
+    public function expandMerchantRelationRequestCollectionWithAssigneeCompanyBusinessUnitAddress(
+        MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
+    ): MerchantRelationRequestCollectionTransfer;
 }

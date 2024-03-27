@@ -1,0 +1,132 @@
+{#
+@var merchantRelationRequest \Generated\Shared\Transfer\MerchantRelationRequestTransfer
+@var merchantRelationRequest.merchant \Generated\Shared\Transfer\MerchantTransfer
+@var merchantRelationRequest.ownerCompanyBusinessUnit \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+@var merchantRelationRequest.ownerCompanyBusinessUnit.company \Generated\Shared\Transfer\CompanyTransfer
+@var merchantRelationRequest.companyUser \Generated\Shared\Transfer\CompanyUserTransfer
+@var merchantRelationRequest.companyUser.customer \Generated\Shared\Transfer\CustomerTransfer
+#}
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'Edit Merchant Relation Request' | trans ~ ': ' ~ merchantRelationRequest.idMerchantRelationRequest %}
+
+{% block head_title page_title %}
+
+{% block section_title %}
+    {{ form_start(merchantRelationRequestForm) }}
+
+    {{ page_title }}
+{% endblock %}
+
+{% block action %}
+    {% if (urlListMerchantRelationship is defined) %}
+        <a href="{{ urlListMerchantRelationship }}" class="btn">{{ 'Merchant Relations' | trans }}</a>
+    {% endif %}
+
+    {% if merchantRelationRequestForm.children.approve is defined %}
+        {{ form_widget(merchantRelationRequestForm.children.approve, { 'attr' : { 'class': 'btn btn-sm safe-submit btn-create' }}) }}
+    {% endif %}
+
+    {% if merchantRelationRequestForm.children.reject is defined %}
+        {{ form_widget(merchantRelationRequestForm.children.reject, { 'attr' : { 'class': 'btn btn-sm safe-submit btn-remove' }}) }}
+    {% endif %}
+
+    {{ backActionButton(url(urlMerchantRelationRequestList), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Merchant' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.merchant.name }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Created date' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.createdAt | formatDateTime }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+                <div class="col-xs-10">
+                    <span class="label {{ statusClassLabelMapping[merchantRelationRequest.status] | default }}">
+                        {{ merchantRelationRequest.status | trans }}
+                    </span>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Company Details' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Company' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.ownerCompanyBusinessUnit.company.name }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Business Unit Owner' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.ownerCompanyBusinessUnit.name }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ merchantRelationRequestForm.children.assigneeCompanyBusinessUnits.vars.label | trans }}</b></div>
+                <div class="col-xs-10">{{ form_row(merchantRelationRequestForm.children.assigneeCompanyBusinessUnits, {
+                        label: false,
+                        disabled: not isEditableMerchantRelationRequest
+                    }) }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Contact Details' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Name' | trans }}</b></div>
+                <div class="col-xs-10">
+                    {{ merchantRelationRequest.companyUser.customer.salutation }}
+                    {{ merchantRelationRequest.companyUser.customer.firstName }}
+                    {{ merchantRelationRequest.companyUser.customer.lastName }}
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Email' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.companyUser.customer.email }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Additional Details' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Message from the Company' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantRelationRequest.requestNote }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Company Note' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ merchantRelationRequestForm.children.decisionNote.vars.label | trans }}</b></div>
+                <div class="col-xs-10">{{ form_row(merchantRelationRequestForm.children.decisionNote, {
+                        label: false,
+                        disabled: not isEditableMerchantRelationRequest
+                    }) }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {{ form_end(merchantRelationRequestForm) }}
+
+    {% include '@CommentGui/Comment/comment-thread.twig' ignore missing with {
+        title: 'Internal Comments' | trans,
+        commentThread: merchantRelationRequest.commentThread,
+        returnUrl: app.request.requestUri,
+        ownerId: merchantRelationRequest.idMerchantRelationRequest,
+        ownerType: 'merchant_relation_request',
+    } %}
+{% endblock %}

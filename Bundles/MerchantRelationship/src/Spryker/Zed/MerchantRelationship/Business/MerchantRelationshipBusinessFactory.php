@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationship\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationship\Business\Builder\MerchantRelationshipDeleteMailBuilder;
+use Spryker\Zed\MerchantRelationship\Business\Builder\MerchantRelationshipDeleteMailBuilderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Creator\MerchantRelationshipCompanyBusinessUnitCreator;
 use Spryker\Zed\MerchantRelationship\Business\Creator\MerchantRelationshipCompanyBusinessUnitCreatorInterface;
 use Spryker\Zed\MerchantRelationship\Business\Creator\MerchantRelationshipCreator;
@@ -24,6 +26,12 @@ use Spryker\Zed\MerchantRelationship\Business\Mapper\MerchantRelationshipCriteri
 use Spryker\Zed\MerchantRelationship\Business\Mapper\MerchantRelationshipCriteriaMapperInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
+use Spryker\Zed\MerchantRelationship\Business\Reader\CompanyBusinessUnitReader;
+use Spryker\Zed\MerchantRelationship\Business\Reader\CompanyBusinessUnitReaderInterface;
+use Spryker\Zed\MerchantRelationship\Business\Reader\MerchantReader;
+use Spryker\Zed\MerchantRelationship\Business\Reader\MerchantReaderInterface;
+use Spryker\Zed\MerchantRelationship\Business\Sender\MerchantRelationshipDeleteMailNotificationSender;
+use Spryker\Zed\MerchantRelationship\Business\Sender\MerchantRelationshipDeleteMailNotificationSenderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Updater\MerchantRelationshipCompanyBusinessUnitUpdater;
 use Spryker\Zed\MerchantRelationship\Business\Updater\MerchantRelationshipCompanyBusinessUnitUpdaterInterface;
 use Spryker\Zed\MerchantRelationship\Business\Updater\MerchantRelationshipUpdater;
@@ -39,6 +47,8 @@ use Spryker\Zed\MerchantRelationship\Business\Validator\ValidatorRule\MerchantRe
 use Spryker\Zed\MerchantRelationship\Business\Validator\ValidatorRule\OwnerCompanyBusinessUnitAllowedValidatorRule;
 use Spryker\Zed\MerchantRelationship\Business\Validator\ValidatorRule\OwnerCompanyBusinessUnitExistsValidatorRule;
 use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToCompanyBusinessUnitFacadeInterface;
+use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToLocaleFacadeInterface;
+use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToMailFacadeInterface;
 use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToMerchantFacadeInterface;
 use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
 
@@ -93,7 +103,9 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantRelationshipDeleter(
             $this->getEntityManager(),
+            $this->createMerchantRelationshipReader(),
             $this->getMerchantRelationshipPreDeletePlugins(),
+            $this->getMerchantRelationshipPostDeletePlugins(),
         );
     }
 
@@ -151,7 +163,7 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
     {
-        return new MerchantRelationshipExpander();
+        return new MerchantRelationshipExpander($this->getRepository());
     }
 
     /**
@@ -246,6 +258,46 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Sender\MerchantRelationshipDeleteMailNotificationSenderInterface
+     */
+    public function createMerchantRelationshipDeleteMailNotificationSender(): MerchantRelationshipDeleteMailNotificationSenderInterface
+    {
+        return new MerchantRelationshipDeleteMailNotificationSender(
+            $this->createCompanyBusinessUnitReader(),
+            $this->createMerchantReader(),
+            $this->createMerchantRelationshipDeleteMailBuilder(),
+            $this->getMailFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Builder\MerchantRelationshipDeleteMailBuilderInterface
+     */
+    public function createMerchantRelationshipDeleteMailBuilder(): MerchantRelationshipDeleteMailBuilderInterface
+    {
+        return new MerchantRelationshipDeleteMailBuilder(
+            $this->getConfig(),
+            $this->getLocaleFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Reader\MerchantReaderInterface
+     */
+    public function createMerchantReader(): MerchantReaderInterface
+    {
+        return new MerchantReader($this->getMerchantFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Reader\CompanyBusinessUnitReaderInterface
+     */
+    public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
+    {
+        return new CompanyBusinessUnitReader($this->getCompanyBusinessUnitFacade());
+    }
+
+    /**
      * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     public function getMerchantRelationshipPreDeletePlugins(): array
@@ -302,10 +354,34 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToMailFacadeInterface
+     */
+    public function getMailFacade(): MerchantRelationshipToMailFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): MerchantRelationshipToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
      * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipExpanderPluginInterface>
      */
     public function getMerchantRelationshipExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface>
+     */
+    public function getMerchantRelationshipPostDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_POST_DELETE);
     }
 }

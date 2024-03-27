@@ -1,0 +1,13 @@
+<div style="text-align: center;">
+    {{ 'merchant_relationship.mail.trans.merchant_relationship_delete.salutation' | trans}}<br>
+
+    {{ 'merchant_relationship.mail.trans.merchant_relationship_delete.main_text' | trans({
+        '%merchant_name%' : mail.merchant.name,
+    })}}<br>
+
+    {% if mail.merchantUrl is not null %}
+        <a href="{{ mail.merchantUrl }}">
+            {{ 'merchant_relationship.mail.trans.merchant_relationship_delete.link' | trans }}
+        </a><br/>
+    {% endif %}
+</div>

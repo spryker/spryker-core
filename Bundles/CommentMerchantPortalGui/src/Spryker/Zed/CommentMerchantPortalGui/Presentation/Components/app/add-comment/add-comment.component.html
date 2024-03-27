@@ -1,0 +1,13 @@
+<spy-spinner [isSpinning]="isLoading$ | async">
+    <form #form class="mp-add-comment__form">
+        <spy-textarea [value]="message" (valueChange)="valueChange($event)" rows="4"></spy-textarea>
+
+        <input type="hidden" name="_token" value="{{ addComment?.crf }}" />
+        <input type="hidden" name="ownerId" value="{{ addComment?.ownerId }}" />
+        <input type="hidden" name="ownerType" value="{{ addComment?.ownerType }}" />
+
+        <spy-button class="mp-add-comment__button" [disabled]="!message.length" (click)="addAction()" shape="circle">
+            <spy-icon name="send"></spy-icon>
+        </spy-button>
+    </form>
+</spy-spinner>

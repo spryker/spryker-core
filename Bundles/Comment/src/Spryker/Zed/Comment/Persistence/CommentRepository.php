@@ -187,7 +187,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
                 ->filterByOwnerId($commentFilterTransfer->getOwnerId())
             ->endUse()
             ->filterByIsDeleted(false)
-            ->joinWithSpyCustomer()
+            ->leftJoinWithSpyCustomer()
             ->leftJoinWithSpyCommentToCommentTag()
             ->useSpyCommentToCommentTagQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyCommentTag()
@@ -197,6 +197,21 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
         return $this->getFactory()
             ->createCommentMapper()
             ->mapCommentEntitiesToCommentTransfers($commentQuery->find());
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param int $idComment
+     *
+     * @return bool
+     */
+    public function isCustomerCommentAuthor(int $idCustomer, int $idComment): bool
+    {
+        return $this->getFactory()
+            ->getCommentPropelQuery()
+            ->filterByIdComment($idComment)
+            ->filterByFkCustomer($idCustomer)
+            ->exists();
     }
 
     /**

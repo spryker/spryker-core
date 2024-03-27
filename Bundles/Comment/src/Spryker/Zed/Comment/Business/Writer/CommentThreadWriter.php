@@ -134,11 +134,12 @@ class CommentThreadWriter implements CommentThreadWriterInterface
     protected function duplicateComment(CommentTransfer $commentTransfer, CommentThreadTransfer $commentThreadTransfer): CommentTransfer
     {
         $duplicatedCommentTransfer = (new CommentTransfer())
-            ->setCustomer($commentTransfer->getCustomer())
+            ->fromArray($commentTransfer->toArray())
             ->setIdCommentThread($commentThreadTransfer->getIdCommentThread())
-            ->setMessage($commentTransfer->getMessage())
-            ->setIsUpdated($commentTransfer->getIsUpdated())
-            ->setCommentTags($commentTransfer->getCommentTags());
+            ->setIdComment(null)
+            ->setUuid(null)
+            ->setCreatedAt(null)
+            ->setUpdatedAt(null);
 
         $duplicatedCommentTransfer = $this->commentEntityManager->createComment($duplicatedCommentTransfer);
 

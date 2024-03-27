@@ -1,0 +1,18 @@
+@form-submitter-position: var(--form-submitter-spinner-position, static);
+@form-submitter-spinner-position: var(--form-submitter-spinner-position, absolute);
+@form-submitter-spinner-inset: var(--form-submitter-spinner-inset, 50%);
+@form-submitter-form-display: var(--form-submitter-form-display, none);
+
+.mp-form-submitter {
+    display: block;
+    position: @form-submitter-position;
+
+    &__spinner {
+        position: @form-submitter-spinner-position;
+        inset: @form-submitter-spinner-inset;
+    }
+
+    &__form {
+        display: @form-submitter-form-display;
+    }
+}

@@ -69,12 +69,14 @@ class MerchantRelationshipMapper
     /**
      * @param \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship $spyMerchantRelationship
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param bool $mapAssigneeCompanyBusinessUnits
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
     public function mapEntityToMerchantRelationshipTransfer(
         SpyMerchantRelationship $spyMerchantRelationship,
-        MerchantRelationshipTransfer $merchantRelationshipTransfer
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        bool $mapAssigneeCompanyBusinessUnits = true
     ): MerchantRelationshipTransfer {
         $merchantRelationshipTransfer->fromArray(
             $spyMerchantRelationship->toArray(),
@@ -95,6 +97,10 @@ class MerchantRelationshipMapper
                 new CompanyBusinessUnitTransfer(),
             ),
         );
+
+        if (!$mapAssigneeCompanyBusinessUnits) {
+            return $merchantRelationshipTransfer;
+        }
 
         return $this->mapAssigneeCompanyBusinessUnits($spyMerchantRelationship, $merchantRelationshipTransfer);
     }
@@ -126,6 +132,7 @@ class MerchantRelationshipMapper
             $merchantRelationshipTransfers[] = $this->mapEntityToMerchantRelationshipTransfer(
                 $merchantRelationshipEntity,
                 new MerchantRelationshipTransfer(),
+                false,
             );
         }
 

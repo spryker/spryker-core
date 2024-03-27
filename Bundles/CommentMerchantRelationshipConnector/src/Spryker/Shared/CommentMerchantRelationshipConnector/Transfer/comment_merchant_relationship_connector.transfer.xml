@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CommentsRequest">
+        <property name="ownerType" type="string"/>
+        <property name="ownerIds" type="array" singular="ownerId"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="ownerId" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="commentThread" type="CommentThread" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+</transfers>

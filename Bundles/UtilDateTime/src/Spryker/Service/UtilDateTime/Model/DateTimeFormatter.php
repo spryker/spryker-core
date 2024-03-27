@@ -35,6 +35,11 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     public const DEFAULT_FORMAT_DATE = 'M. d, Y';
 
     /**
+     * @var string
+     */
+    protected const UTC_ISO_8601_FORMAT_DATE_TIME = 'Y-m-d\TH:i:s.v\Z';
+
+    /**
      * @var \Spryker\Shared\Config\Config
      */
     protected $config;
@@ -76,6 +81,17 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     public function formatDateTimeToIso8601($dateTime, ?string $timezone = null): string
     {
         return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM, $timezone);
+    }
+
+    /**
+     * @param \DateTime|string $dateTime
+     * @param string|null $timezone
+     *
+     * @return string
+     */
+    public function formatDateTimeToUtcIso8601($dateTime, ?string $timezone = null): string
+    {
+        return $this->format($dateTime, static::UTC_ISO_8601_FORMAT_DATE_TIME, static::UTC_ISO_8601_FORMAT_DATE_TIME, $timezone);
     }
 
     /**

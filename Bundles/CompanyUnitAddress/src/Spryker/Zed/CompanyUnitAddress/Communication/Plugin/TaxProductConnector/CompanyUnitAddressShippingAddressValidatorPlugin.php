@@ -17,6 +17,7 @@ use Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\Shi
  * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddress\Communication\CompanyUnitAddressCommunicationFactory getFactory()
  */
 class CompanyUnitAddressShippingAddressValidatorPlugin extends AbstractPlugin implements ShippingAddressValidatorPluginInterface
 {

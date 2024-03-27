@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Comment">
+        <property name="user" type="User"/>
+        <property name="uuid" type="string"/>
+        <property name="fkUser" type="int"/>
+    </transfer>
+
+    <transfer name="CommentRequest">
+        <property name="comment" type="Comment"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="comments" type="Comment[]" singular="comment"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="CommentThreadResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+</transfers>

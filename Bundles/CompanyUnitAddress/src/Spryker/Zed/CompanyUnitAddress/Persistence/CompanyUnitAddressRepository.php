@@ -100,6 +100,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module CompanyBusinessUnit
      * @module Country
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
@@ -113,6 +114,13 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->createCompanyUnitAddressQuery()
             ->innerJoinWithCountry();
 
+        if ($criteriaFilterTransfer->getWithCompanyBusinessUnits()) {
+            $companyUnitAddressQuery->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+                ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithCompanyBusinessUnit()
+                ->endUse();
+        }
+
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $companyUnitAddressQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }
@@ -120,6 +128,12 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
             $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
                     ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+                ->endUse();
+        }
+
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
+            $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
+                    ->filterByFkCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds())
                 ->endUse();
         }
 
@@ -239,7 +253,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

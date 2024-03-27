@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUnitAddress\Communication\CompanyUnitAddressCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

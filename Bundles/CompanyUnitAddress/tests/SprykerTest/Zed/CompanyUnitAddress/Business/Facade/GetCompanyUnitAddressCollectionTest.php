@@ -181,4 +181,51 @@ class GetCompanyUnitAddressCollectionTest extends Unit
         $actualCompanyUnitAddressTransfer = $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->getIterator()->current();
         $this->assertSame($countryTransfer->toArray(), $actualCompanyUnitAddressTransfer->getCountryOrFail()->toArray());
     }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnCompanyUnitAddressesByCompanyBusinessUnitIds(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer1 = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressesCollection(static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT),
+        ]);
+        $companyBusinessUnitTransfer2 = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressesCollection(static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT),
+        ]);
+
+        $this->tester->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer1);
+        $this->tester->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer2);
+
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->addIdCompanyBusinessUnit($companyBusinessUnitTransfer1->getIdCompanyBusinessUnit());
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            $companyUnitAddressCriteriaFilterTransfer,
+        );
+
+        // Assert
+        $this->assertCount(
+            static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT,
+            $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
+        );
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
+        $companyUnitAddressTransfer = $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->getIterator()->current();
+
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransferLoaded */
+        $companyBusinessUnitTransferLoaded = $companyUnitAddressTransfer
+            ->getCompanyBusinessUnits()
+            ->getCompanyBusinessUnits()
+            ->getIterator()
+            ->current();
+
+        $this->assertEquals(
+            $companyBusinessUnitTransfer1->getIdCompanyBusinessUnit(),
+            $companyBusinessUnitTransferLoaded->getIdCompanyBusinessUnit(),
+        );
+    }
 }

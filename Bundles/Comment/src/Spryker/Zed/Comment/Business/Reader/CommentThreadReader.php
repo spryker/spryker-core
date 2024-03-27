@@ -21,11 +21,18 @@ class CommentThreadReader implements CommentThreadReaderInterface
     protected $commentRepository;
 
     /**
-     * @param \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface $commentRepository
+     * @var list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentExpanderPluginInterface>
      */
-    public function __construct(CommentRepositoryInterface $commentRepository)
+    protected array $commentExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface $commentRepository
+     * @param list<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentExpanderPluginInterface> $commentExpanderPlugins
+     */
+    public function __construct(CommentRepositoryInterface $commentRepository, array $commentExpanderPlugins)
     {
         $this->commentRepository = $commentRepository;
+        $this->commentExpanderPlugins = $commentExpanderPlugins;
     }
 
     /**
@@ -62,6 +69,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
 
         $threadIds = $this->collectThreadIds($commentThreadTransfers);
         $commentTransfers = $this->commentRepository->getCommentsByCommentThreadIds($threadIds);
+        $commentTransfers = $this->executeCommentExpanderPlugins($commentTransfers);
 
         return $this->mapCommentsToThreads($commentThreadTransfers, $commentTransfers);
     }
@@ -80,6 +88,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
         }
 
         $commentTransfers = $this->commentRepository->findCommentsByCommentThread($commentThreadTransfer);
+        $commentTransfers = $this->executeCommentExpanderPlugins($commentTransfers);
         $commentThreadTransfer->setComments(new ArrayObject($commentTransfers));
 
         return $commentThreadTransfer;
@@ -108,15 +117,46 @@ class CommentThreadReader implements CommentThreadReaderInterface
      */
     protected function mapCommentsToThreads(array $commentThreadTransfers, array $commentTransfers): array
     {
+        $indexedCommentThreadTransfers = $this->getCommentThreadsIndexedById($commentThreadTransfers);
+
         foreach ($commentTransfers as $commentTransfer) {
-            $threadId = $commentTransfer->getIdCommentThread();
-            if (!isset($commentThreadTransfers[$threadId])) {
+            $idCommentThread = $commentTransfer->getIdCommentThread();
+            if (!isset($indexedCommentThreadTransfers[$idCommentThread])) {
                 continue;
             }
 
-            $commentThreadTransfers[$threadId]->addComment($commentTransfer);
+            $indexedCommentThreadTransfers[$idCommentThread]->addComment($commentTransfer);
         }
 
-        return $commentThreadTransfers;
+        return array_values($indexedCommentThreadTransfers);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\CommentTransfer>
+     */
+    protected function executeCommentExpanderPlugins(array $commentTransfers): array
+    {
+        foreach ($this->commentExpanderPlugins as $commentExpanderPlugin) {
+            $commentTransfers = $commentExpanderPlugin->expand($commentTransfers);
+        }
+
+        return $commentTransfers;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\CommentThreadTransfer> $commentThreadTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\CommentThreadTransfer>
+     */
+    protected function getCommentThreadsIndexedById(array $commentThreadTransfers): array
+    {
+        $commentThreadsIndexedById = [];
+        foreach ($commentThreadTransfers as $commentThreadTransfer) {
+            $commentThreadsIndexedById[$commentThreadTransfer->getIdCommentThreadOrFail()] = $commentThreadTransfer;
+        }
+
+        return $commentThreadsIndexedById;
     }
 }

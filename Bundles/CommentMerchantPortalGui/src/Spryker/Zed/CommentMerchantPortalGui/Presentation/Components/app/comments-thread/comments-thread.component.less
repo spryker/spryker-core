@@ -1,0 +1,14 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@comment-thread-comments-padding-bottom: var(--spy-comment-thread-comments-padding-bottom, 20px);
+
+.mp-comments-thread {
+    &__error {
+        display: block;
+        color: @red;
+    }
+
+    &__comments {
+        padding-bottom: @comment-thread-comments-padding-bottom;
+    }
+}

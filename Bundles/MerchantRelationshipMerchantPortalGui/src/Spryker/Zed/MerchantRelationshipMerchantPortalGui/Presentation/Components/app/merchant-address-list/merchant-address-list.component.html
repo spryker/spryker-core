@@ -1,0 +1,38 @@
+<div class="mp-merchant-address-list">
+    <h4 class="mp-merchant-address-list__title">
+        <ng-content select="[business-unit-title]"></ng-content>
+    </h4>
+
+    <ng-container *ngIf="businessUnitList.length">
+        <ng-container *ngFor="let businessUnit of businessUnitList">
+            <div class="mp-merchant-address-list__business-unit">
+                <spy-checkbox
+                    class="mp-merchant-address-list__business-unit-checkbox"
+                    name="{{ businessUnit.checkboxName }}"
+                    id="{{ businessUnit.checkboxName }}"
+                    [attrs]="{ value: businessUnit.id }"
+                    checked
+                ></spy-checkbox>
+                <div>
+                    <h5 class="mp-merchant-address-list__business-unit-name">{{ businessUnit.businessUnitName }}</h5>
+                    <ul class="mp-merchant-address-list__address-list">
+                        <ng-container *ngFor="let address of businessUnit.addresses">
+                            <li class="mp-merchant-address-list__address-list-item">
+                                <spy-icon
+                                    class="mp-merchant-address-list__address-list-item-icon"
+                                    name="address"
+                                    icon
+                                ></spy-icon>
+                                <span class="mp-merchant-address-list__address-list-item-text">{{ address }}</span>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <span class="mp-merchant-address-list__empty" *ngIf="!businessUnitList.length">
+        <ng-content select="[business-unit-empty]"></ng-content>
+    </span>
+</div>

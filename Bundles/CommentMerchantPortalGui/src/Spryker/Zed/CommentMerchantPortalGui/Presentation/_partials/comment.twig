@@ -1,0 +1,48 @@
+{# @var commentThread \Generated\Shared\Transfer\CommentThreadTransfer #}
+{# @var ownerId int #}
+{# @var ownerType string #}
+
+{% block body %}
+    {% set actions = {
+        create: {
+            url: url('/comment-merchant-portal-gui/comment/create'),
+        },
+        update: {
+            url: url('/comment-merchant-portal-gui/comment/update'),
+            label: 'Update' | trans,
+        },
+        remove: {
+            url: url('/comment-merchant-portal-gui/comment/delete'),
+            label: 'Remove' | trans,
+        },
+        edit: {
+            label: 'Edit' | trans,
+        },
+    } %}
+
+    {% set comments = commentThread and commentThread.comments ? commentThread.comments|map(comment => {
+        uuid: comment.uuid,
+        message: comment.message,
+        fullname: comment.customer
+            ? comment.customer.firstName ~ ' ' ~ comment.customer.lastName
+            : comment.user
+            ? comment.user.firstName ~ ' ' ~ comment.user.lastName
+            : '',
+        readonly: userEmail != comment.user.username,
+        createdAt: comment.createdAt,
+        isUpdated: comment.isUpdated,
+        crf: csrf_token('update-comment-form'),
+    }) : [] %}
+
+    {% set translations = {
+        updated: 'Edited' | trans,
+    } %}
+
+    {% set add = {
+        crf: csrf_token('add-comment-form'),
+        ownerId: ownerId,
+        ownerType: ownerType,
+    } %}
+
+    {% block content %}{% endblock %}
+{% endblock %}

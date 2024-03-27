@@ -1,0 +1,49 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@comment-message-color: var(--spy-comment-message-max-width, @ink-static);
+@comment-message-min-height: var(--spy-comment-message-min-height, 45px);
+@comment-message-background: var(--spy-comment-message-background, @gray-lighter);
+@comment-message-border: var(--spy-comment-message-border, 2px solid @gray-light);
+@comment-message-padding: var(--spy-comment-message-padding, 7px 12px 9px);
+@comment-message-radius: var(--spy-comment-message-radius, 10px);
+@comment-message-bottom-indent: var(--spy-comment-message-bottom-indent, 10px);
+@comment-message-signature-size: var(--spy-comment-message-signature-size, 12px);
+@comment-message-signature-weight: var(--spy-comment-message-signature-weight, 700);
+@comment-message-action-button-color: var(--spy-comment-message-link-hover-color, @gray-darker);
+
+.mp-comment {
+    padding-bottom: @comment-message-bottom-indent;
+
+    &__message,
+    &__textarea {
+        display: block;
+        margin-bottom: @comment-message-bottom-indent;
+    }
+
+    &__message {
+        background: @comment-message-background;
+        border: @comment-message-border;
+        border-radius: @comment-message-radius;
+        padding: @comment-message-padding;
+        min-height: @comment-message-min-height;
+        color: @comment-message-color;
+    }
+
+    &__signature {
+        padding-bottom: @comment-message-bottom-indent;
+        font-size: @comment-message-signature-size;
+    }
+
+    &__signature-info {
+        font-weight: @comment-message-signature-weight;
+    }
+
+    &__signature-form {
+        text-align: right;
+    }
+
+    &__actions {
+        --spy-btn-link-color: @comment-message-action-button-color;
+        padding-bottom: @comment-message-bottom-indent;
+    }
+}

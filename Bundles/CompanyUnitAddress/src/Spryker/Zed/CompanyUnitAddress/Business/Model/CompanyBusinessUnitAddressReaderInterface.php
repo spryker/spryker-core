@@ -53,4 +53,13 @@ interface CompanyBusinessUnitAddressReaderInterface
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+
+    /**
+     * @param list<int> $companyBusinessUnitIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollectionByCompanyBusinessUnitIds(
+        array $companyBusinessUnitIds
+    ): CompanyUnitAddressCollectionTransfer;
 }

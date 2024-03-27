@@ -24,6 +24,9 @@
         "spryker/testify": "*",
         "spryker/twig": "*"
     },
+    "suggest": {
+        "spryker/comment-gui": "Add the module if you want to display comments."
+    },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"

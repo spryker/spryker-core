@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantRelationRequestCollection" strict="true">
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequest" strict="true">
+        <property name="idMerchantRelationRequest" type="int"/>
+        <property name="status" type="string"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="requestNote" type="string"/>
+        <property name="decisionNote" type="string"/>
+        <property name="isSplitEnabled" type="bool"/>
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnit[]" singular="assigneeCompanyBusinessUnit"/>
+        <property name="createdAt" type="string"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCriteria" strict="true">
+        <property name="merchantRelationRequestConditions" type="MerchantRelationRequestConditions"/>
+        <property name="merchantRelationRequestSearchConditions" type="MerchantRelationRequestSearchConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestTableCriteria" strict="true">
+        <property name="searchTerm" type="string"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+        <property name="filterInStatuses" type="string[]" singular="inStatus"/>
+        <property name="filterInCompanyIds" type="int[]" singular="inIdCompany"/>
+        <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestConditions" strict="true">
+        <property name="merchantRelationRequestIds" type="int[]" singular="idMerchantRelationRequest"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="companyIds" type="int[]" singular="idCompany"/>
+        <property name="statuses" type="string[]" singular="status"/>
+        <property name="withAssigneeCompanyBusinessUnitRelations" type="bool"/>
+        <property name="withMerchantRelationshipRelations" type="bool"/>
+        <property name="rangeCreatedAt" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestSearchConditions" strict="true">
+        <property name="ownerCompanyBusinessUnitName" type="string"/>
+        <property name="ownerCompanyBusinessUnitCompanyName" type="string"/>
+        <property name="assigneeCompanyBusinessUnitName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="name" type="string"/>
+        <property name="company" type="Company"/>
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCollection">
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="idCompanyUnitAddress" type="int"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="country" type="Country" strict="true"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="phone" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableConfiguration">
+    </transfer>
+
+    <transfer name="GuiTableDataRequest" strict="true">
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="page" type="int" strict="true"/>
+        <property name="pageSize" type="int" strict="true"/>
+        <property name="total" type="int" strict="true"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter" strict="true">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="merchant" type="Merchant" strict="true"/>
+        <property name="merchantRelationRequestTableLink" type="string" strict="true"/>
+        <property name="type" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollectionResponse" strict="true">
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestFormActionConfiguration">
+        <property name="name" type="string"/>
+        <property name="label" type="string"/>
+        <property name="buttonVariant" type="string"/>
+        <property name="modalTitle" type="string"/>
+        <property name="modalBody" type="string"/>
+        <property name="modalCancelText" type="string"/>
+        <property name="modalCancelVariant" type="string"/>
+        <property name="modalConfirmText" type="string"/>
+        <property name="modalConfirmVariant" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="createdAt" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="ZedUiFormResponse" strict="true">
+    </transfer>
+
+    <transfer name="MerchantDashboardCard">
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton" strict="true"/>
+        <property name="title" type="string" strict="true"/>
+        <property name="content" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardActionButton" strict="true">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+</transfers>

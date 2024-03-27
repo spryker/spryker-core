@@ -155,6 +155,31 @@ class UtilDateTimeServiceTest extends Unit
     }
 
     /**
+     * @dataProvider testFormatDateTimeToUtcIso8601ReturnsProperlyFormattedDateDataProvider
+     *
+     * @param \DateTime|string $dateTime
+     * @param string|null $timezone
+     * @param string $expectedResult
+     *
+     * @return void
+     */
+    public function testFormatDateTimeToUtcIso8601ReturnsProperlyFormattedDate(
+        $dateTime,
+        ?string $timezone,
+        string $expectedResult
+    ): void {
+        // Act
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_ZONE => static::DEFAULT_DATE_TIME_ZONE,
+        ]);
+
+        $formattedDateTime = $utilDateTimeService->formatDateTimeToUtcIso8601($dateTime, $timezone);
+
+        // Assert
+        $this->assertSame($expectedResult, $formattedDateTime);
+    }
+
+    /**
      * @return list<array<mixed>>
      */
     protected function testFormatDateTimeToIso8601ReturnsProperlyFormattedDateDataProvider(): array
@@ -166,6 +191,21 @@ class UtilDateTimeServiceTest extends Unit
             [new DateTime('1980-12-06 23:59:00'), 'EET', '1980-12-07T01:59:00+02:00'],
             ['1980-12-06 23:59:00', null, '1980-12-07T00:59:00+01:00'],
             [new DateTime('1980-12-06 23:59:00'), null, '1980-12-07T00:59:00+01:00'],
+        ];
+    }
+
+    /**
+     * @return list<array<mixed>>
+     */
+    protected function testFormatDateTimeToUtcIso8601ReturnsProperlyFormattedDateDataProvider(): array
+    {
+        return [
+            ['1980-12-06 23:59:00', 'UTC', '1980-12-06T23:59:00.000Z'],
+            [new DateTime('1980-12-06 23:59:00'), 'UTC', '1980-12-06T23:59:00.000Z'],
+            ['1980-12-06 23:59:00', 'EET', '1980-12-07T01:59:00.000Z'],
+            [new DateTime('1980-12-06 23:59:00'), 'EET', '1980-12-07T01:59:00.000Z'],
+            ['1980-12-06 23:59:00', null, '1980-12-07T00:59:00.000Z'],
+            [new DateTime('1980-12-06 23:59:00'), null, '1980-12-07T00:59:00.000Z'],
         ];
     }
 

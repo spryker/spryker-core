@@ -32,6 +32,7 @@ use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableTotalConfigurationTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Shared\GuiTable\Exception\InvalidConfigurationException;
@@ -170,6 +171,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var bool|null
      */
     protected ?bool $isPaginationEnabled = null;
+
+    /**
+     * @var bool
+     */
+    protected bool $isTotalEnabled = true;
 
     /**
      * @api
@@ -1049,6 +1055,22 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param bool $isTotalEnabled
+     *
+     * @return $this
+     */
+    public function setIsTotalEnabled(bool $isTotalEnabled)
+    {
+        $this->isTotalEnabled = $isTotalEnabled;
+
+        return $this;
+    }
+
+    /**
      * @api
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
@@ -1089,6 +1111,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         $guiTableConfigurationTransfer->setSearch(
             (new GuiTableSearchConfigurationTransfer())->setIsEnabled($this->isSearchEnabled),
+        );
+
+        $guiTableConfigurationTransfer->setTotal(
+            (new GuiTableTotalConfigurationTransfer())->setIsEnabled($this->isTotalEnabled),
         );
 
         if ($this->searchPlaceholder) {

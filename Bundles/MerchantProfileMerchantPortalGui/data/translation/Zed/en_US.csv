@@ -31,8 +31,8 @@ Number,Number
 "Store Status","Store Status"
 "Phone Number","Phone Number"
 Profile,Profile
-profile.status.message.online,"This means that your store is available online and people can see it."
-profile.status.message.offline,"This means that your store is available online and people can see it."
+profile.status.message.online,"This means that your store is available online and visible to visitors."
+profile.status.message.offline,"This means that your store is offline and not accessible by anyone."
 "Provide a logo URL","Provide a logo URL"
 "Provide a banner URL","Provide a banner URL"
 "Provide Average Delivery Time","Provide Average Delivery Time"

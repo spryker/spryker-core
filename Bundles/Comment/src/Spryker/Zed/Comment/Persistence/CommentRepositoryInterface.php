@@ -68,4 +68,12 @@ interface CommentRepositoryInterface
      * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByFilter(CommentFilterTransfer $commentFilterTransfer): array;
+
+    /**
+     * @param int $idCustomer
+     * @param int $idComment
+     *
+     * @return bool
+     */
+    public function isCustomerCommentAuthor(int $idCustomer, int $idComment): bool;
 }

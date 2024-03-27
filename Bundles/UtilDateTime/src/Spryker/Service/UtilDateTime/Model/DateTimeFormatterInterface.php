@@ -40,6 +40,14 @@ interface DateTimeFormatterInterface
 
     /**
      * @param \DateTime|string $dateTime
+     * @param string|null $timezone
+     *
+     * @return string
+     */
+    public function formatDateTimeToUtcIso8601($dateTime, ?string $timezone = null): string;
+
+    /**
+     * @param \DateTime|string $dateTime
      * @param string $format
      *
      * @return string

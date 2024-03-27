@@ -7,15 +7,16 @@ import { SidebarModule } from '@spryker/sidebar';
 import { ApplyContextsModule } from '@spryker/utils';
 import { CustomElementBoundaryModule } from '@spryker/web-components';
 
-import { LayoutMainComponent } from './layout-main.component';
 import {
+    IconContractsModule,
     IconDashboardModule,
-    IconProfileModule,
     IconOffersModule,
     IconOrdersModule,
+    IconProfileModule,
     IconUserGroupModule,
     IconProductsModule,
 } from '../../icons';
+import { LayoutMainComponent } from './layout-main.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import {
         IconProfileModule,
         IconOrdersModule,
         IconOffersModule,
+        IconContractsModule,
         IconUserGroupModule,
         IconProductsModule,
     ],

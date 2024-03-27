@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CompanyUnitAddress;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -70,5 +71,49 @@ class CompanyUnitAddressBusinessTester extends Actor
         }
 
         return $companyUnitAddressCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $expectedCompanyUnitAddressCollection
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $actualCompanyUnitAddressCollection
+     *
+     * @return void
+     */
+    public function assertCompanyUnitAddressCollection(
+        CompanyUnitAddressCollectionTransfer $expectedCompanyUnitAddressCollection,
+        CompanyUnitAddressCollectionTransfer $actualCompanyUnitAddressCollection
+    ): void {
+        $this->assertCount(
+            $expectedCompanyUnitAddressCollection->getCompanyUnitAddresses()->count(),
+            $actualCompanyUnitAddressCollection->getCompanyUnitAddresses(),
+        );
+
+        foreach ($expectedCompanyUnitAddressCollection->getCompanyUnitAddresses() as $expectedCompanyUnitAddressTransfer) {
+            $actualCompanyUnitAddressTransfer = $this->findCompanyUnitAddressTransferById(
+                $actualCompanyUnitAddressCollection,
+                $expectedCompanyUnitAddressTransfer->getIdCompanyUnitAddressOrFail(),
+            );
+
+            $this->assertNotNull($actualCompanyUnitAddressTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    protected function findCompanyUnitAddressTransferById(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer,
+        int $idCompanyUnitAddress
+    ): ?CompanyUnitAddressTransfer {
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            if ($companyUnitAddressTransfer->getIdCompanyUnitAddressOrFail() === $idCompanyUnitAddress) {
+                return $companyUnitAddressTransfer;
+            }
+        }
+
+        return null;
     }
 }

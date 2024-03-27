@@ -1,0 +1,57 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@merchant-relation-edit-indent-small: var(--spy-merchant-relation-edit-indent-small, 8px);
+@merchant-relation-edit-indent-medium: var(--spy-merchant-relation-edit-indent-medium, 16px);
+@merchant-relation-edit-indent-address-list-item-text-top: var(
+    --spy-merchant-relation-edit-indent-address-list-item-text-top,
+    2px
+);
+@merchant-merchant-address-list-title-font-size: var(
+    --spy-merchant-merchant-address-list-title-font-size,
+    @heading-5-font-size
+);
+@merchant-merchant-address-list-title-font-weight: var(
+    --spy-merchant-merchant-address-list-title-font-weight,
+    @font-weight-semi-bold
+);
+
+.mp-merchant-address-list {
+    font: @font-default;
+    letter-spacing: @letter-spacing-base;
+    color: @gray-darker;
+
+    &__title {
+        font-size: @merchant-merchant-address-list-title-font-size;
+        font-weight: @merchant-merchant-address-list-title-font-weight;
+        color: @ink;
+        margin-bottom: @merchant-relation-edit-indent-medium;
+    }
+
+    &__empty {
+        color: @gray;
+    }
+
+    &__business-unit {
+        display: flex;
+        margin-bottom: @merchant-relation-edit-indent-small;
+    }
+
+    &__business-unit-name {
+        color: @ink;
+        margin-bottom: @merchant-relation-edit-indent-medium;
+    }
+
+    &__business-unit-checkbox {
+        margin-right: @merchant-relation-edit-indent-medium;
+    }
+
+    &__address-list-item {
+        font-weight: @font-weight-medium;
+        margin-bottom: @merchant-relation-edit-indent-small;
+    }
+
+    &__address-list-item-icon {
+        margin-right: @merchant-relation-edit-indent-small;
+        vertical-align: text-top;
+    }
+}

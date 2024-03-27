@@ -12,6 +12,7 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
+use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\CompanyBusinessUnitMapper;
 use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapper;
 
 /**
@@ -43,6 +44,14 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     public function createPropelMerchantRelationshipMapper(): MerchantRelationshipMapper
     {
         return new MerchantRelationshipMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\CompanyBusinessUnitMapper
+     */
+    public function createCompanyBusinessUnitMapper(): CompanyBusinessUnitMapper
+    {
+        return new CompanyBusinessUnitMapper();
     }
 
     /**

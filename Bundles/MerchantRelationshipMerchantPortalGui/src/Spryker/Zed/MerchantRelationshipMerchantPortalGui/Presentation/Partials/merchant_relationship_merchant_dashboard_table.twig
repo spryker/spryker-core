@@ -1,0 +1,24 @@
+{% if totalMerchantRelationshipCount > 0 %}
+    <div class="spy-col spy-col-12 spy-col-gutter-lg">
+        {% block card %}
+            <web-mp-dashboard-card>
+                {% block title %}
+                    <span title>{{ 'Companies with the most merchant relations' | raw }}</span>
+                {% endblock %}
+
+                {% block table %}
+                    <web-mp-dashboard-table
+                        table-id="table-merchant-relationship-dashboard"
+                        config='{{ guiTableConfiguration(merchantRelationshipDashboardTableConfiguration) }}'
+                    >
+                        {% block link %}
+                            <div link class="spy-row spy-row-direction-column spy-row-align-row-flex-end">
+                                <a href="{{ url('/merchant-relationship-merchant-portal-gui/merchant-relationship') }}">{{ 'View all' | trans }}</a>
+                            </div>
+                        {% endblock %}
+                    </web-mp-dashboard-table>
+                {% endblock %}
+            </web-mp-dashboard-card>
+        {% endblock %}
+    </div>
+{% endif %}

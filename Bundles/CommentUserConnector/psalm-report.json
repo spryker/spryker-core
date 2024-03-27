@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CommentUserConnector\\Business\\Reader\\UserReaderInterface::getUserCollectionByUserIds expects list<int>, but parent type array<int, int> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentUserConnector/src/Spryker/Zed/CommentUserConnector/Business/Expander/CommentExpander.php",
+            "snippet": "        $userCollectionTransfer = $this->userReader->getUserCollectionByUserIds($userIds);",
+            "selected_text": "$userIds",
+            "error_level": 3,
+            "shortcode": 193
+        }
+    ],
+    "deprecation": [],
+    "count": 1
+}

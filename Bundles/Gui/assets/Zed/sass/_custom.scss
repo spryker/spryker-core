@@ -546,6 +546,10 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     margin-bottom: 1em;
 }
 
+.spacing-bottom-big {
+    margin-bottom: 20px;
+}
+
 .navbar-default {
     box-shadow: 0 2px 16px $grey-light2;
 
@@ -806,6 +810,19 @@ select.form-control {
         text-align: left;
         display: inline-block;
         vertical-align: middle;
+    }
+
+    .form-filter {
+        padding-bottom: 10px;
+
+        label {
+            display: block;
+        }
+
+        select {
+            width: 100%;
+            margin: 0;
+        }
     }
 
     &--alt {
@@ -1455,6 +1472,23 @@ a.label {
         }
     }
 
+    &.btn-link {
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+        color: #999c9e;
+        border: none;
+        box-shadow: none;
+        line-height: 1;
+        text-transform: none;
+
+        &:hover {
+            background: transparent;
+            box-shadow: none;
+            color: #121212;
+        }
+    }
+
     &.navbar-minimalize {
         border-radius: 4px;
         padding: 2px 12px;
@@ -1813,4 +1847,64 @@ a.label {
 
 .col-auto {
     width: auto;
+}
+
+.comment {
+    &__message {
+        display: block;
+        background: #f8f8f8;
+        border: 2px solid #f1f1f1;
+        border-radius: 10px;
+        padding: 7px 12px 9px;
+        line-height: 18px;
+        min-height: 65px;
+        white-space: pre;
+        color: #121212;
+        font-weight: 400;
+    }
+
+    &__area-message {
+        position: relative;
+    }
+
+    &__textarea {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        resize: none;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    textarea.comment__textarea {
+        height: 100%;
+        min-height: 0;
+    }
+
+    &__edit-mode-picker,
+    &__textarea,
+    &__update-btn {
+        display: none;
+    }
+
+    &:has(&__edit-mode-picker:checked) {
+        .comment__textarea,
+        .comment__update-btn {
+            display: block;
+        }
+
+        .comment__edit-btn {
+            display: none;
+        }
+
+        .comment__message {
+            visibility: hidden;
+            opacity: 0;
+        }
+    }
 }

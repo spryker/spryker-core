@@ -87,6 +87,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR => $guiTableConfigurationTransfer->getColumnConfiguratorOrFail()->toArray(),
+                GuiTableConfigurationTransfer::TOTAL => $this->prepareTotalData($guiTableConfigurationTransfer),
             ];
 
             if (count($overwrite)) {
@@ -294,5 +295,19 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
         $editable[GuiTableEditableConfigurationTransfer::COLUMNS] = array_values($editable[GuiTableEditableConfigurationTransfer::COLUMNS]);
 
         return $editable;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array<string, bool>
+     */
+    protected function prepareTotalData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        $isEnabled = $guiTableConfigurationTransfer->getTotal() === null || $guiTableConfigurationTransfer->getTotalOrFail()->getIsEnabledOrFail();
+
+        return [
+            static::CONFIG_ENABLED => $isEnabled,
+        ];
     }
 }

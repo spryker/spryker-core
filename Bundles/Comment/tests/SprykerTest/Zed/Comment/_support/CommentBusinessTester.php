@@ -24,7 +24,7 @@ use Generated\Shared\Transfer\CommentThreadResponseTransfer;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Comment\Business\CommentFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\Comment\PHPMD)
  */
 class CommentBusinessTester extends Actor
 {

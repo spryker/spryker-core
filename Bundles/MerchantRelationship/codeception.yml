@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/MerchantRelationship
+    - tests/SprykerTest/Client/MerchantRelationship
 paths:
     tests: tests
     output: tests/_output

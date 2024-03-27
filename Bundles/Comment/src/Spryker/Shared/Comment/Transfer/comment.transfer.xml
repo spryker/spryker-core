@@ -86,4 +86,12 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="CustomerCollection">
+        <property name="customers" type="Customer[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="CustomerCriteriaFilter">
+        <property name="customerIds" type="int[]" singular="idCustomer" strict="true"/>
+    </transfer>
+
 </transfers>

@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/merchant-relationship": "Added for future compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

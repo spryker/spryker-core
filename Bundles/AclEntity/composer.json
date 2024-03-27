@@ -13,7 +13,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/price-product-extension": "^1.7.0",
         "spryker/propel-orm": "^1.16.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/user": "^3.0.0"
     },
     "require-dev": {

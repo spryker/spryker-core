@@ -1,0 +1,60 @@
+<spy-spinner [isSpinning]="isLoading$ | async">
+    <div class="spy-row">
+        <ng-container *ngIf="comment.readonly; else commentFormTmpl">
+            <div class="spy-col-10">
+                <span class="mp-comment__message spacing-bottom">
+                    {{ comment.message }}
+                </span>
+
+                <ng-container *ngTemplateOutlet="signatureTmpl"></ng-container>
+            </div>
+        </ng-container>
+    </div>
+</spy-spinner>
+
+<ng-template #commentFormTmpl>
+    <form #form class="spy-col-push-left-2 spy-col-10">
+        <spy-textarea
+            class="mp-comment__textarea"
+            cols="auto"
+            rows="auto"
+            *ngIf="editing"
+            [value]="comment.message"
+            (valueChange)="valueChange($event)"
+        ></spy-textarea>
+        <span *ngIf="!editing" class="mp-comment__message">{{ comment.message }}</span>
+
+        <ng-container *ngTemplateOutlet="signatureTmpl; context: { $implicit: true }"></ng-container>
+
+        <input type="hidden" name="_token" value="{{ comment.crf }}" />
+        <input type="hidden" name="uuid" value="{{ comment.uuid }}" />
+
+        <div class="mp-comment__actions">
+            <div class="spy-row spy-row-gutter-sm spy-row-align-row-flex-end">
+                <spy-button
+                    variant="link"
+                    class="spy-col-gutter-sm"
+                    (click)="editing ? commentAction('update') : useEditingMode()"
+                >
+                    <spy-icon icon name="edit"></spy-icon>{{ editing ? translations?.update : translations?.edit }}
+                </spy-button>
+
+                <spy-button variant="link" class="spy-col-gutter-sm" (click)="commentAction('remove')">
+                    <spy-icon icon name="trash"></spy-icon>{{ translations?.remove }}
+                </spy-button>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #signatureTmpl let-form>
+    <div class="mp-comment__signature">
+        <div class="{{ form ? 'mp-comment__signature-form' : '' }}">
+            <span class="mp-comment__signature-info">
+                {{ comment.fullname }}, {{ comment.createdAt | date: 'mediumDate' }},
+                {{ comment.createdAt | localTime }}
+            </span>
+            <ng-container *ngIf="comment.isUpdated">({{ translations.updated }})</ng-container>
+        </div>
+    </div>
+</ng-template>

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Deleter;
 
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
 
 class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterface
@@ -22,20 +25,36 @@ class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterfac
     protected $merchantRelationshipEntityManager;
 
     /**
-     * @var array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
+     * @var \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface
+     */
+    protected MerchantRelationshipReaderInterface $merchantRelationshipReader;
+
+    /**
+     * @var list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     protected $merchantRelationshipPreDeletePlugins;
 
     /**
+     * @var list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface>
+     */
+    protected array $merchantRelationshipPostDeletePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $merchantRelationshipEntityManager
-     * @param array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface> $merchantRelationshipPreDeletePlugins
+     * @param \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface $merchantRelationshipReader
+     * @param list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface> $merchantRelationshipPreDeletePlugins
+     * @param list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface> $merchantRelationshipPostDeletePlugins
      */
     public function __construct(
         MerchantRelationshipEntityManagerInterface $merchantRelationshipEntityManager,
-        array $merchantRelationshipPreDeletePlugins
+        MerchantRelationshipReaderInterface $merchantRelationshipReader,
+        array $merchantRelationshipPreDeletePlugins,
+        array $merchantRelationshipPostDeletePlugins
     ) {
         $this->merchantRelationshipEntityManager = $merchantRelationshipEntityManager;
+        $this->merchantRelationshipReader = $merchantRelationshipReader;
         $this->merchantRelationshipPreDeletePlugins = $merchantRelationshipPreDeletePlugins;
+        $this->merchantRelationshipPostDeletePlugins = $merchantRelationshipPostDeletePlugins;
     }
 
     /**
@@ -58,6 +77,11 @@ class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterfac
 
         if ($merchantRelationshipRequestTransfer && $merchantRelationshipRequestTransfer->getMerchantRelationshipOrFail()->getIdMerchantRelationship()) {
             $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationshipOrFail();
+        }
+
+        $merchantRelationshipTransfer = $this->findMerchantRelationship($merchantRelationshipTransfer);
+        if (!$merchantRelationshipTransfer) {
+            return;
         }
 
         $this->deleteByMerchantRelationshipTransfer($merchantRelationshipTransfer);
@@ -84,6 +108,7 @@ class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterfac
     {
         $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationshipTransfer);
         $this->merchantRelationshipEntityManager->deleteMerchantRelationshipById($merchantRelationshipTransfer->getIdMerchantRelationship());
+        $this->executeMerchantRelationshipPostDeletePlugins($merchantRelationshipTransfer);
     }
 
     /**
@@ -96,5 +121,40 @@ class MerchantRelationshipDeleter implements MerchantRelationshipDeleterInterfac
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
             $merchantRelationshipPreDeletePlugin->execute($merchantRelationshipTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    protected function executeMerchantRelationshipPostDeletePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    {
+        foreach ($this->merchantRelationshipPostDeletePlugins as $merchantRelationshipPostDeletePlugin) {
+            $merchantRelationshipPostDeletePlugin->execute($merchantRelationshipTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    protected function findMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
+    {
+        $merchantRelationshipConditionsTransfer = (new MerchantRelationshipConditionsTransfer())
+            ->addIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationshipOrFail());
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions($merchantRelationshipConditionsTransfer);
+
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer */
+        $merchantRelationshipCollectionTransfer = $this->merchantRelationshipReader->getMerchantRelationshipCollection(
+            null,
+            $merchantRelationshipCriteriaTransfer,
+        );
+
+        return $merchantRelationshipCollectionTransfer->getMerchantRelationships()
+            ->getIterator()
+            ->current();
     }
 }

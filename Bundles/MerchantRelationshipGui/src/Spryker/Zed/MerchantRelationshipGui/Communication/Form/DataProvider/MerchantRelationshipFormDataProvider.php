@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyFacadeInterface;
@@ -92,9 +94,15 @@ class MerchantRelationshipFormDataProvider
             return $merchantRelationshipTransfer;
         }
 
-        $merchantRelationshipTransfer->setIdMerchantRelationship($idMerchantRelationship);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions((new MerchantRelationshipConditionsTransfer())
+                ->addIdMerchantRelationship($idMerchantRelationship));
 
-        return $this->merchantRelationshipFacade->findMerchantRelationshipById($merchantRelationshipTransfer);
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer */
+        $merchantRelationshipCollectionTransfer = $this->merchantRelationshipFacade
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        return $merchantRelationshipCollectionTransfer->getMerchantRelationships()->getIterator()->current();
     }
 
     /**

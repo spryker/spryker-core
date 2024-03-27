@@ -42,6 +42,8 @@
     <transfer name="CompanyUnitAddressCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnitIds" type="int[]" singular="idCompanyBusinessUnit" strict="true"/>
+        <property name="withCompanyBusinessUnits" type="bool" strict="true"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -89,5 +91,45 @@
 
     <transfer name="Address">
         <property name="idCompanyUnitAddress" type="int"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+        <property name="modelName" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequest" strict="true">
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnit[]" singular="assigneeCompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollection" strict="true">
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
     </transfer>
 </transfers>

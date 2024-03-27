@@ -1,0 +1,79 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/Builder/CompanyBusinessUnitAddressBuilder.php",
+            "snippet": "        $companyBusinessUnitAddress = sprintf('%s %s', $companyUnitAddressTransfer->getAddress1(), $companyUnitAddressTransfer->getAddress2());",
+            "selected_text": "$companyUnitAddressTransfer->getAddress1()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/Builder/CompanyBusinessUnitAddressBuilder.php",
+            "snippet": "        $companyBusinessUnitAddress = sprintf('%s %s', $companyUnitAddressTransfer->getAddress1(), $companyUnitAddressTransfer->getAddress2());",
+            "selected_text": "$companyUnitAddressTransfer->getAddress2()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/Builder/CompanyBusinessUnitAddressBuilder.php",
+            "snippet": "            $companyBusinessUnitAddress .= sprintf(', %s', $companyUnitAddressTransfer->getAddress3());",
+            "selected_text": "$companyUnitAddressTransfer->getAddress3()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/Builder/CompanyBusinessUnitAddressBuilder.php",
+            "snippet": "            $companyBusinessUnitAddress .= sprintf(' - %s', $countryTransfer->getName());",
+            "selected_text": "$countryTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullIterator",
+            "message": "Cannot iterate over nullable var list<int>|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/Form/DataTransformer/AssigneeCompanyBusinessUnitsDataTransformer.php",
+            "snippet": "        foreach ($value as $idCompanyBusinessUnit) {",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 97
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable Spryker\\Zed\\MerchantRelationshipMerchantPortalGui\\Communication\\GuiTable\\Mapper\\MerchantRelationshipGuiTableMapper::COLUMN_MAP using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipMerchantPortalGui/src/Spryker/Zed/MerchantRelationshipMerchantPortalGui/Communication/GuiTable/Mapper/MerchantRelationshipGuiTableMapper.php",
+            "snippet": "                    ->setField(static::COLUMN_MAP[$merchantRelationshipTableCriteriaTransfer->getOrderBy()])",
+            "selected_text": "static::COLUMN_MAP",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": [],
+    "count": 7
+}

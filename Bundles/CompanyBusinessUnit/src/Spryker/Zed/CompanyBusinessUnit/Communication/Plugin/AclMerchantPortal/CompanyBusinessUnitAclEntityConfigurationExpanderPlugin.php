@@ -39,7 +39,21 @@ class CompanyBusinessUnitAclEntityConfigurationExpanderPlugin extends AbstractPl
                     ->setEntityName('Orm\Zed\Company\Persistence\SpyCompany')
                     ->setParent((new AclEntityParentMetadataTransfer())->setEntityName('Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit'))
                     ->setIsSubEntity(true),
+            )->addAclEntityMetadata(
+                'Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit',
+                (new AclEntityMetadataTransfer())
+                    ->setEntityName('Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit'),
             );
+
+        if ($aclEntityMetadataConfigTransfer->getModelName() === 'Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit') {
+            $aclEntityMetadataConfigTransfer
+                ->getAclEntityMetadataCollectionOrFail()
+                ->addAclEntityMetadata(
+                    'Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit',
+                    (new AclEntityMetadataTransfer())
+                        ->setEntityName('Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit'),
+                );
+        }
 
         return $aclEntityMetadataConfigTransfer;
     }

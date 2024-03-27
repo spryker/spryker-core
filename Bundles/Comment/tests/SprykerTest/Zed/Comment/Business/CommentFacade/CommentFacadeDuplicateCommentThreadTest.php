@@ -13,11 +13,16 @@ use Generated\Shared\DataBuilder\CommentFilterBuilder;
 use Generated\Shared\DataBuilder\CommentRequestBuilder;
 use Generated\Shared\DataBuilder\CommentTagBuilder;
 use Generated\Shared\Transfer\CommentFilterTransfer;
+use Generated\Shared\Transfer\CommentRequestTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Comment\Business\CommentBusinessFactory;
 use Spryker\Zed\Comment\Business\CommentFacadeInterface;
 use Spryker\Zed\Comment\CommentConfig;
+use Spryker\Zed\Comment\CommentDependencyProvider;
+use Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Auto-generated group annotations
@@ -73,6 +78,47 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         // Arrange
         $firstCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
         $secondCommentTransfer = (new CommentBuilder())->build()->setCustomer($this->customerTransfer);
+
+        $commentRequestTransfer = (new CommentRequestBuilder())->build()
+            ->setComment($firstCommentTransfer);
+
+        $this->tester->createComment($commentRequestTransfer);
+
+        $commentRequestTransfer->setComment($secondCommentTransfer);
+        $this->tester->getFacade()->addComment($commentRequestTransfer);
+
+        $commentFilterTransfer = (new CommentFilterTransfer())
+            ->setOwnerId($commentRequestTransfer->getOwnerId())
+            ->setOwnerType($commentRequestTransfer->getOwnerType());
+
+        $newCommentRequestTransfer = (new CommentRequestBuilder())->build();
+
+        // Act
+        $commentThreadResponseTransfer = $this->tester->getFacade()
+            ->duplicateCommentThread($commentFilterTransfer, $newCommentRequestTransfer);
+
+        $commentThreadTransfer = $this->tester
+            ->getFacade()
+            ->findCommentThreadByOwner($newCommentRequestTransfer);
+
+        // Assert
+        $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
+        $this->assertCount(2, $commentThreadTransfer->getComments());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDuplicateCommentThreadCopyExistingCommentThreadToNewOnWhenOriginalCommentDontHaveFkCustomer(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            CommentDependencyProvider::PLUGINS_COMMENT_AUTHOR_VALIDATOR_STRATEGY,
+            [$this->getNoCustomerCommentValidationStrategyPlugin()],
+        );
+
+        $firstCommentTransfer = (new CommentBuilder())->build();
+        $secondCommentTransfer = (new CommentBuilder())->build();
 
         $commentRequestTransfer = (new CommentRequestBuilder())->build()
             ->setComment($firstCommentTransfer);
@@ -271,5 +317,33 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         $commentFacade->setFactory((new CommentBusinessFactory())->setConfig($commentConfigMock));
 
         return $commentFacade;
+    }
+
+    /**
+     * @return \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface
+     */
+    protected function getNoCustomerCommentValidationStrategyPlugin(): CommentAuthorValidatorStrategyPluginInterface
+    {
+        return new class extends AbstractPlugin implements CommentAuthorValidatorStrategyPluginInterface {
+            /**
+             * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+             *
+             * @return bool
+             */
+            public function isApplicable(CommentRequestTransfer $commentRequestTransfer): bool
+            {
+                return $commentRequestTransfer->getCommentOrFail()->getCustomer() === null;
+            }
+
+            /**
+             * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+             *
+             * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+             */
+            public function validate(CommentRequestTransfer $commentRequestTransfer): CommentValidationResponseTransfer
+            {
+                return (new CommentValidationResponseTransfer())->setIsSuccessful(true);
+            }
+        };
     }
 }

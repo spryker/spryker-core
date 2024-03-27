@@ -1,0 +1,13 @@
+<div class="mp-comments-thread__comments">
+    <mp-comment
+        *ngFor="let comment of comments$ | async"
+        [comment]="comment"
+        [translations]="commentTranslations"
+        [updateUrl]="actions.update.url"
+        [removeUrl]="actions.remove.url"
+    >
+    </mp-comment>
+</div>
+
+<mp-add-comment [addComment]="add" [addUrl]="actions.create.url"></mp-add-comment>
+<span class="mp-comments-thread__error">{{ error$ | async }}</span>

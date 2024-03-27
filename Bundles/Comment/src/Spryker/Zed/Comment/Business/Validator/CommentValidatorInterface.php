@@ -41,4 +41,13 @@ interface CommentValidatorInterface
         CommentRequestTransfer $commentRequestTransfer,
         ?CommentTransfer $commentTransfer
     ): CommentValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateCommentAuthor(
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentValidationResponseTransfer;
 }

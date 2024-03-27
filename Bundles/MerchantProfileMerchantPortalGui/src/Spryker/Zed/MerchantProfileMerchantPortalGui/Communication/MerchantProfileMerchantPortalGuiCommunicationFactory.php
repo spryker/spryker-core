@@ -116,4 +116,12 @@ class MerchantProfileMerchantPortalGuiCommunicationFactory extends AbstractCommu
     {
         return $this->getProvidedDependency(MerchantProfileMerchantPortalGuiDependencyProvider::FACADE_COUNTRY);
     }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantProfileMerchantPortalGuiExtension\Dependency\Plugin\OnlineProfileMerchantProfileFormExpanderPluginInterface>
+     */
+    public function getOnlineProfileMerchantProfileFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantProfileMerchantPortalGuiDependencyProvider::PLUGINS_ONLINE_PROFILE_MERCHANT_PROFILE_FORM_EXPANDER);
+    }
 }

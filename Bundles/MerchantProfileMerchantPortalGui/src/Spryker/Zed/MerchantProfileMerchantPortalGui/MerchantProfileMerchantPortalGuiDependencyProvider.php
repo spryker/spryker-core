@@ -52,6 +52,11 @@ class MerchantProfileMerchantPortalGuiDependencyProvider extends AbstractBundleD
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ONLINE_PROFILE_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_ONLINE_PROFILE_MERCHANT_PROFILE_FORM_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -66,6 +71,7 @@ class MerchantProfileMerchantPortalGuiDependencyProvider extends AbstractBundleD
         $container = $this->addLocaleFacade($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addCountryFacade($container);
+        $container = $this->addOnlineProfileMerchantProfileFormExpanderPlugins($container);
 
         return $container;
     }
@@ -152,5 +158,27 @@ class MerchantProfileMerchantPortalGuiDependencyProvider extends AbstractBundleD
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOnlineProfileMerchantProfileFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ONLINE_PROFILE_MERCHANT_PROFILE_FORM_EXPANDER, function (Container $container) {
+            return $this->getOnlineProfileMerchantProfileFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantProfileMerchantPortalGuiExtension\Dependency\Plugin\OnlineProfileMerchantProfileFormExpanderPluginInterface>
+     */
+    protected function getOnlineProfileMerchantProfileFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

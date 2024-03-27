@@ -616,6 +616,18 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsPaginationEnabled(bool $isPaginationEnabled);
 
     /**
+     * Specification:
+     * - Sets if total is displayed.
+     *
+     * @api
+     *
+     * @param bool $isTotalEnabled
+     *
+     * @return $this
+     */
+    public function setIsTotalEnabled(bool $isTotalEnabled);
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer

@@ -1,0 +1,9 @@
+Edit,Edit
+Edited,Edited
+Update,Update
+Remove,Remove
+Comments,Comments
+"Unexpected error occurred.","Unexpected error occurred."
+comment.validation.error.invalid_message_length,"Invalid message length."
+comment.validation.error.comment_not_found,"Comment not found."
+comment.validation.error.access_denied,"Access denied."

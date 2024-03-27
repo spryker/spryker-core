@@ -90,6 +90,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         }
 
         $merchantTransfer
+            ->fromArray($dataSet->getArrayCopy(), true)
             ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->setName($dataSet[MerchantDataSetInterface::NAME])
             ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])

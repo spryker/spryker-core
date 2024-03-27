@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclEntity\Business\Reader;
 
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
+use Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface;
 use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface;
@@ -46,13 +47,21 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
 
     /**
      * @param bool $runValidation
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer|null $aclEntityMetadataConfigRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(bool $runValidation): AclEntityMetadataConfigTransfer
-    {
+    public function getAclEntityMetadataConfig(
+        bool $runValidation = true,
+        ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
+    ): AclEntityMetadataConfigTransfer {
         $aclEntityMetadataConfigTransfer = new AclEntityMetadataConfigTransfer();
         $aclEntityMetadataConfigTransfer->setAclEntityMetadataCollection(new AclEntityMetadataCollectionTransfer());
+
+        if ($aclEntityMetadataConfigRequestTransfer !== null) {
+            $aclEntityMetadataConfigTransfer->setModelName($aclEntityMetadataConfigRequestTransfer->getModelName());
+        }
+
         foreach ($this->aclEntityMetadataCollectionExpandPlugins as $aclEntityMetadataCollectionExpanderPlugin) {
             $aclEntityMetadataConfigTransfer = $aclEntityMetadataCollectionExpanderPlugin->expand(
                 $aclEntityMetadataConfigTransfer,

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <b2b-contracts>
+        <label>B2B contracts</label>
+        <title>B2B contracts</title>
+        <icon>contracts</icon>
+        <pages>
+            <merchant-relation-requests>
+                <label>navigation.merchant_relation_requests</label>
+                <title>navigation.merchant_relation_requests</title>
+                <bundle>merchant-relation-request-merchant-portal-gui</bundle>
+                <controller>merchant-relation-requests</controller>
+                <action>index</action>
+            </merchant-relation-requests>
+        </pages>
+    </b2b-contracts>
+</config>

@@ -85,6 +85,11 @@
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
         <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
+        <property name="modelName" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfigRequest" strict="true">
+        <property name="modelName" type="string"/>
     </transfer>
 
     <transfer name="User">

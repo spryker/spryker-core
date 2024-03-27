@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
+use Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationRequestCollectionExpander;
+use Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationRequestCollectionExpanderInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationshipExpander;
+use Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationshipExpanderInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReader;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriter;
@@ -65,6 +69,22 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createCompanyUnitAddressPluginExecutor(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationshipExpanderInterface
+     */
+    public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
+    {
+        return new MerchantRelationshipExpander($this->createCompanyBusinessUnitAddressReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationRequestCollectionExpanderInterface
+     */
+    public function createMerchantRelationRequestCollectionExpander(): MerchantRelationRequestCollectionExpanderInterface
+    {
+        return new MerchantRelationRequestCollectionExpander($this->getRepository());
     }
 
     /**

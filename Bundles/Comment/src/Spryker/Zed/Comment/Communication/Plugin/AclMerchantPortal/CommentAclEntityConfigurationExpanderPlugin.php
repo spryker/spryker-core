@@ -27,6 +27,20 @@ class CommentAclEntityConfigurationExpanderPlugin extends AbstractPlugin impleme
     protected const OPERATION_MASK_READ = 0b1;
 
     /**
+     * @uses {@link \Spryker\Shared\AclEntity\AclEntityConstants::OPERATION_MASK_CREATE}
+     *
+     * @var int
+     */
+    protected const OPERATION_MASK_CREATE = 0b10;
+
+    /**
+     * @uses {@link \Spryker\Shared\AclEntity\AclEntityConstants::OPERATION_MASK_CRUD}
+     *
+     * @var int
+     */
+    protected const OPERATION_MASK_CRUD = 0b1111;
+
+    /**
      * {@inheritDoc}
      * - Expands provided `AclEntityMetadataConfig` transfer object with comment composite data.
      *
@@ -44,7 +58,13 @@ class CommentAclEntityConfigurationExpanderPlugin extends AbstractPlugin impleme
                 'Orm\Zed\Comment\Persistence\SpyCommentThread',
                 (new AclEntityMetadataTransfer())
                     ->setEntityName('Orm\Zed\Comment\Persistence\SpyCommentThread')
-                    ->setDefaultGlobalOperationMask(static::OPERATION_MASK_READ),
+                    ->setDefaultGlobalOperationMask(static::OPERATION_MASK_READ | static::OPERATION_MASK_CREATE),
+            )
+            ->addAclEntityMetadata(
+                'Orm\Zed\Comment\Persistence\SpyComment',
+                (new AclEntityMetadataTransfer())
+                    ->setEntityName('Orm\Zed\Comment\Persistence\SpyComment')
+                    ->setDefaultGlobalOperationMask(static::OPERATION_MASK_CRUD),
             );
 
         return $aclEntityMetadataConfigTransfer;

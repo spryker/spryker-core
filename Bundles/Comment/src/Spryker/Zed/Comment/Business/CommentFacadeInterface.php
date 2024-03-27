@@ -13,12 +13,14 @@ use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 
 interface CommentFacadeInterface
 {
     /**
      * Specification:
      * - Retrieves a comment thread using the provided owner type and owner ID if found.
+     * - Executes a stack of {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -31,6 +33,7 @@ interface CommentFacadeInterface
     /**
      * Specification:
      * - Returns comment threads found for the CommentsRequestTransfer or an empty array if no comment threads were found.
+     * - Executes a stack of {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -47,6 +50,7 @@ interface CommentFacadeInterface
      * - Expects comment message to be provided.
      * - Expects customer id to be provided.
      * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface} plugin stack.
      * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Creates comment thread if it does not exist in Persistence yet.
      * - Persists provided comment for the comment thread.
@@ -66,6 +70,7 @@ interface CommentFacadeInterface
      * - Expects comment message to be provided.
      * - Expects customer id to be provided.
      * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface} plugin stack.
      * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Updates the provided comment by comment UUID in Persistence.
      * - Returns 'isSuccessful=true' with the up to date comment thread.
@@ -83,6 +88,7 @@ interface CommentFacadeInterface
      * Specification:
      * - Expects customer id to be provided.
      * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentAuthorValidatorStrategyPluginInterface} plugin stack.
      * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
@@ -144,4 +150,19 @@ interface CommentFacadeInterface
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
     public function removeCommentTag(CommentTagRequestTransfer $commentTagRequestTransfer): CommentThreadResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CommentRequestTransfer.comment` and `CommentRequestTransfer.comment.customer.idCustomer` transfer properties to be set.
+     * - Validates if customer with provided ID exists.
+     * - If `CommentRequestTransfer.comment.idComment` is set, validates if this comments belongs to customer.
+     * - Returns `CommentValidationResponseTransfer` with validation error messages if validation failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateCommentAuthor(CommentRequestTransfer $commentRequestTransfer): CommentValidationResponseTransfer;
 }

@@ -1,0 +1,43 @@
+{# @var title string #}
+{# @var commentThread \Generated\Shared\Transfer\CommentThreadTransfer #}
+{# @var returnUrl string #}
+{# @var ownerId int #}
+{# @var ownerType string #}
+
+{% block body %}
+    <div class="ibox">
+        <div class="ibox-title">
+            {% block title %}
+                <h5>{{ title | trans }}</h5>
+            {% endblock %}
+        </div>
+
+        <div class="ibox-content">
+            {% block thread %}
+                <div class="spacing-bottom-big">
+                    {% if commentThread %}
+                        {% for comment in commentThread.comments %}
+                            {% include '@CommentGui/Partials/comment.twig' with {
+                                comment: comment,
+                                returnUrl: returnUrl,
+                            } %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% block addForm %}
+                <form action="{{ url('/comment-gui/comment/add') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('add-comment-form') }}">
+                    <input type="hidden" name="ownerId" value="{{ ownerId }}">
+                    <input type="hidden" name="ownerType" value="{{ ownerType }}">
+                    <input type="hidden" name="returnUrl" value="{{ returnUrl }}">
+
+                    <textarea name="message" required="required" class="form-control spacing-bottom-big"></textarea>
+
+                    <button type="submit" class="btn btn-primary">{{ 'Send' | trans }}</button>
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+        "spryker/transfer": "Provides transfer objects definition with strict types."
     }
 }

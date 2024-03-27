@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddress\Communication\CompanyUnitAddressCommunicationFactory getFactory()
  */
 class CompanyBusinessUnitAddressSaverPlugin extends AbstractPlugin implements CompanyBusinessUnitPostSavePluginInterface
 {

@@ -133,6 +133,22 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     }
 
     /**
+     * @param list<int> $companyBusinessUnitIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollectionByCompanyBusinessUnitIds(
+        array $companyBusinessUnitIds
+    ): CompanyUnitAddressCollectionTransfer {
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setCompanyBusinessUnitIds($companyBusinessUnitIds)
+            ->setWithCompanyBusinessUnits(true);
+
+        return $this->repository
+            ->getCompanyBusinessUnitAddressesByCriteriaFilter($companyUnitAddressCriteriaFilterTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
      * @return array<int>

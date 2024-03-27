@@ -1,0 +1,28 @@
+"Merchant Relations",Händlerbeziehungen
+"Merchant Relation",Händlerbeziehung
+Company,Firma
+"Business Unit Owner","Inhaber der GE"
+"Business Units",Geschäftseinheiten
+Created,Erstellt
+From,Von
+To,Bis
+"Select Company","Firma auswählen"
+Save,Speichern
+"Manage Relation","Beziehung verwalten"
+"Confirm deletion","Löschen bestätigen"
+Cancel,Abbrechen
+"Created date","Erstellt am"
+"Company Details",Firmendetails
+"Delete merchant relation","Delete merchant relation"
+"Are you sure you want to delete this merchant relation?","Are you sure you want to delete this merchant relation?"
+Delete,Löschen
+Relations,Beziehungen
+View,Ansehen
+"View all","Alle ansehen"
+"Companies with the most merchant relations","Firmen mit den meisten Händlerbeziehungen"
+"B2B Contracts","B2B Verträge"
+"Merchant Relation is deleted","Händlerbeziehung wurde gelöscht"
+"Merchant Relation is updated","Händlerbeziehung wurde aktualisiert"
+"Merchant relation is not found for ID %d","Für die ID %d wurde keine Händlerbeziehung gefunden"
+"No assigned business units","Keine zugewiesenen Geschäftseinheiten"
+"Internal Comments","Interne Anmerkungen"

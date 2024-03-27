@@ -11,6 +11,8 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToCompanyBusinessUnitFacadeBridge;
+use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToLocaleFacadeBridge;
+use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToMailFacadeBridge;
 use Spryker\Zed\MerchantRelationship\Dependency\Facade\MerchantRelationshipToMerchantFacadeBridge;
 
 /**
@@ -51,6 +53,11 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @var string
      */
+    public const PLUGINS_MERCHANT_RELATIONSHIP_POST_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_DELETE';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
 
     /**
@@ -62,6 +69,16 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MAIL = 'FACADE_MAIL';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -77,8 +94,11 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addMerchantRelationshipCreateValidatorPlugins($container);
         $container = $this->addMerchantRelationshipUpdateValidatorPlugins($container);
         $container = $this->addMerchantRelationshipExpanderPlugins($container);
+        $container = $this->addMerchantRelationshipPostDeletePlugins($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addMailFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -197,6 +217,20 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipPostDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_POST_DELETE, function () {
+            return $this->getMerchantRelationshipPostDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     protected function getMerchantRelationshipPreDeletePlugins(): array
@@ -245,6 +279,14 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
+     * @return list<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface>
+     */
+    protected function getMerchantRelationshipPostDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -267,6 +309,38 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new MerchantRelationshipToCompanyBusinessUnitFacadeBridge($container->getLocator()->companyBusinessUnit()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
+            return new MerchantRelationshipToMailFacadeBridge(
+                $container->getLocator()->mail()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new MerchantRelationshipToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
         });
 
         return $container;

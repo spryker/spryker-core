@@ -20,6 +20,7 @@
         <property name="search" type="GuiTableSearchConfiguration" strict="true"/>
         <property name="filters" type="GuiTableFiltersConfiguration" strict="true"/>
         <property name="itemSelection" type="GuiTableItemSelectionConfiguration" strict="true"/>
+        <property name="total" type="GuiTableTotalConfiguration" strict="true"/>
         <property name="syncStateUrl" type="GuiTableSyncStateUrlConfiguration" strict="true"/>
         <property name="editable" type="GuiTableEditableConfiguration" strict="true"/>
         <property name="columnConfigurator" type="GuiTableColumnConfiguratorConfiguration" strict="true"/>
@@ -86,6 +87,10 @@
     </transfer>
 
     <transfer name="GuiTableSyncStateUrlConfiguration" strict="true">
+        <property name="isEnabled" type="bool"/>
+    </transfer>
+
+    <transfer name="GuiTableTotalConfiguration" strict="true">
         <property name="isEnabled" type="bool"/>
     </transfer>
 

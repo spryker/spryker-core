@@ -29,4 +29,12 @@
         {% endblock %}
 
     {% endembed %}
+
+    {% include '@CommentGui/Comment/comment-thread.twig' ignore missing with {
+        title: 'Internal Comments',
+        commentThread: merchantRelationshipTransfer.commentThread,
+        returnUrl: app.request.requestUri,
+        ownerId: merchantRelationshipTransfer.idMerchantRelationship,
+        ownerType: 'merchant_relationship',
+    } %}
 {% endblock %}

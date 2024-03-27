@@ -62,6 +62,21 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
      *
      * @api
      *
+     * @param \DateTime|string $dateTime
+     * @param string|null $timezone
+     *
+     * @return string
+     */
+    public function formatDateTimeToUtcIso8601($dateTime, ?string $timezone = null): string
+    {
+        return $this->getFactory()->createDateFormatter()->formatDateTimeToUtcIso8601($dateTime, $timezone);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \DateTime|string $date
      *
      * @return string

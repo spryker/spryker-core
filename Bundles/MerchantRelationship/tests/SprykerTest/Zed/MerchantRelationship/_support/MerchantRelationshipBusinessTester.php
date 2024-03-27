@@ -10,9 +10,12 @@ namespace SprykerTest\Zed\MerchantRelationship;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 
@@ -29,7 +32,7 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBus
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\SprykerTest\Zed\MerchantRelationship\PHPMD)
  */
 class MerchantRelationshipBusinessTester extends Actor
 {
@@ -189,6 +192,148 @@ class MerchantRelationshipBusinessTester extends Actor
     }
 
     /**
+     * @param array<mixed> $merchantRelationshipSeedData
+     * @param array<mixed> $companySeedData
+     * @param array<mixed> $ownerCompanyBusinessUnitSeedData
+     * @param array<mixed> $assigneeCompanyBusinessUnitSeedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function createMerchantRelationshipBySeedData(
+        array $merchantRelationshipSeedData = [],
+        array $companySeedData = [],
+        array $ownerCompanyBusinessUnitSeedData = [],
+        array $assigneeCompanyBusinessUnitSeedData = []
+    ): MerchantRelationshipTransfer {
+        $merchantTransfer = $this->haveMerchant();
+        $companyTransfer = $this->haveCompany(array_merge([CompanyTransfer::IS_ACTIVE => true], $companySeedData));
+
+        $ownerCompanyBusinessUnitTransfer = $this->haveCompanyBusinessUnit(array_merge([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ], $ownerCompanyBusinessUnitSeedData));
+        $assigneeCompanyBusinessUnitTransfer = $this->haveCompanyBusinessUnit(array_merge([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ], $assigneeCompanyBusinessUnitSeedData));
+        $assigneeCompanyBusinessUnitCollectionTransfer = (new CompanyBusinessUnitCollectionTransfer())
+            ->addCompanyBusinessUnit($assigneeCompanyBusinessUnitTransfer);
+
+        return $this->haveMerchantRelationship(array_merge([
+            MerchantRelationshipTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchantOrFail(),
+            MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT => $ownerCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+            MerchantRelationshipTransfer::MERCHANT => $merchantTransfer,
+            MerchantRelationshipTransfer::OWNER_COMPANY_BUSINESS_UNIT => $ownerCompanyBusinessUnitTransfer,
+            MerchantRelationshipTransfer::ASSIGNEE_COMPANY_BUSINESS_UNITS => $assigneeCompanyBusinessUnitCollectionTransfer,
+        ], $merchantRelationshipSeedData));
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureMerchantRelationshipTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getMerchantRelationshipQuery());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     *
+     * @return void
+     */
+    public function assertCollectionContainsMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+    ): void {
+        $actualMerchantRelationshipTransfer = $this->findMerchantRelationshipByIdMerchantRelationship(
+            $merchantRelationshipCollectionTransfer,
+            $merchantRelationshipTransfer->getIdMerchantRelationshipOrFail(),
+        );
+
+        $this->assertNotNull($actualMerchantRelationshipTransfer);
+        $this->assertSameMerchantRelationship($merchantRelationshipTransfer, $actualMerchantRelationshipTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     *
+     * @return void
+     */
+    public function assertCollectionDoesNotContainMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+    ): void {
+        $actualMerchantRelationshipTransfer = $this->findMerchantRelationshipByIdMerchantRelationship(
+            $merchantRelationshipCollectionTransfer,
+            $merchantRelationshipTransfer->getIdMerchantRelationshipOrFail(),
+        );
+
+        $this->assertNull($actualMerchantRelationshipTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $expectedMerchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $actualMerchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function assertSameMerchantRelationship(
+        MerchantRelationshipTransfer $expectedMerchantRelationshipTransfer,
+        MerchantRelationshipTransfer $actualMerchantRelationshipTransfer
+    ): void {
+        $this->assertSame(
+            $expectedMerchantRelationshipTransfer->getIdMerchantRelationshipOrFail(),
+            $actualMerchantRelationshipTransfer->getIdMerchantRelationship(),
+        );
+
+        $this->assertNotNull($actualMerchantRelationshipTransfer->getOwnerCompanyBusinessUnit());
+        $this->assertSame(
+            $expectedMerchantRelationshipTransfer->getOwnerCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnitOrFail(),
+            $actualMerchantRelationshipTransfer->getOwnerCompanyBusinessUnitOrFail()->getIdCompanyBusinessUnit(),
+        );
+
+        $this->assertNotNull($actualMerchantRelationshipTransfer->getAssigneeCompanyBusinessUnits());
+        $this->assertSame(
+            $expectedMerchantRelationshipTransfer->getAssigneeCompanyBusinessUnitsOrFail()->getCompanyBusinessUnits()->count(),
+            $actualMerchantRelationshipTransfer->getAssigneeCompanyBusinessUnitsOrFail()->getCompanyBusinessUnits()->count(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     * @param int $idMerchantRelationship
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    protected function findMerchantRelationshipByIdMerchantRelationship(
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer,
+        int $idMerchantRelationship
+    ): ?MerchantRelationshipTransfer {
+        foreach ($merchantRelationshipCollectionTransfer->getMerchantRelationships() as $merchantRelationshipTransfer) {
+            if ($merchantRelationshipTransfer->getIdMerchantRelationship() === $idMerchantRelationship) {
+                return $merchantRelationshipTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return void
+     */
+    public function deactivateMerchant(int $idMerchant): void
+    {
+        $merchantEntity = $this->getMerchantQuery()
+            ->filterByIdMerchant($idMerchant)
+            ->findOne();
+
+        $merchantEntity->setIsActive(false);
+        $merchantEntity->save();
+    }
+
+    /**
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
     protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
@@ -202,5 +347,13 @@ class MerchantRelationshipBusinessTester extends Actor
     protected function getMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
     {
         return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
     }
 }

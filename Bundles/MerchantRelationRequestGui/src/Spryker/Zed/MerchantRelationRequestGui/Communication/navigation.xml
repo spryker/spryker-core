@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <merchant-relation-request-gui>
+        <label>navigation.merchant_relation_requests</label>
+        <title>navigation.merchant_relation_requests</title>
+        <bundle>merchant-relation-request-gui</bundle>
+        <controller>list</controller>
+        <action>index</action>
+        <icon>fa-file-text-o</icon>
+        <pages>
+            <merchant-relation-request-edit>
+                <label>Edit Merchant Relation Request</label>
+                <title>Edit Merchant Relation Request</title>
+                <bundle>merchant-relation-request-gui</bundle>
+                <controller>edit</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </merchant-relation-request-edit>
+        </pages>
+    </merchant-relation-request-gui>
+</config>

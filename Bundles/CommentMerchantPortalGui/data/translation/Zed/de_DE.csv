@@ -1,0 +1,9 @@
+Edit,Bearbeiten
+Edited,Bearbeitet
+Update,Aktualisieren
+Remove,Entfernen
+Comments,Kommentare
+"Unexpected error occurred.","Ein unerwarteter Fehler ist aufgetreten."
+comment.validation.error.invalid_message_length,"Ungültige Nachrichtenlänge."
+comment.validation.error.comment_not_found,"Kommentar nicht gefunden."
+comment.validation.error.access_denied,"Zugriff verweigert."

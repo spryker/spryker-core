@@ -1,0 +1,25 @@
+{% for field in onlineProfileMerchantProfileFields %}
+    {% if field.vars.attr.template_path is defined %}
+        {% embed field.vars.attr.template_path with {'onlineProfileMerchantProfileFields': onlineProfileMerchantProfileFields, 'mainClass': mainClass} %}
+            {% block content %}
+                <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Merchant Relation Requests' | trans }}">
+                    <div class="{{ mainClass }}__status">
+                        <div class="{{ mainClass }}__status-toggle">
+                            {{ form_row(formRow, {
+                                label: false, row_attr: { 'no-spaces': 'true' },
+                            }) }}
+
+                            <h3 class="{{ mainClass }}__status-title">
+                                {{ block('label') }}
+                            </h3>
+                        </div>
+
+                        <p class="{{ mainClass }}__status-message">
+                            {{ block('description') }}
+                        </p>
+                    </div>
+                </web-spy-card>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endfor %}

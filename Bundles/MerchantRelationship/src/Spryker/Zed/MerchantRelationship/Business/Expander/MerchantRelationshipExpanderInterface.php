@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Expander;
 
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipExpanderInterface
@@ -17,4 +18,13 @@ interface MerchantRelationshipExpanderInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
     public function expandWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer
+     */
+    public function expandMerchantRelationshipCollection(
+        MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
+    ): MerchantRelationshipCollectionTransfer;
 }

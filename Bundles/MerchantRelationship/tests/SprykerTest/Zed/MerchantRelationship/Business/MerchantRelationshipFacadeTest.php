@@ -20,8 +20,10 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\SortCollectionTransfer;
 use Generated\Shared\Transfer\SortTransfer;
 use Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipBusinessFactory;
+use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipPersistenceFactory;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepository;
+use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostDeletePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -39,7 +41,12 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const MR_KEY_TEST = 'mr-test';
+    protected const MR_KEY_1_TEST = 'mr-test-1';
+
+    /**
+     * @var string
+     */
+    protected const MR_KEY_2_TEST = 'mr-test-2';
 
     /**
      * @var string
@@ -73,7 +80,7 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testCreateMerchantRelationship(): void
     {
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
 
         // Assert
         $this->assertNotNull($merchantRelationship->getIdMerchantRelationship());
@@ -85,7 +92,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testCreateMerchantRelationshipForwardCompatibility(): void
     {
         // Arrange
-        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_TEST);
+        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_1_TEST);
         $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationship();
 
         // Act
@@ -105,7 +112,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testCreateMerchantRelationshipWithNotUniqueKeyHasErrorsInResponse(): void
     {
         // Arrange
-        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_TEST);
+        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_1_TEST);
         $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationship();
         $merchantRelationshipTransfer = clone $merchantRelationshipTransfer;
         $merchantRelationshipTransfer->setIdMerchantRelationship(null);
@@ -136,7 +143,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testCreateMerchantRelationshipWithNotUniqueKeyThrowsException(): void
     {
         // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $newMerchantRelationshipTransfer = clone $merchantRelationshipTransfer;
         $newMerchantRelationshipTransfer->setIdMerchantRelationship(null);
 
@@ -152,7 +159,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testCreateMerchantRelationshipWithOwner(): void
     {
         // Arrange
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST, static::BU_OWNER_KEY_OWNER);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST, static::BU_OWNER_KEY_OWNER);
 
         // Assert
         $this->assertNotNull($merchantRelationship->getIdMerchantRelationship());
@@ -174,7 +181,7 @@ class MerchantRelationshipFacadeTest extends Unit
         ]);
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())
-            ->setMerchantRelationshipKey(static::MR_KEY_TEST)
+            ->setMerchantRelationshipKey(static::MR_KEY_1_TEST)
             ->setOwnerCompanyBusinessUnit($companyBusinessUnitTransfer)
             ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
             ->setFkMerchant($merchantTransfer->getIdMerchant())
@@ -201,7 +208,7 @@ class MerchantRelationshipFacadeTest extends Unit
     {
         // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(
-            static::MR_KEY_TEST,
+            static::MR_KEY_1_TEST,
             static::BU_OWNER_KEY_OWNER,
             [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2],
         );
@@ -218,7 +225,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testUpdateMerchantRelationship(): void
     {
         // Arrange
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
         $newMerchant = $this->tester->haveMerchant();
@@ -249,7 +256,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testUpdateMerchantRelationshipWithForwardCompatibility(): void
     {
         // Arrange
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
         $newMerchant = $this->tester->haveMerchant();
@@ -288,7 +295,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testGetMerchantRelationshipById(): void
     {
         // Arrange
-        $expectedMerchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $expectedMerchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $expectedMerchantRelationship->setName(
             sprintf('%s - %s', $expectedMerchantRelationship->getIdMerchantRelationship(), $expectedMerchantRelationship->getOwnerCompanyBusinessUnit()->getName()),
         );
@@ -312,7 +319,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testDeleteMerchantRelationship(): void
     {
         // Arrange
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
         // Act
@@ -329,7 +336,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testDeleteMerchantRelationshipForwardCompatible(): void
     {
         // Arrange
-        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
         $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
             ->setMerchantRelationship($merchantRelationship);
@@ -343,15 +350,13 @@ class MerchantRelationshipFacadeTest extends Unit
     }
 
     /**
-     * @group test
-     *
      * @return void
      */
     public function testDeleteMerchantRelationshipWithAssigneeDeletesAssignee(): void
     {
         // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(
-            static::MR_KEY_TEST,
+            static::MR_KEY_1_TEST,
             static::BU_OWNER_KEY_OWNER,
             [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2],
         );
@@ -369,6 +374,38 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testDeleteMerchantRelationshipExecutesAStackOfPostDeletePlugins(): void
+    {
+        // Assert
+        $merchantRelationshipPostDeletePluginMock = $this->getMockBuilder(MerchantRelationshipPostDeletePluginInterface::class)
+            ->getMock();
+        $merchantRelationshipPostDeletePluginMock
+            ->expects($this->once())
+            ->method('execute');
+
+        $this->tester->setDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_POST_DELETE, [
+            $merchantRelationshipPostDeletePluginMock,
+        ]);
+
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(
+            static::MR_KEY_1_TEST,
+            static::BU_OWNER_KEY_OWNER,
+            [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2],
+        );
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
+            ->setMerchantRelationship($merchantRelationshipTransfer);
+
+        // Act
+        $this->tester->getFacade()->deleteMerchantRelationship(
+            $merchantRelationshipTransfer,
+            $merchantRelationshipRequestTransfer,
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testGetMerchantRelationshipCollectionWillReturnAllAvailableRelationships(): void
     {
         // Arrange
@@ -379,7 +416,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $merchantRelationshipBusinessFactory = (new MerchantRelationshipBusinessFactory())->setRepository($merchantRelationshipRepository);
         $merchantRelationshipFacade = $this->tester->getFacade()->setFactory($merchantRelationshipBusinessFactory);
 
-        $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
 
         // Act
         $merchantRelationTransfers = $merchantRelationshipFacade->getMerchantRelationshipCollection();
@@ -394,7 +431,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testGetMerchantRelationshipCollectionWillReturnRelationshipsFilteredByIds(): void
     {
         // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
         $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds(
             [$merchantRelationshipTransfer->getIdMerchantRelationship()],
         );
@@ -451,7 +488,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testGetFilteredMerchantRelationshipCollectionFilteredByIdMerchantRelationship(): void
     {
         // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
 
         $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
             ->setLimit(10)
@@ -577,7 +614,7 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testGetMerchantRelationshipCollectionByCriteriaFilteredByIdMerchantRelationship(): void
     {
         // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_1_TEST);
 
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage(10);

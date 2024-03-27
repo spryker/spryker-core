@@ -1,0 +1,5 @@
+{{ 'merchant_relationship.mail.trans.merchant_relationship_delete.salutation' | trans | raw}}
+
+{{ 'merchant_relationship.mail.trans.merchant_relationship_delete.main_text' | trans({'%merchant_name%' : mail.merchant.name,}) | raw }}
+
+{% if mail.merchantUrl is not null %}{{ mail.merchantUrl | raw }}{% endif %}

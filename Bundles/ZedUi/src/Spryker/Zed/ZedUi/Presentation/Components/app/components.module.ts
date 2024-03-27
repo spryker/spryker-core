@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
-import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
-import { NotificationComponent, NotificationModule } from '@spryker/notification';
-import { WebComponentsModule } from '@spryker/web-components';
 import { ButtonComponent, ButtonModule } from '@spryker/button';
+import { CheckboxComponent, CheckboxModule } from '@spryker/checkbox';
+import { DatasourceDependableComponent, DatasourceDependableModule } from '@spryker/datasource.dependable';
 import { FormItemComponent, FormItemModule } from '@spryker/form-item';
 import { InputComponent, InputModule } from '@spryker/input';
 import { InputPasswordComponent, InputPasswordModule } from '@spryker/input.password';
-import { TextareaComponent, TextareaModule } from '@spryker/textarea';
-import { SelectModule, SelectComponent } from '@spryker/select';
-import { ToggleModule, ToggleComponent } from '@spryker/toggle';
-import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
+import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
 import { LogoComponent, LogoModule } from '@spryker/logo';
-import { DatasourceDependableComponent, DatasourceDependableModule } from '@spryker/datasource.dependable';
-
+import { NotificationComponent, NotificationModule } from '@spryker/notification';
+import { SelectComponent, SelectModule } from '@spryker/select';
+import { TextareaComponent, TextareaModule } from '@spryker/textarea';
+import { ToggleComponent, ToggleModule } from '@spryker/toggle';
+import { WebComponentsModule } from '@spryker/web-components';
+import { RootComponent } from './app.component';
+import { FormSubmitterComponent } from './form-submitter/form-submitter.component';
+import { FormSubmitterModule } from './form-submitter/form-submitter.module';
+import { FormComponent } from './form/form.component';
+import { FormModule } from './form/form.module';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
@@ -23,9 +27,6 @@ import { MerchantLayoutCenteredComponent } from './merchant-layout-centered/merc
 import { MerchantLayoutCenteredModule } from './merchant-layout-centered/merchant-layout-centered.module';
 import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-layout-main.component';
 import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
-import { FormComponent } from './form/form.component';
-import { FormModule } from './form/form.module';
-import { RootComponent } from './app.component';
 
 @NgModule({
     imports: [
@@ -52,6 +53,7 @@ import { RootComponent } from './app.component';
             CheckboxComponent,
             LogoComponent,
             DatasourceDependableComponent,
+            FormSubmitterComponent,
         ]),
         LayoutCenteredModule,
         MerchantLayoutCenteredModule,
@@ -71,6 +73,7 @@ import { RootComponent } from './app.component';
         CheckboxModule,
         LogoModule,
         DatasourceDependableModule,
+        FormSubmitterModule,
     ],
     declarations: [RootComponent],
 })

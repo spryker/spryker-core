@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationship\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantRelationship\Communication\Expander\MerchantRelationshipAclEntityConfigurationExpander;
+use Spryker\Zed\MerchantRelationship\Communication\Expander\MerchantRelationshipAclEntityConfigurationExpanderInterface;
 use Spryker\Zed\MerchantRelationship\Communication\Hydrator\MerchantRelationshipHydrator;
 use Spryker\Zed\MerchantRelationship\Communication\Hydrator\MerchantRelationshipHydratorInterface;
 
@@ -27,5 +29,13 @@ class MerchantRelationshipCommunicationFactory extends AbstractCommunicationFact
         return new MerchantRelationshipHydrator(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Communication\Expander\MerchantRelationshipAclEntityConfigurationExpanderInterface
+     */
+    public function createMerchantRelationshipAclEntityConfigurationExpander(): MerchantRelationshipAclEntityConfigurationExpanderInterface
+    {
+        return new MerchantRelationshipAclEntityConfigurationExpander();
     }
 }

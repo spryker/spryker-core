@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -151,5 +152,21 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
         return $this->getFactory()
             ->createCommentTagWriter()
             ->removeCommentTag($commentTagRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateCommentAuthor(CommentRequestTransfer $commentRequestTransfer): CommentValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerCommentValidator()
+            ->validateCommentAuthor($commentRequestTransfer);
     }
 }

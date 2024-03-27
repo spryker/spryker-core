@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+
+<form class="mp-form-submitter__form" #form>
+    <ng-content select="[form]"></ng-content>
+</form>
+
+<spy-spinner class="mp-form-submitter__spinner" [isSpinning]="isLoading"></spy-spinner>

@@ -1,0 +1,26 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@comment-add-message-textarea-max-height: var(--spy-comment-add-message-textarea-max-height, 110px);
+@comment-add-message-button-width: var(--comment-add-message-button-width, 40px);
+@comment-add-message-button-font-size: var(--comment-add-message-button-font-size, 20px);
+@comment-add-message-button-position: var(--comment-add-message-button-position, absolute);
+@comment-add-message-button-position-bottom: var(--comment-add-message-button-position-bottom, 10px);
+@comment-add-message-button-position-right: var(--comment-add-message-button-right, 10px);
+
+.mp-add-comment {
+    &__form {
+        position: relative;
+    }
+
+    &__button {
+        --spy-btn-min-width-circle: @comment-add-message-button-width;
+        --spy-font-size-base: @comment-add-message-button-font-size;
+        position: @comment-add-message-button-position;
+        bottom: @comment-add-message-button-position-bottom;
+        right: @comment-add-message-button-position-right;
+    }
+
+    .@{textarea-prefix-cls}__textfield {
+        max-height: @comment-add-message-textarea-max-height;
+    }
+}

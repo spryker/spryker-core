@@ -1,0 +1,47 @@
+"Allow merchant relation requests","Händlerbeziehungsanfragen zulassen"
+"Merchant Relation Requests",Händlerbeziehungsanfragen
+navigation.merchant_relation_requests,Händlerbeziehung-Anfragen
+Merchant,Händler
+"Merchant name",Händlername
+Company,Firma
+"Business Unit Owner","Inhaber der GE"
+"Assigned Business Units","Zugewiesene Geschäftseinheiten"
+Created,Erstellt
+Status,Status
+Actions,Aktionen
+Edit,Bearbeiten
+approved,Genehmigt
+canceled,Storniert
+rejected,Abgelehnt
+pending,Ausstehend
+"Select Merchant","Händler auswählen"
+"Select Company","Firma auswählen"
+"Merchant Relation Request with ID ""%id%"" doesn\'t exist.","Händlerbeziehungsanfrage mit der ID ""%id%"" existiert nicht."
+"Edit Merchant Relation Request","Händlerbeziehungsanfrage bearbeiten"
+Back,Zurück
+Save,Speichern
+General,Allgemein
+"Created date","Erstellt am"
+"Company Details",Firmendetails
+"Contact Details",Kontaktdetails
+Name,Name
+Email,E-Mail
+"Additional Details","Weitere Details"
+"Message from the Company","Nachricht von der Firma"
+"Company Note",Firmennotiz
+"Message to the company","Nachricht an die Firma"
+"CSRF token is not valid.","CSRF-Token ist ungültig."
+"Merchant relation request has been approved.","Händlerbeziehungsanfrage wurde genehmigt."
+"Merchant relation request has been rejected.","Händlerbeziehungsanfrage wurde abgelehnt."
+"Merchant relation request has been successfully saved.","Händlerbeziehungsanfrage wurde erfolgreich gespeichert."
+"Confirm approval","Genehmigung bestätigen"
+"Confirm reject","Ablehnung bestätigen"
+Cancel,Abbrechen
+Approve,Genehmigen
+Reject,Ablehnen
+"Create a separate merchant relation per each business unit","Für jede Geschäftseinheit eine separate Händlerbeziehung erstellen"
+"Approve Request","Anfrage genehmigen"
+"Reject Request","Anfrage genehmigen"
+"Please confirm if you want to proceed with approving the merchant relation request.","Bitte bestätigen Sie, ob Sie mit der Genehmigung der Händlerbeziehungsanfrage fortfahren möchten."
+"Please confirm if you want to proceed with rejecting the merchant relation request.","Bitte bestätigen Sie, ob Sie mit der Ablehnung der Händlerbeziehungsanfrage fortfahren möchten."
+"Internal Comments","Interne Anmerkungen"

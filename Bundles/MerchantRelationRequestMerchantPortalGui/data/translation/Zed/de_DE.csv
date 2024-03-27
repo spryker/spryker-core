@@ -1,0 +1,45 @@
+"B2B contracts","B2B Verträge"
+"Merchant Relation Requests",Händlerbeziehungsanfragen
+navigation.merchant_relation_requests,Händlerbeziehung-Anfragen
+"Merchant Relation Request",Händlerbeziehungsanfrage
+Company,Firma
+"Business Unit Owner","Inhaber der GE"
+"Business Units",Geschäftseinheiten
+Created,Erstellt
+Status,Status
+approved,Genehmigt
+canceled,Storniert
+rejected,Abgelehnt
+pending,Ausstehend
+From,Von
+To,Bis
+"Select Company","Firma auswählen"
+"Select Status","Status auswählen"
+"Allow merchant relation requests","Händlerbeziehungsanfragen zulassen"
+"This means that you are open to receiving merchant relations requests from customers","Das bedeutet, dass Sie offen für Händlerbeziehungsanfragen von Kunden sind."
+"This means that you do not accept merchant relations requests from customers","Das bedeutet, dass Sie keine Händlerbeziehungsanfragen von Kunden annehmen."
+"Manage Request","Anfrage verwalten"
+Name,Name
+Email,E-Mail
+Phone,Telefon
+"Company Details",Firmendetails
+"Created date","Erstellt am"
+"Contact details",Kontaktdetails
+"Additional Details","Weitere Details"
+"Company Note",Firmennotiz
+"Message from the Company","Nachricht von der Firma"
+"Message to the company","Nachricht an die Firma"
+"Create a separate merchant relation per each business unit","Für jede Geschäftseinheit eine separate Händlerbeziehung erstellen"
+"This value should not be blank.","Dieser Wert sollte nicht leer sein."
+Approve,Reject
+Reject,Ablehnen
+"Approve Request","Anfrage genehmigen"
+"Reject Request","Anfrage genehmigen"
+"Please confirm if you want to proceed with approving the merchant relation request.","Bitte bestätigen Sie, ob Sie mit der Genehmigung der Händlerbeziehungsanfrage fortfahren möchten."
+"Please confirm if you want to proceed with rejecting the merchant relation request.","Bitte bestätigen Sie, ob Sie mit der Ablehnung der Händlerbeziehungsanfrage fortfahren möchten."
+"Confirm approval","Genehmigung bestätigen"
+"Confirm reject","Ablehnung bestätigen"
+Cancel,Abbrechen
+"Internal Comments","Interne Anmerkungen"
+"At least one business unit must be included in the merchant relation.","In der Händlerbeziehung muss mindestens eine Geschäftseinheit enthalten sein."
+"No assigned business units","Keine zugewiesenen Geschäftseinheiten"

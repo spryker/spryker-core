@@ -14,6 +14,8 @@ use Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\AclEntityConfigurat
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantRelationship\Communication\Plugin\AclMerchantPortal\MerchantRelationshipModelAclEntityConfigurationExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
  * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()

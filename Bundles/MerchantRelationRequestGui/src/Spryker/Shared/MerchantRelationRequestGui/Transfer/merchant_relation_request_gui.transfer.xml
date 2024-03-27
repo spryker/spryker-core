@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantRelationRequestCollection" strict="true">
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequest" strict="true">
+        <property name="idMerchantRelationRequest" type="int"/>
+        <property name="status" type="string"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnit[]" singular="assigneeCompanyBusinessUnit"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="createdAt" type="string"/>
+        <property name="isSplitEnabled" type="bool"/>
+        <property name="requestNote" type="string"/>
+        <property name="decisionNote" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCriteria" strict="true">
+        <property name="merchantRelationRequestConditions" type="MerchantRelationRequestConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestConditions" strict="true">
+        <property name="merchantRelationRequestIds" type="int[]" singular="idMerchantRelationRequest"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="companyIds" type="int[]" singular="idCompany"/>
+        <property name="withAssigneeCompanyBusinessUnitRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+    </transfer>
+
+    <transfer name="MerchantRelationRequestCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="name" type="string"/>
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="name" type="string"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="withoutExpanders" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+</transfers>

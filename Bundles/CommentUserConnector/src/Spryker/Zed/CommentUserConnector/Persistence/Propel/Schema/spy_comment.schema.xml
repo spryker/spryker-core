@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Comment\Persistence" package="src.Orm.Zed.Comment.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
+
+    <table name="spy_comment">
+        <column name="fk_user" type="INTEGER" required="false"/>
+
+        <index name="index-spy_comment-fk_user">
+            <index-column name="fk_user"/>
+        </index>
+
+        <foreign-key name="spy_comment-fk_user" foreignTable="spy_user" phpName="User" refPhpName="Comment">
+            <reference local="fk_user" foreign="id_user"/>
+        </foreign-key>
+    </table>
+
+</database>

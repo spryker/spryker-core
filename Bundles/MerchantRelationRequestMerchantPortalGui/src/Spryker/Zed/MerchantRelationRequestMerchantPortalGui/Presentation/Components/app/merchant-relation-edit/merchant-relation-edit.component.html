@@ -1,0 +1,37 @@
+<div class="mp-merchant-relation-edit__header">
+    <spy-headline>
+        <div class="mp-merchant-relation-edit__headline">
+            <h3 class="mp-merchant-relation-edit__title">
+                <ng-content select="[title]"></ng-content>
+            </h3>
+            <span class="mp-merchant-relation-edit__approval-status">
+                <ng-content select="[approval-status]"></ng-content>
+            </span>
+            <span class="mp-merchant-relation-edit__actions">
+                <ng-content select="[actions]"></ng-content>
+
+                <button #hiddenButton class="mp-merchant-relation-edit__button-hidden"></button>
+                <input type="hidden" [name]="actinName" />
+
+                <ng-container *ngFor="let action of actions">
+                    <spy-button
+                        class="mp-merchant-relation-edit__button"
+                        [variant]="action.buttonVariant"
+                        (click)="openConfirm(action)"
+                    >
+                        {{ action.label }}
+                    </spy-button>
+
+                    <ng-template #modal let-data let-modal="modalRef">{{ action.modalBody }}</ng-template>
+                </ng-container>
+            </span>
+        </div>
+        <div class="mp-merchant-relation-edit__created-date">
+            <ng-content select="[created-date]"></ng-content>
+        </div>
+    </spy-headline>
+</div>
+
+<div class="mp-merchant-relation-edit__content">
+    <ng-content></ng-content>
+</div>

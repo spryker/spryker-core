@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ToJson, ToBoolean } from '@spryker/utils';
+import { ChangeDetectionStrategy, Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { UnsavedChangesFormMonitorDirective } from '@spryker/unsaved-changes.monitor.form';
+import { ToBoolean, ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-form',
     templateUrl: './form.component.html',
-    styleUrls: ['./form.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })

@@ -16,7 +16,8 @@
         "formatter:run": "prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json '**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)'",
         "mp:stylelint": "node ./frontend/merchant-portal/stylelint",
         "mp:lint": "ng lint --no-eslintrc",
-        "mp:test": "ng test"
+        "mp:test": "ng test",
+        "mp:test:watch": "ng test --watch"
     },
     "engines": {
         "node": ">=18.0.0",

@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Reject Request' %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <p class="spacing-bottom">{{ 'Please confirm if you want to proceed with rejecting the merchant relation request.' | trans }}</p>
+            <div>
+                {{ form_start(rejectMerchantRelationRequestForm) }}
+                    <a href="{{ editMerchantRelationRequestUrl }}" class="btn btn-view btn-outline">{{ 'Cancel' | trans }}</a>
+                    {{ form_widget(rejectMerchantRelationRequestForm.children.reject, { 'attr' : { 'class': 'btn btn-danger safe-submit' }}) }}
+                {{ form_end(rejectMerchantRelationRequestForm) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

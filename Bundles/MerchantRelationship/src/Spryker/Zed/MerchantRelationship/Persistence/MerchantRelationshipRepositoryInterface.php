@@ -61,4 +61,11 @@ interface MerchantRelationshipRepositoryInterface
     public function getMerchantRelationshipCollection(
         MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer
     ): MerchantRelationshipCollectionTransfer;
+
+    /**
+     * @param list<int> $merchantRelationshipIds
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer>>
+     */
+    public function getAssigneeCompanyBusinessUnitsGroupedByIdMerchantRelationship(array $merchantRelationshipIds): array;
 }

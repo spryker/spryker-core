@@ -1,0 +1,13 @@
+{% block body %}
+    {% set formRow = onlineProfileMerchantProfileFields.is_open_for_relation_request %}
+
+    {% block content %}
+        {% block label %}
+            {{ 'Allow merchant relation requests' | trans }}
+        {% endblock %}
+
+        {% block description %}
+            {{ (formRow.vars.checked ? 'This means that you are open to receiving merchant relations requests from customers' : 'This means that you do not accept merchant relations requests from customers') | trans }}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

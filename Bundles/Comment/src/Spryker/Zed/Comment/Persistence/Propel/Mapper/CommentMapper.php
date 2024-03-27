@@ -108,10 +108,11 @@ class CommentMapper
         SpyComment $commentEntity
     ): SpyComment {
         $commentEntity->fromArray($commentTransfer->modifiedToArray());
+        $commentEntity->setFkCommentThread($commentTransfer->getIdCommentThread());
 
-        $commentEntity
-            ->setFkCustomer($commentTransfer->getCustomer()->getIdCustomer())
-            ->setFkCommentThread($commentTransfer->getIdCommentThread());
+        if ($commentTransfer->getCustomer() !== null) {
+            $commentEntity->setFkCustomer($commentTransfer->getCustomerOrFail()->getIdCustomer());
+        }
 
         return $commentEntity;
     }
