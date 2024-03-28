@@ -81,4 +81,19 @@ interface DynamicEntityMapperInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): array;
+
+    /**
+     * @param string $tableAlias
+     * @param array<int, array<mixed>> $entityFieldsCollection
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
+     * @param array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface> $dynamicEntityCollectionRequestTreeBranches
+     *
+     * @return array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface>
+     */
+    public function mapDynamicEntityCollectionRequestTransfersToCollectionRequestTreeBranches(
+        string $tableAlias,
+        array $entityFieldsCollection,
+        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer,
+        array $dynamicEntityCollectionRequestTreeBranches = []
+    ): array;
 }

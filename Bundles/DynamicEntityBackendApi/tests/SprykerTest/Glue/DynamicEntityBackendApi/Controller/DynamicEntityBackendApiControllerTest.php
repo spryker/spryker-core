@@ -40,17 +40,17 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @var string
      */
-    protected const ERROR_REQUEST_BODY_CONFLICT = 'Modification of immutable field `table_alias` is prohibited';
+    protected const ERROR_REQUEST_BODY_CONFLICT = 'Modification of immutable field `foo[0].table_alias` is prohibited';
 
     /**
      * @var string
      */
-    protected const ERROR_INCOMPLETE_REQUEST = 'Incomplete Request - missing identifier';
+    protected const ERROR_INCOMPLETE_REQUEST = 'Incomplete Request - missing identifier for `foo[0]`';
 
     /**
      * @var string
      */
-    protected const ERROR_ENTITY_DOES_NOT_EXIST = 'The entity could not be found in the database.';
+    protected const ERROR_ENTITY_DOES_NOT_EXIST = 'The entity `foo[0]` could not be found in the database.';
 
     /**
      * @var string
@@ -518,7 +518,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPutActionUpdateByIdFailesIfIdIsProvidedInRequestBody(): void
+    public function testPutActionUpdateByIdFailsIfIdIsProvidedInRequestBody(): void
     {
         //Arrange
         $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(true, false, false));
@@ -582,7 +582,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPutActionCreateByIdFailesIfIdIsProvidedInRequestBody(): void
+    public function testPutActionCreateByIdFailsIfIdIsProvidedInRequestBody(): void
     {
         //Arrange
         $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(false));
@@ -614,7 +614,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPutActionCreateByIdFailesIfIdIsNotCreatable(): void
+    public function testPutActionCreateByIdFailsIfIdIsNotCreatable(): void
     {
         //Arrange
         $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(false));

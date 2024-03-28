@@ -30,13 +30,15 @@ class EditableRelationValidator implements DynamicEntityValidatorInterface
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param string|null $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        ?string $errorPath = null
     ): DynamicEntityCollectionResponseTransfer {
         $indexedChildRelations = $this->getChildTableAliasesIndexedByRelationName($dynamicEntityConfigurationTransfer);
 

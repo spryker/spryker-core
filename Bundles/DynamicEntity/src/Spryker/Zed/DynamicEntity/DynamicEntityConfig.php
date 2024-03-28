@@ -13,6 +13,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DynamicEntityConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    public const ERROR_PATH = '%errorPath%';
+
+    /**
+     * @var string
+     */
+    public const PLACEHOLDER_FIELD_NAME = '%fieldName%';
+
+    /**
      * Specification:
      * - Path to configuration file with Dynamic entity data in JSON format.
      * - Example:

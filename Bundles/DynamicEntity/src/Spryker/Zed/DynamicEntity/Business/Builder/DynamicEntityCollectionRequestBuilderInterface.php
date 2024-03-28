@@ -25,9 +25,9 @@ interface DynamicEntityCollectionRequestBuilderInterface
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
      *
-     * @return array<string, \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer>
+     * @return array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface>
      */
-    public function buildDynamicEntityCollectionRequestTransfersArrayIndexedByTableAlias(
+    public function buildDynamicEntityCollectionRequestTreeBranches(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
     ): array;

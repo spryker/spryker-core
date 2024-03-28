@@ -31,6 +31,8 @@ use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DisallowedTablesReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolver;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdaterInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdater;
@@ -107,6 +109,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->createDynamicEntityUpdateValidator(),
             $this->createDynamicEntityConfigurationTreeValidator(),
             $this->createDynamicEntityCollectionRequestBuilder(),
+            $this->createDynamicEntityErrorPathResolver(),
         );
     }
 
@@ -129,7 +132,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDynamicEntityCollectionRequestBuilder(): DynamicEntityCollectionRequestBuilderInterface
     {
-        return new DynamicEntityCollectionRequestBuilder();
+        return new DynamicEntityCollectionRequestBuilder(
+            $this->createDynamicEntityMapper(),
+        );
     }
 
     /**
@@ -189,7 +194,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createRequiredFieldValidator(): DynamicEntityValidatorInterface
     {
-        return new RequiredFieldValidator();
+        return new RequiredFieldValidator(
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -197,7 +204,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createRequestFieldValidator(): DynamicEntityValidatorInterface
     {
-        return new RequestFieldValidator();
+        return new RequestFieldValidator(
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -478,5 +487,13 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
         return new DynamicEntityPostEditRequestExpander(
             $this->createDynamicEntityIndexer(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
+    {
+        return new DynamicEntityErrorPathResolver();
     }
 }

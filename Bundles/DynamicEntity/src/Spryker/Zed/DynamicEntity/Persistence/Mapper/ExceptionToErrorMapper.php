@@ -19,6 +19,11 @@ class ExceptionToErrorMapper implements ExceptionToErrorMapperInterface
     protected array $databaseExceptionToErrorMappers;
 
     /**
+     * @var string
+     */
+    protected const RELATION_CHAIN_PLACEHOLDER = '%s.%s';
+
+    /**
      * @param array<\Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface> $databaseExceptionToErrorMappers
      */
     public function __construct(array $databaseExceptionToErrorMappers)
@@ -29,18 +34,26 @@ class ExceptionToErrorMapper implements ExceptionToErrorMapperInterface
     /**
      * @param \Exception $exception
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer|null
      */
-    public function map(Exception $exception, DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): ?ErrorTransfer
-    {
+    public function map(
+        Exception $exception,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $errorPath
+    ): ?ErrorTransfer {
         foreach ($this->databaseExceptionToErrorMappers as $databaseExceptionToErrorMapper) {
             if (!$databaseExceptionToErrorMapper->isApplicable($exception)) {
                 continue;
             }
 
+            $errorPath = $this->appendMappedExceptionToKeyToErrorPath(
+                $errorPath,
+                $databaseExceptionToErrorMapper->mapExceptionToErrorMessage($exception),
+            );
             $errorKey = $databaseExceptionToErrorMapper->getErrorGlossaryKey();
-            $errorDetails = $databaseExceptionToErrorMapper->getErrorGlossaryParams();
+            $errorDetails = $databaseExceptionToErrorMapper->getErrorGlossaryParams($errorPath);
 
             return (new ErrorTransfer())
                 ->setEntityIdentifier($dynamicEntityConfigurationTransfer->getTableAliasOrFail())
@@ -49,5 +62,20 @@ class ExceptionToErrorMapper implements ExceptionToErrorMapperInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $errorPath
+     * @param string|null $duplicatedKey
+     *
+     * @return string
+     */
+    protected function appendMappedExceptionToKeyToErrorPath(string $errorPath, ?string $duplicatedKey): string
+    {
+        if ($duplicatedKey === null) {
+            return $errorPath;
+        }
+
+        return sprintf(static::RELATION_CHAIN_PLACEHOLDER, $errorPath, $duplicatedKey);
     }
 }

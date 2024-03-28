@@ -48,6 +48,7 @@ interface DynamicEntityEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string|null $errorPath
      *
      * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
      *
@@ -55,7 +56,8 @@ interface DynamicEntityEntityManagerInterface
      */
     public function updateDynamicEntityCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        ?string $errorPath
     ): DynamicEntityCollectionResponseTransfer;
 
     /**

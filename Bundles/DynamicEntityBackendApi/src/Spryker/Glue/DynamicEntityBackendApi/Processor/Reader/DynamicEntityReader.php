@@ -113,7 +113,11 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
         }
 
         if ($dynamicEntityCollectionTransfer->getDynamicEntities()->count() === 0 && $dynamicEntityCollectionTransfer->getErrors()->count() === 0) {
-            return $this->responseMapper->mapErrorToResponseTransfer(DynamicEntityBackendApiConfig::GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST, new GlueResponseTransfer());
+            return $this->responseMapper->mapErrorToResponseTransfer(
+                DynamicEntityBackendApiConfig::GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST,
+                new GlueResponseTransfer(),
+                [DynamicEntityBackendApiConfig::ERROR_PATH => $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail()],
+            );
         }
 
         return $this->responseMapper->mapDynamicEntityCollectionTransferToGlueResponseTransfer(

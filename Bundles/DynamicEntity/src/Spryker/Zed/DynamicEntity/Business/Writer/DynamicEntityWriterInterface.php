@@ -38,12 +38,14 @@ interface DynamicEntityWriterInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string|null $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function executeUpdateWithoutTransaction(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        ?string $errorPath = null
     ): DynamicEntityCollectionResponseTransfer;
 
     /**

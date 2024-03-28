@@ -22,6 +22,13 @@ class DynamicEntityBackendApiConfig extends AbstractBundleConfig
     public const GLOSSARY_KEY_ERROR_ENTITY_DOES_NOT_EXIST = 'dynamic_entity.validation.entity_does_not_exist';
 
     /**
+     * @uses \Spryker\Zed\DynamicEntity\DynamicEntityConfig:ERROR_PATH
+     *
+     * @var string
+     */
+    public const ERROR_PATH = '%errorPath%';
+
+    /**
      * @var string
      */
     protected const ROUTE_PREFIX = 'dynamic-entity';

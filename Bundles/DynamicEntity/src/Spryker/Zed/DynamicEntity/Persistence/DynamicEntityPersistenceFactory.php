@@ -23,6 +23,8 @@ use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\InFilterStrategy;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldCreationPreValidator;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldUpdatePreValidator;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityPreValidatorInterface;
+use Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexer;
+use Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapperInterface;
@@ -31,6 +33,8 @@ use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\DuplicateKeyExceptio
 use Spryker\Zed\DynamicEntity\Persistence\Propel\Mapper\DynamicEntityMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetter;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface;
+use Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolver;
+use Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolverInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -150,6 +154,22 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createDynamicEntityResetter(): DynamicEntityResetterInterface
     {
         return new DynamicEntityResetter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexerInterface
+     */
+    public function createDynamicEntityIndexer(): DynamicEntityIndexerInterface
+    {
+        return new DynamicEntityIndexer();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
+    {
+        return new DynamicEntityErrorPathResolver();
     }
 
     /**

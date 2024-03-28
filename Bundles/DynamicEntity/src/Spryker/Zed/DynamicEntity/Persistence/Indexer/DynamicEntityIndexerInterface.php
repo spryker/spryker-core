@@ -5,24 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Mapper;
+namespace Spryker\Zed\DynamicEntity\Persistence\Indexer;
 
-use Exception;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
-use Generated\Shared\Transfer\ErrorTransfer;
 
-interface ExceptionToErrorMapperInterface
+interface DynamicEntityIndexerInterface
 {
     /**
-     * @param \Exception $exception
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param string $errorPath
+     * @param array<string, string|array<mixed>> $indexedDynamicEntityConfigurations
      *
-     * @return \Generated\Shared\Transfer\ErrorTransfer|null
+     * @return array<string, string|array<mixed>>
      */
-    public function map(
-        Exception $exception,
+    public function getChildDynamicEntityConfigurationsIndexedByRelationName(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        string $errorPath
-    ): ?ErrorTransfer;
+        array $indexedDynamicEntityConfigurations = []
+    ): array;
 }

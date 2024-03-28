@@ -14,36 +14,43 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
+use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
 class RequiredFieldValidator implements DynamicEntityValidatorInterface
 {
     /**
      * @var string
      */
-    protected const PLACEHOLDER_FIELD_NAME = '%fieldName%';
-
-    /**
-     * @var string
-     */
-    protected const PLACEHOLDER_TABLE_ALIAS = '%tableAlias%';
-
-    /**
-     * @var string
-     */
     protected const GLOSSARY_KEY_REQUIRED_FIELD_IS_MISSING = 'dynamic_entity.validation.required_field_is_missing';
+
+    /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    protected DynamicEntityErrorPathResolverInterface $dynamicEntityErrorPathResolver;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface $dynamicEntityErrorPathResolver
+     */
+    public function __construct(DynamicEntityErrorPathResolverInterface $dynamicEntityErrorPathResolver)
+    {
+        $this->dynamicEntityErrorPathResolver = $dynamicEntityErrorPathResolver;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param string|null $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        ?string $errorPath = null
     ): DynamicEntityCollectionResponseTransfer {
         if ((bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable() === false) {
             return $dynamicEntityCollectionResponseTransfer;
@@ -52,12 +59,15 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
         $indexedDefinitions = $this->getDefinitionsIndexedByTableAlias($dynamicEntityConfigurationTransfer);
         $indexedChildRelations = $this->getChildTableAliasesIndexByRelationName($dynamicEntityConfigurationTransfer);
 
-        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $index => $dynamicEntityTransfer) {
+            $currentErrorPath = $this->dynamicEntityErrorPathResolver->getErrorPath($index, $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(), $errorPath);
+
             $dynamicEntityCollectionResponseTransfer = $this->processValidation(
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityTransfer,
                 $indexedDefinitions,
                 $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(),
+                $currentErrorPath,
             );
 
             $this->processValidationForChildChains(
@@ -65,6 +75,7 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
                 $dynamicEntityCollectionResponseTransfer,
                 $indexedDefinitions,
                 $indexedChildRelations,
+                $currentErrorPath,
             );
         }
 
@@ -76,6 +87,7 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param array<mixed> $indexedDefinitions
      * @param array<string, string> $indexedChildRelations
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
@@ -83,15 +95,19 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         array $indexedDefinitions,
-        array $indexedChildRelations
+        array $indexedChildRelations,
+        string $errorPath
     ): DynamicEntityCollectionResponseTransfer {
         foreach ($dynamicEntityTransfer->getChildRelations() as $childRelationTransfer) {
-            foreach ($childRelationTransfer->getDynamicEntities() as $childDynamicEntityTransfer) {
+            foreach ($childRelationTransfer->getDynamicEntities() as $index => $childDynamicEntityTransfer) {
+                $currentErrorPath = $this->dynamicEntityErrorPathResolver->getErrorPath($index, $indexedChildRelations[$childRelationTransfer->getNameOrFail()], $errorPath);
+
                 $dynamicEntityCollectionResponseTransfer = $this->processValidation(
                     $dynamicEntityCollectionResponseTransfer,
                     $childDynamicEntityTransfer,
                     $indexedDefinitions,
                     $indexedChildRelations[$childRelationTransfer->getNameOrFail()],
+                    $currentErrorPath,
                 );
 
                 $this->processValidationForChildChains(
@@ -99,6 +115,7 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
                     $dynamicEntityCollectionResponseTransfer,
                     $indexedDefinitions,
                     $indexedChildRelations,
+                    $currentErrorPath,
                 );
             }
         }
@@ -111,6 +128,7 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param array<mixed> $indexedDefinitions
      * @param string $entityIdentifier
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
@@ -118,7 +136,8 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
         array $indexedDefinitions,
-        string $entityIdentifier
+        string $entityIdentifier,
+        string $errorPath
     ): DynamicEntityCollectionResponseTransfer {
         $fieldDefinitionsTransfer = $indexedDefinitions[$entityIdentifier][DynamicEntityConfigurationTransfer::DYNAMIC_ENTITY_DEFINITION]->getFieldDefinitions();
 
@@ -144,8 +163,8 @@ class RequiredFieldValidator implements DynamicEntityValidatorInterface
                     ->setEntityIdentifier($entityIdentifier)
                     ->setMessage(static::GLOSSARY_KEY_REQUIRED_FIELD_IS_MISSING)
                     ->setParameters([
-                        static::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
-                        static::PLACEHOLDER_TABLE_ALIAS => $entityIdentifier,
+                        DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
+                        DynamicEntityConfig::ERROR_PATH => $errorPath,
                     ]),
             );
         }

@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DynamicEntity\Business\Builder;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilder;
+use Spryker\Zed\DynamicEntity\Business\DynamicEntityBusinessFactory;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +34,7 @@ class DynamicEntityCollectionRequestBuilderTest extends Unit
     public function testBuildRelationChainsFromDynamicEntityCollectionRequestGeneratesCorrectChain(): void
     {
         //Arrange
-        $builder = new DynamicEntityCollectionRequestBuilder();
+        $builder = (new DynamicEntityBusinessFactory())->createDynamicEntityCollectionRequestBuilder();
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransferWithComplexData();
 
         //Act

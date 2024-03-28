@@ -9,7 +9,7 @@ namespace Spryker\Zed\DynamicEntity\Business\Builder;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\DynamicEntityTransfer;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 
 class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRequestBuilderInterface
 {
@@ -17,6 +17,24 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
      * @var string
      */
     protected const FORMAT_RELATION_CHAIN_ELEMENT = '%s%s.';
+
+    /**
+     * @var string
+     */
+    protected const KEY_CHILDREN = 'children';
+
+    /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
+     */
+    protected DynamicEntityMapperInterface $dynamicEntityMapper;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
+     */
+    public function __construct(DynamicEntityMapperInterface $dynamicEntityMapper)
+    {
+        $this->dynamicEntityMapper = $dynamicEntityMapper;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
@@ -45,9 +63,9 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
      *
-     * @return array<string, \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer>
+     * @return array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface>
      */
-    public function buildDynamicEntityCollectionRequestTransfersArrayIndexedByTableAlias(
+    public function buildDynamicEntityCollectionRequestTreeBranches(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
     ): array {
@@ -58,18 +76,25 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
             $mainTableAlias => [],
         ];
         foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $flattenFieldsByAlias[$mainTableAlias][] = $this->getNonRelationalFields($dynamicEntityTransfer->getFields());
+            $entityFields = $this->getNonRelationalFields($dynamicEntityTransfer->getFields());
 
             $relationalFields = $this->getRelationalFields($dynamicEntityTransfer->getFields());
-            $flattenFieldsByAlias = $this->flattenEntityRelations($configurationsIndexedByChildRelationName, $relationalFields, $flattenFieldsByAlias);
+            $flattenRelationalFieldsByAlias = $this->flattenEntityRelations($configurationsIndexedByChildRelationName, $relationalFields);
+
+            $flattenFieldsByAlias[$mainTableAlias][] = array_merge($entityFields, $flattenRelationalFieldsByAlias);
         }
 
-        $dynamicEntityCollectionRequestTransfersByTableAlias = [];
+        $dynamicEntityCollectionRequestTreeBranches = [];
         foreach ($flattenFieldsByAlias as $tableAlias => $entityFieldsCollection) {
-            $dynamicEntityCollectionRequestTransfersByTableAlias[$tableAlias] = $this->createDynamicEntityCollectionRequestTransfer($tableAlias, $entityFieldsCollection, $dynamicEntityCollectionRequestTransfer);
+            $dynamicEntityCollectionRequestTreeBranches = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransfersToCollectionRequestTreeBranches(
+                $tableAlias,
+                $entityFieldsCollection,
+                $dynamicEntityCollectionRequestTransfer,
+                $dynamicEntityCollectionRequestTreeBranches,
+            );
         }
 
-        return $dynamicEntityCollectionRequestTransfersByTableAlias;
+        return $dynamicEntityCollectionRequestTreeBranches;
     }
 
     /**
@@ -88,10 +113,15 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
             }
 
             foreach ($value as $subfields) {
-                $flattenFieldsByAlias[$tableAlias][] = $this->getNonRelationalFields($subfields);
+                $flattenFieldsByAlias[static::KEY_CHILDREN][$tableAlias][] = $this->getNonRelationalFields($subfields);
 
+                $childEntities = $flattenFieldsByAlias[static::KEY_CHILDREN][$tableAlias];
                 $relationalFields = $this->getRelationalFields($subfields);
-                $flattenFieldsByAlias = $this->flattenEntityRelations($configurationsIndexedByChildRelationName, $relationalFields, $flattenFieldsByAlias);
+                $flattenFieldsByAlias[static::KEY_CHILDREN][$tableAlias][array_key_last($childEntities)] = $this->flattenEntityRelations(
+                    $configurationsIndexedByChildRelationName,
+                    $relationalFields,
+                    end($childEntities),
+                );
             }
         }
 
@@ -112,32 +142,6 @@ class DynamicEntityCollectionRequestBuilder implements DynamicEntityCollectionRe
         }
 
         return $dynamicEntityConfigurationTransfer->getTableAlias();
-    }
-
-    /**
-     * @param string $tableAlias
-     * @param array<int, array<mixed>> $entityFieldsCollection
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
-     */
-    protected function createDynamicEntityCollectionRequestTransfer(
-        string $tableAlias,
-        array $entityFieldsCollection,
-        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
-    ): DynamicEntityCollectionRequestTransfer {
-        $dynamicEntityCollectionRequestTransfer = (new DynamicEntityCollectionRequestTransfer())
-            ->setIsCreatable($originalDynamicEntityCollectionRequestTransfer->getIsCreatable())
-            ->setResetNotProvidedFieldValues($originalDynamicEntityCollectionRequestTransfer->getResetNotProvidedFieldValues())
-            ->setTableAlias($tableAlias);
-
-        foreach ($entityFieldsCollection as $fields) {
-            $dynamicEntityTransfer = (new DynamicEntityTransfer())->setFields($fields);
-
-            $dynamicEntityCollectionRequestTransfer->addDynamicEntity($dynamicEntityTransfer);
-        }
-
-        return $dynamicEntityCollectionRequestTransfer;
     }
 
     /**

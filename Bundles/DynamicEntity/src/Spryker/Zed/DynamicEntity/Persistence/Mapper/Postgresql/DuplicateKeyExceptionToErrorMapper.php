@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql;
 
 use Exception;
+use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
 class DuplicateKeyExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
@@ -21,6 +22,11 @@ class DuplicateKeyExceptionToErrorMapper implements DatabaseExceptionToErrorMapp
      * @var string
      */
     protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 'dynamic_entity.validation.persistence_failed_duplicate_entry';
+
+    /**
+     * @var string
+     */
+    protected const DUPLICATED_KEY_REGEX = '/DETAIL:  Key \((.*?)\)/';
 
     /**
      * @param \Exception $exception
@@ -47,10 +53,33 @@ class DuplicateKeyExceptionToErrorMapper implements DatabaseExceptionToErrorMapp
     }
 
     /**
+     * @param string $errorPath
+     *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(): array
+    public function getErrorGlossaryParams(string $errorPath): array
     {
-        return [];
+        return [
+            DynamicEntityConfig::ERROR_PATH => $errorPath,
+        ];
+    }
+
+    /**
+     * @param \Exception $exception
+     *
+     * @return string|null
+     */
+    public function mapExceptionToErrorMessage(Exception $exception): ?string
+    {
+        $previousException = $exception->getPrevious();
+        if ($previousException === null) {
+            return null;
+        }
+
+        if (preg_match(static::DUPLICATED_KEY_REGEX, $previousException->getMessage(), $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 }

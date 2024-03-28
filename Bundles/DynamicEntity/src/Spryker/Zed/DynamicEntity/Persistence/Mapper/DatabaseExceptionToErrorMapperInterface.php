@@ -24,7 +24,16 @@ interface DatabaseExceptionToErrorMapperInterface
     public function getErrorGlossaryKey(): string;
 
     /**
+     * @param string $errorPath
+     *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(): array;
+    public function getErrorGlossaryParams(string $errorPath): array;
+
+    /**
+     * @param \Exception $exception
+     *
+     * @return string|null
+     */
+    public function mapExceptionToErrorMessage(Exception $exception): ?string;
 }

@@ -112,14 +112,16 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string|null $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function executeUpdateWithoutTransaction(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        ?string $errorPath = null
     ): DynamicEntityCollectionResponseTransfer {
-        $dynamicEntityCollectionResponseTransfer = $this->entityManager->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer, $dynamicEntityConfigurationTransfer);
+        $dynamicEntityCollectionResponseTransfer = $this->entityManager->updateDynamicEntityCollection($dynamicEntityCollectionRequestTransfer, $dynamicEntityConfigurationTransfer, $errorPath);
 
         if ($dynamicEntityCollectionResponseTransfer->getErrors()->count() === 0) {
             $dynamicEntityPostEditResponseTransfer = $this->executeDynamicEntityPostUpdatePlugins($dynamicEntityConfigurationTransfer, $dynamicEntityCollectionResponseTransfer);

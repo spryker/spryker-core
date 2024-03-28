@@ -17,12 +17,14 @@ interface DynamicEntityPreValidatorInterface
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param callable $filterCallback
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer|null
      */
     public function validate(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        callable $filterCallback
+        callable $filterCallback,
+        string $errorPath
     ): ?ErrorTransfer;
 }

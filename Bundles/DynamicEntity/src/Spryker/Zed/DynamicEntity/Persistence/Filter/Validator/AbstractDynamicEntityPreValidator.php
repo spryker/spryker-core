@@ -11,14 +11,10 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
 abstract class AbstractDynamicEntityPreValidator
 {
-    /**
-     * @var string
-     */
-    protected const FIELD_NAME_PLACEHOLDER = '%fieldName%';
-
     /**
      * @var string
      */
@@ -43,13 +39,15 @@ abstract class AbstractDynamicEntityPreValidator
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param callable $filterCallback
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer|null
      */
     public function validate(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        callable $filterCallback
+        callable $filterCallback,
+        string $errorPath
     ): ?ErrorTransfer {
         $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
         $identifier = $this->getIdentifierVisibleName(
@@ -62,7 +60,10 @@ abstract class AbstractDynamicEntityPreValidator
                 return (new ErrorTransfer())
                     ->setEntityIdentifier($dynamicEntityConfigurationTransfer->getTableAliasOrFail())
                     ->setMessage(static::GLOSSARY_KEY_ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED)
-                    ->setParameters([static::FIELD_NAME_PLACEHOLDER => $fieldDefinitionTransfer->getFieldVisibleNameOrFail()]);
+                    ->setParameters([
+                        DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
+                        DynamicEntityConfig::ERROR_PATH => $errorPath,
+                    ]);
             }
         }
 

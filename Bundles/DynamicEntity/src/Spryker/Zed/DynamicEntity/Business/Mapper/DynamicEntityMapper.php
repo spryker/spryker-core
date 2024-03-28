@@ -18,7 +18,10 @@ use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
+use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface;
+use Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranch;
+use Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface;
 
 class DynamicEntityMapper implements DynamicEntityMapperInterface
 {
@@ -41,6 +44,11 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
      * @var string
      */
     protected const DEFINITION = 'definition';
+
+    /**
+     * @var string
+     */
+    protected const KEY_CHILDREN = 'children';
 
     /**
      * @var \Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface
@@ -288,6 +296,93 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
             );
 
         return $dynamicEntityPostEditRequestTransfers;
+    }
+
+    /**
+     * @param string $tableAlias
+     * @param array<int, array<mixed>> $entityFieldsCollection
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
+     * @param array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface> $dynamicEntityCollectionRequestTreeBranches
+     *
+     * @return array<\Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface>
+     */
+    public function mapDynamicEntityCollectionRequestTransfersToCollectionRequestTreeBranches(
+        string $tableAlias,
+        array $entityFieldsCollection,
+        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer,
+        array $dynamicEntityCollectionRequestTreeBranches = []
+    ): array {
+        foreach ($entityFieldsCollection as $fields) {
+            $dynamicEntityCollectionRequestTransfer = (new DynamicEntityCollectionRequestTransfer())
+                ->setIsCreatable($originalDynamicEntityCollectionRequestTransfer->getIsCreatable())
+                ->setResetNotProvidedFieldValues($originalDynamicEntityCollectionRequestTransfer->getResetNotProvidedFieldValues())
+                ->setTableAlias($tableAlias);
+
+            $dynamicEntityTransfer = (new DynamicEntityTransfer())->setFields($fields);
+            $dynamicEntityCollectionRequestTransfer->addDynamicEntity($dynamicEntityTransfer);
+
+            $dynamicEntityCollectionRequestTreeBranch = (new DynamicEntityCollectionRequestTreeBranch())
+                ->setParentCollectionRequestTransfer($dynamicEntityCollectionRequestTransfer);
+
+            $dynamicEntityCollectionRequestTreeBranches[] = $this->createChildDynamicEntityCollectionRequestTransfers(
+                $fields,
+                $originalDynamicEntityCollectionRequestTransfer,
+                $dynamicEntityCollectionRequestTreeBranch,
+            );
+        }
+
+        return $dynamicEntityCollectionRequestTreeBranches;
+    }
+
+    /**
+     * @param array<string, mixed> $fields
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
+     * @param \Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface $dynamicEntityCollectionRequestTreeBranch
+     *
+     * @return \Spryker\Zed\DynamicEntity\Business\Request\DynamicEntityCollectionRequestTreeBranchInterface
+     */
+    protected function createChildDynamicEntityCollectionRequestTransfers(
+        array $fields,
+        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer,
+        DynamicEntityCollectionRequestTreeBranchInterface $dynamicEntityCollectionRequestTreeBranch
+    ): DynamicEntityCollectionRequestTreeBranchInterface {
+        foreach ($fields[static::KEY_CHILDREN] as $childTableAlias => $childEntityFieldsCollection) {
+            $childDynamicEntityCollectionRequestTransfer = $this->createChildynamicEntityCollectionRequestByEntityFieldsCollection(
+                $originalDynamicEntityCollectionRequestTransfer,
+                $childEntityFieldsCollection,
+                $childTableAlias,
+            );
+
+            $dynamicEntityCollectionRequestTreeBranch->addChildCollectionRequestTransfer($childDynamicEntityCollectionRequestTransfer);
+        }
+
+        return $dynamicEntityCollectionRequestTreeBranch;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer
+     * @param array<int, mixed> $entityFieldsCollection
+     * @param string $tableAlias
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
+     */
+    protected function createChildynamicEntityCollectionRequestByEntityFieldsCollection(
+        DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer,
+        array $entityFieldsCollection,
+        string $tableAlias
+    ): DynamicEntityCollectionRequestTransfer {
+        $dynamicEntityCollectionRequestTransfer = (new DynamicEntityCollectionRequestTransfer())
+            ->setIsCreatable($originalDynamicEntityCollectionRequestTransfer->getIsCreatable())
+            ->setResetNotProvidedFieldValues($originalDynamicEntityCollectionRequestTransfer->getResetNotProvidedFieldValues())
+            ->setTableAlias($tableAlias);
+
+        foreach ($entityFieldsCollection as $fields) {
+            $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
+                (new DynamicEntityTransfer())->setFields($fields),
+            );
+        }
+
+        return $dynamicEntityCollectionRequestTransfer;
     }
 
     /**

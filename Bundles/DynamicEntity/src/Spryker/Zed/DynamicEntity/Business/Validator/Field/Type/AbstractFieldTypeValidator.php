@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
 abstract class AbstractFieldTypeValidator
 {
@@ -29,11 +30,6 @@ abstract class AbstractFieldTypeValidator
     /**
      * @var string
      */
-    protected const PLACEHOLDER_FIELD_NAME = '%fieldName%';
-
-    /**
-     * @var string
-     */
     protected const PLACEHOLDER_TABLE_ALIAS = '%tableAlias%';
 
     /**
@@ -44,43 +40,52 @@ abstract class AbstractFieldTypeValidator
     /**
      * @var string
      */
-    protected const PLACEHOLDER_ROW_NUMBER = '%rowNumber%';
+    protected const FORMATTED_INDEX_PLACEHOLDER = '%s[%d]';
 
     /**
-     * @var int
+     * @var string
      */
-    protected int $rowNumber = 1;
+    protected const RELATION_CHAIN_PLACEHOLDER = '%s.%s';
+
+    /**
+     * @var string
+     */
+    protected const CHAIN_DELIMITER = '.';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param string|null $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        ?string $errorPath = null
     ): DynamicEntityCollectionResponseTransfer {
         $indexedDefinitions = $this->getDefinitionsIndexedByTableAliases($dynamicEntityConfigurationTransfer);
         $indexedChildRelations = $this->getTableAliasesIndexedByChildRelationName($dynamicEntityConfigurationTransfer);
 
-        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $index => $dynamicEntityTransfer) {
+            $currentErrorPath = $this->getErrorPath($index, $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(), $errorPath);
+
             $this->processValidation(
                 $dynamicEntityTransfer,
                 $indexedDefinitions,
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(),
+                $currentErrorPath,
             );
-
-            $this->rowNumber++;
 
             $this->validateChildRelationChainFieldTypes(
                 $dynamicEntityTransfer,
                 $indexedDefinitions,
                 $dynamicEntityCollectionResponseTransfer,
                 $indexedChildRelations,
+                $currentErrorPath,
             );
         }
 
@@ -112,6 +117,7 @@ abstract class AbstractFieldTypeValidator
      * @param array<mixed> $indexedDefinitions
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param string $entityIdentifier
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
@@ -119,7 +125,8 @@ abstract class AbstractFieldTypeValidator
         DynamicEntityTransfer $dynamicEntityTransfer,
         array $indexedDefinitions,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        string $entityIdentifier
+        string $entityIdentifier,
+        string $errorPath
     ): DynamicEntityCollectionResponseTransfer {
         foreach ($indexedDefinitions[$entityIdentifier]->getFieldDefinitions() as $fieldDefinitionTransfer) {
             $fieldName = $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
@@ -136,8 +143,8 @@ abstract class AbstractFieldTypeValidator
                         ->setEntityIdentifier($entityIdentifier)
                         ->setMessage(static::GLOSSARY_KEY_ERROR_INVALID_FIELD_TYPE)
                         ->setParameters([
-                            static::PLACEHOLDER_FIELD_NAME => $fieldName,
-                            static::PLACEHOLDER_TABLE_ALIAS => $entityIdentifier,
+                            DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldName,
+                            DynamicEntityConfig::ERROR_PATH => $errorPath,
                     ]),
                 );
             }
@@ -148,6 +155,7 @@ abstract class AbstractFieldTypeValidator
                         $entityIdentifier,
                         $fieldDefinitionTransfer->getValidationOrFail()->toArray(),
                         $fieldName,
+                        $errorPath,
                     ),
                 );
             }
@@ -161,6 +169,7 @@ abstract class AbstractFieldTypeValidator
      * @param array<mixed> $indexedDefinitions
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param array<string, string> $indexedChildRelations
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
@@ -168,24 +177,27 @@ abstract class AbstractFieldTypeValidator
         DynamicEntityTransfer $dynamicEntityTransfer,
         array $indexedDefinitions,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        array $indexedChildRelations
+        array $indexedChildRelations,
+        string $errorPath
     ): DynamicEntityCollectionResponseTransfer {
         foreach ($dynamicEntityTransfer->getChildRelations() as $childRelationTransfer) {
-            foreach ($childRelationTransfer->getDynamicEntities() as $childDynamicEntityTransfer) {
+            foreach ($childRelationTransfer->getDynamicEntities() as $index => $childDynamicEntityTransfer) {
+                $currentErrorPath = $this->getErrorPath($index, $indexedChildRelations[$childRelationTransfer->getNameOrFail()], $errorPath);
+
                 $dynamicEntityCollectionResponseTransfer = $this->processValidation(
                     $childDynamicEntityTransfer,
                     $indexedDefinitions,
                     $dynamicEntityCollectionResponseTransfer,
                     $indexedChildRelations[$childRelationTransfer->getNameOrFail()],
+                    $currentErrorPath,
                 );
-
-                $this->rowNumber++;
 
                 $this->validateChildRelationChainFieldTypes(
                     $childDynamicEntityTransfer,
                     $indexedDefinitions,
                     $dynamicEntityCollectionResponseTransfer,
                     $indexedChildRelations,
+                    $currentErrorPath,
                 );
             }
         }
@@ -207,13 +219,15 @@ abstract class AbstractFieldTypeValidator
      * @param string $entityIdentifier
      * @param array<string, string> $validationRules
      * @param string $fieldName
+     * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer
      */
     protected function buildValueErrorTransfer(
         string $entityIdentifier,
         array $validationRules,
-        string $fieldName
+        string $fieldName,
+        string $errorPath
     ): ErrorTransfer {
         $rules = [];
         foreach ($validationRules as $key => $value) {
@@ -227,8 +241,8 @@ abstract class AbstractFieldTypeValidator
             ->setMessage(static::GLOSSARY_KEY_ERROR_INVALID_FIELD_VALUE)
             ->setParameters([
                 static::PLACEHOLDER_VALIDATION_RULES => implode(', ', $rules),
-                static::PLACEHOLDER_FIELD_NAME => $fieldName,
-                static::PLACEHOLDER_ROW_NUMBER => $this->rowNumber,
+                DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldName,
+                DynamicEntityConfig::ERROR_PATH => $errorPath,
             ]);
     }
 
@@ -294,5 +308,23 @@ abstract class AbstractFieldTypeValidator
         }
 
         return $indexedDefinitions;
+    }
+
+    /**
+     * @param int $index
+     * @param string $tableAlias
+     * @param string|null $parentErrorPath
+     *
+     * @return string
+     */
+    protected function getErrorPath(int $index, string $tableAlias, ?string $parentErrorPath): string
+    {
+        $formattedIndex = sprintf(static::FORMATTED_INDEX_PLACEHOLDER, $tableAlias, $index);
+
+        if ($parentErrorPath === $formattedIndex) {
+            return $parentErrorPath;
+        }
+
+        return ltrim(sprintf(static::RELATION_CHAIN_PLACEHOLDER, $parentErrorPath, $formattedIndex), static::CHAIN_DELIMITER);
     }
 }
