@@ -24,6 +24,7 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelper;
 
 class CustomerDataHelper extends Module
@@ -33,11 +34,17 @@ class CustomerDataHelper extends Module
     use DataCleanupHelperTrait;
     use ConfigHelperTrait;
     use ContainerHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
      */
     protected const SERVICE_STORE = 'store';
+
+    /**
+     * @var string
+     */
+    protected const CONFIG_KEY_IS_MAIL_FACADE_MOCK_ENABLED = 'isMailFacadeMockEnabled';
 
     /**
      * @param array $override
@@ -141,8 +148,10 @@ class CustomerDataHelper extends Module
      */
     public function getCustomerFacade(): CustomerFacadeInterface
     {
-        $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
-        $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
+        if ($this->config[static::CONFIG_KEY_IS_MAIL_FACADE_MOCK_ENABLED]) {
+            $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
+            $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
+        }
 
         if ($this->isDefaultCustomerFacadeSufficient()) {
             return $this->getLocatorHelper()->getLocator()->customer()->facade();
@@ -196,5 +205,13 @@ class CustomerDataHelper extends Module
         $mailFacadeMock = Stub::makeEmpty(MailFacadeInterface::class);
 
         return $mailFacadeMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [static::CONFIG_KEY_IS_MAIL_FACADE_MOCK_ENABLED => true];
     }
 }
