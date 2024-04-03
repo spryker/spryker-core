@@ -1,19 +1,16 @@
 export default {
-    displayName: 'merchant-portal',
+    displayName: 'merchant-portal-vendor',
     preset: './jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
-    globals: {
-        'ts-jest': {
-            stringifyContentPathRegex: '\\.(html|svg)$',
-            tsconfig: '<rootDir>/tsconfig.spec.json',
-        },
-    },
     roots: ['<rootDir>/../../Bundles'],
     testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-    resolver: '@nrwl/jest/plugins/resolver',
+    resolver: '@nx/jest/plugins/resolver',
     moduleFileExtensions: ['ts', 'js', 'html'],
-    collectCoverageFrom: ['**/*.ts', '!**/*.stories.ts', '!**/node_modules/**'],
-    coverageReporters: ['lcov', 'text'],
-    coverageDirectory: '<rootDir>/../../coverage/merchant-portal',
     passWithNoTests: true,
+    globals: {
+        'ts-jest': {
+            tsconfig: '<rootDir>/tsconfig.spec.json',
+            stringifyContentPathRegex: '\\.(html|svg)$',
+        },
+    },
 };

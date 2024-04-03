@@ -166,6 +166,7 @@ class MerchantUserGuiTableConfigurationProvider implements MerchantUserGuiTableC
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\AgentDashboardMerchantPortalGui\Dependency\Facade\AgentDashboardMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\AgentDashboardMerchantPortalGui\AgentDashboardMerchantPortalGuiConfig $agentDashboardMerchantPortalGuiConfig
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,

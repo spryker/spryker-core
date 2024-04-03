@@ -85,8 +85,3 @@
         </web-mp-my-account>
     {{ form_end(merchantAccountForm) }}
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('user-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

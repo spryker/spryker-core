@@ -1,0 +1,27 @@
+{
+    "name": "merchant-portal-vendor",
+    "$schema": "node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": ".",
+    "projectType": "application",
+    "prefix": "mp",
+    "generators": {},
+    "targets": {
+        "test": {
+            "executor": "@nx/jest:jest",
+            "options": {
+                "jestConfig": "frontend/merchant-portal/jest.config.ts"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "options": {
+                "eslintConfig": ".eslintrc.mp.json",
+                "lintFilePatterns": [
+                    "Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.ts",
+                    "Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.html"
+                ],
+                "noEslintrc": true
+            }
+        }
+    }
+}

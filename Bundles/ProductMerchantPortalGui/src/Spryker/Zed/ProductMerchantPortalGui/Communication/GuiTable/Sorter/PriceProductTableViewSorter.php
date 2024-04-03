@@ -90,13 +90,7 @@ class PriceProductTableViewSorter implements PriceProductTableViewSorterInterfac
     {
         $valueExtractorFunction = $this->getValueExtractorFunction($sortField);
 
-        return function (
-            PriceProductTableViewTransfer $priceProductTableViewTransferA,
-            PriceProductTableViewTransfer $priceProductTableViewTransferB
-        ) use (
-            $valueExtractorFunction,
-            $isSortAscending
-        ) {
+        return function (PriceProductTableViewTransfer $priceProductTableViewTransferA, PriceProductTableViewTransfer $priceProductTableViewTransferB) use ($valueExtractorFunction, $isSortAscending) {
             $valueA = $valueExtractorFunction($priceProductTableViewTransferA);
             $valueB = $valueExtractorFunction($priceProductTableViewTransferB);
 

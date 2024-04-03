@@ -6,7 +6,7 @@
 'use strict';
 
 // external dependencies
-var $ = require('jquery');
+const $ = require('jquery');
 require('datatables.net')(window, $);
 require('datatables.net-bs')(window, $);
 require('datatables.net-buttons')(window, $);

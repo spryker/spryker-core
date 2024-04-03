@@ -62,11 +62,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
             $moneyValueType . 'Amount',
         );
 
-        return function (
-            PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransfer
-        ) use (
-            $priceKey
-        ) {
+        return function (PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransfer) use ($priceKey) {
             $prices = $priceProductOfferTableViewTransfer->getPrices();
 
             if (!array_key_exists($priceKey, $prices)) {

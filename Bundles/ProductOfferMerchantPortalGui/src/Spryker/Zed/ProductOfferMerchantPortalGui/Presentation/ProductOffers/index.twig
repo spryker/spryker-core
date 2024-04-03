@@ -15,8 +15,3 @@
         <web-spy-button-link action url="/product-offer-merchant-portal-gui/product-list" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>
     </web-mp-offers-list>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('product-offer-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

@@ -1,12 +1,15 @@
-const stylelint = require('stylelint');
-const commandLineParser = require('commander');
-const path = require('path');
+import commandLineParser from 'commander';
+import path from 'path';
+import stylelint from 'stylelint';
+import { fileURLToPath } from 'url';
 
 commandLineParser
     .option('-f, --fix', 'execute stylelint in the fix mode.')
     .option('-p, --file-path <path>', 'execute stylelint only for this file.')
     .parse(process.argv);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, '../..');
 const defaultFilePaths = [`${root}/Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.less`];
 const filePaths = commandLineParser.filePath ? [commandLineParser.filePath] : defaultFilePaths;
@@ -15,7 +18,6 @@ stylelint
     .lint({
         configFile: `${root}/.stylelintrc.mp.js`,
         files: filePaths,
-        syntax: 'less',
         formatter: 'string',
         fix: !!commandLineParser.fix,
     })

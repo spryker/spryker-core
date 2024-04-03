@@ -14,8 +14,3 @@
         <span description>{{ 'To create your offer, choose a product from the list below.' | trans }}</span>
     </web-mp-product-offer>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('product-offer-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

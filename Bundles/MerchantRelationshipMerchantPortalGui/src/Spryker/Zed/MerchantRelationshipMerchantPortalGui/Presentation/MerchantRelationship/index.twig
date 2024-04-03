@@ -15,8 +15,3 @@
         <h1 title>{{ 'Merchant Relations' | trans }}</h1>
     </web-mp-merchant-relationship>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('merchant-relationship-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

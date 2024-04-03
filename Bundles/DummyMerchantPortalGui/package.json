@@ -3,14 +3,14 @@
     "version": "0.0.1",
     "private": true,
     "peerDependencies": {
-        "@angular/common": "^15.0.3",
-        "@angular/core": "^15.0.3",
-        "rxjs": "~7.5.7"
+        "@angular/common": "^17.3.0",
+        "@angular/core": "^17.3.0",
+        "rxjs": "~7.8.1"
     },
     "dependencies": {
-        "@spryker/button": "^1.1.0",
-        "@spryker/card": "^1.1.0",
-        "@spryker/headline": "^1.1.0",
-        "@spryker/web-components": "^1.0.0"
+        "@spryker/button": "^2.0.0",
+        "@spryker/card": "^2.0.0",
+        "@spryker/headline": "^2.0.0",
+        "@spryker/web-components": "^2.0.0"
     }
 }

@@ -41,8 +41,3 @@
         {% endblock %}
     </web-mp-login-layout>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('security-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

@@ -100,13 +100,7 @@ class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSort
         callable $valueExtractorFunction,
         bool $sortAscending
     ): callable {
-        return function (
-            PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransferA,
-            PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransferB
-        ) use (
-            $valueExtractorFunction,
-            $sortAscending
-        ) {
+        return function (PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransferA, PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransferB) use ($valueExtractorFunction, $sortAscending) {
             $valueA = $valueExtractorFunction($priceProductOfferTableViewTransferA);
             $valueB = $valueExtractorFunction($priceProductOfferTableViewTransferB);
 

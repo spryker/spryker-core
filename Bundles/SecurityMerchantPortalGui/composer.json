@@ -16,7 +16,7 @@
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.25.0",
         "spryker/user-merchant-portal-gui-extension": "^1.0.0",
-        "spryker/zed-ui": "^2.4.0"
+        "spryker/zed-ui": "^3.0.0"
     },
     "require-dev": {
         "spryker/acl": "*",
@@ -52,7 +52,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     },
     "config": {

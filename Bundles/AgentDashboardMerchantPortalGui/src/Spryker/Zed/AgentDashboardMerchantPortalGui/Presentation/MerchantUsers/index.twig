@@ -29,8 +29,3 @@
         <h1 title>{{ 'Merchant Users' | trans }}</h1>
     </web-mp-agent-user-list>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('agent-dashboard-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}

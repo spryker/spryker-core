@@ -10,7 +10,7 @@
         "importHelpers": true,
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
-        "target": "es2020",
+        "target": "ES2022",
         "module": "esnext",
         "typeRoots": ["node_modules/@types"],
         "lib": ["dom", "esnext"],
@@ -19,7 +19,8 @@
         "paths": {
             "@mp/zed-ui/testing": ["./Bundles/ZedUi/mp.testing-api.ts"],
             "@mp/zed-ui/*": ["./Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/*"]
-        }
+        },
+        "noEmit": true
     },
     "exclude": ["**/node_modules/**"]
 }

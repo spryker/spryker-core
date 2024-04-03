@@ -13,8 +13,3 @@
         <h1 title>{{ 'Orders' | trans }}</h1>
     </web-mp-sales-orders>
 {% endblock %}
-
-{% block footerJs %}
-    {{ view.importJsBundle('sales-merchant-portal-gui', importConfig) }}
-    {{ parent() }}
-{% endblock %}
