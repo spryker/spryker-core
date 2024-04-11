@@ -33,9 +33,11 @@ class MaintenanceController extends AbstractController
      */
     public function indexAction()
     {
+        $isDynamicStoreEnabled = $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled();
+
         return $this->viewResponse([
-            'totalCount' => $this->getFacade()->getTotalCount(),
-            'metaData' => $this->getFacade()->getMetaData(),
+            'totalCount' => !$isDynamicStoreEnabled ? $this->getFacade()->getTotalCount() : 0,
+            'metaData' => !$isDynamicStoreEnabled ? $this->getFacade()->getMetaData() : [],
             'isInSearchLegacyMode' => $this->getFacade()->isInLegacyMode(),
         ]);
     }

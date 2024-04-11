@@ -9,6 +9,8 @@ namespace Spryker\Zed\Search\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Search\Communication\Table\SearchTable;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
+use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Search\SearchConfig getConfig()
@@ -30,5 +32,13 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     public function getElasticaDocumentType()
     {
         return $this->getConfig()->getElasticaDocumentType();
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_STORE);
     }
 }

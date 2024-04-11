@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CollectorSearchConnector\Communication;
 
 use Spryker\Zed\CollectorSearchConnector\CollectorSearchConnectorDependencyProvider;
+use Spryker\Zed\CollectorSearchConnector\Dependency\Facade\CollectorSearchConnectorToStoreInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CollectorSearchConnectorCommunicationFactory extends AbstractCommunicationFactory
@@ -18,5 +19,13 @@ class CollectorSearchConnectorCommunicationFactory extends AbstractCommunication
     public function getCollectorFacade()
     {
         return $this->getProvidedDependency(CollectorSearchConnectorDependencyProvider::FACADE_COLLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CollectorSearchConnector\Dependency\Facade\CollectorSearchConnectorToStoreInterface
+     */
+    public function getStoreFacade(): CollectorSearchConnectorToStoreInterface
+    {
+        return $this->getProvidedDependency(CollectorSearchConnectorDependencyProvider::FACADE_STORE);
     }
 }
