@@ -106,4 +106,11 @@ interface ProductLabelRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
      */
     public function getProductLabelCollection(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): ProductLabelCollectionTransfer;
+
+    /**
+     * @param array<int> $productLabelIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
+     */
+    public function getProductAbstractRelationsByIdProductLabelIds(array $productLabelIds): array;
 }

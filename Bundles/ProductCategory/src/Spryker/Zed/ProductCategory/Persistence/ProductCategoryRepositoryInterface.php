@@ -36,9 +36,16 @@ interface ProductCategoryRepositoryInterface
     public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer;
 
     /**
-     * @param int $idCategoryNode
+     * @param array<int> $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
-    public function findProductCategoryChildrenMappingsByCategoryNodeId(int $idCategoryNode): ProductCategoryCollectionTransfer;
+    public function findProductCategoryChildrenMappingsByCategoryNodeIds(array $categoryNodeIds): ProductCategoryCollectionTransfer;
+
+    /**
+     * @param array<int> $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function findProductCategoryByCategoryIds(array $categoryIds): ProductCategoryCollectionTransfer;
 }

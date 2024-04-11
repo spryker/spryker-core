@@ -279,12 +279,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
 
         $productUpdatedEvents = [];
-
-        foreach ($productAbstractIds as $productAbstractId) {
-            $productUpdatedEvents[] = (new EventEntityTransfer())->setForeignKeys(['fk_product_abstract' => $productAbstractId]);
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $productUpdatedEvents[] = (new EventEntityTransfer())->setId($idProductAbstract);
         }
 
-        $this->eventFacade->triggerBulk(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $productUpdatedEvents);
+        $this->eventFacade->triggerBulk(ProductCategoryEvents::PRODUCT_ABSTRACT_UPDATE, $productUpdatedEvents);
     }
 
     /**

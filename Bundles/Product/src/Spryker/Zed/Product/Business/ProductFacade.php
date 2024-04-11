@@ -1219,6 +1219,34 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishProductToMessageBrokerByProductAbstractEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()->createProductMessageBrokerPublisher()->publishByProductAbstractEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishProductToMessageBrokerByProductEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()->createProductMessageBrokerPublisher()->publishByProductEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
      *
      * @return void

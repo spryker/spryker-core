@@ -184,4 +184,16 @@ interface ProductCategoryFacadeInterface
      * @return void
      */
     public function triggerProductUpdateEventsForCategory(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     *  Specification:
+     *  - Triggers product abstract events for products that are assigned to the categories from events, including products from sub-categories.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEventsByCategoryEvents(array $eventEntityTransfers): void;
 }

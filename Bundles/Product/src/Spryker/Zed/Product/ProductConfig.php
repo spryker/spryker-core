@@ -57,6 +57,14 @@ class ProductConfig extends AbstractBundleConfig
     {
         return [
             ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+            ProductEvents::PRODUCT_ABSTRACT_UPDATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE,
+            ProductEvents::ENTITY_SPY_URL_CREATE,
+            ProductEvents::ENTITY_SPY_URL_UPDATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE,
         ];
     }
 
@@ -68,9 +76,11 @@ class ProductConfig extends AbstractBundleConfig
     public function getProductUpdateMessageBrokerPublisherSubscribedEvents(): array
     {
         return [
-            ProductEvents::ENTITY_SPY_PRODUCT_UPDATE,
-            ProductEvents::PRODUCT_CONCRETE_UPDATE,
             ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+            ProductEvents::PRODUCT_CONCRETE_UPDATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_UPDATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE,
+            ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE,
         ];
     }
 

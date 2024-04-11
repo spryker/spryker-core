@@ -31,7 +31,6 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTrigger;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface;
@@ -52,6 +51,13 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
  */
 class ProductLabelFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_UPDATE
+     *
+     * @var string
+     */
+    protected const PRODUCT_ABSTRACT_UPDATE = 'Product.product_abstract.update';
+
     /**
      * @var \SprykerTest\Zed\ProductLabel\ProductLabelBusinessTester
      */
@@ -1377,6 +1383,46 @@ class ProductLabelFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTriggerProductAbstractUpdateEventsByProductLabelEventsTriggerEventsWithCorrectProductAbstracts(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabelOrFail(), $productTransfer->getFkProductAbstractOrFail());
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($productTransfer->getFkProductAbstractOrFail());
+
+        // Act
+        $this->tester->getFacade()->triggerProductAbstractUpdateEventsByProductLabelEvents([
+                (new EventEntityTransfer())->setId($productLabelTransfer->getIdProductLabelOrFail()),
+           ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductAbstractUpdateEventsByProductLabelLocalizedAttributeEventsTriggerEventsWithCorrectProductAbstracts(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabelOrFail(), $productTransfer->getFkProductAbstractOrFail());
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($productTransfer->getFkProductAbstractOrFail());
+
+        // Act
+        $this->tester->getFacade()->triggerProductAbstractUpdateEventsByProductLabelEvents([
+                (new EventEntityTransfer())
+                    ->setName('spy_product_label_localized_attributes')
+                    ->setForeignKeys(['spy_product_label_localized_attributes.fk_product_label' => $productLabelTransfer->getIdProductLabelOrFail()]),
+            ]);
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return void
@@ -1386,13 +1432,11 @@ class ProductLabelFacadeTest extends Unit
         $this->eventFacade
             ->expects($this->atLeastOnce())
             ->method('triggerBulk')
-            ->with(ProductEventTrigger::PRODUCT_CONCRETE_UPDATE, $this->callback(
+            ->with(static::PRODUCT_ABSTRACT_UPDATE, $this->callback(
                 function ($transfers) use ($idProductAbstract) {
                     $this->assertNotEmpty($transfers);
                     $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
-                    $this->assertNotEmpty($transfers[0]->getForeignKeys());
-                    $this->assertNotEmpty($transfers[0]->getForeignKeys()[ProductEventTrigger::COLUMN_FK_PRODUCT_ABSTRACT]);
-                    $this->assertEquals($transfers[0]->getForeignKeys()[ProductEventTrigger::COLUMN_FK_PRODUCT_ABSTRACT], $idProductAbstract);
+                    $this->assertEquals($transfers[0]->getId(), $idProductAbstract);
 
                     return true;
                 },

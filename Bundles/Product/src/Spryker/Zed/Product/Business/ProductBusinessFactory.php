@@ -707,6 +707,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getMessageBrokerFacade(),
             $this->getRepository(),
             $this->getConfig(),
+            $this->createProductEventTrigger(),
         );
     }
 

@@ -71,13 +71,23 @@ interface ProductEvents
 
     /**
      * Specification
-     * - This events will be used for product_abstract publishing
+     * - This event will be used for product abstract publishing
      *
      * @api
      *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
+    /**
+     * Specification
+     * - This event will be used for product abstract updates.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_ABSTRACT_UPDATE = 'Product.product_abstract.update';
 
     /**
      * Specification
@@ -288,4 +298,18 @@ interface ProductEvents
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
+
+    /**
+     * @uses \Spryker\Zed\Url\Dependency\UrlEvents::ENTITY_SPY_URL_CREATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_URL_CREATE = 'Entity.spy_url.create';
+
+    /**
+     * @uses \Spryker\Zed\Url\Dependency\UrlEvents::ENTITY_SPY_URL_UPDATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_URL_UPDATE = 'Entity.spy_url.update';
 }

@@ -66,9 +66,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductCategoryToProductBridge($container->getLocator()->product()->facade());
         });
 
-        $container->set(static::FACADE_EVENT, function (Container $container) {
-            return new ProductCategoryToEventBridge($container->getLocator()->event()->facade());
-        });
+        $container = $this->addEventFacade($container);
 
         $container = $this->addCategoryFacade($container);
 
@@ -96,6 +94,8 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCategoryFacade($container);
 
+        $container = $this->addEventFacade($container);
+
         return $container;
     }
 
@@ -108,6 +108,20 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new ProductCategoryToEventBridge($container->getLocator()->event()->facade());
         });
 
         return $container;

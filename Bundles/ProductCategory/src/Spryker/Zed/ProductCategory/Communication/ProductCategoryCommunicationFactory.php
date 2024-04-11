@@ -95,4 +95,12 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface
+     */
+    public function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_EVENT);
+    }
 }

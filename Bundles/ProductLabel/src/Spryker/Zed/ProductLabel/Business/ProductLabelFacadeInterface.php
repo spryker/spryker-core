@@ -284,4 +284,16 @@ interface ProductLabelFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcretesWithLabels(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Triggers product abstract events for products that are assigned to the labels from events.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEventsByProductLabelEvents(array $eventEntityTransfers): void;
 }

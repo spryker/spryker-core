@@ -328,4 +328,18 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->createProductConcreteLabelExpander()
             ->expandProductConcretesWithLabels($productConcreteTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEventsByProductLabelEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()->createProductEventTrigger()->triggerProductAbstractUpdateEvents($eventEntityTransfers);
+    }
 }

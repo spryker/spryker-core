@@ -219,4 +219,20 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->createProductCategoryEventTrigger()
             ->triggerProductUpdateEventsForCategory($categoryTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEventsByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryEventTrigger()
+            ->triggerProductAbstractUpdateEvents($eventEntityTransfers);
+    }
 }

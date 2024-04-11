@@ -489,7 +489,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         $this->notifyAfterUpdateObservers($productConcreteTransfer);
 
-        $this->productEventTrigger->triggerProductUpdateEvents([$idProductAbstract]);
+        $this->productEventTrigger->triggerProductAbstractUpdateEvents([$idProductAbstract]);
 
         return $idProductConcrete;
     }

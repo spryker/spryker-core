@@ -50,13 +50,6 @@ class ProductCategoryFacadeTest extends Unit
     protected const FAKE_ID_CATEGORY_NODE = 888;
 
     /**
-     * @uses \Spryker\Zed\ProductCategory\Business\Event\ProductCategoryEventTrigger::COL_FK_PRODUCT_ABSTRACT
-     *
-     * @var string
-     */
-    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-
-    /**
      * @var \SprykerTest\Zed\ProductCategory\ProductCategoryBusinessTester
      */
     protected ProductCategoryBusinessTester $tester;
@@ -282,12 +275,8 @@ class ProductCategoryFacadeTest extends Unit
         $this->tester->assignProductToCategory($childCategoryTransfer->getIdCategory(), $childProductTransfer->getFkProductAbstract());
 
         $expectedProductUpdatedEvents = [
-            (new EventEntityTransfer())->setForeignKeys([
-                static::COL_FK_PRODUCT_ABSTRACT => $parentProductTransfer->getFkProductAbstract(),
-            ]),
-            (new EventEntityTransfer())->setForeignKeys([
-                static::COL_FK_PRODUCT_ABSTRACT => $childProductTransfer->getFkProductAbstract(),
-            ]),
+            (new EventEntityTransfer())->setId($parentProductTransfer->getFkProductAbstract()),
+            (new EventEntityTransfer())->setId($childProductTransfer->getFkProductAbstract()),
         ];
 
         $eventFacadeMock = $this->createEventFacadeMock();
@@ -296,7 +285,7 @@ class ProductCategoryFacadeTest extends Unit
         // Assert
         $eventFacadeMock->expects($this->once())
             ->method('triggerBulk')
-            ->with(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $expectedProductUpdatedEvents);
+            ->with(ProductCategoryEvents::PRODUCT_ABSTRACT_PUBLISH, $expectedProductUpdatedEvents);
 
         // Act
         $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory($parentCategoryTransfer);
@@ -319,9 +308,7 @@ class ProductCategoryFacadeTest extends Unit
         $this->tester->assignProductToCategory($childCategoryTransfer->getIdCategory(), $idProductAbstract);
 
         $expectedProductUpdatedEvents = [
-            (new EventEntityTransfer())->setForeignKeys([
-                static::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
-            ]),
+            (new EventEntityTransfer())->setId($idProductAbstract),
         ];
 
         $eventFacadeMock = $this->createEventFacadeMock();
@@ -330,10 +317,101 @@ class ProductCategoryFacadeTest extends Unit
         // Assert
         $eventFacadeMock->expects($this->once())
             ->method('triggerBulk')
-            ->with(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $expectedProductUpdatedEvents);
+            ->with(ProductCategoryEvents::PRODUCT_ABSTRACT_PUBLISH, $expectedProductUpdatedEvents);
 
         // Act
         $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory($parentCategoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductAbstractUpdateEventsByCategoryEventsTriggersEventsWithCorrectProductAbstracts()
+    {
+        // Arrange
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $categoryTransfer = $this->tester->haveCategory();
+        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $idProductAbstract);
+
+        $expectedProductAbstractUpdatedEvents = [
+            (new EventEntityTransfer())->setId($idProductAbstract),
+        ];
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $eventFacadeMock->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductCategoryEvents::PRODUCT_ABSTRACT_UPDATE, $expectedProductAbstractUpdatedEvents);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductAbstractUpdateEventsByCategoryEvents([
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductAbstractUpdateEventsByCategoryAttributeEventsTriggersEventsWithCorrectProductAbstracts()
+    {
+        // Arrange
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $categoryTransfer = $this->tester->haveCategory();
+        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $idProductAbstract);
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $expectedProductAbstractUpdatedEvents = [
+            (new EventEntityTransfer())->setId($idProductAbstract),
+        ];
+        $eventFacadeMock->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductCategoryEvents::PRODUCT_ABSTRACT_UPDATE, $expectedProductAbstractUpdatedEvents);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductAbstractUpdateEventsByCategoryEvents([
+            (new EventEntityTransfer())
+                ->setName('spy_category_attribute')
+                ->setForeignKeys(['spy_category_attribute.fk_category' => $categoryTransfer->getIdCategory()]),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductAbstractUpdateEventsByCategoryEventsTriggersEventsForProductAbstractAssignedToChildCategory()
+    {
+        // Arrange
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->assignProductToCategory($childCategoryTransfer->getIdCategory(), $idProductAbstract);
+
+        $expectedProductUpdatedEvents = [
+            (new EventEntityTransfer())->setId($idProductAbstract),
+        ];
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $eventFacadeMock->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductCategoryEvents::PRODUCT_ABSTRACT_UPDATE, $expectedProductUpdatedEvents);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductAbstractUpdateEventsByCategoryEvents([
+            (new EventEntityTransfer())->setId($parentCategoryTransfer->getIdCategory()),
+        ]);
     }
 
     /**

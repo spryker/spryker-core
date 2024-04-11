@@ -8,23 +8,23 @@
 namespace Spryker\Zed\ProductLabel\Business\Label\Trigger;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductLabelProductAbstractTransfer;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
 
 class ProductEventTrigger implements ProductEventTriggerInterface
 {
     /**
-     * @uses \Spryker\Shared\Product\ProductConfig::COLUMN_FK_PRODUCT_ABSTRACT
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_UPDATE
      *
      * @var string
      */
-    public const COLUMN_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    protected const PRODUCT_ABSTRACT_UPDATE = 'Product.product_abstract.update';
 
     /**
-     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
-     *
      * @var string
      */
-    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
+    protected const KEY_FK_PRODUCT_LABEL = 'fk_product_label';
 
     /**
      * @var \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface
@@ -32,11 +32,20 @@ class ProductEventTrigger implements ProductEventTriggerInterface
     protected $eventFacade;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface $eventFacade
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface
      */
-    public function __construct(ProductLabelToEventInterface $eventFacade)
-    {
+    protected ProductLabelRepositoryInterface $productLabelRepository;
+
+    /**
+     * @param \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface $eventFacade
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
+     */
+    public function __construct(
+        ProductLabelToEventInterface $eventFacade,
+        ProductLabelRepositoryInterface $productLabelRepository
+    ) {
         $this->eventFacade = $eventFacade;
+        $this->productLabelRepository = $productLabelRepository;
     }
 
     /**
@@ -46,13 +55,61 @@ class ProductEventTrigger implements ProductEventTriggerInterface
      */
     public function triggerProductUpdateEvents(array $productAbstractIds): void
     {
-        $productUpdatedEvents = [];
+        $eventEntityTransfers = [];
 
         foreach ($productAbstractIds as $idProductAbstract) {
-            $productUpdatedEvents[] = (new EventEntityTransfer())
-                ->setForeignKeys([static::COLUMN_FK_PRODUCT_ABSTRACT => $idProductAbstract]);
+            $eventEntityTransfers[] = (new EventEntityTransfer())
+                ->setId($idProductAbstract);
         }
 
-        $this->eventFacade->triggerBulk(static::PRODUCT_CONCRETE_UPDATE, $productUpdatedEvents);
+        $this->eventFacade->triggerBulk(static::PRODUCT_ABSTRACT_UPDATE, $eventEntityTransfers);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEvents(array $eventEntityTransfers): void
+    {
+        $productLabelsIds = $this->extractProductLabelIds($eventEntityTransfers);
+        if (!$productLabelsIds) {
+            return;
+        }
+
+        $productLabelProductAbstractTransfers = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelIds($productLabelsIds);
+        $productAbstractIds = array_map(
+            fn (ProductLabelProductAbstractTransfer $productLabelProductAbstractTransfer) => $productLabelProductAbstractTransfer->getFkProductAbstract(),
+            $productLabelProductAbstractTransfers,
+        );
+
+        $this->triggerProductUpdateEvents(array_unique($productAbstractIds));
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return array<int>
+     */
+    protected function extractProductLabelIds(array $eventEntityTransfers): array
+    {
+        $productLabelsIds = [];
+
+        foreach ($eventEntityTransfers as $eventEntityTransfer) {
+            // checking if event has foreign key for product label, the format is {table_name}.fk_product_label
+            $foreignKeys = $eventEntityTransfer->getForeignKeys();
+            $key = sprintf('%s.%s', $eventEntityTransfer->getName(), static::KEY_FK_PRODUCT_LABEL);
+            if (!empty($foreignKeys[$key])) {
+                $productLabelsIds[$foreignKeys[$key]] = $foreignKeys[$key];
+
+                continue;
+            }
+
+            if ($eventEntityTransfer->getId() !== null) {
+                $productLabelsIds[$eventEntityTransfer->getId()] = $eventEntityTransfer->getId();
+            }
+        }
+
+        return array_values($productLabelsIds);
     }
 }

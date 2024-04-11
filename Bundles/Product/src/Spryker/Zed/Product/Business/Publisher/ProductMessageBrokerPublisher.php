@@ -18,6 +18,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException;
 use Spryker\Zed\Product\Business\Exception\ProductPublisherWrongChunkSizeException;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
@@ -27,6 +28,21 @@ use Throwable;
 class ProductMessageBrokerPublisher implements ProductPublisherInterface
 {
     use LoggerTrait;
+
+    /**
+     * @var string
+     */
+    protected const KEY_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
+    /**
+     * @var string
+     */
+    protected const KEY_FK_RESOURCE_PRODUCT_ABSTRACT = 'fk_resource_product_abstract';
+
+    /**
+     * @var string
+     */
+    protected const KEY_FK_PRODUCT = 'fk_product';
 
     /**
      * @var \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface
@@ -49,21 +65,29 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     protected $productConfig;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
+     */
+    protected ProductEventTriggerInterface $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface $productConcreteReader
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace $messageBrokerFacade
      * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      * @param \Spryker\Zed\Product\ProductConfig $productConfig
+     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductConcreteReaderInterface $productConcreteReader,
         ProductToMessageBrokerInterfrace $messageBrokerFacade,
         ProductRepositoryInterface $productRepository,
-        ProductConfig $productConfig
+        ProductConfig $productConfig,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->productConcreteReader = $productConcreteReader;
         $this->messageBrokerFacade = $messageBrokerFacade;
         $this->productRepository = $productRepository;
         $this->productConfig = $productConfig;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -75,7 +99,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     {
         $this->assertEventNameIsProperForPublish($productPublisherConfigTransfer);
 
-        $this->performProductsConcretePublish($productPublisherConfigTransfer);
+        $this->performProductsPublish($productPublisherConfigTransfer);
     }
 
     /**
@@ -133,7 +157,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
      *
      * @return void
      */
-    protected function performProductsConcretePublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
+    protected function performProductsPublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
         $productConcreteIds = $this->getProductConcreteIds($productPublisherConfigTransfer);
 
@@ -317,5 +341,98 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         }
 
         return array_filter(array_unique($storeReferences));
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishByProductAbstractEvents(array $eventEntityTransfers): void
+    {
+        $productAbstractIds = [];
+        $fkProductAbstractIds = [];
+
+        foreach ($eventEntityTransfers as $eventEntityTransfer) {
+            // checking if event has foreign key for product abstract, the format is {table_name}.fk_product_abstract
+            $foreignKeys = $eventEntityTransfer->getForeignKeys();
+            $key = sprintf('%s.%s', $eventEntityTransfer->getName(), static::KEY_FK_PRODUCT_ABSTRACT);
+            if (!empty($foreignKeys[$key])) {
+                $fkProductAbstractIds[$foreignKeys[$key]] = $foreignKeys[$key];
+
+                continue;
+            }
+
+            // for URLs events
+            $key = sprintf('%s.%s', $eventEntityTransfer->getName(), static::KEY_FK_RESOURCE_PRODUCT_ABSTRACT);
+            if (!empty($foreignKeys[$key])) {
+                $fkProductAbstractIds[$foreignKeys[$key]] = $foreignKeys[$key];
+
+                continue;
+            }
+
+            if ($eventEntityTransfer->getId() !== null) {
+                $productAbstractIds[] = $eventEntityTransfer->getId();
+            }
+        }
+
+        if ($productAbstractIds !== []) {
+            $this->performProductsPublish(
+                (new ProductPublisherConfigTransfer())
+                    ->setProductAbstractIds(array_values($productAbstractIds))
+                    ->setEventName(ProductUpdatedTransfer::class),
+            );
+        }
+
+        if ($fkProductAbstractIds !== []) {
+            $this->productEventTrigger->triggerProductAbstractUpdateEvents(array_unique($fkProductAbstractIds));
+        }
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishByProductEvents(array $eventEntityTransfers): void
+    {
+        $productIds = [];
+        $fkProductIds = [];
+        $fkProductAbstractIds = [];
+
+        foreach ($eventEntityTransfers as $eventEntityTransfer) {
+            $foreignKeys = $eventEntityTransfer->getForeignKeys();
+
+            // added only for BC reasons, should be removed in the future, covered by publishByProductAbstractEvents()}
+            if (!empty($foreignKeys[static::KEY_FK_PRODUCT_ABSTRACT])) {
+                $fkProductAbstractIds[$foreignKeys[static::KEY_FK_PRODUCT_ABSTRACT]] = $foreignKeys[static::KEY_FK_PRODUCT_ABSTRACT];
+            }
+
+            // checking if event has foreign key for product, the format is {table_name}.fk_product
+            $key = sprintf('%s.%s', $eventEntityTransfer->getName(), static::KEY_FK_PRODUCT);
+            if (!empty($foreignKeys[$key])) {
+                $fkProductIds[$foreignKeys[$key]] = $foreignKeys[$key];
+
+                continue;
+            }
+
+            if ($eventEntityTransfer->getId() !== null) {
+                $productIds[] = $eventEntityTransfer->getId();
+            }
+        }
+
+        if ($productIds !== [] || $fkProductAbstractIds !== []) {
+            $this->performProductsPublish(
+                (new ProductPublisherConfigTransfer())
+                    ->setProductIds(array_values($productIds))
+                    ->setEventName(ProductUpdatedTransfer::class)
+                    // added only for BC reasons, should be removed in the future
+                    ->setProductAbstractIds(array_values($fkProductAbstractIds)),
+            );
+        }
+
+        if ($fkProductIds !== []) {
+            $this->productEventTrigger->triggerProductUpdateEvents(array_unique($fkProductIds));
+        }
     }
 }

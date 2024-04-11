@@ -372,7 +372,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $this->notifyAfterUpdateObservers($productAbstractTransfer);
 
-        $this->productEventTrigger->triggerProductUpdateEvents([$idProductAbstract]);
+        $this->productEventTrigger->triggerProductAbstractUpdateEvents([$idProductAbstract]);
 
         return $idProductAbstract;
     }

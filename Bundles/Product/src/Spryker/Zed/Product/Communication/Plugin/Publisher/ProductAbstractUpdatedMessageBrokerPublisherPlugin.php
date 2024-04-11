@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Product\Communication\Plugin\Publisher;
 
-use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
-use Generated\Shared\Transfer\ProductUpdatedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -34,9 +32,7 @@ class ProductAbstractUpdatedMessageBrokerPublisherPlugin extends AbstractPlugin 
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productPublisherConfigTransfer = $this->getProductPublisherConfigTransfer($eventEntityTransfers);
-
-        $this->getFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+        $this->getFacade()->publishProductToMessageBrokerByProductAbstractEvents($eventEntityTransfers);
     }
 
     /**
@@ -53,23 +49,5 @@ class ProductAbstractUpdatedMessageBrokerPublisherPlugin extends AbstractPlugin 
         }
 
         return $this->getConfig()->getProductAbstractUpdateMessageBrokerPublisherSubscribedEvents();
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductPublisherConfigTransfer
-     */
-    protected function getProductPublisherConfigTransfer(array $eventEntityTransfers): ProductPublisherConfigTransfer
-    {
-        $productAbstractIds = [];
-
-        foreach ($eventEntityTransfers as $eventEntityTransfer) {
-            $productAbstractIds[] = $eventEntityTransfer->getId();
-        }
-
-        return (new ProductPublisherConfigTransfer())
-            ->setProductAbstractIds(array_unique($productAbstractIds))
-            ->setEventName(ProductUpdatedTransfer::class);
     }
 }

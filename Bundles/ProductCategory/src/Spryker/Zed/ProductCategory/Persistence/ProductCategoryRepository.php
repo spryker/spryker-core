@@ -122,7 +122,7 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
         $productCategoryQuery = $this->applyProductCategoryFilters($productCategoryQuery, $productCategoryCriteriaTransfer);
 
         return $this->getFactory()
-            ->createproductCategoryMapper()
+            ->createProductCategoryMapper()
             ->mapProductCategoryArrayToProductCategoryCollectionTransfer(
                 $productCategoryQuery->find(),
                 new ProductCategoryCollectionTransfer(),
@@ -132,18 +132,18 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
     /**
      * @module Category
      *
-     * @param int $idCategoryNode
+     * @param array<int> $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
-    public function findProductCategoryChildrenMappingsByCategoryNodeId(int $idCategoryNode): ProductCategoryCollectionTransfer
+    public function findProductCategoryChildrenMappingsByCategoryNodeIds(array $categoryNodeIds): ProductCategoryCollectionTransfer
     {
         $productCategoryEntities = $this->getFactory()
             ->createProductCategoryQuery()
             ->useSpyCategoryQuery()
                 ->useNodeQuery()
                     ->useDescendantQuery()
-                        ->filterByFkCategoryNode($idCategoryNode)
+                        ->filterByFkCategoryNode_In($categoryNodeIds)
                     ->endUse()
                 ->endUse()
             ->endUse()
@@ -151,7 +151,7 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->find();
 
         return $this->getFactory()
-            ->createproductCategoryMapper()
+            ->createProductCategoryMapper()
             ->mapProductCategoryArrayToProductCategoryCollectionTransfer(
                 $productCategoryEntities,
                 new ProductCategoryCollectionTransfer(),
@@ -188,5 +188,25 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
         }
 
         return $productCategoryQuery;
+    }
+
+    /**
+     * @module Category
+     *
+     * @param array<int> $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function findProductCategoryByCategoryIds(array $categoryIds): ProductCategoryCollectionTransfer
+    {
+        $categoryNodes = $this->getFactory()->createCategoryNodeQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
+            ->find()
+            ->getData();
+
+        $categoryNodeIds = array_column($categoryNodes, 'id_category_node');
+
+        return $this->findProductCategoryChildrenMappingsByCategoryNodeIds($categoryNodeIds);
     }
 }

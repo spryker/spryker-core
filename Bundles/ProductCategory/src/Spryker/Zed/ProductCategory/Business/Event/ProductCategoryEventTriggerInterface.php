@@ -17,4 +17,11 @@ interface ProductCategoryEventTriggerInterface
      * @return void
      */
     public function triggerProductUpdateEventsForCategory(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEvents(array $eventEntityTransfers): void;
 }

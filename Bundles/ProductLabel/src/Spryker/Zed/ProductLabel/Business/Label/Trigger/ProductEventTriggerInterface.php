@@ -15,4 +15,11 @@ interface ProductEventTriggerInterface
      * @return void
      */
     public function triggerProductUpdateEvents(array $productAbstractIds): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function triggerProductAbstractUpdateEvents(array $eventEntityTransfers): void;
 }

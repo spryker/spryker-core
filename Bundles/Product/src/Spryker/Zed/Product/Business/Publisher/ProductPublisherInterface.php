@@ -24,4 +24,18 @@ interface ProductPublisherInterface
      * @return void
      */
     public function unpublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishByProductAbstractEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishByProductEvents(array $eventEntityTransfers): void;
 }

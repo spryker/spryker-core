@@ -14,5 +14,12 @@ interface ProductEventTriggerInterface
      *
      * @return void
      */
-    public function triggerProductUpdateEvents(array $productAbstractIds): void;
+    public function triggerProductAbstractUpdateEvents(array $productAbstractIds): void;
+
+    /**
+     * @param array<int> $productIds
+     *
+     * @return void
+     */
+    public function triggerProductUpdateEvents(array $productIds): void;
 }

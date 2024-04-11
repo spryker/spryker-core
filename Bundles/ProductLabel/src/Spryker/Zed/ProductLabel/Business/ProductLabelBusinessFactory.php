@@ -214,7 +214,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductEventTrigger(): ProductEventTriggerInterface
     {
-        return new ProductEventTrigger($this->getEventFacade());
+        return new ProductEventTrigger($this->getEventFacade(), $this->getRepository());
     }
 
     /**

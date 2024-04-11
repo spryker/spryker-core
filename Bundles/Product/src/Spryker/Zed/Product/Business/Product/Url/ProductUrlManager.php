@@ -183,7 +183,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         }
 
         if ($productAbstractTransfer->getIdProductAbstract() !== null) {
-            $this->productEventTrigger->triggerProductUpdateEvents([$productAbstractTransfer->getIdProductAbstract()]);
+            $this->productEventTrigger->triggerProductAbstractUpdateEvents([$productAbstractTransfer->getIdProductAbstract()]);
         }
 
         return $productUrl;

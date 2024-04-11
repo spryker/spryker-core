@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Business\Product\Trigger;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -32,15 +31,32 @@ class ProductEventTrigger implements ProductEventTriggerInterface
      *
      * @return void
      */
-    public function triggerProductUpdateEvents(array $productAbstractIds): void
+    public function triggerProductAbstractUpdateEvents(array $productAbstractIds): void
     {
-        $productUpdatedEvents = [];
+        $eventEntityTransfers = [];
 
         foreach ($productAbstractIds as $idProductAbstract) {
-            $productUpdatedEvents[] = (new EventEntityTransfer())
-                ->setForeignKeys([ProductConfig::COLUMN_FK_PRODUCT_ABSTRACT => $idProductAbstract]);
+            $eventEntityTransfers[] = (new EventEntityTransfer())
+                ->setId($idProductAbstract);
         }
 
-        $this->eventFacade->triggerBulk(ProductEvents::PRODUCT_CONCRETE_UPDATE, $productUpdatedEvents);
+        $this->eventFacade->triggerBulk(ProductEvents::PRODUCT_ABSTRACT_UPDATE, $eventEntityTransfers);
+    }
+
+    /**
+     * @param array<int> $productIds
+     *
+     * @return void
+     */
+    public function triggerProductUpdateEvents(array $productIds): void
+    {
+        $eventEntityTransfers = [];
+
+        foreach ($productIds as $idProduct) {
+            $eventEntityTransfers[] = (new EventEntityTransfer())
+                ->setId($idProduct);
+        }
+
+        $this->eventFacade->triggerBulk(ProductEvents::PRODUCT_CONCRETE_UPDATE, $eventEntityTransfers);
     }
 }

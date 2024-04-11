@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Product\Communication\Plugin\Publisher;
 
-use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
-use Generated\Shared\Transfer\ProductUpdatedTransfer;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -35,9 +32,7 @@ class ProductConcreteUpdatedMessageBrokerPublisherPlugin extends AbstractPlugin 
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productPublisherConfigTransfer = $this->getProductPublisherConfigTransfer($eventEntityTransfers);
-
-        $this->getFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+        $this->getFacade()->publishProductToMessageBrokerByProductEvents($eventEntityTransfers);
     }
 
     /**
@@ -54,35 +49,5 @@ class ProductConcreteUpdatedMessageBrokerPublisherPlugin extends AbstractPlugin 
         }
 
         return $this->getConfig()->getProductUpdateMessageBrokerPublisherSubscribedEvents();
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductPublisherConfigTransfer
-     */
-    protected function getProductPublisherConfigTransfer(array $eventEntityTransfers): ProductPublisherConfigTransfer
-    {
-        $productIds = [];
-        $productAbstractIds = [];
-
-        foreach ($eventEntityTransfers as $eventEntityTransfer) {
-            if ($eventEntityTransfer->getId() !== null) {
-                $productIds[] = $eventEntityTransfer->getId();
-
-                continue;
-            }
-
-            $fkProductAbstract = $eventEntityTransfer->getForeignKeys()[ProductConfig::COLUMN_FK_PRODUCT_ABSTRACT] ?? null;
-
-            if ($fkProductAbstract !== null) {
-                $productAbstractIds[] = $fkProductAbstract;
-            }
-        }
-
-        return (new ProductPublisherConfigTransfer())
-            ->setProductIds(array_unique($productIds))
-            ->setProductAbstractIds(array_unique($productAbstractIds))
-            ->setEventName(ProductUpdatedTransfer::class);
     }
 }

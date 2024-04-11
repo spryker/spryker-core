@@ -1065,6 +1065,34 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Uses EventEntityTransfer.id, EventEntityTransfer.name and EventEntityTransfer.foreignKeys to collect product abstract IDs.
+     * - When an event is not product event, but event of related entity, new event `Product.product_abstract.update` is triggered with the product abstract ID.
+     * - When an event is a product event, emits `ProductUpdated` messages to Message Broker, read {@link emitPublishProductToMessageBroker()} specification for details.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishProductToMessageBrokerByProductAbstractEvents(array $eventEntityTransfers): void;
+
+    /**
+     *  Specification:
+     *  - Uses EventEntityTransfer.id, EventEntityTransfer.name and EventEntityTransfer.foreignKeys to collect product IDs.
+     *  - When an event is not product event, but event of related entity, new event `Product.product_concrete.update` is triggered with the product ID.
+     *  - When an event is a product event, emits `ProductUpdated` messages to Message Broker, read {@link emitPublishProductToMessageBroker()} specification for details.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishProductToMessageBrokerByProductEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
      * - Requires ProductPublisherConfigTransfer.productIds.
      * - Sends ProductDeletedTransfer event to the event bus.
      *

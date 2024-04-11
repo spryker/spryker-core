@@ -787,4 +787,115 @@ class ProductFacadeTest extends Unit
             $this->assertIsArray($productConcreteTransfer->getAttributes());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testPublishProductToMessageBrokerByProductEventsWithProductIdsEmitsProductUpdatedMessageToMessageBroker(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $eventEntityTransfer = (new EventEntityTransfer())
+            ->setEvent(ProductEvents::PRODUCT_CONCRETE_UPDATE)
+            ->setId($productConcreteTransfer->getIdProductConcrete());
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $productConcreteTransfer,
+            ProductUpdatedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->publishProductToMessageBrokerByProductEvents([$eventEntityTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishProductToMessageBrokerByProductEventsWithFkProductIdTriggersEventProductUpdate(): void
+    {
+        // Arrange
+        $idProduct = 1000;
+        $eventEntityTransfer = (new EventEntityTransfer())
+            ->setEvent('Entity.spy_product_entity.update')
+            ->setName('spy_product_entity')
+            ->setForeignKeys(['spy_product_entity.fk_product' => $idProduct]);
+
+        // Assert
+        $this->eventFacade
+            ->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductEvents::PRODUCT_CONCRETE_UPDATE, $this->callback(
+                function (array $transfers) use ($idProduct) {
+                    $this->assertNotEmpty($transfers);
+                    $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
+                    $this->assertSame($idProduct, $transfers[0]->getId());
+
+                    return true;
+                },
+            ));
+
+        // Act
+        $this->tester->getProductFacade()->publishProductToMessageBrokerByProductEvents([$eventEntityTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishProductToMessageBrokerByProductAbstractEventsWithProductIdsEmmitsProductUpdatedMessageToMessageBroker(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $eventEntityTransfer = (new EventEntityTransfer())
+            ->setEvent(ProductEvents::PRODUCT_ABSTRACT_UPDATE)
+            ->setId($productConcreteTransfer->getFkProductAbstract());
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $productConcreteTransfer,
+            ProductUpdatedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->publishProductToMessageBrokerByProductAbstractEvents([$eventEntityTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishProductToMessageBrokerByProductAbstractEventsWithFkProductIdTriggersEventProductAbstractUpdate(): void
+    {
+        // Arrange
+        $eventEntityTransfers = [];
+        $idProductAbstract = 1000;
+        $idProductAbstract2 = 1001;
+        $eventEntityTransfers[] = (new EventEntityTransfer())
+            ->setEvent('Entity.spy_product_entity.update')
+            ->setName('spy_product_entity')
+            ->setForeignKeys(['spy_product_entity.fk_product_abstract' => $idProductAbstract]);
+        $eventEntityTransfers[] = (new EventEntityTransfer())
+            ->setEvent('Entity.spy_another_product_entity.update')
+            ->setName('spy_another_product_entity')
+            ->setForeignKeys(['spy_another_product_entity.fk_resource_product_abstract' => $idProductAbstract2]);
+
+        // Assert
+        $this->eventFacade
+            ->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductEvents::PRODUCT_ABSTRACT_UPDATE, $this->callback(
+                function (array $transfers) use ($idProductAbstract, $idProductAbstract2) {
+                    $this->assertCount(2, $transfers);
+                    $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
+                    $this->assertSame($idProductAbstract, $transfers[0]->getId());
+                    $this->assertSame($idProductAbstract2, $transfers[1]->getId());
+
+                    return true;
+                },
+            ));
+
+        // Act
+        $this->tester->getProductFacade()->publishProductToMessageBrokerByProductAbstractEvents($eventEntityTransfers);
+    }
 }

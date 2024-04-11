@@ -70,9 +70,60 @@ interface ProductCategoryEvents
     public const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
 
     /**
+     * @deprecated Use Product Abstract related events instead.
+     *
      * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
      *
      * @var string
      */
     public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_UPDATE
+     *
+     * @var string
+     */
+    public const PRODUCT_ABSTRACT_UPDATE = 'Product.product_abstract.update';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_PUBLISH;
+     *
+     * @var string
+     */
+    public const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
+    /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
+
+    /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
+
+    /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
+
+    /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
+
+    /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
 }
