@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Communication\Plugin\Publisher;
 
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -14,7 +15,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
  * @method \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface getFacade()
  */
-class ProductLabelProductUpdatedEventTriggerPlugin implements PublisherPluginInterface
+class ProductLabelProductUpdatedEventTriggerPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
