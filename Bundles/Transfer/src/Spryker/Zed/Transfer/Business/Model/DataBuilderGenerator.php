@@ -45,7 +45,7 @@ class DataBuilderGenerator
      */
     public function execute(): void
     {
-        $definitions = $this->definitionBuilder->getDefinitions();
+        $definitions = $this->definitionBuilder->getDefinitions($this->messenger);
 
         foreach ($definitions as $classDefinition) {
             $fileName = $this->generator->generate($classDefinition);

@@ -45,7 +45,7 @@ class TransferGenerator implements TransferGeneratorInterface
      */
     public function execute()
     {
-        $definitions = $this->definitionBuilder->getDefinitions();
+        $definitions = $this->definitionBuilder->getDefinitions($this->messenger);
 
         foreach ($definitions as $classDefinition) {
             $fileName = $this->generator->generate($classDefinition);

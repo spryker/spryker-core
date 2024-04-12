@@ -8,7 +8,10 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Exception;
+use Psr\Log\LoggerInterface;
+use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException;
+use Spryker\Zed\Transfer\TransferConfig;
 
 class TransferDefinitionMerger implements MergerInterface
 {
@@ -20,17 +23,49 @@ class TransferDefinitionMerger implements MergerInterface
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
     /**
+     * @var string
+     */
+    protected const PROPERTY_DESCRIPTION_DELIMITER = ', ';
+
+    /**
+     * @var string
+     */
+    protected const WARNING_MESSAGE_PROPERTY_DESCRIPTION_NOT_IDENTICAL = 'Description mismatch for "%1$s.%2$s" transfer property.' .
+        '⚠️ Description1: "%3$s"; Description2: "%4$s".' .
+        'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
+
+    /**
      * @var array<string, array>
      */
     protected $mergedTransferDefinitions = [];
 
     /**
+     * @var \Spryker\Zed\Transfer\TransferConfig
+     */
+    protected $transferConfig;
+
+    /**
+     * @var \Psr\Log\LoggerInterface|null
+     */
+    protected $messenger;
+
+    /**
+     * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
+     */
+    public function __construct(TransferConfig $transferConfig)
+    {
+        $this->transferConfig = $transferConfig;
+    }
+
+    /**
      * @param array<array> $transferDefinitions
+     * @param \Psr\Log\LoggerInterface|null $messenger
      *
      * @return array<string, array>
      */
-    public function merge(array $transferDefinitions): array
+    public function merge(array $transferDefinitions, ?LoggerInterface $messenger = null): array
     {
+        $this->messenger = $messenger;
         $this->mergedTransferDefinitions = [];
 
         /** @var array<string, string> $transferDefinition */
@@ -155,6 +190,12 @@ class TransferDefinitionMerger implements MergerInterface
                     $property[$propertyName] = $this->mergeDeprecatedAttributes($property[$propertyName], $propertyValue);
 
                     break;
+                case 'description': // phpcs:ignore
+                    if (!$this->isDefaultMergeStrategy()) {
+                        $property[$propertyName] = $this->mergePropertyDescription($property[$propertyName], $propertyValue, $property['name'], $transferName);
+
+                        break;
+                    }
                 default:
                     if ($propertyValue !== $property[$propertyName]) {
                         throw new Exception(sprintf(
@@ -184,6 +225,41 @@ class TransferDefinitionMerger implements MergerInterface
         $mergedPropertyBundles = array_merge($bundles1, $bundles2);
 
         return array_unique($mergedPropertyBundles);
+    }
+
+    /**
+     * @param string $description1
+     * @param string $description2
+     * @param string $propertyName
+     * @param string $transferName
+     *
+     * @return string|null
+     */
+    protected function mergePropertyDescription(string $description1, string $description2, $propertyName, $transferName): ?string
+    {
+        if ($description1 === $description2) {
+            return $description1;
+        }
+
+        if ($this->isConcatMergeStrategy()) {
+            return sprintf('%s%s%s', $description1, static::PROPERTY_DESCRIPTION_DELIMITER, $description2);
+        }
+
+        if ($this->isGetFirstMergeStrategy()) {
+            $this->logWarning(
+                sprintf(
+                    static::WARNING_MESSAGE_PROPERTY_DESCRIPTION_NOT_IDENTICAL,
+                    $transferName,
+                    $propertyName,
+                    $description1,
+                    $description2,
+                ),
+            );
+
+            return $description1;
+        }
+
+        return null;
     }
 
     /**
@@ -268,5 +344,44 @@ class TransferDefinitionMerger implements MergerInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDefaultMergeStrategy(): bool
+    {
+        return $this->transferConfig->getPropertyDescriptionMergeStrategy() === TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_DEFAULT;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isConcatMergeStrategy(): bool
+    {
+        return $this->transferConfig->getPropertyDescriptionMergeStrategy() === TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_CONCAT;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isGetFirstMergeStrategy(): bool
+    {
+        return $this->transferConfig->getPropertyDescriptionMergeStrategy() === TransferConstants::PROPERTY_DESCRIPTION_MERGE_STRATEGY_GET_FIRST;
+    }
+
+    /**
+     * @param string $message
+     * @param array<mixed> $context
+     *
+     * @return void
+     */
+    protected function logWarning(string $message, array $context = [])
+    {
+        if ($this->messenger !== null) {
+            $this->messenger->warning($message, $context);
+
+            return;
+        }
     }
 }

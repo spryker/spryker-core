@@ -298,7 +298,9 @@ class TransferBusinessFactory extends AbstractBusinessFactory
      */
     protected function createTransferDefinitionMerger()
     {
-        return new TransferDefinitionMerger();
+        return new TransferDefinitionMerger(
+            $this->getConfig(),
+        );
     }
 
     /**

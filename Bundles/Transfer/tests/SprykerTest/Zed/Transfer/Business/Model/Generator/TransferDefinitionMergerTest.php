@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Transfer\TransferConfig;
+use SprykerTest\Zed\Transfer\TransferBusinessTester;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 
 /**
  * Auto-generated group annotations
@@ -25,6 +28,11 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 class TransferDefinitionMergerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Transfer\TransferBusinessTester
+     */
+    protected TransferBusinessTester $tester;
+
+    /**
      * @return void
      */
     public function testMergeShouldReturnMergedTransferDefinition(): void
@@ -37,8 +45,9 @@ class TransferDefinitionMergerTest extends Unit
 
         $expected = [];
         $expected['Transfer'] = $helper->getExpectedTransfer();
+        $transferConfig = new TransferConfig();
 
-        $merger = new TransferDefinitionMerger();
+        $merger = new TransferDefinitionMerger($transferConfig, $this->getMessengerMock());
         $this->assertEquals($expected, $merger->merge($transferDefinitions));
     }
 
@@ -66,9 +75,18 @@ class TransferDefinitionMergerTest extends Unit
 
         $expected = [];
         $expected['Transfer'] = $helper->getExpectedTransfer();
+        $transferConfig = new TransferConfig();
 
-        $merger = new TransferDefinitionMerger();
+        $merger = new TransferDefinitionMerger($transferConfig, $this->getMessengerMock());
 
         $merger->merge($transferDefinitions);
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMessengerMock(): ConsoleLogger
+    {
+        return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
 }

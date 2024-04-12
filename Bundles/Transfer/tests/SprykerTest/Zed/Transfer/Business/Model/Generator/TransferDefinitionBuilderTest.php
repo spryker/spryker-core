@@ -17,6 +17,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\TransferConfig;
+use Symfony\Component\Console\Logger\ConsoleLogger;
 
 /**
  * Auto-generated group annotations
@@ -43,7 +44,7 @@ class TransferDefinitionBuilderTest extends Unit
 
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($directories);
 
-        $result = $transferDefinitionBuilder->getDefinitions();
+        $result = $transferDefinitionBuilder->getDefinitions($this->getMessengerMock());
         $this->assertTrue(is_array($result), print_r($result, true));
 
         $transferDefinition = $result[0];
@@ -65,7 +66,7 @@ class TransferDefinitionBuilderTest extends Unit
         $this->expectExceptionMessage('Transfer name `category` does not match expected name `Category` for module `Test`');
 
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $config);
-        $transferDefinitionBuilder->getDefinitions();
+        $transferDefinitionBuilder->getDefinitions($this->getMessengerMock());
     }
 
     /**
@@ -81,7 +82,7 @@ class TransferDefinitionBuilderTest extends Unit
         $loader = new TransferDefinitionLoader($finder, $normalizer);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
-            new TransferDefinitionMerger(),
+            new TransferDefinitionMerger(new TransferConfig(), $this->getMessengerMock()),
             new ClassDefinition($config ?: new TransferConfig()),
         );
 
@@ -94,5 +95,13 @@ class TransferDefinitionBuilderTest extends Unit
     protected function getTransferConfigMock(): TransferConfig
     {
         return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMessengerMock(): ConsoleLogger
+    {
+        return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
 }

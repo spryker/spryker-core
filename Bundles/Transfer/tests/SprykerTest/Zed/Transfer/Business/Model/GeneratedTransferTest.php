@@ -871,10 +871,18 @@ class GeneratedTransferTest extends Unit
         $loader = new TransferDefinitionLoader($finder, $normalizer);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
-            new TransferDefinitionMerger(),
+            new TransferDefinitionMerger(new TransferConfig(), $this->getMessengerMock()),
             new ClassDefinition(new TransferConfig()),
         );
 
         return $definitionBuilder;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMessengerMock(): ConsoleLogger
+    {
+        return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
 }

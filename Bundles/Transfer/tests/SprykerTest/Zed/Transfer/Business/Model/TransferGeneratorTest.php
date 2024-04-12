@@ -46,7 +46,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
-        $this->assertCount(1, $transferDefinitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+        $this->assertCount(1, $transferDefinitionBuilder->getDefinitions($this->getMessengerMock()), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -73,7 +73,7 @@ class TransferGeneratorTest extends Unit
         $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
 
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $config);
-        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+        $this->assertCount(1, $definitionBuilder->getDefinitions($this->getMessengerMock()), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -98,7 +98,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Vendor/Test2/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
-        $this->assertCount(2, $definitionBuilder->getDefinitions(), 'Expected to get 2 class definitions.');
+        $this->assertCount(2, $definitionBuilder->getDefinitions($this->getMessengerMock()), 'Expected to get 2 class definitions.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -124,7 +124,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Shared/Deprecated/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
-        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+        $this->assertCount(1, $definitionBuilder->getDefinitions($this->getMessengerMock()), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -149,7 +149,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Project/Deprecated/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
-        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+        $this->assertCount(1, $definitionBuilder->getDefinitions($this->getMessengerMock()), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -315,7 +315,7 @@ class TransferGeneratorTest extends Unit
         $loader = new TransferDefinitionLoader($finder, $normalizer);
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
-            new TransferDefinitionMerger(),
+            new TransferDefinitionMerger(new TransferConfig(), $this->getMessengerMock()),
             new ClassDefinition($config ?: new TransferConfig()),
         );
 
@@ -331,5 +331,13 @@ class TransferGeneratorTest extends Unit
         $configMock->method('isDebugEnabled')->willReturn(false);
 
         return $configMock;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMessengerMock(): ConsoleLogger
+    {
+        return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
 }

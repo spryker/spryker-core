@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Psr\Log\LoggerInterface;
+
 class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
     /**
@@ -37,12 +39,14 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
     }
 
     /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
      * @return array<\Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface|\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface>
      */
-    public function getDefinitions(): array
+    public function getDefinitions(LoggerInterface $messenger): array
     {
         $definitions = $this->loader->getDefinitions();
-        $definitions = $this->merger->merge($definitions);
+        $definitions = $this->merger->merge($definitions, $messenger);
 
         return $this->buildDefinitions($definitions, $this->classDefinition);
     }
