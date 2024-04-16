@@ -102,8 +102,9 @@ class Repeater implements RepeaterInterface
         $string = serialize($repeatData);
 
         $directory = dirname($filePath);
-        if (!is_dir($directory)) {
-            mkdir($directory, $this->getConfig()->getPermissionMode(), true);
+
+        if ($this->makeDirectory($directory) === false) {
+            return;
         }
 
         file_put_contents($filePath, $string);
@@ -162,5 +163,19 @@ class Repeater implements RepeaterInterface
                 $moduleControllerAction,
             ),
         );
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return bool
+     */
+    protected function makeDirectory(string $directory): bool
+    {
+        if (!is_dir($directory) && !mkdir($directory, $this->getConfig()->getPermissionMode(), true) && !is_dir($directory)) {
+            return false;
+        }
+
+        return true;
     }
 }
