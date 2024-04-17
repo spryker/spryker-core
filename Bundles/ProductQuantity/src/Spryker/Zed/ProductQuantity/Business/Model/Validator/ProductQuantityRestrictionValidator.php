@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\ProductQuantity\Business\Model\Validator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
@@ -34,6 +39,11 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      * @var string
      */
     protected const ERROR_QUANTITY_INCORRECT = 'cart.pre.check.quantity.value.failed';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_PARAMETER_SKU = '%sku%';
 
     /**
      * @var string
@@ -75,7 +85,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
         $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemAddCartQuantityMap($cartChangeTransfer);
-        $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap($cartChangeTransfer);
+        $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap(array_values($changedSkuMapByGroupKey));
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
@@ -104,7 +114,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
         $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemRemoveCartQuantityMap($cartChangeTransfer);
-        $productQuantityTransferMap = $this->getProductQuantityTransferMap($cartChangeTransfer);
+        $productQuantityTransferMap = $this->getProductQuantityTransferMap(array_values($changedSkuMapByGroupKey));
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
@@ -119,6 +129,36 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         }
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isValidItemQuantitiesOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        $errorsCount = $checkoutResponseTransfer->getErrors()->count();
+        $itemSkus = $this->extractItemSkus($quoteTransfer->getItems());
+        $productQuantityTransfersIndexedBySku = $this->getProductQuantityTransferMap($itemSkus);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productQuantityTransfer = $productQuantityTransfersIndexedBySku[$itemTransfer->getSkuOrFail()] ?? null;
+            if (!$productQuantityTransfer) {
+                continue;
+            }
+
+            $checkoutResponseTransfer = $this->validateItemPreCheckout(
+                $itemTransfer,
+                $productQuantityTransfer,
+                $checkoutResponseTransfer,
+            );
+        }
+
+        return $checkoutResponseTransfer->getErrors()->count() === $errorsCount;
     }
 
     /**
@@ -139,17 +179,75 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
-        if ($quantity !== 0 && $quantity < $min) {
+        if (!$this->isMinQuantityFulfilled($quantity, $min)) {
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
-        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
+        if (!$this->isQuantityIntervalFulfilled($quantity, $min, $interval)) {
             $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
-        if ($max !== null && $quantity > $max) {
+        if (!$this->isMaxQuantityFulfilled($quantity, $max)) {
             $this->addViolation(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function validateItemPreCheckout(
+        ItemTransfer $itemTransfer,
+        ProductQuantityTransfer $productQuantityTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): CheckoutResponseTransfer {
+        $itemQuantity = $itemTransfer->getQuantityOrFail();
+        $min = $productQuantityTransfer->getQuantityMin();
+        $max = $productQuantityTransfer->getQuantityMax();
+        $interval = $productQuantityTransfer->getQuantityInterval();
+
+        if (!$this->isQuantityPositiveInteger($itemQuantity)) {
+            $checkoutResponseTransfer->addError(
+                $this->createCheckoutErrorTransfer(
+                    static::ERROR_QUANTITY_INCORRECT,
+                    [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                ),
+            );
+
+            return $checkoutResponseTransfer;
+        }
+
+        if (!$this->isMinQuantityFulfilled($itemQuantity, $min)) {
+            $checkoutResponseTransfer->addError(
+                $this->createCheckoutErrorTransfer(
+                    static::ERROR_QUANTITY_MIN_NOT_FULFILLED,
+                    [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                ),
+            );
+        }
+
+        if (!$this->isQuantityIntervalFulfilled($itemQuantity, $min, $interval)) {
+            $checkoutResponseTransfer->addError(
+                $this->createCheckoutErrorTransfer(
+                    static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED,
+                    [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                ),
+            );
+        }
+
+        if (!$this->isMaxQuantityFulfilled($itemQuantity, $max)) {
+            $checkoutResponseTransfer->addError(
+                $this->createCheckoutErrorTransfer(
+                    static::ERROR_QUANTITY_MAX_NOT_FULFILLED,
+                    [static::GLOSSARY_KEY_PARAMETER_SKU => $itemTransfer->getSkuOrFail()],
+                ),
+            );
+        }
+
+        return $checkoutResponseTransfer;
     }
 
     /**
@@ -228,13 +326,12 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<string> $skus
      *
      * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer> Keys are product SKUs.
      */
-    protected function getProductQuantityTransferMap(CartChangeTransfer $cartChangeTransfer): array
+    protected function getProductQuantityTransferMap(array $skus): array
     {
-        $skus = $this->getChangedSkuMap($cartChangeTransfer);
         $productQuantityTransfers = $this->productQuantityReader->findProductQuantityTransfersByProductSku($skus);
 
         $productQuantityTransferMap = $this->mapProductQuantityTransfersBySku($productQuantityTransfers);
@@ -305,6 +402,21 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return list<string>
+     */
+    protected function extractItemSkus(ArrayObject $itemTransfers): array
+    {
+        $itemSkus = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemSkus[] = $itemTransfer->getSkuOrFail();
+        }
+
+        return $itemSkus;
+    }
+
+    /**
      * @param string $sku
      * @param string|float|int $quantity
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
@@ -313,7 +425,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected function validateQuantityIsPositiveInteger(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        if ($quantity <= 0 || !ctype_digit((string)$quantity)) {
+        if (!$this->isQuantityPositiveInteger($quantity)) {
             $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
 
             return false;
@@ -355,7 +467,64 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue($message)
-                ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue]),
+                ->setParameters([static::GLOSSARY_KEY_PARAMETER_SKU => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue]),
         );
+    }
+
+    /**
+     * @param string $message
+     * @param array<string, mixed> $parameters
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createCheckoutErrorTransfer(string $message, array $parameters): CheckoutErrorTransfer
+    {
+        return (new CheckoutErrorTransfer())
+            ->setMessage($message)
+            ->setParameters($parameters);
+    }
+
+    /**
+     * @param string|float|int $quantity
+     *
+     * @return bool
+     */
+    protected function isQuantityPositiveInteger(float|int|string $quantity): bool
+    {
+        return $quantity > 0 && ctype_digit((string)$quantity);
+    }
+
+    /**
+     * @param int $quantity
+     * @param int|null $min
+     *
+     * @return bool
+     */
+    protected function isMinQuantityFulfilled(int $quantity, ?int $min): bool
+    {
+        return $quantity === 0 || $quantity >= $min;
+    }
+
+    /**
+     * @param int $quantity
+     * @param int|null $min
+     * @param int|null $interval
+     *
+     * @return bool
+     */
+    protected function isQuantityIntervalFulfilled(int $quantity, ?int $min, ?int $interval): bool
+    {
+        return $quantity === 0 || ($quantity - $min) % $interval === 0;
+    }
+
+    /**
+     * @param int $quantity
+     * @param int|null $max
+     *
+     * @return bool
+     */
+    protected function isMaxQuantityFulfilled(int $quantity, ?int $max): bool
+    {
+        return $max === null || $quantity <= $max;
     }
 }

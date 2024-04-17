@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Business\Model\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductQuantityRestrictionValidatorInterface
 {
@@ -25,4 +27,15 @@ interface ProductQuantityRestrictionValidatorInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItemRemoval(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isValidItemQuantitiesOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

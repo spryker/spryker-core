@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductQuantityFacadeInterface
 {
@@ -99,4 +101,23 @@ interface ProductQuantityFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.items.sku` to be set.
+     * - Validates if quote items fulfill all quantity restriction rules during checkout.
+     * - Adds all found errors to `CheckoutResponseTransfer.errors`.
+     * - Returns `true` if no errors were found, `false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isValidItemQuantitiesOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

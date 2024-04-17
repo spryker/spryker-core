@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -128,5 +130,24 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityReader()
             ->findFilteredProductQuantityTransfers($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isValidItemQuantitiesOnCheckout(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createProductQuantityRestrictionValidator()
+            ->isValidItemQuantitiesOnCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 }
