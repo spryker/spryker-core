@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader;
 
 use Countable;
-use Exception;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use SplFileObject;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
@@ -16,6 +15,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedExce
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use ValueError;
 
 class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface, Countable
 {
@@ -173,7 +173,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
             try {
                 /** @var array $dataSet */
                 $dataSet = array_combine($this->dataSetKeys, $dataSet);
-            } catch (Exception $e) {
+            } catch (ValueError $e) {
                 throw new DataSetWithHeaderCombineFailedException(sprintf(
                     'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
                     implode(', ', $this->dataSetKeys),
