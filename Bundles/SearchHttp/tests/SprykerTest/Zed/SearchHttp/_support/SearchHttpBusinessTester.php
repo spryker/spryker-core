@@ -60,7 +60,7 @@ class SearchHttpBusinessTester extends Actor
     public function findSearchHttpConfigByStoreName(string $storeName): ?SpySearchHttpConfig
     {
         return $this->getSearchHttpConfigQuery()
-            ->filterByStoreName($storeName)
+            ->filterByStore($storeName)
             ->findOne();
     }
 

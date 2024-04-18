@@ -56,7 +56,7 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
                 $searchHttpConfigCollectionTransfer,
                 $searchHttpConfigEntity,
             )
-            ->setStoreName($storeTransfer->getNameOrFail())
+            ->setStore($storeTransfer->getNameOrFail())
             ->save();
     }
 
@@ -90,7 +90,7 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
                     $searchHttpConfigCollectionTransfer,
                     $searchHttpConfigEntity,
                 )
-                ->setStoreName($storeTransfer->getNameOrFail())
+                ->setStore($storeTransfer->getNameOrFail())
                 ->save();
         }
     }
@@ -104,7 +104,7 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
     {
         return $this->getFactory()
             ->createSearchHttpPropelQuery()
-            ->filterByStoreName($storeName)
+            ->filterByStore($storeName)
             ->findOne();
     }
 
