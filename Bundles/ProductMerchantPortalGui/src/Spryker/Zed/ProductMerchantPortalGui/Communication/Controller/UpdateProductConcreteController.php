@@ -478,6 +478,10 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         $this->getFactory()
             ->getProductFacade()
             ->saveProductConcrete($productConcreteTransfer);
+
+        $productConcreteTransfer->getIsActiveOrFail()
+            ? $this->getFactory()->getProductFacade()->activateProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            : $this->getFactory()->getProductFacade()->deactivateProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
     }
 
     /**
