@@ -9,6 +9,7 @@ namespace SprykerTest\Glue\GlueApplication\Plugin\Console;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\Plugin\Console\ControllerCacheCollectorConsole;
 use SprykerTest\Glue\GlueApplication\GlueApplicationTester;
 use Symfony\Component\Console\Application;
@@ -51,6 +52,42 @@ class ControllerCacheCollectorConsoleTest extends Unit
 
         // Act
         $commandTester->execute([]);
+
+        // Assert
+        $this->assertSame(ControllerCacheCollectorConsole::CODE_SUCCESS, $commandTester->getStatusCode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCommandIsExecutableWithArgumentApplication(): void
+    {
+        // Arrange & Assert
+        $controllerCacheWriterMock = $this->getMockBuilder(ControllerCacheWriterInterface::class)->getMock();
+        $controllerCacheWriterMock
+            ->expects($this->once())
+            ->method('cache')
+            ->will(
+                $this->returnCallback(function ($apiApplication) {
+                        $this->assertSame($this->tester::FAKE_APPLICATION, $apiApplication);
+                }),
+            );
+        $this->tester->mockConfigMethod('getControllerCachePath', Configuration::dataDir());
+        $this->tester->mockFactoryMethod('createControllerCacheWriter', $controllerCacheWriterMock);
+
+        $controllerCacheCollectorConsole = new ControllerCacheCollectorConsole();
+        $controllerCacheCollectorConsole->setFactory($this->tester->getFactory());
+
+        $application = new Application();
+        $application->add($controllerCacheCollectorConsole);
+
+        $command = $application->find($controllerCacheCollectorConsole->getName());
+        $commandTester = new CommandTester($command);
+
+        // Act
+        $commandTester->execute([
+            'application' => $this->tester::FAKE_APPLICATION,
+        ]);
 
         // Assert
         $this->assertSame(ControllerCacheCollectorConsole::CODE_SUCCESS, $commandTester->getStatusCode());
