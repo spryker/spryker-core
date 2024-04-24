@@ -217,7 +217,7 @@ abstract class AbstractFieldTypeValidator
 
     /**
      * @param string $entityIdentifier
-     * @param array<string, string> $validationRules
+     * @param array<string, mixed> $validationRules
      * @param string $fieldName
      * @param string $errorPath
      *
@@ -231,6 +231,10 @@ abstract class AbstractFieldTypeValidator
     ): ErrorTransfer {
         $rules = [];
         foreach ($validationRules as $key => $value) {
+            if (is_array($value) && count($value) === 0) {
+                continue;
+            }
+
             if ($value !== null) {
                 $rules[] = sprintf('%s: %s', $key, $value);
             }

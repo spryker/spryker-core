@@ -102,6 +102,7 @@ class FieldTypeIntegerValidatorRule extends AbstractFildTypeValidatorRule implem
             'isRequired',
             'min',
             'max',
+            'constraints',
         ];
     }
 

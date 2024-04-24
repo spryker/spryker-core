@@ -102,6 +102,7 @@ class FieldTypeStringValidatorRule extends AbstractFildTypeValidatorRule impleme
             'isRequired',
             'minLength',
             'maxLength',
+            'constraints',
         ];
     }
 

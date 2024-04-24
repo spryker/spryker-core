@@ -925,6 +925,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             if ($productAbstractCriteriaTransfer->getProductAbstractConditions()->getSkus()) {
                 $productAbstractQuery->filterBySku_In($productAbstractCriteriaTransfer->getProductAbstractConditions()->getSkus());
             }
+            if ($productAbstractCriteriaTransfer->getProductAbstractConditions()->getIds()) {
+                $productAbstractQuery->filterByIdProductAbstract_In($productAbstractCriteriaTransfer->getProductAbstractConditions()->getIds());
+            }
         }
 
         return $productAbstractQuery;

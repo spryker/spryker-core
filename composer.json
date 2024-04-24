@@ -675,6 +675,7 @@
         "spryker/product-discontinued-storage": "*",
         "spryker/product-discount-connector": "*",
         "spryker/product-discount-connector-extension": "*",
+        "spryker/product-dynamic-entity-connector": "*",
         "spryker/product-extension": "*",
         "spryker/product-group": "*",
         "spryker/product-group-collector": "*",

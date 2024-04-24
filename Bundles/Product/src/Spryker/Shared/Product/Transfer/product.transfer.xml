@@ -209,6 +209,7 @@
 
     <transfer name="ProductAbstractConditions" strict="true">
         <property name="skus" type="string[]" singular="sku"/>
+        <property name="ids" type="array" singular="id"/>
     </transfer>
 
     <transfer name="Sort">

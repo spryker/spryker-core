@@ -80,6 +80,11 @@
         <property name="maxLength" type="int"/>
         <property name="minLength" type="int"/>
         <property name="isRequired" type="bool"/>
+        <property name="constraints" type="DynamicEntityFieldValidationConstraint[]" singular="constraint"/>
+    </transfer>
+
+    <transfer name="DynamicEntityFieldValidationConstraint" strict="true">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="DynamicEntityCollectionRequest" strict="true">

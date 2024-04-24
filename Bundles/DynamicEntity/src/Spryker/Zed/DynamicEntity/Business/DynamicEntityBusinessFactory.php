@@ -43,6 +43,9 @@ use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValid
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\Constraint\ConstraintInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\Constraint\UrlConstraint;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\ConstraintValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequestFieldValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequiredFieldValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\BooleanFieldTypeValidator;
@@ -170,6 +173,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->createStringFieldTypeValidator(),
             $this->createBooleanFieldTypeValidator(),
             $this->createDecimalFeildTypeValidator(),
+            $this->createConstraintValidator(),
         ];
     }
 
@@ -186,6 +190,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->createStringFieldTypeValidator(),
             $this->createBooleanFieldTypeValidator(),
             $this->createDecimalFeildTypeValidator(),
+            $this->createConstraintValidator(),
         ];
     }
 
@@ -196,6 +201,17 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new RequiredFieldValidator(
             $this->createDynamicEntityErrorPathResolver(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    public function createConstraintValidator(): DynamicEntityValidatorInterface
+    {
+        return new ConstraintValidator(
+            $this->createDynamicEntityErrorPathResolver(),
+            $this->getFieldsValidationConstraints(),
         );
     }
 
@@ -495,5 +511,23 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
     {
         return new DynamicEntityErrorPathResolver();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\Constraint\ConstraintInterface
+     */
+    public function createUrlConstraint(): ConstraintInterface
+    {
+        return new UrlConstraint();
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\Constraint\ConstraintInterface>
+     */
+    public function getFieldsValidationConstraints(): array
+    {
+        return [
+            $this->createUrlConstraint(),
+        ];
     }
 }

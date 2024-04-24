@@ -87,6 +87,7 @@ class FieldTypeDecimalValidatorRule extends AbstractFildTypeValidatorRule implem
             'isRequired',
             'precision',
             'scale',
+            'constraints',
         ];
     }
 

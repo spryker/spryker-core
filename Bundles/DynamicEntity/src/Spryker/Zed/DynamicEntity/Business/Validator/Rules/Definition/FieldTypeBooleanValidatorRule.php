@@ -42,6 +42,7 @@ class FieldTypeBooleanValidatorRule extends AbstractFildTypeValidatorRule implem
     {
         return [
             'isRequired',
+            'constraints',
         ];
     }
 
