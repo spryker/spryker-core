@@ -412,6 +412,8 @@
         "spryker/merchant-category": "*",
         "spryker/merchant-category-data-import": "*",
         "spryker/merchant-category-search": "*",
+        "spryker/merchant-commission": "*",
+        "spryker/merchant-commission-data-import": "*",
         "spryker/merchant-data-import": "*",
         "spryker/merchant-extension": "*",
         "spryker/merchant-gui": "*",

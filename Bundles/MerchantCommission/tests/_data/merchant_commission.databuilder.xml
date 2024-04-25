@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="MerchantCommission" strict="true">
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="isActive" dataBuilderRule="=true"/>
+        <property name="key" dataBuilderRule="unique()->word()"/>
+        <property name="validFrom" dataBuilderRule="dateTime('-1 day')->format('Y-m-d H:i:s')"/>
+        <property name="validTo" dataBuilderRule="dateTimeInInterval('+1 day', '+10 years')->format('Y-m-d H:i:s')"/>
+        <property name="priority" dataBuilderRule="=9999"/>
+        <property name="calculatorTypePlugin" dataBuilderRule="=test-calculator-type-fixed"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionGroup" strict="true">
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="key" dataBuilderRule="unique()->word()"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmount" strict="true">
+        <property name="netAmount" dataBuilderRule="randomNumber(3, true)"/>
+        <property name="grossAmount" dataBuilderRule="randomNumber(3, true)"/>
+    </transfer>
+
+</transfers>

@@ -1,0 +1,3 @@
+key,name,description,valid_from,valid_to,is_active,amount,calculator_type_plugin,merchant_commission_group_key,priority,item_condition,order_condition
+test-mc-1,Test Merchant Commission 1,,2024-01-01,2029-06-01,1,10,percentage,test-mcg-1,4,item-price >= '500' AND category IS IN 'computer',"price-mode = ""GROSS_MODE"""
+test-mc-2,Test Merchant Commission 2,,2024-01-01,2029-06-01,0,,fixed,test-mcg-1,4,,"price-mode = ""NET_MODE"""

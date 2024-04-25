@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantCommission" strict="true">
+        <property name="idMerchantCommission" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="key" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="priority" type="int"/>
+        <property name="itemCondition" type="string"/>
+        <property name="orderCondition" type="string"/>
+        <property name="calculatorTypePlugin" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="merchantCommissionGroup" type="MerchantCommissionGroup"/>
+        <property name="merchantCommissionAmounts" type="MerchantCommissionAmount[]" singular="merchantCommissionAmount"/>
+        <property name="merchants" type="Merchant[]" singular="merchant"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionGroup" strict="true">
+        <property name="idMerchantCommissionGroup" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmount" strict="true">
+        <property name="idMerchantCommissionAmount" type="int"/>
+        <property name="fkMerchantCommission" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCollection" strict="true">
+        <property name="merchantCommissions" type="MerchantCommission[]" singular="merchantCommission"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCriteria" strict="true">
+        <property name="merchantCommissionConditions" type="MerchantCommissionConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionConditions" strict="true">
+        <property name="merchantCommissionIds" type="int[]" singular="idMerchantCommission"/>
+        <property name="keys" type="string[]" singular="key"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="isActive" type="bool"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantCommissionGroupNames" type="string[]" singular="merchantCommissionGroupName"/>
+        <property name="withStoreRelations" type="bool"/>
+        <property name="withMerchantRelations" type="bool"/>
+        <property name="withCommissionMerchantAmountRelations" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCollectionRequest" strict="true">
+        <property name="merchantCommissions" type="MerchantCommission[]" singular="merchantCommission"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCollectionResponse" strict="true">
+        <property name="merchantCommissions" type="MerchantCommission[]" singular="merchantCommission"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmountCollection" strict="true">
+        <property name="merchantCommissionAmounts" type="MerchantCommissionAmount[]" singular="merchantCommissionAmount"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmountCriteria" strict="true">
+        <property name="merchantCommissionAmountConditions" type="MerchantCommissionAmountConditions"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmountConditions" strict="true">
+        <property name="merchantCommissionIds" type="int[]" singular="idMerchantCommission"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionGroupCollection" strict="true">
+        <property name="merchantCommissionGroups" type="MerchantCommissionGroup[]" singular="merchantCommissionGroup"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionGroupCriteria" strict="true">
+        <property name="merchantCommissionGroupConditions" type="MerchantCommissionGroupConditions"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionGroupConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="page" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="entityIdentifier" type="string"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+        <property name="idEntity" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="merchantIds" type="array" singular="merchantId"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
+        <property name="storeConditions" type="StoreConditions"/>
+    </transfer>
+
+    <transfer name="StoreConditions">
+        <property name="storeIds" type="array" singular="storeId"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
+    <transfer name="CurrencyCollection">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+    </transfer>
+
+    <transfer name="CurrencyConditions">
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="CurrencyCriteria">
+        <property name="currencyConditions" type="CurrencyConditions"/>
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+</transfers>

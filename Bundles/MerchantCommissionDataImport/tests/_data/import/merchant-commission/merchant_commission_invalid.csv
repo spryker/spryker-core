@@ -1,0 +1,6 @@
+key,name,description,valid_from,valid_to,is_active,amount,calculator_type_plugin,merchant_commission_group_key,priority,item_condition,order_condition
+,Test Merchant Commission 1,,2024-01-01,2029-06-01,1,10,percentage,test-mcg-1,4,,"price-mode = ""GROSS_MODE"""
+test-mc-1,,,2024-01-01,2029-06-01,1,10,percentage,test-mcg-1,4,,"price-mode = ""GROSS_MODE"""
+test-mc-1,Test Merchant Commission 1,,2024-01-01,2029-06-01,1,10,,test-mcg-1,4,,"price-mode = ""GROSS_MODE"""
+test-mc-1,Test Merchant Commission 1,,2024-01-01,2029-06-01,,10,percentage,test-mcg-1,4,,"price-mode = ""GROSS_MODE"""
+test-mc-1,Test Merchant Commission 1,,2024-01-01,2029-06-01,1,10,percentage,test-mcg-invalid,4,,"price-mode = ""GROSS_MODE"""

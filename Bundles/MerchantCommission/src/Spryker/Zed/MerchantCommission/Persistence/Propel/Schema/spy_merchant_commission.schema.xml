@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantCommission\Persistence" package="src.Orm.Zed.MerchantCommission.Persistence">
+
+    <table name="spy_merchant_commission_group" identifierQuoting="true">
+        <column name="id_merchant_commission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="key" type="VARCHAR" required="true" size="255"/>
+
+        <unique name="spy_merchant_commission_group-key">
+            <unique-column name="key"/>
+        </unique>
+
+        <unique name="spy_merchant_commission_group-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <id-method-parameter value="spy_merchant_commission_group_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_merchant_commission_group"/>
+        </behavior>
+    </table>
+
+    <table name="spy_merchant_commission" identifierQuoting="true">
+        <column name="id_merchant_commission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_merchant_commission_group" type="INTEGER" required="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="description" type="VARCHAR" size="1024"/>
+        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="amount" type="INTEGER" required="false"/>
+        <column name="is_active" type="BOOLEAN" required="true"/>
+        <column name="valid_from" type="TIMESTAMP" required="false"/>
+        <column name="valid_to" type="TIMESTAMP" required="false"/>
+        <column name="priority" type="INTEGER" required="true" default="9999"/>
+        <column name="item_condition" type="LONGVARCHAR" required="false"/>
+        <column name="order_condition" type="LONGVARCHAR" required="false"/>
+        <column name="calculator_type_plugin" type="VARCHAR" size="255" required="true"/>
+
+        <foreign-key name="spy_merchant_commission-fk_merchant_commission_group" foreignTable="spy_merchant_commission_group" phpName="MerchantCommissionGroup" refPhpName="MerchantCommission">
+            <reference local="fk_merchant_commission_group" foreign="id_merchant_commission_group"/>
+        </foreign-key>
+
+        <unique name="spy_merchant_commission-key">
+            <unique-column name="key"/>
+        </unique>
+
+        <unique name="spy_merchant_commission-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <index name="spy_merchant_commission-combined">
+            <index-column name="is_active"/>
+            <index-column name="valid_from"/>
+            <index-column name="valid_to"/>
+            <index-column name="priority"/>
+        </index>
+
+        <id-method-parameter value="spy_merchant_commission_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_merchant_commission"/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="spy_merchant_commission_amount">
+        <column name="id_merchant_commission_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_currency" type="INTEGER" required="true"/>
+        <column name="fk_merchant_commission" type="INTEGER" required="true"/>
+        <column name="gross_amount" type="INTEGER" required="false"/>
+        <column name="net_amount" type="INTEGER" required="false"/>
+
+        <unique name="spy_merchant_commission_amount-unique-c-mmc">
+            <unique-column name="fk_currency"/>
+            <unique-column name="fk_merchant_commission"/>
+        </unique>
+
+        <foreign-key name="spy_merchant_commission_amount-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="MerchantCommissionAmount">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+
+        <foreign-key name="spy_merchant_commission_amount-fk_merchant_commission" foreignTable="spy_merchant_commission" phpName="MerchantCommission" refPhpName="MerchantCommissionAmount">
+            <reference local="fk_merchant_commission" foreign="id_merchant_commission"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_merchant_commission_amount_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_merchant_commission_amount"/>
+        </behavior>
+    </table>
+
+    <table name="spy_merchant_commission_store">
+        <column name="id_merchant_commission_store" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_merchant_commission" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_merchant_commission_store-fk_merchant_commission" foreignTable="spy_merchant_commission" phpName="MerchantCommission" refPhpName="MerchantCommissionStore">
+            <reference local="fk_merchant_commission" foreign="id_merchant_commission"/>
+        </foreign-key>
+
+        <foreign-key name="spy_merchant_commission_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="MerchantCommission">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <unique name="spy_merchant_commission_store-fkmc-fks">
+            <unique-column name="fk_merchant_commission"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <id-method-parameter value="spy_merchant_commission_store_pk_seq"/>
+    </table>
+
+    <table name="spy_merchant_commission_merchant">
+        <column name="id_merchant_commission_merchant" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_merchant_commission" type="INTEGER" required="true"/>
+        <column name="fk_merchant" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_merchant_commission_merchant-fk_merchant_commission" foreignTable="spy_merchant_commission" phpName="MerchantCommission" refPhpName="MerchantCommissionMerchant">
+            <reference local="fk_merchant_commission" foreign="id_merchant_commission"/>
+        </foreign-key>
+
+        <foreign-key name="spy_merchant_commission_merchant-fk_merchant" foreignTable="spy_merchant" phpName="Merchant" refPhpName="MerchantCommission">
+            <reference local="fk_merchant" foreign="id_merchant"/>
+        </foreign-key>
+
+        <unique name="spy_merchant_commission_store-fkmc-fkm">
+            <unique-column name="fk_merchant_commission"/>
+            <unique-column name="fk_merchant"/>
+        </unique>
+
+        <id-method-parameter value="spy_merchant_commission_merchant_pk_seq"/>
+    </table>
+
+</database>
