@@ -19,6 +19,7 @@
         <property name="idSalesOrderItem" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="name" type="string"/>
+        <property name="sku" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
         <property name="state" type="ItemState"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
@@ -92,9 +93,15 @@
 
     <transfer name="RefundPayment">
         <property name="orderReference" type="string"/>
-        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="orderItemIds" type="array" singular="orderItemId" deprecated="Use orderItems property instead."/>
+        <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
         <property name="amount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="OrderItem">
+        <property name="orderItemId" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
     <!-- EOF Payment Messages -->
 

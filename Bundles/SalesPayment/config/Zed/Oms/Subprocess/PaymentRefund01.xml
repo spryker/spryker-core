@@ -14,6 +14,7 @@
             <state name="payment refund ready" display="oms.state.waiting"/>
             <state name="payment refund pending" display="oms.state.waiting"/>
             <state name="payment refunded" display="oms.state.refunded"/>
+            <state name="payment refund succeeded" display="oms.state.waiting"/>
             <state name="payment refund failed" display="oms.state.waiting"/>
         </states>
 
@@ -26,8 +27,14 @@
 
             <transition>
                 <source>payment refund pending</source>
-                <target>payment refunded</target>
+                <target>payment refund succeeded</target>
                 <event>payment refund successful</event>
+            </transition>
+
+            <transition>
+                <source>payment refund succeeded</source>
+                <target>payment refunded</target>
+                <event>confirm payment refund</event>
             </transition>
 
             <transition>
@@ -38,8 +45,14 @@
 
             <transition>
                 <source>payment refund failed</source>
-                <target>payment refunded</target>
-                <event>confirm payment refund</event>
+                <target>payment refund succeeded</target>
+                <event>payment refund successful</event>
+            </transition>
+
+            <transition>
+                <source>payment refund succeeded</source>
+                <target>payment refund failed</target>
+                <event>payment refund failed</event>
             </transition>
 
             <transition>
@@ -57,9 +70,9 @@
 
         <events>
             <event name="payment refund successful"/>
-            <event name="payment refund failed" timeout="1 day"/>
+            <event name="payment refund failed"/>
             <event name="retry payment refund" manual="true"/>
-            <event name="confirm payment refund" manual="true"/>
+            <event name="confirm payment refund" manual="true" timeout="7 day" command="Payment/Refund/Confirm"/>
             <event name="refund" manual="true"/>
             <event name="start refund" onEnter="true" command="Payment/Refund"/>
         </events>

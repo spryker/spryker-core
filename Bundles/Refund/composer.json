@@ -29,6 +29,9 @@
         "spryker/testify": "*",
         "spryker/zed-navigation": "*"
     },
+    "suggest": {
+        "spryker/oms": "If you want to use Oms command plugins."
+    },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"

@@ -34,8 +34,13 @@ interface MessageBrokerFacadeInterface
 
     /**
      * Specification:
-     * - Starts a worker process for the defined channels.
-     * - Will not start worker if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`
+     * - Will not start worker if {@link \Spryker\Zed\MessageBroker\MessageBrokerConfig::isEnabled()} is `false`.
+     * - Starts a worker process using data form `MessageBrokerWorkerConfig` transfer.
+     * - If `MessageBrokerWorkerConfig.channels` is empty, it will use all available channels specified in the module's config.
+     * - Uses message receiver plugins to get messages from the channels.
+     * - Iterates over the messages and sends them to the message handler plugins.
+     * - Adds `ChannelNameStamp` stamp with message channel to the message.
+     * - Disables Propel instance pooling on message handling to avoid data inconsistency on long-running processes.
      *
      * @api
      *

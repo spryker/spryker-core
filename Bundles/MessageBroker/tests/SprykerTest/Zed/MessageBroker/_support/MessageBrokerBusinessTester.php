@@ -31,4 +31,12 @@ use Codeception\Actor;
 class MessageBrokerBusinessTester extends Actor
 {
     use _generated\MessageBrokerBusinessTesterActions;
+
+    /**
+     * @return void
+     */
+    public function assertPropelInstancePoolingIsDisabled()
+    {
+        $this->assertFalse($this->isPropelInstancePoolingEnabled());
+    }
 }

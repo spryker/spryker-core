@@ -28,6 +28,7 @@ use Spryker\Zed\MessageBroker\Business\MessageSender\MessageSenderLocator;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStack;
 use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStackInterface;
 use Spryker\Zed\MessageBroker\Business\Middleware\AddChannelNameStampMiddleware;
+use Spryker\Zed\MessageBroker\Business\Middleware\DisableHandleMessagePropelPoolingMiddleware;
 use Spryker\Zed\MessageBroker\Business\Middleware\LogHandleMessageExceptionMiddleware;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisher;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisherInterface;
@@ -117,6 +118,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
             $this->getMiddlewarePlugins(),
             [
                 $this->createAddChannelNameStampMiddleware(),
+                $this->createDisableHandleMessagePropelPoolingMiddleware(),
                 $this->createSendMessageMiddleware(),
                 $this->createHandleMessageMiddleware(),
             ],
@@ -131,6 +133,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         return new AddChannelNameStampMiddleware(
             $this->createMessageChannelProvider(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Middleware\MiddlewareInterface
+     */
+    public function createDisableHandleMessagePropelPoolingMiddleware(): MiddlewareInterface
+    {
+        return new DisableHandleMessagePropelPoolingMiddleware();
     }
 
     /**

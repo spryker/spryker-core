@@ -15,7 +15,7 @@ interface RefundFacadeInterface
 {
     /**
      * Specification:
-     * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
+     * - Calculates refund amount for given Order entity and OrderItems which should be refunded.
      * - Adds refundable amount to RefundTransfer.
      * - Adds items with canceled amount to RefundTransfer.
      * - Uses calculator plugin stack for calculation.

@@ -10,12 +10,15 @@ namespace SprykerTest\Zed\MessageBroker\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
 use Spryker\Zed\MessageBroker\Business\Exception\MissingMessageSenderException;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\CorrelationIdMessageAttributeProviderPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 use SprykerTest\Zed\MessageBroker\Helper\Plugin\SomethingHappenedMessageHandlerPlugin;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -33,6 +36,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class MessageBrokerFacadeTest extends Unit
 {
+    use InstancePoolingHelperTrait;
+
     /**
      * @var string
      */
@@ -212,5 +217,68 @@ class MessageBrokerFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->startWorker(new MessageBrokerWorkerConfigTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageConsumeHandlingMessagesUsesDisabledPropelInstancePooling(): void
+    {
+        $this->enableInstancePooling();
+
+        $inMemoryMessageTransportMock = $this->tester->getInMemoryMessageTransportPlugin();
+
+        $this->tester->setMessageToSenderChannelNameMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToTransportMap(static::CHANNEL_NAME, $inMemoryMessageTransportMock->getTransportName());
+
+        $this->tester->setMessageSenderPlugins([$inMemoryMessageTransportMock]);
+        $this->tester->setMessageReceiverPlugins([$inMemoryMessageTransportMock]);
+
+        $this->tester->setMessageHandlerPlugins([
+            new class ($this) extends AbstractPlugin implements MessageHandlerPluginInterface {
+                /**
+                 * @var \SprykerTest\Zed\MessageBroker\Business\MessageBrokerFacadeTest $tester
+                 */
+                protected MessageBrokerFacadeTest $tester;
+
+                /**
+                 * @param \SprykerTest\Zed\MessageBroker\Business\MessageBrokerFacadeTest $tester
+                 */
+                public function __construct(MessageBrokerFacadeTest $tester)
+                {
+                    $this->tester = $tester;
+                }
+
+                /**
+                 * @return iterable
+                 */
+                public function handles(): iterable
+                {
+                    yield MessageBrokerTestMessageTransfer::class => function (): void {
+                        $this->tester->assertFalse(
+                            $this->tester->isInstancePoolingEnabled(),
+                        );
+
+                        // due to inability to assert on instance pooling being disabled in the worker using Mock
+                        // because Envelope is a final class and cannot be mocked (cloned)
+                        // we assert on the number of assertions made in the worker
+                        // if assert fails it throws an exception and assertion count is not increased
+                        $this->tester->addToAssertionCount(1);
+                    };
+                }
+            },
+        ]);
+
+        $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
+
+        $messageBrokerWorkerConfigTransfer = (new MessageBrokerWorkerConfigTransfer())
+            ->setLimit(1);
+
+        // Act
+        $this->tester->getFacade()->sendMessage($messageBrokerTestMessageTransfer);
+        $this->tester->getFacade()->startWorker($messageBrokerWorkerConfigTransfer);
+
+        $this->tester->assertSame(1, $this->getNumAssertions(), 'Expected one assertion to be made');
+        $this->tester->assertTrue($this->isInstancePoolingEnabled(), 'Instance pooling should be enabled');
     }
 }

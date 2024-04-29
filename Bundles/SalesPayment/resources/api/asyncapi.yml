@@ -44,7 +44,7 @@ components:
                 module: SalesPayment
             summary: 'Handle payment refund request event.'
             payload:
-                $ref: '#/components/schemas/PaymentPayload'
+                $ref: '#/components/schemas/PaymentRefundPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
 
@@ -92,6 +92,32 @@ components:
             required:
                 - orderReference
                 - orderItemIds
+        PaymentRefundPayload:
+            type: object
+            properties:
+                orderReference:
+                    type: string
+                orderItems:
+                    type: array
+                    $ref: '#/components/schemas/OrderItem'
+                amount:
+                    type: integer
+                currencyIsoCode:
+                    type: string
+            required:
+                - orderReference
+                - orderItems
+                - amount
+        OrderItem:
+            type: object
+            properties:
+                orderItemId:
+                    type: integer
+                sku:
+                    type: string
+            required:
+                - orderItemId
+                - sku
 
         message-broker:
             $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

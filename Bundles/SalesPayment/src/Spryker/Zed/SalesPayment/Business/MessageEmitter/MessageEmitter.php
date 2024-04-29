@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesPayment\Business\MessageEmitter;
 use Generated\Shared\Transfer\CancelPaymentTransfer;
 use Generated\Shared\Transfer\CapturePaymentTransfer;
 use Generated\Shared\Transfer\EventPaymentTransfer;
+use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundPaymentTransfer;
 use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculatorInterface;
@@ -149,6 +150,18 @@ class MessageEmitter implements MessageEmitterInterface
             ->setOrderItemIds($eventPaymentTransfer->getOrderItemIds())
             ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
             ->setAmount($refundAmount * -1);
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if (!in_array($itemTransfer->getIdSalesOrderItem(), $eventPaymentTransfer->getOrderItemIds(), true)) {
+                continue;
+            }
+
+            $orderItemTransfer = (new OrderItemTransfer())
+                ->setOrderItemId($itemTransfer->getIdSalesOrderItem())
+                ->setSku($itemTransfer->getSku());
+
+            $refundPaymentTransfer->addOrderItem($orderItemTransfer);
+        }
 
         $this->messageBrokerFacade->sendMessage($refundPaymentTransfer);
     }
