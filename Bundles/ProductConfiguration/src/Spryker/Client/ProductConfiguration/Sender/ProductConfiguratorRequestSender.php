@@ -22,7 +22,7 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
     use LoggerTrait;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const ASSESS_TOKEN_REQUEST_HEADERS = [
         'Content-Type' => 'application/json',
@@ -81,6 +81,12 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
         $responseData = $this->utilEncodingService->decodeJson($response->getBody(), true) ?: [];
         $productConfiguratorPageResponseTransfer = (new ProductConfiguratorPageResponseTransfer())->fromArray($responseData);
 
+        if ($responseData === []) {
+            return $productConfiguratorRedirectTransfer->setIsSuccessful(false)->addMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN),
+            );
+        }
+
         if ($productConfiguratorPageResponseTransfer->getIsSuccessful()) {
             return $productConfiguratorRedirectTransfer->setConfiguratorRedirectUrl(
                 $productConfiguratorPageResponseTransfer->getConfiguratorRedirectUrl(),
@@ -95,7 +101,7 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function buildAccessTokenRequestOptions(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
