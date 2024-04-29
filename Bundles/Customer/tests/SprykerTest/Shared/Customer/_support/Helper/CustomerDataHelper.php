@@ -108,6 +108,19 @@ class CustomerDataHelper extends Module
     }
 
     /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function confirmCustomerByEmail(string $email): CustomerTransfer
+    {
+        $customerTransfer = (new CustomerTransfer())->setEmail($email);
+        $customerTransfer = $this->getCustomerFacade()->getCustomer($customerTransfer);
+
+        return $this->confirmCustomer($customerTransfer);
+    }
+
+    /**
      * @param array<string, mixed> $seed
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
