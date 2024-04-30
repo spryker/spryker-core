@@ -169,7 +169,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
             : null;
         if (!$existingUserTransfer) {
             $userTransfer->setPassword(
-                $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH),
+                $this->utilTextService->generateRandomString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH),
             )->setStatus($this->merchantUserConfig->getUserCreationStatus());
 
             return $this->userFacade->createUser($userTransfer);
