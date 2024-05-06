@@ -105,6 +105,8 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
             $merchantCommissionAmountQuery,
             $merchantCommissionAmountCriteriaTransfer,
         );
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionAmount> $merchantCommissionAmountEntities */
         $merchantCommissionAmountEntities = $merchantCommissionAmountQuery->find();
         if ($merchantCommissionAmountEntities->count() === 0) {
             return $merchantCommissionAmountCollectionTransfer;
@@ -133,6 +135,7 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
             $merchantCommissionGroupCriteriaTransfer,
         );
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionGroup> $merchantCommissionGroupEntities */
         $merchantCommissionGroupEntities = $merchantCommissionGroupQuery->find();
         if ($merchantCommissionGroupEntities->count() === 0) {
             return $merchantCommissionGroupCollectionTransfer;

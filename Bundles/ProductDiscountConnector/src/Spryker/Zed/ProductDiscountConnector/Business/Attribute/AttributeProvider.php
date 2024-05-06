@@ -29,6 +29,7 @@ class AttributeProvider implements AttributeProviderInterface
      */
     public function getAllAttributeTypes()
     {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $attributeMetaData */
         $attributeMetaData = $this->queryContainer
             ->queryProductAttributeKeys()
             ->find();

@@ -285,14 +285,16 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->createProductAlternativePropelQuery()
             ->useProductConcreteQuery()
                 ->groupByFkProductAbstract()
             ->endUse()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**

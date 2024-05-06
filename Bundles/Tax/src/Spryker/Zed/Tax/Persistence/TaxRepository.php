@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -145,15 +145,15 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Tax\Persistence\SpyTaxSet> $taxSetEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Tax\Persistence\SpyTaxSet> $taxSetEntities
      * @param \Generated\Shared\Transfer\TaxSetCriteriaTransfer $taxSetCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Tax\Persistence\SpyTaxSet>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Tax\Persistence\SpyTaxSet>
      */
     public function expandTaxSetsWithTaxRates(
-        ObjectCollection $taxSetEntities,
+        Collection $taxSetEntities,
         TaxSetCriteriaTransfer $taxSetCriteriaTransfer
-    ): ObjectCollection {
+    ): Collection {
         /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity */
         foreach ($taxSetEntities as $taxSetEntity) {
             $taxSetEntity->initSpyTaxRates();
@@ -187,11 +187,11 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Tax\Persistence\SpyTaxSet> $taxSetEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Tax\Persistence\SpyTaxSet> $taxSetEntities
      *
      * @return array<int, \Orm\Zed\Tax\Persistence\SpyTaxSet>
      */
-    protected function indexTaxSetEntitiesByTaxSetIds(ObjectCollection $taxSetEntities): array
+    protected function indexTaxSetEntitiesByTaxSetIds(Collection $taxSetEntities): array
     {
         $taxSetEntitiesIndexedByTaxSetIds = [];
         foreach ($taxSetEntities as $taxSetEntity) {

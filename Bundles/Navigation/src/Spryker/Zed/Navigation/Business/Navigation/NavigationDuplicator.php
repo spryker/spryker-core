@@ -179,6 +179,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
             );
         }
 
+        /** @var array<\Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer> $newNavigationNodeLocalizedAttributesTransfers */
         return new ArrayObject($newNavigationNodeLocalizedAttributesTransfers);
     }
 

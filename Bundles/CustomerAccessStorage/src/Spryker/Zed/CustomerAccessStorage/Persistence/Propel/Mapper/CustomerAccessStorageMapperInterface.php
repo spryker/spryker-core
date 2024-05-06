@@ -8,14 +8,14 @@
 namespace Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface CustomerAccessStorageMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
+     * @param \Propel\Runtime\Collection\Collection $customerAccessEntities
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function fillCustomerAccessTransferFromEntities(ObjectCollection $customerAccessEntities): CustomerAccessTransfer;
+    public function fillCustomerAccessTransferFromEntities(Collection $customerAccessEntities): CustomerAccessTransfer;
 }

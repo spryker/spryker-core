@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductRelation\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationType;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductRelationTypeMapper
 {
@@ -27,13 +27,13 @@ class ProductRelationTypeMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType> $productRelationTypeEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType> $productRelationTypeEntities
      * @param array $productRelationTypeTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductRelationTypeTransfer>
      */
     public function mapProductRelationTypeEntitiesToProductRelationTypeTransfer(
-        ObjectCollection $productRelationTypeEntities,
+        Collection $productRelationTypeEntities,
         array $productRelationTypeTransfers
     ): array {
         foreach ($productRelationTypeEntities as $productRelationTypeEntity) {

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\WarehouseAllocationCollectionTransfer;
 use Generated\Shared\Transfer\WarehouseAllocationTransfer;
 use Orm\Zed\WarehouseAllocation\Persistence\SpyWarehouseAllocation;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class WarehouseAllocationMapper
 {
@@ -31,13 +31,13 @@ class WarehouseAllocationMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\WarehouseAllocation\Persistence\SpyWarehouseAllocation> $warehouseAllocationEntities
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\WarehouseAllocation\Persistence\SpyWarehouseAllocation> $warehouseAllocationEntities
      * @param \Generated\Shared\Transfer\WarehouseAllocationCollectionTransfer $warehouseAllocationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseAllocationCollectionTransfer
      */
     public function mapWarehouseAllocationEntitiesToWarehouseAllocationCollectionTransfer(
-        ObjectCollection $warehouseAllocationEntities,
+        Collection $warehouseAllocationEntities,
         WarehouseAllocationCollectionTransfer $warehouseAllocationCollectionTransfer
     ): WarehouseAllocationCollectionTransfer {
         foreach ($warehouseAllocationEntities as $warehouseAllocationEntity) {

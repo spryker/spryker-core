@@ -51,11 +51,11 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
      */
     public function publish(array $customerReferences): void
     {
-        $shoppingListCustomerStorageEntities = $this->shoppingListStorageRepository
-            ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences)
-            ->toKeyIndex(static::COL_CUSTOMER_REFERENCE);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListCustomerStorageCollection */
+        $shoppingListCustomerStorageCollection = $this->shoppingListStorageRepository
+            ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences);
 
-        $this->storeData($customerReferences, $shoppingListCustomerStorageEntities);
+        $this->storeData($customerReferences, $shoppingListCustomerStorageCollection->toKeyIndex(static::COL_CUSTOMER_REFERENCE));
     }
 
     /**

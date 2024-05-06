@@ -80,10 +80,12 @@ class WarehouseUserEntityManager extends AbstractEntityManager implements Wareho
             $warehouseUserAssignmentIds[] = $warehouseUserAssignmentTransfer->getIdWarehouseUserAssignmentOrFail();
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $warehouseUserAssignmentCollection */
+        $warehouseUserAssignmentCollection = $this->getFactory()
             ->createWarehouseUserAssignmentQuery()
             ->filterByIdWarehouseUserAssignment_In($warehouseUserAssignmentIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $warehouseUserAssignmentCollection->delete();
     }
 }

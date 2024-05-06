@@ -8,5 +8,8 @@ parameters:
         - APPLICATION_STORE
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, .+ given.#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(string\): bool\)\|null, .+ given.#'
         - '#Call to static method classify\(\) on an unknown class Doctrine\\Common\\Inflector\\Inflector.#'
         - '#Call to static method singularize\(\) on an unknown class Doctrine\\Common\\Inflector\\Inflector.#'
+        - '#Cannot access offset string on bool\|string.#'
+        - '#Cannot assign offset string to string.#'

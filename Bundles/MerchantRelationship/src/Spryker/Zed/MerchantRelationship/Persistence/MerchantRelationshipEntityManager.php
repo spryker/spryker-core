@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnit;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -143,14 +144,14 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\CompanyBusinessUnit\Persistence\Base\SpyCompanyBusinessUnit> $companyBusinessUnitEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\CompanyBusinessUnit\Persistence\Base\SpyCompanyBusinessUnit> $companyBusinessUnitEntityCollection
      * @param int $idAssignedCompanyBusinessUnit
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     protected function addCompanyBusinessUnitTransferToCompanyBusinessUnitCollectionTransfer(
-        ObjectCollection $companyBusinessUnitEntityCollection,
+        Collection $companyBusinessUnitEntityCollection,
         int $idAssignedCompanyBusinessUnit,
         CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
     ): CompanyBusinessUnitCollectionTransfer {

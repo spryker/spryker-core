@@ -44,6 +44,7 @@ class ProductOfferWarehouseAllocationExampleRepository extends AbstractRepositor
             static::MINIMAL_QUANTITY,
         );
 
+        /** @var \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock|null $productOfferStockEntity */
         $productOfferStockEntity = $this->getFactory()
             ->getProductOfferStockPropelQuery()
             ->useStockQuery()

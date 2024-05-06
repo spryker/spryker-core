@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface SalesOrderItemMapperInterface
 {
@@ -36,12 +36,12 @@ interface SalesOrderItemMapperInterface
     ): SpySalesOrderItem;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
-        ObjectCollection $salesOrderItemEntities
+        Collection $salesOrderItemEntities
     ): array;
 
     /**

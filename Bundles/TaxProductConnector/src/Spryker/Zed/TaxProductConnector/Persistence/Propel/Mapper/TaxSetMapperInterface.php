@@ -9,7 +9,7 @@ namespace Spryker\Zed\TaxProductConnector\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface TaxSetMapperInterface
 {
@@ -21,10 +21,10 @@ interface TaxSetMapperInterface
     public function mapTaxSetEntityToTaxSetTransfer(SpyTaxSet $taxSetEntity): TaxSetTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
      * @param array<int, \Generated\Shared\Transfer\TaxSetTransfer> $taxSetTransfers
      *
      * @return array<int, \Generated\Shared\Transfer\TaxSetTransfer>
      */
-    public function mapProductAbstractEntitiesToTaxSetTransfers(ObjectCollection $productAbstractEntities, array $taxSetTransfers = []): array;
+    public function mapProductAbstractEntitiesToTaxSetTransfers(Collection $productAbstractEntities, array $taxSetTransfers = []): array;
 }

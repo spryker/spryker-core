@@ -16,16 +16,16 @@ use Orm\Zed\Comment\Persistence\Base\SpyCommentThread;
 use Orm\Zed\Comment\Persistence\SpyComment;
 use Orm\Zed\Comment\Persistence\SpyCommentTag;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CommentMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyCommentTag> $commentTagEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Comment\Persistence\SpyCommentTag> $commentTagEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
-    public function mapCommentTagEntitiesToCommentTagTransfers(ObjectCollection $commentTagEntities): array
+    public function mapCommentTagEntitiesToCommentTagTransfers(Collection $commentTagEntities): array
     {
         $commentTagTransfers = [];
 
@@ -82,11 +82,11 @@ class CommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyComment> $commentEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Comment\Persistence\SpyComment> $commentEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
-    public function mapCommentEntitiesToCommentTransfers(ObjectCollection $commentEntities): array
+    public function mapCommentEntitiesToCommentTransfers(Collection $commentEntities): array
     {
         $commentTransfers = [];
 

@@ -42,10 +42,11 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
     {
         $contentProductAbstractListEntity = $this->saveContentProductAbstractListEntity($dataSet);
 
-        SpyContentLocalizedQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $contentLocalizedCollection */
+        $contentLocalizedCollection = SpyContentLocalizedQuery::create()
             ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
-            ->find()
-            ->delete();
+            ->find();
+        $contentLocalizedCollection->delete();
 
         foreach ($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_PRODUCT_ABSTRACT_LIST_TERMS] as $localizedProductAbstractListTermParameters) {
             $contentLocalizedProductAbstractListEntity = SpyContentLocalizedQuery::create()

@@ -286,7 +286,7 @@ class CreatePushNotificationSubscriptionCollectionTest extends Unit
             ->withGroup($pushNotificationGroupTransfer->toArray())
             ->build();
         $pushNotificationSubscriptionTransfer->setLocale(
-            (new LocaleTransfer())->setLocaleName(self::LOCALE_INVALID)
+            (new LocaleTransfer())->setLocaleName(static::LOCALE_INVALID),
         );
         $pushNotificationSubscriptionRequestTransfer = (new PushNotificationSubscriptionCollectionRequestTransfer())
             ->setIsTransactional(true)

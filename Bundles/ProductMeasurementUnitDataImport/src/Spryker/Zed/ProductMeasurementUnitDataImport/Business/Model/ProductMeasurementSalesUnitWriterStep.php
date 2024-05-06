@@ -129,9 +129,10 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
      */
     protected function loadProductMeasurementUnitIds(): void
     {
-        static::$productMeasurementUnitIdBuffer = SpyProductMeasurementUnitQuery::create()
-            ->find()
-            ->toKeyValue('code', 'idProductMeasurementUnit');
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productMeasurementUnitCollection */
+        $productMeasurementUnitCollection = SpyProductMeasurementUnitQuery::create()->find();
+
+        static::$productMeasurementUnitIdBuffer = $productMeasurementUnitCollection->toKeyValue('code', 'idProductMeasurementUnit');
     }
 
     /**

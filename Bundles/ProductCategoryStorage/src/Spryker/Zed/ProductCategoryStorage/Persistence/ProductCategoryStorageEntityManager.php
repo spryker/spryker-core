@@ -26,11 +26,13 @@ class ProductCategoryStorageEntityManager extends AbstractEntityManager implemen
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractCategoryStorageCollection */
+        $productAbstractCategoryStorageCollection = $this->getFactory()
             ->createProductAbstractCategoryStoragePropelQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAbstractCategoryStorageCollection->delete();
     }
 
     /**

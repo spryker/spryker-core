@@ -14,6 +14,7 @@ use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetToCategoryImageTabl
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CategoryImage\Dependency\Facade\CategoryImageToLocaleInterface;
 
@@ -33,11 +34,11 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
-    public function mapCategoryImageSetCollection(ObjectCollection $categoryImageSetEntityCollection): array
+    public function mapCategoryImageSetCollection(Collection $categoryImageSetEntityCollection): array
     {
         $transferList = [];
         foreach ($categoryImageSetEntityCollection as $categoryImageSetEntity) {

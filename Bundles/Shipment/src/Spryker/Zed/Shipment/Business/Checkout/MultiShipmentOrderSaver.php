@@ -117,11 +117,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     ): ShipmentGroupTransfer {
         $this->assertShipmentRequirements($orderTransfer->getItems());
 
-        $shipmentGroupTransfer = $this->handleDatabaseTransaction(function () use (
-            $orderTransfer,
-            $shipmentGroupTransfer,
-            $saveOrderTransfer
-        ) {
+        $shipmentGroupTransfer = $this->handleDatabaseTransaction(function () use ($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer) {
             return $this->saveOrderShipmentTransactionByShipmentGroup(
                 $orderTransfer,
                 $shipmentGroupTransfer,

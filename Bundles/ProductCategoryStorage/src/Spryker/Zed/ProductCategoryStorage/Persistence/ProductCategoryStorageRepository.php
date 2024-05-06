@@ -111,12 +111,14 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      */
     public function getAllCategoryNodeIds(): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $categoryNodeIds */
+        $categoryNodeIds = $this->getFactory()
             ->getCategoryNodePropelQuery()
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->select([SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $categoryNodeIds->toArray();
     }
 
     /**

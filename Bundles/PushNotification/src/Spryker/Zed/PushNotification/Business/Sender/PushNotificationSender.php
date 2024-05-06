@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
 use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
 use Spryker\Zed\PushNotification\Business\Creator\PushNotificationSubscriptionDeliveryLogCreatorInterface;
 use Spryker\Zed\PushNotification\Business\Extractor\PushNotificationSubscriptionDeliveryLogExtractorInterface;
-use Spryker\Zed\PushNotification\Persistence\PushNotificationRepositoryInterface;
 
 class PushNotificationSender implements PushNotificationSenderInterface
 {

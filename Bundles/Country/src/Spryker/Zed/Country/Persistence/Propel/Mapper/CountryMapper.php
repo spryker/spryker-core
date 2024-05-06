@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CountryMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Country\Persistence\SpyRegion> $regionEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Country\Persistence\SpyRegion> $regionEntities
      *
      * @return array<int, list<\Generated\Shared\Transfer\RegionTransfer>>
      */
-    public function mapRegionEntitiesToRegionTransfersGroupedByIdCountry(ObjectCollection $regionEntities): array
+    public function mapRegionEntitiesToRegionTransfersGroupedByIdCountry(Collection $regionEntities): array
     {
         $regionTransfersGroupedByIdCountry = [];
 
@@ -127,13 +127,13 @@ class CountryMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Country\Persistence\SpyCountry> $countryEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Country\Persistence\SpyCountry> $countryEntities
      * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function mapCountryEntitiesToCountryCollectionTransfer(
-        ObjectCollection $countryEntities,
+        Collection $countryEntities,
         CountryCollectionTransfer $countryCollectionTransfer
     ): CountryCollectionTransfer {
         foreach ($countryEntities as $countryEntity) {

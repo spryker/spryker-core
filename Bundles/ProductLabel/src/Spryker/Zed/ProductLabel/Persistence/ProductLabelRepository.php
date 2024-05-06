@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 
@@ -232,6 +232,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      */
     public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
+        /** @var array<int, \Generated\Shared\Transfer\SpyProductLabelProductAbstractEntityTransfer> $productLabelProductAbstractEntities */
         $productLabelProductAbstractEntities = $this->getFactory()
             ->createProductRelationQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
@@ -396,11 +397,11 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
      *
      * @return array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
      */
-    protected function indexProductLabelEntitiesByProductLabelIds(ObjectCollection $productLabelEntities): array
+    protected function indexProductLabelEntitiesByProductLabelIds(Collection $productLabelEntities): array
     {
         $productLabelEntitiesIndexedByProductLabelIds = [];
         foreach ($productLabelEntities as $productLabelEntity) {

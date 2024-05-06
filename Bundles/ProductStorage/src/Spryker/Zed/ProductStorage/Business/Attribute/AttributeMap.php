@@ -235,14 +235,16 @@ class AttributeMap implements AttributeMapInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return array<\Orm\Zed\Product\Persistence\SpyProduct>
+     * @return array<int|string, array<\Orm\Zed\Product\Persistence\SpyProduct>>
      */
     protected function getConcreteProducts($idProductAbstract, $idLocale)
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $concreteProductCollection */
+        $concreteProductCollection = $this->queryContainer
             ->queryConcreteProduct($idProductAbstract, $idLocale)
-            ->find()
-            ->toArray(null, false, TableMap::TYPE_CAMELNAME);
+            ->find();
+
+        return $concreteProductCollection->toArray(null, false, TableMap::TYPE_CAMELNAME);
     }
 
     /**
@@ -253,10 +255,12 @@ class AttributeMap implements AttributeMapInterface
      */
     protected function getConcreteProductsBulk(array $productAbstractIds, array $localeIds): array
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $concreteProductBulkCollection */
+        $concreteProductBulkCollection = $this->queryContainer
             ->queryConcreteProductBulk($productAbstractIds, $localeIds)
-            ->find()
-            ->toArray(null, false, TableMap::TYPE_CAMELNAME);
+            ->find();
+
+        return $concreteProductBulkCollection->toArray(null, false, TableMap::TYPE_CAMELNAME);
     }
 
     /**
@@ -296,13 +300,13 @@ class AttributeMap implements AttributeMapInterface
         $uniqueAttributeKeys = $this->filterUniqueAttributeKeys($productAttributes);
 
         if (static::$superAttributesCache === null) {
-            $superAttributeList = $this->queryContainer
+            /** @var \Propel\Runtime\Collection\ArrayCollection $superAttributeKeys */
+            $superAttributeKeys = $this->queryContainer
                 ->queryProductAttributeKey()
                 ->select(SpyProductAttributeKeyTableMap::COL_KEY)
-                ->find()
-                ->toArray();
+                ->find();
 
-            static::$superAttributesCache = array_flip($superAttributeList);
+            static::$superAttributesCache = array_flip($superAttributeKeys->toArray());
         }
 
         $superAttributes = $this->filterSuperAttributes(array_keys($uniqueAttributeKeys));

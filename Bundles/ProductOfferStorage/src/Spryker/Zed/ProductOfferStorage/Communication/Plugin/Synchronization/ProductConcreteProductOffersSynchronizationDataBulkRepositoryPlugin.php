@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferStorage\Communication\Plugin\Synchronization;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage;
 use Orm\Zed\ProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -124,9 +124,9 @@ class ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin extend
      * @param int $limit
      * @param array $ids
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection
      */
-    protected function getProductConcreteProductOffersStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
+    protected function getProductConcreteProductOffersStorageEntities(int $offset, int $limit, array $ids): Collection
     {
         $productConcreteProductOffersStorageQuery = SpyProductConcreteProductOffersStorageQuery::create();
 

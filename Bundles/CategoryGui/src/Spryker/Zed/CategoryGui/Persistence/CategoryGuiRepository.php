@@ -63,10 +63,12 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      */
     public function getIndexedCategoryTemplateNames(): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryTemplateCollection */
+        $categoryTemplateCollection = $this->getFactory()
             ->getCategoryTemplatePropelQuery()
-            ->find()
-            ->toKeyValue(static::ID_CATEGORY_TEMPLATE, static::CATEGORY_TEMPLATE_NAME);
+            ->find();
+
+        return $categoryTemplateCollection->toKeyValue(static::ID_CATEGORY_TEMPLATE, static::CATEGORY_TEMPLATE_NAME);
     }
 
     /**
@@ -79,7 +81,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      */
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $categoryNodeNameCollection */
+        $categoryNodeNameCollection = $this->getFactory()
             ->getCategoryNodePropelQuery()
             ->filterByFkParentCategoryNode($idParentNode)
             ->useCategoryQuery()
@@ -90,8 +93,9 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::CHILDREN_ID_CATEGORY_NODE)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->select([static::CHILDREN_ID_CATEGORY_NODE, static::CHILDREN_CATEGORY_ATTRIBUTE_NAME])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $categoryNodeNameCollection->toArray();
     }
 
     /**
@@ -104,7 +108,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      */
     public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array
     {
-        $categoryStoreNames = $this->getFactory()->getCategoryPropelQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryStoreNameCollection */
+        $categoryStoreNameCollection = $this->getFactory()->getCategoryPropelQuery()
             ->filterByIdCategory_In($categoryIds)
             ->leftJoinWithSpyCategoryStore()
             ->useSpyCategoryStoreQuery()
@@ -113,7 +118,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
             ->select([
                 SpyStoreTableMap::COL_NAME,
                 SpyCategoryTableMap::COL_ID_CATEGORY,
-            ])->find()->toArray();
+            ])->find();
+        $categoryStoreNames = $categoryStoreNameCollection->toArray();
 
         $categoryStoreNamesGroupedByIdCategory = [];
         foreach ($categoryStoreNames as $categoryStoreName) {

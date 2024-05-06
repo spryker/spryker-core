@@ -94,12 +94,13 @@ class CategoryTree implements CategoryTreeInterface
             ->queryFirstLevelChildren($idSourceCategoryNode)
             ->find();
 
-        $destinationChildrenIds = $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $destinationChildrenIdCollection */
+        $destinationChildrenIdCollection = $this->queryContainer
             ->queryFirstLevelChildren($idDestinationCategoryNode)
             ->select([SpyCategoryNodeTableMap::COL_FK_CATEGORY])
             ->setFormatter(new SimpleArrayFormatter())
-            ->find()
-            ->toArray();
+            ->find();
+        $destinationChildrenIds = $destinationChildrenIdCollection->toArray();
 
         $destinationCategoryTransfer = $this->categoryFacade->findCategory(
             (new CategoryCriteriaTransfer())->setIdCategoryNode($idDestinationCategoryNode),

@@ -44,14 +44,15 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
      */
     public function publish(array $productAbstractIds)
     {
-        $productReviewEntities = $this->queryContainer->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productReviewCollection */
+        $productReviewCollection = $this->queryContainer->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find();
         $productReviewStorageEntities = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
 
-        if (!$productReviewEntities) {
+        if (!$productReviewCollection->toArray()) {
             $this->deleteStorageData($productReviewStorageEntities);
         }
 
-        $this->storeData($productReviewEntities, $productReviewStorageEntities);
+        $this->storeData($productReviewCollection->toArray(), $productReviewStorageEntities);
     }
 
     /**

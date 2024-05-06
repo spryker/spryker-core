@@ -180,11 +180,13 @@ class CollectorExporter
             return [];
         }
 
-        return $this->touchQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $touchCollection */
+        $touchCollection = $this->touchQueryContainer
             ->queryExportTypes()
             ->setFormatter(new SimpleArrayFormatter())
-            ->find()
-            ->toArray();
+            ->find();
+
+         return $touchCollection->toArray();
     }
 
     /**

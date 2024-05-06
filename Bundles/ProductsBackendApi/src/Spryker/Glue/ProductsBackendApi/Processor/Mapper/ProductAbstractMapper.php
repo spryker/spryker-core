@@ -189,6 +189,7 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
             $productImageSetsTransfers[] = $productImageSetsTransfer;
         }
 
+        /** @var array<\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetsTransfers */
         return new ArrayObject($productImageSetsTransfers);
     }
 
@@ -211,6 +212,7 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
                 $localizedAttributesTransfers[] = $localizedAttributesTransfer;
             }
 
+            /** @var array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers */
             return new ArrayObject($localizedAttributesTransfers);
         }
 
@@ -235,6 +237,7 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
                     ->setLocale($localeTransfers[$productsProductConcreteLocalizedAttributesAttributesTransfer->getLocaleOrFail()]);
             }
 
+            /** @var array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers */
             return new ArrayObject($localizedAttributesTransfers);
         }
 

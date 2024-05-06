@@ -20,7 +20,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface;
@@ -170,15 +170,15 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function getProductSkusByPriceProductOfferIds(array $priceProductOfferIds): array
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productSkus */
         $productSkus = SpyPriceProductOfferQuery::create()
             ->filterByIdPriceProductOffer_In($priceProductOfferIds)
             ->joinWithSpyProductOffer()
             ->select([SpyProductOfferTableMap::COL_CONCRETE_SKU])
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
 
-        return $productSkus;
+        return $productSkus->toArray();
     }
 
     /**
@@ -188,7 +188,8 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function getProductOfferDataByProductSkus(array $productSkus): array
     {
-        $priceProductOffers = SpyProductOfferQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferData */
+        $productOfferData = SpyProductOfferQuery::create()
             ->useSpyPriceProductOfferQuery()
                 ->useSpyPriceProductStoreQuery()
                     ->joinWithCurrency()
@@ -210,10 +211,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyPriceProductStoreTableMap::COL_NET_PRICE,
                 SpyPriceProductStoreTableMap::COL_PRICE_DATA,
             ])
-            ->find()
-            ->toArray();
+            ->find();
 
-        return $priceProductOffers;
+        return $productOfferData->toArray();
     }
 
     /**
@@ -223,21 +223,21 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function getActiveProductIdToSkuMapBySkus(array $productSkus): array
     {
-        $productSkuToIdMap = SpyProductQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productCollection */
+        $productCollection = SpyProductQuery::create()
             ->filterBySku_In($productSkus)
             ->filterByIsActive(true)
-            ->find()
-            ->toKeyValue(static::COL_SKU_NAME, static::COL_ID_PRODUCT_NAME);
+            ->find();
 
-        return $productSkuToIdMap;
+        return $productCollection->toKeyValue(static::COL_SKU_NAME, static::COL_ID_PRODUCT_NAME);
     }
 
     /**
      * @param array<int> $productIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct>
      */
-    protected function getProductEntitiesByProductIds(array $productIds): ObjectCollection
+    protected function getProductEntitiesByProductIds(array $productIds): Collection
     {
         $productEntities = SpyProductQuery::create()
             ->filterByIdProduct_In($productIds)
@@ -298,9 +298,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     /**
      * @param array<int> $productIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage>
      */
-    protected function getProductConcreteProductOfferPriceStorageEntities(array $productIds): ObjectCollection
+    protected function getProductConcreteProductOfferPriceStorageEntities(array $productIds): Collection
     {
         return SpyProductConcreteProductOfferPriceStorageQuery::create()
             ->filterByFkProduct_In($productIds)
@@ -314,18 +314,20 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function getProductIdsByProductOfferIds(array $productOfferIds): array
     {
-        $productSkus = SpyProductOfferQuery::create()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productOfferSkus */
+        $productOfferSkus = SpyProductOfferQuery::create()
             ->filterByIdProductOffer_In($productOfferIds)
             ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
 
-        return SpyProductQuery::create()
-            ->filterBySku_In($productSkus)
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productIdsByProductOfferIds */
+        $productIdsByProductOfferIds = SpyProductQuery::create()
+            ->filterBySku_In($productOfferSkus->toArray())
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productIdsByProductOfferIds->toArray();
     }
 
     /**

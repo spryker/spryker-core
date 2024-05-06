@@ -95,6 +95,7 @@ class PushNotificationSubscriptionFilter implements PushNotificationSubscription
             $validPushNotificationSubscriptionTransfers[] = $pushNotificationSubscriptionTransfer;
         }
 
+        /** @var array<\Generated\Shared\Transfer\PushNotificationSubscriptionTransfer> $validPushNotificationSubscriptionTransfers */
         return new ArrayObject($validPushNotificationSubscriptionTransfers);
     }
 

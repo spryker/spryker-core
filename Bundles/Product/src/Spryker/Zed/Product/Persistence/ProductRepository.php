@@ -31,6 +31,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -129,8 +130,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
             ])->addAscendingOrderByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME);
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $abstractProducts */
+        $abstractProducts = $productAbstractQuery->find();
+
         return $this->collectFilteredResults(
-            $productAbstractQuery->find()->toArray(),
+            $abstractProducts->toArray(),
         );
     }
 
@@ -167,8 +171,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
             ]);
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $concreteProducts */
+        $concreteProducts = $productConcreteQuery->find();
+
         return $this->collectFilteredResults(
-            $productConcreteQuery->find()->toArray(),
+            $concreteProducts->toArray(),
         );
     }
 
@@ -203,10 +210,12 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->createProductQuery()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
 
-        return $productQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $products */
+        $products = $productQuery
             ->filterByIdProduct_In($productConcreteIds)
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $products->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -238,12 +247,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIds */
+        $productConcreteIds = $this->getFactory()
             ->createProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productConcreteIds->toArray();
     }
 
     /**
@@ -463,11 +474,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productConcreteEntities
+     * @param \Propel\Runtime\Collection\Collection $productConcreteEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    protected function getProductConcreteTransfersMappedFromProductConcreteEntities(ObjectCollection $productConcreteEntities): array
+    protected function getProductConcreteTransfersMappedFromProductConcreteEntities(Collection $productConcreteEntities): array
     {
         $productConcreteTransfers = [];
         $productMapper = $this->getFactory()->createProductMapper();
@@ -507,11 +518,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productEntities
+     * @param \Propel\Runtime\Collection\Collection $productEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(ObjectCollection $productEntities): array
+    protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(Collection $productEntities): array
     {
         $productConcreteTransfers = [];
         $productMapper = $this->getFactory()->createProductMapper();
@@ -770,11 +781,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
-    protected function mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations(ObjectCollection $productAbstractEntities): array
+    protected function mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations(Collection $productAbstractEntities): array
     {
         $productAbstractTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();
@@ -848,7 +859,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->endUse();
         }
 
-        return $productQuery->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $products */
+        $products = $productQuery->find();
+
+        return $products->toArray();
     }
 
     /**
@@ -1020,16 +1034,16 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             return $productConcreteQuery;
         }
 
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIds */
         $productConcreteIds = $productConcreteQuery
             ->groupByIdProduct()
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
 
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
         $productConcreteQuery = $this->getFactory()
             ->createProductQuery()
-            ->filterByIdProduct_In($productConcreteIds)
+            ->filterByIdProduct_In($productConcreteIds->toArray())
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
@@ -1155,6 +1169,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $localizedProductConcreteQuery = clone $productConcreteQuery;
 
+        /** @var \Propel\Runtime\Collection\ArrayCollection $hiddenProductConcreteIds */
         $hiddenProductConcreteIds = $localizedProductConcreteQuery
             ->groupByIdProduct()
             ->joinWithSpyProductLocalizedAttributes()
@@ -1165,13 +1180,12 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 ->endUse()
             ->endUse()
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
 
-        if (!$hiddenProductConcreteIds) {
+        if (!$hiddenProductConcreteIds->toArray()) {
             return $productConcreteQuery->filterByIdProduct();
         }
 
-        return $productConcreteQuery->filterByIdProduct_In($hiddenProductConcreteIds);
+        return $productConcreteQuery->filterByIdProduct_In($hiddenProductConcreteIds->toArray());
     }
 }

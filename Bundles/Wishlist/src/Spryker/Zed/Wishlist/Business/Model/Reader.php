@@ -375,7 +375,7 @@ class Reader implements ReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getProductCollection(array $itemCollection)
     {

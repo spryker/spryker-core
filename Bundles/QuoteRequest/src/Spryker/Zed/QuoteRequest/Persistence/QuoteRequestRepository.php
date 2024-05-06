@@ -139,12 +139,14 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      */
     public function findQuoteRequestIdsByIdCompanyUser(int $idCompanyUser): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $quoteRequestIds */
+        $quoteRequestIds = $this->getFactory()
             ->getQuoteRequestPropelQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $quoteRequestIds->toArray();
     }
 
     /**
@@ -197,6 +199,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     {
         $hiddenQuoteRequestQuery = clone $quoteRequestQuery;
 
+        /** @var \Propel\Runtime\Collection\ArrayCollection $hiddenQuoteRequestIds */
         $hiddenQuoteRequestIds = $hiddenQuoteRequestQuery
             ->joinSpyQuoteRequestVersion()
             ->filterByIsLatestVersionVisible(false)
@@ -208,10 +211,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->select([
                 SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST,
             ])
-            ->find()
-            ->toArray();
+            ->find();
 
-        $quoteRequestQuery->filterByIdQuoteRequest($hiddenQuoteRequestIds, Criteria::NOT_IN);
+        $quoteRequestQuery->filterByIdQuoteRequest($hiddenQuoteRequestIds->toArray(), Criteria::NOT_IN);
 
         return $quoteRequestQuery;
     }

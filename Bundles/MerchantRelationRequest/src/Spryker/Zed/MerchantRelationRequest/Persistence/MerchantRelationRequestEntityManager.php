@@ -74,6 +74,10 @@ class MerchantRelationRequestEntityManager extends AbstractEntityManager impleme
             ->filterByUuid($merchantRelationRequestTransfer->getUuidOrFail())
             ->findOne();
 
+        if ($merchantRelationRequestEntity === null) {
+            return $merchantRelationRequestTransfer;
+        }
+
         $merchantRelationRequestEntity = $merchantRelationRequestMapper
             ->mapMerchantRelationRequestTransferToMerchantRelationRequestEntity(
                 $merchantRelationRequestTransfer,
@@ -110,7 +114,9 @@ class MerchantRelationRequestEntityManager extends AbstractEntityManager impleme
             );
         }
 
-        $merchantRelationRequestQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantRelationRequestCollection */
+        $merchantRelationRequestCollection = $merchantRelationRequestQuery->find();
+        $merchantRelationRequestCollection->delete();
     }
 
     /**
@@ -136,6 +142,8 @@ class MerchantRelationRequestEntityManager extends AbstractEntityManager impleme
             );
         }
 
-        $merchantRelationRequestToCompanyBusinessUnitQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantRelationRequestToCompanyBusinessCollection */
+        $merchantRelationRequestToCompanyBusinessCollection = $merchantRelationRequestToCompanyBusinessUnitQuery->find();
+        $merchantRelationRequestToCompanyBusinessCollection->delete();
     }
 }

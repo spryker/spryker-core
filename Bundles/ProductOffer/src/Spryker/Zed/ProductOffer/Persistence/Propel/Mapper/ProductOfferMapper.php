@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductOfferMapper
 {
@@ -80,13 +80,13 @@ class ProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOffer\Persistence\SpyProductOffer> $productOfferEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductOffer\Persistence\SpyProductOffer> $productOfferEntities
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function mapProductOfferEntitiesToProductOfferCollectionTransfer(
-        ObjectCollection $productOfferEntities,
+        Collection $productOfferEntities,
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): ProductOfferCollectionTransfer {
         foreach ($productOfferEntities as $productOfferEntity) {

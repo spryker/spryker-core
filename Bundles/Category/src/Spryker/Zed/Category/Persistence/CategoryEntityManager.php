@@ -17,6 +17,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
@@ -309,13 +310,14 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryClosureTable(int $idCategoryNode): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryClosureCollection */
+        $categoryClosureCollection = $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->filterByFkCategoryNode($idCategoryNode)
             ->_or()
             ->filterByFkCategoryNodeDescendant($idCategoryNode)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryClosureCollection->delete();
     }
 
     /**
@@ -325,11 +327,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryStoreRelations(int $idCategory): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryStoreCollection */
+        $categoryStoreCollection = $this->getFactory()
             ->createCategoryStoreQuery()
             ->filterByFkCategory($idCategory)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryStoreCollection->delete();
     }
 
     /**
@@ -367,7 +370,9 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
         /** @var literal-string $where */
         $where = sprintf('descendants.fk_category_node = %d', $idCategoryNode);
-        $categoryClosureTableQuery->addJoinObject($joinCategoryNodeDescendant)
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryClosureCollection */
+        $categoryClosureCollection = $categoryClosureTableQuery->addJoinObject($joinCategoryNodeDescendant)
             ->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin')
             ->addJoinCondition(
                 'ascendantsJoin',
@@ -375,8 +380,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             )
             ->where($where)
             ->where('ascendants.fk_category_node IS NULL')
-            ->find()
-            ->delete();
+            ->find();
+        $categoryClosureCollection->delete();
     }
 
     /**
@@ -391,12 +396,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryStoreCollection */
+        $categoryStoreCollection = $this->getFactory()
             ->createCategoryStoreQuery()
             ->filterByFkCategory_in($categoryIds)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryStoreCollection->delete();
     }
 
     /**
@@ -419,13 +425,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $baseCategoryClosureTableEntity
      *
      * @return void
      */
     protected function createCategoryClosureTableParentEntries(
-        ObjectCollection $parentCategoryClosureTableEntities,
+        Collection $parentCategoryClosureTableEntities,
         SpyCategoryClosureTable $baseCategoryClosureTableEntity
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
@@ -460,13 +466,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $categoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $categoryClosureTableEntities
      *
      * @return void
      */
     protected function persistCategoryClosureTableNodes(
         NodeTransfer $nodeTransfer,
-        ObjectCollection $categoryClosureTableEntities
+        Collection $categoryClosureTableEntities
     ): void {
         $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
 
@@ -487,13 +493,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $baseCategoryClosureTableEntity
      *
      * @return void
      */
     protected function persistCategoryClosureTableParentEntries(
-        ObjectCollection $parentCategoryClosureTableEntities,
+        Collection $parentCategoryClosureTableEntities,
         SpyCategoryClosureTable $baseCategoryClosureTableEntity
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {

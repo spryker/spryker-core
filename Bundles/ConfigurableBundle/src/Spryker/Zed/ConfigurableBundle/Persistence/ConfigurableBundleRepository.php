@@ -135,13 +135,15 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $configurableBundleTemplateUuids */
+        $configurableBundleTemplateUuids = $this->getFactory()
             ->getConfigurableBundleTemplatePropelQuery()
             ->filterByUuid_In($templateUuids)
             ->filterByIsActive(true)
             ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $configurableBundleTemplateUuids->toArray();
     }
 
     /**

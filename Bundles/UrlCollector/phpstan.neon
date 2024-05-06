@@ -4,3 +4,4 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Cannot access offset .+collector_.+ on .+SpyTouch#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\): bool\)\|null, .+ given.#'

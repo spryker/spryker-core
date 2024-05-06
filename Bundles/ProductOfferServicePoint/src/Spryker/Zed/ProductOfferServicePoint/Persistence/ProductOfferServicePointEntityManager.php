@@ -24,12 +24,14 @@ class ProductOfferServicePointEntityManager extends AbstractEntityManager implem
      */
     public function deleteProductOfferServicesByIdProductOfferAndServiceIds(int $idProductOffer, array $serviceIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferServiceCollection */
+        $productOfferServiceCollection = $this->getFactory()
             ->getProductOfferServiceQuery()
             ->filterByFkProductOffer($idProductOffer)
             ->filterByFkService_In($serviceIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productOfferServiceCollection->delete();
     }
 
     /**

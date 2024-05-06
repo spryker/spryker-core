@@ -34,6 +34,9 @@ class StockTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value): ArrayObject
     {
-        return (new ArrayObject([$value]));
+        /** @var array<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers */
+        $stockProductTransfers = [$value];
+
+        return (new ArrayObject($stockProductTransfers));
     }
 }

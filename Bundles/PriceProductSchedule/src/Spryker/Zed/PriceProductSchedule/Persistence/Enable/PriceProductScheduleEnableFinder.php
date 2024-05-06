@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence\Enable;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
-use Propel\Runtime\Collection\ArrayCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface;
@@ -203,11 +203,11 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $priceProductSchedulesWithWeights
+     * @param \Propel\Runtime\Collection\Collection $priceProductSchedulesWithWeights
      *
      * @return array<int>
      */
-    protected function getPriceProductScheduleIdsFilteredByWeight(ArrayCollection $priceProductSchedulesWithWeights): array
+    protected function getPriceProductScheduleIdsFilteredByWeight(Collection $priceProductSchedulesWithWeights): array
     {
         $priceProductSchedulesIndexedByProductKey = [];
         foreach ($priceProductSchedulesWithWeights as $priceProductSchedule) {

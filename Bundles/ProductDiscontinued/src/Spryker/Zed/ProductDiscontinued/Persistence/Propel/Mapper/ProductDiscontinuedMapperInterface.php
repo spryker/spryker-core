@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinued\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface ProductDiscontinuedMapperInterface
 {
@@ -26,13 +26,13 @@ interface ProductDiscontinuedMapperInterface
     ): ProductDiscontinuedTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
-        ObjectCollection $productDiscontinuedEntities,
+        Collection $productDiscontinuedEntities,
         ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
     ): ProductDiscontinuedCollectionTransfer;
 

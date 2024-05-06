@@ -113,11 +113,13 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
      */
     public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $merchantRelationshipIds */
+        $merchantRelationshipIds = $this->getFactory()
             ->getProductListQuery()
             ->filterByIdProductList($idProductList)
             ->select(SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $merchantRelationshipIds->toArray();
     }
 }

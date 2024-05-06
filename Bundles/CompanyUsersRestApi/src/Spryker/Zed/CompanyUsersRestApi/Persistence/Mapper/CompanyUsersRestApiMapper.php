@@ -12,19 +12,19 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Map\TableMap;
 
 class CompanyUsersRestApiMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $companyUserCollection
+     * @param \Propel\Runtime\Collection\Collection $companyUserCollection
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function mapCompanyUserEntitiesToCompanyUserCollectionTransfer(
-        ObjectCollection $companyUserCollection,
+        Collection $companyUserCollection,
         CompanyUserCollectionTransfer $companyUserCollectionTransfer
     ): CompanyUserCollectionTransfer {
         foreach ($companyUserCollection as $companyUserEntity) {
@@ -40,13 +40,13 @@ class CompanyUsersRestApiMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $companyRoleCollection
+     * @param \Propel\Runtime\Collection\Collection $companyRoleCollection
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function mapCompanyRoleCollectionTransferToCompanyUserCollection(
-        ObjectCollection $companyRoleCollection,
+        Collection $companyRoleCollection,
         CompanyUserCollectionTransfer $companyUserCollectionTransfer
     ): CompanyUserCollectionTransfer {
         $indexedCompanyRoles = $this->indexCompanyRoleEntities($companyRoleCollection);
@@ -106,11 +106,11 @@ class CompanyUsersRestApiMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $companyRoles
+     * @param \Propel\Runtime\Collection\Collection $companyRoles
      *
      * @return array<array<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole>>
      */
-    protected function indexCompanyRoleEntities(ObjectCollection $companyRoles): array
+    protected function indexCompanyRoleEntities(Collection $companyRoles): array
     {
         $indexedCompanyRoles = [];
         foreach ($companyRoles as $companyRoleEntity) {

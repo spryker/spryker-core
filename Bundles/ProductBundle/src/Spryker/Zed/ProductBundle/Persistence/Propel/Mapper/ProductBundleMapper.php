@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
 {
@@ -61,7 +60,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -84,11 +83,11 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
+     * @param \Propel\Runtime\Collection\Collection $salesOrderItemBundleEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
-    public function mapSalesOrderItemBundleEntitiesToItemTransfers(ObjectCollection $salesOrderItemBundleEntities): array
+    public function mapSalesOrderItemBundleEntitiesToItemTransfers(Collection $salesOrderItemBundleEntities): array
     {
         $bundleItemTransfers = [];
 
@@ -141,7 +140,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      *
      * @return array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */

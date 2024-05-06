@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -105,12 +105,12 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
      * @param int $idMerchant
      *
      * @return array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore>
      */
-    protected function filterMerchantStoresById(ObjectCollection $merchantStoreEntities, int $idMerchant): array
+    protected function filterMerchantStoresById(Collection $merchantStoreEntities, int $idMerchant): array
     {
         $filteredMerchantStoreEntities = [];
         foreach ($merchantStoreEntities as $merchantStoreEntity) {
@@ -201,7 +201,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

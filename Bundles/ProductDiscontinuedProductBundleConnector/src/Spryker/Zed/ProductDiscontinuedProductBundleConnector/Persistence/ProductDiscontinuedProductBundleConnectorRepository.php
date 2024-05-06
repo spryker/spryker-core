@@ -37,15 +37,16 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
                 Criteria::LEFT_JOIN,
             )
             ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_PRODUCT);
+
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productIds */
         $productIds = $productDiscontinuedPropelQuery
             ->select([ProductDiscontinuedTransfer::FK_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
 
-        if ($productIds[0] === null) {
+        if ($productIds->toArray()[0] === null) {
             return [];
         }
 
-        return $productIds;
+        return $productIds->toArray();
     }
 }

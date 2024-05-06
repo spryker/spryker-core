@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantProductAbstractTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class MerchantMapper
 {
@@ -41,13 +41,13 @@ class MerchantMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractEntities
      * @param \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer $merchantProductAbstractCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
      */
     public function mapMerchantProductAbstractEntitiesToMerchantProductAbstractCollectionTransfer(
-        ObjectCollection $merchantProductAbstractEntities,
+        Collection $merchantProductAbstractEntities,
         MerchantProductAbstractCollectionTransfer $merchantProductAbstractCollectionTransfer
     ): MerchantProductAbstractCollectionTransfer {
         foreach ($merchantProductAbstractEntities as $merchantProductAbstractEntity) {

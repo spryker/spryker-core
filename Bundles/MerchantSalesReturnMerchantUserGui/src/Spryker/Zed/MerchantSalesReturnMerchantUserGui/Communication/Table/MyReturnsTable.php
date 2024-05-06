@@ -281,6 +281,7 @@ class MyReturnsTable extends AbstractTable
      */
     protected function getItemStateLabelsByIdSalesReturn(int $idSalesReturn): array
     {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $states */
         $states = $this->salesReturnQuery
             ->clear()
             ->filterByIdSalesReturn($idSalesReturn)
@@ -296,12 +297,11 @@ class MyReturnsTable extends AbstractTable
                 ->endUse()
             ->endUse()
             ->select(static::COL_STATE)
-            ->find()
-            ->toArray();
+            ->find();
 
         $stateLabels = [];
 
-        foreach ($states as $state) {
+        foreach ($states->toArray() as $state) {
             $stateLabels[] = $this->generateLabel(ucfirst($state), $this->merchantSalesReturnMerchantUserGuiConfig->getItemStateToLabelClassMapping()[$state] ?? 'label-default');
         }
 

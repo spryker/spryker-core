@@ -84,10 +84,11 @@ class ErrorResponseBuilder implements ErrorResponseBuilderInterface
      */
     public function createErrorResponseFromErrorMessage(string $errorMessage, ?string $localeName = null): GlueResponseTransfer
     {
-        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
+        /** @var array<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = [(new ErrorTransfer())->setMessage($errorMessage)];
 
         return $this->createErrorResponse(
-            new ArrayObject([$errorTransfer]),
+            new ArrayObject($errorTransfers),
             $localeName,
         );
     }

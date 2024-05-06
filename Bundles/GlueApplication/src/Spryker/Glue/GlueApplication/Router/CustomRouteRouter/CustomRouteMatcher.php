@@ -72,7 +72,7 @@ class CustomRouteMatcher implements RouteMatcherInterface
     }
 
     /**
-     * @param array<string> $executable
+     * @param array<int, mixed> $executable
      *
      * @return array<mixed>
      */

@@ -82,10 +82,11 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
      */
     protected function saveContentLocalizedNavigationTerms(array $localizedNavigationTerms, int $idContentNavigationTerm): void
     {
-        SpyContentLocalizedQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $contentLocalizedCollection */
+        $contentLocalizedCollection = SpyContentLocalizedQuery::create()
             ->filterByFkContent($idContentNavigationTerm)
-            ->find()
-            ->delete();
+            ->find();
+        $contentLocalizedCollection->delete();
 
         foreach ($localizedNavigationTerms as $idLocale => $localizedNavigationTerm) {
             if (!$idLocale) {

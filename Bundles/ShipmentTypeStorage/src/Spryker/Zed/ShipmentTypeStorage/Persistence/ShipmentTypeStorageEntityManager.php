@@ -49,6 +49,8 @@ class ShipmentTypeStorageEntityManager extends AbstractEntityManager implements 
             $shipmentTypeStorageQuery->filterByStore($storeName);
         }
 
-        $shipmentTypeStorageQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shipmentTypeStorageCollection */
+        $shipmentTypeStorageCollection = $shipmentTypeStorageQuery->find();
+        $shipmentTypeStorageCollection->delete();
     }
 }

@@ -192,13 +192,16 @@ class MerchantRelationshipUpdater implements MerchantRelationshipUpdaterInterfac
      */
     protected function createMerchantRelationshipNotFoundError(int $idMerchantRelationship): ApiItemTransfer
     {
-        $apiValidationErrorTransfer = (new ApiValidationErrorTransfer())
-            ->setField(MerchantRelationshipRequestDataInterface::KEY_ID)
-            ->addMessages(sprintf('Merchant relationship is not found for id "%s".', $idMerchantRelationship));
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ApiValidationErrorTransfer> $apiValidationErrorTransfers */
+        $apiValidationErrorTransfers = new ArrayObject([
+            (new ApiValidationErrorTransfer())
+                ->setField(MerchantRelationshipRequestDataInterface::KEY_ID)
+                ->addMessages(sprintf('Merchant relationship is not found for id "%s".', $idMerchantRelationship)),
+        ]);
 
         return $this->getValidationErrorsApiItem(
             Response::HTTP_NOT_FOUND,
-            new ArrayObject([$apiValidationErrorTransfer]),
+            $apiValidationErrorTransfers,
             (string)$idMerchantRelationship,
         );
     }

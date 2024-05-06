@@ -66,15 +66,17 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     /**
      * @param list<string> $servicePointUuids
      *
-     * @return array<string, int>
+     * @return array<int|string, mixed>
      */
     public function getServicePointIdsIndexedByServicePointUuid(array $servicePointUuids): array
     {
-        return $this->getFactory()->getServicePointQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $servicePointIds */
+        $servicePointIds = $this->getFactory()->getServicePointQuery()
             ->select([SpyServicePointTableMap::COL_ID_SERVICE_POINT, SpyServicePointTableMap::COL_UUID])
             ->filterByUuid_In($servicePointUuids)
-            ->find()
-            ->toKeyValue(SpyServicePointTableMap::COL_UUID, SpyServicePointTableMap::COL_ID_SERVICE_POINT);
+            ->find();
+
+        return $servicePointIds->toKeyValue(SpyServicePointTableMap::COL_UUID, SpyServicePointTableMap::COL_ID_SERVICE_POINT);
     }
 
     /**

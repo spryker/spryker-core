@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\TaxProductStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class TaxProductStorageMapper
 {
@@ -35,13 +35,13 @@ class TaxProductStorageMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
      * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
      */
     public function mapProductAbstractEntitiesToProductAbstractCollectionTransfer(
-        ObjectCollection $productAbstractEntities,
+        Collection $productAbstractEntities,
         ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
     ): ProductAbstractCollectionTransfer {
         foreach ($productAbstractEntities as $productAbstractEntity) {

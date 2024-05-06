@@ -212,10 +212,12 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
     ): CustomerCollectionTransfer {
         $customerCollectionTransfer = new CustomerCollectionTransfer();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $customerCollection */
+        $customerCollection = $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find();
 
         $this->hydrateCustomerListWithCustomers(
             $customerCollectionTransfer,
-            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray(),
+            $customerCollection->toArray(),
         );
 
         return $customerCollectionTransfer;

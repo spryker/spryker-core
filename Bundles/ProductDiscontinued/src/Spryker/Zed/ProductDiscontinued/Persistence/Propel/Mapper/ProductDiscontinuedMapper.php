@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
 {
@@ -38,13 +38,13 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
-        ObjectCollection $productDiscontinuedEntities,
+        Collection $productDiscontinuedEntities,
         ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
     ): ProductDiscontinuedCollectionTransfer {
         foreach ($productDiscontinuedEntities as $productDiscontinuedEntity) {
@@ -87,6 +87,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
                 ->fromArray($discontinuedNoteEntityTransfer->toArray(), true);
         }
 
+        /** @var array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer> $discontinuedNoteTransfers */
         return new ArrayObject($discontinuedNoteTransfers);
     }
 }

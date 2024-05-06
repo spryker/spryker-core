@@ -108,6 +108,10 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
             ->filterByUuid($merchantCommissionTransfer->getUuidOrFail())
             ->findOne();
 
+        if ($merchantCommissionEntity === null) {
+            return $merchantCommissionTransfer;
+        }
+
         $merchantCommissionMapper = $this->getFactory()->createMerchantCommissionMapper();
         $merchantCommissionEntity = $merchantCommissionMapper->mapMerchantCommissionTransferToMerchantCommissionEntity(
             $merchantCommissionTransfer,
@@ -134,6 +138,10 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
             ->filterByUuid($merchantCommissionAmountTransfer->getUuidOrFail())
             ->findOne();
 
+        if ($merchantCommissionAmountEntity === null) {
+            return $merchantCommissionAmountTransfer;
+        }
+
         $merchantCommissionMapper = $this->getFactory()->createMerchantCommissionMapper();
         $merchantCommissionAmountEntity = $merchantCommissionMapper->mapMerchantCommissionAmountTransferToMerchantCommissionAmountEntity(
             $merchantCommissionAmountTransfer,
@@ -154,11 +162,13 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
      */
     public function deleteMerchantCommissionAmount(MerchantCommissionAmountTransfer $merchantCommissionAmountTransfer): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantCommissionAmountEntity */
+        $merchantCommissionAmountEntity = $this->getFactory()
             ->getMerchantCommissionAmountQuery()
             ->filterByUuid($merchantCommissionAmountTransfer->getUuidOrFail())
-            ->find()
-            ->delete();
+            ->find();
+
+        $merchantCommissionAmountEntity->delete();
     }
 
     /**
@@ -169,12 +179,14 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
      */
     public function deleteMerchantCommissionStores(int $idMerchantCommission, array $storeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantComissionStoreEntity */
+        $merchantComissionStoreEntity = $this->getFactory()
             ->getMerchantCommissionStoreQuery()
             ->filterByFkMerchantCommission($idMerchantCommission)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $merchantComissionStoreEntity->delete();
     }
 
     /**
@@ -185,11 +197,13 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
      */
     public function deleteMerchantCommissionMerchants(int $idMerchantCommission, array $merchantIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantCommissionMerchantEntity */
+        $merchantCommissionMerchantEntity = $this->getFactory()
             ->getMerchantCommissionMerchantQuery()
             ->filterByFkMerchantCommission($idMerchantCommission)
             ->filterByFkMerchant_In($merchantIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $merchantCommissionMerchantEntity->delete();
     }
 }

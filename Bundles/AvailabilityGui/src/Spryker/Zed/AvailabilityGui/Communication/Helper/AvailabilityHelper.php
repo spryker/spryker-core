@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
@@ -279,13 +279,13 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $availabilityAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $availabilityAbstractEntities
      * @param array<int> $productAbstractIds
      *
      * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     protected function orderAvailabilityAbstractEntitiesByProductAbstractIdsSequence(
-        ObjectCollection $availabilityAbstractEntities,
+        Collection $availabilityAbstractEntities,
         array $productAbstractIds
     ): array {
         $orderedAvailabilityAbstractEntities = [];

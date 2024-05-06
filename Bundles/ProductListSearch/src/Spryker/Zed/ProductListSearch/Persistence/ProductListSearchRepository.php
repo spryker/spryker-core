@@ -81,10 +81,12 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
             ->getProductQuery()
             ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        return $productQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $productQuery
             ->filterByIdProduct_In($concreteIds)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**
@@ -101,10 +103,12 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
             ->getProductCategoryPropelQuery()
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        return $productCategoryQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $productCategoryQuery
             ->filterByFkCategory_In($categoryIds)
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 }

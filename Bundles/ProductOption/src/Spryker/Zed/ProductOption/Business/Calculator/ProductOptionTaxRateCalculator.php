@@ -204,9 +204,11 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
      */
     protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ArrayCollection $taxSetCollection */
+        $taxSetCollection = $this->queryContainer
             ->queryTaxSetByIdProductOptionValueAndCountryIso2Code($productOptionValueIds, $countryIso2Code)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $taxSetCollection->toArray();
     }
 }

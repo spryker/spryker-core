@@ -55,16 +55,18 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
             $companyUserQuery->filterByIsActive(true);
         }
 
-        $companyUserQuery->filterByFkCustomer($idCustomer)
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyUserIds */
+        $companyUserIds = $companyUserQuery->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
             ->endUse()
             ->orderByIdCompanyUser()
-            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
+            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
+            ->find();
 
-        return $companyUserQuery->find()->toArray();
+        return $companyUserIds->toArray();
     }
 
     /**

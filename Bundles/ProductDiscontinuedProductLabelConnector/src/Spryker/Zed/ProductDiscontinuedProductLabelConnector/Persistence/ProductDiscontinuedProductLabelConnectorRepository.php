@@ -31,12 +31,14 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
             ->endUse()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]);
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getProductPropelQuery()
             ->filterByFkProductAbstract($productAbstractWithNotDiscontinuedProductConcreteQuery, Criteria::NOT_IN)
             ->distinct()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 }

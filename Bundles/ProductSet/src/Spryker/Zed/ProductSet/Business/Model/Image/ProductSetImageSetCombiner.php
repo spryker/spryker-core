@@ -55,10 +55,12 @@ class ProductSetImageSetCombiner implements ProductSetImageSetCombinerInterface
      */
     protected function findDefaultProductImageSets($idProductSet)
     {
-        return $this->productSetQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productSetCollection */
+        $productSetCollection = $this->productSetQueryContainer
             ->queryDefaultProductImageSet($idProductSet)
-            ->find()
-            ->toKeyIndex('name');
+            ->find();
+
+        return $productSetCollection->toKeyIndex('name');
     }
 
     /**
@@ -69,10 +71,12 @@ class ProductSetImageSetCombiner implements ProductSetImageSetCombinerInterface
      */
     protected function findLocalizedProductImageSets($idProductSet, $idLocale)
     {
-        return $this->productSetQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productSetCollection */
+        $productSetCollection = $this->productSetQueryContainer
             ->queryProductImageSet($idProductSet, $idLocale)
-            ->find()
-            ->toKeyIndex('name');
+            ->find();
+
+        return $productSetCollection->toKeyIndex('name');
     }
 
     /**

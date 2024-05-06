@@ -74,9 +74,11 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
                 ->orderByIdCountryStore()
             ->endUse();
         $countryQuery->select([SpyCountryTableMap::COL_ISO2_CODE, SpyCountryTableMap::COL_NAME, SpyCountryStoreTableMap::COL_FK_STORE]);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $countries */
+        $countries = $countryQuery->find();
 
         $countryCodesByStoreId = [];
-        foreach ($countryQuery->find()->toArray() as $countryData) {
+        foreach ($countries->toArray() as $countryData) {
             /** @var int $fkStore */
             $fkStore = $countryData[SpyCountryStoreTableMap::COL_FK_STORE];
             /** @var string $iso2code */

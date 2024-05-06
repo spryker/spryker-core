@@ -55,7 +55,9 @@ class ServicePointStorageEntityManager extends AbstractEntityManager implements 
             $servicePointQuery->filterByStore($storeName);
         }
 
-        $servicePointQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $servicePointCollection */
+        $servicePointCollection = $servicePointQuery->find();
+        $servicePointCollection->delete();
     }
 
     /**
@@ -84,10 +86,12 @@ class ServicePointStorageEntityManager extends AbstractEntityManager implements 
      */
     public function deleteServiceTypeStorageByServiceTypeIds(array $serviceTypeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $serviceTypeStorageCollection */
+        $serviceTypeStorageCollection = $this->getFactory()
             ->getServiceTypeStorageQuery()
             ->filterByFkServiceType_In($serviceTypeIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $serviceTypeStorageCollection->delete();
     }
 }

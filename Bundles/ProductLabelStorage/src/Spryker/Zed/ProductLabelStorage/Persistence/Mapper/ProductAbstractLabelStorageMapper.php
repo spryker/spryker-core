@@ -9,18 +9,18 @@ namespace Spryker\Zed\ProductLabelStorage\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductAbstractLabelStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage> $productAbstractLabelStorageEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage> $productAbstractLabelStorageEntities
      * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer>
      */
     public function mapProductAbstractLabelStorageEntitiesToProductAbstractLabelStorageTransfers(
-        ObjectCollection $productAbstractLabelStorageEntities,
+        Collection $productAbstractLabelStorageEntities,
         array $productAbstractLabelStorageTransfers
     ): array {
         foreach ($productAbstractLabelStorageEntities as $productAbstractLabelStorageEntity) {

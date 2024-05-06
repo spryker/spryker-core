@@ -203,15 +203,17 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             $companyRoleQuery->filterByFkCompany($idCompany);
         }
 
-        return $companyRoleQuery->joinSpyCompanyRoleToCompanyUser()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyUserIds */
+        $companyUserIds = $companyRoleQuery->joinSpyCompanyRoleToCompanyUser()
             ->useSpyCompanyRoleToPermissionQuery()
                 ->usePermissionQuery()
                     ->filterByKey($permissionKey)
                 ->endUse()
             ->endUse()
             ->select([SpyCompanyRoleToCompanyUserTableMap::COL_FK_COMPANY_USER])
-            ->find()
-            ->toArray();
+            ->find();
+
+         return $companyUserIds->toArray();
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProductOption\Persistence\Mapper;
 use Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductOptionGroupTransfer;
 use Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroup;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class MerchantProductOptionGroupMapper
 {
@@ -28,13 +28,13 @@ class MerchantProductOptionGroupMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroup> $merchantProductOptionGroupEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroup> $merchantProductOptionGroupEntities
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer $merchantProductOptionGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
      */
     public function mapMerchantProductOptionGroupEntitiesToMerchantProductOptionGroupCollectionTransfer(
-        ObjectCollection $merchantProductOptionGroupEntities,
+        Collection $merchantProductOptionGroupEntities,
         MerchantProductOptionGroupCollectionTransfer $merchantProductOptionGroupCollectionTransfer
     ): MerchantProductOptionGroupCollectionTransfer {
         foreach ($merchantProductOptionGroupEntities as $merchantProductOptionGroupEntity) {

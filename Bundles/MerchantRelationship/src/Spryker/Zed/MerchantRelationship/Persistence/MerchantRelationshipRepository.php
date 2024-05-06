@@ -109,12 +109,14 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyBusinessUnitIds */
+        $companyBusinessUnitIds = $this->getFactory()
             ->createMerchantRelationshipToCompanyBusinessUnitQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->select([SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $companyBusinessUnitIds->toArray();
     }
 
     /**

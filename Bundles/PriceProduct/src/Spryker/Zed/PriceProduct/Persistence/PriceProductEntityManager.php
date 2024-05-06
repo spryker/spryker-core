@@ -40,7 +40,9 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             return;
         }
 
-        $priceProductStoreQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductStoreCollection */
+        $priceProductStoreCollection = $priceProductStoreQuery->find();
+        $priceProductStoreCollection->delete();
     }
 
     /**
@@ -98,13 +100,14 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         $moneyValueTransfer
             ->requireCurrency();
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductStoreCollection */
+        $priceProductStoreCollection = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->filterByFkStore($moneyValueTransfer->getFkStore())
-            ->find()
-            ->delete();
+            ->find();
+        $priceProductStoreCollection->delete();
     }
 
     /**
@@ -114,11 +117,12 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      */
     public function deletePriceProductById(int $idPriceProduct): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductCollection */
+        $priceProductCollection = $this->getFactory()
             ->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct)
-            ->find()
-            ->delete();
+            ->find();
+        $priceProductCollection->delete();
     }
 
     /**
@@ -128,11 +132,12 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      */
     public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductDefaultCollection */
+        $priceProductDefaultCollection = $this->getFactory()
             ->createPriceProductDefaultQuery()
             ->filterByFkPriceProductStore($idPriceProductStore)
-            ->find()
-            ->delete();
+            ->find();
+        $priceProductDefaultCollection->delete();
     }
 
     /**
@@ -157,6 +162,8 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
                 $priceProductCollectionDeleteCriteriaTransfer->getPriceProductStoreIds(),
             );
         }
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductDefaultCollection */
         $priceProductDefaultCollection = $priceProductDefaultQuery->find();
 
         $priceProductDefaultCollection->delete();

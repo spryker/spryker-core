@@ -23,7 +23,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToUtilEncodingServiceInterface;
 
 class FileManagerMapper implements FileManagerMapperInterface
@@ -81,13 +81,13 @@ class FileManagerMapper implements FileManagerMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\FileManager\Persistence\SpyFile> $fileEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\FileManager\Persistence\SpyFile> $fileEntities
      * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\FileCollectionTransfer
      */
     public function mapFileEntitiesToFileCollectionTransfer(
-        ObjectCollection $fileEntities,
+        Collection $fileEntities,
         FileCollectionTransfer $fileCollectionTransfer
     ): FileCollectionTransfer {
         foreach ($fileEntities as $fileEntity) {

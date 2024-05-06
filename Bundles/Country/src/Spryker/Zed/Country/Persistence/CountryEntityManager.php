@@ -87,11 +87,12 @@ class CountryEntityManager extends AbstractEntityManager implements CountryEntit
             }
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $countryStoreCollection */
+        $countryStoreCollection = $this->getFactory()
             ->createCountryStorePropelQuery()
             ->filterByFkStore($storeId)
             ->filterByFkCountry($countryIds, Criteria::NOT_IN)
-            ->find()
-            ->delete();
+            ->find();
+        $countryStoreCollection->delete();
     }
 }

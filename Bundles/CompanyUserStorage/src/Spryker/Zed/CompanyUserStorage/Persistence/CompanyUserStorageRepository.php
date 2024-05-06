@@ -28,11 +28,13 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $companyUserStorageCollection */
+        $companyUserStorageCollection = $this->getFactory()
             ->createCompanyUserStorageQuery()
             ->filterByFkCompanyUser_In($companyUserIds)
-            ->find()
-            ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds
+            ->find();
+
+        return $companyUserStorageCollection->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds
     }
 
     /**

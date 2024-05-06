@@ -27,6 +27,7 @@ use Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscriptionQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -504,12 +505,12 @@ class PushNotificationRepository extends AbstractRepository implements PushNotif
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription> $pushNotificationSubscriptionCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription> $pushNotificationSubscriptionCollection
      *
      * @return array<int, array<int, array<int, \Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription>>>
      */
     protected function groupPushNotificationProviderEntitiesByProviderAndGroup(
-        ObjectCollection $pushNotificationSubscriptionCollection
+        Collection $pushNotificationSubscriptionCollection
     ): array {
         $pushNotificationSubscriptionsGroupedByProviderAndGroup = [];
         /** @var \Orm\Zed\PushNotification\Persistence\SpyPushNotificationSubscription $pushNotificationEntity */

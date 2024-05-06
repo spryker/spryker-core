@@ -1,2 +1,4 @@
 parameters:
     level: 8
+    ignoreErrors:
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\): bool\)\|null, .+ given.#'

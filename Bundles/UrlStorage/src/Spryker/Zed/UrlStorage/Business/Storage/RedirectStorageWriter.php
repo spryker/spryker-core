@@ -133,6 +133,9 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
      */
     protected function findRedirectStorageEntitiesByIds(array $redirectIds)
     {
-        return $this->queryContainer->queryRedirectStorageByIds($redirectIds)->find()->toKeyIndex(static::FK_URL_REDIRECT);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $redirectStorageCollection */
+        $redirectStorageCollection = $this->queryContainer->queryRedirectStorageByIds($redirectIds)->find();
+
+        return $redirectStorageCollection->toKeyIndex(static::FK_URL_REDIRECT);
     }
 }

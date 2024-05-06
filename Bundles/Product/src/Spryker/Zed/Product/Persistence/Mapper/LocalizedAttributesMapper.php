@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 
 class LocalizedAttributesMapper
@@ -53,13 +53,13 @@ class LocalizedAttributesMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
      * @param array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>> $localizedAttributesTransfers
      *
      * @return array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>>
      */
     public function mapProductLocalizedAttributesEntitiesToLocalizedAttributesTransfers(
-        ObjectCollection $productAbstractLocalizedAttributesEntities,
+        Collection $productAbstractLocalizedAttributesEntities,
         array $localizedAttributesTransfers = []
     ): array {
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {

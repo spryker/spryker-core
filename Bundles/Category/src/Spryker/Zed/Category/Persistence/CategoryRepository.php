@@ -536,7 +536,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $nodeQuery->filterByIsRoot(false);
         }
 
-        $nodeQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $nodeCollection */
+        $nodeCollection = $nodeQuery
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
                 ->orderByDepth(Criteria::DESC)
@@ -553,9 +554,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::KEY_FK_CATEGORY_NODE_DESCENDANT)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::KEY_NAME)
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::KEY_CATEGORY_KEY)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE);
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE)
+            ->find();
 
-        return $nodeQuery->find()->toArray();
+        return $nodeCollection->toArray();
     }
 
     /**
@@ -572,7 +574,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryNodeQuery->filterByIsRoot(false);
         }
 
-        $categoryNodeQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeCollection */
+        $categoryNodeCollection = $categoryNodeQuery
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
                 ->orderByDepth(Criteria::DESC)
@@ -599,9 +602,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 static::KEY_CATEGORY_KEY,
                 static::COL_FK_LOCALE,
                 static::KEY_FK_PARENT_CATEGORY_NODE,
-            ]);
+            ])
+            ->find();
 
-        return $categoryNodeQuery->find()->toArray();
+        return $categoryNodeCollection->toArray();
     }
 
     /**
@@ -649,15 +653,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
-        $categoryNodeEntities = $categoryNodeQuery->find()->toKeyIndex();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeCollection */
+        $categoryNodeCollection = $categoryNodeQuery->find();
+        $categoryNodes = $categoryNodeCollection->toKeyIndex();
 
-        if ($categoryNodeEntities === []) {
+        if ($categoryNodes === []) {
             return $nodeCollectionTransfer;
         }
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeCollectionTransfer($categoryNodeEntities, $nodeCollectionTransfer);
+            ->mapCategoryNodeEntitiesToNodeCollectionTransfer($categoryNodes, $nodeCollectionTransfer);
     }
 
     /**
@@ -716,24 +722,28 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->setCategoryNodeFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeCollection */
+        $categoryNodeCollection = $categoryNodeQuery->find();
 
         if (!$categoryNodeCriteriaTransfer->getWithRelations()) {
             return $this->getFactory()
                 ->createCategoryNodeMapper()
-                ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
+                ->mapNodeCollection($categoryNodeCollection, new NodeCollectionTransfer());
         }
 
-        $categoryNodeQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeCollection */
+        $categoryNodeCollection = $categoryNodeQuery
             ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
             ->useCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCategoryTemplate()
-            ->endUse();
+            ->endUse()
+            ->find();
 
         return $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryNodeEntitiesToNodeCollectionTransfer(
-                $categoryNodeQuery->find()->toKeyIndex(),
+                $categoryNodeCollection->toKeyIndex(),
                 new NodeCollectionTransfer(),
             );
     }
@@ -1056,8 +1066,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ]);
 
         $categoryNodeQuery = $this->applyAscendantCategoryKeyFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
+        /** @var \Propel\Runtime\Collection\ArrayCollection $categoryNodeCollection */
+        $categoryNodeCollection = $categoryNodeQuery->find();
 
-        return $categoryNodeQuery->find()->toArray();
+        return $categoryNodeCollection->toArray();
     }
 
     /**

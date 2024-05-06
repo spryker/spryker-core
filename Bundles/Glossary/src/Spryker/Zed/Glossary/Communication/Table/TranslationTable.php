@@ -107,6 +107,7 @@ class TranslationTable extends AbstractTable
     protected function getDetails($fkGlossaryKey)
     {
         $keyName = $this->camelize($this->cutTablePrefix(SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY));
+        /** @var \Propel\Runtime\Collection\ObjectCollection $locales */
         $locales = $this->subGlossaryQuery->filterBy($keyName, $fkGlossaryKey)
             ->leftJoinLocale()
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)

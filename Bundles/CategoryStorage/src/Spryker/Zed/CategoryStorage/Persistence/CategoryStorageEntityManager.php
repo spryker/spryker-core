@@ -55,13 +55,14 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeStorageCollection */
+        $categoryNodeStorageCollection = $this->getFactory()
             ->createSpyCategoryNodeStorageQuery()
             ->filterByFkCategoryNode_In($categoryNodeIds)
             ->filterByLocale($localeName)
             ->filterByStore($storeName)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryNodeStorageCollection->delete();
     }
 
     /**
@@ -71,11 +72,12 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
      */
     public function deleteCategoryNodeStorageByCategoryNodeIds(array $categoryNodeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeStorageCollection */
+        $categoryNodeStorageCollection = $this->getFactory()
             ->createSpyCategoryNodeStorageQuery()
             ->filterByFkCategoryNode_In($categoryNodeIds)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryNodeStorageCollection->delete();
     }
 
     /**
@@ -103,9 +105,10 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
      */
     public function deleteCategoryTreeStorageCollection(): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryTreeStorageCollection */
+        $categoryTreeStorageCollection = $this->getFactory()
             ->createSpyCategoryTreeStorageQuery()
-            ->find()
-            ->delete();
+            ->find();
+        $categoryTreeStorageCollection->delete();
     }
 }

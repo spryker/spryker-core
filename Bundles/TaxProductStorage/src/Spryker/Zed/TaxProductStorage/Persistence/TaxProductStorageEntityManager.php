@@ -62,11 +62,13 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
      */
     protected function findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $taxProductStorageCollection */
+        $taxProductStorageCollection = $this->getFactory()
             ->createTaxProductStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->toKeyIndex(static::COL_FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $taxProductStorageCollection->toKeyIndex(static::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**

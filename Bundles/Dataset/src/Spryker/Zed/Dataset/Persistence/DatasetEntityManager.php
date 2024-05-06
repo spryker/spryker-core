@@ -284,7 +284,10 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
                 continue;
             }
-            $this->createLocalizedAttributes($datasetEntity, (new ArrayObject([$localizedAttribute])));
+
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer> $localizedAttributesToSave */
+            $localizedAttributesToSave = new ArrayObject([$localizedAttribute]);
+            $this->createLocalizedAttributes($datasetEntity, $localizedAttributesToSave);
         }
     }
 

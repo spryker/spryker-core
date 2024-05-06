@@ -177,13 +177,15 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $customerReferences */
+        $customerReferences = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinCustomer()
             ->filterByIdCompanyUser_In($companyUserIds)
             ->select(static::COL_CUSTOMER_REFERENCE)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $customerReferences->toArray();
     }
 
     /**

@@ -10,18 +10,18 @@ namespace Spryker\Zed\ApiKey\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ApiKeyCollectionTransfer;
 use Generated\Shared\Transfer\ApiKeyTransfer;
 use Orm\Zed\ApiKey\Persistence\Base\SpyApiKey;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ApiKeyMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ApiKey\Persistence\Base\SpyApiKey> $apiKeysCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ApiKey\Persistence\Base\SpyApiKey> $apiKeysCollection
      * @param \Generated\Shared\Transfer\ApiKeyCollectionTransfer $apiKeyCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ApiKeyCollectionTransfer
      */
     public function mapApiKeyEntityCollectionToApiKeyCollectionTransfer(
-        ObjectCollection $apiKeysCollection,
+        Collection $apiKeysCollection,
         ApiKeyCollectionTransfer $apiKeyCollectionTransfer
     ): ApiKeyCollectionTransfer {
         foreach ($apiKeysCollection as $apiKeyEntity) {

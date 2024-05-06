@@ -82,10 +82,11 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      */
     protected function saveContentLocalizedBannerTerms(array $localizedBannerTerms, int $idContentBannerTerm): void
     {
-        SpyContentLocalizedQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $contentLocalizedCollection */
+        $contentLocalizedCollection = SpyContentLocalizedQuery::create()
             ->filterByFkContent($idContentBannerTerm)
-            ->find()
-            ->delete();
+            ->find();
+        $contentLocalizedCollection->delete();
 
         foreach ($localizedBannerTerms as $idLocale => $localizedBannerTerm) {
             if (!$idLocale) {

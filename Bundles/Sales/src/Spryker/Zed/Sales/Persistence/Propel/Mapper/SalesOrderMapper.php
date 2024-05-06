@@ -17,7 +17,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class SalesOrderMapper
 {
@@ -55,12 +54,12 @@ class SalesOrderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderTotals> $salesOrderTotalsEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderTotals> $salesOrderTotalsEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\TotalsTransfer>
      */
     public function mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder(
-        ObjectCollection $salesOrderTotalsEntityCollection
+        Collection $salesOrderTotalsEntityCollection
     ): array {
         $mappedTotalsTransfers = [];
 

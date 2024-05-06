@@ -137,12 +137,14 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
      */
     public function deleteServicePointStores(int $idServicePoint, array $storeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $servicePointStoreCollection */
+        $servicePointStoreCollection = $this->getFactory()
             ->getServicePointStoreQuery()
             ->filterByFkServicePoint($idServicePoint)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $servicePointStoreCollection->delete();
     }
 
     /**

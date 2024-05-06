@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ShipmentType\Persistence\SpyShipmentType;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentTypeMapper
@@ -61,13 +62,13 @@ class ShipmentTypeMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeStore> $shipmentTypeStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\ShipmentType\Persistence\SpyShipmentTypeStore> $shipmentTypeStoreEntities
      * @param array<int, \Generated\Shared\Transfer\StoreRelationTransfer> $storeRelationTransfers
      *
      * @return array<int, \Generated\Shared\Transfer\StoreRelationTransfer>
      */
     public function mapShipmentTypeStoreEntitiesToStoreRelationTransfersIndexedByIdShipmentStore(
-        ObjectCollection $shipmentTypeStoreEntities,
+        Collection $shipmentTypeStoreEntities,
         array $storeRelationTransfers
     ): array {
         foreach ($shipmentTypeStoreEntities as $shipmentTypeStoreEntity) {

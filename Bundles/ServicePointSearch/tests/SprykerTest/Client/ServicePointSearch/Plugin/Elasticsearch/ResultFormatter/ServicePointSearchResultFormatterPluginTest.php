@@ -156,6 +156,7 @@ class ServicePointSearchResultFormatterPluginTest extends Unit
     }
 
     /**
+     * @param \Elastica\Query $query
      * @param list<\Elastica\Result> $results
      *
      * @return \Elastica\ResultSet|\PHPUnit\Framework\MockObject\MockObject

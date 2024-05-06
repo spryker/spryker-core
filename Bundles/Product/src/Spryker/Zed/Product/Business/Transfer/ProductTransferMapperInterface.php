@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductTransferMapperInterface
@@ -44,9 +45,9 @@ interface ProductTransferMapperInterface
     public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function convertProductCollection(ObjectCollection $productCollection);
+    public function convertProductCollection(Collection $productCollection);
 }

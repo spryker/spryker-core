@@ -32,10 +32,11 @@ class CmsProductSetKeyParameterMapper implements CmsProductSetKeyParameterMapper
      */
     public function mapProductSetKeyList(array $keyList)
     {
-        $productSetIds = $this->cmsProductSetConnectorQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsProductSetConnectorCollection */
+        $cmsProductSetConnectorCollection = $this->cmsProductSetConnectorQueryContainer
             ->queryProductSetIdsByKeyList($keyList)
-            ->find()
-            ->toArray();
+            ->find();
+        $productSetIds = $cmsProductSetConnectorCollection->toArray();
 
         $productSetKeyIdPairs = [];
         foreach ($productSetIds as $id) {

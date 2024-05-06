@@ -34,7 +34,9 @@ abstract class AbstractIdFilter implements FilterInterface
     protected function getIdCollection(string $itemType, array $itemIdChunk)
     {
         $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
+        /** @var \Propel\Runtime\Collection\ArrayCollection $touchItemIds */
+        $touchItemIds = $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find();
 
-        return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
+        return $touchItemIds->toArray();
     }
 }

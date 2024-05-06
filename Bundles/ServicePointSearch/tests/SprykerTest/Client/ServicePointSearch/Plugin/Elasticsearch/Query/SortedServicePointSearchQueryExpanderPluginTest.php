@@ -145,6 +145,7 @@ class SortedServicePointSearchQueryExpanderPluginTest extends Unit
 
     /**
      * @param \Elastica\Query\AbstractQuery $abstractQuery
+     * @param string|null $searchString
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject
      */

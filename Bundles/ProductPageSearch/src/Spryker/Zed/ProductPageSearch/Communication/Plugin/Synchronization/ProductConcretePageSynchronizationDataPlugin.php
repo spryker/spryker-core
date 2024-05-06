@@ -130,9 +130,11 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
      */
     protected function getAllProductIds(): array
     {
-        return SpyProductQuery::create()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productIds */
+        $productIds = SpyProductQuery::create()
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productIds->toArray();
     }
 }

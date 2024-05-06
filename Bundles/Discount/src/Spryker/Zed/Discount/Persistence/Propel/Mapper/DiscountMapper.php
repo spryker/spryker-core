@@ -17,7 +17,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class DiscountMapper
 {
@@ -101,13 +101,13 @@ class DiscountMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Discount\Persistence\SpyDiscountAmount> $discountAmountEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Discount\Persistence\SpyDiscountAmount> $discountAmountEntities
      * @param array<\Generated\Shared\Transfer\MoneyValueTransfer> $moneyValueTransfers
      *
      * @return array<\Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function mapDiscountAmountEntitiesToMoneyValueTransfers(
-        ObjectCollection $discountAmountEntities,
+        Collection $discountAmountEntities,
         array $moneyValueTransfers
     ): array {
         foreach ($discountAmountEntities as $discountAmountEntity) {
@@ -118,13 +118,13 @@ class DiscountMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Discount\Persistence\SpyDiscountStore> $discountStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Discount\Persistence\SpyDiscountStore> $discountStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function mapDiscountStoreEntitiesToStoreRelationTransfer(
-        ObjectCollection $discountStoreEntities,
+        Collection $discountStoreEntities,
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
         foreach ($discountStoreEntities as $discountStoreEntity) {

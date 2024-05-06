@@ -42,6 +42,7 @@ class ProductWarehouseAllocationExampleRepository extends AbstractRepository imp
             static::MINIMAL_QUANTITY,
         );
 
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct|null $stockProductEntity */
         $stockProductEntity = $this->getFactory()
             ->getStockProductQuery()
             ->useStockQuery()
@@ -61,7 +62,7 @@ class ProductWarehouseAllocationExampleRepository extends AbstractRepository imp
             ->orderBy(SpyStockProductTableMap::COL_QUANTITY, Criteria::DESC)
             ->findOne();
 
-        if (!$stockProductEntity) {
+        if ($stockProductEntity === null) {
             return null;
         }
 

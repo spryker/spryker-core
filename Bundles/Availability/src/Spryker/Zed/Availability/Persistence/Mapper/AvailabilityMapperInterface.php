@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface AvailabilityMapperInterface
 {
@@ -38,13 +38,13 @@ interface AvailabilityMapperInterface
     ): ProductAbstractAvailabilityTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Availability\Persistence\SpyAvailability> $availabilityEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Availability\Persistence\SpyAvailability> $availabilityEntities
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
      */
     public function mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
-        ObjectCollection $availabilityEntities,
+        Collection $availabilityEntities,
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
     ): ProductConcreteAvailabilityCollectionTransfer;
 }

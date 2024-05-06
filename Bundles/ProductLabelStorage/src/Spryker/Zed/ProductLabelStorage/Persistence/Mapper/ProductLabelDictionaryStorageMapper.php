@@ -11,18 +11,18 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductLabelDictionaryStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage> $productLabelDictionaryStorageEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage> $productLabelDictionaryStorageEntities
      * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer> $productLabelDictionaryStorageTransfers
      *
      * @return array
      */
     public function mapProductLabelDictionaryStorageEntitiesToProductLabelDictionaryStorageTransfers(
-        ObjectCollection $productLabelDictionaryStorageEntities,
+        Collection $productLabelDictionaryStorageEntities,
         array $productLabelDictionaryStorageTransfers
     ): array {
         foreach ($productLabelDictionaryStorageEntities as $productLabelDictionaryStorageEntity) {

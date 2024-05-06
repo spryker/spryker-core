@@ -41,6 +41,7 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
             );
         }
 
+        /** @var array<\Generated\Shared\Transfer\ProductListTransfer> $productListTransfers */
         return new ArrayObject($productListTransfers);
     }
 

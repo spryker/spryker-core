@@ -248,6 +248,7 @@ class Role implements RoleInterface
      */
     public function removeRoleById($idRole)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $aclRules */
         $aclRules = $this->queryContainer->queryRuleByRoleId($idRole)->find();
         $aclRules->delete();
 

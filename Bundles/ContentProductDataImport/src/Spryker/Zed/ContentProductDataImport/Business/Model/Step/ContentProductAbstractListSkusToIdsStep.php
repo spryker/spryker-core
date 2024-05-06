@@ -129,6 +129,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
             return $productAbstractIds;
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractEntity */
         $productAbstractEntity = SpyProductAbstractQuery::create()
             ->filterBySku_In($productAbstractSkus)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_SKU])

@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
@@ -108,11 +108,11 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
      *
      * @return void
      */
-    protected function touchDeleteCategoryCmsBlockRelation(ObjectCollection $relations)
+    protected function touchDeleteCategoryCmsBlockRelation(Collection $relations)
     {
         foreach ($relations as $relation) {
             $this->touchFacade->touchActive(
@@ -189,11 +189,11 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector> $relations
      *
      * @return void
      */
-    protected function deleteRelations(ObjectCollection $relations)
+    protected function deleteRelations(Collection $relations)
     {
         foreach ($relations as $relation) {
             $relation->delete();

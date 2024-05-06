@@ -867,6 +867,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         $omsProcessEntity = $this->queryContainer->queryProcess($process->getName())->findOne();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $omsOrderItemEntityCollection */
         $omsOrderItemEntityCollection = $this->queryContainer->querySalesOrderItemStatesByName($states)->find();
 
         if ($omsProcessEntity === null || $omsOrderItemEntityCollection->count() === 0) {

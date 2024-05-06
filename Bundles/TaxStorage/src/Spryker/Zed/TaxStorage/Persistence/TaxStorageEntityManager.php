@@ -64,13 +64,13 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
      */
     public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array
     {
-        $spyTaxSetStorage = $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $taxSetStorageCollection */
+        $taxSetStorageCollection = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->filterByFkTaxSet_In($taxSetIds)
-            ->find()
-            ->toKeyIndex(static::COL_FK_TAX_SET);
+            ->find();
 
-        return $spyTaxSetStorage;
+        return $taxSetStorageCollection->toKeyIndex(static::COL_FK_TAX_SET);
     }
 
     /**

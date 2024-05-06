@@ -9,18 +9,18 @@ namespace Spryker\Zed\Navigation\Persistence\Mapper;
 
 use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class NavigationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigation> $navigationEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Navigation\Persistence\SpyNavigation> $navigationEntities
      * @param array<\Generated\Shared\Transfer\NavigationTransfer> $navigationTransfers
      *
      * @return array<\Generated\Shared\Transfer\NavigationTransfer>
      */
     public function mapNavigationEntitiesToNavigationTransfers(
-        ObjectCollection $navigationEntities,
+        Collection $navigationEntities,
         array $navigationTransfers
     ): array {
         foreach ($navigationEntities as $navigationEntity) {

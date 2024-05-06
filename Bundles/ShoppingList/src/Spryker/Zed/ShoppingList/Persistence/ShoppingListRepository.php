@@ -345,12 +345,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyBusinessUnitSharedShoppingListsIds */
+        $companyBusinessUnitSharedShoppingListsIds = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $companyBusinessUnitSharedShoppingListsIds->toArray();
     }
 
     /**
@@ -363,15 +365,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyBusinessUnitSharedShoppingListIds */
+        $companyBusinessUnitSharedShoppingListIds = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
             ->useSpyShoppingListPermissionGroupQuery()
             ->filterByName($shoppingListPermissionGroupName)
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $companyBusinessUnitSharedShoppingListIds->toArray();
     }
 
     /**
@@ -381,12 +385,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyUserSharedShoppingListsIds */
+        $companyUserSharedShoppingListsIds = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $companyUserSharedShoppingListsIds->toArray();
     }
 
     /**
@@ -399,15 +405,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $companyUserSharedShoppingListIds */
+        $companyUserSharedShoppingListIds = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
             ->useSpyShoppingListPermissionGroupQuery()
             ->filterByName($shoppingListPermissionGroupName)
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $companyUserSharedShoppingListIds->toArray();
     }
 
     /**

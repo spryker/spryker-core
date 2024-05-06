@@ -237,7 +237,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAttributeKey>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAttributeKey>
      */
     protected function findProductAttributes()
     {

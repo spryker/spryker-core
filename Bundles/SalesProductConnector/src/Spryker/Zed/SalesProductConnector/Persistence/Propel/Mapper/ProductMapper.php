@@ -8,16 +8,16 @@
 namespace Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function mapProductEntityCollectionToRawProductConcreteTransfers(ObjectCollection $productEntities): array
+    public function mapProductEntityCollectionToRawProductConcreteTransfers(Collection $productEntities): array
     {
         $productConcreteTransfer = [];
 

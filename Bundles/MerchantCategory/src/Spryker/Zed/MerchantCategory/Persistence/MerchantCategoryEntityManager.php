@@ -25,7 +25,9 @@ class MerchantCategoryEntityManager extends AbstractEntityManager implements Mer
     {
         $merchantCategoryQuery = $this->getFactory()->getMerchantCategoryPropelQuery();
         $merchantCategoryQuery = $this->applyCriteria($merchantCategoryQuery, $merchantCategoryCriteriaTransfer);
-        $merchantCategoryQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantCategoryCollection */
+        $merchantCategoryCollection = $merchantCategoryQuery->find();
+        $merchantCategoryCollection->delete();
     }
 
     /**

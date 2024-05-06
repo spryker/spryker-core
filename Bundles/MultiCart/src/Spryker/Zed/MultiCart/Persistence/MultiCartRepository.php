@@ -38,7 +38,10 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
         }
         $quoteQuery->select([SpyQuoteTableMap::COL_NAME]);
 
-        return $quoteQuery->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $quoteNames */
+        $quoteNames = $quoteQuery->find();
+
+        return $quoteNames->toArray();
     }
 
     /**
@@ -82,9 +85,11 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
             ->addAsColumn(QuoteTransfer::IS_DEFAULT, SpyQuoteTableMap::COL_IS_DEFAULT)
             ->addAsColumn(QuoteTransfer::NAME, SpyQuoteTableMap::COL_NAME);
 
-        return $quoteQuery->select([QuoteTransfer::ID_QUOTE, QuoteTransfer::IS_DEFAULT, QuoteTransfer::NAME])
-            ->find()
-            ->toArray();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $quotes */
+        $quotes = $quoteQuery->select([QuoteTransfer::ID_QUOTE, QuoteTransfer::IS_DEFAULT, QuoteTransfer::NAME])
+            ->find();
+
+        return $quotes->toArray();
     }
 
     /**

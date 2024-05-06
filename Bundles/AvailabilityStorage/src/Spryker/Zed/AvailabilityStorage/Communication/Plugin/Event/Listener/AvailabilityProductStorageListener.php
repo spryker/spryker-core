@@ -116,6 +116,11 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
      */
     protected function findAvailabilityStorageEntitiesByAbstractProductIds(array $abstractProductIds)
     {
-        return $this->getQueryContainer()->queryAvailabilityStorageByProductAbstractIds($abstractProductIds)->find()->toKeyIndex(static::FK_PRODUCT_ABSTRACT);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $availabilityStorageCollection */
+        $availabilityStorageCollection = $this->getQueryContainer()
+            ->queryAvailabilityStorageByProductAbstractIds($abstractProductIds)
+            ->find();
+
+        return $availabilityStorageCollection->toKeyIndex(static::FK_PRODUCT_ABSTRACT);
     }
 }

@@ -10,18 +10,18 @@ namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class StoreRelationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentMethodStore> $paymentMethodStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpyPaymentMethodStore> $paymentMethodStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
-        ObjectCollection $paymentMethodStoreEntities,
+        Collection $paymentMethodStoreEntities,
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
         foreach ($paymentMethodStoreEntities as $paymentMethodStoreEntity) {

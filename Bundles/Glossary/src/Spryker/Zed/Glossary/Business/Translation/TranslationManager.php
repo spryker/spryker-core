@@ -368,6 +368,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function deleteTranslationsByFkKeys(array $idKeys)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $translations */
         $translations = $this->glossaryQueryContainer
             ->queryGlossaryTranslationByFkGlossaryKeys($idKeys)
             ->find();

@@ -63,12 +63,15 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
      */
     public function publish(array $categoryIds)
     {
-        $productCategoryFilters = $this->queryContainer->queryProductCategoryByIdCategories($categoryIds)
-            ->find()
-            ->toKeyValue(static::FK_CATEGORY, static::FILTER_DATA);
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productCategoryFilterCollection */
+        $productCategoryFilterCollection = $this->queryContainer->queryProductCategoryByIdCategories($categoryIds)
+            ->find();
 
         $categoryFilterStorageEntitiesByCategoryIds = $this->findProductCategoryFilterStorageEntitiesByCategoryIds($categoryIds);
-        $this->storeData($productCategoryFilters, $categoryFilterStorageEntitiesByCategoryIds);
+        $this->storeData(
+            $productCategoryFilterCollection->toKeyValue(static::FK_CATEGORY, static::FILTER_DATA),
+            $categoryFilterStorageEntitiesByCategoryIds,
+        );
     }
 
     /**

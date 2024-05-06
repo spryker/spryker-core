@@ -43,12 +43,13 @@ class CurrencyEntityManager extends AbstractEntityManager implements CurrencyEnt
             $currencyIds[] = $currencyTransfer->getIdCurrencyOrFail();
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $currencyStoreCollection */
+        $currencyStoreCollection = $this->getFactory()
             ->createCurrencyStorePropelQuery()
             ->filterByFkStore($idStore)
             ->filterByFkCurrency($currencyIds, Criteria::NOT_IN)
-            ->find()
-            ->delete();
+            ->find();
+        $currencyStoreCollection->delete();
     }
 
     /**

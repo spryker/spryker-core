@@ -220,7 +220,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
         );
 
         $salesExpenseQuery->select($selectedColumns);
-        $orderExpenseData = $salesExpenseQuery->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ArrayCollection $orderExpenses */
+        $orderExpenses = $salesExpenseQuery->find();
+        $orderExpenseData = $orderExpenses->toArray();
 
         if ($orderExpenseData === []) {
             return $dataExportBatchTransfer;

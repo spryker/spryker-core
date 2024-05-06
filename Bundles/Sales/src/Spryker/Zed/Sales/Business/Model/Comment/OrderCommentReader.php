@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales\Business\Model\Comment;
 
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderDetailsCommentsTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderCommentReader implements OrderCommentReaderInterface
@@ -40,11 +40,11 @@ class OrderCommentReader implements OrderCommentReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $commentsCollection
+     * @param \Propel\Runtime\Collection\Collection $commentsCollection
      *
      * @return \Generated\Shared\Transfer\OrderDetailsCommentsTransfer
      */
-    protected function hydrateCommentCollectionFromEntityCollection(ObjectCollection $commentsCollection)
+    protected function hydrateCommentCollectionFromEntityCollection(Collection $commentsCollection)
     {
         $comments = new OrderDetailsCommentsTransfer();
         foreach ($commentsCollection as $salesOrderCommentEntity) {

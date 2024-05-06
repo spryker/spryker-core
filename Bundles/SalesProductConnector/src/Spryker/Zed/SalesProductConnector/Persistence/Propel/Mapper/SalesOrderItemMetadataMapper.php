@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
 
 class SalesOrderItemMetadataMapper
@@ -29,12 +29,12 @@ class SalesOrderItemMetadataMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata> $salesOrderItemMetadataEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata> $salesOrderItemMetadataEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */
     public function mapSalesOrderItemMetadataEntityCollectionToItemMetadataTransfers(
-        ObjectCollection $salesOrderItemMetadataEntities
+        Collection $salesOrderItemMetadataEntities
     ): array {
         $itemMetadataTransfers = [];
 

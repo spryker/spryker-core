@@ -11,16 +11,17 @@ use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\CategoryImageTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface CategoryImageMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
-    public function mapCategoryImageSetCollection(ObjectCollection $categoryImageSetEntityCollection): array;
+    public function mapCategoryImageSetCollection(Collection $categoryImageSetEntityCollection): array;
 
     /**
      * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet $categoryImageSetEntity

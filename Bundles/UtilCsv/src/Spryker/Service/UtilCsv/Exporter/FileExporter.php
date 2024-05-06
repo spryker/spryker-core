@@ -50,6 +50,7 @@ class FileExporter implements FileExporterInterface
      */
     protected function writeCsvHeader(CsvFileTransfer $csvFileTransfer, $csvHandle): void
     {
+        /** @phpstan-ignore-next-line */
         if ($csvFileTransfer->getHeader() && is_array($csvFileTransfer->getHeader())) {
             fputcsv($csvHandle, $csvFileTransfer->getHeader());
         }

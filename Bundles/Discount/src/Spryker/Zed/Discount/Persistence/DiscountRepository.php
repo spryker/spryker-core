@@ -25,14 +25,16 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
      */
     public function findVoucherCodesExceedingUsageLimit(array $codes): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $voucherCodesExceedingUsageLimit */
+        $voucherCodesExceedingUsageLimit = $this->getFactory()
             ->createDiscountVoucherQuery()
             ->filterByCode($codes, Criteria::IN)
             ->filterByMaxNumberOfUses(0, Criteria::GREATER_THAN)
             ->where(SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES . '>=' . SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES)
             ->select(SpyDiscountVoucherTableMap::COL_CODE)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $voucherCodesExceedingUsageLimit->toArray();
     }
 
     /**

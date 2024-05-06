@@ -38,11 +38,12 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
 
         $filterTo = (new DateTime(sprintf(static::PATTERN_MINUS_DAYS, $daysRetained)));
 
-        $priceProductScheduleQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $priceProductScheduleCollection */
+        $priceProductScheduleCollection = $priceProductScheduleQuery
             ->filterByActiveTo(['max' => $filterTo], Criteria::LESS_THAN)
             ->filterByIsCurrent(false)
-            ->find()
-            ->delete();
+            ->find();
+        $priceProductScheduleCollection->delete();
     }
 
     /**

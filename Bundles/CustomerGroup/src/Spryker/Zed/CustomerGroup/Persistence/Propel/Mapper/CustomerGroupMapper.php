@@ -9,16 +9,16 @@ namespace Spryker\Zed\CustomerGroup\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CustomerGroupMapper implements CustomerGroupMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customerGroupEntities
+     * @param \Propel\Runtime\Collection\Collection $customerGroupEntities
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function mapCustomerGroupEntitiesToCustomerGroupCollectionTransfer(ObjectCollection $customerGroupEntities): CustomerGroupCollectionTransfer
+    public function mapCustomerGroupEntitiesToCustomerGroupCollectionTransfer(Collection $customerGroupEntities): CustomerGroupCollectionTransfer
     {
         $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
 

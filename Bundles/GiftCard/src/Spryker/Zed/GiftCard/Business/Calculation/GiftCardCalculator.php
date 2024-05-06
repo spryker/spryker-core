@@ -141,6 +141,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
             $nonApplicableGiftCards[] = $giftCardTransfer;
         }
 
+        /** @var array<int, \Generated\Shared\Transfer\GiftCardTransfer> $applicableGiftCards */
+
+        /** @var array<int, \Generated\Shared\Transfer\GiftCardTransfer> $nonApplicableGiftCards */
         return [new ArrayObject($applicableGiftCards), new ArrayObject($nonApplicableGiftCards)];
     }
 

@@ -142,7 +142,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
      */
     protected function findRootNavigationNodes(SpyNavigation $navigationEntity)
     {
@@ -242,7 +242,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
      */
     protected function findChildrenNavigationNodes(NavigationNodeTransfer $navigationNodeTransfer)
     {

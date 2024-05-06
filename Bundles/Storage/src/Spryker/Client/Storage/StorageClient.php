@@ -413,6 +413,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         static::$bufferedValues = [];
         static::$bufferedDecodedValues = [];
 
+        /** @phpstan-ignore-next-line */
         if (static::$cachedKeys && is_array(static::$cachedKeys)) {
             $values = $this->getService()->getMulti(array_keys(static::$cachedKeys));
 

@@ -17,7 +17,6 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductRepository;
 
@@ -213,13 +212,13 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractCollection
      * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
      */
     public function mapProductAbstractEntitiesToProductAbstractCollectionTransfer(
-        ObjectCollection $productAbstractCollection,
+        Collection $productAbstractCollection,
         ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
     ): ProductAbstractCollectionTransfer {
         foreach ($productAbstractCollection as $productAbstractEntity) {
@@ -245,13 +244,13 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\Product\Persistence\SpyProduct> $productEntities
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\Product\Persistence\SpyProduct> $productEntities
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
     public function mapProductEntitiesToProductConcreteCollection(
-        ObjectCollection $productEntities,
+        Collection $productEntities,
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): ProductConcreteCollectionTransfer {
         foreach ($productEntities as $productEntity) {

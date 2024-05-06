@@ -96,6 +96,7 @@ class PushNotificationFilter implements PushNotificationFilterInterface
             $validPushNotificationTransfers[] = $pushNotificationTransfer;
         }
 
+        /** @var array<\Generated\Shared\Transfer\PushNotificationTransfer> $validPushNotificationTransfers */
         return new ArrayObject($validPushNotificationTransfers);
     }
 

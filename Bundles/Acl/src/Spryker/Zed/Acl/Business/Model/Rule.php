@@ -205,6 +205,7 @@ class Rule implements RuleInterface
      */
     public function getRulesForGroupId($idGroup)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $relationshipCollection */
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         /** @var array<\Orm\Zed\Acl\Persistence\SpyAclRole> $roleCollection */
         $roleCollection = $this->queryContainer->queryGroupRules($relationshipCollection)->find();

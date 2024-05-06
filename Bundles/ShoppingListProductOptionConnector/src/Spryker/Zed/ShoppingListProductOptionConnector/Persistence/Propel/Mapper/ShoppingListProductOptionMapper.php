@@ -10,18 +10,18 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence\Propel\Mapp
 use Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListProductOptionTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ShoppingListProductOptionMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption> $shoppingListProductOptionEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption> $shoppingListProductOptionEntityCollection
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
      */
     public function mapShoppingListProductOptionEntityCollectionToShoppingListProductOptionCollectionTransfer(
-        ObjectCollection $shoppingListProductOptionEntityCollection,
+        Collection $shoppingListProductOptionEntityCollection,
         ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
     ): ShoppingListProductOptionCollectionTransfer {
         foreach ($shoppingListProductOptionEntityCollection as $shoppingListProductOptionEntity) {

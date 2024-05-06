@@ -46,12 +46,14 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
         int $productAbstractId,
         array $stores
     ): void {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractRelationStorageCollection */
+        $productAbstractRelationStorageCollection = $this->getFactory()
             ->createSpyProductAbstractRelationStorageQuery()
             ->filterByFkProductAbstract($productAbstractId)
             ->filterByStore_In($stores)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAbstractRelationStorageCollection->delete();
     }
 
     /**
@@ -62,10 +64,12 @@ class ProductRelationStorageEntityManager extends AbstractEntityManager implemen
     public function deleteProductAbstractStorageEntitiesByProductAbstractIds(
         array $productAbstractIds
     ): void {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractRelationStorageCollection */
+        $productAbstractRelationStorageCollection = $this->getFactory()
             ->createSpyProductAbstractRelationStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAbstractRelationStorageCollection->delete();
     }
 }

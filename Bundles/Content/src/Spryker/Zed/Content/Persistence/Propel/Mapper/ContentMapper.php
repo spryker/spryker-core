@@ -10,7 +10,7 @@ namespace Spryker\Zed\Content\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ContentMapper implements ContentMapperInterface
 {
@@ -37,13 +37,13 @@ class ContentMapper implements ContentMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Content\Persistence\SpyContent> $contentEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Content\Persistence\SpyContent> $contentEntities
      * @param array<\Generated\Shared\Transfer\ContentTransfer> $contentTransfers
      *
      * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function mapContentEntitiesToContentTransfers(
-        ObjectCollection $contentEntities,
+        Collection $contentEntities,
         array $contentTransfers = []
     ): array {
         foreach ($contentEntities as $contentEntity) {

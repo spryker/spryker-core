@@ -63,8 +63,9 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
     public function getAllProductCategoriesIdsWithFilters()
     {
         $categoryIds = [];
-        $productCategoryFilters = $this->productCategoryFilterQueryContainer->queryProductCategoryFilter()->find()->toArray();
-        foreach ($productCategoryFilters as $productCategoryFilter) {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productCategoryFilterCollection */
+        $productCategoryFilterCollection = $this->productCategoryFilterQueryContainer->queryProductCategoryFilter()->find();
+        foreach ($productCategoryFilterCollection->toArray() as $productCategoryFilter) {
             $productCategoryFilterTransfer = (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilter);
             $categoryIds[] = $productCategoryFilterTransfer->getFkCategory();
         }

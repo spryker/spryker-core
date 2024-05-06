@@ -27,7 +27,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryImageSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds)
     {
@@ -76,7 +76,7 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryImageIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageIds(array $categoryImageIds)
     {

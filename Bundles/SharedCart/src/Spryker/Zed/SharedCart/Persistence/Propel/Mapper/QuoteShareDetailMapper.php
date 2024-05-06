@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
 {
@@ -32,12 +32,12 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function mapShareDetailCollection(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): ShareDetailCollectionTransfer
+    public function mapShareDetailCollection(Collection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): ShareDetailCollectionTransfer
     {
         $shareDetailCollectionTransfer = new ShareDetailCollectionTransfer();
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
@@ -50,12 +50,12 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
-    public function mapShareDetailCollectionByQuoteId(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): array
+    public function mapShareDetailCollectionByQuoteId(Collection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): array
     {
         $shareDetailCollectionByQuoteId = [];
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);

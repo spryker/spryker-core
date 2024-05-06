@@ -30,12 +30,11 @@ class ReorderProductSetsFormDataProvider
      */
     public function getData()
     {
-        $productSetWeights = $this->productSetGuiQueryContainer->queryProductSetWeights()
-            ->find()
-            ->toKeyValue('PrimaryKey', 'weight');
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productSetWeights */
+        $productSetWeights = $this->productSetGuiQueryContainer->queryProductSetWeights()->find();
 
         return [
-            ReorderProductSetsFormType::FIELD_PRODUCT_SET_WEIGHTS => $productSetWeights,
+            ReorderProductSetsFormType::FIELD_PRODUCT_SET_WEIGHTS => $productSetWeights->toKeyValue('PrimaryKey', 'weight'),
         ];
     }
 

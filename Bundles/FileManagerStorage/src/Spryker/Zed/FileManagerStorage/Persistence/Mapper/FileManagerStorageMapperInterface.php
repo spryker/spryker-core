@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileStorageTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface FileManagerStorageMapperInterface
 {
@@ -40,9 +40,9 @@ interface FileManagerStorageMapperInterface
     public function mapFileStorageTransferToEntity(FileStorageTransfer $fileStorageTransfer, SpyFileStorage $fileStorage);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage> $fileStorageEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage> $fileStorageEntities
      *
      * @return array<\Generated\Shared\Transfer\FileStorageTransfer>
      */
-    public function mapFileStorageEntityCollectionToTransferCollection(ObjectCollection $fileStorageEntities): array;
+    public function mapFileStorageEntityCollectionToTransferCollection(Collection $fileStorageEntities): array;
 }

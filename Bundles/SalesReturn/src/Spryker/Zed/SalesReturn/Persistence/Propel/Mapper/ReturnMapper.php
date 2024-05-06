@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ReturnMapper
 {
@@ -49,11 +49,11 @@ class ReturnMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnEntities
+     * @param \Propel\Runtime\Collection\Collection $salesReturnEntities
      *
      * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
      */
-    public function mapReturnEntityCollectionToReturnCollectionTransfer(ObjectCollection $salesReturnEntities): ReturnCollectionTransfer
+    public function mapReturnEntityCollectionToReturnCollectionTransfer(Collection $salesReturnEntities): ReturnCollectionTransfer
     {
         $returnCollectionTransfer = new ReturnCollectionTransfer();
 
@@ -67,11 +67,11 @@ class ReturnMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesReturnItemEntities
+     * @param \Propel\Runtime\Collection\Collection $salesReturnItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ReturnItemTransfer>
      */
-    public function mapReturnItemEntityCollectionToReturnTransfers(ObjectCollection $salesReturnItemEntities): array
+    public function mapReturnItemEntityCollectionToReturnTransfers(Collection $salesReturnItemEntities): array
     {
         $returnItemTransfers = [];
 

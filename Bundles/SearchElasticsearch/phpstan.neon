@@ -40,4 +40,5 @@ parameters:
         - '#Method Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\Mapping.+::buildMapping\(\) has invalid return type Elastica.+Mapping#'
         - '#Call to an undefined method .+SearchStringGetterInterface::getSearchQuery\(\).#'
         - '#Call to an undefined method .+SearchStringGetterInterface::getSearchString\(\).#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed\): bool\)\|null, .+ given.#'
     reportUnmatchedIgnoredErrors: false

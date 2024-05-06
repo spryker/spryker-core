@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 interface WishlistMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntities
      * @param \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function mapWishlistEntitiesToWishlistCollectionTransfer(
-        ObjectCollection $wishlistEntities,
+        Collection $wishlistEntities,
         WishlistCollectionTransfer $wishlistCollectionTransfer
     ): WishlistCollectionTransfer;
 

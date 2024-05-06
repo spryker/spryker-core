@@ -26,11 +26,13 @@ class SalesReturnSearchEntityManager extends AbstractEntityManager implements Sa
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $salesReturnReasonSearchCollection */
+        $salesReturnReasonSearchCollection = $this->getFactory()
             ->getSalesReturnReasonSearchPropelQuery()
             ->filterByFkSalesReturnReason_In($returnReasonIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $salesReturnReasonSearchCollection->delete();
     }
 
     /**

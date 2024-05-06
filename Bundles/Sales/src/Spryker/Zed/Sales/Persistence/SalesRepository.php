@@ -128,12 +128,14 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $currencyIsoCodes */
+        $currencyIsoCodes = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByIdSalesOrder_In($salesOrderIds)
             ->select([static::ID_SALES_ORDER, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE])
-            ->find()
-            ->toKeyValue(static::ID_SALES_ORDER, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE);
+            ->find();
+
+        return $currencyIsoCodes->toKeyValue(static::ID_SALES_ORDER, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE);
     }
 
     /**

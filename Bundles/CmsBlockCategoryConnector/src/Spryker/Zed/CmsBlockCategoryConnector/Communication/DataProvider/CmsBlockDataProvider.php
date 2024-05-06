@@ -187,10 +187,12 @@ class CmsBlockDataProvider
      */
     protected function getPositionList()
     {
-        return $this->cmsBlockCategoryConnectorQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockCategoryPositionCollection */
+        $cmsBlockCategoryPositionCollection = $this->cmsBlockCategoryConnectorQueryContainer
             ->queryCmsBlockCategoryPosition()
             ->orderByIdCmsBlockCategoryPosition()
-            ->find()
-            ->toKeyValue('idCmsBlockCategoryPosition', 'name');
+            ->find();
+
+         return $cmsBlockCategoryPositionCollection->toKeyValue('idCmsBlockCategoryPosition', 'name');
     }
 }

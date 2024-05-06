@@ -10,18 +10,18 @@ namespace Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductOfferValidityMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<mixed> $productOfferValidityEntities
+     * @param \Propel\Runtime\Collection\Collection<mixed> $productOfferValidityEntities
      * @param \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer $productOfferValidityCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer
      */
     public function productOfferValidityEntitiesToProductOfferValidityCollectionTransfer(
-        ObjectCollection $productOfferValidityEntities,
+        Collection $productOfferValidityEntities,
         ProductOfferValidityCollectionTransfer $productOfferValidityCollectionTransfer
     ): ProductOfferValidityCollectionTransfer {
         foreach ($productOfferValidityEntities as $productOfferValidityEntity) {

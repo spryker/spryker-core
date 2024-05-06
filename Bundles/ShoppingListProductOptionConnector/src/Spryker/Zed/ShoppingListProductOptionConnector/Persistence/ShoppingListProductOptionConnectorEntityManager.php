@@ -63,6 +63,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
      */
     public function removeShoppingListItemProductOptions(int $idShoppingListItem): void
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities */
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
@@ -78,6 +79,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
      */
     public function removeShoppingListItemProductOptionsByShoppingListItemIds(array $shoppingListItemIds): void
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities */
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem_In($shoppingListItemIds)
@@ -93,6 +95,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
      */
     public function removeShoppingListItemProductOptionsByProductOptionValueIds(array $productOptionValueIds): void
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities */
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkProductOptionValue_In($productOptionValueIds)

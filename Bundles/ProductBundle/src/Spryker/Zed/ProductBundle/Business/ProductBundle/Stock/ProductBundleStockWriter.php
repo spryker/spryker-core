@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -143,11 +143,11 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
      *
      * @return array<int, array<string, mixed>>
      */
-    protected function calculateBundleStockPerWarehouse(ObjectCollection $bundleItems)
+    protected function calculateBundleStockPerWarehouse(Collection $bundleItems)
     {
         $bundledItemStock = [];
         $bundledItemQuantity = [];
@@ -261,7 +261,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function findBundledItemsByIdBundleProduct($idProductConcrete)
     {
@@ -305,7 +305,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProduct
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Stock\Persistence\SpyStockProduct>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Stock\Persistence\SpyStockProduct>
      */
     protected function findProductStocks($idProduct)
     {

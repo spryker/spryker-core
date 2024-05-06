@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesServicePoint\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderItemServicePointTransfer;
 use Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePoint;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class SalesServicePointMapper
 {
@@ -30,13 +30,13 @@ class SalesServicePointMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePoint> $salesOrderItemServicePointEntities
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\SalesServicePoint\Persistence\SpySalesOrderItemServicePoint> $salesOrderItemServicePointEntities
      * @param \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer $salesOrderItemServicePointCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemServicePointCollectionTransfer
      */
     public function mapSalesOrderItemServicePointEntityCollectionToSalesOrderItemServicePointCollectionTransfer(
-        ObjectCollection $salesOrderItemServicePointEntities,
+        Collection $salesOrderItemServicePointEntities,
         SalesOrderItemServicePointCollectionTransfer $salesOrderItemServicePointCollectionTransfer
     ): SalesOrderItemServicePointCollectionTransfer {
         foreach ($salesOrderItemServicePointEntities as $salesOrderItemServicePointEntity) {

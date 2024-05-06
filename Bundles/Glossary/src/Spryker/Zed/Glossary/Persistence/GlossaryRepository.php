@@ -9,6 +9,7 @@ namespace Spryker\Zed\Glossary\Persistence;
 
 use Generated\Shared\Transfer\GlossaryKeyTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -116,11 +117,11 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey> $glossaryKeyEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey> $glossaryKeyEntities
      *
      * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
-    protected function mapGlossaryKeyEntitiesToGlossaryKeyTransfers(ObjectCollection $glossaryKeyEntities): array
+    protected function mapGlossaryKeyEntitiesToGlossaryKeyTransfers(Collection $glossaryKeyEntities): array
     {
         $glossaryKeyTransfers = [];
         $glossaryMapper = $this->getFactory()->createGlossaryMapper();

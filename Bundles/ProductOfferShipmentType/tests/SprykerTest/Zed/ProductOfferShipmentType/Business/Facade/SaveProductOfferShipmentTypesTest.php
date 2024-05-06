@@ -574,7 +574,7 @@ class SaveProductOfferShipmentTypesTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<string, mixed>
      */
     protected function getProductOfferShipmentTypeCollectionRequestDataProvider(): array
     {

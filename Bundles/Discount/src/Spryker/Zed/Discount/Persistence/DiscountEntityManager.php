@@ -151,8 +151,9 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
     {
         $discountAmountQuery = $this->getFactory()->createDiscountAmountQuery();
         $discountAmountQuery = $this->applyDiscountAmountCriteria($discountAmountQuery, $discountAmountCriteriaTransfer);
-
-        $discountAmountQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $discountAmountCollection */
+        $discountAmountCollection = $discountAmountQuery->find();
+        $discountAmountCollection->delete();
     }
 
     /**
@@ -167,12 +168,13 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $dicountStoreCollection */
+        $dicountStoreCollection = $this->getFactory()
             ->createDiscountStoreQuery()
             ->filterByFkDiscount($idDiscount)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+        $dicountStoreCollection->delete();
     }
 
     /**

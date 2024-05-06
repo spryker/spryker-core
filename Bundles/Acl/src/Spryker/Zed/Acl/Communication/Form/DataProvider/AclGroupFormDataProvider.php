@@ -67,9 +67,10 @@ class AclGroupFormDataProvider
      */
     protected function getAvailableRoleListByIdGroup($idAclGroup)
     {
-        $roleCollection = $this->queryContainer->queryGroupHasRole($idAclGroup)->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $roleCollection */
+        $roleCollection = $this->queryContainer->queryGroupHasRole($idAclGroup)->find();
 
-        return array_column($roleCollection, 'FkAclRole');
+        return array_column($roleCollection->toArray(), 'FkAclRole');
     }
 
     /**
@@ -77,8 +78,9 @@ class AclGroupFormDataProvider
      */
     protected function getAvailableRoleList()
     {
-        $roleCollection = $this->queryContainer->queryRole()->find()->toArray();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $roleCollection */
+        $roleCollection = $this->queryContainer->queryRole()->find();
 
-        return array_column($roleCollection, 'IdAclRole', 'Name');
+        return array_column($roleCollection->toArray(), 'IdAclRole', 'Name');
     }
 }

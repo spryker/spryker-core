@@ -44,6 +44,10 @@ class ApiKeyEntityManager extends AbstractEntityManager implements ApiKeyEntityM
             ->filterByIdApiKey($apiKeyTransfer->getIdApiKeyOrFail())
             ->findOne();
 
+        if ($apiKeyEntity === null) {
+            return new ApiKeyTransfer();
+        }
+
         if ($apiKeyTransfer->getKeyHash() !== null) {
             $apiKeyEntity->setKeyHash($apiKeyTransfer->getKeyHashOrFail());
         }

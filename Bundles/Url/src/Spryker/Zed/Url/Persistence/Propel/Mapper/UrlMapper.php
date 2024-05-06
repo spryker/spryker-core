@@ -9,17 +9,17 @@ namespace Spryker\Zed\Url\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\UrlCollectionTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class UrlMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
      * @param \Generated\Shared\Transfer\UrlCollectionTransfer $urlCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\UrlCollectionTransfer
      */
-    public function mapUrlEntitiesToUrlCollectionTransfer(ObjectCollection $urlEntities, UrlCollectionTransfer $urlCollectionTransfer): UrlCollectionTransfer
+    public function mapUrlEntitiesToUrlCollectionTransfer(Collection $urlEntities, UrlCollectionTransfer $urlCollectionTransfer): UrlCollectionTransfer
     {
         foreach ($urlEntities as $urlEntity) {
             $urlCollectionTransfer->addUrl(

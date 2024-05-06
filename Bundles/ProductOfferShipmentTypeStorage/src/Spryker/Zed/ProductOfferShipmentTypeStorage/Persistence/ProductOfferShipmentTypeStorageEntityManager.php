@@ -50,6 +50,8 @@ class ProductOfferShipmentTypeStorageEntityManager extends AbstractEntityManager
             $productOfferShipmentTypeStorageQuery->filterByStore($storeName);
         }
 
-        $productOfferShipmentTypeStorageQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferShipmentTypeStorageCollection */
+        $productOfferShipmentTypeStorageCollection = $productOfferShipmentTypeStorageQuery->find();
+        $productOfferShipmentTypeStorageCollection->delete();
     }
 }

@@ -13,7 +13,7 @@ use Orm\Zed\Locale\Persistence\Map\SpyLocaleStoreTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -171,9 +171,11 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
             ->filterByFkStore_In($storeIds)
             ->endUse();
         $localeQuery->select([SpyLocaleTableMap::COL_LOCALE_NAME, SpyLocaleStoreTableMap::COL_FK_STORE]);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $locales */
+        $locales = $localeQuery->find();
 
         $localeCodesByStoreId = [];
-        foreach ($localeQuery->find()->toArray() as $localeData) {
+        foreach ($locales->toArray() as $localeData) {
             /** @var int $fkStore */
             $fkStore = $localeData[SpyLocaleStoreTableMap::COL_FK_STORE];
             /** @var string $name */
@@ -204,10 +206,12 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
             ->useDefaultLocaleQuery()
             ->endUse();
         $localeQuery->select([SpyLocaleTableMap::COL_LOCALE_NAME, SpyStoreTableMap::COL_ID_STORE]);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $locales */
+        $locales = $localeQuery->find();
 
         $localeNamesIndexedByIdStore = [];
 
-        foreach ($localeQuery->find()->toArray() as $localeData) {
+        foreach ($locales->toArray() as $localeData) {
             /** @var int $idStore */
             $idStore = $localeData[SpyStoreTableMap::COL_ID_STORE];
             /** @var string $name */
@@ -220,11 +224,11 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Locale\Persistence\SpyLocale> $localeEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Locale\Persistence\SpyLocale> $localeEntities
      *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    protected function mapLocaleEntitiesToLocaleTransfers(ObjectCollection $localeEntities): array
+    protected function mapLocaleEntitiesToLocaleTransfers(Collection $localeEntities): array
     {
         $localeTransfers = [];
         $localeMapper = $this->getFactory()->createLocaleMapper();

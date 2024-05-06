@@ -42,7 +42,7 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {

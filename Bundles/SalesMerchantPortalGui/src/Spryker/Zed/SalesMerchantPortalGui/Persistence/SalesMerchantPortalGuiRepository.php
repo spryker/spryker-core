@@ -697,7 +697,8 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
 
-        return $merchantSalesOrderQuery->joinOrder()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $orderTotals */
+        $orderTotals = $merchantSalesOrderQuery->joinOrder()
             ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
             ->addAsColumn(MerchantOrderCountsTransfer::ORDER_TOTALS_PER_STORE, 'COUNT(*)')
             ->useOrderQuery()
@@ -707,7 +708,8 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
                 OrderTransfer::STORE,
                 MerchantOrderCountsTransfer::ORDER_TOTALS_PER_STORE,
             ])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $orderTotals->toArray();
     }
 }

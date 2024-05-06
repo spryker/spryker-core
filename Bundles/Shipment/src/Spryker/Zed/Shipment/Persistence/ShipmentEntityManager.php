@@ -177,11 +177,13 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      */
     public function deleteShipmentMethodStoreRelationsByIdShipmentMethod(int $idShipmentMethod): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shipmentMethodStoreCollection */
+        $shipmentMethodStoreCollection = $this->getFactory()
             ->createShipmentMethodStoreQuery()
             ->filterByFkShipmentMethod($idShipmentMethod)
-            ->find()
-            ->delete();
+            ->find();
+
+        $shipmentMethodStoreCollection->delete();
     }
 
     /**
@@ -229,12 +231,14 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shipmentMethodStoreCollection */
+        $shipmentMethodStoreCollection = $this->getFactory()
             ->createShipmentMethodStoreQuery()
             ->filterByFkShipmentMethod($idShipmentMethod)
             ->filterByFkStore_In($idStores)
-            ->find()
-            ->delete();
+            ->find();
+
+        $shipmentMethodStoreCollection->delete();
     }
 
     /**

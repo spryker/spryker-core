@@ -25,6 +25,7 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
     {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractOptionGroupStatuses */
         $productAbstractOptionGroupStatuses = $this->getFactory()
             ->createProductAbstractProductOptionGroupQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
@@ -37,12 +38,11 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
             ->withColumn(SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT, ProductAbstractOptionGroupStatusTransfer::ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductOptionGroupTableMap::COL_ACTIVE, ProductAbstractOptionGroupStatusTransfer::IS_ACTIVE)
             ->withColumn(SpyProductOptionGroupTableMap::COL_NAME, ProductAbstractOptionGroupStatusTransfer::PRODUCT_OPTION_GROUP_NAME)
-            ->find()
-            ->toArray();
+            ->find();
 
         return $this->getFactory()
             ->createProductOptionMapper()
-            ->mapProductAbstractOptionGroupStatusesToTransfers($productAbstractOptionGroupStatuses);
+            ->mapProductAbstractOptionGroupStatusesToTransfers($productAbstractOptionGroupStatuses->toArray());
     }
 
     /**

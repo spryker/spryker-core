@@ -183,11 +183,13 @@ class KeyManager implements KeyManagerInterface
      */
     public function getKeySuggestions($keyFragment)
     {
-        return $this
+        /** @var \Propel\Runtime\Collection\ObjectCollection $keySuggestions */
+        $keySuggestions = $this
             ->queryContainer
             ->queryActiveKeysByName('%' . $keyFragment . '%')
             ->select([SpyGlossaryKeyTableMap::COL_KEY])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $keySuggestions->toArray();
     }
 }

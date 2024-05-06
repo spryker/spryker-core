@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
@@ -83,12 +83,12 @@ class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityM
      * @param \Generated\Shared\Transfer\TaxAppConfigTransfer $taxAppConfigTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection
      */
     protected function getTaxAppConfigEntityCollectionByTaxAppConfigAndStore(
         TaxAppConfigTransfer $taxAppConfigTransfer,
         StoreTransfer $storeTransfer
-    ): ObjectCollection {
+    ): Collection {
         if ($storeTransfer->getIdStore() === null) {
             return $this->getFactory()
                 ->createTaxAppConfigQuery()
@@ -106,9 +106,9 @@ class TaxAppEntityManager extends AbstractEntityManager implements TaxAppEntityM
     /**
      * @param \Generated\Shared\Transfer\TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection
      */
-    protected function getTaxAppConfigEntityCollectionByTaxAppConfigCriteria(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): ObjectCollection
+    protected function getTaxAppConfigEntityCollectionByTaxAppConfigCriteria(TaxAppConfigCriteriaTransfer $taxAppConfigCriteriaTransfer): Collection
     {
         $taxAppConfigConditionTransfer = $taxAppConfigCriteriaTransfer->getTaxAppConfigConditionsOrFail();
 

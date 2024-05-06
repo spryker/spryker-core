@@ -24,6 +24,7 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
      */
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array
     {
+        /** @var \Propel\Runtime\Collection\ArrayCollection $taxSetIds */
         $taxSetIds = $this->getFactory()
             ->getTaxSetQuery()
             ->useSpyTaxSetTaxQuery()
@@ -33,10 +34,9 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
             ->endUse()
             ->select(SpyTaxSetTableMap::COL_ID_TAX_SET)
             ->groupBy(SpyTaxSetTableMap::COL_ID_TAX_SET)
-            ->find()
-            ->toArray();
+            ->find();
 
-        return $taxSetIds;
+        return $taxSetIds->toArray();
     }
 
     /**

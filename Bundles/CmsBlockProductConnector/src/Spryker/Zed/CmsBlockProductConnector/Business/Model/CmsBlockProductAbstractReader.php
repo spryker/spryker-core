@@ -35,10 +35,12 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
-        $idProductAbstracts = $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockProductConnectorCollection */
+        $cmsBlockProductConnectorCollection = $this->queryContainer
             ->queryCmsBlockProductConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock())
-            ->find()
-            ->getColumnValues('FkProductAbstract');
+            ->find();
+
+        $idProductAbstracts = $cmsBlockProductConnectorCollection->getColumnValues('FkProductAbstract');
 
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
 

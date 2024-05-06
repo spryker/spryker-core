@@ -66,13 +66,15 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractAlternativeIds */
+        $productAbstractAlternativeIds = $this->getFactory()
             ->getProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductAbstractAlternative(null, Criteria::ISNOTNULL)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_ABSTRACT_ALTERNATIVE])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractAlternativeIds->toArray();
     }
 
     /**
@@ -84,13 +86,15 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteAlternativeIds */
+        $productConcreteAlternativeIds = $this->getFactory()
             ->getProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductConcreteAlternative(null, Criteria::ISNOTNULL)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_CONCRETE_ALTERNATIVE])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productConcreteAlternativeIds->toArray();
     }
 
     /**
@@ -110,14 +114,16 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU);
 
-        return $productQuery->select([
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIdToSkusByProductIds */
+        $productConcreteIdToSkusByProductIds = $productQuery->select([
                     SpyProductTableMap::COL_ID_PRODUCT,
                     ProductConcreteTransfer::SKU,
                     ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
                     ProductConcreteTransfer::ABSTRACT_SKU,
             ])
-            ->find()
-            ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
+            ->find();
+
+        return $productConcreteIdToSkusByProductIds->toArray(SpyProductTableMap::COL_ID_PRODUCT);
     }
 
     /**
@@ -134,9 +140,11 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
         $productAbstractQuery->filterByIdProductAbstract_In($productIds)
             ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU);
 
-        return $productAbstractQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
-            ->find()
-            ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+        /** @var \Propel\Runtime\Collection\ArrayCollection $indexedProductAbstractIdToSkusByProductIds */
+        $indexedProductAbstractIdToSkusByProductIds = $productAbstractQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
+            ->find();
+
+        return $indexedProductAbstractIdToSkusByProductIds->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -156,14 +164,16 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU);
 
-        return $productAbstractQuery->select([
+        /** @var \Propel\Runtime\Collection\ArrayCollection $indexedProductConcreteIdToSkusByProductAbstractIds */
+        $indexedProductConcreteIdToSkusByProductAbstractIds = $productAbstractQuery->select([
                     SpyProductTableMap::COL_ID_PRODUCT,
                     ProductConcreteTransfer::SKU,
                     ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
                     ProductConcreteTransfer::ABSTRACT_SKU,
             ])
-            ->find()
-            ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
+            ->find();
+
+        return $indexedProductConcreteIdToSkusByProductAbstractIds->toArray(SpyProductTableMap::COL_ID_PRODUCT);
     }
 
     /**
@@ -188,12 +198,14 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function getReplacementsByAbstractProductId(int $idProductAbstract): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAlternativeByProductIds */
+        $productAlternativeByProductIds = $this->getFactory()
             ->getProductAlternativePropelQuery()
             ->filterByFkProductAbstractAlternative($idProductAbstract)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAlternativeByProductIds->toArray();
     }
 
     /**
@@ -205,12 +217,14 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAlternativeByConcreteProductIds */
+        $productAlternativeByConcreteProductIds = $this->getFactory()
             ->getProductAlternativePropelQuery()
             ->filterByFkProductConcreteAlternative($idProductConcrete)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAlternativeByConcreteProductIds->toArray();
     }
 
     /**

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class SalesOrderItemMapper implements SalesOrderItemMapperInterface
 {
@@ -44,11 +44,11 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
-    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(ObjectCollection $salesOrderItemEntities): array
+    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(Collection $salesOrderItemEntities): array
     {
         $itemTransfers = [];
 

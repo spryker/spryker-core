@@ -8,18 +8,18 @@
 namespace Spryker\Zed\ProductCategoryStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductCategoryStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage> $productAbstractCategoryStorageEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage> $productAbstractCategoryStorageEntities
      * @param array<array<array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>>> $productAbstractCategoryStorageTransfers
      *
      * @return array<array<array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>>>
      */
     public function mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers(
-        ObjectCollection $productAbstractCategoryStorageEntities,
+        Collection $productAbstractCategoryStorageEntities,
         array $productAbstractCategoryStorageTransfers
     ): array {
         foreach ($productAbstractCategoryStorageEntities as $productAbstractCategoryStorageEntity) {

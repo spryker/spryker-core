@@ -93,6 +93,7 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
      */
     public function deleteProductDiscontinuedInBulk(array $productDiscontinuedIds): void
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productDiscontinuedEntities */
         $productDiscontinuedEntities = $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->filterByIdProductDiscontinued_In($productDiscontinuedIds)

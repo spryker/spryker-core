@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
@@ -184,15 +184,17 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->leftJoinProduct()
             ->useProductQuery()
                 ->groupByFkProductAbstract()
             ->endUse()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**
@@ -288,11 +290,11 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued>
      */
-    protected function expandWithProductDiscontinuedNotes(ObjectCollection $productDiscontinuedEntities): ObjectCollection
+    protected function expandWithProductDiscontinuedNotes(Collection $productDiscontinuedEntities): Collection
     {
         $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds =
             $this->indexProductDiscontinuedEntitiesByProductDiscontinuedIds($productDiscontinuedEntities);
@@ -318,12 +320,12 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
      *
      * @return array<int, \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued>
      */
     protected function indexProductDiscontinuedEntitiesByProductDiscontinuedIds(
-        ObjectCollection $productDiscontinuedEntities
+        Collection $productDiscontinuedEntities
     ): array {
         $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds = [];
         foreach ($productDiscontinuedEntities as $productDiscontinuedEntity) {

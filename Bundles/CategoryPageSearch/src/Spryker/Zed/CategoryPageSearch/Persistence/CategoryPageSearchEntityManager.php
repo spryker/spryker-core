@@ -47,11 +47,12 @@ class CategoryPageSearchEntityManager extends AbstractEntityManager implements C
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodePageSearchCollection */
+        $categoryNodePageSearchCollection = $this->getFactory()
             ->createSpyCategoryNodePageSearchQuery()
             ->filterByFkCategoryNode_In($categoryNodeIds)
-            ->find()
-            ->delete();
+            ->find();
+        $categoryNodePageSearchCollection->delete();
     }
 
     /**
@@ -63,12 +64,14 @@ class CategoryPageSearchEntityManager extends AbstractEntityManager implements C
      */
     public function deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(int $idCategoryNode, string $localeName, string $storeName): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodePageSearchCollection */
+        $categoryNodePageSearchCollection = $this->getFactory()
             ->createSpyCategoryNodePageSearchQuery()
             ->filterByFkCategoryNode($idCategoryNode)
             ->filterByLocale($localeName)
             ->filterByStore($storeName)
-            ->find()
-            ->delete();
+            ->find();
+
+        $categoryNodePageSearchCollection->delete();
     }
 }

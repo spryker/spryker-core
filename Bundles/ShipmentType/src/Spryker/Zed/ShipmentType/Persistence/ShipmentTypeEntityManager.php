@@ -47,6 +47,10 @@ class ShipmentTypeEntityManager extends AbstractEntityManager implements Shipmen
             ->filterByUuid($shipmentTypeTransfer->getUuidOrFail())
             ->findOne();
 
+        if ($shipmentTypeEntity === null) {
+            return $shipmentTypeTransfer;
+        }
+
         $shipmentTypeMapper = $this->getFactory()->createShipmentTypeMapper();
 
         $shipmentTypeEntity = $shipmentTypeMapper->mapShipmentTypeTransferToShipmentTypeEntity($shipmentTypeTransfer, $shipmentTypeEntity);
@@ -79,11 +83,13 @@ class ShipmentTypeEntityManager extends AbstractEntityManager implements Shipmen
      */
     public function deleteShipmentTypeStoreRelations(int $idShipmentType, array $idStores): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shipmentTypeStoreCollection */
+        $shipmentTypeStoreCollection = $this->getFactory()
             ->createShipmentTypeStoreQuery()
             ->filterByFkShipmentType($idShipmentType)
             ->filterByFkStore_In($idStores)
-            ->find()
-            ->delete();
+            ->find();
+
+        $shipmentTypeStoreCollection->delete();
     }
 }

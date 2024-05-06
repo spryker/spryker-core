@@ -8,16 +8,16 @@
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CmsSlotBlockProductCategoryGuiMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntityCollection
+     * @param \Propel\Runtime\Collection\Collection $productAbstractEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
-    public function mapProductAbstractCollectionToTransfers(ObjectCollection $productAbstractEntityCollection): array
+    public function mapProductAbstractCollectionToTransfers(Collection $productAbstractEntityCollection): array
     {
         $productAbstracts = [];
 

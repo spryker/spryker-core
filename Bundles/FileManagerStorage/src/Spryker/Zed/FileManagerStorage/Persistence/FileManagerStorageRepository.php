@@ -65,7 +65,9 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
                 $storageCompositeKey,
             );
 
-        $fileStorageEntityCollection = $query->find()->toKeyIndex($storageCompositeKey);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $fileStorageCollection */
+        $fileStorageCollection = $query->find();
+        $fileStorageEntityCollection = $fileStorageCollection->toKeyIndex($storageCompositeKey);
 
         foreach ($fileStorageEntityCollection as $compositeKey => $fileStorageEntity) {
             $fileStorageTransferCollection[$compositeKey] = $mapper->mapFileStorageEntityToTransfer($fileStorageEntity, new FileStorageTransfer());

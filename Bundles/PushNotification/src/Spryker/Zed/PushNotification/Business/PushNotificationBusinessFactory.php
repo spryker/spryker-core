@@ -61,7 +61,6 @@ use Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscription
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationSubscriptionValidatorInterface;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationValidator;
 use Spryker\Zed\PushNotification\Business\Validator\PushNotificationValidatorInterface;
-use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationProviderExistsValidatorRule as PushNotificationPushNotificationProviderExistsValidatorRule;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotification\PushNotificationValidatorRuleInterface;
 use Spryker\Zed\PushNotification\Business\Validator\Rules\PushNotificationProvider\NameExistencePushNotificationProviderValidatorRule;

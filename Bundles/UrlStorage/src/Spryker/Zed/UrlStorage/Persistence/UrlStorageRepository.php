@@ -61,11 +61,13 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
      */
     public function findUrlStorageByUrlIds(array $urlIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $storageUrlCollection */
+        $storageUrlCollection = $this->getFactory()
             ->createSpyStorageUrlQuery()
             ->filterByFkUrl_In($urlIds)
-            ->find()
-            ->toKeyIndex(SpyUrlStorageTableMap::getTableMap()->getColumn(SpyUrlStorageTableMap::COL_FK_URL)->getPhpName());
+            ->find();
+
+        return $storageUrlCollection->toKeyIndex(SpyUrlStorageTableMap::getTableMap()->getColumn(SpyUrlStorageTableMap::COL_FK_URL)->getPhpName());
     }
 
     /**

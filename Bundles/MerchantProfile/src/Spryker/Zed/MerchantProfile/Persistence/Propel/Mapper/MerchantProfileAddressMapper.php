@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterface
@@ -59,13 +60,13 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $merchantProfileAddressEntities
+     * @param \Propel\Runtime\Collection\Collection $merchantProfileAddressEntities
      * @param array $merchantProfileAddressTransfers
      *
      * @return array
      */
     public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfersIndexedByMerchantReference(
-        ObjectCollection $merchantProfileAddressEntities,
+        Collection $merchantProfileAddressEntities,
         array $merchantProfileAddressTransfers
     ): array {
         /** @var \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity */

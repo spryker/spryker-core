@@ -10,7 +10,7 @@ namespace Spryker\Zed\Asset\Persistence\Mapper;
 use Generated\Shared\Transfer\AssetCollectionTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Orm\Zed\Asset\Persistence\SpyAsset;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Asset\Business\TimeStamp\AssetTimeStamp;
 
 class AssetMapper
@@ -44,13 +44,13 @@ class AssetMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Asset\Persistence\SpyAsset> $assetEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Asset\Persistence\SpyAsset> $assetEntityCollection
      * @param \Generated\Shared\Transfer\AssetCollectionTransfer $assetCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\AssetCollectionTransfer
      */
     public function mapAssetEntitiesToAssetCollectionTransfer(
-        ObjectCollection $assetEntityCollection,
+        Collection $assetEntityCollection,
         AssetCollectionTransfer $assetCollectionTransfer
     ): AssetCollectionTransfer {
         foreach ($assetEntityCollection as $assetEntity) {

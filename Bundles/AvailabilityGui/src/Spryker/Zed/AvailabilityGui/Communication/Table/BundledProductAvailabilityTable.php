@@ -187,6 +187,7 @@ class BundledProductAvailabilityTable extends AbstractTable
             return [];
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $bundledProducts */
         $bundledProducts = $this->productBundleQueryContainer
             ->queryBundleProduct($this->idProductBundle)
             ->select([SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT])

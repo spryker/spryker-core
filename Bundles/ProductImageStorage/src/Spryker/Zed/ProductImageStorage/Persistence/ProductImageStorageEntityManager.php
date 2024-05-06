@@ -21,10 +21,12 @@ class ProductImageStorageEntityManager extends AbstractEntityManager implements 
      */
     public function deleteProductAbstractImageStorageByProductAbstractIds(array $productAbstractIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractImageStorageCollection */
+        $productAbstractImageStorageCollection = $this->getFactory()
             ->createSpyProductAbstractImageStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAbstractImageStorageCollection->delete();
     }
 }

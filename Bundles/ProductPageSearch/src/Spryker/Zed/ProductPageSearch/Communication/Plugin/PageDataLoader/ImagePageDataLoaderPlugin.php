@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
@@ -67,11 +67,11 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
-    protected function getImageSets(ObjectCollection $productImageSetCollection): array
+    protected function getImageSets(Collection $productImageSetCollection): array
     {
         $imageSets = [];
 
@@ -83,11 +83,11 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
-    protected function getDefaultProductImageSets(ObjectCollection $productImageSetCollection): array
+    protected function getDefaultProductImageSets(Collection $productImageSetCollection): array
     {
         $defaultProductImageSets = [];
 

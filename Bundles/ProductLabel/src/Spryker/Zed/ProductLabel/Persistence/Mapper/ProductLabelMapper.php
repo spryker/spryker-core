@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelProductAbstract;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductLabelMapper
 {
@@ -50,13 +50,13 @@ class ProductLabelMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
      * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function mapProductLabelEntitiesToProductLabelTransfers(
-        ObjectCollection $productLabelEntities,
+        Collection $productLabelEntities,
         array $productLabelTransfers
     ): array {
         foreach ($productLabelEntities as $productLabelEntity) {
@@ -209,13 +209,13 @@ class ProductLabelMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract> $productLabelProductAbstractEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract> $productLabelProductAbstractEntities
      * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers(
-        ObjectCollection $productLabelProductAbstractEntities,
+        Collection $productLabelProductAbstractEntities,
         array $productLabelProductAbstractTransfers
     ): array {
         foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {

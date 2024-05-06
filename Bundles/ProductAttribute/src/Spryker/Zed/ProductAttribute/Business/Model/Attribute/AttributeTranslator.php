@@ -123,10 +123,12 @@ class AttributeTranslator implements AttributeTranslatorInterface
      */
     protected function resetAttributeValueTranslations($idProductManagementAttribute)
     {
-        $this->productAttributeQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAttributeCollection */
+        $productAttributeCollection = $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAttributeCollection->delete();
     }
 
     /**

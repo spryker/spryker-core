@@ -80,30 +80,36 @@ class AttributeReader implements AttributeReaderInterface
      * @param string $searchText
      * @param int $limit
      *
-     * @return array
+     * @return array<string>
      */
     public function suggestUnusedKeys($searchText = '', $limit = 10)
     {
         $query = $this->productSearchQueryContainer
             ->queryUnusedProductAttributeKeys();
 
-        return $this->applySearchParamsToQuery($query, $searchText, $limit)
+        /** @var array<string> $suggestedUnusedKeys */
+        $suggestedUnusedKeys = $this->applySearchParamsToQuery($query, $searchText, $limit)
             ->find();
+
+        return $suggestedUnusedKeys;
     }
 
     /**
      * @param string $searchText
      * @param int $limit
      *
-     * @return array
+     * @return array<string>
      */
     public function suggestKeys($searchText = '', $limit = 10)
     {
         $query = $this->productSearchQueryContainer
             ->queryAllProductAttributeKeys();
 
-        return $this->applySearchParamsToQuery($query, $searchText, $limit)
-                ->find();
+        /** @var array<string> $suggestedKeys */
+        $suggestedKeys = $this->applySearchParamsToQuery($query, $searchText, $limit)
+            ->find();
+
+        return $suggestedKeys;
     }
 
     /**

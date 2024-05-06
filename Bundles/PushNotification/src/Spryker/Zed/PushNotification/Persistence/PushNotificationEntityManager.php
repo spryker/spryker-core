@@ -149,11 +149,13 @@ class PushNotificationEntityManager extends AbstractEntityManager implements Pus
     public function deletePushNotificationProviders(
         array $pushNotificationProviderUuids
     ): void {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $pushNotificationProviderCollection */
+        $pushNotificationProviderCollection = $this->getFactory()
             ->createPushNotificationProviderQuery()
             ->filterByUuid_In($pushNotificationProviderUuids)
-            ->find()
-            ->delete();
+            ->find();
+
+        $pushNotificationProviderCollection->delete();
     }
 
     /**

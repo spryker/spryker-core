@@ -78,14 +78,16 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
 
         /** @var literal-string $where */
         $where = sprintf('%s IN (%s)', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds));
-        $availabilityEntities = $this->getFactory()
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection $availabilityCollection */
+        $availabilityCollection = $this->getFactory()
             ->createSpyAvailabilityQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->where($where)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::COL_ID_PRODUCT)
-            ->find()
-            ->toKeyIndex(static::COL_ID_PRODUCT);
+            ->find();
+        $availabilityEntities = $availabilityCollection->toKeyIndex(static::COL_ID_PRODUCT);
 
         $productConcreteAvailabilityTransfers = [];
         $availabilityMapper = $this->getFactory()->createAvailabilityMapper();

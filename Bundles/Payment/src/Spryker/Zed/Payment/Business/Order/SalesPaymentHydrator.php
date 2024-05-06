@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPayment;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
@@ -72,14 +72,14 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $objectCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $collection
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function hydrate(ObjectCollection $objectCollection, OrderTransfer $orderTransfer): OrderTransfer
+    protected function hydrate(Collection $collection, OrderTransfer $orderTransfer): OrderTransfer
     {
-        foreach ($objectCollection as $salesPaymentEntity) {
+        foreach ($collection as $salesPaymentEntity) {
             $paymentTransfer = $this->mapPaymentTransfer($salesPaymentEntity);
             $paymentTransfer = $this->executePaymentHydratorPlugin($paymentTransfer, $orderTransfer);
             $orderTransfer->addPayment($paymentTransfer);
@@ -134,9 +134,9 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpySalesPayment>
      */
-    protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer): ObjectCollection
+    protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer): Collection
     {
         return $this->paymentQueryContainer
             ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())

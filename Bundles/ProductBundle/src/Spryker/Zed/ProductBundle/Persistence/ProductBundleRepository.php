@@ -173,7 +173,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
      */
     public function getProductConcretesRawDataByProductConcreteSkus(array $productConcreteSkus): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcretesRawDataByProductConcreteSkus */
+        $productConcretesRawDataByProductConcreteSkus = $this->getFactory()
             ->createProductBundleQuery()
             ->useSpyProductRelatedByFkProductQuery()
                 ->filterBySku_In($productConcreteSkus)
@@ -186,8 +187,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
                 ItemTransfer::ID_PRODUCT_ABSTRACT,
                 ItemTransfer::SKU,
             ])
-            ->find()
-            ->toArray(ItemTransfer::SKU);
+            ->find();
+
+        return $productConcretesRawDataByProductConcreteSkus->toArray(ItemTransfer::SKU);
     }
 
     /**

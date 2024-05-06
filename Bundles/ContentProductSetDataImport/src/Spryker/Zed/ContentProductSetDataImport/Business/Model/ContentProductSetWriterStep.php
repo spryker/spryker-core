@@ -42,10 +42,11 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
     {
         $contentProductSetEntity = $this->saveContentProductSetEntity($dataSet);
 
-        SpyContentLocalizedQuery::create()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $contentLocalizedProductSetCollection */
+        $contentLocalizedProductSetCollection = SpyContentLocalizedQuery::create()
             ->filterByFkContent($contentProductSetEntity->getIdContent())
-            ->find()
-            ->delete();
+            ->find();
+        $contentLocalizedProductSetCollection->delete();
 
         foreach ($dataSet[ContentProductSetDataSetInterface::CONTENT_LOCALIZED_PRODUCT_SET_TERMS] as $localizedProductSetTermParameters) {
             $contentLocalizedProductSetEntity = SpyContentLocalizedQuery::create()

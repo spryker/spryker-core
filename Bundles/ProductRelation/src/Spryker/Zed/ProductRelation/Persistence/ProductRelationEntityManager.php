@@ -98,12 +98,14 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productRelationStoreCollection */
+        $productRelationStoreCollection = $this->getFactory()
             ->createProductRelationStoreQuery()
             ->filterByFkProductRelation($idProductRelation)
             ->filterByFkStore_In($idStores)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productRelationStoreCollection->delete();
     }
 
     /**
@@ -165,11 +167,13 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
      */
     public function removeRelatedProductsByIdProductRelation(int $idProductRelation): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productRelationProductAbstractCollection */
+        $productRelationProductAbstractCollection = $this->getFactory()
             ->createProductRelationProductAbstractQuery()
             ->filterByFkProductRelation($idProductRelation)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productRelationProductAbstractCollection->delete();
     }
 
     /**
@@ -193,11 +197,13 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
      */
     public function deleteProductRelationStoresByIdProductRelation(int $idProductRelation): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productRelationStoreCollection */
+        $productRelationStoreCollection = $this->getFactory()
             ->createProductRelationStoreQuery()
             ->filterByFkProductRelation($idProductRelation)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productRelationStoreCollection->delete();
     }
 
     /**

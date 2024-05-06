@@ -89,13 +89,15 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
             $productAbstractIds,
         );
 
-        return $salesOrderQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productPopularityData */
+        $productPopularityData = $salesOrderQuery
             ->withColumn(sprintf('SUM(%s)', SpySalesOrderItemTableMap::COL_QUANTITY), static::FIELD_POPULARITY)
             ->where($where)
             ->select([static::FIELD_POPULARITY])
             ->groupBy(SpySalesOrderItemTableMap::COL_SKU)
-            ->find()
-            ->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $productPopularityData->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -110,11 +112,13 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
         $this->addJoinByColSku($salesOrderQuery);
         $this->addWhereByInterval($salesOrderQuery, $interval);
 
-        return $salesOrderQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $salesOrderQuery
             ->select([static::FIELD_FK_PRODUCT_ABSTRACT])
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**

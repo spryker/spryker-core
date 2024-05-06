@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CommentTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncodingServiceInterface;
 
 class SalesOrderCommentMapper
@@ -27,13 +27,13 @@ class SalesOrderCommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment> $salesOrderCommentEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment> $salesOrderCommentEntities
      * @param array<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function mapSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder(
-        ObjectCollection $salesOrderCommentEntities,
+        Collection $salesOrderCommentEntities,
         array $commentTransfers
     ): array {
         foreach ($salesOrderCommentEntities as $salesOrderCommentEntity) {

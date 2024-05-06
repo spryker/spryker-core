@@ -68,11 +68,14 @@ class ProductSearchRepository extends AbstractRepository implements ProductSearc
      */
     public function getAllProductAttributeKeys(): array
     {
-        return $this->getFactory()
+        /** @var array<string> $allProductAttributeKeys */
+        $allProductAttributeKeys = $this->getFactory()
             ->createProductAttributeKeyQuery()
             ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
+
+        return $allProductAttributeKeys;
     }
 
     /**

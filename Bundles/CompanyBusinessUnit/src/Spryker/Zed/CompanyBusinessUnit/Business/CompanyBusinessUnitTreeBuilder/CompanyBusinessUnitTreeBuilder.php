@@ -66,7 +66,7 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      * @param int|null $idParentCompanyBusinessUnit
      * @param int $indent
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer>
+     * @return \ArrayObject<int<0, max>, \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer>
      */
     protected function buildTree(ArrayObject $companyBusinessUnits, ?int $idParentCompanyBusinessUnit, int $indent): ArrayObject
     {

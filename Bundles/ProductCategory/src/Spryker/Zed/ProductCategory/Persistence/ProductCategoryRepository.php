@@ -85,15 +85,17 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIds */
+        $productConcreteIds = $this->getFactory()
             ->createProductCategoryQuery()
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->filterByFkCategory_In($categoryIds)
             ->useSpyProductAbstractQuery()
                 ->innerJoinSpyProduct()
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productConcreteIds->toArray();
     }
 
     /**

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentProvider;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class PaymentProviderMapper
 {
@@ -44,13 +44,13 @@ class PaymentProviderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentProvider> $paymentProviderEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpyPaymentProvider> $paymentProviderEntityCollection
      * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
     public function mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
-        ObjectCollection $paymentProviderEntityCollection,
+        Collection $paymentProviderEntityCollection,
         PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
     ): PaymentProviderCollectionTransfer {
         foreach ($paymentProviderEntityCollection as $paymentProviderEntity) {

@@ -29,7 +29,8 @@ class ProductReviewSearchRepository extends AbstractRepository implements Produc
      */
     public function getProductReviewRatingByIdAbstractProductIn(array $abstractProductIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productReviewRatings */
+        $productReviewRatings = $this->getFactory()
             ->getPropelProductReviewQuery()
             ->filterByFkProductAbstract_In($abstractProductIds)
             ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
@@ -38,7 +39,8 @@ class ProductReviewSearchRepository extends AbstractRepository implements Produc
             ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_REVIEW_COUNT)
             ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_REVIEW_COUNT])
             ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->find()
-            ->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $productReviewRatings->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);
     }
 }

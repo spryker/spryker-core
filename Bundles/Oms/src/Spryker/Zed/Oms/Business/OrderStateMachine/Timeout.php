@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use RuntimeException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
@@ -239,11 +239,11 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
+     * @param \Propel\Runtime\Collection\Collection $orderItems
      *
      * @return array
      */
-    protected function groupItemsByEvent(ObjectCollection $orderItems)
+    protected function groupItemsByEvent(Collection $orderItems)
     {
         $groupedOrderItems = [];
         foreach ($orderItems as $orderItem) {
@@ -263,7 +263,7 @@ class Timeout implements TimeoutInterface
     /**
      * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection
      */
     protected function findItemsWithExpiredTimeouts(?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null)
     {

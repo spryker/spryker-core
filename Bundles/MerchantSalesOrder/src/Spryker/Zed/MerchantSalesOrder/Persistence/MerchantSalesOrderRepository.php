@@ -24,7 +24,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -113,11 +113,11 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     /**
      * @param array<int> $merchantOrderIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      */
     protected function getMerchantSalesOrderItemEntityCollectionByMerchantOrderIds(
         array $merchantOrderIds
-    ): ObjectCollection {
+    ): Collection {
         $merchantSalesOrderItemQuery = $this->getFactory()->createMerchantSalesOrderItemQuery();
 
         return $merchantSalesOrderItemQuery

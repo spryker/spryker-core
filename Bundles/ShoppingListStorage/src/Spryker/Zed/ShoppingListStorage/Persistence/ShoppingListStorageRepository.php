@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -62,13 +62,14 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->getShoppingListPropelQuery();
         $this->addCompanyUserCustomerReferences($shoppingListQuery);
         $this->addCompanyBusinessUnitCustomerReferences($shoppingListQuery);
-        $customerReferencesArray = $shoppingListQuery->filterByIdShoppingList_In($shoppingListIds)
+
+        /** @var \Propel\Runtime\Collection\ArrayCollection $customerReferences */
+        $customerReferences = $shoppingListQuery->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
-            ->find()
-            ->toArray();
+            ->find();
 
         $result = [];
-        foreach ($customerReferencesArray as $item) {
+        foreach ($customerReferences->toArray() as $item) {
             $result = array_merge($result, array_filter(array_values($item)));
         }
         $result = array_unique($result);
@@ -79,9 +80,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
-    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
+    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): Collection
     {
         return $this->getFactory()
             ->createShoppingListCustomerStoragePropelQuery()
@@ -92,9 +93,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array<string> $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
      */
-    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
+    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): Collection
     {
         return $this->getFactory()
             ->getShoppingListPropelQuery()
@@ -105,9 +106,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $shoppingListCustomerStorageIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
-    public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection
+    public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): Collection
     {
         return $this->getFactory()
             ->createShoppingListCustomerStoragePropelQuery()

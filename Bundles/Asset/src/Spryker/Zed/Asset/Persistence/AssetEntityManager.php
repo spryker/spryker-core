@@ -140,11 +140,12 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
             $storeIds[] = $store->getIdStore();
         }
 
-        $this->getFactory()->createAssetStoreQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $assetStoreCollection */
+        $assetStoreCollection = $this->getFactory()->createAssetStoreQuery()
             ->filterByFkAsset($assetTransfer->getIdAsset())
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+        $assetStoreCollection->delete();
     }
 
     /**
@@ -155,11 +156,12 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
      */
     protected function deleteStoresNotInStoreIdList(array $storeTransferIds, int $idAsset): void
     {
-        $this->getFactory()->createAssetStoreQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $assetStoreCollection */
+        $assetStoreCollection = $this->getFactory()->createAssetStoreQuery()
             ->filterByFkAsset($idAsset)
             ->filterByFkStore($storeTransferIds, Criteria::NOT_IN)
-            ->find()
-            ->delete();
+            ->find();
+        $assetStoreCollection->delete();
     }
 
     /**

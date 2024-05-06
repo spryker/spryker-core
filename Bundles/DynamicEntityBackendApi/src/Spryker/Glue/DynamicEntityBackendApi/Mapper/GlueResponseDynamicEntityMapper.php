@@ -366,8 +366,9 @@ class GlueResponseDynamicEntityMapper
     protected function createGlueResourceTransfer(DynamicEntityTransfer $dynamicEntityTransfer, string $tableAlias): GlueResourceTransfer
     {
         $dynamicEntityAttributesTransfer = new DynamicEntityAttributes();
-
-        $dynamicEntityAttributesTransfer->fromArray($this->getFieldsCollection(new ArrayObject([$dynamicEntityTransfer]))[0], true);
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\DynamicEntityTransfer> $dynamicEntities */
+        $dynamicEntities = new ArrayObject([$dynamicEntityTransfer]);
+        $dynamicEntityAttributesTransfer->fromArray($this->getFieldsCollection($dynamicEntities)[0], true);
 
         return (new GlueResourceTransfer())
             ->setType($tableAlias)

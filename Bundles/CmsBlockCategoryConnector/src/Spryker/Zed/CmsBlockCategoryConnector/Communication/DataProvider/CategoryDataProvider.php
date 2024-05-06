@@ -151,11 +151,13 @@ class CategoryDataProvider
      */
     protected function getPositionList()
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockCategoryPositionCollection */
+        $cmsBlockCategoryPositionCollection = $this->queryContainer
             ->queryCmsBlockCategoryPosition()
             ->orderByIdCmsBlockCategoryPosition()
-            ->find()
-            ->toKeyValue('idCmsBlockCategoryPosition', 'name');
+            ->find();
+
+        return $cmsBlockCategoryPositionCollection->toKeyValue('idCmsBlockCategoryPosition', 'name');
     }
 
     /**
@@ -163,10 +165,12 @@ class CategoryDataProvider
      */
     protected function getCmsBlockList()
     {
-        return $this->cmsBlockQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockCollection */
+        $cmsBlockCollection = $this->cmsBlockQueryContainer
             ->queryCmsBlockWithTemplate()
-            ->find()
-            ->toKeyValue('idCmsBlock', 'name');
+            ->find();
+
+         return $cmsBlockCollection->toKeyValue('idCmsBlock', 'name');
     }
 
     /**
@@ -209,9 +213,11 @@ class CategoryDataProvider
      */
     protected function getCategoryTemplates(): array
     {
-        return $this->categoryQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryCollection */
+        $categoryCollection = $this->categoryQueryContainer
             ->queryCategoryTemplate()
-            ->find()
-            ->toKeyValue(CategoryTemplateTransfer::ID_CATEGORY_TEMPLATE, CategoryTemplateTransfer::NAME);
+            ->find();
+
+         return $categoryCollection->toKeyValue(CategoryTemplateTransfer::ID_CATEGORY_TEMPLATE, CategoryTemplateTransfer::NAME);
     }
 }

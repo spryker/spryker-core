@@ -148,9 +148,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<int, mixed> $options
      *
-     * @return array<string, mixed>
+     * @return array<int, mixed>
      */
     protected function sortOptions(array $options)
     {

@@ -16,7 +16,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementBaseUnitTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementSalesUnitTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -395,11 +395,11 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit> $productMeasurementUnitEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit> $productMeasurementUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
-    protected function getMappedProductMeasurementUnitTransfers(ObjectCollection $productMeasurementUnitEntityCollection): array
+    protected function getMappedProductMeasurementUnitTransfers(Collection $productMeasurementUnitEntityCollection): array
     {
         $productMeasurementUnitTransfers = [];
         $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
@@ -415,11 +415,11 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit> $productMeasurementSalesUnitEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit> $productMeasurementSalesUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
-    protected function getMappedProductMeasurementSalesUnitTransfers(ObjectCollection $productMeasurementSalesUnitEntityCollection): array
+    protected function getMappedProductMeasurementSalesUnitTransfers(Collection $productMeasurementSalesUnitEntityCollection): array
     {
         $productMeasurementSalesUnitTransfers = [];
         $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
@@ -460,8 +460,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->endUse()
             ->select([SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT, SpyProductTableMap::COL_SKU]);
 
-        return $productMeasurementSalesUnitQuery->find()
-            ->toKeyValue(SpyProductTableMap::COL_SKU, SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productMeasurementSalesUnitIds */
+        $productMeasurementSalesUnitIds = $productMeasurementSalesUnitQuery->find();
+
+        return $productMeasurementSalesUnitIds->toKeyValue(SpyProductTableMap::COL_SKU, SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
     }
 
     /**

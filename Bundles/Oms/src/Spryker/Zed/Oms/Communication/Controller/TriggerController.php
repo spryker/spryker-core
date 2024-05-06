@@ -116,6 +116,7 @@ class TriggerController extends AbstractController
         /** @var string $redirect */
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems */
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $request->query->all(static::REQUEST_PARAMETER_ITEMS) ?: null);
 
         $triggerEventReturnData = $this->getFacade()->triggerEvent($event, $orderItems, []);
@@ -151,7 +152,7 @@ class TriggerController extends AbstractController
      * @param int $idOrder
      * @param array|null $itemsList
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function getOrderItemsToTriggerAction($idOrder, $itemsList = null)
     {

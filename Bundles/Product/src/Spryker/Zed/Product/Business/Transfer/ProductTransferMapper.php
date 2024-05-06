@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 
@@ -111,11 +112,11 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function convertProductCollection(ObjectCollection $productCollection)
+    public function convertProductCollection(Collection $productCollection)
     {
         $transferList = [];
         foreach ($productCollection as $productEntity) {

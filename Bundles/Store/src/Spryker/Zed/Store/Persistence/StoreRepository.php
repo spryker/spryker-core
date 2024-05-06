@@ -10,7 +10,7 @@ namespace Spryker\Zed\Store\Persistence;
 use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -103,11 +103,11 @@ class StoreRepository extends AbstractRepository implements StoreRepositoryInter
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Store\Persistence\SpyStore> $storeEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Store\Persistence\SpyStore> $storeEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    protected function mapStoreEntitiesToStoreTransfers(ObjectCollection $storeEntities): array
+    protected function mapStoreEntitiesToStoreTransfers(Collection $storeEntities): array
     {
         $mapper = $this->getFactory()->createStoreMapper();
         $storeTransfers = [];

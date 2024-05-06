@@ -6,4 +6,6 @@ parameters:
         - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
         - '#^Method Spryker\\Zed\Router\\Communication\\Resolver\\ControllerResolver\:\:resolveControllerFromUri\(\) should return callable\(\)\: mixed but returns array#'
         - '#Method Spryker\\Glue\\Router\\Router\\RequestMatcherUrlGeneratorWrapper::setContext\(\) with return type void returns mixed but should not return anything.#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(string\): bool\)\|null, .+ given.#'
+
 

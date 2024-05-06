@@ -45,7 +45,8 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
             $cmsSlotBlockTransfers,
         );
 
-        $cmsSlotWithSlotTemplateCombinations = $cmsSlotBlockQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsSlotWithSlotTemplateCombinationCollection */
+        $cmsSlotWithSlotTemplateCombinationCollection = $cmsSlotBlockQuery
             ->groupBy([
                 SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
                 SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE,
@@ -56,8 +57,8 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
                 SpyCmsSlotTableMap::COL_KEY,
                 SpyCmsSlotTemplateTableMap::COL_PATH,
             ])
-            ->find()
-            ->toArray();
+            ->find();
+        $cmsSlotWithSlotTemplateCombinations = $cmsSlotWithSlotTemplateCombinationCollection->toArray();
 
         $cmsSlotBlockStorageTransfers = [];
         $cmsSlotBlockStorageMapper = $this->getFactory()->createCmsSlotBlockStorageMapper();

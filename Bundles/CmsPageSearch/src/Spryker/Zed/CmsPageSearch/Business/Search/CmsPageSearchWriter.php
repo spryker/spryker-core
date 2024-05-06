@@ -165,7 +165,9 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             return;
         }
 
-        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsPageCollection */
+        $cmsPageCollection = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
+        $cmsPageCollection->delete();
     }
 
     /**

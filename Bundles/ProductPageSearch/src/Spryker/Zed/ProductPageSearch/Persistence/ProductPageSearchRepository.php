@@ -132,15 +132,17 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->filterByIsActive(true)
             ->groupByFkProductAbstract()
             ->having(sprintf('COUNT(%s) = ?', SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT), 1)
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**
@@ -154,17 +156,17 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             return [];
         }
 
-        $productConcreteSkuMapByIdProductAbstract = $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productConcreteSkus */
+        $productConcreteSkus = $this->getFactory()
             ->getProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->select([
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductTableMap::COL_SKU,
             ])
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_SKU);
+            ->find();
 
-        return $productConcreteSkuMapByIdProductAbstract;
+        return $productConcreteSkus->toKeyValue(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_SKU);
     }
 
     /**
@@ -202,12 +204,14 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getProductImageSetQuery()
             ->filterByIdProductImageSet_In($productImageSetIds)
             ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**
@@ -219,7 +223,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getCategoryIdsByCategoryNodeIds(array $categoryNodeIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $categoryIds */
+        $categoryIds = $this->getFactory()
             ->getCategoryClosureTableQuery()
             ->filterByFkCategoryNode_In($categoryNodeIds)
             ->_or()
@@ -227,8 +232,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->joinDescendantNode()
             ->withColumn(static::COL_FK_CATEGORY, static::FK_CATEGORY)
             ->select([static::FK_CATEGORY])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $categoryIds->toArray();
     }
 
     /**
@@ -240,16 +246,18 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getProductCategoryQuery()
             ->filterByFkCategory_In($categoryIds)
             ->select(static::COL_FK_PRODUCT_ABSTRACT)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
@@ -272,7 +280,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch>
      */
     protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {
@@ -374,14 +382,16 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getPriceProductPropelQuery()
             ->select(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->usePriceProductStoreQuery()
                 ->filterByIdPriceProductStore_In($priceProductStoreIds)
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**

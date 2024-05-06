@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class MerchantStockMapper
 {
@@ -85,11 +85,11 @@ class MerchantStockMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantStock\Persistence\SpyMerchantStock> $merchantStocksEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantStock\Persistence\SpyMerchantStock> $merchantStocksEntities
      *
      * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\StockTransfer>>
      */
-    public function mapMerchantStockEntityCollectionToStocksGroupedByIdMerchant(ObjectCollection $merchantStocksEntities): array
+    public function mapMerchantStockEntityCollectionToStocksGroupedByIdMerchant(Collection $merchantStocksEntities): array
     {
         $stockTransfersGroupedByIdMerchant = [];
 

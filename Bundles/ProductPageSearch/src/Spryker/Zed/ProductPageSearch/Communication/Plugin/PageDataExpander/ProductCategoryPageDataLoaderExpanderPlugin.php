@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -124,6 +124,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->queryCategoryNode($localeTransfer->getIdLocale())
             ->find();
 
+        /** @var array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodesData */
         $categoryNodesData = $this->getQueryContainer()->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $mappedCategoryNodesDataByLocaleIdAndNodeId = $this->mapCategoryNodesWithLocaleIdAndNodeId($categoryNodesData);
 
@@ -269,11 +270,11 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityCollection
+     * @param \Propel\Runtime\Collection\Collection $categoryNodeEntityCollection
      *
      * @return array<string>
      */
-    protected function mapCategoryNamesIndexedByCategoryNodeIds(ObjectCollection $categoryNodeEntityCollection): array
+    protected function mapCategoryNamesIndexedByCategoryNodeIds(Collection $categoryNodeEntityCollection): array
     {
         $categoryNames = [];
         foreach ($categoryNodeEntityCollection as $categoryNodeEntity) {

@@ -72,9 +72,10 @@ class ProductMeasurementSalesUnitStoreWriterStep extends PublishAwareStep implem
      */
     protected function loadStoreIds(): void
     {
-        static::$idStoreBuffer = SpyStoreQuery::create()
-            ->find()
-            ->toKeyValue('name', 'idStore');
+        /** @var \Propel\Runtime\Collection\ObjectCollection $storeCollection */
+        $storeCollection = SpyStoreQuery::create()->find();
+
+        static::$idStoreBuffer = $storeCollection->toKeyValue('name', 'idStore');
     }
 
     /**

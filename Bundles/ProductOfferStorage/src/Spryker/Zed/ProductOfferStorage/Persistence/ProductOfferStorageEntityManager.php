@@ -76,7 +76,9 @@ class ProductOfferStorageEntityManager extends AbstractEntityManager implements 
             $query->filterByStore($storeName);
         }
 
-        $query->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productConcreteProductOffersStorageCollection */
+        $productConcreteProductOffersStorageCollection = $query->find();
+        $productConcreteProductOffersStorageCollection->delete();
     }
 
     /**
@@ -95,6 +97,8 @@ class ProductOfferStorageEntityManager extends AbstractEntityManager implements 
             $query->filterByStore($storeName);
         }
 
-        $query->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferStorageCollection */
+        $productOfferStorageCollection = $query->find();
+        $productOfferStorageCollection->delete();
     }
 }

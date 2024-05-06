@@ -17,6 +17,7 @@ use Orm\Zed\PickingList\Persistence\SpyPickingListItemQuery;
 use Orm\Zed\PickingList\Persistence\SpyPickingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
@@ -326,11 +327,11 @@ class PickingListRepository extends AbstractRepository implements PickingListRep
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingListItem> $pickingListItemEntities
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\PickingList\Persistence\SpyPickingListItem> $pickingListItemEntities
      *
      * @return array<int, list<\Orm\Zed\PickingList\Persistence\SpyPickingListItem>>
      */
-    protected function groupPickingListItemEntitiesByIdPickingList(ObjectCollection $pickingListItemEntities): array
+    protected function groupPickingListItemEntitiesByIdPickingList(Collection $pickingListItemEntities): array
     {
         $groupedPickingListItemEntities = [];
         foreach ($pickingListItemEntities as $pickingListItemEntity) {

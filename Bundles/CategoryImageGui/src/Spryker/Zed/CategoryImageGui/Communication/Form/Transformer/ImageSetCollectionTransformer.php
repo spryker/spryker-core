@@ -56,7 +56,7 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
      *
      * @param array|null $value The value in the transformed representation
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageSetTransfer>|null The value in the original representation
+     * @return \ArrayObject|\ArrayObject<\Generated\Shared\Transfer\CategoryImageSetTransfer>|null The value in the original representation
      */
     public function reverseTransform($value)
     {

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -49,6 +49,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         $filterTransfer = $companyUserCriteriaFilterTransfer->getFilter();
         $queryCompanyUser = $this->setQueryFilters($queryCompanyUser, $filterTransfer);
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $companyUserEntityCollection */
         $companyUserEntityCollection = $queryCompanyUser->find();
 
         $companyUserCollectionTransfer = $this->getFactory()
@@ -74,9 +75,9 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
      *
      * @param array<int> $companyUserIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\CompanyRole\Persistence\SpyCompanyRole>
      */
-    protected function getCompanyRoleEntityCollectionForCompanyUserIds(array $companyUserIds): ObjectCollection
+    protected function getCompanyRoleEntityCollectionForCompanyUserIds(array $companyUserIds): Collection
     {
         $queryCompanyRole = $this->getFactory()->getCompanyRolePropelQuery()
             ->joinWithSpyCompanyRoleToCompanyUser()

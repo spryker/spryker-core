@@ -37,10 +37,12 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
-        $idCategories = $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockCategoryCollection */
+        $cmsBlockCategoryCollection = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock())
-            ->find()
-            ->getColumnValues('FkCategory');
+            ->find();
+
+        $idCategories = $cmsBlockCategoryCollection->getColumnValues('FkCategory');
 
         $cmsBlockTransfer->setIdCategories($idCategories);
 

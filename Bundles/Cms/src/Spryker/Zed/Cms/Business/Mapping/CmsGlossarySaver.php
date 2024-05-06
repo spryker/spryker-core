@@ -95,10 +95,11 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
      */
     public function deleteCmsGlossary(int $idCmsPage): void
     {
-        $idGlossaryKeys = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)
+        /** @var \Propel\Runtime\Collection\ObjectCollection $glossaryKeyIdCollection */
+        $glossaryKeyIdCollection = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)
             ->select(SpyCmsGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY)
-            ->find()
-            ->toArray();
+            ->find();
+        $idGlossaryKeys = $glossaryKeyIdCollection->toArray();
 
         if (!$idGlossaryKeys) {
             return;

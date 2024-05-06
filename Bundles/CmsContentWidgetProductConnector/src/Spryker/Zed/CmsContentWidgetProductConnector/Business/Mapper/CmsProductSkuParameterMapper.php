@@ -32,10 +32,11 @@ class CmsProductSkuParameterMapper implements CmsProductSkuParameterMapperInterf
      */
     public function mapProductSkuList(array $skuList)
     {
-        $productIds = $this->cmsProductConnectorQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsProductConnectorCollection */
+        $cmsProductConnectorCollection = $this->cmsProductConnectorQueryContainer
             ->queryProductIdsBySkuList($skuList)
-            ->find()
-            ->toArray();
+            ->find();
+        $productIds = $cmsProductConnectorCollection->toArray();
 
         $skuIdPairs = [];
         foreach ($productIds as $id) {

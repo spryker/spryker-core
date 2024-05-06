@@ -9,17 +9,17 @@ namespace Spryker\Zed\Product\Persistence\Mapper;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductAbstractStoreMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
      */
     public function mapProductAbstractStoreEntitiesToStoreRelationTransfers(
-        ObjectCollection $productAbstractStoreEntities
+        Collection $productAbstractStoreEntities
     ): array {
         $storeRelationTransfers = [];
         foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {

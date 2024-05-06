@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesPayment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPayment;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class SalesPaymentMapper
 {
@@ -46,12 +46,12 @@ class SalesPaymentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $spySalesPaymentCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $spySalesPaymentCollection
      *
      * @return array<\Generated\Shared\Transfer\SalesPaymentTransfer>
      */
     public function mapSalesPaymentEntityCollectionToSalesPaymentTransferArray(
-        ObjectCollection $spySalesPaymentCollection
+        Collection $spySalesPaymentCollection
     ): array {
         $salesPaymentTransfers = [];
 

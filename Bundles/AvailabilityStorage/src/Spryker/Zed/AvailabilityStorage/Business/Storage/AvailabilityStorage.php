@@ -182,10 +182,12 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $availabilityStorageCollection */
+        $availabilityStorageCollection = $this->queryContainer
             ->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)
-            ->find()
-            ->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
+            ->find();
+
+        return $availabilityStorageCollection->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
     }
 
     /**

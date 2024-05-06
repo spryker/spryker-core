@@ -137,14 +137,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      */
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productIds */
+        $productIds = $this->getFactory()
             ->createProductPackagingUnitQuery()
             ->useProductPackagingUnitTypeQuery()
                 ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
             ->endUse()
             ->select([SpyProductPackagingUnitTableMap::COL_FK_PRODUCT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productIds->toArray();
     }
 
     /**
@@ -310,14 +312,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             return [];
         }
 
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productSkus */
+        $productSkus = $this->getFactory()
             ->getSalesOrderItemQuery()
             ->filterByIdSalesOrderItem_In($salesOrderItemIds)
             ->filterByAmountSku(null, Criteria::ISNOTNULL)
             ->filterByAmount(null, Criteria::ISNOTNULL)
             ->select([SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU])
-            ->find()
-            ->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);
+            ->find();
+
+        return $productSkus->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);
     }
 
     /**

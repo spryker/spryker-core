@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -76,11 +76,11 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer>
      */
-    protected function hydrateOrderListCollectionTransferFromEntityCollection(ObjectCollection $orderCollection)
+    protected function hydrateOrderListCollectionTransferFromEntityCollection(Collection $orderCollection)
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {

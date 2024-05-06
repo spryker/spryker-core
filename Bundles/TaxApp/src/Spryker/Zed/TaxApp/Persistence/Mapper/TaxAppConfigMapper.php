@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TaxAppApiUrlsTransfer;
 use Generated\Shared\Transfer\TaxAppConfigCollectionTransfer;
 use Generated\Shared\Transfer\TaxAppConfigTransfer;
 use Orm\Zed\TaxApp\Persistence\SpyTaxAppConfig;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\TaxApp\Dependency\Service\TaxAppToUtilEncodingServiceInterface;
 
 class TaxAppConfigMapper
@@ -72,13 +72,13 @@ class TaxAppConfigMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $taxAppConfigEntities
+     * @param \Propel\Runtime\Collection\Collection $taxAppConfigEntities
      * @param \Generated\Shared\Transfer\TaxAppConfigCollectionTransfer $taxAppConfigCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\TaxAppConfigCollectionTransfer
      */
     public function mapTaxAppConfigEntitiesToTaxAppConfigCollectionTransfer(
-        ObjectCollection $taxAppConfigEntities,
+        Collection $taxAppConfigEntities,
         TaxAppConfigCollectionTransfer $taxAppConfigCollectionTransfer
     ): TaxAppConfigCollectionTransfer {
         foreach ($taxAppConfigEntities as $taxAppConfigEntity) {

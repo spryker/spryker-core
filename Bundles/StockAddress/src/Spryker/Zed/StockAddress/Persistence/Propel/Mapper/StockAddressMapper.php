@@ -13,17 +13,17 @@ use Generated\Shared\Transfer\StockAddressTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
 use Orm\Zed\StockAddress\Persistence\SpyStockAddress;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class StockAddressMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StockAddress\Persistence\SpyStockAddress> $stockAddressEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\StockAddress\Persistence\SpyStockAddress> $stockAddressEntities
      * @param array<\Generated\Shared\Transfer\StockAddressTransfer> $stockAddressTransfers
      *
      * @return array<\Generated\Shared\Transfer\StockAddressTransfer>
      */
-    public function mapStockAddressEntitiesToStockAddressTransfers(ObjectCollection $stockAddressEntities, array $stockAddressTransfers): array
+    public function mapStockAddressEntitiesToStockAddressTransfers(Collection $stockAddressEntities, array $stockAddressTransfers): array
     {
         foreach ($stockAddressEntities as $stockAddressEntity) {
             $stockAddressTransfers[] = $this->mapStockAddressEntityToStockAddressTransfer($stockAddressEntity, new StockAddressTransfer());

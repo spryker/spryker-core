@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryStoreRelationMapper
@@ -34,11 +35,11 @@ class CategoryStoreRelationMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
      */
-    public function mapCategoryStoreEntitiesToStoreRelationTransfers(ObjectCollection $categoryStoreEntities): array
+    public function mapCategoryStoreEntitiesToStoreRelationTransfers(Collection $categoryStoreEntities): array
     {
         $storeRelationTransfers = [];
 
@@ -65,11 +66,11 @@ class CategoryStoreRelationMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
      *
      * @return array<int, array<\Orm\Zed\Category\Persistence\SpyCategoryStore>>
      */
-    protected function getCategoryStoreEntitiesGroupedByIdCategory(ObjectCollection $categoryStoreEntities): array
+    protected function getCategoryStoreEntitiesGroupedByIdCategory(Collection $categoryStoreEntities): array
     {
         $groupedCategoryStoreEntities = [];
         foreach ($categoryStoreEntities as $categoryStoreEntity) {

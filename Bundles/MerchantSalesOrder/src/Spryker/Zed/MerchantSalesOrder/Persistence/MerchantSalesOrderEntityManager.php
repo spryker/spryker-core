@@ -104,6 +104,10 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
             ->filterByFkMerchantSalesOrder($idMerchantOrder)
             ->findOne();
 
+        if ($merchantSalesOrderTotalsEntity === null) {
+            return $totalsTransfer;
+        }
+
         $merchantSalesOrderTotalsEntity = $merchantSalesOrderMapper->mapTotalsTransferToMerchantSalesOrderTotalsEntity(
             $idMerchantOrder,
             $totalsTransfer,

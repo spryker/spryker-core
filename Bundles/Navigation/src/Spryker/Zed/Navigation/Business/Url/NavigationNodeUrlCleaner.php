@@ -80,7 +80,7 @@ class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes>
      */
     protected function findNodesByUrl(UrlTransfer $urlTransfer)
     {

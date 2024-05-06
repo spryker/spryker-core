@@ -319,11 +319,13 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListsCompanyUserByCompanyUserId(int $idCompanyUser): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListCompanyUserCollection */
+        $shoppingListCompanyUserCollection = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
-            ->find()
-            ->delete();
+            ->find();
+
+        $shoppingListCompanyUserCollection->delete();
     }
 
     /**
@@ -471,11 +473,13 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListCompanyBusinessUnitBlacklistsByIdCompanyUser(int $idCompanyUser): void
     {
-        $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $shoppingListCompanyBusinessUnitBlacklistCollection */
+        $shoppingListCompanyBusinessUnitBlacklistCollection = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
-            ->find()
-            ->delete();
+            ->find();
+
+        $shoppingListCompanyBusinessUnitBlacklistCollection->delete();
     }
 
     /**

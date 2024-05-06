@@ -31,7 +31,7 @@ use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -576,9 +576,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
      */
-    protected function getActiveMethodsWithMethodPricesAndCarrierForStore(int $idStore): ObjectCollection
+    protected function getActiveMethodsWithMethodPricesAndCarrierForStore(int $idStore): Collection
     {
         $shipmentMethodEntities = $this->queryMethods()
             ->filterByIsActive(true)
@@ -786,15 +786,15 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
      */
     protected function expandShipmentMethodEntitiesWithShipmentMethodPricesForStore(
-        ObjectCollection $shipmentMethodEntities,
+        Collection $shipmentMethodEntities,
         int $idStore
-    ): ObjectCollection {
+    ): Collection {
         $shipmentMethodWithoutPricePluginIds = $this->extractShipmentMethodWithoutPricePluginIds($shipmentMethodEntities);
 
         $shipmentMethodPriceEntities = $this->getFactory()
@@ -816,11 +816,11 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $shipmentMethodEntities
+     * @param \Propel\Runtime\Collection\Collection $shipmentMethodEntities
      *
      * @return array<int>
      */
-    protected function extractShipmentMethodWithoutPricePluginIds(ObjectCollection $shipmentMethodEntities): array
+    protected function extractShipmentMethodWithoutPricePluginIds(Collection $shipmentMethodEntities): array
     {
         $idShipmentMethodsWithoutPricePlugins = [];
         foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
@@ -835,13 +835,13 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice> $shipmentMethodPriceEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice> $shipmentMethodPriceEntities
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
     protected function expandShipmentMethodEntityWithShipmentMethodPrices(
         SpyShipmentMethod $shipmentMethodEntity,
-        ObjectCollection $shipmentMethodPriceEntities
+        Collection $shipmentMethodPriceEntities
     ): SpyShipmentMethod {
         foreach ($shipmentMethodPriceEntities as $shipmentMethodPriceEntity) {
             if ($shipmentMethodEntity->getIdShipmentMethod() === $shipmentMethodPriceEntity->getFkShipmentMethod()) {

@@ -58,9 +58,11 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      */
     public function getAssignedProductAbstractIds(int $idCmsBlock): array
     {
-        return $this->getFactory()->createCmsBlockProductConnectorQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $cmsBlockProductConnectorCollection */
+        $cmsBlockProductConnectorCollection = $this->getFactory()->createCmsBlockProductConnectorQuery()
             ->filterByFkCmsBlock($idCmsBlock)
-            ->find()
-            ->getColumnValues(static::FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $cmsBlockProductConnectorCollection->getColumnValues(static::FK_PRODUCT_ABSTRACT);
     }
 }

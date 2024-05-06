@@ -206,6 +206,7 @@ class PickingListBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param bool $withUser
      *
      * @return void
      */

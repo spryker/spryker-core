@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CategoryMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function mapCategoryCollection(
-        ObjectCollection $productCategoryEntities,
+        Collection $productCategoryEntities,
         CategoryCollectionTransfer $categoryCollectionTransfer
     ): CategoryCollectionTransfer {
         foreach ($productCategoryEntities as $productCategoryEntity) {

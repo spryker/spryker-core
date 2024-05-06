@@ -11,18 +11,18 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductAbstractLocalizedAttributesMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
      * @param array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer>
      */
     public function mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers(
-        ObjectCollection $productAbstractLocalizedAttributesEntities,
+        Collection $productAbstractLocalizedAttributesEntities,
         array $productAbstractLocalizedAttributesTransfers
     ): array {
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {

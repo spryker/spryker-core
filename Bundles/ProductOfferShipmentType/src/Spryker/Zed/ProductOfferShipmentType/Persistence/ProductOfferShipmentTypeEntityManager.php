@@ -38,11 +38,13 @@ class ProductOfferShipmentTypeEntityManager extends AbstractEntityManager implem
      */
     public function deleteProductOfferShipmentTypes(int $idProductOffer, array $shipmentTypeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferShipmentTypeCollection */
+        $productOfferShipmentTypeCollection = $this->getFactory()
             ->createProductOfferShipmentTypeQuery()
             ->filterByFkProductOffer($idProductOffer)
             ->filterByFkShipmentType_In($shipmentTypeIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productOfferShipmentTypeCollection->delete();
     }
 }

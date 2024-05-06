@@ -102,7 +102,8 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     protected function getDataTopOrderStatistic(int $countProduct): array
     {
-        return $this->getFactory()->createSalesOrderItemQuery()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $orderStatisticData */
+        $orderStatisticData = $this->getFactory()->createSalesOrderItemQuery()
             ->select([static::ITEM_NAME, static::ITEM_SKU, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderItemTableMap::COL_NAME . ')', static::COUNT)
             ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::ITEM_NAME)
@@ -110,7 +111,9 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
             ->groupBy(SpySalesOrderItemTableMap::COL_NAME)
             ->limit($countProduct)
             ->orderBy(static::COUNT, Criteria::DESC)
-            ->find()->toArray();
+            ->find();
+
+        return $orderStatisticData->toArray();
     }
 
     /**
@@ -128,13 +131,16 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     protected function getDataStatusOrderStatistic(): array
     {
-        return $this->getFactory()->createSalesOrderItemQuery()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $statusOrderStatisticData */
+        $statusOrderStatisticData = $this->getFactory()->createSalesOrderItemQuery()
             ->joinWithState()
             ->select([static::STATUS_NAME, static::TOTAL])
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATUS_NAME)
             ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_PRICE_TO_PAY_AGGREGATION . ')', static::TOTAL)
             ->groupBy(SpyOmsOrderItemStateTableMap::COL_ID_OMS_ORDER_ITEM_STATE)
-            ->find()->toArray();
+            ->find();
+
+        return $statusOrderStatisticData->toArray();
     }
 
     /**
@@ -157,12 +163,15 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
         /** @var literal-string $where */
         $where = sprintf("%s>='%s'", SpySalesOrderTableMap::COL_CREATED_AT, $date);
 
-        return $this->getFactory()->createSalesOrderQuery()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $orderCountStatisticData */
+        $orderCountStatisticData = $this->getFactory()->createSalesOrderQuery()
             ->select([static::DATE, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderTableMap::COL_ID_SALES_ORDER . ')', static::COUNT)
             ->withColumn('DATE(' . SpySalesOrderTableMap::COL_CREATED_AT . ')', static::DATE)
             ->where($where)
             ->groupBy(static::DATE)
-            ->find()->toArray();
+            ->find();
+
+        return $orderCountStatisticData->toArray();
     }
 }

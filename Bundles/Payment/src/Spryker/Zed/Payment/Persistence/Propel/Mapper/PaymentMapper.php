@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethod;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class PaymentMapper
 {
@@ -40,13 +40,13 @@ class PaymentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntityCollection
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function mapPaymentMethodEntityCollectionToPaymentMethodsTransfer(
-        ObjectCollection $paymentMethodEntityCollection,
+        Collection $paymentMethodEntityCollection,
         PaymentMethodsTransfer $paymentMethodsTransfer
     ): PaymentMethodsTransfer {
         foreach ($paymentMethodEntityCollection as $paymentMethodEntity) {
@@ -113,13 +113,13 @@ class PaymentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntityCollection
      * @param \Generated\Shared\Transfer\PaymentMethodCollectionTransfer $paymentMethodCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodCollectionTransfer
      */
     public function mapPaymentMethodEntityCollectionToPaymentMethodCollectionTransfer(
-        ObjectCollection $paymentMethodEntityCollection,
+        Collection $paymentMethodEntityCollection,
         PaymentMethodCollectionTransfer $paymentMethodCollectionTransfer
     ): PaymentMethodCollectionTransfer {
         foreach ($paymentMethodEntityCollection as $paymentMethodEntity) {

@@ -10,18 +10,18 @@ namespace Spryker\Zed\User\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\SpyUser;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class UserMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\User\Persistence\SpyUser> $userEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<array-key, \Orm\Zed\User\Persistence\SpyUser> $userEntityCollection
      * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
     public function mapUserEntityCollectionToUserCollectionTransfer(
-        ObjectCollection $userEntityCollection,
+        Collection $userEntityCollection,
         UserCollectionTransfer $userCollectionTransfer
     ): UserCollectionTransfer {
         foreach ($userEntityCollection as $userEntity) {

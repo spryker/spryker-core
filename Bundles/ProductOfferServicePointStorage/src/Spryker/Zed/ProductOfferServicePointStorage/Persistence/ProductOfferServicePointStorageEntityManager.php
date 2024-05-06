@@ -54,6 +54,8 @@ class ProductOfferServicePointStorageEntityManager extends AbstractEntityManager
             $productOfferServiceStorageQuery->filterByStore($storeName);
         }
 
-        $productOfferServiceStorageQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferServiceStorageCollection */
+        $productOfferServiceStorageCollection = $productOfferServiceStorageQuery->find();
+        $productOfferServiceStorageCollection->delete();
     }
 }

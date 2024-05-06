@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
@@ -168,14 +169,14 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer|null $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function mapCategoryCollection(
-        ObjectCollection $categoryEntities,
+        Collection $categoryEntities,
         CategoryCollectionTransfer $categoryCollectionTransfer,
         ?CategoryCriteriaTransfer $categoryCriteriaTransfer = null
     ): CategoryCollectionTransfer {

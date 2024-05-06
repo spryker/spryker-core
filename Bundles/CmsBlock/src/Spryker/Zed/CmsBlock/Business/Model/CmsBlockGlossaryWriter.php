@@ -97,10 +97,11 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      */
     public function deleteByCmsBlockId(int $idCmsBlock): void
     {
-        $glossaryKeys = $this->cmsBlockQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $glossaryKeyCollection */
+        $glossaryKeyCollection = $this->cmsBlockQueryContainer
             ->queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
-            ->find()
-            ->getColumnValues('FkGlossaryKey');
+            ->find();
+        $glossaryKeys = $glossaryKeyCollection->getColumnValues('FkGlossaryKey');
 
         if (!$glossaryKeys) {
             return;

@@ -134,7 +134,9 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
             $productRelationQuery->filterByFkProductAbstract_In($productAbstractIds);
         }
 
-        $productRelationQuery->find()->delete();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productRelationCollection */
+        $productRelationCollection = $productRelationQuery->find();
+        $productRelationCollection->delete();
     }
 
     /**
@@ -149,12 +151,13 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productLabelStoreCollection */
+        $productLabelStoreCollection = $this->getFactory()
             ->createProductLabelStoreQuery()
             ->filterByFkProductLabel($idProductLabel)
             ->filterByFkStore_In($idStores)
-            ->find()
-            ->delete();
+            ->find();
+        $productLabelStoreCollection->delete();
     }
 
     /**

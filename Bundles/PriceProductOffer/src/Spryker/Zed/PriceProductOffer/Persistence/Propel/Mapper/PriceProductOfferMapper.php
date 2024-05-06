@@ -21,7 +21,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceType;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class PriceProductOfferMapper
 {
@@ -48,13 +48,13 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductOfferEntities
+     * @param \Propel\Runtime\Collection\Collection $priceProductOfferEntities
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductOfferEntitiesToPriceProductTransfers(
-        ObjectCollection $priceProductOfferEntities,
+        Collection $priceProductOfferEntities,
         ArrayObject $priceProductTransfers
     ): ArrayObject {
         foreach ($priceProductOfferEntities as $priceProductOfferEntity) {
@@ -92,13 +92,13 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer> $priceProductOfferEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer> $priceProductOfferEntities
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
      */
     public function mapPriceProductOfferEntitiesToPriceProductOfferCollectionTransfer(
-        ObjectCollection $priceProductOfferEntities,
+        Collection $priceProductOfferEntities,
         PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
     ): PriceProductOfferCollectionTransfer {
         foreach ($priceProductOfferEntities as $priceProductOfferEntity) {

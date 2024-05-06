@@ -58,15 +58,15 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getGroupRoleListByGroupId($idAclGroup)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $roleCollection */
         $roleCollection = $this->getQueryContainer()
             ->queryGroupRoles($idAclGroup)
-            ->find()
-            ->toArray();
+            ->find();
 
         return [
             'code' => Response::HTTP_OK,
             'idGroup' => $idAclGroup,
-            'data' => $roleCollection,
+            'data' => $roleCollection->toArray(),
         ];
     }
 

@@ -88,7 +88,8 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function getConcreteProductSkuMerchantReferenceMap(array $concreteSku): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $concreteProductSkuMerchantReferenceMap */
+        $concreteProductSkuMerchantReferenceMap = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
             ->select([SpyMerchantTableMap::COL_MERCHANT_REFERENCE, SpyProductTableMap::COL_SKU])
             ->joinMerchant()
@@ -97,8 +98,9 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
                     ->filterBySku_In($concreteSku)
                 ->endUse()
             ->endUse()
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_SKU, SpyMerchantTableMap::COL_MERCHANT_REFERENCE);
+            ->find();
+
+        return $concreteProductSkuMerchantReferenceMap->toKeyValue(SpyProductTableMap::COL_SKU, SpyMerchantTableMap::COL_MERCHANT_REFERENCE);
     }
 
     /**

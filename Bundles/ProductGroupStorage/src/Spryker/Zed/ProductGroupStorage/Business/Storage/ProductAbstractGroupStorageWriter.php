@@ -255,7 +255,10 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
      */
     protected function findProductGroupAbstractEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        return $this->queryContainer->queryProductAbstractGroupByProductAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductGroup');
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractGroupCollection */
+        $productAbstractGroupCollection = $this->queryContainer->queryProductAbstractGroupByProductAbstractIds($productAbstractIds)->find();
+
+        return $productAbstractGroupCollection->toKeyIndex('fkProductGroup');
     }
 
     /**

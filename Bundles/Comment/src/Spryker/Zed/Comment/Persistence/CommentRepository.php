@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -215,11 +215,11 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyCommentThread> $commentThreadEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Comment\Persistence\SpyCommentThread> $commentThreadEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
-    protected function mapCommentThreadEntitiesToTransfers(ObjectCollection $commentThreadEntities): array
+    protected function mapCommentThreadEntitiesToTransfers(Collection $commentThreadEntities): array
     {
         $commentThreadTransfers = [];
 

@@ -14,7 +14,7 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface;
@@ -169,9 +169,9 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping>
      */
-    protected function getGlossaryMappingCollection(int $idCmsBlock, array $placeholders): ObjectCollection
+    protected function getGlossaryMappingCollection(int $idCmsBlock, array $placeholders): Collection
     {
         $glossaryKeyMappingCollection = $this->cmsBlockQueryContainer
             ->queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock($placeholders, $idCmsBlock)

@@ -168,6 +168,7 @@ class ProductBundleCartExpanderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface|null $priceProductFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface|null $productFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface|null $localeFacadeMock
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig|null $productBundleConfigMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */

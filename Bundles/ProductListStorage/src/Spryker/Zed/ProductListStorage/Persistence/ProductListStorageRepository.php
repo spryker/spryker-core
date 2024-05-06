@@ -33,10 +33,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->getProductPropelQuery()
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
 
-        return $productQuery
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractIds */
+        $productAbstractIds = $productQuery
             ->filterByIdProduct_In($productConcreteIds)
-            ->find()
-            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $productAbstractIds->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -53,11 +55,13 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->getProductPropelQuery()
             ->select(SpyProductTableMap::COL_ID_PRODUCT);
 
-        return $productQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIds */
+        $productConcreteIds = $productQuery
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productConcreteIds->toArray();
     }
 
     /**
@@ -143,13 +147,15 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findProductConcreteIdsByProductListIds(array $productListIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteIds */
+        $productConcreteIds = $this->getFactory()
             ->getProductListProductConcretePropelQuery()
             ->filterByFkProductList_In($productListIds)
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT)
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productConcreteIds->toArray();
     }
 
     /**
@@ -166,11 +172,13 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->getProductCategoryPropelQuery()
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        return $productCategoryQuery
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $productCategoryQuery
             ->filterByFkCategory_In($categoryIds)
             ->distinct()
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**

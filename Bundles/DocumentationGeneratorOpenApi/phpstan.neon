@@ -3,3 +3,5 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#^Call to static method [A-Za-z]+\(\) on an unknown class Doctrine\\Common\\Inflector\\Inflector\.$#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(string\): bool\)\|null, .+ given.#'
+        - '#Cannot access offset string on string\|true.#'

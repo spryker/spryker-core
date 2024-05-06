@@ -73,6 +73,7 @@ class KeyController extends AbstractController
     {
         $term = $request->get(static::TERM);
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $keys */
         $keys = $this->getQueryContainer()
             ->queryByKey($term)->find();
 

@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclGroup;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroup;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class AclMapper
 {
@@ -72,13 +72,13 @@ class AclMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Acl\Persistence\SpyAclUserHasGroup> $aclUserHasGroupEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Acl\Persistence\SpyAclUserHasGroup> $aclUserHasGroupEntities
      * @param \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer $aclUserHasGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
      */
     public function mapAclUserHasGroupEntitiesToAclUserHasGroupCollectionTransfer(
-        ObjectCollection $aclUserHasGroupEntities,
+        Collection $aclUserHasGroupEntities,
         AclUserHasGroupCollectionTransfer $aclUserHasGroupCollectionTransfer
     ): AclUserHasGroupCollectionTransfer {
         foreach ($aclUserHasGroupEntities as $aclUserHasGroupEntity) {

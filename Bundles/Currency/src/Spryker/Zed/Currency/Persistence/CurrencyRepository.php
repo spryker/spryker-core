@@ -19,7 +19,7 @@ use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -99,9 +99,11 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
             ->filterByFkStore_In($storeIds)
             ->endUse();
         $currencyQuery->select([SpyCurrencyTableMap::COL_CODE, SpyCurrencyStoreTableMap::COL_FK_STORE]);
+        /** @var \Propel\Runtime\Collection\ObjectCollection $currencies */
+        $currencies = $currencyQuery->find();
 
         $currencyCodesByStoreId = [];
-        foreach ($currencyQuery->find()->toArray() as $currencyData) {
+        foreach ($currencies->toArray() as $currencyData) {
             /** @var int $fkStore */
             $fkStore = $currencyData[SpyCurrencyStoreTableMap::COL_FK_STORE];
             /** @var string $code */
@@ -132,11 +134,11 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Currency\Persistence\SpyCurrency> $currencyEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Currency\Persistence\SpyCurrency> $currencyEntities
      *
      * @return array<string, \Generated\Shared\Transfer\CurrencyTransfer>
      */
-    protected function mapCurrencyEntitiesToCurrencyTransfers(ObjectCollection $currencyEntities): array
+    protected function mapCurrencyEntitiesToCurrencyTransfers(Collection $currencyEntities): array
     {
         $currencyTransfers = [];
         foreach ($currencyEntities as $currencyEntity) {

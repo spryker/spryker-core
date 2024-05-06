@@ -26,11 +26,13 @@ class ServicePointSearchEntityManager extends AbstractEntityManager implements S
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $servicePointSearchCollection */
+        $servicePointSearchCollection = $this->getFactory()
             ->getServicePointSearchPropelQuery()
             ->filterByFkServicePoint_In($servicePointIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $servicePointSearchCollection->delete();
     }
 
     /**
@@ -44,11 +46,13 @@ class ServicePointSearchEntityManager extends AbstractEntityManager implements S
             return;
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $servicePointSearchCollection */
+        $servicePointSearchCollection = $this->getFactory()
             ->getServicePointSearchPropelQuery()
             ->filterByIdServicePointSearch_In($servicePointSearchIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $servicePointSearchCollection->delete();
     }
 
     /**

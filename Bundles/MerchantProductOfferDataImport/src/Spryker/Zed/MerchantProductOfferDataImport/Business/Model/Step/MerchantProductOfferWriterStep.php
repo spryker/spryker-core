@@ -144,6 +144,10 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
             ->filterBySku($concreteProductSku)
             ->findOne();
 
+        if ($spyProduct === null) {
+            return;
+        }
+
         $eventEntityTransfer = new EventEntityTransfer();
         $eventEntityTransfer->setId($spyProduct->getIdProduct());
 

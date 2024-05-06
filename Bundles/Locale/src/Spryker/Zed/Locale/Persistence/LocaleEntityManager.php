@@ -123,11 +123,12 @@ class LocaleEntityManager extends AbstractEntityManager implements LocaleEntityM
             $localeIds[] = $localeTransfer->getIdLocaleOrFail();
         }
 
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $localeStoreCollection */
+        $localeStoreCollection = $this->getFactory()
             ->createLocaleStorePropelQuery()
             ->filterByFkStore($idStore)
             ->filterByFkLocale($localeIds, Criteria::NOT_IN)
-            ->find()
-            ->delete();
+            ->find();
+        $localeStoreCollection->delete();
     }
 }

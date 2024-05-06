@@ -26,7 +26,8 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getProductLocalizedAttributesWithProductByIdProductIn(array $productIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productLocalizedAttributes */
+        $productLocalizedAttributes = $this->getFactory()
             ->getProductLocalizedAttributesQuery()
             ->select([
                 SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES,
@@ -36,8 +37,9 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ])
             ->innerJoinWithSpyProduct()
             ->filterByFkProduct_In($productIds)
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productLocalizedAttributes->toArray();
     }
 
     /**
@@ -133,12 +135,14 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getProductAbstractIdsByProductImageSetIds(array $productImageSetIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractIds */
+        $productAbstractIds = $this->getFactory()
             ->getProductImageSetQuery()
             ->filterByIdProductImageSet_In($productImageSetIds)
             ->select([SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->find()
-            ->toArray();
+            ->find();
+
+        return $productAbstractIds->toArray();
     }
 
     /**

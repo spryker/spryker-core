@@ -24,11 +24,13 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
      */
     public function deleteMerchantSearchByMerchantIds(array $merchantIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantSearchCollection */
+        $merchantSearchCollection = $this->getFactory()
             ->getMerchantSearchPropelQuery()
             ->filterByFkMerchant_In($merchantIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $merchantSearchCollection->delete();
     }
 
     /**
@@ -44,6 +46,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
             $merchantSearchTransferIdMerchantMap[$merchantSearchTransfer->getIdMerchant()] = $merchantSearchTransfer;
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $merchantSearchEntityCollection */
         $merchantSearchEntityCollection = $this->getFactory()
             ->getMerchantSearchPropelQuery()
             ->filterByFkMerchant(array_keys($merchantSearchTransferIdMerchantMap), Criteria::IN)

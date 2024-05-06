@@ -38,10 +38,12 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
      */
     public function deleteAllProductLabelDictionaryStorageEntities(): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productLabelDictionaryStorageCollection */
+        $productLabelDictionaryStorageCollection = $this->getFactory()
             ->createSpyProductLabelDictionaryStorageQuery()
-            ->find()
-            ->delete();
+            ->find();
+
+        $productLabelDictionaryStorageCollection->delete();
     }
 
     /**
@@ -51,11 +53,13 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
      */
     public function deleteProductAbstractLabelStorageByProductAbstractId(int $productAbstractId): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractLabelStorageCollection */
+        $productAbstractLabelStorageCollection = $this->getFactory()
             ->createSpyProductAbstractLabelStorageQuery()
             ->filterByFkProductAbstract($productAbstractId)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productAbstractLabelStorageCollection->delete();
     }
 
     /**

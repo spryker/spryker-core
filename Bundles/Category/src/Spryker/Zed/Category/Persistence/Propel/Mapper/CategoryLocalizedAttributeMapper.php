@@ -10,7 +10,7 @@ namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CategoryLocalizedAttributeMapper
 {
@@ -31,12 +31,12 @@ class CategoryLocalizedAttributeMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $categoryAttributeEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $categoryAttributeEntities
      *
      * @return array<int, array<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>>
      */
     public function mapCategoryAttributeEntitiesToCategoryLocalizedAttributesTransfersGroupedByIdCategory(
-        ObjectCollection $categoryAttributeEntities
+        Collection $categoryAttributeEntities
     ): array {
         $categoryLocalizedAttributesTransfers = [];
         foreach ($categoryAttributeEntities as $categoryAttributeEntity) {

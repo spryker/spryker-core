@@ -65,6 +65,7 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
             return;
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $stockStoreEntities */
         $stockStoreEntities = $this->getFactory()
             ->createStockStoreQuery()
             ->filterByFkStock($idStock)

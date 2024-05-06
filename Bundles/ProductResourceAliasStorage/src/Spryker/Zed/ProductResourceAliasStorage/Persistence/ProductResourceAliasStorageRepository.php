@@ -42,12 +42,14 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
      */
     public function getProductAbstractSkuList(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productAbstractSkus */
+        $productAbstractSkus = $this->getFactory()
             ->getProductAbstractPropelQuery()
             ->filterByIdProductAbstract_In($productAbstractIds)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_SKU => static::KEY_SKU])
-            ->find()
-            ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $productAbstractSkus->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -71,11 +73,13 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
      */
     public function getProductConcreteSkuList(array $productConcreteIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $productConcreteSkus */
+        $productConcreteSkus = $this->getFactory()
             ->getProductPropelQuery()
             ->filterByIdProduct_In($productConcreteIds)
             ->select([SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_SKU => static::KEY_SKU])
-            ->find()
-            ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
+            ->find();
+
+        return $productConcreteSkus->toArray(SpyProductTableMap::COL_ID_PRODUCT);
     }
 }

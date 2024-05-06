@@ -161,15 +161,17 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ArrayCollection $customerReferences */
+        $customerReferences = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->select(static::COL_CUSTOMER_REFERENCE)
             ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
             ->useCompanyUserQuery()
                 ->joinCustomer()
             ->endUse()
-            ->find()
-            ->toArray();
+            ->find();
+
+         return $customerReferences->toArray();
     }
 
     /**

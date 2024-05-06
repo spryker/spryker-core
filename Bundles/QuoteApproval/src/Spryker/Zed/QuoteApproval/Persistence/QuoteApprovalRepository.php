@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteApproval\Persistence;
 
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,9 +23,9 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @param array<int> $quoteIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection
      */
-    protected function getQuoteApprovalsEntitiesByQuoteIds(array $quoteIds): ObjectCollection
+    protected function getQuoteApprovalsEntitiesByQuoteIds(array $quoteIds): Collection
     {
         return $this->getFactory()
             ->createQuoteApprovalPropelQuery()

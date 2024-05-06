@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomerAccess\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CustomerAccessMapper implements CustomerAccessMapperInterface
 {
@@ -28,13 +28,13 @@ class CustomerAccessMapper implements CustomerAccessMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
+     * @param \Propel\Runtime\Collection\Collection $customerAccessEntities
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function mapEntitiesToCustomerAccessTransfer(
-        ObjectCollection $customerAccessEntities,
+        Collection $customerAccessEntities,
         CustomerAccessTransfer $customerAccessTransfer
     ): CustomerAccessTransfer {
         foreach ($customerAccessEntities as $customerAccessEntity) {

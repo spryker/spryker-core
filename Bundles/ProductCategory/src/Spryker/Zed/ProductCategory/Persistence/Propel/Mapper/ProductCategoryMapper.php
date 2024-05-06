@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategory\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
-use Propel\Runtime\Collection\ArrayCollection;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductCategoryMapper
@@ -55,13 +55,13 @@ class ProductCategoryMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection<array> $productCategories
+     * @param \Propel\Runtime\Collection\Collection<array> $productCategories
      * @param \Generated\Shared\Transfer\ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
     public function mapProductCategoryArrayToProductCategoryCollectionTransfer(
-        ArrayCollection $productCategories,
+        Collection $productCategories,
         ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
     ): ProductCategoryCollectionTransfer {
         foreach ($productCategories as $productCategory) {

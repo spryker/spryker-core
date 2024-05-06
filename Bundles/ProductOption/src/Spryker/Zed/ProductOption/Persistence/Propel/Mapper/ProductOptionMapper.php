@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class ProductOptionMapper
 {
@@ -36,12 +36,12 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemEntityCollectionToItemTransfers(
-        ObjectCollection $salesOrderItemEntities
+        Collection $salesOrderItemEntities
     ): array {
         $itemTransfers = [];
 
@@ -58,12 +58,12 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */
     public function mapProductOptionValueEntityCollectionToProductOptionValueTransfers(
-        ObjectCollection $productOptionValueEntities
+        Collection $productOptionValueEntities
     ): array {
         $productOptionValueTransfers = [];
 

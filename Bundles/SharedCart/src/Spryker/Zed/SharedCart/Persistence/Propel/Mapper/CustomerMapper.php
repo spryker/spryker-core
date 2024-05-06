@@ -9,18 +9,18 @@ namespace Spryker\Zed\SharedCart\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 
 class CustomerMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntityCollection
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
     public function mapCustomerEntityCollectionToCustomerTransferCollection(
-        ObjectCollection $customerEntityCollection,
+        Collection $customerEntityCollection,
         CustomerCollectionTransfer $customerCollectionTransfer
     ): CustomerCollectionTransfer {
         foreach ($customerEntityCollection as $customerEntity) {

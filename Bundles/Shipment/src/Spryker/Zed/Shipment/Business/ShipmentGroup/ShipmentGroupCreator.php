@@ -132,7 +132,7 @@ class ShipmentGroupCreator implements ShipmentGroupCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array<bool> $itemListUpdatedStatus
+     * @param array<mixed> $itemListUpdatedStatus
      *
      * @return bool
      */

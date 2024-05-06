@@ -259,10 +259,12 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      */
     protected function getProductAbstractIdMap(array $productConcreteIds)
     {
-        return $this->queryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productAbstractCollection */
+        $productAbstractCollection = $this->queryContainer
             ->queryProductAbstractIdsByProductConcreteIds($productConcreteIds)
-            ->find()
-            ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_CONCRETE, PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT);
+            ->find();
+
+        return $productAbstractCollection->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_CONCRETE, PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT);
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\DiscountPromotion\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\DiscountPromotion\Persistence\Checker\DiscountPromotionFieldCheckerInterface;
 
 class DiscountPromotionMapper
@@ -61,13 +61,13 @@ class DiscountPromotionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion> $discountPromotionEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion> $discountPromotionEntities
      * @param \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer $discountPromotionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer
      */
     public function mapDiscountPromotionEntitiesToDiscountPromotionCollectionTransfer(
-        ObjectCollection $discountPromotionEntities,
+        Collection $discountPromotionEntities,
         DiscountPromotionCollectionTransfer $discountPromotionCollectionTransfer
     ): DiscountPromotionCollectionTransfer {
         foreach ($discountPromotionEntities as $discountPromotionEntity) {

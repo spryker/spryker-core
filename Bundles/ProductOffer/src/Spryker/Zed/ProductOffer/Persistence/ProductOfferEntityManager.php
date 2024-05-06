@@ -87,11 +87,13 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
      */
     public function deleteProductOfferStores(int $idProductOffer, array $storeIds): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productOfferStoreCollection */
+        $productOfferStoreCollection = $this->getFactory()
             ->createProductOfferStoreQuery()
             ->filterByFkProductOffer($idProductOffer)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
+            ->find();
+
+        $productOfferStoreCollection->delete();
     }
 }

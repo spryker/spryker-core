@@ -19,7 +19,7 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -56,11 +56,11 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    protected function mapProductImageSetTransfers(ObjectCollection $productImageSetEntities): array
+    protected function mapProductImageSetTransfers(Collection $productImageSetEntities): array
     {
         $mapper = $this->getFactory()->createProductImageMapper();
         $productImageSetTransfers = [];
@@ -97,11 +97,11 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $productImageSetToProductImageEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $productImageSetToProductImageEntities
      *
      * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
-    protected function indexProductImagesByProductImageSetId(ObjectCollection $productImageSetToProductImageEntities): array
+    protected function indexProductImagesByProductImageSetId(Collection $productImageSetToProductImageEntities): array
     {
         $mapper = $this->getFactory()->createProductImageMapper();
         $indexedProductImages = [];

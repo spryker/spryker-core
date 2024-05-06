@@ -62,6 +62,7 @@ class ExportReservation implements ExportReservationInterface
         $lastExportedVersion = $this->getLastExportedVersion();
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $reservations */
         $reservations = $this->findReservations($lastExportedVersion, $maxVersion);
 
         if (count($reservations) === 0) {
@@ -166,7 +167,7 @@ class ExportReservation implements ExportReservationInterface
      * @param int $lastExportedVersion
      * @param int $maxVisibleVersion
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion>
+     * @return \Propel\Runtime\Collection\Collection<\Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion>
      */
     protected function findReservations($lastExportedVersion, $maxVisibleVersion)
     {
