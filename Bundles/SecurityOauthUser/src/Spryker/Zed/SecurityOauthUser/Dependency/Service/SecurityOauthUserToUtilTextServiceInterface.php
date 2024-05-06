@@ -14,5 +14,5 @@ interface SecurityOauthUserToUtilTextServiceInterface
      *
      * @return string
      */
-    public function generateRandomByteString(int $length = 32): string;
+    public function generateRandomString(int $length): string;
 }

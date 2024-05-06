@@ -89,7 +89,7 @@ class OauthUserCreator implements OauthUserCreatorInterface
             ->setFirstName($userCriteriaTransfer->getEmailOrFail())
             ->setLastName($userCriteriaTransfer->getEmailOrFail())
             ->setStatus($this->securityOauthUserConfig->getOauthUserCreationStatus())
-            ->setPassword($this->utilTextService->generateRandomByteString(
+            ->setPassword($this->utilTextService->generateRandomString(
                 static::OAUTH_USER_CREATION_DEFAULT_PASSWORD_LENGTH,
             ));
     }
