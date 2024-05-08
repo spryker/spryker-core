@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToPriceProductServiceInterface;
 use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 use Spryker\Shared\ProductConfiguration\ProductConfigurationConfig;
@@ -58,6 +59,11 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     protected const IS_PRICE_MERGEABLE = false;
 
     /**
+     * @var string
+     */
+    protected const KEY_SKU = 'sku';
+
+    /**
      * @var \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToPriceProductServiceInterface
      */
     protected $priceProductService;
@@ -89,13 +95,13 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
 
     /**
      * @param array<string, mixed> $configuratorResponseData
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
     public function mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
         array $configuratorResponseData,
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
     ): ProductConfigurationInstanceTransfer {
         $priceProductTransfers = [];
         $configuratorResponsePrisesData = $configuratorResponseData[static::KEY_PRICES] ?? [];
@@ -109,12 +115,14 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
             $priceProductTransfers[] = $priceProductTransfer;
         }
 
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail();
         $priceProductTransfers = $this->executeProductConfigurationPriceExtractorPlugins($priceProductTransfers);
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
-        $this->fillUpPriceDimensionWithProductConfigurationInstanceHash(
+        $this->assignProductConfigurationHashToPriceDimensions(
             $productConfigurationInstanceTransfer->getPrices(),
             $this->productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer),
+            $productConfiguratorResponseTransfer->getSku(),
         );
 
         return $productConfigurationInstanceTransfer;
@@ -169,15 +177,19 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param string $productConfigurationInstanceHash
+     * @param string|null $sku
      *
      * @return void
      */
-    protected function fillUpPriceDimensionWithProductConfigurationInstanceHash(
+    protected function assignProductConfigurationHashToPriceDimensions(
         ArrayObject $priceProductTransfers,
-        string $productConfigurationInstanceHash
+        string $productConfigurationInstanceHash,
+        ?string $sku
     ): void {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer->getPriceDimensionOrFail()->setProductConfigurationInstanceHash($productConfigurationInstanceHash);
+            $priceProductTransfer->setSkuProduct($sku)
+                ->getPriceDimensionOrFail()
+                ->setProductConfigurationInstanceHash($productConfigurationInstanceHash);
         }
     }
 }

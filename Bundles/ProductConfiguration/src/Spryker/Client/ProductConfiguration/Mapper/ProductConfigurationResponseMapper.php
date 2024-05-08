@@ -47,7 +47,7 @@ class ProductConfigurationResponseMapper implements ProductConfigurationResponse
         $productConfigurationInstanceTransfer = $this->productConfigurationInstancePriceMapper
             ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(
                 $configuratorResponseData[static::KEY_PRODUCT_CONFIGURATION_INSTANCE] ?? [],
-                $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail(),
+                $productConfiguratorResponseTransfer,
             );
 
         return $productConfiguratorResponseTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);

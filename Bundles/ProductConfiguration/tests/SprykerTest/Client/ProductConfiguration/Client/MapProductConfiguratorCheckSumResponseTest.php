@@ -110,6 +110,7 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
         $priceData = ['some' => 'data'];
         $netPrice = 111;
         $grossPrice = 222;
+        $sku = '123';
 
         $configuratorResponseData = [
             static::KEY_PRODUCT_CONFIGURATION_INSTANCE => [
@@ -130,6 +131,7 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseTransfer())->setProductConfigurationInstance(
             new ProductConfigurationInstanceTransfer(),
         );
+        $productConfiguratorResponseTransfer->setSku($sku);
 
         // Act
         $productConfiguratorResponseTransfer = $this->tester->getClient()->mapProductConfiguratorCheckSumResponse(
@@ -151,6 +153,12 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
 
         // Assert
         $this->assertNotNull($priceProductTransfer->getGroupKey());
+
+        $this->assertSame(
+            $sku,
+            $priceProductTransfer->getSkuProduct(),
+            sprintf('Expects price product SKU to be equal to %s.', $sku),
+        );
 
         $this->assertSame(
             static::PRICE_DIMENSION_PRODUCT_CONFIGURATION,
