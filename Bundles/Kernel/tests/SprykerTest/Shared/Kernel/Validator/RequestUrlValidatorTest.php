@@ -189,6 +189,13 @@ class RequestUrlValidatorTest extends Unit
                 'redirect request' => true,
                 'validation result' => true,
             ],
+            'relative url to some page with underscore' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/?_store=DE',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
         ];
     }
 
