@@ -160,6 +160,7 @@ class PriceAggregator implements PriceAggregatorInterface
         TaxAppSaleTransfer $taxAppSaleTransfer,
         CalculableObjectTransfer $calculableObjectTransfer
     ): CalculableObjectTransfer {
+        $calculableObjectTransfer = $this->preDefineTaxAmount($calculableObjectTransfer);
         $indexedExpenses = $this->filterShipmentExpenses($calculableObjectTransfer->getExpenses());
 
         foreach ($taxAppSaleTransfer->getShipments() as $taxAppShipmentTransfer) {
@@ -169,6 +170,25 @@ class PriceAggregator implements PriceAggregatorInterface
 
             $indexedExpenses[$taxAppShipmentTransfer->getId()] = $this->calculateTaxAmountForExpense($indexedExpenses[$taxAppShipmentTransfer->getId()], $taxAppShipmentTransfer);
             $indexedExpenses[$taxAppShipmentTransfer->getId()] = $this->calculatePriceToPayAggregationForExpense($indexedExpenses[$taxAppShipmentTransfer->getId()], $calculableObjectTransfer->getPriceModeOrFail());
+        }
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    protected function preDefineTaxAmount(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getSumTaxAmount() === null) {
+                $expenseTransfer->setSumTaxAmount(0);
+            }
+            if ($expenseTransfer->getUnitTaxAmount() === null) {
+                $expenseTransfer->setUnitTaxAmount(0);
+            }
         }
 
         return $calculableObjectTransfer;

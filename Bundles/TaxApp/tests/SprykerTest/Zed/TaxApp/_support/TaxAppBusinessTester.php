@@ -108,6 +108,12 @@ class TaxAppBusinessTester extends Actor
             ExpenseTransfer::TYPE => 'SHIPMENT_EXPENSE_TYPE',
         ]))->withShipment($shipmentBuilder);
 
+        $customExpenseBuilder = (new ExpenseBuilder([
+            ExpenseTransfer::TYPE => 'CUSTOM_EXPENSE_TYPE',
+            ExpenseTransfer::UNIT_TAX_AMOUNT => null,
+            ExpenseTransfer::SUM_TAX_AMOUNT => null,
+        ]));
+
         $quoteTransfer = (new QuoteBuilder())
             ->withCustomer()
             ->withBillingAddress()
@@ -127,6 +133,7 @@ class TaxAppBusinessTester extends Actor
             )
             ->withTotals()
             ->withExpense($expenseBuilder)
+            ->withExpense($customExpenseBuilder)
             ->build();
 
         $quoteTransfer->setStore($storeTransfer);

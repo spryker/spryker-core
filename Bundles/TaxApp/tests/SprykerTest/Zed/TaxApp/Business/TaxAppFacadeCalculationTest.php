@@ -75,6 +75,10 @@ class TaxAppFacadeCalculationTest extends Unit
         $this->tester->getFacade()->recalculate($calculableObjectTransfer);
 
         $this->assertGreaterThanOrEqual(0, $taxCalculationResponseTransfer->getSale()->getTaxTotal());
+        foreach ($calculableObjectTransfer->getExpenses() as $expense) {
+            $this->assertNotNull($expense->getSumTaxAmount());
+            $this->assertNotNull($expense->getUnitTaxAmount());
+        }
     }
 
     /**
