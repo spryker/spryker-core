@@ -23,9 +23,27 @@ interface DynamicEntityQueryBuilderInterface
     /**
      * @param string $tableName
      *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return string
+     */
+    public function assertEntityClassNameExists(string $tableName): string;
+
+    /**
+     * @param string $tableName
+     *
      * @return string
      */
     public function getEntityQueryClass(string $tableName): string;
+
+    /**
+     * @param string $tableName
+     *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return string
+     */
+    public function assertEntityQueryClassNameExists(string $tableName): string;
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query

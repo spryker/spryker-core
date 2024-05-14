@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiConfig;
+use Spryker\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiFactory;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\SchemaBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\TreeBuilder\DynamicEntityConfigurationTreeBuilder;
@@ -55,6 +56,11 @@ class DynamicEntityBackendApiTester extends Actor
      * @var string
      */
     public const BAR_TABLE_NAME = 'spy_bar';
+
+    /**
+     * @var string
+     */
+    public const FOO_TABLE_NAME = 'spy_foo';
 
     /**
      * @var string
@@ -152,6 +158,11 @@ class DynamicEntityBackendApiTester extends Actor
     protected const REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
 
     /**
+     * @var string
+     */
+    protected const STRING_FALSE = 'false';
+
+    /**
      * @param string|null $tableAlias
      *
      * @return \Generated\Shared\Transfer\GlueRequestTransfer
@@ -239,7 +250,7 @@ class DynamicEntityBackendApiTester extends Actor
                 'isEditable' => $isEditable,
                 'isCreatable' => $isCreatable,
                 'validation' => [
-                    'isRequired' => false,
+                    'isRequired' => $isRequired,
                 ],
             ],
             [
@@ -433,6 +444,21 @@ class DynamicEntityBackendApiTester extends Actor
         $rootDynamicEntityConfigurationTransfer->addChildRelation($firstLevelDynamicEntityConfigurationRelationTransfer);
 
         return $rootDynamicEntityConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueRequestTransfer
+     */
+    public function addNonTransactionalHeaderToRequestTransfer(GlueRequestTransfer $glueRequestTransfer): GlueRequestTransfer
+    {
+        $factory = new DynamicEntityBackendApiFactory();
+        $meta = $glueRequestTransfer->getMeta();
+        $meta[strtolower($factory->getConfig()->getTransactionalHeader())] = [static::STRING_FALSE];
+        $glueRequestTransfer->setMeta($meta);
+
+        return $glueRequestTransfer;
     }
 
     /**

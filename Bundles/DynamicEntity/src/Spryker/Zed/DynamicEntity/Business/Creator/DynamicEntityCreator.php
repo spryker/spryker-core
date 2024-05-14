@@ -9,10 +9,13 @@ namespace Spryker\Zed\DynamicEntity\Business\Creator;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
-use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityConfigurationNotFoundException;
+use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
+use Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer;
+use Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface;
+use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
-use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface;
-use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface;
 use Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface;
 
 class DynamicEntityCreator implements DynamicEntityCreatorInterface
@@ -28,76 +31,172 @@ class DynamicEntityCreator implements DynamicEntityCreatorInterface
     protected DynamicEntityWriterInterface $dynamicEntityWriter;
 
     /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     * @var \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface
      */
-    protected DynamicEntityValidatorInterface $dynamicEntityValidator;
+    protected DynamicEntityMapperInterface $dynamicEntityMapper;
 
     /**
-     * @var \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface
+     * @var \Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface
      */
-    protected DynamicEntityConfigurationTreeValidatorInterface $dynamicEntityConfigurationTreeValidator;
+    protected TransactionProcessorInterface $transactionProcessor;
+
+    /**
+     * @var array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface>
+     */
+    protected array $dynamicEntityPostCreatePlugins;
 
     /**
      * @param \Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface $dynamicEntityReader
      * @param \Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface $dynamicEntityWriter
-     * @param \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface $dynamicEntityValidator
-     * @param \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface $dynamicEntityConfigurationTreeValidator
+     * @param \Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface $dynamicEntityMapper
+     * @param \Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface $transactionProcessor
+     * @param array<\Spryker\Zed\DynamicEntityExtension\Dependency\Plugin\DynamicEntityPostCreatePluginInterface> $dynamicEntityPostCreatePlugins
      */
     public function __construct(
         DynamicEntityReaderInterface $dynamicEntityReader,
         DynamicEntityWriterInterface $dynamicEntityWriter,
-        DynamicEntityValidatorInterface $dynamicEntityValidator,
-        DynamicEntityConfigurationTreeValidatorInterface $dynamicEntityConfigurationTreeValidator
+        DynamicEntityMapperInterface $dynamicEntityMapper,
+        TransactionProcessorInterface $transactionProcessor,
+        array $dynamicEntityPostCreatePlugins
     ) {
         $this->dynamicEntityReader = $dynamicEntityReader;
         $this->dynamicEntityWriter = $dynamicEntityWriter;
-        $this->dynamicEntityValidator = $dynamicEntityValidator;
-        $this->dynamicEntityConfigurationTreeValidator = $dynamicEntityConfigurationTreeValidator;
+        $this->dynamicEntityMapper = $dynamicEntityMapper;
+        $this->transactionProcessor = $transactionProcessor;
+        $this->dynamicEntityPostCreatePlugins = $dynamicEntityPostCreatePlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      *
-     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityConfigurationNotFoundException
-     *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     public function create(DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer): DynamicEntityCollectionResponseTransfer
     {
-        $dynamicEntityConfigurationCollectionTransfer = $this->dynamicEntityReader->getDynamicEntityConfigurationByDynamicEntityCollectionRequest(
+        $dynamicEntityConfigurationResponse = $this->dynamicEntityReader->getDynamicEntityConfigurationTransferTree(
             $dynamicEntityCollectionRequestTransfer,
         );
 
-        $errorTransfer = $this->dynamicEntityConfigurationTreeValidator
-            ->validateDynamicEntityConfigurationCollectionByDynamicEntityConfigurationCollection(
+        $dynamicEntityCollectionResponseTransfer = new DynamicEntityCollectionResponseTransfer();
+
+        if ($dynamicEntityConfigurationResponse->getErrorTransfers() !== []) {
+            return $this->mergeErrors($dynamicEntityCollectionResponseTransfer, $dynamicEntityConfigurationResponse);
+        }
+
+        $this->transactionProcessor->startAtomicTransaction($dynamicEntityCollectionRequestTransfer);
+
+        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $index => $dynamicEntityTransfer) {
+            $currentDynamicEntityCollectionResponseTransfer = new DynamicEntityCollectionResponseTransfer();
+
+            $this->transactionProcessor->startPerItemTransaction($dynamicEntityCollectionRequestTransfer);
+
+            $currentDynamicEntityCollectionResponseTransfer = $this->dynamicEntityWriter->createDynamicEntity(
+                $dynamicEntityTransfer,
+                $dynamicEntityConfigurationResponse->getDynamicEntityConfigurationTransfer(),
                 $dynamicEntityCollectionRequestTransfer,
-                $dynamicEntityConfigurationCollectionTransfer,
+                $currentDynamicEntityCollectionResponseTransfer,
             );
 
-        if ($errorTransfer !== null) {
-            return (new DynamicEntityCollectionResponseTransfer())
-                ->addError($errorTransfer);
+            $this->transactionProcessor->endPerItemTransaction($dynamicEntityCollectionRequestTransfer, $currentDynamicEntityCollectionResponseTransfer);
+
+            $dynamicEntityCollectionResponseTransfer = $this->mergeResponses($dynamicEntityCollectionResponseTransfer, $currentDynamicEntityCollectionResponseTransfer);
         }
 
-        $dynamicEntityConfigurationTransfer = $this->dynamicEntityReader->getDynamicEntityConfigurationTransferTreeByDynamicEntityConfigurationCollection(
-            $dynamicEntityCollectionRequestTransfer,
-            $dynamicEntityConfigurationCollectionTransfer,
+        $dynamicEntityCollectionResponseTransfer = $this->executeDynamicEntityPostCreatePlugins(
+            $dynamicEntityConfigurationResponse->getDynamicEntityConfigurationTransfer(),
+            $dynamicEntityCollectionResponseTransfer,
         );
 
-        if ($dynamicEntityConfigurationTransfer === null) {
-            throw new DynamicEntityConfigurationNotFoundException();
+        $this->transactionProcessor->endAtomicTransaction($dynamicEntityCollectionRequestTransfer, $dynamicEntityCollectionResponseTransfer);
+
+        return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    protected function executeDynamicEntityPostCreatePlugins(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+    ): DynamicEntityCollectionResponseTransfer {
+        $dynamicEntityPostEditResponseTransfer = new DynamicEntityPostEditResponseTransfer();
+        $dynamicEntityPostEditRequestTransfers = $this->dynamicEntityMapper
+            ->mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
+                $dynamicEntityConfigurationTransfer,
+                $dynamicEntityCollectionResponseTransfer,
+            );
+
+        foreach ($dynamicEntityPostEditRequestTransfers as $dynamicEntityPostEditRequestTransfer) {
+            $dynamicEntityPostEditResponseTransfer = $this->executeDynamicEntityPostCreatePluginsForPostEditRequestTransfer($dynamicEntityPostEditRequestTransfer);
+
+            foreach ($dynamicEntityPostEditResponseTransfer->getErrors() as $error) {
+                $dynamicEntityCollectionResponseTransfer->addError($error);
+            }
         }
 
-        $dynamicEntityCollectionResponseTransfer = $this->dynamicEntityValidator->validate(
-            $dynamicEntityCollectionRequestTransfer,
-            $dynamicEntityConfigurationTransfer,
-            new DynamicEntityCollectionResponseTransfer(),
-        );
+        return $dynamicEntityCollectionResponseTransfer;
+    }
 
-        if ($dynamicEntityCollectionResponseTransfer->getErrors()->count()) {
-            return $dynamicEntityCollectionResponseTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityPostEditResponseTransfer
+     */
+    protected function executeDynamicEntityPostCreatePluginsForPostEditRequestTransfer(
+        DynamicEntityPostEditRequestTransfer $dynamicEntityPostEditRequestTransfer
+    ): DynamicEntityPostEditResponseTransfer {
+        $dynamicEntityPostEditResponseTransfer = null;
+        foreach ($this->dynamicEntityPostCreatePlugins as $dynamicEntityPostCreatePlugin) {
+            $dynamicEntityPostEditResponseTransfer = $dynamicEntityPostCreatePlugin->postCreate(
+                $dynamicEntityPostEditRequestTransfer,
+            );
+
+            if ($dynamicEntityPostEditResponseTransfer->getErrors()->count() > 0) {
+                return $dynamicEntityPostEditResponseTransfer;
+            }
         }
 
-        return $this->dynamicEntityWriter->executeCreateTransaction($dynamicEntityCollectionRequestTransfer, $dynamicEntityConfigurationTransfer);
+        return $dynamicEntityPostEditResponseTransfer ?: new DynamicEntityPostEditResponseTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param \Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface $dynamicEntityConfigurationResponse
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    protected function mergeErrors(
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        DynamicEntityConfigurationResponseInterface $dynamicEntityConfigurationResponse
+    ): DynamicEntityCollectionResponseTransfer {
+        foreach ($dynamicEntityConfigurationResponse->getErrorTransfers() as $errorTransfer) {
+            $dynamicEntityCollectionResponseTransfer->addError($errorTransfer);
+        }
+
+        return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $mainDynamicEntityCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $currentDynamicEntityCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    protected function mergeResponses(
+        DynamicEntityCollectionResponseTransfer $mainDynamicEntityCollectionResponseTransfer,
+        DynamicEntityCollectionResponseTransfer $currentDynamicEntityCollectionResponseTransfer
+    ): DynamicEntityCollectionResponseTransfer {
+        foreach ($currentDynamicEntityCollectionResponseTransfer->getErrors() as $errorTransfer) {
+            $mainDynamicEntityCollectionResponseTransfer->addError($errorTransfer);
+        }
+
+        foreach ($currentDynamicEntityCollectionResponseTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+            $mainDynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
+        }
+
+        return $mainDynamicEntityCollectionResponseTransfer;
     }
 }

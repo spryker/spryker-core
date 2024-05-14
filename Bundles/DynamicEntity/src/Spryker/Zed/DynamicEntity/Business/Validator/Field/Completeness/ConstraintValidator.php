@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
-use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationConstraintTransfer;
@@ -44,108 +43,66 @@ class ConstraintValidator implements DynamicEntityValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     * @param string|null $errorPath
+     * @param int $index
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        ?string $errorPath = null
-    ): DynamicEntityCollectionResponseTransfer {
-        $indexedConfigurations = $this->getConfigurationsIndexedByTableAliases($dynamicEntityConfigurationTransfer);
-        $indexedChildRelations = $this->getChildRelationsIndexedByRelationNames($dynamicEntityConfigurationTransfer);
-
-        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $index => $dynamicEntityTransfer) {
-            $currentErrorPath = $this->dynamicEntityErrorPathResolver->getErrorPath($index, $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(), $errorPath);
-
-            $dynamicEntityCollectionResponseTransfer = $this->processValidation(
-                $dynamicEntityCollectionResponseTransfer,
-                $dynamicEntityTransfer,
-                $indexedConfigurations,
-                $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail(),
-                $currentErrorPath,
-            );
-
-            $this->processValidationForChildChains(
-                $dynamicEntityTransfer,
-                $dynamicEntityCollectionResponseTransfer,
-                $indexedConfigurations,
-                $indexedChildRelations,
-                $currentErrorPath,
-            );
-        }
-
-        return $dynamicEntityCollectionResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $indexedDefinitions
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $indexedChildRelations
-     * @param string $errorPath
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    protected function processValidationForChildChains(
         DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        array $indexedDefinitions,
-        array $indexedChildRelations,
-        string $errorPath
-    ): DynamicEntityCollectionResponseTransfer {
-        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelationTransfer) {
-            foreach ($childRelationTransfer->getDynamicEntities() as $childDynamicEntityTransfer) {
-                $dynamicEntityCollectionResponseTransfer = $this->processValidation(
-                    $dynamicEntityCollectionResponseTransfer,
-                    $childDynamicEntityTransfer,
-                    $indexedDefinitions,
-                    $indexedChildRelations[$childRelationTransfer->getNameOrFail()]->getNameOrFail(),
-                    $errorPath,
-                );
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        int $index
+    ): array {
+        $errorPath = $this->dynamicEntityErrorPathResolver->getErrorPath(
+            $index,
+            $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
+        );
 
-                $this->processValidationForChildChains(
-                    $childDynamicEntityTransfer,
-                    $dynamicEntityCollectionResponseTransfer,
-                    $indexedDefinitions,
-                    $indexedChildRelations,
-                    $errorPath,
-                );
-            }
-        }
+        $configurationsIndexedByTableAlias = $this->getConfigurationsIndexedByTableAlias($dynamicEntityConfigurationTransfer);
+        $childRelationsIndexedByRelationName = $this->getChildRelationsIndexedByRelationName($dynamicEntityConfigurationTransfer);
 
-        return $dynamicEntityCollectionResponseTransfer;
+        $errorTransfers = $this->processValidation(
+            $dynamicEntityTransfer,
+            $configurationsIndexedByTableAlias,
+            $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
+            $errorPath,
+        );
+
+        $errorTransfers = array_merge($errorTransfers, $this->processValidationForChildChains(
+            $dynamicEntityTransfer,
+            $configurationsIndexedByTableAlias,
+            $childRelationsIndexedByRelationName,
+            $errorPath,
+        ));
+
+        return $errorTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $indexedConfigurations
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $configurationsIndexedByTableAlias
      * @param string $entityIdentifier
      * @param string $errorPath
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     protected function processValidation(
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        array $indexedConfigurations,
+        array $configurationsIndexedByTableAlias,
         string $entityIdentifier,
         string $errorPath
-    ): DynamicEntityCollectionResponseTransfer {
+    ): array {
         if (
-            !array_key_exists($entityIdentifier, $indexedConfigurations)
-            || $indexedConfigurations[$entityIdentifier]->getDynamicEntityDefinition() === null
+            !array_key_exists($entityIdentifier, $configurationsIndexedByTableAlias)
+            || $configurationsIndexedByTableAlias[$entityIdentifier]->getDynamicEntityDefinition() === null
         ) {
-            return $dynamicEntityCollectionResponseTransfer;
+            return [];
         }
 
-        $fieldDefinitionsTransfer = $indexedConfigurations[$entityIdentifier]->getDynamicEntityDefinition()->getFieldDefinitions();
-
+        $fieldDefinitionsTransfer = $configurationsIndexedByTableAlias[$entityIdentifier]->getDynamicEntityDefinition()->getFieldDefinitions();
+        $errorTransfers = [];
         foreach ($fieldDefinitionsTransfer as $fieldDefinitionTransfer) {
             if (
                 $fieldDefinitionTransfer->getValidation() === null
@@ -154,108 +111,138 @@ class ConstraintValidator implements DynamicEntityValidatorInterface
                 continue;
             }
 
-            $this->processFieldValidationConstraints(
-                $dynamicEntityCollectionResponseTransfer,
+            $errorTransfers = array_merge($errorTransfers, $this->processFieldValidationConstraints(
                 $dynamicEntityTransfer,
                 $fieldDefinitionTransfer,
                 $entityIdentifier,
                 $errorPath,
-            );
+            ));
         }
 
-        return $dynamicEntityCollectionResponseTransfer;
+        return $errorTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $configurationsIndexedByTableAlias
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $childRelationsIndexedByRelationName
+     * @param string $errorPath
+     *
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
+     */
+    protected function processValidationForChildChains(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        array $configurationsIndexedByTableAlias,
+        array $childRelationsIndexedByRelationName,
+        string $errorPath
+    ): array {
+        $errorTransfers = [];
+        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelationTransfer) {
+            foreach ($childRelationTransfer->getDynamicEntities() as $childDynamicEntityTransfer) {
+                $errorTransfers = array_merge($errorTransfers, $this->processValidation(
+                    $childDynamicEntityTransfer,
+                    $configurationsIndexedByTableAlias,
+                    $childRelationsIndexedByRelationName[$childRelationTransfer->getNameOrFail()]->getNameOrFail(),
+                    $errorPath,
+                ));
+
+                $errorTransfers = array_merge($errorTransfers, $this->processValidationForChildChains(
+                    $childDynamicEntityTransfer,
+                    $configurationsIndexedByTableAlias,
+                    $childRelationsIndexedByRelationName,
+                    $errorPath,
+                ));
+            }
+        }
+
+        return $errorTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param string $entityIdentifier
      * @param string $errorPath
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     protected function processFieldValidationConstraints(
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         string $entityIdentifier,
         string $errorPath
-    ): DynamicEntityCollectionResponseTransfer {
-        /** @phpstan-var \Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer $validation */
-        $validation = $fieldDefinitionTransfer->getValidation();
-        foreach ($validation->getConstraints() as $dynamicEntityFieldValidationConstraintTransfer) {
-            $dynamicEntityCollectionResponseTransfer = $this->applyFieldValidationConstraint(
-                $dynamicEntityCollectionResponseTransfer,
+    ): array {
+        $errorTransfers = [];
+        /** @phpstan-var \Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer $fieldValidationTransfer */
+        $fieldValidationTransfer = $fieldDefinitionTransfer->getValidation();
+        foreach ($fieldValidationTransfer->getConstraints() as $dynamicEntityFieldValidationConstraintTransfer) {
+            $errorTransfers = array_merge($errorTransfers, $this->applyFieldValidationConstraint(
                 $dynamicEntityTransfer,
                 $fieldDefinitionTransfer,
                 $entityIdentifier,
                 $errorPath,
                 $dynamicEntityFieldValidationConstraintTransfer,
-            );
+            ));
         }
 
-        return $dynamicEntityCollectionResponseTransfer;
+        return $errorTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param string $entityIdentifier
      * @param string $errorPath
      * @param \Generated\Shared\Transfer\DynamicEntityFieldValidationConstraintTransfer $dynamicEntityFieldValidationConstraintTransfer
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     protected function applyFieldValidationConstraint(
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         string $entityIdentifier,
         string $errorPath,
         DynamicEntityFieldValidationConstraintTransfer $dynamicEntityFieldValidationConstraintTransfer
-    ): DynamicEntityCollectionResponseTransfer {
+    ): array {
+        $errorTransfers = [];
         foreach ($this->fieldsValidationConstraints as $constraint) {
             if (
                 $constraint->isApplicable($dynamicEntityFieldValidationConstraintTransfer->getNameOrFail())
                 && !$constraint->isValid($dynamicEntityTransfer, $fieldDefinitionTransfer)
             ) {
-                $dynamicEntityCollectionResponseTransfer->addError(
-                    (new ErrorTransfer())
-                        ->setEntityIdentifier($entityIdentifier)
-                        ->setMessage($constraint->getErrorMessage())
-                        ->setParameters([
-                            DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
-                            DynamicEntityConfig::ERROR_PATH => $errorPath,
-                        ]),
-                );
+                $errorTransfers[] = (new ErrorTransfer())
+                    ->setEntityIdentifier($entityIdentifier)
+                    ->setMessage($constraint->getErrorMessage())
+                    ->setParameters([
+                        DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
+                        DynamicEntityConfig::ERROR_PATH => $errorPath,
+                    ]);
             }
         }
 
-        return $dynamicEntityCollectionResponseTransfer;
+        return $errorTransfers;
     }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $indexedChildRelations
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $childRelationsIndexedByRelationName
      *
      * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer>
      */
-    protected function getChildRelationsIndexedByRelationNames(
+    protected function getChildRelationsIndexedByRelationName(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        array $indexedChildRelations = []
+        array $childRelationsIndexedByRelationName = []
     ): array {
         foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
             $childDynamicEntityConfigurationTransfer = $childRelation->getChildDynamicEntityConfigurationOrFail();
-            $indexedChildRelations[$childRelation->getNameOrFail()] = $childRelation;
+            $childRelationsIndexedByRelationName[$childRelation->getNameOrFail()] = $childRelation;
 
             if ($childDynamicEntityConfigurationTransfer->getChildRelations()->count() > 0) {
-                $indexedChildRelations = $this->getChildRelationsIndexedByRelationNames($childDynamicEntityConfigurationTransfer, $indexedChildRelations);
+                $childRelationsIndexedByRelationName = $this->getChildRelationsIndexedByRelationName($childDynamicEntityConfigurationTransfer, $childRelationsIndexedByRelationName);
             }
         }
 
-        return $indexedChildRelations;
+        return $childRelationsIndexedByRelationName;
     }
 
     /**
@@ -263,40 +250,40 @@ class ConstraintValidator implements DynamicEntityValidatorInterface
      *
      * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
      */
-    protected function getConfigurationsIndexedByTableAliases(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    protected function getConfigurationsIndexedByTableAlias(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
     {
-        $indexedConfigurations = [
+        $configurationsIndexedByTableAlias = [
             $dynamicEntityConfigurationTransfer->getTableAliasOrFail() => $dynamicEntityConfigurationTransfer,
         ];
 
-        return $this->indexChildConfigurationsByTableAliases($dynamicEntityConfigurationTransfer, $indexedConfigurations);
+        return $this->indexChildConfigurationsByTableAliases($dynamicEntityConfigurationTransfer, $configurationsIndexedByTableAlias);
     }
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $indexedConfigurations
+     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer> $configurationsIndexedByTableAlias
      *
      * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
      */
     protected function indexChildConfigurationsByTableAliases(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        array $indexedConfigurations
+        array $configurationsIndexedByTableAlias
     ): array {
         foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
             $childDynamicEntityConfigurationTransfer = $childRelation->getChildDynamicEntityConfigurationOrFail();
             $tableAlias = $childDynamicEntityConfigurationTransfer->getTableAliasOrFail();
 
-            if (isset($indexedConfigurations[$tableAlias])) {
+            if (isset($configurationsIndexedByTableAlias[$tableAlias])) {
                 continue;
             }
 
-            $indexedConfigurations[$childDynamicEntityConfigurationTransfer->getTableAliasOrFail()] = $childDynamicEntityConfigurationTransfer;
+            $configurationsIndexedByTableAlias[$childDynamicEntityConfigurationTransfer->getTableAliasOrFail()] = $childDynamicEntityConfigurationTransfer;
 
             if ($childDynamicEntityConfigurationTransfer->getChildRelations()->count() > 0) {
-                $indexedConfigurations = $this->indexChildConfigurationsByTableAliases($childDynamicEntityConfigurationTransfer, $indexedConfigurations);
+                $configurationsIndexedByTableAlias = $this->indexChildConfigurationsByTableAliases($childDynamicEntityConfigurationTransfer, $configurationsIndexedByTableAlias);
             }
         }
 
-        return $indexedConfigurations;
+        return $configurationsIndexedByTableAlias;
     }
 }

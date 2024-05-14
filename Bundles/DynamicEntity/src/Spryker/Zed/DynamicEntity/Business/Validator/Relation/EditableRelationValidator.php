@@ -8,10 +8,11 @@
 namespace Spryker\Zed\DynamicEntity\Business\Validator\Relation;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
-use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 
 class EditableRelationValidator implements DynamicEntityValidatorInterface
@@ -27,89 +28,90 @@ class EditableRelationValidator implements DynamicEntityValidatorInterface
     protected const PLACEHOLDER_RELATION_NAME = '%relationName%';
 
     /**
+     * @var \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface
+     */
+    protected DynamicEntityIndexerInterface $dynamicEntityIndexer;
+
+    /**
+     * @param \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface $dynamicEntityIndexer
+     */
+    public function __construct(DynamicEntityIndexerInterface $dynamicEntityIndexer)
+    {
+        $this->dynamicEntityIndexer = $dynamicEntityIndexer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     * @param string|null $errorPath
+     * @param int $index
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        ?string $errorPath = null
-    ): DynamicEntityCollectionResponseTransfer {
-        $indexedChildRelations = $this->getChildTableAliasesIndexedByRelationName($dynamicEntityConfigurationTransfer);
-
-        foreach ($dynamicEntityCollectionRequestTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
-            $dynamicEntityCollectionResponseTransfer = $this->validateRelationChains(
-                $dynamicEntityTransfer,
-                $dynamicEntityCollectionResponseTransfer,
-                $indexedChildRelations,
-            );
-        }
-
-        return $dynamicEntityCollectionResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $indexedChildRelations
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
-     */
-    protected function validateRelationChains(
         DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        array $indexedChildRelations
-    ): DynamicEntityCollectionResponseTransfer {
-        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelation) {
-            foreach ($childRelation->getDynamicEntities() as $dynamicEntityTransfer) {
-                if ($indexedChildRelations[$childRelation->getNameOrFail()]->getIsEditableOrFail() === false) {
-                    return $dynamicEntityCollectionResponseTransfer->addError(
-                        (new ErrorTransfer())
-                            ->setMessage(static::GLOSSARY_KEY_NOT_EDITABLE_RELATION)
-                            ->setParameters([
-                                static::PLACEHOLDER_RELATION_NAME => $childRelation->getNameOrFail(),
-                            ]),
-                    );
-                }
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        int $index
+    ): array {
+        $errorTransfers = [];
+        $childRelationsIndexedByRelationName = $this->dynamicEntityIndexer->getChildRelationsIndexedByRelationName($dynamicEntityConfigurationTransfer);
 
-                if ($dynamicEntityTransfer->getChildRelations()->count() > 0) {
-                    $dynamicEntityCollectionResponseTransfer = $this->validateRelationChains(
-                        $dynamicEntityTransfer,
-                        $dynamicEntityCollectionResponseTransfer,
-                        $indexedChildRelations,
-                    );
-                }
-            }
+        foreach ($dynamicEntityTransfer->getChildRelations() as $childRelation) {
+            $errorTransfers = array_merge($errorTransfers, $this->validateChildRelations(
+                $dynamicEntityCollectionRequestTransfer,
+                $childRelation,
+                $dynamicEntityConfigurationTransfer,
+                $childRelationsIndexedByRelationName,
+                $index,
+            ));
         }
 
-        return $dynamicEntityCollectionResponseTransfer;
+        return $errorTransfers;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityRelationTransfer $childRelation
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer> $indexedChildRelations
+     * @param array<mixed> $childRelationsIndexedByRelationName
+     * @param int $index
      *
-     * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer>
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
-    protected function getChildTableAliasesIndexedByRelationName(
+    protected function validateChildRelations(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityRelationTransfer $childRelation,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        array $indexedChildRelations = []
+        array $childRelationsIndexedByRelationName,
+        int $index
     ): array {
-        foreach ($dynamicEntityConfigurationTransfer->getChildRelations() as $childRelation) {
-            $childDynamicEntityConfigurationTransfer = $childRelation->getChildDynamicEntityConfigurationOrFail();
+        $errorTransfers = [];
+        foreach ($childRelation->getDynamicEntities() as $dynamicEntityTransfer) {
+            $editableRelationChildErrorTransfers = [];
 
-            $indexedChildRelations[$childRelation->getNameOrFail()] = $childRelation;
+            if ($childRelationsIndexedByRelationName[$childRelation->getNameOrFail()]->getIsEditableOrFail() === false) {
+                $errorTransfers[] = (new ErrorTransfer())
+                    ->setMessage(static::GLOSSARY_KEY_NOT_EDITABLE_RELATION)
+                    ->setParameters([
+                        static::PLACEHOLDER_RELATION_NAME => $childRelation->getNameOrFail(),
+                    ]);
 
-            if ($childDynamicEntityConfigurationTransfer->getChildRelations()->count() > 0) {
-                $indexedChildRelations = $this->getChildTableAliasesIndexedByRelationName($childDynamicEntityConfigurationTransfer, $indexedChildRelations);
+                continue;
             }
+
+            if ($dynamicEntityTransfer->getChildRelations()->count() > 0) {
+                $editableRelationChildErrorTransfers = array_merge($editableRelationChildErrorTransfers, $this->validate(
+                    $dynamicEntityCollectionRequestTransfer,
+                    $dynamicEntityTransfer,
+                    $dynamicEntityConfigurationTransfer,
+                    $index,
+                ));
+            }
+
+            $errorTransfers = array_merge($errorTransfers, $editableRelationChildErrorTransfers);
         }
 
-        return $indexedChildRelations;
+        return $errorTransfers;
     }
 }

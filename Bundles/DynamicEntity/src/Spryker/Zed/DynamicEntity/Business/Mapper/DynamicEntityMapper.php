@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
+use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityPostEditRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
@@ -332,6 +333,55 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         }
 
         return $dynamicEntityCollectionRequestTreeBranches;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConditionsTransfer|null
+     */
+    public function mapDynamicEntityTransferToDynamicEntityConditionsTransfer(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): ?DynamicEntityConditionsTransfer {
+        $identifierFieldVisibleName = $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer);
+
+        $identifierValue = $dynamicEntityTransfer->getIdentifier();
+        if ($identifierValue === null) {
+            $dynamicEntityFields = $dynamicEntityTransfer->getFields();
+            $identifierValue = $dynamicEntityFields[static::IDENTIFIER] ?? $dynamicEntityFields[$identifierFieldVisibleName] ?? null;
+        }
+
+        if ($identifierValue === null) {
+            return null;
+        }
+
+        $dynamicEntityConditionsTransfer = new DynamicEntityConditionsTransfer();
+        $dynamicEntityConditionsTransfer->addFieldCondition(
+            (new DynamicEntityFieldConditionTransfer())
+                ->setName($identifierFieldVisibleName)
+                ->setValue($identifierValue),
+        );
+
+        return $dynamicEntityConditionsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return string
+     */
+    protected function getIdentifierVisibleName(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        $identifier = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail();
+        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($fieldDefinitionTransfer->getFieldNameOrFail() === $identifier) {
+                return $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
+            }
+        }
+
+        return $identifier;
     }
 
     /**

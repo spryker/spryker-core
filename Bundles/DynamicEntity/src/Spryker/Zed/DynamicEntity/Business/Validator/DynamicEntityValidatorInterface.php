@@ -8,23 +8,23 @@
 namespace Spryker\Zed\DynamicEntity\Business\Validator;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
-use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityTransfer;
 
 interface DynamicEntityValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
-     * @param string|null $errorPath
+     * @param int $index
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
     public function validate(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
-        ?string $errorPath = null
-    ): DynamicEntityCollectionResponseTransfer;
+        int $index
+    ): array;
 }

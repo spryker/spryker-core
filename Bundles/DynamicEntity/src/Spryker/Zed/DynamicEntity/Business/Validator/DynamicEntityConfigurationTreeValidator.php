@@ -121,7 +121,7 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
      *
      * @return \Generated\Shared\Transfer\ErrorTransfer|null
      */
-    public function validateDynamicEntityConfigurationCollectionByDynamicEntityConfigurationCollection(
+    public function validateDynamicEntityCollectionRequestByDynamicEntityConfigurationCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
         DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
     ): ?ErrorTransfer {

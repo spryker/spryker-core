@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\DatabaseMap;
+use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
@@ -25,6 +26,11 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
      * @var string
      */
     protected const IDENTIFIER_KEY = 'identifier';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_ENTITY_MODEL_NOT_FOUND = 'Model for table "%s" not found.';
 
     /**
      * @var \Propel\Runtime\Map\DatabaseMap
@@ -61,11 +67,51 @@ class DynamicEntityQueryBuilder implements DynamicEntityQueryBuilderInterface
     /**
      * @param string $tableName
      *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return string
+     */
+    public function assertEntityClassNameExists(string $tableName): string
+    {
+        $entityClassName = $this->getEntityClassName($tableName);
+
+        if ($entityClassName === null || !class_exists($entityClassName)) {
+            throw new DynamicEntityModelNotFoundException(
+                sprintf(static::ERROR_ENTITY_MODEL_NOT_FOUND, $tableName),
+            );
+        }
+
+        return $entityClassName;
+    }
+
+    /**
+     * @param string $tableName
+     *
      * @return string
      */
     public function getEntityQueryClass(string $tableName): string
     {
         return sprintf(static::QUERY_CLASS_PLACEHOLDER, $this->getEntityClassName($tableName));
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityModelNotFoundException
+     *
+     * @return string
+     */
+    public function assertEntityQueryClassNameExists(string $tableName): string
+    {
+        $dynamicEntityQueryClassName = $this->getEntityQueryClass($tableName);
+
+        if (!class_exists($dynamicEntityQueryClassName)) {
+            throw new DynamicEntityModelNotFoundException(
+                sprintf(static::ERROR_ENTITY_MODEL_NOT_FOUND, $tableName),
+            );
+        }
+
+        return $dynamicEntityQueryClassName;
     }
 
     /**

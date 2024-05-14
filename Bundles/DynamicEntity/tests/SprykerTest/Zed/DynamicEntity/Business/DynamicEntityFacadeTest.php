@@ -69,6 +69,11 @@ class DynamicEntityFacadeTest extends Unit
     /**
      * @var string
      */
+    protected const RELATION_WRONG_NAME = 'relationWrong';
+
+    /**
+     * @var string
+     */
     protected const FOO_TABLE_ALIAS_2 = 'BAR';
 
     /**
@@ -407,6 +412,7 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias($this->tester::FOO_TABLE_ALIAS_1);
 
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($this->tester::FOO_TABLE_ALIAS_1);
+        $dynamicEntityCollectionRequestTransfer->setResetNotProvidedFieldValues(false);
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity(
             (new DynamicEntityTransfer())
                 ->setFields([
@@ -444,6 +450,7 @@ class DynamicEntityFacadeTest extends Unit
         $childDynamicConfigurationEntity = $relationEntity->getSpyDynamicEntityConfigurationRelatedByFkChildDynamicEntityConfiguration();
 
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
+        $dynamicEntityCollectionRequestTransfer->setResetNotProvidedFieldValues(false);
         $dynamicEntityCollectionRequestTransfer
             ->setIsCreatable(false)
             ->addDynamicEntity(
@@ -489,6 +496,7 @@ class DynamicEntityFacadeTest extends Unit
 
         $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias($this->tester::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
+        $dynamicEntityCollectionRequestTransfer->setResetNotProvidedFieldValues(false);
         $dynamicEntityCollectionRequestTransfer
             ->setIsCreatable(false)
             ->addDynamicEntity(
@@ -496,7 +504,7 @@ class DynamicEntityFacadeTest extends Unit
                     ->setFields([
                         'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                         'table_name' => static::FOO_TABLE_NAME,
-                        static::RELATION_TEST_NAME => [
+                        static::RELATION_WRONG_NAME => [
                             [
                                 'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
                                 'table_name' => static::FOO_TABLE_NAME,
@@ -530,12 +538,15 @@ class DynamicEntityFacadeTest extends Unit
 
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
         $dynamicEntityCollectionRequestTransfer
+            ->setResetNotProvidedFieldValues(true)
             ->setIsCreatable(true)
             ->addDynamicEntity(
                 (new DynamicEntityTransfer())
                     ->setFields([
                         'id_dynamic_entity_configuration' => $dynamicConfigurationEntity->getIdDynamicEntityConfiguration(),
-                        'table_name' => static::FOO_TABLE_NAME,
+                        'table_alias' => static::FOO_TABLE_ALIAS_2,
+                        'table_name' => $dynamicConfigurationEntity->getTableName(),
+                        'definition' => $dynamicConfigurationEntity->getDefinition(),
                         static::RELATION_TEST_NAME => [
                             [
                                 'id_dynamic_entity_configuration_relation' => $relationEntity->getIdDynamicEntityConfigurationRelation(),
@@ -574,6 +585,7 @@ class DynamicEntityFacadeTest extends Unit
 
         $dynamicConfigurationEntity = $this->tester->getDynamicEntityConfigurationByTableAlias($this->tester::FOO_TABLE_ALIAS_1);
         $dynamicEntityCollectionRequestTransfer = $this->tester->createDynamicEntityCollectionRequestTransfer($dynamicEntityConfigurationEntity->getTableAlias());
+        $dynamicEntityCollectionRequestTransfer->setResetNotProvidedFieldValues(true);
         $dynamicEntityCollectionRequestTransfer
             ->setIsCreatable(true)
             ->addDynamicEntity(

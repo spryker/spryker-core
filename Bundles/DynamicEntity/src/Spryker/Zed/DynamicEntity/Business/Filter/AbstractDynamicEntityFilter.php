@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Filter;
+namespace Spryker\Zed\DynamicEntity\Business\Filter;
 
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 abstract class AbstractDynamicEntityFilter
 {
@@ -18,28 +17,24 @@ abstract class AbstractDynamicEntityFilter
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param array<mixed> $filteredFields
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
      *
      * @return array<mixed>
      */
     abstract public function filterFields(
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        array $filteredFields,
-        ActiveRecordInterface $activeRecord
+        array $filteredFields
     ): array;
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
      *
      * @return \Generated\Shared\Transfer\DynamicEntityTransfer
      */
     public function filter(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        ActiveRecordInterface $activeRecord
+        DynamicEntityTransfer $dynamicEntityTransfer
     ): DynamicEntityTransfer {
         $filteredFields = [];
         $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
@@ -49,7 +44,6 @@ abstract class AbstractDynamicEntityFilter
                 $fieldDefinitionTransfer,
                 $dynamicEntityTransfer,
                 $filteredFields,
-                $activeRecord,
             );
         }
 

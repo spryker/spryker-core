@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Filter\Validator;
+namespace Spryker\Zed\DynamicEntity\Business\Validator\Field\Immutability;
 
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 
-class DynamicEntityFieldUpdatePreValidator extends AbstractDynamicEntityPreValidator implements DynamicEntityPreValidatorInterface
+class UpdateFieldImmutabilityValidator extends AbstractFieldImmutabilityValidator implements DynamicEntityValidatorInterface
 {
     /**
      * @var string
@@ -19,7 +20,6 @@ class DynamicEntityFieldUpdatePreValidator extends AbstractDynamicEntityPreValid
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param array<mixed> $dynamicEntityFields
-     * @param callable $filterCallback
      * @param string $identifier
      *
      * @return bool
@@ -27,15 +27,23 @@ class DynamicEntityFieldUpdatePreValidator extends AbstractDynamicEntityPreValid
     public function isFieldNonModifiable(
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         array $dynamicEntityFields,
-        callable $filterCallback,
         string $identifier
     ): bool {
-        if (call_user_func($filterCallback, $fieldDefinitionTransfer) === false && isset($dynamicEntityFields[$fieldDefinitionTransfer->getFieldVisibleNameOrFail()])) {
-            if (!isset($dynamicEntityFields[static::IDENTIFIER]) && $fieldDefinitionTransfer->getFieldVisibleNameOrFail() === $identifier) {
-                return false;
+        if (
+            !isset($dynamicEntityFields[static::IDENTIFIER]) &&
+            $fieldDefinitionTransfer->getFieldVisibleNameOrFail() === $identifier
+        ) {
+            return false;
+        }
+
+        foreach ($dynamicEntityFields as $fieldName => $fieldValue) {
+            if ($fieldDefinitionTransfer->getFieldVisibleNameOrFail() !== $fieldName) {
+                continue;
             }
 
-            return true;
+            if ($fieldDefinitionTransfer->getIsEditableOrFail() === false) {
+                return true;
+            }
         }
 
         return false;

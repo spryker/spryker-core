@@ -10,9 +10,11 @@ namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
+use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
+use Generated\Shared\Transfer\DynamicEntityTransfer;
 
 interface DynamicEntityMapperInterface
 {
@@ -96,4 +98,15 @@ interface DynamicEntityMapperInterface
         DynamicEntityCollectionRequestTransfer $originalDynamicEntityCollectionRequestTransfer,
         array $dynamicEntityCollectionRequestTreeBranches = []
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConditionsTransfer|null
+     */
+    public function mapDynamicEntityTransferToDynamicEntityConditionsTransfer(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): ?DynamicEntityConditionsTransfer;
 }

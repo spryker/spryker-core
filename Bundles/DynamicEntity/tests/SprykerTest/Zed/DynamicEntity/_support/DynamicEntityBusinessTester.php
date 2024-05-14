@@ -590,6 +590,7 @@ DEFINITION;
     {
         $dynamicEntityCollectionRequestTransfer = new DynamicEntityCollectionRequestTransfer();
         $dynamicEntityCollectionRequestTransfer->setTableAlias($tableAlias);
+        $dynamicEntityCollectionRequestTransfer->setIsTransactional(true);
 
         return $dynamicEntityCollectionRequestTransfer;
     }

@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\DynamicEntity\Business\Validator\Field\Type;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\BooleanFieldTypeValidator;
 
 /**
@@ -31,7 +34,7 @@ class BooleanFieldTypeValidatorTest extends Unit
      */
     public function testWillReturnValidatorType(): void
     {
-        $validator = new BooleanFieldTypeValidator();
+        $validator = $this->createBooleanFieldTypeValidator();
 
         $this->assertSame('boolean', $validator->getType());
     }
@@ -41,7 +44,7 @@ class BooleanFieldTypeValidatorTest extends Unit
      */
     public function testValidTypeWillReturnTrue(): void
     {
-        $validator = new BooleanFieldTypeValidator();
+        $validator = $this->createBooleanFieldTypeValidator();
 
         $this->assertTrue($validator->isValidType(true));
         $this->assertTrue($validator->isValidType(false));
@@ -52,7 +55,7 @@ class BooleanFieldTypeValidatorTest extends Unit
      */
     public function testValidTypeWillReturnFalse(): void
     {
-        $validator = new BooleanFieldTypeValidator();
+        $validator = $this->createBooleanFieldTypeValidator();
 
         $this->assertFalse($validator->isValidType(1));
         $this->assertFalse($validator->isValidType(0));
@@ -66,7 +69,7 @@ class BooleanFieldTypeValidatorTest extends Unit
     public function testValidValueWillReturnTrue(): void
     {
         // Arrange
-        $validator = new BooleanFieldTypeValidator();
+        $validator = $this->createBooleanFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = new DynamicEntityFieldDefinitionTransfer();
 
         // Act & Assert
@@ -80,7 +83,7 @@ class BooleanFieldTypeValidatorTest extends Unit
     public function testValidValueWillReturnFalse(): void
     {
         // Arrange
-        $validator = new BooleanFieldTypeValidator();
+        $validator = $this->createBooleanFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = new DynamicEntityFieldDefinitionTransfer();
 
         // Act & Assert
@@ -88,5 +91,32 @@ class BooleanFieldTypeValidatorTest extends Unit
         $this->assertFalse($validator->isValidValue(0, $dynamicEntityFieldDefinitionTransfer));
         $this->assertFalse($validator->isValidValue('1', $dynamicEntityFieldDefinitionTransfer));
         $this->assertFalse($validator->isValidValue('0', $dynamicEntityFieldDefinitionTransfer));
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    protected function createBooleanFieldTypeValidator(): DynamicEntityValidatorInterface
+    {
+        return new BooleanFieldTypeValidator(
+            $this->createDynamicEntityIndexerMock(),
+            $this->createDynamicEntityErrorPathResolverMock(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface
+     */
+    protected function createDynamicEntityIndexerMock(): DynamicEntityIndexerInterface
+    {
+        return $this->getMockBuilder(DynamicEntityIndexerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    protected function createDynamicEntityErrorPathResolverMock(): DynamicEntityErrorPathResolverInterface
+    {
+        return $this->getMockBuilder(DynamicEntityErrorPathResolverInterface::class)->getMock();
     }
 }

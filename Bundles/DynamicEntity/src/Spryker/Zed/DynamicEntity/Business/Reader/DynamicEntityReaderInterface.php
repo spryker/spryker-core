@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
+use Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface;
 
 interface DynamicEntityReaderInterface
 {
@@ -27,7 +28,7 @@ interface DynamicEntityReaderInterface
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
      */
-    public function getDynamicEntityConfigurationByDynamicEntityCollectionRequest(
+    public function getDynamicEntityConfigurationCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
     ): DynamicEntityConfigurationCollectionTransfer;
 
@@ -40,12 +41,10 @@ interface DynamicEntityReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
+     * @return \Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface
      */
-    public function getDynamicEntityConfigurationTransferTreeByDynamicEntityConfigurationCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
-    ): ?DynamicEntityConfigurationTransfer;
+    public function getDynamicEntityConfigurationTransferTree(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+    ): DynamicEntityConfigurationResponseInterface;
 }

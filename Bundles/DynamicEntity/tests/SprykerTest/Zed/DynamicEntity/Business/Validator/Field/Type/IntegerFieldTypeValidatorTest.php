@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\DynamicEntity\Business\Validator\Field\Type;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\IntegerFieldTypeValidator;
 
 /**
@@ -33,7 +36,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testWillReturnValidatorType(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
 
         // Act & Assert
         $this->assertSame('integer', $validator->getType());
@@ -45,7 +48,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testValidTypeWillReturnTrue(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
 
         // Act & Assert
         $this->assertTrue($validator->isValidType(123));
@@ -59,7 +62,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testValidTypeWillReturnFalse(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
 
         // Act & Assert
         $this->assertFalse($validator->isValidType('string'));
@@ -74,7 +77,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testValidValueWithoutValidationRulesWillReturnTrue(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = new DynamicEntityFieldDefinitionTransfer();
 
         // Act & Assert
@@ -94,7 +97,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testValidValueWithValidationRulesWillReturnTrue(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->setValidation(
             (new DynamicEntityFieldValidationTransfer())->setMin(0)->setMax(10),
         );
@@ -113,7 +116,7 @@ class IntegerFieldTypeValidatorTest extends Unit
     public function testValidValueWithValidationRulesWillReturnFalse(): void
     {
         // Arrange
-        $validator = new IntegerFieldTypeValidator();
+        $validator = $this->createIntegerFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->setValidation(
             (new DynamicEntityFieldValidationTransfer())->setMin(-99)->setMax(99),
         );
@@ -123,5 +126,32 @@ class IntegerFieldTypeValidatorTest extends Unit
         $this->assertFalse($validator->isValidValue(-100, $dynamicEntityFieldDefinitionTransfer));
         $this->assertFalse($validator->isValidValue('-100', $dynamicEntityFieldDefinitionTransfer));
         $this->assertFalse($validator->isValidValue('100', $dynamicEntityFieldDefinitionTransfer));
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    protected function createIntegerFieldTypeValidator(): DynamicEntityValidatorInterface
+    {
+        return new IntegerFieldTypeValidator(
+            $this->createDynamicEntityIndexerMock(),
+            $this->createDynamicEntityErrorPathResolverMock(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface
+     */
+    protected function createDynamicEntityIndexerMock(): DynamicEntityIndexerInterface
+    {
+        return $this->getMockBuilder(DynamicEntityIndexerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    protected function createDynamicEntityErrorPathResolverMock(): DynamicEntityErrorPathResolverInterface
+    {
+        return $this->getMockBuilder(DynamicEntityErrorPathResolverInterface::class)->getMock();
     }
 }

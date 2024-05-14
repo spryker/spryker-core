@@ -31,6 +31,11 @@ class DynamicEntityBackendApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    protected const HEADER_IS_TRANSACTIONAL = 'X-Is-Transactional';
+
+    /**
+     * @var string
+     */
     protected const ROUTE_PREFIX = 'dynamic-entity';
 
     /**
@@ -108,5 +113,18 @@ class DynamicEntityBackendApiConfig extends AbstractBundleConfig
     public function getBackendApiSchemaStorageKey(): string
     {
         return static::BACKEND_API_SCHEMA_STORAGE_KEY;
+    }
+
+    /**
+     * Specification:
+     * - Returns a transactional header name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getTransactionalHeader(): string
+    {
+        return static::HEADER_IS_TRANSACTIONAL;
     }
 }

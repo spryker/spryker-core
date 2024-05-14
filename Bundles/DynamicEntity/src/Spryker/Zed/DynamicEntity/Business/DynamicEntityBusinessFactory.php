@@ -19,6 +19,9 @@ use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpander;
 use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface;
+use Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFieldCreationFilter;
+use Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFieldUpdateFilter;
+use Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFilterInterface;
 use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexer;
 use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Business\Installer\DynamicEntityInstaller;
@@ -33,10 +36,14 @@ use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReader;
 use Spryker\Zed\DynamicEntity\Business\Reader\DynamicEntityReaderInterface;
 use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolver;
 use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
+use Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessor;
+use Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdater;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityConfigurationUpdaterInterface;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdater;
 use Spryker\Zed\DynamicEntity\Business\Updater\DynamicEntityUpdaterInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityComprehensiveValidator;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityComprehensiveValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationValidator;
@@ -48,6 +55,8 @@ use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\Constraint\U
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\ConstraintValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequestFieldValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness\RequiredFieldValidator;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Immutability\CreationFieldImmutabilityValidator;
+use Spryker\Zed\DynamicEntity\Business\Validator\Field\Immutability\UpdateFieldImmutabilityValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\BooleanFieldTypeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\DecimalFieldTypeValidator;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\IntegerFieldTypeValidator;
@@ -95,9 +104,10 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new DynamicEntityCreator(
             $this->createDynamicEntityReader(),
-            $this->createDynamicEntityWriter(),
-            $this->createDynamicEntityValidator(),
-            $this->createDynamicEntityConfigurationTreeValidator(),
+            $this->createDynamicEntityCreateWriter(),
+            $this->createDynamicEntityMapper(),
+            $this->createTransactionProcessor(),
+            $this->getDynamicEntityPostCreatePlugins(),
         );
     }
 
@@ -108,10 +118,24 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new DynamicEntityUpdater(
             $this->createDynamicEntityReader(),
-            $this->createDynamicEntityWriter(),
-            $this->createDynamicEntityUpdateValidator(),
-            $this->createDynamicEntityConfigurationTreeValidator(),
-            $this->createDynamicEntityCollectionRequestBuilder(),
+            $this->createDynamicEntityUpdateWriter(),
+            $this->createDynamicEntityMapper(),
+            $this->createTransactionProcessor(),
+            $this->getDynamicEntityPostUpdatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface
+     */
+    public function createDynamicEntityCreateWriter(): DynamicEntityWriterInterface
+    {
+        return new DynamicEntityWriter(
+            $this->getEntityManager(),
+            $this->createDynamicEntityComprehensiveCreateValidator(),
+            $this->createDynamicEntityFieldCreationFilter(),
+            $this->createDynamicEntityIndexer(),
+            $this->createDynamicEntityMapper(),
             $this->createDynamicEntityErrorPathResolver(),
         );
     }
@@ -119,34 +143,49 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DynamicEntity\Business\Writer\DynamicEntityWriterInterface
      */
-    public function createDynamicEntityWriter(): DynamicEntityWriterInterface
+    public function createDynamicEntityUpdateWriter(): DynamicEntityWriterInterface
     {
         return new DynamicEntityWriter(
             $this->getEntityManager(),
-            $this->getConnection(),
+            $this->createDynamicEntityComprehensiveUpdateValidator(),
+            $this->createDynamicEntityFieldUpdateFilter(),
+            $this->createDynamicEntityIndexer(),
             $this->createDynamicEntityMapper(),
-            $this->getDynamicEntityPostCreatePlugins(),
-            $this->getDynamicEntityPostUpdatePlugins(),
+            $this->createDynamicEntityErrorPathResolver(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilderInterface
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityComprehensiveValidatorInterface
      */
-    public function createDynamicEntityCollectionRequestBuilder(): DynamicEntityCollectionRequestBuilderInterface
+    public function createDynamicEntityComprehensiveCreateValidator(): DynamicEntityComprehensiveValidatorInterface
     {
-        return new DynamicEntityCollectionRequestBuilder(
-            $this->createDynamicEntityMapper(),
+        return new DynamicEntityComprehensiveValidator(
+            $this->createDynamicEntityConfigurationValidator(),
+            $this->createDynamicEntityConfigurationTreeValidator(),
+            $this->createDynamicEntityCreateValidator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityComprehensiveValidatorInterface
+     */
+    public function createDynamicEntityComprehensiveUpdateValidator(): DynamicEntityComprehensiveValidatorInterface
+    {
+        return new DynamicEntityComprehensiveValidator(
+            $this->createDynamicEntityConfigurationValidator(),
+            $this->createDynamicEntityConfigurationTreeValidator(),
+            $this->createDynamicEntityUpdateValidator(),
         );
     }
 
     /**
      * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
      */
-    public function createDynamicEntityValidator(): DynamicEntityValidatorInterface
+    public function createDynamicEntityCreateValidator(): DynamicEntityValidatorInterface
     {
         return new DynamicEntityValidator(
-            $this->getDynamicEntityValidators(),
+            $this->getDynamicEntityCreateValidators(),
         );
     }
 
@@ -161,9 +200,19 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityCollectionRequestBuilderInterface
+     */
+    public function createDynamicEntityCollectionRequestBuilder(): DynamicEntityCollectionRequestBuilderInterface
+    {
+        return new DynamicEntityCollectionRequestBuilder(
+            $this->createDynamicEntityMapper(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface>
      */
-    public function getDynamicEntityValidators(): array
+    public function getDynamicEntityCreateValidators(): array
     {
         return [
             $this->createEditableRelationValidator(),
@@ -173,6 +222,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->createStringFieldTypeValidator(),
             $this->createBooleanFieldTypeValidator(),
             $this->createDecimalFeildTypeValidator(),
+            $this->createCreationFieldImmutableValidator(),
             $this->createConstraintValidator(),
         ];
     }
@@ -190,6 +240,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
             $this->createStringFieldTypeValidator(),
             $this->createBooleanFieldTypeValidator(),
             $this->createDecimalFeildTypeValidator(),
+            $this->createUpdateFieldImmutableValidator(),
             $this->createConstraintValidator(),
         ];
     }
@@ -201,6 +252,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new RequiredFieldValidator(
             $this->createDynamicEntityErrorPathResolver(),
+            $this->createDynamicEntityIndexer(),
         );
     }
 
@@ -222,6 +274,7 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new RequestFieldValidator(
             $this->createDynamicEntityErrorPathResolver(),
+            $this->createDynamicEntityIndexer(),
         );
     }
 
@@ -230,7 +283,9 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createEditableRelationValidator(): DynamicEntityValidatorInterface
     {
-        return new EditableRelationValidator();
+        return new EditableRelationValidator(
+            $this->createDynamicEntityIndexer(),
+        );
     }
 
     /**
@@ -238,7 +293,10 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createIntegerFieldTypeValidator(): DynamicEntityValidatorInterface
     {
-        return new IntegerFieldTypeValidator();
+        return new IntegerFieldTypeValidator(
+            $this->createDynamicEntityIndexer(),
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -246,7 +304,10 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createStringFieldTypeValidator(): DynamicEntityValidatorInterface
     {
-        return new StringFieldTypeValidator();
+        return new StringFieldTypeValidator(
+            $this->createDynamicEntityIndexer(),
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -254,7 +315,10 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createBooleanFieldTypeValidator(): DynamicEntityValidatorInterface
     {
-        return new BooleanFieldTypeValidator();
+        return new BooleanFieldTypeValidator(
+            $this->createDynamicEntityIndexer(),
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -262,7 +326,10 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDecimalFeildTypeValidator(): DynamicEntityValidatorInterface
     {
-        return new DecimalFieldTypeValidator();
+        return new DecimalFieldTypeValidator(
+            $this->createDynamicEntityIndexer(),
+            $this->createDynamicEntityErrorPathResolver(),
+        );
     }
 
     /**
@@ -511,6 +578,54 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
     {
         return new DynamicEntityErrorPathResolver();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    public function createCreationFieldImmutableValidator(): DynamicEntityValidatorInterface
+    {
+        return new CreationFieldImmutabilityValidator(
+            $this->createDynamicEntityErrorPathResolver(),
+            $this->createDynamicEntityIndexer(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    public function createUpdateFieldImmutableValidator(): DynamicEntityValidatorInterface
+    {
+        return new UpdateFieldImmutabilityValidator(
+            $this->createDynamicEntityErrorPathResolver(),
+            $this->createDynamicEntityIndexer(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFilterInterface
+     */
+    public function createDynamicEntityFieldCreationFilter(): DynamicEntityFilterInterface
+    {
+        return new DynamicEntityFieldCreationFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFilterInterface
+     */
+    public function createDynamicEntityFieldUpdateFilter(): DynamicEntityFilterInterface
+    {
+        return new DynamicEntityFieldUpdateFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Transaction\Propel\TransactionProcessorInterface
+     */
+    public function createTransactionProcessor(): TransactionProcessorInterface
+    {
+        return new TransactionProcessor(
+            $this->getConnection(),
+        );
     }
 
     /**

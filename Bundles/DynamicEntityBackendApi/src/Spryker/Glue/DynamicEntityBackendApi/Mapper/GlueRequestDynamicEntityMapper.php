@@ -127,14 +127,16 @@ class GlueRequestDynamicEntityMapper
 
         $httpMethod = $glueRequestTransfer->getResourceOrFail()->getMethod();
         if ($httpMethod === Request::METHOD_POST || $httpMethod === Request::METHOD_PUT) {
-            $dynamicEntityCollectionRequestTransfer
-                ->setIsCreatable(true);
+            $dynamicEntityCollectionRequestTransfer->setIsCreatable(true);
         }
 
         if ($httpMethod === Request::METHOD_PUT) {
-            $dynamicEntityCollectionRequestTransfer
-                ->setResetNotProvidedFieldValues(true);
+            $dynamicEntityCollectionRequestTransfer->setResetNotProvidedFieldValues(true);
         }
+
+        $dynamicEntityCollectionRequestTransfer->setIsTransactional(
+            $this->isTransactionalRequest($glueRequestTransfer),
+        );
 
         return $dynamicEntityCollectionRequestTransfer;
     }
@@ -157,7 +159,11 @@ class GlueRequestDynamicEntityMapper
 
         $dataCollection[static::IDENTIFIER] = $glueRequestTransfer->getResourceOrFail()->getId();
 
-        return $this->mapRequestContentToDynamicEntityTransfer($dynamicEntityCollectionRequestTransfer, $dataCollection);
+        return $this->mapRequestContentToDynamicEntityTransfer(
+            $dynamicEntityCollectionRequestTransfer,
+            $dataCollection,
+            $glueRequestTransfer->getResourceOrFail()->getId(),
+        );
     }
 
     /**
@@ -184,16 +190,22 @@ class GlueRequestDynamicEntityMapper
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param array<mixed> $fields
+     * @param string|null $identifier
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer
      */
     protected function mapRequestContentToDynamicEntityTransfer(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        array $fields
+        array $fields,
+        ?string $identifier = null
     ): DynamicEntityCollectionRequestTransfer {
         $dynamicEntityTransfer = $this
             ->mapChildRelationsToDynamicEntityTransfer($fields)
             ->setFields($fields);
+
+        if ($identifier !== null) {
+            $dynamicEntityTransfer->setIdentifier($identifier);
+        }
 
         $dynamicEntityCollectionRequestTransfer->addDynamicEntity($dynamicEntityTransfer);
 
@@ -320,5 +332,26 @@ class GlueRequestDynamicEntityMapper
         }
 
         return $paginationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isTransactionalRequest(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        $transactionalHeader = strtolower($this->config->getTransactionalHeader());
+        $meta = $glueRequestTransfer->getMeta();
+        if (!isset($meta[$transactionalHeader]) || $meta[$transactionalHeader] === []) {
+            return true;
+        }
+
+        $isTransactional = $meta[$transactionalHeader][0];
+        if ($isTransactional === 'false' || $isTransactional === '0') {
+            return false;
+        }
+
+        return true;
     }
 }

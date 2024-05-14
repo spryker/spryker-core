@@ -14,27 +14,19 @@ use Spryker\Zed\DynamicEntity\Dependency\Service\DynamicEntityToUtilEncodingServ
 use Spryker\Zed\DynamicEntity\DynamicEntityDependencyProvider;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilder;
 use Spryker\Zed\DynamicEntity\Persistence\Builder\DynamicEntityQueryBuilderInterface;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFieldCreationFilter;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFieldUpdateFilter;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFilterInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\DefaultFilterStrategy;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\FilterStrategyInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\InFilterStrategy;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldCreationPreValidator;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityFieldUpdatePreValidator;
-use Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityPreValidatorInterface;
-use Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexer;
-use Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapperInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql\DuplicateEntryExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql\NotNullableExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\DuplicateKeyExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\NotNullViolationExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Propel\Mapper\DynamicEntityMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetter;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface;
-use Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolver;
-use Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolverInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -80,38 +72,6 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFilterInterface
-     */
-    public function createDynamicEntityFieldCreationFilter(): DynamicEntityFilterInterface
-    {
-        return new DynamicEntityFieldCreationFilter();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\DynamicEntityFilterInterface
-     */
-    public function createDynamicEntityFieldUpdateFilter(): DynamicEntityFilterInterface
-    {
-        return new DynamicEntityFieldUpdateFilter();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityPreValidatorInterface
-     */
-    public function createDynamicEntityFieldCreationPreValidator(): DynamicEntityPreValidatorInterface
-    {
-        return new DynamicEntityFieldCreationPreValidator();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Filter\Validator\DynamicEntityPreValidatorInterface
-     */
-    public function createDynamicEntityFieldUpdatePreValidator(): DynamicEntityPreValidatorInterface
-    {
-        return new DynamicEntityFieldUpdatePreValidator();
-    }
-
-    /**
      * @return \Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapperInterface
      */
     public function createExceptionToErrorMapper(): ExceptionToErrorMapperInterface
@@ -127,8 +87,12 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function getDatabaseExceptionToErrorMappers(): array
     {
         return [
+            //MySQL
             $this->createDuplicateEntryExceptionToErrorMapper(),
+            $this->createNotNullableExceptionToErrorMapper(),
+            //PostgreSQL
             $this->createDuplicateKeyExceptionToErrorMapper(),
+            $this->createNotNullViolationExceptionToErrorMapper(),
         ];
     }
 
@@ -149,27 +113,27 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface
+     */
+    public function createNotNullableExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
+    {
+        return new NotNullableExceptionToErrorMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface
+     */
+    public function createNotNullViolationExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
+    {
+        return new NotNullViolationExceptionToErrorMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface
      */
     public function createDynamicEntityResetter(): DynamicEntityResetterInterface
     {
         return new DynamicEntityResetter();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Indexer\DynamicEntityIndexerInterface
-     */
-    public function createDynamicEntityIndexer(): DynamicEntityIndexerInterface
-    {
-        return new DynamicEntityIndexer();
-    }
-
-    /**
-     * @return \Spryker\Zed\DynamicEntity\Persistence\Resolver\DynamicEntityErrorPathResolverInterface
-     */
-    public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
-    {
-        return new DynamicEntityErrorPathResolver();
     }
 
     /**

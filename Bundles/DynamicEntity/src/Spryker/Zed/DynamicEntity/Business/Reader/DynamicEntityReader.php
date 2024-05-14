@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DynamicEntity\Business\Builder\DynamicEntityRelationConfigurationTreeBuilderInterface;
+use Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponse;
+use Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface;
+use Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityConfigurationNotFoundException;
 use Spryker\Zed\DynamicEntity\Business\Mapper\DynamicEntityMapperInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityConfigurationTreeValidatorInterface;
 use Spryker\Zed\DynamicEntity\Persistence\DynamicEntityRepositoryInterface;
@@ -112,7 +115,7 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
      *
      * @return \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer
      */
-    public function getDynamicEntityConfigurationByDynamicEntityCollectionRequest(
+    public function getDynamicEntityConfigurationCollection(
         DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
     ): DynamicEntityConfigurationCollectionTransfer {
         $dynamicEntityCriteriaTransfer = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer($dynamicEntityCollectionRequestTransfer);
@@ -134,20 +137,41 @@ class DynamicEntityReader implements DynamicEntityReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer|null
+     * @throws \Spryker\Zed\DynamicEntity\Business\Exception\DynamicEntityConfigurationNotFoundException
+     *
+     * @return \Spryker\Zed\DynamicEntity\Business\Configuration\DynamicEntityConfigurationResponseInterface
      */
-    public function getDynamicEntityConfigurationTransferTreeByDynamicEntityConfigurationCollection(
-        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
-        DynamicEntityConfigurationCollectionTransfer $dynamicEntityConfigurationCollectionTransfer
-    ): ?DynamicEntityConfigurationTransfer {
+    public function getDynamicEntityConfigurationTransferTree(
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+    ): DynamicEntityConfigurationResponseInterface {
+        $dynamicEntityConfigurationCollectionTransfer = $this->getDynamicEntityConfigurationCollection($dynamicEntityCollectionRequestTransfer);
+
+        $errorTransfer = $this->dynamicEntityConfigurationTreeValidator
+            ->validateDynamicEntityCollectionRequestByDynamicEntityConfigurationCollection(
+                $dynamicEntityCollectionRequestTransfer,
+                $dynamicEntityConfigurationCollectionTransfer,
+            );
+
+        $dynamicEntityConfigurationResponse = new DynamicEntityConfigurationResponse();
+        if ($errorTransfer !== null) {
+            return $dynamicEntityConfigurationResponse->addErrorTransfer($errorTransfer);
+        }
+
         $dynamicEntityCriteriaTransfer = $this->dynamicEntityMapper->mapDynamicEntityCollectionRequestTransferToDynamicEntityCriteriaTransfer($dynamicEntityCollectionRequestTransfer);
 
-        return $this->dynamicEntityRelationTreeBuilder->buildDynamicEntityConfigurationTransferTree(
+        $dynamicEntityConfigurationTransfer = $this->dynamicEntityRelationTreeBuilder->buildDynamicEntityConfigurationTransferTree(
             $dynamicEntityCriteriaTransfer,
             $dynamicEntityConfigurationCollectionTransfer,
         );
+
+        if ($dynamicEntityConfigurationTransfer === null) {
+            throw new DynamicEntityConfigurationNotFoundException();
+        }
+
+        $dynamicEntityConfigurationResponse->setDynamicConfigurationTransfer($dynamicEntityConfigurationTransfer);
+
+        return $dynamicEntityConfigurationResponse;
     }
 
     /**

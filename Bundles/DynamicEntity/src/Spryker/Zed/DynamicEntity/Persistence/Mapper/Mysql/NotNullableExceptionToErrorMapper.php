@@ -11,7 +11,7 @@ use Exception;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
-class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
+class NotNullableExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
 {
     /**
      * @var string
@@ -21,12 +21,12 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 'dynamic_entity.validation.persistence_failed_duplicate_entry';
+    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULLABLE_FIELD = 'dynamic_entity.validation.persistence_failed_not_nullable_field';
 
     /**
      * @var string
      */
-    protected const DUPLICATED_ENTRY_REGEX = '/for key \'.*-(.*?)\'$/';
+    protected const NOT_NULL_ENTRY_REGEX = '/Column \'(.*?)\' cannot be null$/';
 
     /**
      * @param \Exception $exception
@@ -41,9 +41,9 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
         }
 
         $code = (string)$previousException->getCode();
-        $errorMatches = (bool)preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches);
+        $errorMatches = (bool)preg_match(static::NOT_NULL_ENTRY_REGEX, $previousException->getMessage(), $matches);
 
-        return $code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches === true;
+        return ($code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches !== null);
     }
 
     /**
@@ -51,7 +51,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
      */
     public function getErrorGlossaryKey(): string
     {
-        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY;
+        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULLABLE_FIELD;
     }
 
     /**
@@ -78,7 +78,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
             return null;
         }
 
-        if (preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
+        if (preg_match(static::NOT_NULL_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
             return $matches[1];
         }
 

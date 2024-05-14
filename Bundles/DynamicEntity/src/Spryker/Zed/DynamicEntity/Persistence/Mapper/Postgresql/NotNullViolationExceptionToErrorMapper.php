@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql;
+namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql;
 
 use Exception;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
-class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
+class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
 {
     /**
      * @var string
      */
-    protected const ERROR_CODE_INTEGRITY_CONSTRAINT = '23000';
+    protected const ERROR_CODE_NOT_NULL_VIOLATION = '23502';
 
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 'dynamic_entity.validation.persistence_failed_duplicate_entry';
+    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL = 'dynamic_entity.validation.persistence_failed_not_nullable_field';
 
     /**
      * @var string
      */
-    protected const DUPLICATED_ENTRY_REGEX = '/for key \'.*-(.*?)\'$/';
+    protected const NOT_NULL_KEY_REGEX = '/DETAIL:  Key \((.*?)\)/';
 
     /**
      * @param \Exception $exception
@@ -35,15 +35,13 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
      */
     public function isApplicable(Exception $exception): bool
     {
-        $previousException = $exception->getPrevious();
-        if ($previousException === null) {
+        if ($exception->getPrevious() === null) {
             return false;
         }
 
-        $code = (string)$previousException->getCode();
-        $errorMatches = (bool)preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches);
+        $code = (string)$exception->getPrevious()->getCode();
 
-        return $code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches === true;
+        return $code === static::ERROR_CODE_NOT_NULL_VIOLATION;
     }
 
     /**
@@ -51,7 +49,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
      */
     public function getErrorGlossaryKey(): string
     {
-        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY;
+        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL;
     }
 
     /**
@@ -78,7 +76,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
             return null;
         }
 
-        if (preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
+        if (preg_match(static::NOT_NULL_KEY_REGEX, $previousException->getMessage(), $matches)) {
             return $matches[1];
         }
 

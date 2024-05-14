@@ -5,29 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Business\Validator\Field\Completeness;
+namespace Spryker\Zed\DynamicEntity\Business\Validator\Field\Immutability;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
 use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
-use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 
-class RequestFieldValidator implements DynamicEntityValidatorInterface
+abstract class AbstractFieldImmutabilityValidator
 {
     /**
      * @var string
      */
-    protected const IDENTIFIER = 'identifier';
-
-    /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_PROVIDED_FIELD_IS_INVALID = 'dynamic_entity.validation.provided_field_is_invalid';
+    protected const GLOSSARY_KEY_ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED = 'dynamic_entity.validation.modification_of_immutable_field_prohibited';
 
     /**
      * @var \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
@@ -52,6 +47,19 @@ class RequestFieldValidator implements DynamicEntityValidatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
+     * @param array<mixed> $dynamicEntityFields
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    abstract public function isFieldNonModifiable(
+        DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
+        array $dynamicEntityFields,
+        string $identifier
+    ): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
@@ -65,19 +73,16 @@ class RequestFieldValidator implements DynamicEntityValidatorInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         int $index
     ): array {
-        $errorPath = $this->dynamicEntityErrorPathResolver->getErrorPath(
-            $index,
-            $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
-        );
+        $errorPath = $this->dynamicEntityErrorPathResolver->getErrorPath($index, $dynamicEntityConfigurationTransfer->getTableAliasOrFail());
 
-        $errorTransfers = $this->validateFieldNames(
+        $errorTransfers = $this->executeValidation(
             $dynamicEntityTransfer,
             $dynamicEntityConfigurationTransfer,
             $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
             $errorPath,
         );
 
-        return array_merge($errorTransfers, $this->validateRelationChains(
+        return array_merge($errorTransfers, $this->validateChildDynamicEntities(
             $dynamicEntityTransfer,
             $dynamicEntityConfigurationTransfer,
             $errorPath,
@@ -87,11 +92,47 @@ class RequestFieldValidator implements DynamicEntityValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $tableAlias
      * @param string $errorPath
      *
      * @return array<\Generated\Shared\Transfer\ErrorTransfer>
      */
-    protected function validateRelationChains(
+    protected function executeValidation(
+        DynamicEntityTransfer $dynamicEntityTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $tableAlias,
+        string $errorPath
+    ): array {
+        $errorTransfers = [];
+        $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
+        $identifier = $this->getIdentifierVisibleName(
+            $dynamicEntityDefinitionTransfer->getIdentifierOrFail(),
+            $dynamicEntityConfigurationTransfer,
+        );
+
+        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($this->isFieldNonModifiable($fieldDefinitionTransfer, $dynamicEntityTransfer->getFields(), $identifier) === true) {
+                $errorTransfers[] = (new ErrorTransfer())
+                    ->setEntityIdentifier($tableAlias)
+                    ->setMessage(static::GLOSSARY_KEY_ERROR_MODIFICATION_OF_IMMUTABLE_FIELD_PROHIBITED)
+                    ->setParameters([
+                        DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldDefinitionTransfer->getFieldVisibleNameOrFail(),
+                        DynamicEntityConfig::ERROR_PATH => $errorPath,
+                    ]);
+            }
+        }
+
+        return $errorTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $errorPath
+     *
+     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
+     */
+    protected function validateChildDynamicEntities(
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         string $errorPath
@@ -129,64 +170,43 @@ class RequestFieldValidator implements DynamicEntityValidatorInterface
         string $errorPath
     ): array {
         $errorTransfers = [];
-        foreach ($childRelationTransfer->getDynamicEntities() as $index => $dynamicEntityTransfer) {
+        foreach ($childRelationTransfer->getDynamicEntities() as $index => $childDynamicEntityTransfer) {
             $childTableAlias = $childRelationsIndexedByRelationName[$childRelationTransfer->getNameOrFail()]->getChildDynamicEntityConfigurationOrFail()->getTableAliasOrFail();
             $childErrorPath = $this->dynamicEntityErrorPathResolver->getErrorPath($index, $childTableAlias, $errorPath);
 
-            $fieldNamesErrorTransfers = $this->validateFieldNames(
-                $dynamicEntityTransfer,
+            $immutableErrorTransfers = $this->executeValidation(
+                $childDynamicEntityTransfer,
                 $dynamicEntityConfigurationTransfer,
                 $childTableAlias,
                 $childErrorPath,
             );
 
-            $relationChainsErrorTransfers = $this->validateRelationChains(
-                $dynamicEntityTransfer,
+            $immutableChildErrorTransfers = $this->validateChildDynamicEntities(
+                $childDynamicEntityTransfer,
                 $dynamicEntityConfigurationTransfer,
                 $childErrorPath,
             );
 
-            $errorTransfers = array_merge($errorTransfers, $fieldNamesErrorTransfers, $relationChainsErrorTransfers);
+            $errorTransfers = array_merge($errorTransfers, $immutableErrorTransfers, $immutableChildErrorTransfers);
         }
 
         return $errorTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
+     * @param string $identifier
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param string $entityIdentifier
-     * @param string $errorPath
      *
-     * @return array<\Generated\Shared\Transfer\ErrorTransfer>
+     * @return string
      */
-    protected function validateFieldNames(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        string $entityIdentifier,
-        string $errorPath
-    ): array {
-        $errorTransfers = [];
-        $definitionsIndexedByFieldVisibleName = $this->dynamicEntityIndexer->getDefinitionsIndexedByFieldVisibleName($dynamicEntityConfigurationTransfer);
-
-        foreach ($dynamicEntityTransfer->getFields() as $fieldName => $fieldValue) {
-            if (is_array($fieldValue)) {
-                continue;
+    protected function getIdentifierVisibleName(string $identifier, DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): string
+    {
+        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $fieldDefinitionTransfer) {
+            if ($fieldDefinitionTransfer->getFieldNameOrFail() === $identifier) {
+                return $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
             }
-
-            if (isset($definitionsIndexedByFieldVisibleName[$entityIdentifier][$fieldName]) || $fieldName === static::IDENTIFIER) {
-                continue;
-            }
-
-            $errorTransfers[] = (new ErrorTransfer())
-                ->setEntityIdentifier($entityIdentifier)
-                ->setMessage(static::GLOSSARY_KEY_PROVIDED_FIELD_IS_INVALID)
-                ->setParameters([
-                    DynamicEntityConfig::PLACEHOLDER_FIELD_NAME => $fieldName,
-                    DynamicEntityConfig::ERROR_PATH => $errorPath,
-                ]);
         }
 
-        return $errorTransfers;
+        return $identifier;
     }
 }

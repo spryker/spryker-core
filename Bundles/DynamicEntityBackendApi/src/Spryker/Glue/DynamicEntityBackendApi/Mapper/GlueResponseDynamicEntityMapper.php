@@ -101,6 +101,26 @@ class GlueResponseDynamicEntityMapper
     protected const RESPONSE_KEY_DATA = 'data';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_ERRORS = 'errors';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_KEY_MESSAGE = 'message';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_KEY_CODE = 'code';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_KEY_STATUS = 'status';
+
+    /**
      * @var int
      */
     protected const RESPONSE_CODE_PARAMETERS_ARE_INVALID = 1301;
@@ -264,20 +284,6 @@ class GlueResponseDynamicEntityMapper
     }
 
     /**
-     * @param array<mixed, mixed> $fieldsCollection
-     *
-     * @return string|null
-     */
-    protected function buildResponseContent(array $fieldsCollection): ?string
-    {
-        return $this->serviceUtilEncoding->encodeJson(
-            [
-                static::RESPONSE_KEY_DATA => $fieldsCollection,
-            ],
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer|null $glueRequestTransfer
@@ -316,6 +322,34 @@ class GlueResponseDynamicEntityMapper
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer|null $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function mapNonTransactionalDynamicEntityCollectionResponseTransferToGlueResponseTransfer(
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        DynamicEntityCollectionRequestTransfer $dynamicEntityCollectionRequestTransfer,
+        ?GlueRequestTransfer $glueRequestTransfer = null
+    ): GlueResponseTransfer {
+        $glueResponseTransfer = $this->createGlueResponseTransfer();
+        $errorCollection = $this->mapErrorTransfersToErrorCollection($dynamicEntityCollectionResponseTransfer);
+
+        foreach ($dynamicEntityCollectionResponseTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+            $glueResponseTransfer->addResource(
+                $this->createGlueResourceTransfer($dynamicEntityTransfer, $dynamicEntityCollectionRequestTransfer->getTableAliasOrFail()),
+            );
+        }
+
+        $fieldsCollection = $this->mapDynamicEntitiesToFieldsCollection($dynamicEntityCollectionResponseTransfer->getDynamicEntities(), $glueRequestTransfer);
+        $glueResponseTransfer->setContent($this->buildTransactionalResponseContent($fieldsCollection, $errorCollection));
+        $glueResponseTransfer = $this->setHttpStatusCodeForNonTransactionalResponse($glueResponseTransfer, $dynamicEntityCollectionResponseTransfer);
+
+        return $glueResponseTransfer;
+    }
+
+    /**
      * @param string $message
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      * @param array<string, string> $parameters
@@ -344,6 +378,68 @@ class GlueResponseDynamicEntityMapper
         );
 
         return $glueResponseTransfer;
+    }
+
+    /**
+     * @param array<mixed, mixed> $fieldsCollection
+     *
+     * @return string|null
+     */
+    protected function buildResponseContent(array $fieldsCollection): ?string
+    {
+        return $this->serviceUtilEncoding->encodeJson(
+            [
+                static::RESPONSE_KEY_DATA => $fieldsCollection,
+            ],
+        );
+    }
+
+    /**
+     * @param array<mixed, mixed> $fieldsCollection
+     * @param array<int, array<string, mixed>> $errorCollection
+     *
+     * @return string|null
+     */
+    protected function buildTransactionalResponseContent(array $fieldsCollection, array $errorCollection): ?string
+    {
+        return $this->serviceUtilEncoding->encodeJson(
+            [
+                static::RESPONSE_KEY_DATA => $fieldsCollection,
+                static::RESPONSE_KEY_ERRORS => $errorCollection,
+            ],
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    protected function mapErrorTransfersToErrorCollection(DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer): array
+    {
+        if ($dynamicEntityCollectionResponseTransfer->getErrors()->count() === 0) {
+            return [];
+        }
+
+        $errorCollection = [];
+
+        foreach ($dynamicEntityCollectionResponseTransfer->getErrors() as $errorTransfer) {
+            $errorMessage = $this->glossaryStorageClient->translate(
+                $errorTransfer->getMessageOrFail(),
+                $this->localeFacade->getCurrentLocaleName(),
+                $errorTransfer->getParameters(),
+            );
+
+            $errorDataIndexedByGlossaryKey = $this->getErrorDataIndexedByGlossaryKey()[$errorTransfer->getMessageOrFail()];
+
+            $errorCollection[] = [
+                static::ERROR_KEY_CODE => (string)$errorDataIndexedByGlossaryKey[GlueErrorTransfer::CODE],
+                static::ERROR_KEY_STATUS => $errorDataIndexedByGlossaryKey[GlueErrorTransfer::STATUS],
+                static::ERROR_KEY_MESSAGE => $errorMessage,
+            ];
+        }
+
+        return $errorCollection;
     }
 
     /**
@@ -511,6 +607,30 @@ class GlueResponseDynamicEntityMapper
         }
 
         return $fields;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    protected function setHttpStatusCodeForNonTransactionalResponse(
+        GlueResponseTransfer $glueResponseTransfer,
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+    ): GlueResponseTransfer {
+        if (
+            $dynamicEntityCollectionResponseTransfer->getErrors()->count() == 0 ||
+            $dynamicEntityCollectionResponseTransfer->getDynamicEntities()->count() > 0
+        ) {
+            return $glueResponseTransfer;
+        }
+
+        $message = $dynamicEntityCollectionResponseTransfer->getErrors()->offsetGet(0)->getMessageOrFail();
+        $errorDataIndexedByGlossaryKey = $this->getErrorDataIndexedByGlossaryKey()[$message];
+        $glueResponseTransfer->setHttpStatus($errorDataIndexedByGlossaryKey[GlueErrorTransfer::STATUS]);
+
+        return $glueResponseTransfer;
     }
 
     /**

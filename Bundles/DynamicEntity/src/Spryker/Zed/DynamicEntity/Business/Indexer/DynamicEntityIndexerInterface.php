@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Indexer;
 
+use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
 
@@ -31,4 +32,34 @@ interface DynamicEntityIndexerInterface
     public function getFieldNamesIndexedByFieldVisibleName(
         DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer>
+     */
+    public function getChildRelationsIndexedByRelationName(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer>
+     */
+    public function getChildRelationsIndexedByTableAlias(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer>
+     */
+    public function getDefinitionsIndexedByFieldVisibleName(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer>
+     */
+    public function getConfigurationsIndexedByTableAlias(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array;
 }

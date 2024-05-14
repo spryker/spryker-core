@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Filter\Validator;
+namespace Spryker\Zed\DynamicEntity\Business\Validator\Field\Immutability;
 
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 
-class DynamicEntityFieldCreationPreValidator extends AbstractDynamicEntityPreValidator implements DynamicEntityPreValidatorInterface
+class CreationFieldImmutabilityValidator extends AbstractFieldImmutabilityValidator implements DynamicEntityValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param array<mixed> $dynamicEntityFields
-     * @param callable $filterCallback
      * @param string $identifier
      *
      * @return bool
@@ -22,10 +22,9 @@ class DynamicEntityFieldCreationPreValidator extends AbstractDynamicEntityPreVal
     public function isFieldNonModifiable(
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         array $dynamicEntityFields,
-        callable $filterCallback,
         string $identifier
     ): bool {
-        return call_user_func($filterCallback, $fieldDefinitionTransfer) === false &&
+        return $fieldDefinitionTransfer->getIsCreatableOrFail() === false &&
             isset($dynamicEntityFields[$fieldDefinitionTransfer->getFieldVisibleNameOrFail()]);
     }
 }

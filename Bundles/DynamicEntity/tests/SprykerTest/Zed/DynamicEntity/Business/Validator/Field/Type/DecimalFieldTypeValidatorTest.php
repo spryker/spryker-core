@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\DynamicEntity\Business\Validator\Field\Type;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldValidationTransfer;
+use Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface;
+use Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface;
+use Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Validator\Field\Type\DecimalFieldTypeValidator;
 
 /**
@@ -33,7 +36,7 @@ class DecimalFieldTypeValidatorTest extends Unit
     public function testWillReturnValidatorType(): void
     {
         // Arrange
-        $validator = new DecimalFieldTypeValidator();
+        $validator = $this->createDecimalFieldTypeValidator();
 
         // Act & Assert
         $this->assertSame('decimal', $validator->getType());
@@ -45,7 +48,7 @@ class DecimalFieldTypeValidatorTest extends Unit
     public function testValidTypeWillReturnTrue(): void
     {
         // Arrange
-        $validator = new DecimalFieldTypeValidator();
+        $validator = $this->createDecimalFieldTypeValidator();
 
         // Act & Assert
         $this->assertTrue($validator->isValidType('0.0'));
@@ -60,7 +63,7 @@ class DecimalFieldTypeValidatorTest extends Unit
     public function testValidTypeWillReturnFalse(): void
     {
         // Arrange
-        $validator = new DecimalFieldTypeValidator();
+        $validator = $this->createDecimalFieldTypeValidator();
 
         // Act & Assert
         $this->assertFalse($validator->isValidType('string'));
@@ -74,7 +77,7 @@ class DecimalFieldTypeValidatorTest extends Unit
     public function testValidValueWithValidationRulesWillReturnTrue(): void
     {
         // Arrange
-        $validator = new DecimalFieldTypeValidator();
+        $validator = $this->createDecimalFieldTypeValidator();
         $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->setValidation(
             (new DynamicEntityFieldValidationTransfer())->setPrecision(5)->setScale(2),
         );
@@ -85,5 +88,32 @@ class DecimalFieldTypeValidatorTest extends Unit
         $this->assertTrue($validator->isValidValue('0', $dynamicEntityFieldDefinitionTransfer));
         $this->assertTrue($validator->isValidValue('123.55', $dynamicEntityFieldDefinitionTransfer));
         $this->assertTrue($validator->isValidValue('0.0000', $dynamicEntityFieldDefinitionTransfer));
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Validator\DynamicEntityValidatorInterface
+     */
+    protected function createDecimalFieldTypeValidator(): DynamicEntityValidatorInterface
+    {
+        return new DecimalFieldTypeValidator(
+            $this->createDynamicEntityIndexerMock(),
+            $this->createDynamicEntityErrorPathResolverMock(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Indexer\DynamicEntityIndexerInterface
+     */
+    protected function createDynamicEntityIndexerMock(): DynamicEntityIndexerInterface
+    {
+        return $this->getMockBuilder(DynamicEntityIndexerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Resolver\DynamicEntityErrorPathResolverInterface
+     */
+    protected function createDynamicEntityErrorPathResolverMock(): DynamicEntityErrorPathResolverInterface
+    {
+        return $this->getMockBuilder(DynamicEntityErrorPathResolverInterface::class)->getMock();
     }
 }

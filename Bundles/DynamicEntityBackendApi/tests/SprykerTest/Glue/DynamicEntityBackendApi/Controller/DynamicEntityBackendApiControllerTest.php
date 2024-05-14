@@ -40,6 +40,21 @@ class DynamicEntityBackendApiControllerTest extends Unit
     /**
      * @var string
      */
+    protected const RESPONSE_KEY_ERRORS = 'errors';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_MESSAGE = 'message';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_KEY_STATUS = 'status';
+
+    /**
+     * @var string
+     */
     protected const ERROR_REQUEST_BODY_CONFLICT = 'Modification of immutable field `foo[0].table_alias` is prohibited';
 
     /**
@@ -66,6 +81,16 @@ class DynamicEntityBackendApiControllerTest extends Unit
      * @var string
      */
     protected const ERROR_FAILED_TO_PERSIST = 'Failed to persist the data. Please verify the provided data and try again.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_IDENTIFIER_NOT_CREATABLE = 'Entity `foo[0].table_alias: bar` not found by identifier, and new identifier can not be persisted. Please update the request.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_FIELD_MUST_NOT_BE_EMPTY = 'The required field must not be empty. Field: `bar[0].table_name`';
 
     /**
      * @var \SprykerTest\Glue\DynamicEntityBackendApi\DynamicEntityBackendApiTester
@@ -129,7 +154,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $errors = $glueResponseTransfer->getErrors();
         $this->assertNull($contentData);
         $this->assertNotEmpty($errors);
-        $this->assertSame($errors[0]->getCode(), static::RESPONSE_CODE_ALIAS_IS_WRONG);
+        $this->assertSame(static::RESPONSE_CODE_ALIAS_IS_WRONG, $errors[0]->getCode());
     }
 
     /**
@@ -197,10 +222,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->postAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_INVALID_DATA_FORMAT,
-        );
+        $this->assertEquals(static::ERROR_INVALID_DATA_FORMAT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -228,11 +250,89 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->postAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_REQUEST_BODY_CONFLICT,
-        );
+        $this->assertEquals(static::ERROR_REQUEST_BODY_CONFLICT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostActionCreatesIfValidAndReturnsErrorIfInvalidDataIsProvidedInNonTransactionalMode(): void
+    {
+        //Arrange
+        $this->createFooEntity(
+            $this->tester->buildDefinitionWithAutoIncrementedId(true, true, true),
+            $this->tester::BAR_TABLE_ALIAS,
+        );
+
+        $content = [
+            $this->tester::KEY_DATA => [
+                [
+                    $this->tester::TABLE_ALIAS_COLUMN => $this->tester::BAR_TABLE_ALIAS,
+                ],
+                [
+                    $this->tester::TABLE_ALIAS_COLUMN => $this->tester::FOO_TABLE_ALIAS,
+                    $this->tester::TABLE_NAME_COLUMN => $this->tester::FOO_TABLE_NAME,
+                    $this->tester::DEFINITION_COLUMN => $this->tester->buildDefinitionWithNonAutoIncrementedId(false),
+                ],
+            ],
+        ];
+        $glueRequestTransfer = $this->tester->haveGlueRequestTransfer($this->tester::BAR_TABLE_ALIAS);
+        $glueRequestTransfer = $this->tester->addNonTransactionalHeaderToRequestTransfer($glueRequestTransfer);
+        $glueRequestTransfer->setContent(json_encode($content));
+        $glueRequestTransfer
+            ->getResource()
+            ->setMethod(Request::METHOD_POST);
+
+        //Act
+        $glueResponseTransfer = $this->controller->postAction($glueRequestTransfer);
+
+        //Assert
+        $decoded = json_decode($glueResponseTransfer->getContent(), true);
+        $data = $decoded[static::RESPONSE_KEY_DATA] ?? null;
+        $errors = $decoded[static::RESPONSE_KEY_ERRORS] ?? null;
+
+        $this->assertNotNull($errors);
+        $this->assertEquals(static::ERROR_FIELD_MUST_NOT_BE_EMPTY, $errors[0][static::RESPONSE_KEY_MESSAGE]);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $errors[0][static::RESPONSE_KEY_STATUS]);
+        $this->assertNotNull($data);
+        $this->assertCount(1, $data);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostActionReturnsErrorIfNotCreatableFieldIsProvidedInNonTransactionalMode(): void
+    {
+        //Arrange
+        $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(false));
+
+        $content = [
+            $this->tester::KEY_DATA => [
+                [
+                    $this->tester::TABLE_ALIAS_COLUMN => $this->tester::BAR_TABLE_ALIAS,
+                    $this->tester::TABLE_NAME_COLUMN => $this->tester::BAR_TABLE_NAME,
+                    $this->tester::DEFINITION_COLUMN => '',
+                ],
+            ],
+        ];
+        $glueRequestTransfer = $this->tester->haveGlueRequestTransfer();
+        $glueRequestTransfer = $this->tester->addNonTransactionalHeaderToRequestTransfer($glueRequestTransfer);
+        $glueRequestTransfer->setContent(json_encode($content));
+        $glueRequestTransfer
+            ->getResource()
+            ->setMethod(Request::METHOD_POST);
+
+        //Act
+        $glueResponseTransfer = $this->controller->postAction($glueRequestTransfer);
+
+        //Assert
+        $decoded = json_decode($glueResponseTransfer->getContent(), true);
+        $errors = $decoded[static::RESPONSE_KEY_ERRORS] ?? null;
+
+        $this->assertNotNull($errors);
+        $this->assertEquals(static::ERROR_REQUEST_BODY_CONFLICT, $errors[0][static::RESPONSE_KEY_MESSAGE]);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $errors[0][static::RESPONSE_KEY_STATUS]);
     }
 
     /**
@@ -288,10 +388,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->patchAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_INCOMPLETE_REQUEST,
-        );
+        $this->assertEquals(static::ERROR_INCOMPLETE_REQUEST, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -318,10 +415,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->patchAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_ENTITY_DOES_NOT_EXIST,
-        );
+        $this->assertEquals(static::ERROR_ENTITY_DOES_NOT_EXIST, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_NOT_FOUND, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -376,10 +470,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->patchAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_INVALID_DATA_FORMAT,
-        );
+        $this->assertEquals(static::ERROR_INVALID_DATA_FORMAT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -405,10 +496,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->patchAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_REQUEST_BODY_CONFLICT,
-        );
+        $this->assertEquals(static::ERROR_REQUEST_BODY_CONFLICT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -540,10 +628,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->putAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_REQUEST_BODY_CONFLICT,
-        );
+        $this->assertEquals(static::ERROR_REQUEST_BODY_CONFLICT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -585,7 +670,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
     public function testPutActionCreateByIdFailsIfIdIsProvidedInRequestBody(): void
     {
         //Arrange
-        $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(false));
+        $this->createFooEntity($this->tester->buildDefinitionWithNonAutoIncrementedId(true, false, false));
         $glueRequestTransfer = $this->tester->haveGlueRequestTransfer();
         $glueRequestTransfer->getResource()
             ->setMethod(Request::METHOD_PUT)
@@ -604,10 +689,7 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->putAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_REQUEST_BODY_CONFLICT,
-        );
+        $this->assertEquals(static::ERROR_REQUEST_BODY_CONFLICT, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
@@ -636,23 +718,22 @@ class DynamicEntityBackendApiControllerTest extends Unit
         $glueResponseTransfer = $this->controller->putAction($glueRequestTransfer);
 
         //Assert
-        $this->assertEquals(
-            $glueResponseTransfer->getErrors()[0]->getMessage(),
-            static::ERROR_REQUEST_BODY_CONFLICT,
-        );
+        $this->assertEquals(static::ERROR_IDENTIFIER_NOT_CREATABLE, $glueResponseTransfer->getErrors()[0]->getMessage());
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getErrors()[0]->getStatus());
     }
 
     /**
      * @param string|null $definition
+     * @param string|null $tableAlias
      *
      * @return void
      */
-    protected function createFooEntity(?string $definition = null): void
+    protected function createFooEntity(?string $definition = null, ?string $tableAlias = null): void
     {
+        $tableAlias = $tableAlias ?? $this->tester::FOO_TABLE_ALIAS;
         (new SpyDynamicEntityConfiguration())
             ->setIsActive(true)
-            ->setTableAlias($this->tester::FOO_TABLE_ALIAS)
+            ->setTableAlias($tableAlias)
             ->setTableName($this->tester::TABLE_NAME)
             ->setDefinition($definition)
             ->save();

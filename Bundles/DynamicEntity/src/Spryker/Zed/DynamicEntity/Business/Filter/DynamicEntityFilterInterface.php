@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Indexer;
+namespace Spryker\Zed\DynamicEntity\Business\Filter;
 
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityTransfer;
 
-interface DynamicEntityIndexerInterface
+interface DynamicEntityFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param array<string, string|array<mixed>> $indexedDynamicEntityConfigurations
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      *
-     * @return array<string, string|array<mixed>>
+     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
      */
-    public function getChildDynamicEntityConfigurationsIndexedByRelationName(
+    public function filter(
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        array $indexedDynamicEntityConfigurations = []
-    ): array;
+        DynamicEntityTransfer $dynamicEntityTransfer
+    ): DynamicEntityTransfer;
 }

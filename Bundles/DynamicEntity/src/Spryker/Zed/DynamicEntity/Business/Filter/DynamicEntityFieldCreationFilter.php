@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Filter;
+namespace Spryker\Zed\DynamicEntity\Business\Filter;
 
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class DynamicEntityFieldCreationFilter extends AbstractDynamicEntityFilter implements DynamicEntityFilterInterface
 {
@@ -17,15 +16,13 @@ class DynamicEntityFieldCreationFilter extends AbstractDynamicEntityFilter imple
      * @param \Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
      * @param array<mixed> $filteredFields
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
      *
      * @return array<mixed>
      */
     public function filterFields(
         DynamicEntityFieldDefinitionTransfer $fieldDefinitionTransfer,
         DynamicEntityTransfer $dynamicEntityTransfer,
-        array $filteredFields,
-        ActiveRecordInterface $activeRecord
+        array $filteredFields
     ): array {
         if (!isset($dynamicEntityTransfer->getFields()[$fieldDefinitionTransfer->getFieldVisibleNameOrFail()])) {
             return $filteredFields;
