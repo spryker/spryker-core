@@ -196,6 +196,13 @@ class RequestUrlValidatorTest extends Unit
                 'redirect request' => true,
                 'validation result' => true,
             ],
+            'relative url to some page with fragment identifier' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/some-page/index/some-page-child?id=1#codes',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
         ];
     }
 
