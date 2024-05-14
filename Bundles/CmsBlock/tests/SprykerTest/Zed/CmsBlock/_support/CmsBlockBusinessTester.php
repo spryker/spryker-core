@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CmsBlock;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 
 /**
  * @method void wantToTest($text)
@@ -41,5 +42,21 @@ class CmsBlockBusinessTester extends Actor
         }
 
         return $storeIds;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsBlockTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getCmsBlockQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    protected function getCmsBlockQuery(): SpyCmsBlockQuery
+    {
+        return SpyCmsBlockQuery::create();
     }
 }

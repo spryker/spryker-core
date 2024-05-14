@@ -46,6 +46,16 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->ensureCmsBlockTableIsEmpty();
+    }
+
+    /**
+     * @return void
+     */
     public function testFindCmsBlockById(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();

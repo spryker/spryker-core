@@ -475,9 +475,13 @@ class GetMerchantRelationRequestCollectionTest extends Unit
         $paginationTransfer = (new PaginationTransfer())
             ->setOffset(3)
             ->setLimit(2);
+        $sortTransfer = (new SortTransfer())
+            ->setField(MerchantRelationRequestTransfer::ID_MERCHANT_RELATION_REQUEST)
+            ->setIsAscending(true);
 
         $merchantRelationRequestCriteriaTransfer = (new MerchantRelationRequestCriteriaTransfer())
-            ->setPagination($paginationTransfer);
+            ->setPagination($paginationTransfer)
+            ->addSort($sortTransfer);
 
         // Act
         $merchantRelationRequestCollectionTransfer = $this->tester->getFacade()
@@ -514,9 +518,13 @@ class GetMerchantRelationRequestCollectionTest extends Unit
         $paginationTransfer = (new PaginationTransfer())
             ->setPage(2)
             ->setMaxPerPage(2);
+        $sortTransfer = (new SortTransfer())
+            ->setField(MerchantRelationRequestTransfer::ID_MERCHANT_RELATION_REQUEST)
+            ->setIsAscending(true);
 
         $merchantRelationRequestCriteriaTransfer = (new MerchantRelationRequestCriteriaTransfer())
-            ->setPagination($paginationTransfer);
+            ->setPagination($paginationTransfer)
+            ->addSort($sortTransfer);
 
         // Act
         $merchantRelationRequestCollectionTransfer = $this->tester->getFacade()

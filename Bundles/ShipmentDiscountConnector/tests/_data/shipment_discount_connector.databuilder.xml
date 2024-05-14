@@ -6,7 +6,7 @@
 >
 
     <transfer name="ShipmentCarrier">
-        <property name="idShipmentCarrier" dataBuilderRule="randomNumber(3)"/>
+        <property name="idShipmentCarrier" dataBuilderRule="randomNumber(3, true)"/>
     </transfer>
 
 </transfers>

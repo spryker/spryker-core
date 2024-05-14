@@ -108,7 +108,9 @@ class ShipmentCarrierDecisionRuleTest extends Unit
     protected function getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForSingleCarrierIsMatched(): array
     {
         $shipmentCarrierTransfer1 = (new ShipmentCarrierBuilder())->build();
-        $shipmentCarrierTransfer2 = (new ShipmentCarrierBuilder())->build();
+        $shipmentCarrierTransfer2 = (new ShipmentCarrierBuilder([
+            ShipmentCarrierTransfer::ID_SHIPMENT_CARRIER => $shipmentCarrierTransfer1->getIdShipmentCarrier() + 1,
+        ]))->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentCarrierIntoQuoteTransfer($quoteTransfer, $shipmentCarrierTransfer1);
@@ -134,7 +136,9 @@ class ShipmentCarrierDecisionRuleTest extends Unit
     protected function getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForMultipleCarrierIsMatched(): array
     {
         $shipmentCarrierTransfer1 = (new ShipmentCarrierBuilder())->build();
-        $shipmentCarrierTransfer2 = (new ShipmentCarrierBuilder())->build();
+        $shipmentCarrierTransfer2 = (new ShipmentCarrierBuilder([
+            ShipmentCarrierTransfer::ID_SHIPMENT_CARRIER => $shipmentCarrierTransfer1->getIdShipmentCarrier() + 1,
+        ]))->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentCarrierIntoQuoteTransfer($quoteTransfer, $shipmentCarrierTransfer1);
