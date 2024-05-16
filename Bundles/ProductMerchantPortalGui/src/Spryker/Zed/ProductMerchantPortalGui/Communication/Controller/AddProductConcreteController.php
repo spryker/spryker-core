@@ -121,8 +121,8 @@ class AddProductConcreteController extends AbstractController
         if ($addProductConcreteForm->isSubmitted() && $addProductConcreteForm->isValid()) {
             $productConcreteCollectionTransfer = $this->getProductConcreteCollection(
                 $addProductConcreteForm,
-                $defaultStoreDefaultLocaleTransfer,
             );
+
             $this->getFactory()->getProductFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
         }
 
@@ -137,13 +137,11 @@ class AddProductConcreteController extends AbstractController
 
     /**
      * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
     protected function getProductConcreteCollection(
-        FormInterface $addProductConcreteForm,
-        LocaleTransfer $localeTransfer
+        FormInterface $addProductConcreteForm
     ): ProductConcreteCollectionTransfer {
         $formData = $addProductConcreteForm->getData();
         $productConcreteCollectionTransfer = $this->getFactory()
@@ -151,7 +149,6 @@ class AddProductConcreteController extends AbstractController
             ->mapAddProductConcreteFormDataToProductConcreteCollectionTransfer(
                 $formData,
                 new ProductConcreteCollectionTransfer(),
-                $localeTransfer,
             );
 
         $this->getFactory()

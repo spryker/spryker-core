@@ -112,9 +112,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $responseData = $productConcreteTransfer->toArray(true, true);
-            $responseData[ProductGuiTableConfigurationProvider::COL_KEY_NAME] = $productConcreteTransfer->getLocalizedAttributes()
-                ->offsetGet(0)
-                ->getName();
+            $responseData[ProductGuiTableConfigurationProvider::COL_KEY_NAME] = $productConcreteTransfer->getName();
             $responseData[ProductGuiTableConfigurationProvider::COL_KEY_IMAGE] = $this->getImageUrl($productConcreteTransfer);
             $responseData[ProductGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES] = $this->getSuperAttributesColumnData(
                 $productConcreteTransfer,

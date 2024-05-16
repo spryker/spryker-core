@@ -619,6 +619,13 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->useSpyProductLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
+            ->leftJoinSpyProductLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
+            ->addJoinCondition(
+                static::RELATION_LOCALE_FALLBACK,
+                sprintf('(%s is null OR %s = \'\')', SpyProductLocalizedAttributesTableMap::COL_NAME, SpyProductLocalizedAttributesTableMap::COL_NAME),
+            )
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
             ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
             ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
@@ -639,7 +646,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ProductConcreteTransfer::VALID_FROM,
                 ProductConcreteTransfer::VALID_TO,
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
-            ]);
+            ])
+            ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK);
 
         return $productConcreteQuery;
     }

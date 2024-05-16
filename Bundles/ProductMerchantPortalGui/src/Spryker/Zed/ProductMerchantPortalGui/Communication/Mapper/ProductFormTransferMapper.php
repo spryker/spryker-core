@@ -87,17 +87,16 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param array<mixed> $addProductConcreteFormData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
     public function mapAddProductConcreteFormDataToProductConcreteCollectionTransfer(
         array $addProductConcreteFormData,
-        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
-        LocaleTransfer $defaultStoreDefaultLocaleTransfer
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): ProductConcreteCollectionTransfer {
         $idProductAbstract = (int)$addProductConcreteFormData[static::ADD_PRODUCT_CONCRETE_FORM_FIELD_ID_PRODUCT_ABSTRACT];
         $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $defaultLocaleTransfer = $this->localeFacade->getCurrentLocale();
 
         foreach ($addProductConcreteFormData[static::ADD_PRODUCT_CONCRETE_FORM_FIELD_PRODUCTS] as $productConcreteFormData) {
             $productConcreteTransfer = (new ProductConcreteTransfer())
@@ -106,7 +105,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
                 ->setIsActive(false);
             $productConcreteTransfer = $this->addLocalizedAttributesToProductConcrete(
                 $productConcreteTransfer,
-                $defaultStoreDefaultLocaleTransfer,
+                $defaultLocaleTransfer,
                 $localeTransfers,
                 $productConcreteFormData,
             );
@@ -120,7 +119,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $defaultLocaleTransfer
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      * @param array<mixed> $productConcreteFormData
      *
@@ -128,14 +127,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      */
     protected function addLocalizedAttributesToProductConcrete(
         ProductConcreteTransfer $productConcreteTransfer,
-        LocaleTransfer $defaultStoreDefaultLocaleTransfer,
+        LocaleTransfer $defaultLocaleTransfer,
         array $localeTransfers,
         array $productConcreteFormData
     ): ProductConcreteTransfer {
         foreach ($localeTransfers as $localeTransfer) {
             $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setLocale($localeTransfer);
             $localizedAttributesTransfer->setName(
-                $localeTransfer->getIdLocaleOrFail() === $defaultStoreDefaultLocaleTransfer->getIdLocaleOrFail()
+                $localeTransfer->getIdLocaleOrFail() === $defaultLocaleTransfer->getIdLocaleOrFail()
                     ? $productConcreteFormData[static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_NAME]
                     : '',
             );

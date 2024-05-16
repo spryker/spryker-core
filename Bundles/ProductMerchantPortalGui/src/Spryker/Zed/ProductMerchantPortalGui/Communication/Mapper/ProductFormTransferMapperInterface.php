@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 interface ProductFormTransferMapperInterface
@@ -15,13 +14,11 @@ interface ProductFormTransferMapperInterface
     /**
      * @param array<mixed> $addProductConcreteFormData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
      */
     public function mapAddProductConcreteFormDataToProductConcreteCollectionTransfer(
         array $addProductConcreteFormData,
-        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer,
-        LocaleTransfer $defaultStoreDefaultLocaleTransfer
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): ProductConcreteCollectionTransfer;
 }

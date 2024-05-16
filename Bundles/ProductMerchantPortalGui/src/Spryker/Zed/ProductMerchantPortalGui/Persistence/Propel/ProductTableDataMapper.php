@@ -71,6 +71,13 @@ class ProductTableDataMapper
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::COL_NAME_FALLBACK
+     *
+     * @var string
+     */
+    protected const COL_NAME_FALLBACK = 'name_fallback';
+
+    /**
      * @var array<string, string>
      */
     public const PRODUCT_DATA_COLUMN_MAP = [
@@ -115,6 +122,10 @@ class ProductTableDataMapper
             $productConcreteTransfer->setAttributes($productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES]);
             $productConcreteTransfer->setLocalizedAttributes($productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES]);
             $productConcreteTransfer = $this->mapImageToProductConcrete($productTableRowDataArray, $productConcreteTransfer);
+
+            if (!$productConcreteTransfer->getName() && $productTableRowDataArray[static::COL_NAME_FALLBACK]) {
+                $productConcreteTransfer->setName($productTableRowDataArray[static::COL_NAME_FALLBACK]);
+            }
 
             $productConcreteCollectionTransfer->addProduct($productConcreteTransfer);
         }
