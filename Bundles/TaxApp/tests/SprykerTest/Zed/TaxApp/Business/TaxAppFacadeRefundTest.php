@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\TaxApp\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\TaxApp\TaxAppClient;
 use SprykerTest\Zed\TaxApp\TaxAppBusinessTester;
@@ -53,24 +54,46 @@ class TaxAppFacadeRefundTest extends Unit
      */
     public function testTaxAppClientWasCalledWhenRefundWasRequestedForAnOrder(): void
     {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::STORE_REFERENCE => 'dev-DE', StoreTransfer::NAME => 'DE'], false);
-        $this->tester->setStoreReferenceData(['DE' => 'dev-DE']);
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
         $this->tester->haveTaxAppConfig(['vendor_code' => 'vendorCode', 'fk_store' => $storeTransfer->getIdStore(), 'isActive' => true]);
 
-        $taxCalculationResponseTransfer = $this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]);
-
-        $clientMock = $this->createMock(TaxAppClient::class);
-        $clientMock->expects($this->once())->method('requestTaxRefund')->willReturn($taxCalculationResponseTransfer);
-        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
-
-        $this->tester->mockOauthClient();
-
-        $orderTransfer = $this->tester->getOrderTransferForRefund($storeTransfer);
+        $orderTransfer = $this->getOrderTransferForRefund($storeTransfer);
 
         $orderItemsIds = array_map(function ($item) {
             return $item->getIdSalesOrderItem();
         }, $orderTransfer->getItems()->getArrayCopy());
 
+        $clientMock = $this->createMock(TaxAppClient::class);
+
+        // Assert
+        $clientMock->expects($this->once())->method('requestTaxRefund')->willReturn($this->tester->haveTaxCalculationResponseTransfer(['isSuccessful' => true]));
+        $this->tester->mockFactoryMethod('getTaxAppClient', $clientMock);
+        $this->tester->mockOauthClient();
+
+        // Act
         $this->tester->getFacade()->processOrderRefund($orderItemsIds, $orderTransfer->getIdSalesOrder());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransferForRefund(StoreTransfer $storeTransfer): OrderTransfer
+    {
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(
+            static::DEFAULT_OMS_PROCESS_NAME,
+            $storeTransfer,
+        );
+        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
+        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
+
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->setSku('some_sku');
+            $item->setCanceledAmount($item->getSumPrice());
+        }
+
+        return $orderTransfer;
     }
 }

@@ -25,7 +25,7 @@ use ReflectionProperty;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
-use SprykerTest\Zed\TaxApp\Business\TaxAppFacadeCalculationTest;
+use SprykerTest\AsyncApi\TaxApp\TaxAppTests\TaxCommands\SubmitPaymentTaxInvoiceTest;
 
 /**
  * Inherited Methods
@@ -77,7 +77,7 @@ class AsyncApiTester extends Actor
      */
     public function getOrderTransferForSubmitPaymentTaxInvoice(): OrderTransfer
     {
-        $orderTransfer = $this->createOrderByStateMachineProcessName(TaxAppFacadeCalculationTest::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $this->createOrderByStateMachineProcessName(SubmitPaymentTaxInvoiceTest::DEFAULT_OMS_PROCESS_NAME);
         $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
         $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
 

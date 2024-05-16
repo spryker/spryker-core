@@ -98,6 +98,9 @@ class Calculator implements CalculatorInterface
             return;
         }
 
+        if ($calculableObjectTransfer->getOriginalQuote()) {
+            $calculableObjectTransfer->getOriginalQuoteOrFail()->setTaxVendor($taxAppConfigTransfer->getVendorCode());
+        }
         $this->setHideTaxInCartFlagToTrue($calculableObjectTransfer);
 
         $this->taxAppCalculator->recalculate($calculableObjectTransfer, $taxAppConfigTransfer);
@@ -146,8 +149,7 @@ class Calculator implements CalculatorInterface
     protected function setHideTaxInCartFlagToTrue(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
         if ($calculableObjectTransfer->getOriginalQuote() !== null && $calculableObjectTransfer->getPriceMode() === ItemExpensePriceRetriever::PRICE_MODE_NET) {
-            $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
-            $quoteTransfer->setHideTaxInCart(true);
+            $calculableObjectTransfer->getOriginalQuote()->setHideTaxInCart(true);
         }
 
         return $calculableObjectTransfer;

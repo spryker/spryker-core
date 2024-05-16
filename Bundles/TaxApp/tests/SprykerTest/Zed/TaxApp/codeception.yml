@@ -22,19 +22,16 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Store\Helper\StoreReferenceHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\TaxApp\Helper\TaxAppDataHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
-                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
-                - \SprykerTest\Zed\MessageBroker\Helper\MessageBrokerHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Zed\TaxApp\Helper\TaxAppBusinessAssertionHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\TaxApp\Helper\TaxAppBusinessAssertionHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper

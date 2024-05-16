@@ -206,7 +206,12 @@ class TaxAppBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxAppMapper(): TaxAppMapperInterface
     {
-        return new TaxAppMapper($this->createAddressMapper(), $this->createItemExpensePriceRetriever());
+        return new TaxAppMapper(
+            $this->createAddressMapper(),
+            $this->createItemExpensePriceRetriever(),
+            $this->getStoreFacade(),
+            $this->getConfig(),
+        );
     }
 
     /**

@@ -170,10 +170,6 @@ class TaxAppRequestSender implements TaxAppRequestSenderInterface
                 ],
             );
 
-            if ($httpResponse->getStatusCode() !== 200) {
-                throw new TaxCalculationResponseException(sprintf(static::MESSAGE_UNEXPECTED_STATUS_CODE, $httpResponse->getStatusCode()));
-            }
-
             $responseData = $this->utilEncodingService->decodeJson($httpResponse->getBody()->getContents(), true);
 
             if (!is_array($responseData)) {

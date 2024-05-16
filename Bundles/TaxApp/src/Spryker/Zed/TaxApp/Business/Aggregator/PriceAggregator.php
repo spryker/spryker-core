@@ -208,8 +208,8 @@ class PriceAggregator implements PriceAggregatorInterface
             return $expenseTransfer;
         }
 
-        $expenseTransfer->setUnitTaxAmount($taxAppShipmentTransfer->getTaxTotal());
-        $expenseTransfer->setSumTaxAmount($taxAppShipmentTransfer->getTaxTotal());
+        $expenseTransfer->setUnitTaxAmount($taxAppShipmentTransfer->getTaxTotal() ?? 0);
+        $expenseTransfer->setSumTaxAmount($taxAppShipmentTransfer->getTaxTotal() ?? 0);
 
         return $expenseTransfer;
     }

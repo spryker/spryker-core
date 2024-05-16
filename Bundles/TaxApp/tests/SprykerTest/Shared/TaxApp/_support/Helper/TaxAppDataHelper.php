@@ -356,14 +356,40 @@ class TaxAppDataHelper extends Module
 
     /**
      * @param array $seed
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\TaxAppSaleTransfer
      */
-    public function haveTaxAppSaleTransfer(array $seed = []): TaxAppSaleTransfer
+    public function haveTaxAppSaleTransfer(array $seed = [], array $items = []): TaxAppSaleTransfer
     {
         $shippingAddress = (new TaxAppAddressBuilder())->build();
 
-        return (new TaxAppSaleBuilder())->seed($seed)->withItem(['shipping_address' => $shippingAddress])->withAnotherItem(['shipping_address' => $shippingAddress])->withShipment()->build();
+        $item1Seed = ['shipping_address' => $shippingAddress];
+        $item2Seed = ['shipping_address' => $shippingAddress];
+
+        if (isset($items[0])) {
+            $item1Seed = [
+                'id' => isset($items[0]) ? sprintf('%s_%s', $items[0]->getSku(), 0) : null,
+                'sku' => isset($items[0]) ? $items[0]->getSku() : null,
+                'quantity' => isset($items[0]) ? $items[0]->getQuantity() : null,
+                'shipping_address' => $shippingAddress,
+            ];
+        }
+
+        if (isset($items[1])) {
+            $item2Seed = [
+                'id' => isset($items[1]) ? sprintf('%s_%s', $items[1]->getSku(), 1) : null,
+                'sku' => isset($items[1]) ? $items[1]->getSku() : null,
+                'quantity' => isset($items[1]) ? $items[1]->getQuantity() : null,
+                'shipping_address' => $shippingAddress,
+            ];
+        }
+
+        return (new TaxAppSaleBuilder())->seed($seed)
+            ->withItem($item1Seed)
+            ->withAnotherItem($item2Seed)
+            ->withShipment()
+            ->build();
     }
 
     /**
@@ -388,12 +414,13 @@ class TaxAppDataHelper extends Module
 
     /**
      * @param array $seed
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return \Generated\Shared\Transfer\TaxCalculationResponseTransfer
      */
-    public function haveTaxCalculationResponseTransfer(array $seed = []): TaxCalculationResponseTransfer
+    public function haveTaxCalculationResponseTransfer(array $seed = [], array $items = []): TaxCalculationResponseTransfer
     {
-        $saleTransfer = $this->haveTaxAppSaleTransfer($seed);
+        $saleTransfer = $this->haveTaxAppSaleTransfer($seed, $items);
         $saleTransfer->setTaxTotal($this->getTaxAppItemsTaxTotals($saleTransfer->getItems()));
 
         return (new TaxCalculationResponseBuilder())->seed($seed)->withSale($saleTransfer->toArray())->build();

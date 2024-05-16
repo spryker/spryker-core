@@ -48,7 +48,7 @@
         <property name="sku" dataBuilderRule="lexify('??????????')"/>
         <property name="priceAmount" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="discountAmount" dataBuilderRule="numberBetween(100, 1000)"/>
-        <property name="quantity" dataBuilderRule="lexify('??????????')"/>
+        <property name="quantity" dataBuilderRule="numberBetween(1, 3)"/>
         <property name="taxTotal" dataBuilderRule="numberBetween(100, 1000)"/>
         <property name="shippingAddress" dataBuilderRule="TaxAppAddress"/>
         <property name="billingAddress" dataBuilderRule="TaxAppAddress"/>

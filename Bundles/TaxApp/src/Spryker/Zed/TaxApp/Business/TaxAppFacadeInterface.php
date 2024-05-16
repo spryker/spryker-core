@@ -44,15 +44,19 @@ interface TaxAppFacadeInterface
 
     /**
      * Specification:
-     * - Requires `CalculableObject.store.name` to be set.
+     * - Requires `CalculableObject.store.name`, `CalculableObject.priceMode` to be set.
      * - Executes {@link \Spryker\Zed\TaxAppExtension\Dependency\Plugin\CalculableObjectTaxAppExpanderPluginInterface} plugins stack.
-     * - Does nothing if `CalculableObjectTransfer.expenses` does not have items of `ShipmentConfig::SHIPMENT_EXPENSE_TYPE` type.
-     * - Dispatch tax quotation request to ACP Apps.
      * - Sets `CalculableObject.totals.taxTotal` with returned amount, if tax quotation request is successful.
      * - Sets `CalculableObject.totals.taxTotal` to 0 and overwrites other calculated taxes until a shipment is selected.
      * - Sets 'Item.UnitPriceToPayAggregation', 'Item.SumPriceToPayAggregation', 'Item.UnitTaxAmountFullAggregation' and 'Item.SumTaxAmountFullAggregation' with returned amounts, if tax quotation request is successful.
      * - Sets 'Expense.UnitTaxAmount', 'Expense.SumTaxAmount', 'Expense.UnitPriceToPayAggregation' and 'Expense.SumPriceToPayAggregation' (if expense type is shipment) with returned amounts, if tax quotation request is successful.
-     * - Recalculation does not trigger additional API calls when TaxAppSale data was not changed.
+     * - Does nothing if `CalculableObjectTransfer.expenses` does not have items of `ShipmentConfig::SHIPMENT_EXPENSE_TYPE` type and price mode = NET_MODE.
+     * - Uses {@link \Spryker\Zed\TaxApp\TaxAppConfig::getSellerCountryCode()} to determine the country code of the store (seller) for the tax calculation.
+     *   The default value is the first country of the store defined in the Quote.
+     * - Uses {@link \Spryker\Zed\TaxApp\TaxAppConfig::getCustomerCountryCode()} to determine the country code of the customer (buyer) for the tax calculation, when shipping address is not yet provided.
+     *   The default value is the first country of the store defined in the Quote.
+     * - Dispatches tax quotation request to ACP Apps.
+     * - Recalculation does not trigger additional API calls when TaxAppSale data was not changed (cached).
      * - Executes fallback {@link \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface} plugins stack if tax app config is missing or inactive.
      *
      * @api
@@ -65,8 +69,12 @@ interface TaxAppFacadeInterface
 
     /**
      * Specification:
-     * - Requires `OrderTransfer.idSalesOrder`, `OrderTransfer.store.name` to be set.
+     * - Requires `Order.idSalesOrder`, `Order.store.name`, 'Order.priceMode' to be set.
      * - Executes {@link \Spryker\Zed\TaxAppExtension\Dependency\Plugin\OrderTaxAppExpanderPluginInterface} plugins stack.
+     * - Uses {@link \Spryker\Zed\TaxApp\TaxAppConfig::getSellerCountryCode()} to determine the country code of the store (seller).
+     *   The default value is the first country of the store defined in the Order.
+     * - Uses {@link \Spryker\Zed\TaxApp\TaxAppConfig::getCustomerCountryCode()} to determine the country code of the customer (buyer), when shipping address is not provided.
+     *   The default value is the first country of the store defined in the Order.
      * - Sends `SubmitPaymentTaxInvoice` message to the message broker.
      *
      * @api

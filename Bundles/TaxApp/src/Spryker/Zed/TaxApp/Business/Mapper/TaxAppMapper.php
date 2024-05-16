@@ -27,6 +27,8 @@ use Generated\Shared\Transfer\TaxAppShipmentTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface;
 use Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface;
+use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface;
+use Spryker\Zed\TaxApp\TaxAppConfig;
 
 class TaxAppMapper implements TaxAppMapperInterface
 {
@@ -53,13 +55,31 @@ class TaxAppMapper implements TaxAppMapperInterface
     protected ItemExpensePriceRetrieverInterface $priceFormatter;
 
     /**
+     * @var \Spryker\Zed\TaxApp\TaxAppConfig
+     */
+    protected TaxAppConfig $taxAppConfig;
+
+    /**
+     * @var \Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface
+     */
+    protected TaxAppToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\TaxApp\Business\Mapper\Addresses\AddressMapperInterface $addressMapper
      * @param \Spryker\Zed\TaxApp\Business\Mapper\Prices\ItemExpensePriceRetrieverInterface $priceFormatter
+     * @param \Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\TaxApp\TaxAppConfig $taxAppConfig
      */
-    public function __construct(AddressMapperInterface $addressMapper, ItemExpensePriceRetrieverInterface $priceFormatter)
-    {
+    public function __construct(
+        AddressMapperInterface $addressMapper,
+        ItemExpensePriceRetrieverInterface $priceFormatter,
+        TaxAppToStoreFacadeInterface $storeFacade,
+        TaxAppConfig $taxAppConfig
+    ) {
         $this->addressMapper = $addressMapper;
         $this->priceFormatter = $priceFormatter;
+        $this->storeFacade = $storeFacade;
+        $this->taxAppConfig = $taxAppConfig;
     }
 
     /**
@@ -92,7 +112,8 @@ class TaxAppMapper implements TaxAppMapperInterface
         $taxAppSaleTransfer
             ->setTransactionId($transferIdentifier)
             ->setDocumentNumber($transferIdentifier)
-            ->setDocumentDate($documentDate);
+            ->setDocumentDate($documentDate)
+            ->setPriceMode($calculableObjectTransfer->getPriceModeOrFail());
 
         foreach ($calculableObjectTransfer->getItems() as $itemIndex => $itemTransfer) {
             $taxAppItemTransfer = $this->mapItemTransfersToSaleItemTransfers(
@@ -122,6 +143,8 @@ class TaxAppMapper implements TaxAppMapperInterface
 
         $taxAppSaleTransfer->setItems($saleItemTransfers);
         $taxAppSaleTransfer->setShipments($saleShipmentTransfers);
+
+        $taxAppSaleTransfer = $this->setTaxSaleCountryCode($calculableObjectTransfer, $taxAppSaleTransfer, $originalTransfer);
 
         return $taxAppSaleTransfer;
     }
@@ -159,7 +182,7 @@ class TaxAppMapper implements TaxAppMapperInterface
             $taxAppItemTransfer->setShippingAddress($shippingTaxAppAddressTransfer);
         }
 
-        if ($billingAddressTransfer) {
+        if ($billingAddressTransfer && $billingAddressTransfer->getCountry()) {
             $billingTaxAppAddressTransfer = $this->addressMapper->mapAddressTransferToTaxAppAddressTransfer($billingAddressTransfer, new TaxAppAddressTransfer());
             $taxAppItemTransfer->setBillingAddress($billingTaxAppAddressTransfer);
         }
@@ -314,5 +337,53 @@ class TaxAppMapper implements TaxAppMapperInterface
         $calculableObjectTransfer->setOriginalOrder($orderTransfer);
 
         return $this->mapCalculableObjectToTaxAppSaleTransfer($calculableObjectTransfer, $taxAppSaleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\TaxAppSaleTransfer $taxAppSaleTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer|\Generated\Shared\Transfer\QuoteTransfer $originalTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxAppSaleTransfer
+     */
+    public function setTaxSaleCountryCode(
+        CalculableObjectTransfer $calculableObjectTransfer,
+        TaxAppSaleTransfer $taxAppSaleTransfer,
+        OrderTransfer|QuoteTransfer $originalTransfer
+    ): TaxAppSaleTransfer {
+        $sellerCountryCode = $customerCountryCode = $this->findStoreCountryCode($calculableObjectTransfer);
+
+        if ($this->taxAppConfig->getSellerCountryCode()) {
+            $sellerCountryCode = $this->taxAppConfig->getSellerCountryCode();
+        }
+
+        if ($this->taxAppConfig->getCustomerCountryCode()) {
+            $customerCountryCode = $this->taxAppConfig->getCustomerCountryCode();
+        }
+
+        if ($originalTransfer->getBillingAddress() && $originalTransfer->getBillingAddress()->getIso2Code()) {
+            $customerCountryCode = $originalTransfer->getBillingAddress()->getIso2Code();
+        }
+
+        $taxAppSaleTransfer->setSellerCountryCode($sellerCountryCode ?: null);
+        $taxAppSaleTransfer->setCustomerCountryCode($customerCountryCode ?: null);
+
+        return $taxAppSaleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return string|null
+     */
+    protected function findStoreCountryCode(CalculableObjectTransfer $calculableObjectTransfer): ?string
+    {
+        if (!empty($calculableObjectTransfer->getStoreOrFail()->getCountries()[0])) {
+            return $calculableObjectTransfer->getStoreOrFail()->getCountries()[0];
+        }
+
+        $storeTransfer = $this->storeFacade->getStoreByName($calculableObjectTransfer->getStoreOrFail()->getNameOrFail());
+
+        return $storeTransfer->getCountries() !== [] ? $storeTransfer->getCountries()[0] : null;
     }
 }

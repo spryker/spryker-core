@@ -26,6 +26,13 @@ class TaxAppCalculator implements TaxAppCalculatorInterface
     use LoggerTrait;
 
     /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     *
+     * @var string
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
      * @var \Spryker\Zed\TaxApp\Business\Mapper\TaxAppMapperInterface
      */
     protected TaxAppMapperInterface $taxAppMapper;
@@ -83,12 +90,11 @@ class TaxAppCalculator implements TaxAppCalculatorInterface
 
         $taxAppSaleTransfer = $this->taxAppMapper->mapCalculableObjectToTaxAppSaleTransfer($calculableObjectTransfer, new TaxAppSaleTransfer());
 
-        if (!$taxAppSaleTransfer->getShipments()->count()) {
+        // for correct tax calculation in NET price mode, at least one shipment must be selected, otherwise tax calculation is skipped.
+        if ($calculableObjectTransfer->getPriceModeOrFail() === static::PRICE_MODE_NET && $taxAppSaleTransfer->getShipments()->count() === 0) {
             $taxTotalTransfer = (new TaxTotalTransfer())->setAmount(0);
             $calculableObjectTransfer->getTotalsOrFail()->setTaxTotal($taxTotalTransfer);
             $this->priceAggregator->calculatePriceAggregation($taxAppSaleTransfer, $calculableObjectTransfer);
-
-            $this->getLogger()->info('At least one shipment must be selected, Tax calculation is skipped.');
 
             return;
         }
@@ -106,7 +112,7 @@ class TaxAppCalculator implements TaxAppCalculatorInterface
                 $apiErrorMessages = array_map(function (ApiErrorMessageTransfer $apiErrorMessageTransfer) {
                     return $apiErrorMessageTransfer->toArray();
                 }, $taxCalculationResponseTransfer->getApiErrorMessages()->getArrayCopy());
-                $this->getLogger()->warning('Tax calculation failed.', ['apiErrorMessages' => $apiErrorMessages]);
+                $this->getLogger()->error('Tax calculation failed.', ['apiErrorMessages' => $apiErrorMessages]);
 
                 $taxAppSaleTransfer = $this->resetTaxAppSaleTaxTotals($taxAppSaleTransfer);
                 $taxCalculationResponseTransfer->setSale($taxAppSaleTransfer);
@@ -166,33 +172,12 @@ class TaxAppCalculator implements TaxAppCalculatorInterface
             $currentTaxRequestHash = $this->getTaxAppSaleHash($taxAppSaleTransfer);
         }
 
+        // Quote was not changed since last tax calculation request. Tax calculation is skipped.
         if ($currentTaxRequestHash === $calculableObjectTransfer->getTaxAppSaleHash() && $calculableObjectTransfer->getTaxCalculationResponse()) {
-            $this->getLogger()->info('Quote was not changed since last tax calculation request. Tax calculation is skipped.');
-
             return $calculableObjectTransfer->getTaxCalculationResponse();
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\TaxCalculationResponseTransfer $taxCalculationResponseTransfer
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
-     */
-    protected function setTaxTotal(
-        TaxCalculationResponseTransfer $taxCalculationResponseTransfer,
-        CalculableObjectTransfer $calculableObjectTransfer
-    ): CalculableObjectTransfer {
-        $taxTotal = $taxCalculationResponseTransfer->getSaleOrFail()->getTaxTotal() ?? 0;
-
-        $taxTotalTransfer = new TaxTotalTransfer();
-        $taxTotalTransfer->setAmount((int)$taxTotal);
-
-        $calculableObjectTransfer->getTotalsOrFail()->setTaxTotal($taxTotalTransfer);
-
-        return $calculableObjectTransfer;
     }
 
     /**

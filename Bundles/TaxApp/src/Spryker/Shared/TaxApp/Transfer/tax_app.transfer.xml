@@ -142,6 +142,9 @@
         <property name="taxMetadata" type="array" associative="true" singular="taxMetadataEntry"/>
         <property name="taxTotal" type="int"/>
         <property name="refundedTaxTotal" type="int"/>
+        <property name="priceMode" type="string"/>
+        <property name="sellerCountryCode" type="string"/>
+        <property name="customerCountryCode" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -216,6 +219,7 @@
         <property name="idStore" type="int"/>
         <property name="storeReference" type="string"/>
         <property name="name" type="string"/>
+        <property name="countries" type="array" singular="country"/>
     </transfer>
 
     <transfer name="SubmitPaymentTaxInvoice" strict="true">
@@ -231,6 +235,8 @@
     </transfer>
 
     <transfer name="Address">
+        <property name="country" type="Country"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileAddress">
@@ -250,6 +256,7 @@
         <property name="hideTaxInCart" type="bool" strict="true"/>
         <property name="taxAppSaleHash" type="string" strict="true"/>
         <property name="taxCalculationResponse" type="TaxCalculationResponse" strict="true"/>
+        <property name="taxVendor" type="string" strict="true"/>
     </transfer>
 
     <transfer name="StockAddress">

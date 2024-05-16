@@ -41,4 +41,33 @@ class TaxAppConfig extends AbstractBundleConfig
     {
         return $this->get(TaxAppConstants::OAUTH_OPTION_AUDIENCE, '');
     }
+
+    /**
+     * Specification:
+     * - 2 letters ISO country code, for example US, DE
+     * - Overrides the default value (the first country of the store defined in the Quote/Order).
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSellerCountryCode(): string
+    {
+        return '';
+    }
+
+    /**
+     * Specification:
+     * - 2 letters ISO country code, for example US, DE
+     * - Used for tax calculation when a customer did not provide shipping address.
+     * - Overrides the default value (the first country of the store defined in the Quote/Order).
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCustomerCountryCode(): string
+    {
+        return '';
+    }
 }

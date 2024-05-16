@@ -28,10 +28,10 @@ use SprykerTest\Zed\TaxApp\TaxAppBusinessTester;
  * @group TaxApp
  * @group Business
  * @group Facade
- * @group TaxAppFacadeConfigTest
+ * @group TaxAppFacadeConfigurationTest
  * Add your own group annotations below this line
  */
-class TaxAppFacadeConfigTest extends Unit
+class TaxAppFacadeConfigurationTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\TaxApp\TaxAppBusinessTester

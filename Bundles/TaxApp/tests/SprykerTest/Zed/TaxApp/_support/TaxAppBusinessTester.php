@@ -48,7 +48,6 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\TaxApp\Dependency\Facade\TaxAppToOauthClientFacadeBridge;
 use Spryker\Zed\TaxApp\TaxAppDependencyProvider;
 use SprykerTest\Shared\TaxApp\Plugins\CalculableObjectTaxAppExpanderPlugin;
-use SprykerTest\Zed\TaxApp\Business\TaxAppFacadeCalculationTest;
 
 /**
  * Inherited Methods
@@ -88,11 +87,18 @@ class TaxAppBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $priceMode
+     * @param bool $withBillingAddress
+     * @param array $billingAddressSeed
      *
      * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
-    public function createCalculableObjectTransfer(StoreTransfer $storeTransfer): CalculableObjectTransfer
-    {
+    public function createCalculableObjectTransfer(
+        StoreTransfer $storeTransfer,
+        string $priceMode = 'NET_MODE',
+        bool $withBillingAddress = true,
+        array $billingAddressSeed = []
+    ): CalculableObjectTransfer {
         $merchantTransfer1 = $this->haveMerchant();
         $this->haveMerchantProfile($merchantTransfer1);
         $merchantTransfer2 = $this->haveMerchant();
@@ -114,9 +120,8 @@ class TaxAppBusinessTester extends Actor
             ExpenseTransfer::SUM_TAX_AMOUNT => null,
         ]));
 
-        $quoteTransfer = (new QuoteBuilder())
+        $quoteBuilder = (new QuoteBuilder())
             ->withCustomer()
-            ->withBillingAddress()
             ->withItem(
                 (new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer1->getMerchantReference()]))
                     ->withShipment(
@@ -133,11 +138,16 @@ class TaxAppBusinessTester extends Actor
             )
             ->withTotals()
             ->withExpense($expenseBuilder)
-            ->withExpense($customExpenseBuilder)
-            ->build();
+            ->withExpense($customExpenseBuilder);
+
+        if ($withBillingAddress) {
+            $quoteBuilder->withBillingAddress($billingAddressSeed);
+        }
+
+        $quoteTransfer = $quoteBuilder->build();
 
         $quoteTransfer->setStore($storeTransfer);
-        $quoteTransfer->setPriceMode('NET_MODE');
+        $quoteTransfer->setPriceMode($priceMode);
 
         $calculableObjectTransfer = (new CalculableObjectTransfer())->fromArray($quoteTransfer->toArray(), true);
         $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
@@ -379,9 +389,9 @@ class TaxAppBusinessTester extends Actor
      */
     public function mockTaxAppClientWithTaxCalculationResponse(TaxCalculationResponseTransfer $taxCalculationResponseTransfer): void
     {
-        $clientMock = Stub::makeEmpty(TaxAppClient::class);
-        $clientMock->expects(Expected::once()->getMatcher())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
-        $this->mockFactoryMethod('getTaxAppClient', $clientMock);
+        $taxAppClientMock = Stub::makeEmpty(TaxAppClient::class);
+        $taxAppClientMock->expects(Expected::once()->getMatcher())->method('requestTaxQuotation')->willReturn($taxCalculationResponseTransfer);
+        $this->mockFactoryMethod('getTaxAppClient', $taxAppClientMock);
 
         $this->mockOauthClient();
     }
@@ -439,28 +449,6 @@ class TaxAppBusinessTester extends Actor
             ->setItems($saveOrderTransfer->getOrderItems())
             ->setExpenses($quoteTransfer->getExpenses())
             ->setBillingAddress($quoteTransfer->getBillingAddress());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderTransferForRefund(StoreTransfer $storeTransfer): OrderTransfer
-    {
-        $orderTransfer = $this->createOrderByStateMachineProcessName(
-            TaxAppFacadeCalculationTest::DEFAULT_OMS_PROCESS_NAME,
-            $storeTransfer,
-        );
-        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
-        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
-
-        foreach ($orderTransfer->getItems() as $item) {
-            $item->setSku('some_sku');
-            $item->setCanceledAmount($item->getSumPrice());
-        }
-
-        return $orderTransfer;
     }
 
     /**
