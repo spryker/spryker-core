@@ -96,8 +96,13 @@ class StoresReader implements StoresReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
         $storeId = $restRequest->getResource()->getId();
+
         if ($storeId !== null) {
             $storeTransfer = $this->storeClient->getStoreByName($storeId);
+
+            if ($storeTransfer->getIdStore() === null) {
+                return $this->getInvalidStoreRestResponse();
+            }
 
             return $this->getRestResponse($storeTransfer, $response);
         }

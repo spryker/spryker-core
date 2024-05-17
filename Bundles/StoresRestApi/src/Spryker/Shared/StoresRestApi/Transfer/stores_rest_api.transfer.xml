@@ -58,6 +58,7 @@
         <property name="name" type="string"/>
         <property name="countries" type="array" singular="country"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="CountryCollection">
