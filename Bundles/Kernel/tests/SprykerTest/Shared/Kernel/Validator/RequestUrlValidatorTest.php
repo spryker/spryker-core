@@ -203,6 +203,13 @@ class RequestUrlValidatorTest extends Unit
                 'redirect request' => true,
                 'validation result' => true,
             ],
+            'relative url to some page with special characters' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/some-page/index/some-page-child?$param=&param2=%7B%22id%22:%22test%22&param3=',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
         ];
     }
 
