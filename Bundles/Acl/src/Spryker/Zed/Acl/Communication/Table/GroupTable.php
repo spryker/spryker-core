@@ -11,6 +11,7 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -30,6 +31,11 @@ class GroupTable extends AbstractTable
      * @var string
      */
     public const EDIT_PARAMETER = 'id-group';
+
+    /**
+     * @var string
+     */
+    protected const ROOT_GROUP_VISIBLE_NAME = 'Administrators group (%s)';
 
     /**
      * @var \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
@@ -93,7 +99,7 @@ class GroupTable extends AbstractTable
 
         foreach ($groupCollection as $group) {
             $groups[] = [
-                SpyAclGroupTableMap::COL_NAME => $group[SpyAclGroupTableMap::COL_NAME],
+                SpyAclGroupTableMap::COL_NAME => $this->prepareGroupName($group[SpyAclGroupTableMap::COL_NAME]),
                 SpyAclGroupTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($group[SpyAclGroupTableMap::COL_CREATED_AT]),
                 static::ROLES => $this->createRoleUrl($group),
                 static::EDIT => $this->createEditUrl($group),
@@ -101,6 +107,16 @@ class GroupTable extends AbstractTable
         }
 
         return $groups;
+    }
+
+    /**
+     * @param string $groupName
+     *
+     * @return string
+     */
+    protected function prepareGroupName(string $groupName): string
+    {
+        return $groupName !== AclConstants::ROOT_GROUP ? $groupName : sprintf(static::ROOT_GROUP_VISIBLE_NAME, AclConstants::ROOT_GROUP);
     }
 
     /**
