@@ -1,0 +1,77 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Merchant Commissions' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/merchant-commission-gui/list'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Import commission file' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    {{ 'Get started with creating commissions by importing your CSV file' | trans }}
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <span class="label label-primary">1</span> {{ 'Download template' | trans }}
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <a href="{{ url('/merchant-commission-gui/import/download-template') }}">{{ 'commissions_template.csv' }}</a>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <span class="label label-primary">2</span> {{ 'Import CSV file' | trans }}
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    {{ form_start(form) }}
+
+                    {{ form_widget(form) }}
+
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Upload' | trans }}">
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <hr>
+
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <span class="label label-primary">3</span> {{ 'Troubleshooting Tips' | trans }}
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <a href="#">{{ 'Documentation' | trans }}</a>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% if errorTable is not null %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Errors found inside your file' | trans } %}
+            {% block widget_content %}
+                {% include '@Gui/Table/table.twig' with { table: errorTable, id: 'merchant-commission-import-errors' } %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}

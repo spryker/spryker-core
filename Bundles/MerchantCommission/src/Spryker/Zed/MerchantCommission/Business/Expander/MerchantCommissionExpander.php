@@ -88,7 +88,7 @@ class MerchantCommissionExpander implements MerchantCommissionExpanderInterface
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
      */
-    public function expandMerchantCommissionsWithMerchantCommissionGroups(ArrayObject $merchantCommissionTransfers): ArrayObject
+    public function expandMerchantCommissionsWithMerchantCommissionGroupsByUuids(ArrayObject $merchantCommissionTransfers): ArrayObject
     {
         $merchantCommissionGroupUuids = $this->merchantCommissionGroupDataExtractor->extractMerchantCommissionGroupUuidsFromMerchantCommissionTransfers(
             $merchantCommissionTransfers,
@@ -103,6 +103,34 @@ class MerchantCommissionExpander implements MerchantCommissionExpanderInterface
         foreach ($merchantCommissionTransfers as $merchantCommissionTransfer) {
             $merchantCommissionGroupUuid = $merchantCommissionTransfer->getMerchantCommissionGroupOrFail()->getUuidOrFail();
             $merchantCommissionGroupTransfer = $merchantCommissionGroupTransfersIndexedByUuid[$merchantCommissionGroupUuid] ?? null;
+            if ($merchantCommissionGroupTransfer) {
+                $merchantCommissionTransfer->setMerchantCommissionGroup($merchantCommissionGroupTransfer);
+            }
+        }
+
+        return $merchantCommissionTransfers;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
+     */
+    public function expandMerchantCommissionsWithMerchantCommissionGroupsByKeys(ArrayObject $merchantCommissionTransfers): ArrayObject
+    {
+        $merchantCommissionGroupKeys = $this->merchantCommissionGroupDataExtractor->extractMerchantCommissionGroupKeysFromMerchantCommissionTransfers(
+            $merchantCommissionTransfers,
+        );
+        $merchantCommissionGroupCollectionTransfer = $this->merchantCommissionGroupReader->getMerchantCommissionGroupCollectionByKeys(
+            $merchantCommissionGroupKeys,
+        );
+        $merchantCommissionGroupTransfersIndexedByKey = $this->getMerchantCommissionGroupTransfersIndexedByKey(
+            $merchantCommissionGroupCollectionTransfer->getMerchantCommissionGroups(),
+        );
+
+        foreach ($merchantCommissionTransfers as $merchantCommissionTransfer) {
+            $merchantCommissionGroupKey = $merchantCommissionTransfer->getMerchantCommissionGroupOrFail()->getKeyOrFail();
+            $merchantCommissionGroupTransfer = $merchantCommissionGroupTransfersIndexedByKey[$merchantCommissionGroupKey] ?? null;
             if ($merchantCommissionGroupTransfer) {
                 $merchantCommissionTransfer->setMerchantCommissionGroup($merchantCommissionGroupTransfer);
             }
@@ -136,6 +164,21 @@ class MerchantCommissionExpander implements MerchantCommissionExpanderInterface
         $indexedMerchantCommissionGroupTransfers = [];
         foreach ($merchantCommissionGroupTransfers as $merchantCommissionGroupTransfer) {
             $indexedMerchantCommissionGroupTransfers[$merchantCommissionGroupTransfer->getUuidOrFail()] = $merchantCommissionGroupTransfer;
+        }
+
+        return $indexedMerchantCommissionGroupTransfers;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionGroupTransfer> $merchantCommissionGroupTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\MerchantCommissionGroupTransfer>
+     */
+    protected function getMerchantCommissionGroupTransfersIndexedByKey(ArrayObject $merchantCommissionGroupTransfers): array
+    {
+        $indexedMerchantCommissionGroupTransfers = [];
+        foreach ($merchantCommissionGroupTransfers as $merchantCommissionGroupTransfer) {
+            $indexedMerchantCommissionGroupTransfers[$merchantCommissionGroupTransfer->getKeyOrFail()] = $merchantCommissionGroupTransfer;
         }
 
         return $indexedMerchantCommissionGroupTransfers;

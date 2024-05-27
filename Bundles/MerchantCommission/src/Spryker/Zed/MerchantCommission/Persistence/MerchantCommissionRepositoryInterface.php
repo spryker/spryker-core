@@ -56,4 +56,11 @@ interface MerchantCommissionRepositoryInterface
      * @return list<int>
      */
     public function getMerchantIdsRelatedToMerchantCommission(int $idMerchantCommission): array;
+
+    /**
+     * @param list<string> $merchantCommissionKeys
+     *
+     * @return list<string>
+     */
+    public function getExistingMerchantCommissionKeys(array $merchantCommissionKeys): array;
 }

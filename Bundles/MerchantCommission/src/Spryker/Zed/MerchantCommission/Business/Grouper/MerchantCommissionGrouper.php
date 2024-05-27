@@ -8,21 +8,41 @@
 namespace Spryker\Zed\MerchantCommission\Business\Grouper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 use Spryker\Zed\MerchantCommission\Business\Extractor\ErrorExtractorInterface;
+use Spryker\Zed\MerchantCommission\Business\Extractor\MerchantCommissionDataExtractorInterface;
+use Spryker\Zed\MerchantCommission\Persistence\MerchantCommissionRepositoryInterface;
 
 class MerchantCommissionGrouper implements MerchantCommissionGrouperInterface
 {
+    /**
+     * @var \Spryker\Zed\MerchantCommission\Persistence\MerchantCommissionRepositoryInterface
+     */
+    protected MerchantCommissionRepositoryInterface $merchantCommissionRepository;
+
+    /**
+     * @var \Spryker\Zed\MerchantCommission\Business\Extractor\MerchantCommissionDataExtractorInterface
+     */
+    protected MerchantCommissionDataExtractorInterface $merchantCommissionDataExtractor;
+
     /**
      * @var \Spryker\Zed\MerchantCommission\Business\Extractor\ErrorExtractorInterface
      */
     protected ErrorExtractorInterface $errorExtractor;
 
     /**
+     * @param \Spryker\Zed\MerchantCommission\Persistence\MerchantCommissionRepositoryInterface $merchantCommissionRepository
+     * @param \Spryker\Zed\MerchantCommission\Business\Extractor\MerchantCommissionDataExtractorInterface $merchantCommissionDataExtractor
      * @param \Spryker\Zed\MerchantCommission\Business\Extractor\ErrorExtractorInterface $errorExtractor
      */
-    public function __construct(ErrorExtractorInterface $errorExtractor)
-    {
+    public function __construct(
+        MerchantCommissionRepositoryInterface $merchantCommissionRepository,
+        MerchantCommissionDataExtractorInterface $merchantCommissionDataExtractor,
+        ErrorExtractorInterface $errorExtractor
+    ) {
+        $this->merchantCommissionRepository = $merchantCommissionRepository;
+        $this->merchantCommissionDataExtractor = $merchantCommissionDataExtractor;
         $this->errorExtractor = $errorExtractor;
     }
 
@@ -52,6 +72,37 @@ class MerchantCommissionGrouper implements MerchantCommissionGrouperInterface
         }
 
         return [$validMerchantCommissionTransfers, $invalidMerchantCommissionTransfers];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+     *
+     * @return list<\ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>>
+     */
+    public function groupMerchantCommissionsByPersistenceExistence(
+        MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+    ): array {
+        $requestedMerchantCommissionKeys = $this->merchantCommissionDataExtractor->extractMerchantCommissionKeys(
+            $merchantCommissionCollectionRequestTransfer->getMerchantCommissions(),
+        );
+        $persistedMerchantCommissionKeys = $this->merchantCommissionRepository->getExistingMerchantCommissionKeys(
+            $requestedMerchantCommissionKeys,
+        );
+        $persistedMerchantCommissionKeys = array_combine($persistedMerchantCommissionKeys, $persistedMerchantCommissionKeys);
+
+        $existingMerchantCommissions = new ArrayObject();
+        $newMerchantCommissions = new ArrayObject();
+        foreach ($merchantCommissionCollectionRequestTransfer->getMerchantCommissions() as $entityIdentifier => $merchantCommissionTransfer) {
+            if (isset($persistedMerchantCommissionKeys[$merchantCommissionTransfer->getKeyOrFail()])) {
+                $existingMerchantCommissions->offsetSet($entityIdentifier, $merchantCommissionTransfer);
+
+                continue;
+            }
+
+            $newMerchantCommissions->offsetSet($entityIdentifier, $merchantCommissionTransfer);
+        }
+
+        return [$newMerchantCommissions, $existingMerchantCommissions];
     }
 
     /**

@@ -95,6 +95,7 @@
 
     <transfer name="MerchantCommissionGroupConditions" strict="true">
         <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="keys" type="string[]" singular="key"/>
     </transfer>
 
     <transfer name="Merchant">

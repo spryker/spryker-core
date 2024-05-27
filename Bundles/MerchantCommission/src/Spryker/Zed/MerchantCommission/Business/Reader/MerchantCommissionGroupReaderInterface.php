@@ -17,4 +17,11 @@ interface MerchantCommissionGroupReaderInterface
      * @return \Generated\Shared\Transfer\MerchantCommissionGroupCollectionTransfer
      */
     public function getMerchantCommissionGroupCollectionByUuids(array $uuids): MerchantCommissionGroupCollectionTransfer;
+
+    /**
+     * @param list<string> $merchantCommissionGroupKeys
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionGroupCollectionTransfer
+     */
+    public function getMerchantCommissionGroupCollectionByKeys(array $merchantCommissionGroupKeys): MerchantCommissionGroupCollectionTransfer;
 }

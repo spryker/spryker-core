@@ -90,6 +90,55 @@ class MerchantCommissionBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionTransfer
+     */
+    public function createMerchantCommissionForImport(array $seedData = []): MerchantCommissionTransfer
+    {
+        if (!isset($seedData[MerchantCommissionTransfer::MERCHANT_COMMISSION_GROUP])) {
+            $merchantCommissionGroupTransfer = $this->haveMerchantCommissionGroup();
+            $seedData[MerchantCommissionTransfer::MERCHANT_COMMISSION_GROUP] = $merchantCommissionGroupTransfer;
+        }
+
+        if (!isset($seedData[MerchantCommissionTransfer::STORE_RELATION])) {
+            $storeTransfer = $this->haveStore();
+            $seedData[MerchantCommissionTransfer::STORE_RELATION] = (new StoreRelationTransfer())->addStores($storeTransfer);
+        }
+
+        if (!isset($seedData[MerchantCommissionTransfer::MERCHANTS])) {
+            $merchantTransfer = $this->haveMerchant();
+            $seedData[MerchantCommissionTransfer::MERCHANTS] = [$merchantTransfer->toArray()];
+        }
+
+        $merchantCommissionData = $this->haveMerchantCommission($seedData)->toArray();
+        unset($merchantCommissionData[MerchantCommissionTransfer::ID_MERCHANT_COMMISSION]);
+        unset($merchantCommissionData[MerchantCommissionTransfer::UUID]);
+
+        return (new MerchantCommissionTransfer())->fromArray($merchantCommissionData, true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantCommissionTransfer
+     */
+    public function createMerchantCommissionTransferForImport(): MerchantCommissionTransfer
+    {
+        $storeTransfer = $this->haveStore();
+        $merchantCommissionGroupTransfer = $this->haveMerchantCommissionGroup();
+
+        return (new MerchantCommissionBuilder([
+            MerchantCommissionTransfer::MERCHANT_COMMISSION_GROUP => [
+                MerchantCommissionGroupTransfer::KEY => $merchantCommissionGroupTransfer->getKeyOrFail(),
+            ],
+            MerchantCommissionTransfer::STORE_RELATION => [
+                StoreRelationTransfer::STORES => [
+                    [StoreTransfer::NAME => $storeTransfer->getNameOrFail()],
+                ],
+            ],
+        ]))->build();
+    }
+
+    /**
      * @param int $idMerchantCommission
      *
      * @return \Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommission

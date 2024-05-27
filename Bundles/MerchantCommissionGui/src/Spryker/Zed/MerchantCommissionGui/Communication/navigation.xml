@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config>
+    <merchant-commission-gui>
+        <label>Merchant Commissions</label>
+        <title>Merchant Commissions</title>
+        <bundle>merchant-commission-gui</bundle>
+        <controller>list</controller>
+        <action>index</action>
+        <icon>fa-file-text-o</icon>
+        <pages>
+            <merchant-commission-view>
+                <label>View Merchant Commission</label>
+                <title>View Merchant Commission</title>
+                <bundle>merchant-commission-gui</bundle>
+                <controller>view</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </merchant-commission-view>
+            <merchant-commission-import>
+                <label>Import Merchant Commissions</label>
+                <title>Import Merchant Commissions</title>
+                <bundle>merchant-commission-gui</bundle>
+                <controller>import</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </merchant-commission-import>
+        </pages>
+    </merchant-commission-gui>
+</config>

@@ -26,5 +26,12 @@ interface MerchantCommissionExpanderInterface
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
      */
-    public function expandMerchantCommissionsWithMerchantCommissionGroups(ArrayObject $merchantCommissionTransfers): ArrayObject;
+    public function expandMerchantCommissionsWithMerchantCommissionGroupsByUuids(ArrayObject $merchantCommissionTransfers): ArrayObject;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
+     */
+    public function expandMerchantCommissionsWithMerchantCommissionGroupsByKeys(ArrayObject $merchantCommissionTransfers): ArrayObject;
 }

@@ -43,4 +43,21 @@ class MerchantCommissionGroupReader implements MerchantCommissionGroupReaderInte
             $merchantCommissionGroupCriteriaTransfer,
         );
     }
+
+    /**
+     * @param list<string> $merchantCommissionGroupKeys
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionGroupCollectionTransfer
+     */
+    public function getMerchantCommissionGroupCollectionByKeys(array $merchantCommissionGroupKeys): MerchantCommissionGroupCollectionTransfer
+    {
+        $merchantCommissionGroupConditionsTransfer = (new MerchantCommissionGroupConditionsTransfer())->setKeys($merchantCommissionGroupKeys);
+        $merchantCommissionGroupCriteriaTransfer = (new MerchantCommissionGroupCriteriaTransfer())->setMerchantCommissionGroupConditions(
+            $merchantCommissionGroupConditionsTransfer,
+        );
+
+        return $this->merchantCommissionRepository->getMerchantCommissionGroupCollection(
+            $merchantCommissionGroupCriteriaTransfer,
+        );
+    }
 }

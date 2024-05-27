@@ -70,4 +70,21 @@ class MerchantCommissionFacade extends AbstractFacade implements MerchantCommiss
             ->createMerchantCommissionUpdater()
             ->updateMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer
+     */
+    public function importMerchantCommissionCollection(
+        MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+    ): MerchantCommissionCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantCommissionImporter()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+    }
 }

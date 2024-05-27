@@ -1,0 +1,26 @@
+ID,ID
+Name,Name
+Period,Zeitraum
+Status,Status
+Priority,Priorität
+Group,Gruppe
+Store,Store
+Actions,Aktionen
+Active,Aktiv
+Inactive,Inaktiv
+"Merchant Commissions",Händlerprovisionen
+"View Merchant Commission","Händlerprovision anzeigen"
+"Import Merchant Commissions","Händlerprovisionen importieren"
+"Merchant Commission with ID ""%id%"" doesn\'t exist.","Händlerprovision mit der ID „%id%“ existiert nicht."
+"Row n°","Reihe n°"
+Error,Fehler
+"Merchant commissions imported successfully.","Händlerprovisionen wurden erfolgreich importiert."
+"The following headers are missing in the uploaded CSV file: %s.","Folgende Kopfzeilen fehlen in der hochgeladenen CSV-Datei: %s."
+"The following columns are empty in the uploaded CSV file: %s.","Folgende Spalten sind in der hochgeladenen CSV-Datei leer: %s."
+"Troubleshooting Tips","Tipps zur Fehlerbehebung"
+Documentation,Dokumentation
+"Import commission file","Provisionsdatei importieren"
+"Get started with creating commissions by importing your CSV file","Mit der Erstellung von Händlerprovisionen beginnen, indem Sie Ihre CSV-Datei importieren"
+"Download template","Vorlage herunterladen"
+"Import CSV file","CSV-Datei importieren"
+"Errors found inside your file","In der CSV-Datei wurden Fehler gefunden"

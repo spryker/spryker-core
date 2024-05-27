@@ -42,6 +42,13 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
     protected const COL_FK_MERCHANT = 'spy_merchant_commission_merchant.fk_merchant';
 
     /**
+     * @uses \Orm\Zed\MerchantCommission\Persistence\Map\SpyMerchantCommissionTableMap::COL_KEY
+     *
+     * @var string
+     */
+    protected const COL_KEY = 'spy_merchant_commission.key';
+
+    /**
      * @module Merchant
      * @module Store
      *
@@ -180,6 +187,21 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
     }
 
     /**
+     * @param list<string> $merchantCommissionKeys
+     *
+     * @return list<string>
+     */
+    public function getExistingMerchantCommissionKeys(array $merchantCommissionKeys): array
+    {
+        return $this->getFactory()
+            ->getMerchantCommissionQuery()
+            ->filterByKey_In($merchantCommissionKeys)
+            ->select([static::COL_KEY])
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery $merchantCommissionQuery
      * @param \Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer $merchantCommissionCriteriaTransfer
      *
@@ -288,6 +310,12 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
         if ($merchantCommissionGroupConditionsTransfer->getUuids() !== []) {
             $merchantCommissionGroupQuery->filterByUuid_In(
                 $merchantCommissionGroupConditionsTransfer->getUuids(),
+            );
+        }
+
+        if ($merchantCommissionGroupConditionsTransfer->getKeys() !== []) {
+            $merchantCommissionGroupQuery->filterByKey_In(
+                $merchantCommissionGroupConditionsTransfer->getKeys(),
             );
         }
 

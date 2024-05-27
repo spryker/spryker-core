@@ -25,6 +25,8 @@ use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 use Spryker\Service\DataExport\Writer\DataExportLocalWriter;
 use Spryker\Service\DataExport\Writer\DataExportWriter;
 use Spryker\Service\DataExport\Writer\DataExportWriterInterface;
+use Spryker\Service\DataExport\Writer\FormattedDataExportWriterInterface;
+use Spryker\Service\DataExport\Writer\OutputStreamFormattedDataExportWriter;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
@@ -116,6 +118,14 @@ class DataExportServiceFactory extends AbstractServiceFactory
             $this->createDataExportPathResolver(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Service\DataExport\Writer\FormattedDataExportWriterInterface
+     */
+    public function createOutputStreamFormattedDataExportWriter(): FormattedDataExportWriterInterface
+    {
+        return new OutputStreamFormattedDataExportWriter();
     }
 
     /**

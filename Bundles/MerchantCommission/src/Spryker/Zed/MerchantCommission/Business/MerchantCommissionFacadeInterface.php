@@ -75,7 +75,7 @@ interface MerchantCommissionFacadeInterface
      * - Stores merchant commissions amounts at Persistence.
      * - Stores merchant commission store relations at Persistence.
      * - Stores merchant commission merchant relations at Persistence.
-     * - Returns `MerchantCommissionCollectionResponseTransfer` with persisted merchant commission requests and errors if any occurred.
+     * - Returns `MerchantCommissionCollectionResponseTransfer` with persisted merchant commissions and errors if any occurred.
      *
      * @api
      *
@@ -122,7 +122,7 @@ interface MerchantCommissionFacadeInterface
      * - Stores merchant commissions amounts at Persistence.
      * - Stores merchant commission store relations at Persistence.
      * - Stores merchant commission merchant relations at Persistence.
-     * - Returns `MerchantCommissionCollectionResponseTransfer` with persisted merchant commission requests and errors if any occurred.
+     * - Returns `MerchantCommissionCollectionResponseTransfer` with persisted merchant commissions and errors if any occurred.
      *
      * @api
      *
@@ -131,6 +131,49 @@ interface MerchantCommissionFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer
      */
     public function updateMerchantCommissionCollection(
+        MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+    ): MerchantCommissionCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantCommissionCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `MerchantCommissionCollectionRequestTransfer.merchantCommissions` to be set.
+     * - Requires `MerchantCommissionTransfer.uuid` to be set.
+     * - Requires `MerchantCommissionTransfer.key` to be set.
+     * - Requires `MerchantCommissionTransfer.name` to be set.
+     * - Requires `MerchantCommissionTransfer.calculationType` to be set.
+     * - Requires `MerchantCommissionTransfer.isActive` to be set.
+     * - Requires `MerchantCommissionTransfer.merchantCommissionGroup` to be set.
+     * - Requires `MerchantCommissionTransfer.merchantCommissionGroup.key` to be set.
+     * - Requires `MerchantCommissionTransfer.getStoreRelation` to be set.
+     * - Requires `MerchantCommissionTransfer.getStoreRelation.store.name` to be set.
+     * - Expects `MerchantCommissionTransfer.merchants.merchantReference` to be set.
+     * - Expects `MerchantCommissionTransfer.merchantCommissionAmount.currency` to be set.
+     * - Expects `MerchantCommissionTransfer.merchantCommissionAmount.currency.code` to be set.
+     * - Determines what merchant commissions should be updated by provided merchant commissions keys.
+     * - Validates that merchant commission keys are unique for every merchant commission within provided collection.
+     * - Validates that merchant commission keys length is valid.
+     * - Validates that merchant commission name length is valid.
+     * - Validates that merchant commission description length is valid.
+     * - Validates that merchant commission priority is in valid range.
+     * - Validates that merchant commission validity dates are valid datetime.
+     * - Validates that merchant commission validity period is valid.
+     * - Validates that merchant commission group key exists.
+     * - Validates that related stores exists.
+     * - Validates that related merchants exists.
+     * - Validates that related currencies exists.
+     * - Uses `MerchantCommissionCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Creates merchant commissions with provided relations in Persistence if they do not already exist.
+     * - Updates existing merchant commissions with all provided relation at Persistence.
+     * - Returns `MerchantCommissionCollectionResponseTransfer` with persisted merchant commissions and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer
+     */
+    public function importMerchantCommissionCollection(
         MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
     ): MerchantCommissionCollectionResponseTransfer;
 }

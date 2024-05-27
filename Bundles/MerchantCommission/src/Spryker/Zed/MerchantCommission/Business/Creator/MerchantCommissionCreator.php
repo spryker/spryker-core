@@ -92,7 +92,7 @@ class MerchantCommissionCreator implements MerchantCommissionCreatorInterface
             return $merchantCommissionCollectionResponseTransfer;
         }
 
-        $validMerchantCommissionTransfers = $this->merchantCommissionExpander->expandMerchantCommissionsWithMerchantCommissionGroups(
+        $validMerchantCommissionTransfers = $this->merchantCommissionExpander->expandMerchantCommissionsWithMerchantCommissionGroupsByUuids(
             $validMerchantCommissionTransfers,
         );
         $persistedMerchantCommissionTransfers = $this->getTransactionHandler()->handleTransaction(function () use ($validMerchantCommissionTransfers) {
@@ -112,7 +112,23 @@ class MerchantCommissionCreator implements MerchantCommissionCreatorInterface
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
      */
-    public function executeCreateMerchantCommissionCollectionTransaction(ArrayObject $merchantCommissionTransfers): ArrayObject
+    public function createPreValidatedMerchantCommissions(ArrayObject $merchantCommissionTransfers): ArrayObject
+    {
+        $merchantCommissionTransfers = $this->merchantCommissionExpander->expandMerchantCommissionsWithMerchantCommissionGroupsByKeys(
+            $merchantCommissionTransfers,
+        );
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantCommissionTransfers) {
+            return $this->executeCreateMerchantCommissionCollectionTransaction($merchantCommissionTransfers);
+        });
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
+     */
+    protected function executeCreateMerchantCommissionCollectionTransaction(ArrayObject $merchantCommissionTransfers): ArrayObject
     {
         $persistedMerchantCommissionTransfers = new ArrayObject();
         foreach ($merchantCommissionTransfers as $entityIdentifier => $merchantCommissionTransfer) {

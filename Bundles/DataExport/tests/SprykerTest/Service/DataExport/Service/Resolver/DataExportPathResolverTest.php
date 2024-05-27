@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Service\DataExport\Service\Resolver;
+namespace SprykerTest\Service\DataExport\Service\Resolver;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
@@ -14,6 +14,7 @@ use Spryker\Service\DataExport\Resolver\DataExportPathResolver;
 /**
  * Auto-generated group annotations
  *
+ * @group SprykerTest
  * @group Service
  * @group DataExport
  * @group Service

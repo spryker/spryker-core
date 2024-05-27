@@ -1,0 +1,135 @@
+{#
+@var merchantCommission \Generated\Shared\Transfer\MerchantCommissionTransfer
+@var merchantCommission.merchantCommissionGroup \Generated\Shared\Transfer\MerchantCommissionGroupTransfer
+@var merchantCommission.merchantCommissionAmounts \Generated\Shared\Transfer\MerchantCommissionAmountTransfer
+@var merchantCommission.merchants \Generated\Shared\Transfer\MerchantTransfer
+@var merchantCommission.storeRelation \Generated\Shared\Transfer\StoreRelationTransfer
+@var merchantCommission.storeRelation.stores \Generated\Shared\Transfer\StoreTransfer
+#}
+
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set page_title = 'View Merchant Commisison' | trans ~ ': ' ~ merchantCommission.idMerchantCommission %}
+
+{% block head_title page_title %}
+
+{% block section_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url(urlMerchantCommissionList), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Name' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.name }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Description' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.description }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.validFrom | formatDateTime }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.validTo | formatDateTime }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+                <div class="col-xs-10">{{ (merchantCommission.isActive ? 'Active' : 'Inactive') | trans }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Priority' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.priority }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Group' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.merchantCommissionGroup.name }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Store Relation' | trans }}</b></div>
+                <div class="col-xs-10">
+                    {% for store in merchantCommission.storeRelation.stores %}
+                        <span class="label label-info">{{ store.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Commission Calculation' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Calculator Type' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.calculatorTypePlugin }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Item Condition' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.itemCondition }}</div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Order Condition' | trans }}</b></div>
+                <div class="col-xs-10">{{ merchantCommission.orderCondition }}</div>
+            </div>
+
+            {% if merchantCommission.merchantCommissionAmounts.count == 0 %}
+                <div class="row form-group">
+                    <div class="col-xs-2"><b>{{ 'Amount' | trans }}</b></div>
+                    <div class="col-xs-10">{{ merchantCommission.amount }} %</div>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+    {% if merchantCommission.merchantCommissionAmounts.count != 0 %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Commission Amounts' | trans } %}
+            {% block widget_content %}
+                {% for merchantCommissionAmount in merchantCommission.merchantCommissionAmounts %}
+                    <div class="row form-group">
+                        <div class="col-xs-2"><b>{{ 'Gross' | trans }}</b></div>
+                        <div class="col-xs-10">
+                            {{ merchantCommissionAmount.grossAmount | money(false, merchantCommissionAmount.currency.code) ~ ' ' ~ merchantCommissionAmount.currency.symbol }}
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-xs-2"><b>{{ 'Net' | trans }}</b></div>
+                        <div class="col-xs-10">
+                            {{ merchantCommissionAmount.netAmount | money(false, merchantCommissionAmount.currency.code) ~ ' ' ~ merchantCommissionAmount.currency.symbol }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
+    {% if merchantCommission.merchants.count != 0 %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Allow List' | trans } %}
+            {% block widget_content %}
+                <div class="row form-group">
+                    <div class="col-xs-2"><b>{{ 'Merchants' | trans }}</b></div>
+                    <div class="col-xs-10">
+                        {% for merchant in merchantCommission.merchants %}
+                            <span class="label label-info">{{ merchant.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+{% endblock %}

@@ -19,9 +19,23 @@ interface MerchantCommissionGroupDataExtractorInterface
     public function extractMerchantCommissionGroupUuids(ArrayObject $merchantCommissionGroupTransfers): array;
 
     /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionGroupTransfer> $merchantCommissionGroupTransfers
+     *
+     * @return list<string>
+     */
+    public function extractUniqueMerchantCommissionGroupKeys(ArrayObject $merchantCommissionGroupTransfers): array;
+
+    /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
      *
      * @return list<string>
      */
     public function extractMerchantCommissionGroupUuidsFromMerchantCommissionTransfers(ArrayObject $merchantCommissionTransfers): array;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return list<string>
+     */
+    public function extractMerchantCommissionGroupKeysFromMerchantCommissionTransfers(ArrayObject $merchantCommissionTransfers): array;
 }

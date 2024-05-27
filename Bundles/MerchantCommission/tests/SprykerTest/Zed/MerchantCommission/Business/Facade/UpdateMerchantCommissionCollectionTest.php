@@ -361,7 +361,7 @@ class UpdateMerchantCommissionCollectionTest extends Unit
 
         // Act
         $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
-            ->createMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+            ->updateMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
 
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
@@ -419,7 +419,7 @@ class UpdateMerchantCommissionCollectionTest extends Unit
 
         // Act
         $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
-            ->createMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+            ->updateMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
 
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(

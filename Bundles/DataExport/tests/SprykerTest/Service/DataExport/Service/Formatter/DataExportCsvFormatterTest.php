@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Service\DataExport\Service\Formatter;
+namespace SprykerTest\Service\DataExport\Service\Formatter;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataExportBatchTransfer;
@@ -17,6 +17,7 @@ use Spryker\Service\DataExport\Formatter\DataExportCsvFormatter;
 /**
  * Auto-generated group annotations
  *
+ * @group SprykerTest
  * @group Service
  * @group DataExport
  * @group Service

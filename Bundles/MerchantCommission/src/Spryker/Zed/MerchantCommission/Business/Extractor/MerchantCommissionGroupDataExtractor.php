@@ -27,6 +27,21 @@ class MerchantCommissionGroupDataExtractor implements MerchantCommissionGroupDat
     }
 
     /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionGroupTransfer> $merchantCommissionGroupTransfers
+     *
+     * @return list<string>
+     */
+    public function extractUniqueMerchantCommissionGroupKeys(ArrayObject $merchantCommissionGroupTransfers): array
+    {
+        $merchantCommissionGroupKeys = [];
+        foreach ($merchantCommissionGroupTransfers as $merchantCommissionGroupTransfer) {
+            $merchantCommissionGroupKeys[$merchantCommissionGroupTransfer->getKeyOrFail()] = $merchantCommissionGroupTransfer->getKeyOrFail();
+        }
+
+        return array_values($merchantCommissionGroupKeys);
+    }
+
+    /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
      *
      * @return list<string>
@@ -40,5 +55,21 @@ class MerchantCommissionGroupDataExtractor implements MerchantCommissionGroupDat
         }
 
         return array_values($merchantCommissionGroupUuids);
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return list<string>
+     */
+    public function extractMerchantCommissionGroupKeysFromMerchantCommissionTransfers(ArrayObject $merchantCommissionTransfers): array
+    {
+        $merchantCommissionGroupKeys = [];
+        foreach ($merchantCommissionTransfers as $merchantCommissionTransfer) {
+            $merchantCommissionGroupTransfer = $merchantCommissionTransfer->getMerchantCommissionGroupOrFail();
+            $merchantCommissionGroupKeys[$merchantCommissionGroupTransfer->getKeyOrFail()] = $merchantCommissionGroupTransfer->getKeyOrFail();
+        }
+
+        return array_values($merchantCommissionGroupKeys);
     }
 }

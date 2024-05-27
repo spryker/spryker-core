@@ -42,6 +42,8 @@ use Spryker\Zed\MerchantCommission\Business\Extractor\StoreDataExtractor;
 use Spryker\Zed\MerchantCommission\Business\Extractor\StoreDataExtractorInterface;
 use Spryker\Zed\MerchantCommission\Business\Grouper\MerchantCommissionGrouper;
 use Spryker\Zed\MerchantCommission\Business\Grouper\MerchantCommissionGrouperInterface;
+use Spryker\Zed\MerchantCommission\Business\Importer\MerchantCommissionImporter;
+use Spryker\Zed\MerchantCommission\Business\Importer\MerchantCommissionImporterInterface;
 use Spryker\Zed\MerchantCommission\Business\Reader\CurrencyReader;
 use Spryker\Zed\MerchantCommission\Business\Reader\CurrencyReaderInterface;
 use Spryker\Zed\MerchantCommission\Business\Reader\MerchantCommissionAmountReader;
@@ -64,6 +66,8 @@ use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionStoreUpdat
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionStoreUpdaterInterface;
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionUpdater;
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionUpdaterInterface;
+use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionImportValidator;
+use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionImportValidatorInterface;
 use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidator;
 use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidatorInterface;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\CurrencyExistsMerchantCommissionValidatorRule;
@@ -73,6 +77,7 @@ use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\Ke
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\KeyUniqueMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionGroupExistsMerchantCommissionValidatorRule;
+use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\NameLengthMerchantCommissionValidatorRule;
@@ -232,6 +237,19 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Importer\MerchantCommissionImporterInterface
+     */
+    public function createMerchantCommissionImporter(): MerchantCommissionImporterInterface
+    {
+        return new MerchantCommissionImporter(
+            $this->createMerchantCommissionGrouper(),
+            $this->createMerchantCommissionImportValidator(),
+            $this->createMerchantCommissionCreator(),
+            $this->createMerchantCommissionUpdater(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantCommission\Business\Expander\MerchantCommissionRelationExpanderInterface
      */
     public function createMerchantCommissionRelationExpander(): MerchantCommissionRelationExpanderInterface
@@ -284,6 +302,17 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionImportValidatorInterface
+     */
+    public function createMerchantCommissionImportValidator(): MerchantCommissionImportValidatorInterface
+    {
+        return new MerchantCommissionImportValidator(
+            $this->createMerchantCommissionImportCreateValidator(),
+            $this->createMerchantCommissionImportUpdateValidator(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidatorInterface
      */
     public function createMerchantCommissionCreateValidator(): MerchantCommissionValidatorInterface
@@ -302,6 +331,28 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
         return new MerchantCommissionValidator(
             $this->createErrorExtractor(),
             $this->getMerchantCommissionUpdateValidationRules(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidatorInterface
+     */
+    public function createMerchantCommissionImportCreateValidator(): MerchantCommissionValidatorInterface
+    {
+        return new MerchantCommissionValidator(
+            $this->createErrorExtractor(),
+            $this->getMerchantCommissionImportCreateValidationRules(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidatorInterface
+     */
+    public function createMerchantCommissionImportUpdateValidator(): MerchantCommissionValidatorInterface
+    {
+        return new MerchantCommissionValidator(
+            $this->createErrorExtractor(),
+            $this->getMerchantCommissionImportUpdateValidationRules(),
         );
     }
 
@@ -337,6 +388,46 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
             $this->createCurrencyExistsMerchantCommissionValidatorRule(),
             $this->createDescriptionLengthMerchantCommissionValidatorRule(),
             $this->createMerchantCommissionGroupExistsMerchantCommissionValidatorRule(),
+            $this->createMerchantExistsMerchantCommissionValidatorRule(),
+            $this->createNameLengthMerchantCommissionValidatorRule(),
+            $this->createPriorityRangeMerchantCommissionValidatorRule(),
+            $this->createStoreExistsMerchantCommissionValidatorRule(),
+            $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
+            $this->createValidToDateTimeMerchantCommissionValidatorRule(),
+            $this->createValidityPeriodMerchantCommissionValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface>
+     */
+    public function getMerchantCommissionImportCreateValidationRules(): array
+    {
+        return [
+            $this->createCurrencyExistsMerchantCommissionValidatorRule(),
+            $this->createDescriptionLengthMerchantCommissionValidatorRule(),
+            $this->createKeyLengthMerchantCommissionValidatorRule(),
+            $this->createKeyUniqueMerchantCommissionValidatorRule(),
+            $this->createMerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule(),
+            $this->createMerchantExistsMerchantCommissionValidatorRule(),
+            $this->createNameLengthMerchantCommissionValidatorRule(),
+            $this->createPriorityRangeMerchantCommissionValidatorRule(),
+            $this->createStoreExistsMerchantCommissionValidatorRule(),
+            $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
+            $this->createValidToDateTimeMerchantCommissionValidatorRule(),
+            $this->createValidityPeriodMerchantCommissionValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface>
+     */
+    public function getMerchantCommissionImportUpdateValidationRules(): array
+    {
+        return [
+            $this->createCurrencyExistsMerchantCommissionValidatorRule(),
+            $this->createDescriptionLengthMerchantCommissionValidatorRule(),
+            $this->createMerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule(),
             $this->createMerchantExistsMerchantCommissionValidatorRule(),
             $this->createNameLengthMerchantCommissionValidatorRule(),
             $this->createPriorityRangeMerchantCommissionValidatorRule(),
@@ -401,6 +492,18 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     public function createMerchantCommissionGroupExistsMerchantCommissionValidatorRule(): MerchantCommissionValidatorRuleInterface
     {
         return new MerchantCommissionGroupExistsMerchantCommissionValidatorRule(
+            $this->createMerchantCommissionGroupReader(),
+            $this->createMerchantCommissionGroupDataExtractor(),
+            $this->createErrorAdder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface
+     */
+    public function createMerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule(): MerchantCommissionValidatorRuleInterface
+    {
+        return new MerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule(
             $this->createMerchantCommissionGroupReader(),
             $this->createMerchantCommissionGroupDataExtractor(),
             $this->createErrorAdder(),
@@ -528,7 +631,11 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantCommissionGrouper(): MerchantCommissionGrouperInterface
     {
-        return new MerchantCommissionGrouper($this->createErrorExtractor());
+        return new MerchantCommissionGrouper(
+            $this->getRepository(),
+            $this->createMerchantCommissionDataExtractor(),
+            $this->createErrorExtractor(),
+        );
     }
 
     /**

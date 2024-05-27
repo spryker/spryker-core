@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantCommission\Business\Grouper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 
 interface MerchantCommissionGrouperInterface
@@ -19,6 +20,15 @@ interface MerchantCommissionGrouperInterface
      */
     public function groupMerchantCommissionsByValidity(
         MerchantCommissionCollectionResponseTransfer $merchantCommissionCollectionResponseTransfer
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
+     *
+     * @return list<\ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>>
+     */
+    public function groupMerchantCommissionsByPersistenceExistence(
+        MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
     ): array;
 
     /**

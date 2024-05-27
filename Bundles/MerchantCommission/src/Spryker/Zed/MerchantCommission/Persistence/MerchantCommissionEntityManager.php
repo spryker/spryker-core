@@ -103,10 +103,11 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
      */
     public function updateMerchantCommission(MerchantCommissionTransfer $merchantCommissionTransfer): MerchantCommissionTransfer
     {
-        $merchantCommissionEntity = $this->getFactory()
-            ->getMerchantCommissionQuery()
-            ->filterByUuid($merchantCommissionTransfer->getUuidOrFail())
-            ->findOne();
+        $merchantCommissionQuery = $this->getFactory()->getMerchantCommissionQuery();
+        $merchantCommissionQuery = $merchantCommissionTransfer->getUuid()
+            ? $merchantCommissionQuery->filterByUuid($merchantCommissionTransfer->getUuidOrFail())
+            : $merchantCommissionQuery->filterByKey($merchantCommissionTransfer->getKeyOrFail());
+        $merchantCommissionEntity = $merchantCommissionQuery->findOne();
 
         if ($merchantCommissionEntity === null) {
             return $merchantCommissionTransfer;
@@ -133,10 +134,13 @@ class MerchantCommissionEntityManager extends AbstractEntityManager implements M
     public function updateMerchantCommissionAmount(
         MerchantCommissionAmountTransfer $merchantCommissionAmountTransfer
     ): MerchantCommissionAmountTransfer {
-        $merchantCommissionAmountEntity = $this->getFactory()
-            ->getMerchantCommissionAmountQuery()
-            ->filterByUuid($merchantCommissionAmountTransfer->getUuidOrFail())
-            ->findOne();
+        $merchantCommissionAmountQuery = $this->getFactory()->getMerchantCommissionAmountQuery();
+        $merchantCommissionAmountQuery = $merchantCommissionAmountTransfer->getUuid()
+            ? $merchantCommissionAmountQuery->filterByUuid($merchantCommissionAmountTransfer->getUuidOrFail())
+            : $merchantCommissionAmountQuery
+                ->filterByFkCurrency($merchantCommissionAmountTransfer->getCurrencyOrFail()->getIdCurrencyOrFail())
+                ->filterByFkMerchantCommission($merchantCommissionAmountTransfer->getFkMerchantCommissionOrFail());
+        $merchantCommissionAmountEntity = $merchantCommissionAmountQuery->findOne();
 
         if ($merchantCommissionAmountEntity === null) {
             return $merchantCommissionAmountTransfer;

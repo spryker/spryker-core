@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantCommission\Business\Creator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 
@@ -20,4 +21,11 @@ interface MerchantCommissionCreatorInterface
     public function createMerchantCommissionCollection(
         MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
     ): MerchantCommissionCollectionResponseTransfer;
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer>
+     */
+    public function createPreValidatedMerchantCommissions(ArrayObject $merchantCommissionTransfers): ArrayObject;
 }

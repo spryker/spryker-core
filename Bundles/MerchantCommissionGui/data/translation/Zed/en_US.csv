@@ -1,0 +1,26 @@
+ID,ID
+Name,Name
+Period,Period
+Status,Status
+Priority,Priority
+Group,Group
+Store,Store
+Actions,Actions
+Active,Active
+Inactive,Inactive
+"Merchant Commissions","Merchant Commissions"
+"View Merchant Commission","View Merchant Commission"
+"Import Merchant Commissions","Import Merchant Commissions"
+"Merchant Commission with ID ""%id%"" doesn\'t exist.","Merchant Commission with ID ""%id%"" doesn\'t exist."
+"Row n°","Row n°"
+Error,Error
+"Merchant commissions imported successfully.","Merchant commissions imported successfully."
+"The following headers are missing in the uploaded CSV file: %s.","The following headers are missing in the uploaded CSV file: %s."
+"The following columns are empty in the uploaded CSV file: %s.","The following columns are empty in the uploaded CSV file: %s."
+"Troubleshooting Tips","Troubleshooting Tips"
+Documentation,Documentation
+"Import commission file","Import commission file"
+"Get started with creating commissions by importing your CSV file","Get started with creating commissions by importing your CSV file"
+"Download template","Download template"
+"Import CSV file","Import CSV file"
+"Errors found inside your file","Errors found inside your file"
