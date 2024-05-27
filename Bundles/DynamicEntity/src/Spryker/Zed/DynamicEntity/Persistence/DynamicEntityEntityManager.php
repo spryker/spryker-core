@@ -10,6 +10,7 @@ namespace Spryker\Zed\DynamicEntity\Persistence;
 use Exception;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
@@ -28,6 +29,7 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\DynamicEntity\Persistence\DynamicEntityPersistenceFactory getFactory()
@@ -60,6 +62,16 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @var string
      */
     protected const KEY_RELATION_FIELD_MAPPINGS = 'relation_field_mappings';
+
+    /**
+     * @var string
+     */
+    protected const IDENTIFIER_INFO_PLACEHOLDER = '%s.%s = %s';
+
+    /**
+     * @var string
+     */
+    protected const PREFIX_GETTER_METHOD = 'get';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
@@ -335,6 +347,47 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function deleteDynamicEntity(
+        DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityCollectionResponseTransfer {
+        $dynamicEntityCollectionResponseTransfer = new DynamicEntityCollectionResponseTransfer();
+        $dynamicEntityQueryClassName = $this->getFactory()->createDynamicEntityQueryBuilder()
+            ->assertEntityQueryClassNameExists($dynamicEntityConfigurationTransfer->getTableNameOrFail());
+
+        $dynamicEntityIdentifiers = [];
+        foreach ($dynamicEntityCollectionTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+            $dynamicEntityIdentifiers[] = $dynamicEntityTransfer->getIdentifierOrFail();
+        }
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $dynamicEntityQuery */
+        $dynamicEntityQuery = new $dynamicEntityQueryClassName();
+        $identifier = $this->convertSnakeCaseToCamelCase($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail());
+        $objectCollection = $dynamicEntityQuery->filterBy($identifier, $dynamicEntityIdentifiers, Criteria::IN)->find();
+
+        foreach ($objectCollection as $object) {
+            try {
+                $object->delete();
+            } catch (Exception $exception) {
+                $getterMethodName = static::PREFIX_GETTER_METHOD . ucfirst($identifier);
+
+                return $this->handleDeleteException(
+                    $dynamicEntityCollectionResponseTransfer,
+                    $dynamicEntityConfigurationTransfer,
+                    $this->generateIdentifierInfo($dynamicEntityConfigurationTransfer, $object->{$getterMethodName}()),
+                    $exception,
+                );
+            }
+        }
+
+        return $dynamicEntityCollectionResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DynamicEntityRelationFieldMappingTransfer $relationFieldMappingTransfer
      *
      * @return string
@@ -607,6 +660,32 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $errorPath
+     * @param \Exception $exception
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    protected function handleDeleteException(
+        DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $errorPath,
+        Exception $exception
+    ): DynamicEntityCollectionResponseTransfer {
+        $errorMessageTransfer = $this->getFactory()->createExceptionToErrorMapper()
+            ->map($exception, $dynamicEntityConfigurationTransfer, $errorPath);
+
+        if ($errorMessageTransfer !== null) {
+            return $dynamicEntityCollectionResponseTransfer->addError($errorMessageTransfer);
+        }
+
+        throw $exception;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param string $errorMessage
      * @param string $tableAlias
      * @param array<string, string> $customErrorParameters
@@ -655,6 +734,34 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 ),
                 DynamicEntityConfig::ERROR_PATH => $errorPath,
             ],
+        );
+    }
+
+    /**
+     * @param string $input
+     *
+     * @return string
+     */
+    protected function convertSnakeCaseToCamelCase(string $input): string
+    {
+        return str_replace('_', '', ucwords($input, '_'));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param string $identifier
+     *
+     * @return string
+     */
+    protected function generateIdentifierInfo(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        string $identifier
+    ): string {
+        return sprintf(
+            static::IDENTIFIER_INFO_PLACEHOLDER,
+            $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
+            $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer),
+            $identifier,
         );
     }
 }

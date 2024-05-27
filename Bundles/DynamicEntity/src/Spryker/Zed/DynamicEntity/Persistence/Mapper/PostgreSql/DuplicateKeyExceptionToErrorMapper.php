@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql;
+namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\PostgreSql;
 
 use Exception;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
-class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
+class DuplicateKeyExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
 {
     /**
      * @var string
      */
-    protected const ERROR_CODE_INTEGRITY_CONSTRAINT = '23000';
+    protected const ERROR_CODE_DUPLICATE_KEY = '23505';
 
     /**
      * @var string
@@ -26,7 +26,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
     /**
      * @var string
      */
-    protected const DUPLICATED_ENTRY_REGEX = '/for key \'.*-(.*?)\'$/';
+    protected const DUPLICATED_KEY_REGEX = '/DETAIL:  Key \((.*?)\)/';
 
     /**
      * @param \Exception $exception
@@ -35,15 +35,13 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
      */
     public function isApplicable(Exception $exception): bool
     {
-        $previousException = $exception->getPrevious();
-        if ($previousException === null) {
+        if ($exception->getPrevious() === null) {
             return false;
         }
 
-        $code = (string)$previousException->getCode();
-        $errorMatches = (bool)preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches);
+        $code = (string)$exception->getPrevious()->getCode();
 
-        return $code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches === true;
+        return $code === static::ERROR_CODE_DUPLICATE_KEY;
     }
 
     /**
@@ -55,14 +53,14 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
     }
 
     /**
-     * @param string $errorPath
+     * @param array<string, mixed> $params
      *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(string $errorPath): array
+    public function getErrorGlossaryParams(array $params): array
     {
         return [
-            DynamicEntityConfig::ERROR_PATH => $errorPath,
+            DynamicEntityConfig::ERROR_PATH => $params[static::ERROR_PATH],
         ];
     }
 
@@ -78,7 +76,7 @@ class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMa
             return null;
         }
 
-        if (preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
+        if (preg_match(static::DUPLICATED_KEY_REGEX, $previousException->getMessage(), $matches)) {
             return $matches[1];
         }
 

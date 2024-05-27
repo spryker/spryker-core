@@ -36,6 +36,11 @@ class UpdateDynamicDataConfigurationFormDataProvider
     /**
      * @var string
      */
+    protected const IS_DELETABLE = 'is_deletable';
+
+    /**
+     * @var string
+     */
     protected const IDENTIFIER = 'identifier';
 
     /**
@@ -236,6 +241,7 @@ class UpdateDynamicDataConfigurationFormDataProvider
         $dynamicEntityConfigurations[static::TABLE_NAME] = $tableName;
         $dynamicEntityConfigurations[static::TABLE_ALIAS] = $dynamicEntityConfigurations[static::TABLE_ALIAS];
         $dynamicEntityConfigurations[static::IS_ACTIVE] = $dynamicEntityConfigurations[static::IS_ACTIVE];
+        $dynamicEntityConfigurations[static::IS_DELETABLE] = $dynamicEntityConfigurations[static::DYNAMIC_ENTITY_DEFINITION][static::IS_DELETABLE] ?? false;
         $dynamicEntityConfigurations[static::IDENTIFIER] = $dynamicEntityConfigurations[static::DYNAMIC_ENTITY_DEFINITION][static::IDENTIFIER] ?? null;
 
         $databaseTable = $this->databaseMap->getTable($tableName);

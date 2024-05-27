@@ -41,7 +41,17 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     /**
      * @var string
      */
+    protected const RESPONSE_ERROR_NO_CONTENT_MESSAGE = 'No content.';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_ERROR_UNAUTHORIZED_REQUEST_MESSAGE = 'Unauthorized request.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_ERROR_NOT_ALLOWED_MESSAGE = 'Method not allowed.';
 
     /**
      * @var string
@@ -102,6 +112,26 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
      * @var string
      */
     protected const FORMAT = 'format';
+
+    /**
+     * @var string
+     */
+    protected const FILTER = 'filter';
+
+    /**
+     * @var string
+     */
+    protected const QUERY = 'query';
+
+    /**
+     * @var string
+     */
+    protected const PARAMETER_FILTER_DESCRIPTION = 'Parameter is used to filter items by specified values.';
+
+    /**
+     * @var string
+     */
+    protected const DEEP_OBJECT = 'deepObject';
 
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
@@ -408,6 +438,26 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
     /**
      * @return array<mixed>
      */
+    protected function buildResponseNoContent(): array
+    {
+        return [
+            (string)Response::HTTP_NO_CONTENT => $this->schemaBuilder->buildResponse(static::RESPONSE_ERROR_NO_CONTENT_MESSAGE),
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function buildResponseMethodNotAllowed(): array
+    {
+        return [
+            (string)Response::HTTP_METHOD_NOT_ALLOWED => $this->schemaBuilder->buildResponse(static::RESPONSE_ERROR_NOT_ALLOWED_MESSAGE, [static::KEY_SCHEMA_REF => static::SCHEMA_REF_COMPONENT_REST_ERROR]),
+        ];
+    }
+
+    /**
+     * @return array<mixed>
+     */
     protected function buildResponseUnauthorizedRequest(): array
     {
         return [
@@ -687,5 +737,34 @@ abstract class AbstractPathMethodBuilder implements PathMethodBuilderInterface
         }
 
         return $items;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return array<mixed>
+     */
+    protected function buildFilterParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
+    {
+        $resourceName = $dynamicEntityConfigurationTransfer->getTableAliasOrFail();
+
+        $properties = [];
+        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $field) {
+            $propertyKey = sprintf('%s.%s', $resourceName, $field->getFieldVisibleNameOrFail());
+            $properties[$propertyKey] = $this->buildKeyType($field->getTypeOrFail());
+        }
+
+        return [
+            static::KEY_NAME => static::FILTER,
+            static::KEY_IN => static::QUERY,
+            static::KEY_DESCRIPTION => static::PARAMETER_FILTER_DESCRIPTION,
+            static::KEY_REQUIRED => false,
+            static::KEY_STYLE => static::DEEP_OBJECT,
+            static::KEY_EXPLODE => true,
+            static::KEY_SCHEMA => [
+                static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
+                static::KEY_SCHEMA_PROPERTIES => $properties,
+            ],
+        ];
     }
 }

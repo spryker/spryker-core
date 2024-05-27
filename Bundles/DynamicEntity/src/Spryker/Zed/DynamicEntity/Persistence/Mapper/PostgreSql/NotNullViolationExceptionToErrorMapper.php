@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql;
+namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\PostgreSql;
 
 use Exception;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
-class NotNullableExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
+class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
 {
     /**
      * @var string
      */
-    protected const ERROR_CODE_INTEGRITY_CONSTRAINT = '23000';
+    protected const ERROR_CODE_NOT_NULL_VIOLATION = '23502';
 
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULLABLE_FIELD = 'dynamic_entity.validation.persistence_failed_not_nullable_field';
+    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL = 'dynamic_entity.validation.persistence_failed_not_nullable_field';
 
     /**
      * @var string
      */
-    protected const NOT_NULL_ENTRY_REGEX = '/Column \'(.*?)\' cannot be null$/';
+    protected const NOT_NULL_KEY_REGEX = '/DETAIL:  Key \((.*?)\)/';
 
     /**
      * @param \Exception $exception
@@ -35,15 +35,13 @@ class NotNullableExceptionToErrorMapper implements DatabaseExceptionToErrorMappe
      */
     public function isApplicable(Exception $exception): bool
     {
-        $previousException = $exception->getPrevious();
-        if ($previousException === null) {
+        if ($exception->getPrevious() === null) {
             return false;
         }
 
-        $code = (string)$previousException->getCode();
-        $errorMatches = (bool)preg_match(static::NOT_NULL_ENTRY_REGEX, $previousException->getMessage(), $matches);
+        $code = (string)$exception->getPrevious()->getCode();
 
-        return ($code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches !== null);
+        return $code === static::ERROR_CODE_NOT_NULL_VIOLATION;
     }
 
     /**
@@ -51,18 +49,18 @@ class NotNullableExceptionToErrorMapper implements DatabaseExceptionToErrorMappe
      */
     public function getErrorGlossaryKey(): string
     {
-        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULLABLE_FIELD;
+        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL;
     }
 
     /**
-     * @param string $errorPath
+     * @param array<string, mixed> $params
      *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(string $errorPath): array
+    public function getErrorGlossaryParams(array $params): array
     {
         return [
-            DynamicEntityConfig::ERROR_PATH => $errorPath,
+            DynamicEntityConfig::ERROR_PATH => $params[static::ERROR_PATH],
         ];
     }
 
@@ -78,7 +76,7 @@ class NotNullableExceptionToErrorMapper implements DatabaseExceptionToErrorMappe
             return null;
         }
 
-        if (preg_match(static::NOT_NULL_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
+        if (preg_match(static::NOT_NULL_KEY_REGEX, $previousException->getMessage(), $matches)) {
             return $matches[1];
         }
 

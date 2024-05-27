@@ -27,6 +27,7 @@
 
     <transfer name="DynamicEntityDefinition" strict="true">
         <property name="identifier" type="string"/>
+        <property name="isDeletable" type="bool"/>
         <property name="fieldDefinitions" type="DynamicEntityFieldDefinition[]" singular="fieldDefinition"/>
     </transfer>
 

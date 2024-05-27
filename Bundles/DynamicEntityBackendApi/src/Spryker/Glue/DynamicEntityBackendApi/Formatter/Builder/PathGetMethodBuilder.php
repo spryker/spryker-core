@@ -45,21 +45,6 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
-    protected const PARAMETER_FILTER_DESCRIPTION = 'Parameter is used to filter items by specified values.';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_DESCRIPTION_GET_COLLECTION = 'Expected response to a valid request returned successfully.';
-
-    /**
-     * @var string
-     */
-    protected const PARAMETER_INCLUDE_DESCRIPTION = 'Parameter is used to include related entities.';
-
-    /**
-     * @var string
-     */
     protected const TPL_COLLECTION_OPERATION_ID = 'get-collection-dynamic-api-%s';
 
     /**
@@ -70,27 +55,12 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
-    protected const QUERY = 'query';
-
-    /**
-     * @var string
-     */
-    protected const FILTER = 'filter';
-
-    /**
-     * @var string
-     */
     protected const PAGE = 'page';
 
     /**
      * @var string
      */
     protected const INCLUDE = 'include';
-
-    /**
-     * @var string
-     */
-    protected const DEEP_OBJECT = 'deepObject';
 
     /**
      * @var string
@@ -195,35 +165,6 @@ class PathGetMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
             $this->buildResponseNotFound(),
             $this->buildResponseDefault(),
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return array<mixed>
-     */
-    protected function buildFilterParameter(DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer): array
-    {
-        $resourceName = $dynamicEntityConfigurationTransfer->getTableAliasOrFail();
-
-        $properties = [];
-        foreach ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getFieldDefinitions() as $field) {
-            $propertyKey = sprintf('%s.%s', $resourceName, $field->getFieldVisibleNameOrFail());
-            $properties[$propertyKey] = $this->buildKeyType($field->getTypeOrFail());
-        }
-
-        return [
-            static::KEY_NAME => static::FILTER,
-            static::KEY_IN => static::QUERY,
-            static::KEY_DESCRIPTION => static::PARAMETER_FILTER_DESCRIPTION,
-            static::KEY_REQUIRED => false,
-            static::KEY_STYLE => static::DEEP_OBJECT,
-            static::KEY_EXPLODE => true,
-            static::KEY_SCHEMA => [
-                static::KEY_TYPE => static::SCHEMA_TYPE_OBJECT,
-                static::KEY_SCHEMA_PROPERTIES => $properties,
-            ],
-        ];
     }
 
     /**

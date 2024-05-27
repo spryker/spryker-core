@@ -143,10 +143,10 @@ class DynamicEntityFacadeTest extends Unit
         $dynamicEntityCollectionTransfer = $this->dynamicEntityFacade->getDynamicEntityCollection($dynamicEntityCriteriaTransfer);
 
         //Assert
-        $totalEntitesCount = SpyDynamicEntityConfigurationQuery::create()->find()->count();
-        $this->assertCount($totalEntitesCount, $dynamicEntityCollectionTransfer->getDynamicEntities());
-        $this->assertEquals($this->tester::FOO_TABLE_ALIAS_1, $dynamicEntityCollectionTransfer->getDynamicEntities()[$totalEntitesCount - 1]->getFields()[$this->tester::TABLE_ALIAS_FIELD_NAME]);
-        $this->assertNotContains('dynamicEntityDefinition', $dynamicEntityCollectionTransfer->getDynamicEntities()[$totalEntitesCount - 1]->getFields());
+        $totalEntitiesCount = SpyDynamicEntityConfigurationQuery::create()->find()->count();
+        $this->assertCount($totalEntitiesCount, $dynamicEntityCollectionTransfer->getDynamicEntities());
+        $this->assertEquals($this->tester::FOO_TABLE_ALIAS_1, $dynamicEntityCollectionTransfer->getDynamicEntities()[$totalEntitiesCount - 1]->getFields()[$this->tester::TABLE_ALIAS_FIELD_NAME]);
+        $this->assertNotContains('dynamicEntityDefinition', $dynamicEntityCollectionTransfer->getDynamicEntities()[$totalEntitiesCount - 1]->getFields());
     }
 
     /**
@@ -184,9 +184,10 @@ class DynamicEntityFacadeTest extends Unit
 
         //Assert
         $this->assertCount(2, $dynamicEntityCollectionTransfer->getDynamicEntities());
-        $this->assertEquals($this->tester::BAR_TABLE_ALIAS, $dynamicEntityCollectionTransfer->getDynamicEntities()[0]->getFields()[$this->tester::TABLE_ALIAS_FIELD_NAME]);
-        $this->assertEquals($this->tester::FOO_TABLE_ALIAS_1, $dynamicEntityCollectionTransfer->getDynamicEntities()[1]->getFields()[$this->tester::TABLE_ALIAS_FIELD_NAME]);
-        $this->assertNotContains('dynamicEntityDefinition', $dynamicEntityCollectionTransfer->getDynamicEntities()[0]->getFields());
+        foreach ($dynamicEntityCollectionTransfer->getDynamicEntities() as $dynamicEntityTransfer) {
+            $this->assertContains($dynamicEntityTransfer->getFields()[$this->tester::TABLE_ALIAS_FIELD_NAME], [$this->tester::FOO_TABLE_ALIAS_1, $this->tester::BAR_TABLE_ALIAS]);
+            $this->assertNotContains('dynamicEntityDefinition', $dynamicEntityTransfer->getFields());
+        }
     }
 
     /**

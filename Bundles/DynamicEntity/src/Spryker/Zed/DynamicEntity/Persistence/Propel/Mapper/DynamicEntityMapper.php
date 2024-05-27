@@ -42,6 +42,11 @@ class DynamicEntityMapper
     /**
      * @var string
      */
+    protected const IS_DELETABLE = 'isDeletable';
+
+    /**
+     * @var string
+     */
     protected const VALIDATION = 'validation';
 
     /**
@@ -106,6 +111,7 @@ class DynamicEntityMapper
         $modifiedDefinitions = $dynamicEntityDefinitionTransfer->modifiedToArray(true, true);
         $definitionForEntity = [
             static::IDENTIFIER => $definitions[static::IDENTIFIER],
+            static::IS_DELETABLE => $definitions[static::IS_DELETABLE],
             static::FIELDS => $modifiedDefinitions[static::FIELD_DEFINITIONS] ?? [],
         ];
 
@@ -328,6 +334,9 @@ class DynamicEntityMapper
         }
 
         $dynamicEntityDefinitionTransfer->setIdentifier($config[static::IDENTIFIER]);
+        if (array_key_exists(static::IS_DELETABLE, $config)) {
+            $dynamicEntityDefinitionTransfer->setIsDeletable($config[static::IS_DELETABLE]);
+        }
 
         foreach ($config[static::FIELDS] as $field) {
             $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->fromArray($field, true);

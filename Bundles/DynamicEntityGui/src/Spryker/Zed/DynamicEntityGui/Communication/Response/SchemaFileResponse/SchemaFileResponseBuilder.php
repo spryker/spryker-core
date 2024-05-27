@@ -11,7 +11,6 @@ use SplFileObject;
 use Spryker\Zed\DynamicEntityGui\Dependency\Facade\DynamicEntityGuiToStorageFacadeInterface;
 use Spryker\Zed\DynamicEntityGui\DynamicEntityGuiConfig;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class SchemaFileResponseBuilder implements SchemaFileResponseBuilderInterface
 {

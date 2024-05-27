@@ -18,7 +18,7 @@ interface SchemaBuilderInterface
      */
     public function buildResponse(
         string $responseDescriptionValue,
-        array $schemaStructure,
+        array $schemaStructure = [],
         bool $isRequired = false
     ): array;
 

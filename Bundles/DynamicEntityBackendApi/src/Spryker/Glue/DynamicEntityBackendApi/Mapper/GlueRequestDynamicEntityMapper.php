@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\DynamicEntityBackendApi\Mapper;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
@@ -84,6 +85,25 @@ class GlueRequestDynamicEntityMapper
         $dynamicEntityCriteriaTransfer->setDynamicEntityConditions($dynamicEntityConditionsTransfer);
 
         return $dynamicEntityCriteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer
+     */
+    public function mapGlueRequestTransferToDynamicEntityCollectionDeleteCriteriaTransfer(
+        GlueRequestTransfer $glueRequestTransfer,
+        DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+    ): DynamicEntityCollectionDeleteCriteriaTransfer {
+        $dynamicEntityConditionsTransfer = $this->createDynamicEntityConditionsTransfer(
+            $glueRequestTransfer,
+            $glueRequestTransfer->getResourceOrFail()->getId(),
+        );
+
+        return $dynamicEntityCollectionDeleteCriteriaTransfer
+            ->setDynamicEntityConditions($dynamicEntityConditionsTransfer);
     }
 
     /**

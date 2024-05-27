@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
@@ -129,4 +130,18 @@ interface DynamicEntityFacadeInterface
     public function updateDynamicEntityConfigurationCollection(
         DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
     ): DynamicEntityConfigurationCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes a collection of entities based on the provided criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function deleteDynamicEntityCollection(
+        DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+    ): DynamicEntityCollectionResponseTransfer;
 }

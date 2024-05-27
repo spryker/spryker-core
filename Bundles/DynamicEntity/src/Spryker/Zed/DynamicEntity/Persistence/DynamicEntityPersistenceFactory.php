@@ -20,10 +20,12 @@ use Spryker\Zed\DynamicEntity\Persistence\Filter\Strategy\InFilterStrategy;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\ExceptionToErrorMapperInterface;
-use Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql\DuplicateEntryExceptionToErrorMapper;
-use Spryker\Zed\DynamicEntity\Persistence\Mapper\Mysql\NotNullableExceptionToErrorMapper;
-use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\DuplicateKeyExceptionToErrorMapper;
-use Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql\NotNullViolationExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\MySql\DeleteParentRowExceptionToErrorMapper as MySqlDeleteParentRowExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\MySql\DuplicateEntryExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\MySql\NotNullableExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\PostgreSql\DeleteParentRowExceptionToErrorMapper as PostgreSqlDeleteParentRowExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\PostgreSql\DuplicateKeyExceptionToErrorMapper;
+use Spryker\Zed\DynamicEntity\Persistence\Mapper\PostgreSql\NotNullViolationExceptionToErrorMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Propel\Mapper\DynamicEntityMapper;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetter;
 use Spryker\Zed\DynamicEntity\Persistence\Resetter\DynamicEntityResetterInterface;
@@ -90,9 +92,11 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
             //MySQL
             $this->createDuplicateEntryExceptionToErrorMapper(),
             $this->createNotNullableExceptionToErrorMapper(),
+            $this->createMySqlDeleteParentRowExceptionToErrorMapper(),
             //PostgreSQL
             $this->createDuplicateKeyExceptionToErrorMapper(),
             $this->createNotNullViolationExceptionToErrorMapper(),
+            $this->createPostgreSqlDeleteParentRowExceptionToErrorMapper(),
         ];
     }
 
@@ -126,6 +130,22 @@ class DynamicEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createNotNullViolationExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
     {
         return new NotNullViolationExceptionToErrorMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface
+     */
+    public function createMySqlDeleteParentRowExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
+    {
+        return new MySqlDeleteParentRowExceptionToErrorMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface
+     */
+    public function createPostgreSqlDeleteParentRowExceptionToErrorMapper(): DatabaseExceptionToErrorMapperInterface
+    {
+        return new PostgreSqlDeleteParentRowExceptionToErrorMapper();
     }
 
     /**

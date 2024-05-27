@@ -12,8 +12,6 @@ use Propel\Runtime\Map\DatabaseMap;
 use Propel\Runtime\Propel;
 use Spryker\Zed\DynamicEntityGui\Communication\Checker\OpenApiSchemaChecker;
 use Spryker\Zed\DynamicEntityGui\Communication\Checker\OpenApiSchemaCheckerInterface;
-use Spryker\Zed\DynamicEntityGui\Communication\Creator\OpenApiSchemaResponseCreator;
-use Spryker\Zed\DynamicEntityGui\Communication\Creator\OpenApiSchemaResponseCreatorInterface;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\CreateDynamicDataConfigurationForm;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\DataProvider\CreateDynamicDataConfigurationFormDataProvider;
 use Spryker\Zed\DynamicEntityGui\Communication\Form\DataProvider\UpdateDynamicDataConfigurationFormDataProvider;

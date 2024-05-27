@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\Postgresql;
+namespace Spryker\Zed\DynamicEntity\Persistence\Mapper\MySql;
 
 use Exception;
 use Spryker\Zed\DynamicEntity\DynamicEntityConfig;
 use Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface;
 
-class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
+class DuplicateEntryExceptionToErrorMapper implements DatabaseExceptionToErrorMapperInterface
 {
     /**
      * @var string
      */
-    protected const ERROR_CODE_NOT_NULL_VIOLATION = '23502';
+    protected const ERROR_CODE_INTEGRITY_CONSTRAINT = '23000';
 
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL = 'dynamic_entity.validation.persistence_failed_not_nullable_field';
+    protected const GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY = 'dynamic_entity.validation.persistence_failed_duplicate_entry';
 
     /**
      * @var string
      */
-    protected const NOT_NULL_KEY_REGEX = '/DETAIL:  Key \((.*?)\)/';
+    protected const DUPLICATED_ENTRY_REGEX = '/for key \'.*-(.*?)\'$/';
 
     /**
      * @param \Exception $exception
@@ -35,13 +35,15 @@ class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToError
      */
     public function isApplicable(Exception $exception): bool
     {
-        if ($exception->getPrevious() === null) {
+        $previousException = $exception->getPrevious();
+        if ($previousException === null) {
             return false;
         }
 
-        $code = (string)$exception->getPrevious()->getCode();
+        $code = (string)$previousException->getCode();
+        $errorMatches = (bool)preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches);
 
-        return $code === static::ERROR_CODE_NOT_NULL_VIOLATION;
+        return $code === static::ERROR_CODE_INTEGRITY_CONSTRAINT && $errorMatches === true;
     }
 
     /**
@@ -49,18 +51,18 @@ class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToError
      */
     public function getErrorGlossaryKey(): string
     {
-        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_NOT_NULL;
+        return static::GLOSSARY_KEY_ERROR_ENTITY_NOT_PERSISTED_DUPLICATE_ENTRY;
     }
 
     /**
-     * @param string $errorPath
+     * @param array<string, mixed> $params
      *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(string $errorPath): array
+    public function getErrorGlossaryParams(array $params): array
     {
         return [
-            DynamicEntityConfig::ERROR_PATH => $errorPath,
+            DynamicEntityConfig::ERROR_PATH => $params[static::ERROR_PATH],
         ];
     }
 
@@ -76,7 +78,7 @@ class NotNullViolationExceptionToErrorMapper implements DatabaseExceptionToError
             return null;
         }
 
-        if (preg_match(static::NOT_NULL_KEY_REGEX, $previousException->getMessage(), $matches)) {
+        if (preg_match(static::DUPLICATED_ENTRY_REGEX, $previousException->getMessage(), $matches)) {
             return $matches[1];
         }
 

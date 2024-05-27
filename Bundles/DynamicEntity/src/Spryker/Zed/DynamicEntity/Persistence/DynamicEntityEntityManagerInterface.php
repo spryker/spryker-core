@@ -9,6 +9,7 @@ namespace Spryker\Zed\DynamicEntity\Persistence;
 
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
+use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
@@ -107,4 +108,15 @@ interface DynamicEntityEntityManagerInterface
         DynamicEntityConfigurationTransfer $parentDynamicEntityConfigurationTransfer,
         array $indexedChildRelations
     ): DynamicEntityConfigurationCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function deleteDynamicEntity(
+        DynamicEntityCollectionTransfer $dynamicEntityCollectionTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): DynamicEntityCollectionResponseTransfer;
 }

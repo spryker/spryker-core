@@ -41,6 +41,11 @@ class UpdateDynamicDataConfigurationForm extends AbstractType
     /**
      * @var string
      */
+    public const FIELD_IS_DELETABLE = 'is_deletable';
+
+    /**
+     * @var string
+     */
     protected const FIELD_TABLE_NAME = 'table_name';
 
     /**
@@ -72,6 +77,11 @@ class UpdateDynamicDataConfigurationForm extends AbstractType
      * @var string
      */
     protected const LABEL_IS_ENABLED = 'Is enabled';
+
+    /**
+     * @var string
+     */
+    protected const LABEL_IS_DELETABLE = 'Is deletable';
 
     /**
      * @var string
@@ -119,6 +129,7 @@ class UpdateDynamicDataConfigurationForm extends AbstractType
         $this->addTableNameField($builder)
             ->addTableAliasField($builder)
             ->addIsEnabledField($builder)
+            ->addIsDeletableField($builder)
             ->addIdentifierField($builder, $options)
             ->addColumnDefinitionSubForm($builder, $options);
     }
@@ -164,6 +175,21 @@ class UpdateDynamicDataConfigurationForm extends AbstractType
     {
         $builder->add(static::FIELD_IS_ENABLED, CheckboxType::class, [
             'label' => static::LABEL_IS_ENABLED,
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsDeletableField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IS_DELETABLE, CheckboxType::class, [
+            'label' => static::LABEL_IS_DELETABLE,
             'required' => false,
         ]);
 

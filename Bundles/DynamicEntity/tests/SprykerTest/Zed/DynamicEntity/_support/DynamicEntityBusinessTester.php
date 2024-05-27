@@ -167,6 +167,7 @@ class DynamicEntityBusinessTester extends Actor
 
         $dynamicEntityDefinitionTransfer = (new DynamicEntityDefinitionTransfer())
             ->setIdentifier('id_test_table')
+            ->setIsDeletable(true)
             ->addFieldDefinition($idDynamicEntityFieldDefinitionTransfer)
             ->addFieldDefinition($stringDynamicEntityFieldDefinitionTransfer)
             ->addFieldDefinition($intDynamicEntityFieldDefinitionTransfer)
@@ -349,7 +350,7 @@ class DynamicEntityBusinessTester extends Actor
     public function getExpectedDefinition(): string
     {
         return <<<'EOT'
-{"identifier":"id_test_table","fields":[{"fieldName":"id_test_table","fieldVisibleName":"id","type":"integer","isCreatable":false,"isEditable":false,"validation":{"isRequired":false}},{"fieldName":"string_field","fieldVisibleName":"string_field","type":"string","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"minLength":1,"maxLength":255}},{"fieldName":"int_field","fieldVisibleName":"int_field","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"min":100,"max":255}},{"fieldName":"bool_field","fieldVisibleName":"bool_field","type":"boolean","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"decimal_field","fieldVisibleName":"decimal_field","type":"decimal","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"scale":2,"precision":10}}]}
+{"identifier":"id_test_table","isDeletable":true,"fields":[{"fieldName":"id_test_table","fieldVisibleName":"id","type":"integer","isCreatable":false,"isEditable":false,"validation":{"isRequired":false}},{"fieldName":"string_field","fieldVisibleName":"string_field","type":"string","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"minLength":1,"maxLength":255}},{"fieldName":"int_field","fieldVisibleName":"int_field","type":"integer","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"min":100,"max":255}},{"fieldName":"bool_field","fieldVisibleName":"bool_field","type":"boolean","isCreatable":true,"isEditable":true,"validation":{"isRequired":true}},{"fieldName":"decimal_field","fieldVisibleName":"decimal_field","type":"decimal","isCreatable":true,"isEditable":true,"validation":{"isRequired":true,"scale":2,"precision":10}}]}
 EOT;
     }
 

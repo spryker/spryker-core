@@ -12,6 +12,11 @@ use Exception;
 interface DatabaseExceptionToErrorMapperInterface
 {
     /**
+     * @var string
+     */
+    public const ERROR_PATH = 'errorPath';
+
+    /**
      * @param \Exception $exception
      *
      * @return bool
@@ -24,11 +29,11 @@ interface DatabaseExceptionToErrorMapperInterface
     public function getErrorGlossaryKey(): string;
 
     /**
-     * @param string $errorPath
+     * @param array<string, mixed> $params
      *
      * @return array<string, string>
      */
-    public function getErrorGlossaryParams(string $errorPath): array;
+    public function getErrorGlossaryParams(array $params): array;
 
     /**
      * @param \Exception $exception

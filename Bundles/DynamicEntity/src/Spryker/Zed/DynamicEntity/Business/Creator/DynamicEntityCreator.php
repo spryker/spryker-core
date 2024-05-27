@@ -122,7 +122,6 @@ class DynamicEntityCreator implements DynamicEntityCreatorInterface
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
     ): DynamicEntityCollectionResponseTransfer {
-        $dynamicEntityPostEditResponseTransfer = new DynamicEntityPostEditResponseTransfer();
         $dynamicEntityPostEditRequestTransfers = $this->dynamicEntityMapper
             ->mapDynamicEntityCollectionResponseTransferToPostEditRequestTransfersArray(
                 $dynamicEntityConfigurationTransfer,

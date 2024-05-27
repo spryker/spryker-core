@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
@@ -109,4 +110,15 @@ interface DynamicEntityMapperInterface
         DynamicEntityTransfer $dynamicEntityTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): ?DynamicEntityConditionsTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer
+     */
+    public function mapDynamicEntityCollectionDeleteCriteriaTransferToDynamicEntityCriteriaTransfer(
+        DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer,
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+    ): DynamicEntityCriteriaTransfer;
 }

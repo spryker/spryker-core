@@ -87,6 +87,11 @@ class RouteBuilder implements RouteBuilderInterface
     protected const PUT_ACTION = 'putAction';
 
     /**
+     * @var string
+     */
+    protected const DELETE_ACTION = 'deleteAction';
+
+    /**
      * @var \Spryker\Glue\DynamicEntityBackendApi\Dependency\Facade\DynamicEntityBackendApiToDynamicEntityFacadeInterface
      */
     protected DynamicEntityBackendApiToDynamicEntityFacadeInterface $dynamicEntityFacade;
@@ -127,6 +132,8 @@ class RouteBuilder implements RouteBuilderInterface
             $routeCollection = $this->addDynamicEntityRouteForPatch($dynamicEntityConfiguration, $routeCollection);
             $routeCollection = $this->addDynamicEntityRouteForPutCollection($dynamicEntityConfiguration, $routeCollection);
             $routeCollection = $this->addDynamicEntityRouteForPut($dynamicEntityConfiguration, $routeCollection);
+            $routeCollection = $this->addDynamicEntityRouteForDelete($dynamicEntityConfiguration, $routeCollection);
+            $routeCollection = $this->addDynamicEntityRouteForDeleteCollection($dynamicEntityConfiguration, $routeCollection);
         }
 
         return $routeCollection;
@@ -312,6 +319,54 @@ class RouteBuilder implements RouteBuilderInterface
 
         $routeCollection->add(
             $this->formatName(static::ROUTE_NAME_PLACEHOLDER, $dynamicEntityConfigurationTransfer->getTableAliasOrFail(), Request::METHOD_PUT),
+            $route,
+        );
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    protected function addDynamicEntityRouteForDeleteCollection(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        RouteCollection $routeCollection
+    ): RouteCollection {
+        $route = $this->buildRoute(
+            static::DELETE_ACTION,
+            Request::METHOD_DELETE,
+            $this->formatPath(static::ROUTE_COLLECTION_PATH_PLACEHOLDER, $dynamicEntityConfigurationTransfer->getTableAliasOrFail()),
+        );
+
+        $routeCollection->add(
+            $this->formatName(static::ROUTE_COLLECTION_NAME_PLACEHOLDER, $dynamicEntityConfigurationTransfer->getTableAliasOrFail(), Request::METHOD_DELETE),
+            $route,
+        );
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    protected function addDynamicEntityRouteForDelete(
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
+        RouteCollection $routeCollection
+    ): RouteCollection {
+        $route = $this->buildRoute(
+            static::DELETE_ACTION,
+            Request::METHOD_DELETE,
+            $this->formatPath(static::ROUTE_PATH_PLACEHOLDER, $dynamicEntityConfigurationTransfer->getTableAliasOrFail()),
+        );
+
+        $routeCollection->add(
+            $this->formatName(static::ROUTE_NAME_PLACEHOLDER, $dynamicEntityConfigurationTransfer->getTableAliasOrFail(), Request::METHOD_DELETE),
             $route,
         );
 

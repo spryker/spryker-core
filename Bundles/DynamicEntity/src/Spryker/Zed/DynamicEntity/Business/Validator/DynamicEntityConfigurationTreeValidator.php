@@ -85,12 +85,12 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
             );
         }
 
-        $rootDynamicEntityConfigurationTranfer = $this->getDynamicEntityConfigurationEntityByTableAlias(
+        $rootDynamicEntityConfigurationTransfer = $this->getDynamicEntityConfigurationEntityByTableAlias(
             $dynamicEntityConfigurationCollectionTransfer,
             $tableAlias,
         );
 
-        if ($rootDynamicEntityConfigurationTranfer === null) {
+        if ($rootDynamicEntityConfigurationTransfer === null) {
             return $this->createErrorTransfer(
                 static::ERROR_MESSAGE_CONFIGURATION_NOT_FOUND,
                 [
@@ -101,7 +101,7 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
 
         $filterFieldValidationError = $this->validateFilterField(
             $dynamicEntityCriteriaTransfer,
-            $rootDynamicEntityConfigurationTranfer,
+            $rootDynamicEntityConfigurationTransfer,
         );
 
         if ($filterFieldValidationError !== null) {
@@ -111,7 +111,7 @@ class DynamicEntityConfigurationTreeValidator implements DynamicEntityConfigurat
         return $this->validateRelationChainsSequence(
             $dynamicEntityConfigurationCollectionTransfer,
             $dynamicEntityCriteriaTransfer,
-            $rootDynamicEntityConfigurationTranfer,
+            $rootDynamicEntityConfigurationTransfer,
         );
     }
 

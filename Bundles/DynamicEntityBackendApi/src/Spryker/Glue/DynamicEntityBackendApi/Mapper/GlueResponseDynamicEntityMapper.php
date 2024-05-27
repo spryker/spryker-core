@@ -98,6 +98,16 @@ class GlueResponseDynamicEntityMapper
     /**
      * @var string
      */
+    protected const GLOSSARY_KEY_ERROR_DELETE_FOREIGN_KEY_CONSTRAINT_FAILS = 'dynamic_entity.validation.delete_foreign_key_constraint_fails';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_ERROR_METHOD_NOT_ALLOWED = 'dynamic_entity.validation.method_not_allowed';
+
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_DATA = 'data';
 
     /**
@@ -199,6 +209,16 @@ class GlueResponseDynamicEntityMapper
      * @var int
      */
     protected const RESPONSE_CODE_INVALID_URL = 1316;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_DELETE_FOREIGN_KEY_CONSTRAINT_FAILS = 1317;
+
+    /**
+     * @var int
+     */
+    protected const RESPONSE_CODE_METHOD_NOT_ALLOWED = 1318;
 
     /**
      * @var string
@@ -552,6 +572,14 @@ class GlueResponseDynamicEntityMapper
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_FILTER_FIELD_NOT_FOUND,
             ],
+            static::GLOSSARY_KEY_ERROR_DELETE_FOREIGN_KEY_CONSTRAINT_FAILS => [
+                GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_DELETE_FOREIGN_KEY_CONSTRAINT_FAILS,
+            ],
+            static::GLOSSARY_KEY_ERROR_METHOD_NOT_ALLOWED => [
+                GlueErrorTransfer::STATUS => Response::HTTP_METHOD_NOT_ALLOWED,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_METHOD_NOT_ALLOWED,
+            ],
         ];
     }
 
@@ -565,6 +593,10 @@ class GlueResponseDynamicEntityMapper
         ArrayObject $dynamicEntities,
         ?GlueRequestTransfer $glueRequestTransfer
     ): array {
+        if ($dynamicEntities->count() === 0) {
+            return [];
+        }
+
         if ($glueRequestTransfer !== null && $glueRequestTransfer->getResourceOrFail()->getId() !== null) {
             return $this->getFieldsCollection($dynamicEntities)[0];
         }

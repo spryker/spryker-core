@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Business;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
@@ -137,5 +138,20 @@ class DynamicEntityFacade extends AbstractFacade implements DynamicEntityFacadeI
         DynamicEntityConfigurationCollectionRequestTransfer $dynamicEntityConfigurationCollectionTransfer
     ): DynamicEntityConfigurationCollectionResponseTransfer {
         return $this->getFactory()->createDynamicEntityConfigurationUpdater()->updateDynamicEntityConfigurationCollection($dynamicEntityConfigurationCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
+     */
+    public function deleteDynamicEntityCollection(
+        DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+    ): DynamicEntityCollectionResponseTransfer {
+        return $this->getFactory()->createDynamicEntityDeleter()->deleteEntityCollection($dynamicEntityCollectionDeleteCriteriaTransfer);
     }
 }

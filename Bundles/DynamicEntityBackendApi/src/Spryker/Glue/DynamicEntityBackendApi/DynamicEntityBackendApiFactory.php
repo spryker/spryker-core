@@ -23,6 +23,7 @@ use Spryker\Glue\DynamicEntityBackendApi\Expander\DocumentationSchemaExpander;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DocumentationSchemaExpanderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DynamicEntityProtectedPathCollectionExpander;
 use Spryker\Glue\DynamicEntityBackendApi\Expander\DynamicEntityProtectedPathCollectionExpanderInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathDeleteMethodBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathGetMethodBuilder;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathMethodBuilderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathPatchMethodBuilder;
@@ -42,6 +43,8 @@ use Spryker\Glue\DynamicEntityBackendApi\Mapper\GlueRequestDynamicEntityMapper;
 use Spryker\Glue\DynamicEntityBackendApi\Mapper\GlueResponseDynamicEntityMapper;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Creator\DynamicEntityCreator;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Creator\DynamicEntityCreatorInterface;
+use Spryker\Glue\DynamicEntityBackendApi\Processor\Deleter\DynamicEntityDeleter;
+use Spryker\Glue\DynamicEntityBackendApi\Processor\Deleter\DynamicEntityDeleterInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Reader\DynamicEntityReader;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Reader\DynamicEntityReaderInterface;
 use Spryker\Glue\DynamicEntityBackendApi\Processor\Updater\DynamicEntityUpdater;
@@ -239,6 +242,7 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
             $this->createPathPostMethodBuilder(),
             $this->createPathPutMethodBuilder(),
             $this->createPathPatchMethodBuilder(),
+            $this->createPathDeleteMethodBuilder(),
         ];
     }
 
@@ -291,6 +295,18 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Formatter\Builder\PathMethodBuilderInterface
+     */
+    public function createPathDeleteMethodBuilder(): PathMethodBuilderInterface
+    {
+        return new PathDeleteMethodBuilder(
+            $this->getConfig(),
+            $this->createDynamicEntityConfigurationTreeBuilder(),
+            $this->createSchemaBuilder(),
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\DynamicEntityBackendApi\InvalidationVoter\InvalidationVoterInterface
      */
     public function createInvalidationVoter(): InvalidationVoterInterface
@@ -324,5 +340,18 @@ class DynamicEntityBackendApiFactory extends AbstractBackendApiFactory
     public function createSchemaBuilder(): SchemaBuilderInterface
     {
         return new SchemaBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\DynamicEntityBackendApi\Processor\Deleter\DynamicEntityDeleterInterface
+     */
+    public function createDynamicEntityDeleter(): DynamicEntityDeleterInterface
+    {
+        return new DynamicEntityDeleter(
+            $this->getDynamicEntityFacade(),
+            $this->createGlueRequestDynamicEntityMapper(),
+            $this->createGlueResponseDynamicEntityMapper(),
+            $this->createDynamicEntityLogger(),
+        );
     }
 }

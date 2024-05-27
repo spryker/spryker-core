@@ -61,6 +61,7 @@
     <transfer name="DynamicEntityDefinition" strict="true">
         <property name="identifier" type="string"/>
         <property name="fieldDefinitions" type="DynamicEntityFieldDefinition[]" singular="fieldDefinition"/>
+        <property name="isDeletable" type="bool"/>
     </transfer>
 
     <transfer name="DynamicEntityFieldDefinition" strict="true">
@@ -103,6 +104,7 @@
     <transfer name="DynamicEntityCollectionDeleteCriteria" strict="true">
         <property name="isTransactional" type="bool"/>
         <property name="dynamicEntityIds" type="int[]" singular="idDynamicEntity"/>
+        <property name="dynamicEntityConditions" type="DynamicEntityConditions"/>
     </transfer>
 
     <transfer name="Error">

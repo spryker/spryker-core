@@ -21,6 +21,7 @@
                 {{ form_row(form.table_name) }}
                 {{ form_row(form.table_alias) }}
                 {{ form_row(form.is_active) }}
+                {{ form_row(form.is_deletable, {'attr': {'data-deletion-allow-message': 'Do you really want to allow deletion?' | trans}}) }}
                 {{ form_row(form.identifier) }}
 
                 {% block form_errors %}
@@ -93,4 +94,8 @@
 {% block head_css %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-dynamic-entity-gui-main.css') }}">
+{% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-dynamic-entity-gui-main.js') }}"></script>
 {% endblock %}

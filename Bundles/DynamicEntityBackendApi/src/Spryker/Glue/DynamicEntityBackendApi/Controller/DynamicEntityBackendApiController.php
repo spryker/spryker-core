@@ -123,4 +123,28 @@ class DynamicEntityBackendApiController extends AbstractController
     ): GlueResponseTransfer {
         return $this->getFactory()->createDynamicEntityUpdater()->updateDynamicEntityCollection($glueRequestTransfer);
     }
+
+    /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Delete dynamic entity by ID or criteria."
+     *          ],
+     *          "responses": {
+     *              "204: "No Content.",
+     *              "400: "Bad request.",
+     *              "405": "Method not allowed."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function deleteAction(
+        GlueRequestTransfer $glueRequestTransfer
+    ): GlueResponseTransfer {
+        return $this->getFactory()->createDynamicEntityDeleter()->deleteDynamicEntity($glueRequestTransfer);
+    }
 }

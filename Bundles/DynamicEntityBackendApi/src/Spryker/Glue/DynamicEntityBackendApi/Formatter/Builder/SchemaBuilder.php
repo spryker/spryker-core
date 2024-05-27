@@ -98,7 +98,7 @@ class SchemaBuilder implements SchemaBuilderInterface
      */
     public function buildResponse(
         string $responseDescriptionValue,
-        array $schemaStructure,
+        array $schemaStructure = [],
         bool $isRequired = false
     ): array {
         $responseBody = [
@@ -107,6 +107,10 @@ class SchemaBuilder implements SchemaBuilderInterface
 
         if ($isRequired) {
             $responseBody[static::KEY_REQUIRED] = true;
+        }
+
+        if ($schemaStructure === []) {
+            return $responseBody;
         }
 
         $responseBody[static::KEY_CONTENT] = [

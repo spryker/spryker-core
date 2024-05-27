@@ -57,7 +57,8 @@ class DynamicDataConfigurationMapper
             ->fromArray($dynamicDataConfiguration, true);
 
         $dynamicEntityDefinitionTransfer = (new DynamicEntityDefinitionTransfer())
-            ->setIdentifier($dynamicDataConfiguration[UpdateDynamicDataConfigurationForm::IDENTIFIER]);
+            ->setIdentifier($dynamicDataConfiguration[UpdateDynamicDataConfigurationForm::IDENTIFIER])
+            ->setIsDeletable($dynamicDataConfiguration[UpdateDynamicDataConfigurationForm::FIELD_IS_DELETABLE]);
         $dynamicEntityConfigurationTransfer->setDynamicEntityDefinition($dynamicEntityDefinitionTransfer);
 
         foreach ($dynamicDataConfiguration[UpdateDynamicDataConfigurationForm::FIELD_DEFINITIONS] as $fieldDefinition) {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DynamicEntity\Business\Mapper;
 
+use Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionTransfer;
@@ -35,6 +36,11 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
      * @var string
      */
     protected const IDENTIFIER = 'identifier';
+
+    /**
+     * @var string
+     */
+    protected const IS_DELETABLE = 'isDeletable';
 
     /**
      * @var string
@@ -101,6 +107,9 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         }
 
         $dynamicEntityDefinitionTransfer->setIdentifier($definition[static::IDENTIFIER]);
+        if (array_key_exists(static::IS_DELETABLE, $definition)) {
+            $dynamicEntityDefinitionTransfer->setIsDeletable($definition[static::IS_DELETABLE]);
+        }
 
         foreach ($definition[static::FIELDS] as $field) {
             $dynamicEntityFieldDefinitionTransfer = (new DynamicEntityFieldDefinitionTransfer())->fromArray($field, true);
@@ -365,6 +374,19 @@ class DynamicEntityMapper implements DynamicEntityMapperInterface
         );
 
         return $dynamicEntityConditionsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer
+     */
+    public function mapDynamicEntityCollectionDeleteCriteriaTransferToDynamicEntityCriteriaTransfer(
+        DynamicEntityCollectionDeleteCriteriaTransfer $dynamicEntityCollectionDeleteCriteriaTransfer,
+        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+    ): DynamicEntityCriteriaTransfer {
+        return $dynamicEntityCriteriaTransfer->fromArray($dynamicEntityCollectionDeleteCriteriaTransfer->toArray(true, true), true);
     }
 
     /**

@@ -40,11 +40,6 @@ class PathPutMethodBuilder extends AbstractPathMethodBuilder implements PathMeth
     /**
      * @var string
      */
-    protected const PROPERTY_NAME = 'data';
-
-    /**
-     * @var string
-     */
     protected const TPL_UPSERT_COLLECTION_OPERATION_ID = 'upsert-collection-dynamic-api-%s';
 
     /**

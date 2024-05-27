@@ -290,6 +290,7 @@ class DynamicEntityBackendApiTester extends Actor
 
         $dynamicEntityDefinitionTransfer = new DynamicEntityDefinitionTransfer();
         $dynamicEntityDefinitionTransfer->setIdentifier('test-identifier')
+            ->setIsDeletable(true)
             ->setFieldDefinitions(new ArrayObject([
                 $dynamicEntityFieldDefinitionTransfer,
             ]));

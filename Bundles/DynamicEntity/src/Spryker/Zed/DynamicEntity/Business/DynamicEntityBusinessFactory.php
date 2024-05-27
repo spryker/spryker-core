@@ -17,6 +17,8 @@ use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreator
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityConfigurationCreatorInterface;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreator;
 use Spryker\Zed\DynamicEntity\Business\Creator\DynamicEntityCreatorInterface;
+use Spryker\Zed\DynamicEntity\Business\Deleter\DynamicEntityDeleter;
+use Spryker\Zed\DynamicEntity\Business\Deleter\DynamicEntityDeleterInterface;
 use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpander;
 use Spryker\Zed\DynamicEntity\Business\Expander\DynamicEntityPostEditRequestExpanderInterface;
 use Spryker\Zed\DynamicEntity\Business\Filter\DynamicEntityFieldCreationFilter;
@@ -578,6 +580,18 @@ class DynamicEntityBusinessFactory extends AbstractBusinessFactory
     public function createDynamicEntityErrorPathResolver(): DynamicEntityErrorPathResolverInterface
     {
         return new DynamicEntityErrorPathResolver();
+    }
+
+    /**
+     * @return \Spryker\Zed\DynamicEntity\Business\Deleter\DynamicEntityDeleterInterface
+     */
+    public function createDynamicEntityDeleter(): DynamicEntityDeleterInterface
+    {
+        return new DynamicEntityDeleter(
+            $this->getEntityManager(),
+            $this->createDynamicEntityMapper(),
+            $this->createDynamicEntityReader(),
+        );
     }
 
     /**

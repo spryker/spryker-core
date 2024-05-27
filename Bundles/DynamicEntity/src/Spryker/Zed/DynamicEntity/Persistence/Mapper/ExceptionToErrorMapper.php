@@ -24,6 +24,16 @@ class ExceptionToErrorMapper implements ExceptionToErrorMapperInterface
     protected const RELATION_CHAIN_PLACEHOLDER = '%s.%s';
 
     /**
+     * @var string
+     */
+    protected const EXCEPTION = 'exception';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_PATH = 'errorPath';
+
+    /**
      * @param array<\Spryker\Zed\DynamicEntity\Persistence\Mapper\DatabaseExceptionToErrorMapperInterface> $databaseExceptionToErrorMappers
      */
     public function __construct(array $databaseExceptionToErrorMappers)
@@ -53,7 +63,13 @@ class ExceptionToErrorMapper implements ExceptionToErrorMapperInterface
                 $databaseExceptionToErrorMapper->mapExceptionToErrorMessage($exception),
             );
             $errorKey = $databaseExceptionToErrorMapper->getErrorGlossaryKey();
-            $errorDetails = $databaseExceptionToErrorMapper->getErrorGlossaryParams($errorPath);
+
+            $errorDetails = $databaseExceptionToErrorMapper->getErrorGlossaryParams(
+                [
+                    static::ERROR_PATH => $errorPath,
+                    static::EXCEPTION => $exception,
+                ],
+            );
 
             return (new ErrorTransfer())
                 ->setEntityIdentifier($dynamicEntityConfigurationTransfer->getTableAliasOrFail())

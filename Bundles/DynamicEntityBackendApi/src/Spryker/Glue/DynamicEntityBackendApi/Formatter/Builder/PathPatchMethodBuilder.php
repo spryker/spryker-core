@@ -63,11 +63,6 @@ class PathPatchMethodBuilder extends AbstractPathMethodBuilder implements PathMe
     protected const REQUEST_DATA_UPDATE_COLLECTION_DESCRIPTION = 'Data to update collection of entities.';
 
     /**
-     * @var string
-     */
-    protected const PROPERTY_NAME = 'data';
-
-    /**
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return array<string, mixed>
