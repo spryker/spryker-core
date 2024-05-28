@@ -10,6 +10,9 @@ namespace Spryker\Zed\Merchant\Dependency\Facade;
 use Generated\Shared\Transfer\MessageResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class MerchantToMessageBrokerFacadeBridge implements MerchantToMessageBrokerFacadeInterface
 {
     /**

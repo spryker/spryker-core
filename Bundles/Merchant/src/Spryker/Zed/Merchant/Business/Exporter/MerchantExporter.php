@@ -19,6 +19,9 @@ use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class MerchantExporter implements MerchantExporterInterface
 {
     use LoggerTrait;

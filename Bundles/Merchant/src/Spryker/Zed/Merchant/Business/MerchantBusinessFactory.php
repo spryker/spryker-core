@@ -186,6 +186,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToMessageBrokerFacadeInterface
      */
     public function getMessageBrokerFacade(): MerchantToMessageBrokerFacadeInterface
@@ -194,6 +196,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Merchant\Business\Publisher\MerchantPublisherInterface
      */
     public function createMerchantMessageBrokerPublisher(): MerchantPublisherInterface
@@ -202,12 +206,13 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getMessageBrokerFacade(),
             $this->createMerchantReader(),
             $this->createTransferMapper(),
-            $this->getStoreFacade(),
             $this->getConfig(),
         );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Merchant\Business\Mapper\TransferMapperInterface
      */
     public function createTransferMapper(): TransferMapperInterface
@@ -216,6 +221,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Merchant\Business\Exporter\MerchantExporterInterface
      */
     public function createMerchantExporter(): MerchantExporterInterface

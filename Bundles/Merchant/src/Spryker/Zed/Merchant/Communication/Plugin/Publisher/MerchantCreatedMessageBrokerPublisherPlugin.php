@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MerchantCreatedTransfer;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
  * @method \Spryker\Zed\Merchant\Communication\MerchantCommunicationFactory getFactory()

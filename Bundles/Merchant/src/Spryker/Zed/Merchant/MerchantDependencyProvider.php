@@ -64,6 +64,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_URL = 'PROPEL_QUERY_URL';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
@@ -256,6 +258,8 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

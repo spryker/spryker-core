@@ -138,6 +138,8 @@ interface MerchantFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
      *
      * @return void
@@ -154,6 +156,8 @@ interface MerchantFacadeInterface
      * - Sends MerchantPublisherConfigTransfer.eventName event to the event bus.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer
      *

@@ -121,6 +121,8 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\MerchantExportCriteriaTransfer $merchantExportCriteriaTransfer
      *
      * @return void
@@ -136,6 +138,8 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\MerchantPublisherConfigTransfer $merchantPublisherConfigTransfer
      *

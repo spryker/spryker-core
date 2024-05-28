@@ -80,6 +80,8 @@ class MerchantConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function getMerchantEventsAllowedForPublish(): array
@@ -94,6 +96,8 @@ class MerchantConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array
      */
     public function getMerchantFieldsForMerchantEventMessage(): array
@@ -107,6 +111,8 @@ class MerchantConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return array
      */

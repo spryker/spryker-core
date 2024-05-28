@@ -9,6 +9,9 @@ namespace Spryker\Zed\Merchant\Business\Exporter;
 
 use Generated\Shared\Transfer\MerchantExportCriteriaTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface MerchantExporterInterface
 {
     /**

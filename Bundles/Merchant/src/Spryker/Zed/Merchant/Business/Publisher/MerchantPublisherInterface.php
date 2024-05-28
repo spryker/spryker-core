@@ -9,6 +9,9 @@ namespace Spryker\Zed\Merchant\Business\Publisher;
 
 use Generated\Shared\Transfer\MerchantPublisherConfigTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface MerchantPublisherInterface
 {
     /**
