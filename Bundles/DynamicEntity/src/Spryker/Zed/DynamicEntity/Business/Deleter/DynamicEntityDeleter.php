@@ -38,6 +38,11 @@ class DynamicEntityDeleter implements DynamicEntityDeleterInterface
     /**
      * @var string
      */
+    protected const PLACEHOLDER_ERROR_PATH = '%errorPath%';
+
+    /**
+     * @var string
+     */
     protected const ERROR_PATH_PLACEHOLDER = '%s[%d]';
 
     /**
@@ -91,13 +96,23 @@ class DynamicEntityDeleter implements DynamicEntityDeleterInterface
         $dynamicEntityConfigurationTransfer = $this->getDynamicEntityConfigurationTransfer($dynamicEntityCriteriaTransfer);
 
         if ($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIsDeletable() !== true) {
-            return $this->createErrorResponse($dynamicEntityCriteriaTransfer, static::ERROR_MESSAGE_METHOD_NOT_ALLOWED);
+            return $this->createErrorResponse(
+                [
+                    static::PLACEHOLDER_ALIAS_NAME => $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+                ],
+                static::ERROR_MESSAGE_METHOD_NOT_ALLOWED,
+            );
         }
 
         $dynamicEntityCollectionTransfer = $this->dynamicEntityReader->getEntityCollection($dynamicEntityCriteriaTransfer);
 
         if ($dynamicEntityCollectionTransfer->getDynamicEntities()->count() === 0) {
-            return $this->createErrorResponse($dynamicEntityCriteriaTransfer, static::ERROR_MESSAGE_ENTITY_NOT_EXIST);
+            return $this->createErrorResponse(
+                [
+                    static::PLACEHOLDER_ERROR_PATH => $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
+                ],
+                static::ERROR_MESSAGE_ENTITY_NOT_EXIST,
+            );
         }
 
         if ($dynamicEntityCollectionTransfer->getErrors()->count() !== 0) {
@@ -111,20 +126,18 @@ class DynamicEntityDeleter implements DynamicEntityDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer
+     * @param array<string, string> $parameters
      * @param string $errorMessage
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
     protected function createErrorResponse(
-        DynamicEntityCriteriaTransfer $dynamicEntityCriteriaTransfer,
+        array $parameters,
         string $errorMessage
     ): DynamicEntityCollectionResponseTransfer {
         $errorTransfer = (new ErrorTransfer())
             ->setMessage($errorMessage)
-            ->setParameters([
-                static::PLACEHOLDER_ALIAS_NAME => $dynamicEntityCriteriaTransfer->getDynamicEntityConditionsOrFail()->getTableAliasOrFail(),
-            ]);
+            ->setParameters($parameters);
 
         return (new DynamicEntityCollectionResponseTransfer())
             ->addError($errorTransfer);
