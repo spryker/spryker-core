@@ -24,7 +24,7 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
     /**
      * @var string
      */
-    protected const RELATIVE_URL_PATTERN = '/^\/(?!\/+|.*\\\\)[^?#\s]*(\?[^#\s]*)?(#[^\s]*)?$/u';
+    protected const RELATIVE_URL_PATTERN = "/^\/(?!\/)([a-zA-Z0-9\-._~%!$&'()*+,;=:@\/]*|\[|\]|\s)*(\/[a-zA-Z0-9\-._~%!$&'()*+,;=:@\/]*|\[|\]|\s)*(\?[a-zA-Z0-9\-._~%!$&'()*+,;=:@\/?\[\]\s]*)?(\#[a-zA-Z0-9\-._~%!$&'()*+,;=:@\/?\[\]\s]*)?$/";
 
     /**
      * @var \Symfony\Component\Validator\Validator\ValidatorInterface
