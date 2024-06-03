@@ -179,7 +179,7 @@ class CmsSlotBlockTable extends AbstractTable
         $results = [];
         foreach ($cmsBlockResults as $cmsBlock) {
             $results[] = [
-                static::COL_ID_CMS_BLOCK => $this->formatInt($cmsBlock[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]),
+                static::COL_ID_CMS_BLOCK => $cmsBlock[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                 static::COL_NAME => $cmsBlock[SpyCmsBlockTableMap::COL_NAME],
                 static::COL_VALID_FROM => $this->formatValidityDateTime($cmsBlock[SpyCmsBlockTableMap::COL_VALID_FROM]),
                 static::COL_VALID_TO => $this->formatValidityDateTime($cmsBlock[SpyCmsBlockTableMap::COL_VALID_TO]),
