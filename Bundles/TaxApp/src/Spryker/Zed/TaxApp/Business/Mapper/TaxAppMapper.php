@@ -252,6 +252,9 @@ class TaxAppMapper implements TaxAppMapperInterface
     ): TaxAppShipmentTransfer {
         $taxAppShipmentTransfer = new TaxAppShipmentTransfer();
 
+        if ($expenseTransfer->getShipment() && $expenseTransfer->getShipment()->getMethod()) {
+            $taxAppShipmentTransfer->setShipmentMethodKey($expenseTransfer->getShipment()->getMethod()->getShipmentMethodKey());
+        }
         if ($expenseTransfer->getShipment() && $expenseTransfer->getShipment()->getShippingAddress()) {
             $shippingTaxAppAddressTransfer = $this->addressMapper->mapAddressTransferToTaxAppAddressTransfer($expenseTransfer->getShipment()->getShippingAddress(), new TaxAppAddressTransfer());
 
