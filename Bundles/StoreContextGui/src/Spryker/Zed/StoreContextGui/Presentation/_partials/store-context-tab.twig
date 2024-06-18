@@ -1,0 +1,15 @@
+{% form_theme form with [
+    '@StoreContextGui/_partials/store-context-theme.twig',
+]%}
+<div class="well">
+    {% apply trans | raw %}
+        <p>{{ 'Setup store-specific configuration.' | trans }}</p>
+    {% endapply %}
+</div>
+
+{% block content %}
+    {% include '@StoreContextGui/_partials/store-context-form.twig' %}
+{% endblock %}
+
+<script src="{{ assetsPath('js/spryker-zed-store-context-main.js') }}"></script>
+<link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-store-context-main.css') }}" />

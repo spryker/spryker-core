@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/StoreContextGui/Dependency/Facade/StoreContextGuiToStoreContextFacadeBridge.php",
+        "description": "Bridges: Method `getAvilableTimeZones()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/StoreContextGui/Dependency/Facade/StoreContextGuiToStoreContextFacadeBridge.php",
+        "description": "Bridges: Method `getAvilableApplications()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

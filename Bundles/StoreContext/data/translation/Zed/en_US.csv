@@ -1,0 +1,8 @@
+"Application %application% is not valid.","Application %application% is not valid."
+"Default store context do not exist in the store context collection.","Default settings do not exist in the store settings collection."
+"Application %application% is used more than once.","Application %application% is used more than once."
+"Timezone %timezone% is not valid.","Timezone %timezone% is not valid."
+"Store context already exist for id: %id%.","Store settings already exist for id: %id%."
+"Store context not found for store id: %id%.","Store settings not found for store id: %id%."
+"Store context collection is missing.","Store settings collection is missing."
+"Store is missing in store context.","Store is missing in store context."

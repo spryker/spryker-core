@@ -1,0 +1,8 @@
+"Application %application% is not valid.","Anwendung %application% ist ungültig."
+"Default store context do not exist in the store context collection.","Standardeinstellungen sind in der Store-Einstellungen Collection nicht vorhanden."
+"Application %application% is used more than once.","Anwendung %application% wird mehr als einmal verwendet."
+"Timezone %timezone% is not valid.","Zeitzone %timezone% ist ungültig."
+"Store context already exist for id: %id%.","Speichereinstellungen existieren bereits für ID: %id%."
+"Store context not found for store id: %id%.","Speichereinstellungen für Store-ID: %id% nicht gefunden."
+"Store context collection is missing.","Die Sammlung der Speichereinstellungen fehlt."
+"Store is missing in store context.","Der Store fehlt im Store-Kontext."

@@ -7,8 +7,10 @@
         "php": ">=8.1",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.71.0",
+        "spryker/store-context": "^1.0.0",
         "spryker/store-gui-extension": "^1.0.0",
-        "spryker/symfony": "^3.11.0"
+        "spryker/symfony": "^3.11.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"
@@ -26,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

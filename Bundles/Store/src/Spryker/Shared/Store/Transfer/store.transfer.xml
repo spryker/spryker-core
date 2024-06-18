@@ -12,7 +12,7 @@
         <property name="queuePools" type="array" singular="queuePools" deprecated="Will be empty after dynamic store enablement"/>
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" deprecated="Will be empty after dynamic store enablement"/>
         <property name="countries" type="array" singular="country"/>
-        <property name="timezone" type="string" deprecated="Will be empty after dynamic store enablement"/>
+        <property name="timezone" type="string"/>
         <property name="storeReference" type="string" deprecated="Will be removed without replacement."/>
     </transfer>
 

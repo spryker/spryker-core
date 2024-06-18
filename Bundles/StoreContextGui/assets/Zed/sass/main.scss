@@ -1,0 +1,16 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+.store-context-item > .panel-footer {
+    background-color: #ffffff;
+}
+.context-collection-delimiter {
+    display: none;
+}
+.ibox-content select {
+    width: 100%;
+}
+.ibox:has(form[name='store']) .ibox-title {
+    display: none;
+}

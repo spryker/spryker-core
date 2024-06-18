@@ -1,0 +1,17 @@
+<div class="context-container" data-context-collection-prototype=" {{ form_widget(form.applicationContextCollection.applicationContexts.vars.prototype)|e('html_attr') }}" >
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group wrapper-context-items">
+                {% for contexts in form.applicationContextCollection %}
+                    {% for k, conext in contexts %}
+                        {{ form_widget(conext) }}
+                    {% endfor %}
+                {% endfor %}
+           </div>
+        </div>
+    </div>
+
+    <button class="btn btn-outline btn-primary add-store-context m-t-md">
+        <i class="fa fa-files-o"></i> {{ 'Add store context' | trans }}
+    </button>
+</div>

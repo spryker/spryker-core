@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="StoreApplicationContext" strict="true">
+        <property name="application" type="string"/>
+        <property name="timezone" type="string"/>
+    </transfer>
+
+    <transfer name="StoreApplicationContextCollection" strict="true">
+        <property name="applicationContexts" type="StoreApplicationContext[]" singular="applicationContext"/>
+    </transfer>
+
+    <transfer name="StoreContext" strict="true">
+        <property name="applicationContextCollection" type="StoreApplicationContextCollection"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="StoreContextCollection" strict="true">
+        <property name="contexts" type="StoreContext[]" singular="context"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="applicationContextCollection" type="StoreApplicationContextCollection" strict="true"/>
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="StoreStorage">
+        <property name="applicationContextCollection" type="StoreApplicationContextCollection"/>
+    </transfer>
+
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="StoreResponse">
+        <property name="store" type="Store"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="StoreContextCollectionRequest">
+        <property name="contexts" type="StoreContext[]" singular="context"/>
+    </transfer>
+    <transfer name="StoreContextCollectionResponse">
+        <property name="contexts" type="StoreContext[]" singular="context"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+</transfers>

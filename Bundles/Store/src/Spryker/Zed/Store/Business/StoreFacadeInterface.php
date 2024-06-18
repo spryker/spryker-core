@@ -27,6 +27,7 @@ interface StoreFacadeInterface
      * Specification:
      * - Returns currently selected store transfer.
      * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
+     * - The current store is always available only in the gateway application.
      *
      * @api
      *
