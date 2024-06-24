@@ -148,9 +148,40 @@ class ImportMerchantCommissionCollectionTest extends Unit
     protected const GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_VALIDITY_PERIOD_INVALID = 'merchant_commission.validation.merchant_commission_validity_period_invalid';
 
     /**
+     * @uses \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\CalculatorTypePluginExistsMerchantCommissionValidatorRule::GLOSSARY_KEY_VALIDATION_CALCULATOR_TYPE_PLUGIN_MISSING
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_VALIDATION_CALCULATOR_TYPE_PLUGIN_MISSING = 'merchant_commission.validation.calculator_type_plugin_is_missing';
+
+    /**
+     * @uses \Spryker\Zed\RuleEngine\Business\Validator\QueryStringValidator::GLOSSARY_KEY_INVALID_QUERY_STRING
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INVALID_QUERY_STRING = 'rule_engine.validation.invalid_query_string';
+
+    /**
+     * @uses \Spryker\Zed\RuleEngine\Business\Validator\QueryStringValidator::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE = 'rule_engine.validation.invalid_compare_operator_value';
+
+    /**
      * @var \SprykerTest\Zed\MerchantCommission\MerchantCommissionBusinessTester
      */
     protected MerchantCommissionBusinessTester $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addTestCalculatorPluginToDependencies();
+    }
 
     /**
      * @return void
@@ -1059,6 +1090,140 @@ class ImportMerchantCommissionCollectionTest extends Unit
             $merchantCommissionCollectionResponseTransfer->getErrors(),
             static::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_VALIDITY_PERIOD_INVALID,
         );
+        $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnValidationErrorWhenProvidedCalculatorTypePluginIsMissing(): void
+    {
+        // Arrange
+        $merchantCommissionTransfer = $this->tester->createMerchantCommissionForImport();
+        $merchantCommissionTransfer->setCalculatorTypePlugin('non-existing-calculator-type-plugin');
+
+        $merchantCommissionCollectionRequestTransfer = (new MerchantCommissionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantCommission($merchantCommissionTransfer);
+
+        // Act
+        $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+
+        // Assert
+        $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
+            $merchantCommissionCollectionResponseTransfer->getErrors(),
+            static::GLOSSARY_KEY_VALIDATION_CALCULATOR_TYPE_PLUGIN_MISSING,
+        );
+
+        $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnValidationErrorWhenOrderConditionContainsIncorrectCompareOperator(): void
+    {
+        // Arrange
+        $this->tester->addOrderDecisionRulePluginToDependencies();
+        $merchantCommissionTransfer = $this->tester->createMerchantCommissionForImport();
+        $merchantCommissionTransfer->setOrderCondition('test-order-field >= "test"');
+
+        $merchantCommissionCollectionRequestTransfer = (new MerchantCommissionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantCommission($merchantCommissionTransfer);
+
+        // Act
+        $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+
+        // Assert
+        $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
+            $merchantCommissionCollectionResponseTransfer->getErrors(),
+            static::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE,
+        );
+
+        $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnValidationErrorWhenOrderConditionContainsIncorrectQueryString(): void
+    {
+        // Arrange
+        $this->tester->addOrderDecisionRulePluginToDependencies();
+        $merchantCommissionTransfer = $this->tester->createMerchantCommissionForImport();
+        $merchantCommissionTransfer->setOrderCondition('test-order-field ? "test"');
+
+        $merchantCommissionCollectionRequestTransfer = (new MerchantCommissionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantCommission($merchantCommissionTransfer);
+
+        // Act
+        $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+
+        // Assert
+        $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
+            $merchantCommissionCollectionResponseTransfer->getErrors(),
+            static::GLOSSARY_KEY_INVALID_QUERY_STRING,
+        );
+
+        $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnValidationErrorWhenItemConditionContainsIncorrectCompareOperator(): void
+    {
+        // Arrange
+        $this->tester->addOrderItemCollectorRulePluginToDependencies();
+        $merchantCommissionTransfer = $this->tester->createMerchantCommissionForImport();
+        $merchantCommissionTransfer->setItemCondition('test-order-item-field >= "test"');
+
+        $merchantCommissionCollectionRequestTransfer = (new MerchantCommissionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantCommission($merchantCommissionTransfer);
+
+        // Act
+        $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+
+        // Assert
+        $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
+            $merchantCommissionCollectionResponseTransfer->getErrors(),
+            static::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE,
+        );
+
+        $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnValidationErrorWhenItemConditionContainsIncorrectQueryString(): void
+    {
+        // Arrange
+        $this->tester->addOrderItemCollectorRulePluginToDependencies();
+        $merchantCommissionTransfer = $this->tester->createMerchantCommissionForImport();
+        $merchantCommissionTransfer->setItemCondition('test-order-item-field = test');
+
+        $merchantCommissionCollectionRequestTransfer = (new MerchantCommissionCollectionRequestTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantCommission($merchantCommissionTransfer);
+
+        // Act
+        $merchantCommissionCollectionResponseTransfer = $this->tester->getFacade()
+            ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+
+        // Assert
+        $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
+            $merchantCommissionCollectionResponseTransfer->getErrors(),
+            static::GLOSSARY_KEY_INVALID_QUERY_STRING,
+        );
+
         $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
     }
 }

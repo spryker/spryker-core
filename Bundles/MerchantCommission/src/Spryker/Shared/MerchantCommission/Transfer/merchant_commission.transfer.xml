@@ -58,6 +58,7 @@
         <property name="isActive" type="bool"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantCommissionGroupNames" type="string[]" singular="merchantCommissionGroupName"/>
+        <property name="withinValidityDateRange" type="bool"/>
         <property name="withStoreRelations" type="bool"/>
         <property name="withMerchantRelations" type="bool"/>
         <property name="withCommissionMerchantAmountRelations" type="bool"/>
@@ -96,6 +97,61 @@
     <transfer name="MerchantCommissionGroupConditions" strict="true">
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="keys" type="string[]" singular="key"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationRequest" strict="true">
+        <property name="idSalesOrder" type="int"/>
+        <property name="priceMode" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
+        <property name="items" type="MerchantCommissionCalculationRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationRequestItem" strict="true">
+        <property name="idSalesOrder" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="merchantCommissions" type="MerchantCommission[]" singular="merchantCommission"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationResponse" strict="true">
+        <property name="items" type="MerchantCommissionCalculationItem[]" singular="item"/>
+        <property name="totals" type="MerchantCommissionCalculationTotals"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationItem" strict="true">
+        <property name="idSalesOrder" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="merchantCommissionAmountAggregation" type="int"/>
+        <property name="merchantCommissionAmountFullAggregation" type="int"/>
+        <property name="merchantCommissions" type="MerchantCommission[]" singular="merchantCommission"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationTotals" strict="true">
+        <property name="idSalesOrder" type="int"/>
+        <property name="merchantCommissionTotal" type="int"/>
+    </transfer>
+
+    <transfer name="CollectedMerchantCommission" strict="true">
+        <property name="merchantCommission" type="MerchantCommission"/>
+        <property name="commissionableItems" type="MerchantCommissionCalculationRequestItem[]" singular="commissionableItem"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmountTransformerRequest" strict="true">
+        <property name="calculatorTypePlugin" type="string"/>
+        <property name="amountForPersistence" type="float"/>
+        <property name="amountFromPersistence" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionAmountFormatRequest" strict="true">
+        <property name="calculatorTypePlugin" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -178,6 +234,33 @@
 
     <transfer name="ErrorCollection" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="RuleEngineSpecificationProviderRequest" strict="true">
+        <property name="domainName" type="string"/>
+        <property name="specificationRuleType" type="string"/>
+    </transfer>
+
+    <transfer name="RuleEngineSpecificationRequest" strict="true">
+        <property name="ruleEngineSpecificationProviderRequest" type="RuleEngineSpecificationProviderRequest"/>
+        <property name="queryString" type="string"/>
+    </transfer>
+
+    <transfer name="RuleEngineQueryStringValidationRequest" strict="true">
+        <property name="ruleEngineSpecificationProviderRequest" type="RuleEngineSpecificationProviderRequest"/>
+        <property name="queryStrings" type="string[]" singular="queryString"/>
+    </transfer>
+
+    <transfer name="RuleEngineQueryStringValidationResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="RuleEngineClause" strict="true">
+        <property name="acceptedTypes" type="array" singular="acceptedTypes"/>
+        <property name="field" type="string"/>
+    </transfer>
+
+    <transfer name="Money">
     </transfer>
 
 </transfers>

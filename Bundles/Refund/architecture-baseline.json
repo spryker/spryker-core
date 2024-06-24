@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMessengerFacadeBridge.php",
+        "description": "Bridges: Method `getStoredMessages()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMoneyBridge.php",
         "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToMoneyBridge::fromInteger()`.",
         "rule": "BridgeMethodsRule",

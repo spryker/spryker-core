@@ -14,7 +14,7 @@ class MerchantCommissionDataExportConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    protected const MERCHANT_COMMISSION_READ_BATCH_SIZE = 1;
+    protected const MERCHANT_COMMISSION_READ_BATCH_SIZE = 500;
 
     /**
      * @api

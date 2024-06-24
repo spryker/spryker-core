@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Refund\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
@@ -21,7 +22,9 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Refund\Business\Model\RefundSaverInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
+use Spryker\Zed\Refund\RefundConfig;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
@@ -50,9 +53,18 @@ class RefundSaverTest extends Unit
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
+        $refundConfigMock = $this->getRefundConfigMock();
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
         $refundEntity = $this->getRefundEntity(1);
 
-        $refundSaver = $this->getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock);
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
         $refundTransfer = new RefundTransfer();
 
         $this->assertTrue($refundSaver->saveRefund($refundTransfer));
@@ -66,9 +78,18 @@ class RefundSaverTest extends Unit
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
+        $refundConfigMock = $this->getRefundConfigMock();
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
         $refundEntity = $this->getRefundEntity(0);
 
-        $refundSaver = $this->getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock);
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
         $refundTransfer = new RefundTransfer();
 
         $this->isCommitSuccessful = false;
@@ -92,9 +113,18 @@ class RefundSaverTest extends Unit
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesQueryContainerMock->method('querySalesOrderItem')->willReturn($salesOrderItemQueryMock);
 
+        $refundConfigMock = $this->getRefundConfigMock();
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
         $refundEntity = $this->getRefundEntity(0);
 
-        $refundSaver = $this->getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock);
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
 
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(100);
@@ -121,9 +151,18 @@ class RefundSaverTest extends Unit
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesQueryContainerMock->method('querySalesExpense')->willReturn($salesExpenseQueryMock);
 
+        $refundConfigMock = $this->getRefundConfigMock();
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
         $refundEntity = $this->getRefundEntity(0);
 
-        $refundSaver = $this->getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock);
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
 
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(100);
@@ -142,41 +181,126 @@ class RefundSaverTest extends Unit
     {
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
+        $refundConfigMock = $this->getRefundConfigMock();
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+
         $refundSaverMock = $this->getRefundSaverMock(
             null,
             $this->getSalesQueryContainerMock(),
             $salesFacadeMock,
             $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
         );
 
         $refundSaverMock->saveRefund(new RefundTransfer());
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Refund\Persistence\SpyRefund $refundEntity
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainerMock
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacadeMock
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacadeMock
+     * @param \Orm\Zed\Refund\Persistence\SpyRefund|null $refundEntity
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainerMock
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacadeMock
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacadeMock
+     * @param \Pyz\Zed\Refund\RefundConfig $refundConfigMock
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface $messengerFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Business\Model\RefundSaverInterface
+     * @return \Spryker\Zed\Refund\Business\Model\RefundSaverInterface
      */
-    protected function getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock): RefundSaverInterface
-    {
+    protected function getRefundSaverMock(
+        ?SpyRefund $refundEntity,
+        SalesQueryContainerInterface $salesQueryContainerMock,
+        RefundToSalesInterface $salesFacadeMock,
+        RefundToCalculationInterface $calculationFacadeMock,
+        RefundConfig $refundConfigMock,
+        RefundToMessengerFacadeInterface $messengerFacadeMock
+    ): RefundSaverInterface {
         if ($refundEntity) {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
                 ->setMethods(['buildRefundEntity'])
-                ->setConstructorArgs([$salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock, []])->getMock();
+                ->setConstructorArgs([
+                    $salesQueryContainerMock,
+                    $salesFacadeMock,
+                    $calculationFacadeMock,
+                    $refundConfigMock,
+                    $messengerFacadeMock,
+                    [],
+                ])->getMock();
 
             $refundSaverMock->expects($this->once())->method('buildRefundEntity')->willReturn($refundEntity);
         } else {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
                 ->setMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
-                ->setConstructorArgs([$this->getSalesQueryContainerMock(), $salesFacadeMock, $calculationFacadeMock, []])
-                ->getMock();
+                ->setConstructorArgs([
+                    $this->getSalesQueryContainerMock(),
+                    $salesFacadeMock,
+                    $calculationFacadeMock,
+                    $refundConfigMock,
+                    $messengerFacadeMock,
+                    [],
+                ])->getMock();
+
             $refundSaverMock->expects($this->once())->method('saveRefundEntity');
         }
 
         return $refundSaverMock;
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveRefundShouldCleanupRecalculationMessages(): void
+    {
+        // Assert
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+        $messengerFacadeMock->expects($this->once())->method('getStoredMessages');
+
+        // Arrange
+        $salesQueryContainerMock = $this->getSalesQueryContainerMock();
+        $salesFacadeMock = $this->getSalesFacadeMock();
+        $calculationFacadeMock = $this->getCalculationFacadeMock();
+        $refundConfigMock = $this->getRefundConfigMock(true);
+        $refundEntity = $this->getRefundEntity(1);
+
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
+
+        // Act
+        $refundSaver->saveRefund(new RefundTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveRefundShouldNotCleanupRecalculationMessages(): void
+    {
+        // Assert
+        $messengerFacadeMock = $this->getMessengerFacadeMock();
+        $messengerFacadeMock->expects($this->never())->method('getStoredMessages');
+
+        // Arrange
+        $salesQueryContainerMock = $this->getSalesQueryContainerMock();
+        $salesFacadeMock = $this->getSalesFacadeMock();
+        $calculationFacadeMock = $this->getCalculationFacadeMock();
+        $refundConfigMock = $this->getRefundConfigMock();
+        $refundEntity = $this->getRefundEntity(1);
+
+        $refundSaver = $this->getRefundSaverMock(
+            $refundEntity,
+            $salesQueryContainerMock,
+            $salesFacadeMock,
+            $calculationFacadeMock,
+            $refundConfigMock,
+            $messengerFacadeMock,
+        );
+
+        // Act
+        $refundSaver->saveRefund(new RefundTransfer());
     }
 
     /**
@@ -223,6 +347,34 @@ class RefundSaverTest extends Unit
         $calculationFacadeMock->method('recalculateOrder')->willReturn(new OrderTransfer());
 
         return $calculationFacadeMock;
+    }
+
+    /**
+     * @param bool $shouldCleanupRecalculationMessagesAfterRefund
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\RefundConfig
+     */
+    protected function getRefundConfigMock(bool $shouldCleanupRecalculationMessagesAfterRefund = false): RefundConfig
+    {
+        $refundConfigMock = $this->getMockBuilder(RefundConfig::class)->getMock();
+        $refundConfigMock
+            ->method('shouldCleanupRecalculationMessagesAfterRefund')
+            ->willReturn($shouldCleanupRecalculationMessagesAfterRefund);
+
+        return $refundConfigMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface
+     */
+    protected function getMessengerFacadeMock(): RefundToMessengerFacadeInterface
+    {
+        $messengerFacadeMock = $this->getMockBuilder(RefundToMessengerFacadeInterface::class)->getMock();
+        $messengerFacadeMock
+            ->method('getStoredMessages')
+            ->willReturn(new FlashMessagesTransfer());
+
+        return $messengerFacadeMock;
     }
 
     /**

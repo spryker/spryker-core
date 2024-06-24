@@ -157,6 +157,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ORDER_POST_UPDATE = 'PLUGINS_ORDER_POST_UPDATE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ORDER_POST_CANCEL = 'PLUGINS_ORDER_POST_CANCEL';
+
+    /**
      * @deprecated Will be removed in the next major version.
      *
      * @var string
@@ -192,6 +197,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerOrderAccessCheckPlugins($container);
         $container = $this->addOrderItemsPostSavePlugins($container);
         $container = $this->addOrderPostUpdatePlugins($container);
+        $container = $this->addOrderPostCancelPlugins($container);
 
         return $container;
     }
@@ -596,6 +602,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostCancelPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_POST_CANCEL, function () {
+            return $this->getOrderPostCancelPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -711,6 +731,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface>
      */
     protected function getOrderPostUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface>
+     */
+    protected function getOrderPostCancelPlugins(): array
     {
         return [];
     }

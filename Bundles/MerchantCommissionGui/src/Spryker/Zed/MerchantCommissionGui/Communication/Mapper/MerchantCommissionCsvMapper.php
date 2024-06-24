@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\MerchantCommissionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface;
+use Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface;
 
 class MerchantCommissionCsvMapper implements MerchantCommissionCsvMapperInterface
 {
@@ -40,6 +40,16 @@ class MerchantCommissionCsvMapper implements MerchantCommissionCsvMapperInterfac
     protected const KEY_FIXED_AMOUNT_CONFIGURATION = 'fixed_amount_configuration';
 
     /**
+     * @var string
+     */
+    protected const KEY_AMOUNT = 'amount';
+
+    /**
+     * @var string
+     */
+    protected const KEY_CALCULATOR_TYPE_PLUGIN = 'calculator_type_plugin';
+
+    /**
      * @var int
      */
     protected const INDEX_CURRENCY_CODE = 0;
@@ -55,16 +65,16 @@ class MerchantCommissionCsvMapper implements MerchantCommissionCsvMapperInterfac
     protected const INDEX_GROSS_AMOUNT = 2;
 
     /**
-     * @var \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface
+     * @var \Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface
      */
-    protected MerchantCommissionGuiToMoneyFacadeInterface $moneyFacade;
+    protected MerchantCommissionAmountTransformerInterface $merchantCommissionAmountTransformer;
 
     /**
-     * @param \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface $merchantCommissionAmountTransformer
      */
-    public function __construct(MerchantCommissionGuiToMoneyFacadeInterface $moneyFacade)
+    public function __construct(MerchantCommissionAmountTransformerInterface $merchantCommissionAmountTransformer)
     {
-        $this->moneyFacade = $moneyFacade;
+        $this->merchantCommissionAmountTransformer = $merchantCommissionAmountTransformer;
     }
 
     /**
@@ -77,24 +87,32 @@ class MerchantCommissionCsvMapper implements MerchantCommissionCsvMapperInterfac
         array $merchantCommissionData,
         MerchantCommissionTransfer $merchantCommissionTransfer
     ): MerchantCommissionTransfer {
-        return $merchantCommissionTransfer
-            ->fromArray($merchantCommissionData, true)
-            ->setMerchantCommissionGroup($this->mapMerchantCommissionGroupDataToMerchantCommissionGroupTransfer(
-                $merchantCommissionData,
-                new MerchantCommissionGroupTransfer(),
-            ))
-            ->setStoreRelation($this->mapStoreRelationDataToStoreRelationTransfer(
-                $merchantCommissionData,
-                new StoreRelationTransfer(),
-            ))
-            ->setMerchants($this->mapMerchantAllowListToMerchantTransfers(
-                $merchantCommissionData,
-                new ArrayObject(),
-            ))
-            ->setMerchantCommissionAmounts($this->mapMerchantCommissionAmountDataToMerchantCommissionAmountTransfers(
-                $merchantCommissionData,
-                new ArrayObject(),
-            ));
+        if (isset($merchantCommissionData[static::KEY_AMOUNT])) {
+            $merchantCommissionData[static::KEY_AMOUNT] = $this->merchantCommissionAmountTransformer->transformMerchantCommissionAmount(
+                $merchantCommissionData[static::KEY_CALCULATOR_TYPE_PLUGIN],
+                (float)$merchantCommissionData[static::KEY_AMOUNT],
+            );
+        }
+
+        $merchantCommissionTransfer->fromArray($merchantCommissionData, true);
+        $merchantCommissionTransfer->setMerchantCommissionGroup($this->mapMerchantCommissionGroupDataToMerchantCommissionGroupTransfer(
+            $merchantCommissionData,
+            new MerchantCommissionGroupTransfer(),
+        ));
+        $merchantCommissionTransfer->setStoreRelation($this->mapStoreRelationDataToStoreRelationTransfer(
+            $merchantCommissionData,
+            new StoreRelationTransfer(),
+        ));
+        $merchantCommissionTransfer->setMerchants($this->mapMerchantAllowListToMerchantTransfers(
+            $merchantCommissionData,
+            new ArrayObject(),
+        ));
+        $merchantCommissionTransfer->setMerchantCommissionAmounts($this->mapMerchantCommissionAmountDataToMerchantCommissionAmountTransfers(
+            $merchantCommissionData,
+            new ArrayObject(),
+        ));
+
+        return $merchantCommissionTransfer;
     }
 
     /**
@@ -169,27 +187,29 @@ class MerchantCommissionCsvMapper implements MerchantCommissionCsvMapperInterfac
 
         foreach ($merchantCommissionAmountData as $merchantCommissionAmount) {
             $merchantCommissionAmountParts = array_map('trim', explode('|', $merchantCommissionAmount));
+            $grossAmount = null;
+            if (isset($merchantCommissionAmountParts[static::INDEX_GROSS_AMOUNT])) {
+                $grossAmount = $this->merchantCommissionAmountTransformer->transformMerchantCommissionAmount(
+                    $merchantCommissionData[static::KEY_CALCULATOR_TYPE_PLUGIN],
+                    (float)$merchantCommissionAmountParts[static::INDEX_GROSS_AMOUNT],
+                );
+            }
+
+            $netAmount = null;
+            if (isset($merchantCommissionAmountParts[static::INDEX_NET_AMOUNT])) {
+                $netAmount = $this->merchantCommissionAmountTransformer->transformMerchantCommissionAmount(
+                    $merchantCommissionData[static::KEY_CALCULATOR_TYPE_PLUGIN],
+                    (float)$merchantCommissionAmountParts[static::INDEX_NET_AMOUNT],
+                );
+            }
 
             $merchantCommissionAmountTransfer = (new MerchantCommissionAmountTransfer())
-                ->setCurrency((new CurrencyTransfer())->setCode($merchantCommissionAmountParts[static::INDEX_CURRENCY_CODE]))
-                ->setNetAmount($this->formatAmount((float)$merchantCommissionAmountParts[static::INDEX_NET_AMOUNT]))
-                ->setGrossAmount($this->formatAmount((float)$merchantCommissionAmountParts[static::INDEX_GROSS_AMOUNT]));
+                ->setCurrency((new CurrencyTransfer())->setCode((string)$merchantCommissionAmountParts[static::INDEX_CURRENCY_CODE]))
+                ->setNetAmount($netAmount)
+                ->setGrossAmount($grossAmount);
             $merchantCommissionAmountTransfers->append($merchantCommissionAmountTransfer);
         }
 
         return $merchantCommissionAmountTransfers;
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $currencyCode
-     *
-     * @return int
-     */
-    protected function formatAmount(float $amount, ?string $currencyCode = null): int
-    {
-        $moneyTransfer = $this->moneyFacade->fromFloat($amount, $currencyCode);
-
-        return (int)$moneyTransfer->getAmountOrFail();
     }
 }

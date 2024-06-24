@@ -52,18 +52,26 @@ class OrderWriter implements OrderWriterInterface
     protected SalesRepositoryInterface $salesRepository;
 
     /**
+     * @var list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface>
+     */
+    protected array $orderPostCancelPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
      * @param \Spryker\Zed\Sales\Business\Order\OrderReaderInterface $orderReader
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
+     * @param list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface> $orderPostCancelPlugins
      */
     public function __construct(
         OmsEventTriggererInterface $omsEventTriggerer,
         OrderReaderInterface $orderReader,
-        SalesRepositoryInterface $salesRepository
+        SalesRepositoryInterface $salesRepository,
+        array $orderPostCancelPlugins
     ) {
         $this->omsEventTriggerer = $omsEventTriggerer;
         $this->orderReader = $orderReader;
         $this->salesRepository = $salesRepository;
+        $this->orderPostCancelPlugins = $orderPostCancelPlugins;
     }
 
     /**
@@ -112,9 +120,13 @@ class OrderWriter implements OrderWriterInterface
                 ->setMessages($omsEventTriggerResponseTransfer->getMessages());
         }
 
+        $updatedOrderTransfer = $this->executeOrderPostCancelPlugins(
+            $this->orderReader->findOrderByIdSalesOrder($idSalesOrder),
+        );
+
         return (new OrderCancelResponseTransfer())
             ->setIsSuccessful(true)
-            ->setOrder($this->orderReader->findOrderByIdSalesOrder($idSalesOrder));
+            ->setOrder($updatedOrderTransfer);
     }
 
     /**
@@ -159,5 +171,19 @@ class OrderWriter implements OrderWriterInterface
         return (new OrderCancelResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function executeOrderPostCancelPlugins(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        foreach ($this->orderPostCancelPlugins as $orderPostCancelPlugin) {
+            $orderTransfer = $orderPostCancelPlugin->postCancel($orderTransfer);
+        }
+
+        return $orderTransfer;
     }
 }

@@ -18,6 +18,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface;
 use SprykerTest\Zed\Sales\SalesBusinessTester;
 
 /**
@@ -401,6 +402,32 @@ class CancelOrderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testShouldExecutePostCancelPluginStack(): void
+    {
+        // Assert
+        $this->tester->setDependency(
+            SalesDependencyProvider::PLUGINS_ORDER_POST_CANCEL,
+            [$this->getOrderPostCancelPluginMock()],
+        );
+
+        // Arrange
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS);
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
+            ->setCustomer($orderTransfer->getCustomer());
+
+        // Act
+        $this->tester->getFacade()->cancelOrder($orderCancelRequestTransfer);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface
      */
     protected function getOrderExpanderPluginMock(): OrderExpanderPluginInterface
@@ -418,5 +445,21 @@ class CancelOrderTest extends Unit
             });
 
         return $orderExpanderPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface
+     */
+    protected function getOrderPostCancelPluginMock(): OrderPostCancelPluginInterface
+    {
+        $orderPostCancelPluginMock = $this
+            ->getMockBuilder(OrderPostCancelPluginInterface::class)
+            ->getMock();
+
+        $orderPostCancelPluginMock
+            ->expects($this->once())
+            ->method('postCancel');
+
+        return $orderPostCancelPluginMock;
     }
 }

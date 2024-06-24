@@ -250,4 +250,17 @@ class SalesConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * Specification:
+     * - Returns true if order items should be updated during order update {@link SalesFacade::updateOrder()}.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function shouldPersistModifiedOrderItemProperties(): bool
+    {
+        return false;
+    }
 }

@@ -65,10 +65,18 @@ class MerchantSalesOrderMapper
     ): ?TotalsTransfer {
         $virtualColumns = $merchantSalesOrderEntity->getVirtualColumns();
 
+        $totalsTransfer = new TotalsTransfer();
+        if ($merchantSalesOrderEntity->getMerchantSalesOrderTotals()->count()) {
+            $totalsTransfer = $totalsTransfer->fromArray(
+                $merchantSalesOrderEntity->getMerchantSalesOrderTotals()->getLast()->toArray(),
+                true,
+            );
+        }
+
         if ($virtualColumns) {
             $taxTotalTransfer = (new TaxTotalTransfer())->setAmount($virtualColumns[TotalsTransfer::TAX_TOTAL]);
 
-            return (new TotalsTransfer())
+            return $totalsTransfer
                 ->fromArray($merchantSalesOrderEntity->getVirtualColumns(), true)
                 ->setTaxTotal($taxTotalTransfer);
         }

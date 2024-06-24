@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantCommissionGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCommissionAmountFormatRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionAmountTransformerRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionTransfer;
@@ -31,4 +33,22 @@ interface MerchantCommissionGuiToMerchantCommissionFacadeInterface
     public function importMerchantCommissionCollection(
         MerchantCommissionCollectionRequestTransfer $merchantCommissionCollectionRequestTransfer
     ): MerchantCommissionCollectionResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+     *
+     * @return int
+     */
+    public function transformMerchantCommissionAmountForPersistence(
+        MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+    ): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionAmountFormatRequestTransfer $merchantCommissionAmountFormatRequestTransfer
+     *
+     * @return string
+     */
+    public function formatMerchantCommissionAmount(
+        MerchantCommissionAmountFormatRequestTransfer $merchantCommissionAmountFormatRequestTransfer
+    ): string;
 }

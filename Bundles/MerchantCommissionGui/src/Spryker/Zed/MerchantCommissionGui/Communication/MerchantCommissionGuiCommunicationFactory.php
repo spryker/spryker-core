@@ -11,18 +11,21 @@ use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantCommissionGui\Communication\Form\MerchantCommissionImportForm;
+use Spryker\Zed\MerchantCommissionGui\Communication\Formatter\MerchantCommissionFormatter;
+use Spryker\Zed\MerchantCommissionGui\Communication\Formatter\MerchantCommissionFormatterInterface;
 use Spryker\Zed\MerchantCommissionGui\Communication\Mapper\MerchantCommissionCsvMapper;
 use Spryker\Zed\MerchantCommissionGui\Communication\Mapper\MerchantCommissionCsvMapperInterface;
 use Spryker\Zed\MerchantCommissionGui\Communication\Reader\MerchantCommissionCsvReader;
 use Spryker\Zed\MerchantCommissionGui\Communication\Reader\MerchantCommissionCsvReaderInterface;
 use Spryker\Zed\MerchantCommissionGui\Communication\Table\MerchantCommissionImportErrorTable;
 use Spryker\Zed\MerchantCommissionGui\Communication\Table\MerchantCommissionListTable;
+use Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformer;
+use Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface;
 use Spryker\Zed\MerchantCommissionGui\Communication\Validator\MerchantCommissionCsvValidator;
 use Spryker\Zed\MerchantCommissionGui\Communication\Validator\MerchantCommissionCsvValidatorInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionDataExportFacadeInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionFacadeInterface;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilCsvServiceInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantCommissionGui\MerchantCommissionGuiDependencyProvider;
@@ -95,7 +98,23 @@ class MerchantCommissionGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createMerchantCommissionCsvMapper(): MerchantCommissionCsvMapperInterface
     {
-        return new MerchantCommissionCsvMapper($this->getMoneyFacade());
+        return new MerchantCommissionCsvMapper($this->createMerchantCommissionAmountTransformer());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface
+     */
+    public function createMerchantCommissionAmountTransformer(): MerchantCommissionAmountTransformerInterface
+    {
+        return new MerchantCommissionAmountTransformer($this->getMerchantCommissionFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionGui\Communication\Formatter\MerchantCommissionFormatterInterface
+     */
+    public function createMerchantCommissionFormatter(): MerchantCommissionFormatterInterface
+    {
+        return new MerchantCommissionFormatter($this->getMerchantCommissionFacade());
     }
 
     /**
@@ -120,14 +139,6 @@ class MerchantCommissionGuiCommunicationFactory extends AbstractCommunicationFac
     public function getGlossaryFacade(): MerchantCommissionGuiToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MerchantCommissionGuiDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface
-     */
-    public function getMoneyFacade(): MerchantCommissionGuiToMoneyFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantCommissionGuiDependencyProvider::FACADE_MONEY);
     }
 
     /**

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToGlossaryFacadeBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionDataExportFacadeBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionFacadeBridge;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilCsvServiceBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilDateTimeServiceBridge;
 
@@ -36,11 +35,6 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
-
-    /**
-     * @var string
-     */
-    public const FACADE_MONEY = 'FACADE_MONEY';
 
     /**
      * @var string
@@ -68,7 +62,6 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addMerchantCommissionFacade($container);
         $container = $this->addMerchantCommissionDataExportFacade($container);
         $container = $this->addGlossaryFacade($container);
-        $container = $this->addMoneyFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addUtilCsvService($container);
         $container = $this->addMerchantCommissionPropelQuery($container);
@@ -117,20 +110,6 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new MerchantCommissionGuiToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMoneyFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_MONEY, function (Container $container) {
-            return new MerchantCommissionGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
         });
 
         return $container;

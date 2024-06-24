@@ -3,6 +3,54 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>' for Spryker\\Zed\\MerchantCommission\\Business\\Calculator\\MerchantCommissionCalculator::calculateMerchantCommissionForItems is more specific than the inferred return type 'array<int, Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Business/Calculator/MerchantCommissionCalculator.php",
+            "snippet": "     * @return list<\\Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>",
+            "selected_text": "list<\\Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 173,
+            "line_to": 173,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>' is more general than the declared return type 'list<Generated\\Shared\\Transfer\\MerchantCommissionCalculationItemTransfer>' for Spryker\\Zed\\MerchantCommission\\Business\\Calculator\\MerchantCommissionCalculator::calculateMerchantCommissionForItems",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Business/Calculator/MerchantCommissionCalculator.php",
+            "snippet": "        return $merchantCommissionCalculationItems;",
+            "selected_text": "$merchantCommissionCalculationItems",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>' for Spryker\\Zed\\MerchantCommission\\Business\\Collector\\CommissionableItemCollector::collectCommissionableItemsForMerchantCommissionGroup is more specific than the inferred return type 'array<int, Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Business/Collector/CommissionableItemCollector.php",
+            "snippet": "     * @return list<\\Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>",
+            "selected_text": "list<\\Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>' is more general than the declared return type 'list<Generated\\Shared\\Transfer\\CollectedMerchantCommissionTransfer>' for Spryker\\Zed\\MerchantCommission\\Business\\Collector\\CommissionableItemCollector::collectCommissionableItemsForMerchantCommissionGroup",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Business/Collector/CommissionableItemCollector.php",
+            "snippet": "        return $collectedMerchantCommissionTransfers;",
+            "selected_text": "$collectedMerchantCommissionTransfers",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
             "line_from": 85,
             "line_to": 85,
             "type": "ArgumentTypeCoercion",
@@ -183,53 +231,29 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\MerchantCommission\\Persistence\\Propel\\Mapper\\MerchantCommissionMapper::mapMerchantCommissionTransferToMerchantCommissionEntity cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Persistence/MerchantCommissionEntityManager.php",
-            "snippet": "            $merchantCommissionEntity,",
-            "selected_text": "$merchantCommissionEntity",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 140,
-            "line_to": 140,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\MerchantCommission\\Persistence\\Propel\\Mapper\\MerchantCommissionMapper::mapMerchantCommissionAmountTransferToMerchantCommissionAmountEntity cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Persistence/MerchantCommissionEntityManager.php",
-            "snippet": "            $merchantCommissionAmountEntity,",
-            "selected_text": "$merchantCommissionAmountEntity",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 116,
-            "line_to": 116,
+            "line_from": 282,
+            "line_to": 282,
             "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantCommission\\Persistence\\Propel\\Mapper\\MerchantCommissionMapper::mapMerchantCommissionAmountEntitiesToMerchantCommissionAmountCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\MerchantCommission\\Persistence\\SpyMerchantCommissionAmount> provided",
+            "message": "Argument 1 of Orm\\Zed\\MerchantCommission\\Persistence\\SpyMerchantCommissionQuery::where expects array<array-key, mixed>|literal-string, but parent type string provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Persistence/MerchantCommissionRepository.php",
-            "snippet": "                $merchantCommissionAmountEntities,",
-            "selected_text": "$merchantCommissionAmountEntities",
+            "snippet": "                ->where($whereClause, [$dateTimeFormatted, $dateTimeFormatted])",
+            "selected_text": "$whereClause",
             "error_level": 3,
             "shortcode": 193
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 285,
+            "line_to": 285,
             "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantCommission\\Persistence\\Propel\\Mapper\\MerchantCommissionMapper::mapMerchantCommissionGroupEntitiesToMerchantCommissionGroupCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\MerchantCommission\\Persistence\\SpyMerchantCommissionGroup>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\MerchantCommission\\Persistence\\SpyMerchantCommissionGroup> provided",
+            "message": "Argument 1 of Orm\\Zed\\MerchantCommission\\Persistence\\SpyMerchantCommissionQuery::where expects array<array-key, mixed>|literal-string, but parent type string provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantCommission/src/Spryker/Zed/MerchantCommission/Persistence/MerchantCommissionRepository.php",
-            "snippet": "                $merchantCommissionGroupEntities,",
-            "selected_text": "$merchantCommissionGroupEntities",
+            "snippet": "                    sprintf('(%s IS NULL AND %s IS NULL )', SpyMerchantCommissionTableMap::COL_VALID_FROM, SpyMerchantCommissionTableMap::COL_VALID_TO),",
+            "selected_text": "sprintf('(%s IS NULL AND %s IS NULL )', SpyMerchantCommissionTableMap::COL_VALID_FROM, SpyMerchantCommissionTableMap::COL_VALID_TO)",
             "error_level": 3,
             "shortcode": 193
         }
     ],
     "deprecation": [],
-    "count": 58
+    "count": 68
 }

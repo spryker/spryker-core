@@ -68,4 +68,7 @@
         <property name="permissionMask" type="int"/>
     </transfer>
 
+    <transfer name="FlashMessages">
+    </transfer>
+
 </transfers>

@@ -90,7 +90,7 @@
             {% if merchantCommission.merchantCommissionAmounts.count == 0 %}
                 <div class="row form-group">
                     <div class="col-xs-2"><b>{{ 'Amount' | trans }}</b></div>
-                    <div class="col-xs-10">{{ merchantCommission.amount }} %</div>
+                    <div class="col-xs-10">{{ merchantCommission.amount }}</div>
                 </div>
             {% endif %}
         {% endblock %}
@@ -103,14 +103,14 @@
                     <div class="row form-group">
                         <div class="col-xs-2"><b>{{ 'Gross' | trans }}</b></div>
                         <div class="col-xs-10">
-                            {{ merchantCommissionAmount.grossAmount | money(false, merchantCommissionAmount.currency.code) ~ ' ' ~ merchantCommissionAmount.currency.symbol }}
+                            {{ merchantCommissionAmount.grossAmount }}
                         </div>
                     </div>
 
                     <div class="row form-group">
                         <div class="col-xs-2"><b>{{ 'Net' | trans }}</b></div>
                         <div class="col-xs-10">
-                            {{ merchantCommissionAmount.netAmount | money(false, merchantCommissionAmount.currency.code) ~ ' ' ~ merchantCommissionAmount.currency.symbol }}
+                            {{ merchantCommissionAmount.netAmount }}
                         </div>
                     </div>
                 {% endfor %}

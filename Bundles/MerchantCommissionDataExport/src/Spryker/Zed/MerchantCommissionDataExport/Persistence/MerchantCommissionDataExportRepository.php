@@ -197,9 +197,7 @@ class MerchantCommissionDataExportRepository extends AbstractRepository implemen
                 continue;
             }
 
-            $merchantCommissionData[$key][static::KEY_FIXED_AMOUNT_CONFIGURATION] = $this->formatFixedAmountConfiguration(
-                $merchantCommissionAmountData,
-            );
+            $merchantCommissionData[$key][static::KEY_FIXED_AMOUNT_CONFIGURATION] = $merchantCommissionAmountData;
         }
 
         return $merchantCommissionData;
@@ -251,25 +249,5 @@ class MerchantCommissionDataExportRepository extends AbstractRepository implemen
         }
 
         return $merchantCommissionData;
-    }
-
-    /**
-     * @param list<array<string, mixed>> $merchantCommissionAmountData
-     *
-     * @return string
-     */
-    protected function formatFixedAmountConfiguration(array $merchantCommissionAmountData): string
-    {
-        $fixedAmountConfiguration = [];
-        foreach ($merchantCommissionAmountData as $merchantCommissionAmountRowData) {
-            $fixedAmountConfiguration[] = sprintf(
-                '%s|%s|%s',
-                $merchantCommissionAmountRowData[SpyCurrencyTableMap::COL_CODE],
-                $merchantCommissionAmountRowData[SpyMerchantCommissionAmountTableMap::COL_NET_AMOUNT] / 100,
-                $merchantCommissionAmountRowData[SpyMerchantCommissionAmountTableMap::COL_GROSS_AMOUNT] / 100,
-            );
-        }
-
-        return implode(',', $fixedAmountConfiguration);
     }
 }

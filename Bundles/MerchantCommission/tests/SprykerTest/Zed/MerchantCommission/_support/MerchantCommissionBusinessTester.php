@@ -11,9 +11,12 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\MerchantCommissionBuilder;
 use Generated\Shared\Transfer\MerchantCommissionAmountTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionGroupTransfer;
 use Generated\Shared\Transfer\MerchantCommissionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\RuleEngineClauseTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantCommission\Persistence\Base\SpyMerchantCommissionMerchantQuery;
@@ -22,6 +25,13 @@ use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionAmount;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionAmountQuery;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionStoreQuery;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantCommission\Communication\Plugin\RuleEngine\MerchantCommissionItemCollectorRuleSpecificationProviderPlugin;
+use Spryker\Zed\MerchantCommission\Communication\Plugin\RuleEngine\MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin;
+use Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface;
+use Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\CollectorRulePluginInterface;
+use Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\DecisionRulePluginInterface;
 
 /**
  * Inherited Methods
@@ -45,6 +55,39 @@ class MerchantCommissionBusinessTester extends Actor
     use _generated\MerchantCommissionBusinessTesterActions;
 
     /**
+     * @uses \Spryker\Zed\MerchantCommission\MerchantCommissionDependencyProvider::PLUGINS_MERCHANT_COMMISSION_CALCULATOR
+     *
+     * @var string
+     */
+    protected const PLUGINS_MERCHANT_COMMISSION_CALCULATOR = 'PLUGINS_MERCHANT_COMMISSION_CALCULATOR';
+
+    /**
+     * @uses \Spryker\Zed\MerchantCommission\MerchantCommissionDependencyProvider::PLUGINS_RULE_ENGINE_COLLECTOR_RULE
+     *
+     * @var string
+     */
+    public const PLUGINS_RULE_ENGINE_COLLECTOR_RULE = 'PLUGINS_RULE_ENGINE_COLLECTOR_RULE';
+
+    /**
+     * @uses \Spryker\Zed\MerchantCommission\MerchantCommissionDependencyProvider::PLUGINS_RULE_ENGINE_DECISION_RULE
+     *
+     * @var string
+     */
+    public const PLUGINS_RULE_ENGINE_DECISION_RULE = 'PLUGINS_RULE_ENGINE_DECISION_RULE';
+
+    /**
+     * @uses \Spryker\Zed\RuleEngine\RuleEngineDependencyProvider::PLUGINS_RULE_SPECIFICATION_PROVIDER
+     *
+     * @var string
+     */
+    public const PLUGINS_RULE_SPECIFICATION_PROVIDER = 'PLUGINS_RULE_SPECIFICATION_PROVIDER';
+
+    /**
+     * @var string
+     */
+    protected const TEST_CALCULATOR_PLUGIN_TYPE = 'test-calculator-type-fixed';
+
+    /**
      * @param array<string, mixed> $seedData
      *
      * @return \Generated\Shared\Transfer\MerchantCommissionTransfer
@@ -66,6 +109,10 @@ class MerchantCommissionBusinessTester extends Actor
             $seedData[MerchantCommissionTransfer::MERCHANTS] = [$merchantTransfer->toArray()];
         }
 
+        if (!isset($seedData[MerchantCommissionTransfer::CALCULATOR_TYPE_PLUGIN])) {
+            $seedData[MerchantCommissionTransfer::CALCULATOR_TYPE_PLUGIN] = static::TEST_CALCULATOR_PLUGIN_TYPE;
+        }
+
         return $this->haveMerchantCommission($seedData);
     }
 
@@ -78,6 +125,7 @@ class MerchantCommissionBusinessTester extends Actor
         $merchantCommissionGroupTransfer = $this->haveMerchantCommissionGroup();
 
         return (new MerchantCommissionBuilder([
+            MerchantCommissionTransfer::CALCULATOR_TYPE_PLUGIN => static::TEST_CALCULATOR_PLUGIN_TYPE,
             MerchantCommissionTransfer::MERCHANT_COMMISSION_GROUP => [
                 MerchantCommissionGroupTransfer::UUID => $merchantCommissionGroupTransfer->getUuidOrFail(),
             ],
@@ -262,6 +310,199 @@ class MerchantCommissionBusinessTester extends Actor
     public function ensureMerchantCommissionDatabaseIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getMerchantCommissionQuery());
+    }
+
+    /**
+     * @param int $calculatedAmount
+     * @param string|null $calculatorPluginType
+     *
+     * @return void
+     */
+    public function addTestCalculatorPluginToDependencies(int $calculatedAmount = 100, ?string $calculatorPluginType = null): void
+    {
+        $this->setDependency(static::PLUGINS_MERCHANT_COMMISSION_CALCULATOR, [
+            $this->getMerchantCommissionCalculatorPlugin($calculatedAmount, $calculatorPluginType ?? static::TEST_CALCULATOR_PLUGIN_TYPE),
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function addOrderDecisionRulePluginToDependencies(): void
+    {
+        $this->setDependency(static::PLUGINS_RULE_SPECIFICATION_PROVIDER, [
+            new MerchantCommissionOrderDecisionRuleSpecificationProviderPlugin(),
+        ]);
+        $this->setDependency(static::PLUGINS_RULE_ENGINE_DECISION_RULE, [$this->getOrderDecisionRulePlugin()]);
+    }
+
+    /**
+     * @return void
+     */
+    public function addOrderItemCollectorRulePluginToDependencies(): void
+    {
+        $this->setDependency(static::PLUGINS_RULE_SPECIFICATION_PROVIDER, [
+            new MerchantCommissionItemCollectorRuleSpecificationProviderPlugin(),
+        ]);
+        $this->setDependency(static::PLUGINS_RULE_ENGINE_COLLECTOR_RULE, [$this->getOrderItemCollectorRulePlugin()]);
+    }
+
+    /**
+     * @param int $calculatedAmount
+     * @param string $calculatorPluginType
+     *
+     * @return \Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface
+     */
+    protected function getMerchantCommissionCalculatorPlugin(int $calculatedAmount, string $calculatorPluginType): MerchantCommissionCalculatorPluginInterface
+    {
+        return new class ($calculatedAmount, $calculatorPluginType) extends AbstractPlugin implements MerchantCommissionCalculatorPluginInterface
+        {
+            /**
+             * @var int
+             */
+            protected int $calculatedAmount;
+
+            /**
+             * @var string
+             */
+            protected string $calculatorPluginType;
+
+            /**
+             * @param int $calculatedAmount
+             * @param string $calculatorPluginType
+             */
+            public function __construct(int $calculatedAmount, string $calculatorPluginType)
+            {
+                $this->calculatedAmount = $calculatedAmount;
+                $this->calculatorPluginType = $calculatorPluginType;
+            }
+
+            /**
+             * @return string
+             */
+            public function getCalculatorType(): string
+            {
+                return $this->calculatorPluginType;
+            }
+
+            /**
+             * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+             * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+             * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+             *
+             * @return int
+             */
+            public function calculateMerchantCommission(
+                MerchantCommissionTransfer $merchantCommissionTransfer,
+                MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+                MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+            ): int {
+                return $this->calculatedAmount;
+            }
+
+            /**
+             * @param float $merchantCommissionAmount
+             *
+             * @return int
+             */
+            public function transformAmountForPersistence(float $merchantCommissionAmount): int
+            {
+                return (int)$merchantCommissionAmount;
+            }
+
+            /**
+             * @param int $merchantCommissionAmount
+             *
+             * @return float
+             */
+            public function transformAmountFromPersistence(int $merchantCommissionAmount): float
+            {
+                return (float)$merchantCommissionAmount;
+            }
+
+            /**
+             * @param int $merchantCommissionAmount
+             * @param string|null $currencyIsoCode
+             *
+             * @return string
+             */
+            public function formatMerchantCommissionAmount(int $merchantCommissionAmount, ?string $currencyIsoCode = null): string
+            {
+                return (string)$merchantCommissionAmount;
+            }
+        };
+    }
+
+    /**
+     * @return \Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\DecisionRulePluginInterface
+     */
+    protected function getOrderDecisionRulePlugin(): DecisionRulePluginInterface
+    {
+        return new class extends AbstractPlugin implements DecisionRulePluginInterface
+        {
+            /**
+             * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $satisfyingTransfer
+             * @param \Generated\Shared\Transfer\RuleEngineClauseTransfer $ruleEngineClauseTransfer
+             *
+             * @return bool
+             */
+            public function isSatisfiedBy(TransferInterface $satisfyingTransfer, RuleEngineClauseTransfer $ruleEngineClauseTransfer): bool
+            {
+                return true;
+            }
+
+            /**
+             * @return string
+             */
+            public function getFieldName(): string
+            {
+                return 'test-order-field';
+            }
+
+            /**
+             * @return list<string>
+             */
+            public function acceptedDataTypes(): array
+            {
+                return ['string'];
+            }
+        };
+    }
+
+    /**
+     * @return \Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\CollectorRulePluginInterface
+     */
+    protected function getOrderItemCollectorRulePlugin(): CollectorRulePluginInterface
+    {
+        return new class extends AbstractPlugin implements CollectorRulePluginInterface
+        {
+            /**
+             * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $collectableTransfer
+             * @param \Generated\Shared\Transfer\RuleEngineClauseTransfer $ruleEngineClauseTransfer
+             *
+             * @return list<\Spryker\Shared\Kernel\Transfer\TransferInterface>
+             */
+            public function collect(TransferInterface $collectableTransfer, RuleEngineClauseTransfer $ruleEngineClauseTransfer): array
+            {
+                return [];
+            }
+
+            /**
+             * @return string
+             */
+            public function getFieldName(): string
+            {
+                return 'test-order-item-field';
+            }
+
+            /**
+             * @return list<string>
+             */
+            public function acceptedDataTypes(): array
+            {
+                return ['string'];
+            }
+        };
     }
 
     /**

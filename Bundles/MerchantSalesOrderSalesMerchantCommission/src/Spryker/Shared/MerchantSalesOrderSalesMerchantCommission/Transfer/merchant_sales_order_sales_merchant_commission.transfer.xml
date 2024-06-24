@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrder">
+        <property name="merchantReference" type="string"/>
+        <property name="idOrder" type="int"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="totals" type="Totals"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="totals" type="Totals"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="merchantCommissionTotal" type="int" strict="true"/>
+        <property name="merchantCommissionRefundedTotal" type="int" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantCommissionAmountFullAggregation" type="int" strict="true"/>
+        <property name="merchantCommissionRefundedAmount" type="int" strict="true"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idOrder" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCollection">
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
+    </transfer>
+
+</transfers>

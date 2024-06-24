@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Refund\Communication\Plugin\RefundableExpenseAmountCalculatorPlugin;
 use Spryker\Zed\Refund\Communication\Plugin\RefundableItemAmountCalculatorPlugin;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationBridge;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
 
@@ -61,6 +62,11 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_DATE_TIME = 'date formatter';
 
     /**
+     * @var string
+     */
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -73,6 +79,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculationFacade($container);
         $container = $this->addSalesQueryContainer($container);
         $container = $this->addRefundPostSavePlugins($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
@@ -205,6 +212,20 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_DATE_TIME, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
+            return new RefundToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         });
 
         return $container;

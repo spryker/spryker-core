@@ -142,6 +142,7 @@ interface SalesClientInterface
      * - Retrieves OrderTransfer filtered by orderReference and customerReference.
      * - Checks OrderTransfer::isCancellable.
      * - Triggers cancel event for provided order items.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface} plugin stack.
      * - Returns "isSuccessful=true" and order transfer on success or `isSuccessful=false` otherwise.
      *
      * @api

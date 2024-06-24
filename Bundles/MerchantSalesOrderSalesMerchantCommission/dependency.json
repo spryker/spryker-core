@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/sales-merchant-commission": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with strict types."
+    }
+}

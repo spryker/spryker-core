@@ -106,6 +106,22 @@ class MerchantCommissionGrouper implements MerchantCommissionGrouperInterface
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\MerchantCommissionTransfer>>
+     */
+    public function getMerchantCommissionsGroupedByMerchantCommissionGroupKey(array $merchantCommissionTransfers): array
+    {
+        $groupedMerchantCommissions = [];
+        foreach ($merchantCommissionTransfers as $merchantCommissionTransfer) {
+            $merchantCommissionGroupKey = $merchantCommissionTransfer->getMerchantCommissionGroupOrFail()->getKeyOrFail();
+            $groupedMerchantCommissions[$merchantCommissionGroupKey][] = $merchantCommissionTransfer;
+        }
+
+        return $groupedMerchantCommissions;
+    }
+
+    /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $baseMerchantCommissionTransfers
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $additionalMerchantCommissionTransfers
      *

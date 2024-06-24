@@ -34,4 +34,9 @@
     <transfer name="Message">
     </transfer>
 
+    <transfer name="MerchantCommissionAmountTransformerRequest" strict="true">
+        <property name="calculatorTypePlugin" type="string"/>
+        <property name="amountFromPersistence" type="int"/>
+    </transfer>
+
 </transfers>

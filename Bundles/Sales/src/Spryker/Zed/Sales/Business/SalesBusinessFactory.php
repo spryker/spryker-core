@@ -226,6 +226,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderUpdater(
             $this->getQueryContainer(),
+            $this->getConfig(),
             $this->getOrderPostUpdatePlugins(),
         );
     }
@@ -595,6 +596,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createOmsEventTriggerer(),
             $this->createOrderReaderWithMultiShippingAddress(),
             $this->getRepository(),
+            $this->getOrderPostCancelPlugins(),
         );
     }
 
@@ -694,5 +696,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderStateMachineResolver(): OrderStateMachineResolverInterface
     {
         return new OrderStateMachineResolver($this->getConfig());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostCancelPluginInterface>
+     */
+    public function getOrderPostCancelPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_CANCEL);
     }
 }

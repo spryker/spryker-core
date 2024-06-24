@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantCommissionDataExport\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantCommissionDataExport\Business\Exporter\MerchantCommissionDataExporter;
 use Spryker\Zed\MerchantCommissionDataExport\Business\Exporter\MerchantCommissionDataExporterInterface;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatter;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface;
+use Spryker\Zed\MerchantCommissionDataExport\Dependency\Facade\MerchantCommissionDataExportToMerchantCommissionFacadeInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportDependencyProvider;
 
@@ -26,9 +29,18 @@ class MerchantCommissionDataExportBusinessFactory extends AbstractBusinessFactor
     {
         return new MerchantCommissionDataExporter(
             $this->getRepository(),
+            $this->createMerchantCommissionAmountFormatter(),
             $this->getConfig(),
             $this->getDataExportService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface
+     */
+    public function createMerchantCommissionAmountFormatter(): MerchantCommissionAmountFormatterInterface
+    {
+        return new MerchantCommissionAmountFormatter($this->getMerchantCommissionFacade());
     }
 
     /**
@@ -37,5 +49,13 @@ class MerchantCommissionDataExportBusinessFactory extends AbstractBusinessFactor
     public function getDataExportService(): MerchantCommissionDataExportToDataExportServiceInterface
     {
         return $this->getProvidedDependency(MerchantCommissionDataExportDependencyProvider::SERVICE_DATA_EXPORT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionDataExport\Dependency\Facade\MerchantCommissionDataExportToMerchantCommissionFacadeInterface
+     */
+    public function getMerchantCommissionFacade(): MerchantCommissionDataExportToMerchantCommissionFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantCommissionDataExportDependencyProvider::FACADE_MERCHANT_COMMISSION);
     }
 }

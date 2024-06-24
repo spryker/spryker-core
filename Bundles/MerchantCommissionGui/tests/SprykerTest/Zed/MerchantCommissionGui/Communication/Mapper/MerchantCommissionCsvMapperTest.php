@@ -9,10 +9,9 @@ namespace SprykerTest\Zed\MerchantCommissionGui\Communication\Mapper;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantCommissionTransfer;
-use Generated\Shared\Transfer\MoneyTransfer;
 use Spryker\Zed\MerchantCommissionGui\Communication\Mapper\MerchantCommissionCsvMapper;
 use Spryker\Zed\MerchantCommissionGui\Communication\Mapper\MerchantCommissionCsvMapperInterface;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface;
+use Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface;
 use SprykerTest\Zed\MerchantCommissionGui\MerchantCommissionGuiCommunicationTester;
 
 /**
@@ -181,10 +180,10 @@ class MerchantCommissionCsvMapperTest extends Unit
 
         $this->assertCount(2, $merchantCommissionTransfer->getMerchantCommissionAmounts());
         $this->assertSame(0, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(0)->getNetAmount());
-        $this->assertSame(50, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(0)->getGrossAmount());
+        $this->assertSame(5, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(0)->getGrossAmount());
         $this->assertSame('EUR', $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(0)->getCurrency()->getCode());
         $this->assertSame(0, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(1)->getNetAmount());
-        $this->assertSame(100, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(1)->getGrossAmount());
+        $this->assertSame(10, $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(1)->getGrossAmount());
         $this->assertSame('CHF', $merchantCommissionTransfer->getMerchantCommissionAmounts()->offsetGet(1)->getCurrency()->getCode());
     }
 
@@ -208,7 +207,7 @@ class MerchantCommissionCsvMapperTest extends Unit
             static::KEY_ORDER_CONDITION => 'test-order-condition',
             static::KEY_STORES => 'DE,AT',
             static::KEY_MERCHANTS_ALLOW_LIST => 'test-merchant-1,test-merchant-2',
-            static::KEY_FIXED_AMOUNT_CONFIGURATION => 'EUR|0|0.5,CHF|0|1',
+            static::KEY_FIXED_AMOUNT_CONFIGURATION => 'EUR|0|5,CHF|0|10',
         ];
     }
 
@@ -217,23 +216,23 @@ class MerchantCommissionCsvMapperTest extends Unit
      */
     protected function createMerchantCommissionCsvMapper(): MerchantCommissionCsvMapperInterface
     {
-        return new MerchantCommissionCsvMapper($this->getMerchantCommissionGuiToMoneyFacadeBridgeMock());
+        return new MerchantCommissionCsvMapper($this->getMerchantCommissionAmountTransformerMock());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMoneyFacadeInterface
+     * @return \Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissionAmountTransformerInterface
      */
-    protected function getMerchantCommissionGuiToMoneyFacadeBridgeMock(): MerchantCommissionGuiToMoneyFacadeInterface
+    protected function getMerchantCommissionAmountTransformerMock(): MerchantCommissionAmountTransformerInterface
     {
-        $merchantCommissionGuiToMoneyFacadeBridgeMock = $this->getMockBuilder(MerchantCommissionGuiToMoneyFacadeInterface::class)
+        $merchantCommissionAmountTransformerMock = $this->getMockBuilder(MerchantCommissionAmountTransformerInterface::class)
             ->getMock();
 
-        $merchantCommissionGuiToMoneyFacadeBridgeMock
-            ->method('fromFloat')
-            ->willReturnCallback(function (float $number, ?string $isoCode = null) {
-                return (new MoneyTransfer())->setAmount((int)($number * 100));
+        $merchantCommissionAmountTransformerMock
+            ->method('transformMerchantCommissionAmount')
+            ->willReturnCallback(function (string $merchantCommissionCalculatorPluginType, float $amount) {
+                return (int)$amount;
             });
 
-        return $merchantCommissionGuiToMoneyFacadeBridgeMock;
+        return $merchantCommissionAmountTransformerMock;
     }
 }

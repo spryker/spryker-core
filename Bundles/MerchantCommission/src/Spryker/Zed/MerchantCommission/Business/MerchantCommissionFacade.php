@@ -7,10 +7,17 @@
 
 namespace Spryker\Zed\MerchantCommission\Business;
 
+use Generated\Shared\Transfer\MerchantCommissionAmountFormatRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionAmountTransformerRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationResponseTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionResponseTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantCommissionTransfer;
+use Generated\Shared\Transfer\RuleEngineClauseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -86,5 +93,161 @@ class MerchantCommissionFacade extends AbstractFacade implements MerchantCommiss
         return $this->getFactory()
             ->createMerchantCommissionImporter()
             ->importMerchantCommissionCollection($merchantCommissionCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionCalculationResponseTransfer
+     */
+    public function calculateMerchantCommission(
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+    ): MerchantCommissionCalculationResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantCommissionCalculator()
+            ->calculateMerchantCommission($merchantCommissionCalculationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     *
+     * @return int
+     */
+    public function calculateFixedMerchantCommissionAmount(
+        MerchantCommissionTransfer $merchantCommissionTransfer,
+        MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+    ): int {
+        return $this->getFactory()
+            ->createFixedMerchantCommissionCalculatorType()
+            ->calculateMerchantCommissionAmount(
+                $merchantCommissionTransfer,
+                $merchantCommissionCalculationRequestItemTransfer,
+                $merchantCommissionCalculationRequestTransfer,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     *
+     * @return int
+     */
+    public function calculatePercentageMerchantCommissionAmount(
+        MerchantCommissionTransfer $merchantCommissionTransfer,
+        MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+    ): int {
+        return $this->getFactory()
+            ->createPercentageMerchantCommissionCalculatorType()
+            ->calculateMerchantCommissionAmount(
+                $merchantCommissionTransfer,
+                $merchantCommissionCalculationRequestItemTransfer,
+                $merchantCommissionCalculationRequestTransfer,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     * @param \Generated\Shared\Transfer\RuleEngineClauseTransfer $ruleEngineClauseTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer>
+     */
+    public function collectByItemSku(
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer,
+        RuleEngineClauseTransfer $ruleEngineClauseTransfer
+    ): array {
+        return $this->getFactory()
+            ->createItemSkuCollectorRule()
+            ->collect($merchantCommissionCalculationRequestTransfer, $ruleEngineClauseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     * @param \Generated\Shared\Transfer\RuleEngineClauseTransfer $ruleEngineClauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceModeDecisionRuleSatisfiedBy(
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer,
+        RuleEngineClauseTransfer $ruleEngineClauseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createPriceModeDecisionRule()
+            ->isSatisfiedBy($merchantCommissionCalculationRequestTransfer, $ruleEngineClauseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+     *
+     * @return int
+     */
+    public function transformMerchantCommissionAmountForPersistence(
+        MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+    ): int {
+        return $this->getFactory()
+            ->createMerchantCommissionAmountTransformer()
+            ->transformForPersistence($merchantCommissionAmountTransformerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+     *
+     * @return float
+     */
+    public function transformMerchantCommissionAmountFromPersistence(
+        MerchantCommissionAmountTransformerRequestTransfer $merchantCommissionAmountTransformerRequestTransfer
+    ): float {
+        return $this->getFactory()
+            ->createMerchantCommissionAmountTransformer()
+            ->transformFromPersistence($merchantCommissionAmountTransformerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionAmountFormatRequestTransfer $merchantCommissionAmountFormatRequestTransfer
+     *
+     * @return string
+     */
+    public function formatMerchantCommissionAmount(
+        MerchantCommissionAmountFormatRequestTransfer $merchantCommissionAmountFormatRequestTransfer
+    ): string {
+        return $this->getFactory()
+            ->createMerchantCommissionAmountFormatter()
+            ->format($merchantCommissionAmountFormatRequestTransfer);
     }
 }

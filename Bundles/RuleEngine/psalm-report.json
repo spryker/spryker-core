@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<string>' for Spryker\\Zed\\RuleEngine\\Business\\Comparator\\Comparator::getCompoundComparatorExpressions is more specific than the inferred return type 'non-empty-array<int, string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/RuleEngine/src/Spryker/Zed/RuleEngine/Business/Comparator/Comparator.php",
+            "snippet": "     * @return list<string>",
+            "selected_text": "list<string>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'non-empty-array<int, string>' is more general than the declared return type 'list<string>' for Spryker\\Zed\\RuleEngine\\Business\\Comparator\\Comparator::getCompoundComparatorExpressions",
+            "file_name": "vendor/spryker/spryker/Bundles/RuleEngine/src/Spryker/Zed/RuleEngine/Business/Comparator/Comparator.php",
+            "snippet": "        return array_unique(array_merge(...$combinedOperators));",
+            "selected_text": "array_unique(array_merge(...$combinedOperators))",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": [],
+    "count": 6
+}

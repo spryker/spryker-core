@@ -32,6 +32,13 @@ interface MerchantCommissionGrouperInterface
     ): array;
 
     /**
+     * @param list<\Generated\Shared\Transfer\MerchantCommissionTransfer> $merchantCommissionTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\MerchantCommissionTransfer>>
+     */
+    public function getMerchantCommissionsGroupedByMerchantCommissionGroupKey(array $merchantCommissionTransfers): array;
+
+    /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $baseMerchantCommissionTransfers
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\MerchantCommissionTransfer> $additionalMerchantCommissionTransfers
      *

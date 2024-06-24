@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
+use Spryker\Zed\Refund\RefundConfig;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundSaver implements RefundSaverInterface
@@ -34,6 +36,16 @@ class RefundSaver implements RefundSaverInterface
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\Refund\RefundConfig
+     */
+    protected RefundConfig $refundConfig;
+
+    /**
+     * @var \Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface
+     */
+    protected RefundToMessengerFacadeInterface $messengerFacade;
+
+    /**
      * @var array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface>
      */
     protected array $refundPostSavePlugins;
@@ -42,17 +54,23 @@ class RefundSaver implements RefundSaverInterface
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $saleFacade
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\Refund\RefundConfig $refundConfig
+     * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface $messengerFacade
      * @param array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface> $refundPostSavePlugins
      */
     public function __construct(
         SalesQueryContainerInterface $salesQueryContainer,
         RefundToSalesInterface $saleFacade,
         RefundToCalculationInterface $calculationFacade,
+        RefundConfig $refundConfig,
+        RefundToMessengerFacadeInterface $messengerFacade,
         array $refundPostSavePlugins
     ) {
         $this->salesQueryContainer = $salesQueryContainer;
         $this->salesFacade = $saleFacade;
         $this->calculationFacade = $calculationFacade;
+        $this->refundConfig = $refundConfig;
+        $this->messengerFacade = $messengerFacade;
         $this->refundPostSavePlugins = $refundPostSavePlugins;
     }
 
@@ -72,6 +90,7 @@ class RefundSaver implements RefundSaverInterface
         $orderTransfer = $this->recalculateOrder($refundTransfer);
 
         $this->executeRefundPostSavePlugins($refundTransfer, $orderTransfer);
+        $this->cleanUpRecalculationMessagesAfterRefund();
 
         return $this->salesQueryContainer->getConnection()->commit();
     }
@@ -199,5 +218,15 @@ class RefundSaver implements RefundSaverInterface
         $this->salesFacade->updateOrder($orderTransfer, $refundTransfer->getFkSalesOrder());
 
         return $orderTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanUpRecalculationMessagesAfterRefund(): void
+    {
+        if ($this->refundConfig->shouldCleanupRecalculationMessagesAfterRefund()) {
+            $this->messengerFacade->getStoredMessages();
+        }
     }
 }

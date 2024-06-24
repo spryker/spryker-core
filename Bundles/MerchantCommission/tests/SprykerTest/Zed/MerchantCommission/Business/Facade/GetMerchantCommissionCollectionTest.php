@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantCommission\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\DataBuilder\MerchantCommissionAmountBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantCommissionAmountTransfer;
@@ -463,6 +464,40 @@ class GetMerchantCommissionCollectionTest extends Unit
         $merchantCommissionConditionsTransfer = (new MerchantCommissionConditionsTransfer())
             ->addStoreName($storeDeTransfer->getNameOrFail())
             ->addStoreName($storeAtTransfer->getNameOrFail());
+        $merchantCommissionCriteriaTransfer = (new MerchantCommissionCriteriaTransfer())->setMerchantCommissionConditions(
+            $merchantCommissionConditionsTransfer,
+        );
+
+        // Act
+        $merchantCommissionCollectionTransfer = $this->tester->getFacade()->getMerchantCommissionCollection(
+            $merchantCommissionCriteriaTransfer,
+        );
+
+        // Assert
+        $this->assertCount(1, $merchantCommissionCollectionTransfer->getMerchantCommissions());
+        $this->assertSame(
+            $merchantCommissionTransfer->getIdMerchantCommissionOrFail(),
+            $merchantCommissionCollectionTransfer->getMerchantCommissions()->getIterator()->current()->getIdMerchantCommission(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsMerchantCommissionCollectionFilteredByValidityDate(): void
+    {
+        // Arrange
+        $this->tester->createMerchantCommission([
+            MerchantCommissionTransfer::VALID_FROM => (new DateTime('-2 month'))->format('Y-m-d H:i:s'),
+            MerchantCommissionTransfer::VALID_TO => (new DateTime('-1 month'))->format('Y-m-d H:i:s'),
+        ]);
+        $merchantCommissionTransfer = $this->tester->createMerchantCommission([
+            MerchantCommissionTransfer::VALID_FROM => (new DateTime('-1 month'))->format('Y-m-d H:i:s'),
+            MerchantCommissionTransfer::VALID_TO => (new DateTime('+1 month'))->format('Y-m-d H:i:s'),
+        ]);
+
+        $merchantCommissionConditionsTransfer = (new MerchantCommissionConditionsTransfer())
+            ->setWithinValidityDateRange(true);
         $merchantCommissionCriteriaTransfer = (new MerchantCommissionCriteriaTransfer())->setMerchantCommissionConditions(
             $merchantCommissionConditionsTransfer,
         );

@@ -11,6 +11,7 @@ use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionAmountQuery;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantCommissionDataExport\Dependency\Facade\MerchantCommissionDataExportToMerchantCommissionFacadeBridge;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceBridge;
 
 /**
@@ -18,6 +19,11 @@ use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissi
  */
 class MerchantCommissionDataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_MERCHANT_COMMISSION = 'FACADE_MERCHANT_COMMISSION';
+
     /**
      * @var string
      */
@@ -41,7 +47,24 @@ class MerchantCommissionDataExportDependencyProvider extends AbstractBundleDepen
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addMerchantCommissionFacade($container);
         $container = $this->addDataExportService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantCommissionFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_COMMISSION, function (Container $container) {
+            return new MerchantCommissionDataExportToMerchantCommissionFacadeBridge(
+                $container->getLocator()->merchantCommission()->facade(),
+            );
+        });
 
         return $container;
     }

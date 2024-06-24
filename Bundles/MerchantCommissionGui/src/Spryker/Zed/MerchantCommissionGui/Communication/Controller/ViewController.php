@@ -64,8 +64,12 @@ class ViewController extends AbstractController
             return $this->redirectResponse(static::URL_MERCHANT_RELATION_REQUEST_LIST);
         }
 
+        $merchantCommissionViewTransfer = $this->getFactory()
+            ->createMerchantCommissionFormatter()
+            ->formatMerchantCommissionForView($merchantCommissionTransfer);
+
         return $this->viewResponse([
-            'merchantCommission' => $merchantCommissionTransfer,
+            'merchantCommission' => $merchantCommissionViewTransfer,
             'urlMerchantCommissionList' => static::URL_MERCHANT_RELATION_REQUEST_LIST,
         ]);
     }

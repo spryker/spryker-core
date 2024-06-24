@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantCommissionDataExport\Business\Exporter;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
 use Generated\Shared\Transfer\DataExportResultTransfer;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportConfig;
 use Spryker\Zed\MerchantCommissionDataExport\Persistence\MerchantCommissionDataExportRepositoryInterface;
@@ -32,6 +33,11 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
     protected MerchantCommissionDataExportRepositoryInterface $merchantCommissionDataExportRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface
+     */
+    protected MerchantCommissionAmountFormatterInterface $merchantCommissionAmountFormatter;
+
+    /**
      * @var \Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportConfig
      */
     protected MerchantCommissionDataExportConfig $merchantCommissionDataExportConfig;
@@ -43,15 +49,18 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
 
     /**
      * @param \Spryker\Zed\MerchantCommissionDataExport\Persistence\MerchantCommissionDataExportRepositoryInterface $merchantCommissionDataExportRepository
+     * @param \Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface $merchantCommissionAmountFormatter
      * @param \Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportConfig $merchantCommissionDataExportConfig
      * @param \Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface $dataExportService
      */
     public function __construct(
         MerchantCommissionDataExportRepositoryInterface $merchantCommissionDataExportRepository,
+        MerchantCommissionAmountFormatterInterface $merchantCommissionAmountFormatter,
         MerchantCommissionDataExportConfig $merchantCommissionDataExportConfig,
         MerchantCommissionDataExportToDataExportServiceInterface $dataExportService
     ) {
         $this->merchantCommissionDataExportRepository = $merchantCommissionDataExportRepository;
+        $this->merchantCommissionAmountFormatter = $merchantCommissionAmountFormatter;
         $this->merchantCommissionDataExportConfig = $merchantCommissionDataExportConfig;
         $this->dataExportService = $dataExportService;
     }
@@ -73,8 +82,11 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
                 ->addFilterCriterion(static::FILTER_CRITERIA_KEY_OFFSET, $offset)
                 ->addFilterCriterion(static::FILTER_CRITERIA_KEY_LIMIT, $limit);
             $dataExportBatchTransfer = $this->merchantCommissionDataExportRepository->getMerchantCommissionData($dataExportConfigurationTransfer);
-            $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
+            $dataExportBatchTransfer->setData(
+                $this->merchantCommissionAmountFormatter->formatMerchantCommissionAmount($dataExportBatchTransfer->getData()),
+            );
 
+            $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
             if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
                 $dataExportResultTransfer
                     ->fromArray($dataExportWriteResponseTransfer->toArray(), true)

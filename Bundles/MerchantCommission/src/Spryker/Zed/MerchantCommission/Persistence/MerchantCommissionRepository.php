@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantCommission\Persistence;
 
 use ArrayObject;
+use DateTime;
 use Generated\Shared\Transfer\MerchantCommissionAmountCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCommissionAmountCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCollectionTransfer;
@@ -15,6 +16,7 @@ use Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantCommissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCommissionGroupCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\MerchantCommission\Persistence\Map\SpyMerchantCommissionTableMap;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionAmountQuery;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionGroupQuery;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
@@ -47,6 +49,11 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
      * @var string
      */
     protected const COL_KEY = 'spy_merchant_commission.key';
+
+    /**
+     * @var string
+     */
+    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @module Merchant
@@ -263,6 +270,20 @@ class MerchantCommissionRepository extends AbstractRepository implements Merchan
             $merchantCommissionQuery->filterByIsActive(
                 $merchantCommissionConditionsTransfer->getIsActiveOrFail(),
             );
+        }
+
+        if ($merchantCommissionConditionsTransfer->getWithinValidityDateRange() !== null) {
+            $dateTimeFormatted = (new DateTime())->format(static::DATE_TIME_FORMAT);
+
+            $whereClause = $merchantCommissionConditionsTransfer->getWithinValidityDateRange()
+                ? sprintf('(%s <= ? AND %s >= ?)', SpyMerchantCommissionTableMap::COL_VALID_FROM, SpyMerchantCommissionTableMap::COL_VALID_TO)
+                : sprintf('(%s > ? OR %s < ?)', SpyMerchantCommissionTableMap::COL_VALID_FROM, SpyMerchantCommissionTableMap::COL_VALID_TO);
+            $merchantCommissionQuery
+                ->where($whereClause, [$dateTimeFormatted, $dateTimeFormatted])
+                ->_or()
+                ->where(
+                    sprintf('(%s IS NULL AND %s IS NULL )', SpyMerchantCommissionTableMap::COL_VALID_FROM, SpyMerchantCommissionTableMap::COL_VALID_TO),
+                );
         }
 
         return $merchantCommissionQuery;

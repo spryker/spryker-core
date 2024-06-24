@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantCommission\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantCommissionCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface MerchantCommissionReaderInterface
 {
@@ -20,4 +21,11 @@ interface MerchantCommissionReaderInterface
     public function getMerchantCommissionCollection(
         MerchantCommissionCriteriaTransfer $merchantCommissionCriteriaTransfer
     ): MerchantCommissionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionCollectionTransfer
+     */
+    public function getActiveMerchantCommissionCollectionForStore(StoreTransfer $storeTransfer): MerchantCommissionCollectionTransfer;
 }

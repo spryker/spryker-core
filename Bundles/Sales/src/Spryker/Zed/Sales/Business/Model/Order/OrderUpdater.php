@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 class OrderUpdater implements OrderUpdaterInterface
 {
@@ -20,19 +21,27 @@ class OrderUpdater implements OrderUpdaterInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Sales\SalesConfig
+     */
+    protected SalesConfig $salesConfig;
+
+    /**
      * @var list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface>
      */
     protected array $orderPostUpdatePlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
      * @param list<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostUpdatePluginInterface> $orderPostUpdatePlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
+        SalesConfig $salesConfig,
         array $orderPostUpdatePlugins
     ) {
         $this->queryContainer = $queryContainer;
+        $this->salesConfig = $salesConfig;
         $this->orderPostUpdatePlugins = $orderPostUpdatePlugins;
     }
 
@@ -99,6 +108,10 @@ class OrderUpdater implements OrderUpdaterInterface
             foreach ($orderTransfer->getItems() as $itemTransfer) {
                 if ($salesOrderItemEntity->getIdSalesOrderItem() !== $itemTransfer->getIdSalesOrderItem()) {
                     continue;
+                }
+
+                if ($this->salesConfig->shouldPersistModifiedOrderItemProperties()) {
+                    $salesOrderItemEntity->fromArray($itemTransfer->modifiedToArray());
                 }
 
                 $salesOrderItemEntity->setCanceledAmount($itemTransfer->getCanceledAmount());

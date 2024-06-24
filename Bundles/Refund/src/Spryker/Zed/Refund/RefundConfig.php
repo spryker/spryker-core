@@ -11,4 +11,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RefundConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - Sanitizes recalculation messages after refund if set to true.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function shouldCleanupRecalculationMessagesAfterRefund(): bool
+    {
+        return false;
+    }
 }

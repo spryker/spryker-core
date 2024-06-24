@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantCommission\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantCommissionCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCommissionConditionsTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantCommission\Business\Expander\MerchantCommissionRelationExpanderInterface;
 use Spryker\Zed\MerchantCommission\Persistence\MerchantCommissionRepositoryInterface;
 
@@ -56,5 +58,26 @@ class MerchantCommissionReader implements MerchantCommissionReaderInterface
             $merchantCommissionCollectionTransfer,
             $merchantCommissionCriteriaTransfer,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCommissionCollectionTransfer
+     */
+    public function getActiveMerchantCommissionCollectionForStore(StoreTransfer $storeTransfer): MerchantCommissionCollectionTransfer
+    {
+        $merchantCommissionConditionsTransfer = (new MerchantCommissionConditionsTransfer())
+            ->addStoreName($storeTransfer->getNameOrFail())
+            ->setIsActive(true)
+            ->setWithinValidityDateRange(true)
+            ->setWithCommissionMerchantAmountRelations(true)
+            ->setWithMerchantRelations(true);
+
+        $merchantCommissionCriteriaTransfer = (new MerchantCommissionCriteriaTransfer())->setMerchantCommissionConditions(
+            $merchantCommissionConditionsTransfer,
+        );
+
+        return $this->getMerchantCommissionCollection($merchantCommissionCriteriaTransfer);
     }
 }

@@ -8,6 +8,19 @@
 namespace Spryker\Zed\MerchantCommission\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantCommission\Business\Adder\MerchantCommissionAdder;
+use Spryker\Zed\MerchantCommission\Business\Adder\MerchantCommissionAdderInterface;
+use Spryker\Zed\MerchantCommission\Business\Calculator\FixedMerchantCommissionCalculatorType;
+use Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculator;
+use Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculatorInterface;
+use Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculatorTypeInterface;
+use Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionItemCalculator;
+use Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionItemCalculatorInterface;
+use Spryker\Zed\MerchantCommission\Business\Calculator\PercentageMerchantCommissionCalculatorType;
+use Spryker\Zed\MerchantCommission\Business\Collector\CommissionableItemCollector;
+use Spryker\Zed\MerchantCommission\Business\Collector\CommissionableItemCollectorInterface;
+use Spryker\Zed\MerchantCommission\Business\CollectorRule\CollectorRuleInterface;
+use Spryker\Zed\MerchantCommission\Business\CollectorRule\ItemSkuCollectorRule;
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionAmountCreator;
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionAmountCreatorInterface;
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionCreator;
@@ -18,6 +31,8 @@ use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionRelationCr
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionRelationCreatorInterface;
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionStoreCreator;
 use Spryker\Zed\MerchantCommission\Business\Creator\MerchantCommissionStoreCreatorInterface;
+use Spryker\Zed\MerchantCommission\Business\DecisionRule\DecisionRuleInterface;
+use Spryker\Zed\MerchantCommission\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\MerchantCommission\Business\Expander\MerchantCommissionAmountExpander;
 use Spryker\Zed\MerchantCommission\Business\Expander\MerchantCommissionAmountExpanderInterface;
 use Spryker\Zed\MerchantCommission\Business\Expander\MerchantCommissionExpander;
@@ -40,10 +55,16 @@ use Spryker\Zed\MerchantCommission\Business\Extractor\MerchantDataExtractor;
 use Spryker\Zed\MerchantCommission\Business\Extractor\MerchantDataExtractorInterface;
 use Spryker\Zed\MerchantCommission\Business\Extractor\StoreDataExtractor;
 use Spryker\Zed\MerchantCommission\Business\Extractor\StoreDataExtractorInterface;
+use Spryker\Zed\MerchantCommission\Business\Filter\MerchantCommissionFilter;
+use Spryker\Zed\MerchantCommission\Business\Filter\MerchantCommissionFilterInterface;
+use Spryker\Zed\MerchantCommission\Business\Formatter\MerchantCommissionAmountFormatter;
+use Spryker\Zed\MerchantCommission\Business\Formatter\MerchantCommissionAmountFormatterInterface;
 use Spryker\Zed\MerchantCommission\Business\Grouper\MerchantCommissionGrouper;
 use Spryker\Zed\MerchantCommission\Business\Grouper\MerchantCommissionGrouperInterface;
 use Spryker\Zed\MerchantCommission\Business\Importer\MerchantCommissionImporter;
 use Spryker\Zed\MerchantCommission\Business\Importer\MerchantCommissionImporterInterface;
+use Spryker\Zed\MerchantCommission\Business\Merger\MerchantCommissionMerger;
+use Spryker\Zed\MerchantCommission\Business\Merger\MerchantCommissionMergerInterface;
 use Spryker\Zed\MerchantCommission\Business\Reader\CurrencyReader;
 use Spryker\Zed\MerchantCommission\Business\Reader\CurrencyReaderInterface;
 use Spryker\Zed\MerchantCommission\Business\Reader\MerchantCommissionAmountReader;
@@ -56,6 +77,12 @@ use Spryker\Zed\MerchantCommission\Business\Reader\MerchantReader;
 use Spryker\Zed\MerchantCommission\Business\Reader\MerchantReaderInterface;
 use Spryker\Zed\MerchantCommission\Business\Reader\StoreReader;
 use Spryker\Zed\MerchantCommission\Business\Reader\StoreReaderInterface;
+use Spryker\Zed\MerchantCommission\Business\Resolver\MerchantCommissionCalculatorPluginResolver;
+use Spryker\Zed\MerchantCommission\Business\Resolver\MerchantCommissionCalculatorPluginResolverInterface;
+use Spryker\Zed\MerchantCommission\Business\Sorter\MerchantCommissionSorter;
+use Spryker\Zed\MerchantCommission\Business\Sorter\MerchantCommissionSorterInterface;
+use Spryker\Zed\MerchantCommission\Business\Transformer\MerchantCommissionAmountTransformer;
+use Spryker\Zed\MerchantCommission\Business\Transformer\MerchantCommissionAmountTransformerInterface;
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionAmountUpdater;
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionAmountUpdaterInterface;
 use Spryker\Zed\MerchantCommission\Business\Updater\MerchantCommissionMerchantUpdater;
@@ -70,8 +97,10 @@ use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionImportVa
 use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionImportValidatorInterface;
 use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidator;
 use Spryker\Zed\MerchantCommission\Business\Validator\MerchantCommissionValidatorInterface;
+use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\CalculatorTypePluginExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\CurrencyExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\DescriptionLengthMerchantCommissionValidatorRule;
+use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\ItemConditionQueryStringMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\KeyExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\KeyLengthMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\KeyUniqueMerchantCommissionValidatorRule;
@@ -81,6 +110,7 @@ use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\Me
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\NameLengthMerchantCommissionValidatorRule;
+use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\OrderConditionQueryStringMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\PriorityRangeMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\StoreExistsMerchantCommissionValidatorRule;
 use Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\ValidFromDateTimeMerchantCommissionValidatorRule;
@@ -90,6 +120,7 @@ use Spryker\Zed\MerchantCommission\Business\Validator\Util\ErrorAdder;
 use Spryker\Zed\MerchantCommission\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToCurrencyFacadeInterface;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToMerchantFacadeInterface;
+use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToRuleEngineFacadeInterface;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToStoreFacadeInterface;
 use Spryker\Zed\MerchantCommission\MerchantCommissionDependencyProvider;
 
@@ -100,6 +131,57 @@ use Spryker\Zed\MerchantCommission\MerchantCommissionDependencyProvider;
  */
 class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculatorInterface
+     */
+    public function createMerchantCommissionCalculator(): MerchantCommissionCalculatorInterface
+    {
+        return new MerchantCommissionCalculator(
+            $this->createMerchantCommissionReader(),
+            $this->createMerchantCommissionFilter(),
+            $this->createMerchantCommissionItemCalculator(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionItemCalculatorInterface
+     */
+    public function createMerchantCommissionItemCalculator(): MerchantCommissionItemCalculatorInterface
+    {
+        return new MerchantCommissionItemCalculator(
+            $this->createCommissionableItemCollector(),
+            $this->createMerchantCommissionCalculatorPluginResolver(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Filter\MerchantCommissionFilterInterface
+     */
+    public function createMerchantCommissionFilter(): MerchantCommissionFilterInterface
+    {
+        return new MerchantCommissionFilter(
+            $this->getConfig(),
+            $this->createMerchantDataExtractor(),
+            $this->getRuleEngineFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Collector\CommissionableItemCollectorInterface
+     */
+    public function createCommissionableItemCollector(): CommissionableItemCollectorInterface
+    {
+        return new CommissionableItemCollector(
+            $this->createMerchantCommissionSorter(),
+            $this->createMerchantCommissionGrouper(),
+            $this->getConfig(),
+            $this->getRuleEngineFacade(),
+            $this->createMerchantCommissionMerger(),
+            $this->createMerchantCommissionAdder(),
+        );
+    }
+
     /**
      * @return \Spryker\Zed\MerchantCommission\Business\Reader\MerchantCommissionReaderInterface
      */
@@ -375,6 +457,9 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
             $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
             $this->createValidToDateTimeMerchantCommissionValidatorRule(),
             $this->createValidityPeriodMerchantCommissionValidatorRule(),
+            $this->createCalculatorTypePluginExistsMerchantCommissionValidatorRule(),
+            $this->createOrderConditionQueryStringMerchantCommissionValidatorRule(),
+            $this->createItemConditionQueryStringMerchantCommissionValidatorRule(),
         ];
     }
 
@@ -395,6 +480,9 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
             $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
             $this->createValidToDateTimeMerchantCommissionValidatorRule(),
             $this->createValidityPeriodMerchantCommissionValidatorRule(),
+            $this->createCalculatorTypePluginExistsMerchantCommissionValidatorRule(),
+            $this->createOrderConditionQueryStringMerchantCommissionValidatorRule(),
+            $this->createItemConditionQueryStringMerchantCommissionValidatorRule(),
         ];
     }
 
@@ -416,6 +504,9 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
             $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
             $this->createValidToDateTimeMerchantCommissionValidatorRule(),
             $this->createValidityPeriodMerchantCommissionValidatorRule(),
+            $this->createCalculatorTypePluginExistsMerchantCommissionValidatorRule(),
+            $this->createOrderConditionQueryStringMerchantCommissionValidatorRule(),
+            $this->createItemConditionQueryStringMerchantCommissionValidatorRule(),
         ];
     }
 
@@ -435,6 +526,9 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
             $this->createValidFromDateTimeMerchantCommissionValidatorRule(),
             $this->createValidToDateTimeMerchantCommissionValidatorRule(),
             $this->createValidityPeriodMerchantCommissionValidatorRule(),
+            $this->createCalculatorTypePluginExistsMerchantCommissionValidatorRule(),
+            $this->createOrderConditionQueryStringMerchantCommissionValidatorRule(),
+            $this->createItemConditionQueryStringMerchantCommissionValidatorRule(),
         ];
     }
 
@@ -587,6 +681,71 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface
+     */
+    public function createCalculatorTypePluginExistsMerchantCommissionValidatorRule(): MerchantCommissionValidatorRuleInterface
+    {
+        return new CalculatorTypePluginExistsMerchantCommissionValidatorRule(
+            $this->createErrorAdder(),
+            $this->getMerchantCommissionCalculatorPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface
+     */
+    public function createOrderConditionQueryStringMerchantCommissionValidatorRule(): MerchantCommissionValidatorRuleInterface
+    {
+        return new OrderConditionQueryStringMerchantCommissionValidatorRule(
+            $this->getConfig(),
+            $this->getRuleEngineFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\MerchantCommissionValidatorRuleInterface
+     */
+    public function createItemConditionQueryStringMerchantCommissionValidatorRule(): MerchantCommissionValidatorRuleInterface
+    {
+        return new ItemConditionQueryStringMerchantCommissionValidatorRule(
+            $this->getConfig(),
+            $this->getRuleEngineFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculatorTypeInterface
+     */
+    public function createFixedMerchantCommissionCalculatorType(): MerchantCommissionCalculatorTypeInterface
+    {
+        return new FixedMerchantCommissionCalculatorType($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Calculator\MerchantCommissionCalculatorTypeInterface
+     */
+    public function createPercentageMerchantCommissionCalculatorType(): MerchantCommissionCalculatorTypeInterface
+    {
+        return new PercentageMerchantCommissionCalculatorType($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\CollectorRule\CollectorRuleInterface
+     */
+    public function createItemSkuCollectorRule(): CollectorRuleInterface
+    {
+        return new ItemSkuCollectorRule($this->getRuleEngineFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\DecisionRule\DecisionRuleInterface
+     */
+    public function createPriceModeDecisionRule(): DecisionRuleInterface
+    {
+        return new PriceModeDecisionRule($this->getRuleEngineFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantCommission\Business\Reader\MerchantCommissionAmountReaderInterface
      */
     public function createMerchantCommissionAmountReader(): MerchantCommissionAmountReaderInterface
@@ -624,6 +783,38 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     public function createCurrencyReader(): CurrencyReaderInterface
     {
         return new CurrencyReader($this->getCurrencyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Transformer\MerchantCommissionAmountTransformerInterface
+     */
+    public function createMerchantCommissionAmountTransformer(): MerchantCommissionAmountTransformerInterface
+    {
+        return new MerchantCommissionAmountTransformer($this->createMerchantCommissionCalculatorPluginResolver());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Formatter\MerchantCommissionAmountFormatterInterface
+     */
+    public function createMerchantCommissionAmountFormatter(): MerchantCommissionAmountFormatterInterface
+    {
+        return new MerchantCommissionAmountFormatter($this->createMerchantCommissionCalculatorPluginResolver());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Resolver\MerchantCommissionCalculatorPluginResolverInterface
+     */
+    public function createMerchantCommissionCalculatorPluginResolver(): MerchantCommissionCalculatorPluginResolverInterface
+    {
+        return new MerchantCommissionCalculatorPluginResolver($this->getMerchantCommissionCalculatorPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Sorter\MerchantCommissionSorterInterface
+     */
+    public function createMerchantCommissionSorter(): MerchantCommissionSorterInterface
+    {
+        return new MerchantCommissionSorter();
     }
 
     /**
@@ -695,6 +886,25 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Merger\MerchantCommissionMergerInterface
+     */
+    public function createMerchantCommissionMerger(): MerchantCommissionMergerInterface
+    {
+        return new MerchantCommissionMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Business\Adder\MerchantCommissionAdderInterface
+     */
+    public function createMerchantCommissionAdder(): MerchantCommissionAdderInterface
+    {
+        return new MerchantCommissionAdder(
+            $this->createMerchantDataExtractor(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToMerchantFacadeInterface
      */
     public function getMerchantFacade(): MerchantCommissionToMerchantFacadeInterface
@@ -716,5 +926,21 @@ class MerchantCommissionBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade(): MerchantCommissionToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(MerchantCommissionDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToRuleEngineFacadeInterface
+     */
+    public function getRuleEngineFacade(): MerchantCommissionToRuleEngineFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantCommissionDependencyProvider::FACADE_RULE_ENGINE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface>
+     */
+    public function getMerchantCommissionCalculatorPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantCommissionDependencyProvider::PLUGINS_MERCHANT_COMMISSION_CALCULATOR);
     }
 }

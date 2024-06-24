@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToCurrencyFacadeBridge;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToMerchantFacadeBridge;
+use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToMoneyFacadeBridge;
+use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToRuleEngineFacadeBridge;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToStoreFacadeBridge;
 
 /**
@@ -34,6 +36,31 @@ class MerchantCommissionDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     /**
+     * @var string
+     */
+    public const FACADE_RULE_ENGINE = 'FACADE_RULE_ENGINE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MONEY = 'FACADE_MONEY';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_COMMISSION_CALCULATOR = 'PLUGINS_MERCHANT_COMMISSION_CALCULATOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_RULE_ENGINE_COLLECTOR_RULE = 'PLUGINS_RULE_ENGINE_COLLECTOR_RULE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_RULE_ENGINE_DECISION_RULE = 'PLUGINS_RULE_ENGINE_DECISION_RULE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -44,6 +71,23 @@ class MerchantCommissionDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addMerchantFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addRuleEngineFacade($container);
+        $container = $this->addMerchantCommissionCalculatorPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addMoneyFacade($container);
+        $container = $this->addRuleEngineCollectorRulePlugins($container);
+        $container = $this->addRuleEngineDecisionRulePlugins($container);
 
         return $container;
     }
@@ -94,5 +138,99 @@ class MerchantCommissionDependencyProvider extends AbstractBundleDependencyProvi
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRuleEngineFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_RULE_ENGINE, function (Container $container) {
+            return new MerchantCommissionToRuleEngineFacadeBridge($container->getLocator()->ruleEngine()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
+            return new MerchantCommissionToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantCommissionCalculatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_COMMISSION_CALCULATOR, function () {
+            return $this->getMerchantCommissionCalculatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRuleEngineCollectorRulePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RULE_ENGINE_COLLECTOR_RULE, function () {
+            return $this->getRuleEngineCollectorRulePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRuleEngineDecisionRulePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RULE_ENGINE_DECISION_RULE, function () {
+            return $this->getRuleEngineDecisionRulePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface>
+     */
+    protected function getMerchantCommissionCalculatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\CollectorRulePluginInterface>
+     */
+    protected function getRuleEngineCollectorRulePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\DecisionRulePluginInterface>
+     */
+    protected function getRuleEngineDecisionRulePlugins(): array
+    {
+        return [];
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Zed\Refund\Business\Model\RefundCalculator;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\ExpenseRefundCalculator;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\ItemRefundCalculator;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
+use Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface;
 use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
@@ -56,6 +57,8 @@ class RefundBusinessFactory extends AbstractBusinessFactory
             $this->getSalesQueryContainer(),
             $this->getSalesFacade(),
             $this->getCalculationFacade(),
+            $this->getConfig(),
+            $this->getMessengerFacade(),
             $this->getRefundPostSavePlugins(),
         );
     }
@@ -101,5 +104,13 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     public function getRefundPostSavePlugins(): array
     {
         return $this->getProvidedDependency(RefundDependencyProvider::PLUGINS_REFUND_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Refund\Dependency\Facade\RefundToMessengerFacadeInterface
+     */
+    protected function getMessengerFacade(): RefundToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_MESSENGER);
     }
 }
