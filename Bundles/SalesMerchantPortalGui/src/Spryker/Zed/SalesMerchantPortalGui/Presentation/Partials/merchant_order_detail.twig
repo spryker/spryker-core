@@ -159,12 +159,15 @@
                                                 },
                                             ] %}
 
-                                            {% block totalsComponent %}
-                                                <web-mp-manage-order-totals
-                                                    order-totals="{{ grandTotalOrderTotals | json_encode() }}"
-                                                    class="{{ mainClass }}__card-column-item">
-                                                </web-mp-manage-order-totals>
-                                            {% endblock %}
+                                            {% include [
+                                                '@SalesMerchantCommissionMerchantPortalGui/Partials/merchant-order-commission-totals.twig',
+                                                '@SalesMerchantPortalGui/Partials/order_totals.twig',
+                                            ]  ignore missing with {
+                                                merchantOrder: merchantOrder,
+                                                merchantData: merchantData,
+                                                grandTotalOrderTotals: grandTotalOrderTotals,
+                                                mainClass: mainClass,
+                                            } %}
                                         {% endblock %}
                                     </web-spy-card>
                                 {% endblock %}

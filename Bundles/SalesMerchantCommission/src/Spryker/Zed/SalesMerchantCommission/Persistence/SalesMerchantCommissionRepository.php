@@ -46,10 +46,13 @@ class SalesMerchantCommissionRepository extends AbstractRepository implements Sa
             $salesMerchantCommissionCollectionTransfer->setPagination($paginationTransfer);
         }
 
+        /** @phpstan-var \Orm\Zed\SalesMerchantCommission\Persistence\SpySalesMerchantCommissionQuery $salesMerchantCommissionQuery */
+        $salesMerchantCommissionEntities = $salesMerchantCommissionQuery->groupByIdSalesMerchantCommission()->find();
+
         return $this->getFactory()
             ->createSalesMerchantCommissionMapper()
             ->mapSalesMerchantCommissionEntityCollectionToSalesMerchantCommissionCollectionTransfer(
-                $salesMerchantCommissionQuery->find(),
+                $salesMerchantCommissionEntities,
                 $salesMerchantCommissionCollectionTransfer,
             );
     }

@@ -1,0 +1,39 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+
+{% set merchantCommissionTotals = {} %}
+{% set merchantCommissionRefundedTotals = {} %}
+{% for key, item in order.items %}
+    {% set merchantOrderReference = item.merchantOrderReference %}
+    {% set merchantCommissionTotals = merchantCommissionTotals | merge({(merchantOrderReference): (merchantCommissionTotals[merchantOrderReference] | default(0) + item.merchantCommissionAmountFullAggregation)}) %}
+    {% set merchantCommissionRefundedTotals = merchantCommissionRefundedTotals | merge({(merchantOrderReference): (merchantCommissionRefundedTotals[merchantOrderReference] | default(0) + item.merchantCommissionRefundedAmount)}) %}
+{% endfor %}
+
+<div class="col-sm-12 grandTotal-row">
+    <div class="row">
+        <div class="col-xs-8"><p><b>{{ 'Total Commission' | trans }}</b></p></div>
+        <div class="col-xs-4"><b>{{ order.totals.merchantCommissionTotal | default(0) | money(true, order.currencyIsoCode) }}</b></div>
+    </div>
+    {% for merchantOrderReference,merchantCommissionTotal in merchantCommissionTotals %}
+        {% if merchantOrderReference is not empty %}
+            <div class="row">
+                <div class="col-xs-8"><p>{{ merchantOrderReference }}</p></div>
+                <div class="col-xs-4">{{ merchantCommissionTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="col-sm-12 grandTotal-row">
+    <div class="row">
+        <div class="col-xs-8"><p><b>{{ 'Total Refunded Commission' | trans }}</b></p></div>
+        <div class="col-xs-4"><b>{{ order.totals.merchantCommissionRefundedTotal | default(0) | money(true, order.currencyIsoCode) }}</b></div>
+    </div>
+    {% for merchantOrderReference,merchantCommissionRefundedTotal in merchantCommissionRefundedTotals %}
+        {% if merchantOrderReference is not empty %}
+            <div class="row">
+                <div class="col-xs-8"><p>{{ merchantOrderReference }}</p></div>
+                <div class="col-xs-4">{{ merchantCommissionRefundedTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

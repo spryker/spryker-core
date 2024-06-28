@@ -73,6 +73,13 @@
                             <div class="col-xs-4">{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
                         </div>
                     </div>
+
+                    {% include [
+                        '@SalesMerchantCommissionMerchantPortalGui/Partials/order-commission-totals.twig',
+                        '@SalesMerchantCommission/Partials/commission-totals.twig',
+                    ] ignore missing with {
+                        order: order,
+                    } %}
                 </div>
             </div>
 

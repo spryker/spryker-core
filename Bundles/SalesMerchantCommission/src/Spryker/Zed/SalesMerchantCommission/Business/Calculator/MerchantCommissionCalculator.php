@@ -52,6 +52,10 @@ class MerchantCommissionCalculator implements MerchantCommissionCalculatorInterf
         $salesMerchantCommissionCollectionTransfer = $this->salesMerchantCommissionReader
             ->getSalesMerchantCommissionsByIdSalesOrder($idSalesOrder);
 
+        if ($salesMerchantCommissionCollectionTransfer->getSalesMerchantCommissions()->count() === 0) {
+            return $calculableObjectTransfer;
+        }
+
         $itemSalesMerchantCommissions = $this->merchantCommissionCollector
             ->collectItemSalesMerchantCommissions($salesMerchantCommissionCollectionTransfer);
         $orderSalesMerchantCommissions = $this->merchantCommissionCollector
@@ -103,10 +107,8 @@ class MerchantCommissionCalculator implements MerchantCommissionCalculatorInterf
             $merchantCommissionRefundedAmount += $salesMerchantCommissionTransfer->getRefundedAmountOrFail();
         }
 
-        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-            $salesMerchantCommissionTransfers = $itemSalesMerchantCommissions[$itemTransfer->getIdSalesOrderItemOrFail()] ?? [];
-
-            foreach ($salesMerchantCommissionTransfers as $salesMerchantCommissionTransfer) {
+        foreach ($itemSalesMerchantCommissions as $itemSalesMerchantCommissionTransfers) {
+            foreach ($itemSalesMerchantCommissionTransfers as $salesMerchantCommissionTransfer) {
                 $merchantCommissionAmount += $salesMerchantCommissionTransfer->getAmountOrFail();
                 $merchantCommissionRefundedAmount += $salesMerchantCommissionTransfer->getRefundedAmountOrFail();
             }

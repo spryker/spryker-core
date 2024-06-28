@@ -1,0 +1,13 @@
+{# @var merchantOrder \Generated\Shared\Transfer\MerchantOrderTransfer #}
+{# @var merchantData \Generated\Shared\Transfer\OrderTransfer #}
+{# @var grandTotalOrderTotals array #}
+{# @var mainClass string #}
+
+{% block body %}
+    {% block totalsComponent %}
+        <web-mp-manage-order-totals
+            order-totals="{{ grandTotalOrderTotals | json_encode() }}"
+            class="{{ mainClass }}__card-column-item">
+        </web-mp-manage-order-totals>
+    {% endblock %}
+{% endblock %}

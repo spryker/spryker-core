@@ -21,6 +21,7 @@
 
     <transfer name="MerchantOrderItem">
         <property name="orderItem" type="Item"/>
+        <property name="idMerchantOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Item">
@@ -31,6 +32,8 @@
 
     <transfer name="MerchantOrderCriteria">
         <property name="idOrder" type="int"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
     </transfer>
 
     <transfer name="MerchantOrderCollection">

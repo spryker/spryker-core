@@ -106,6 +106,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currency" type="Currency"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="OrderFilter">

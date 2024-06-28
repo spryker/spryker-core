@@ -1,0 +1,15 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+
+<div class="col-sm-12 grandTotal-row">
+    <div class="row">
+        <div class="col-xs-8"><b>{{ 'Total Commission' | trans }}</b></div>
+        <div class="col-xs-4"><b>{{ order.totals.merchantCommissionTotal | default(0) | money(true, order.currencyIsoCode) }}</b></div>
+    </div>
+</div>
+
+<div class="col-sm-12 grandTotal-row">
+    <div class="row">
+        <div class="col-xs-8"><b>{{ 'Total Refunded Commission' | trans }}</b></div>
+        <div class="col-xs-4"><b>{{ order.totals.merchantCommissionRefundedTotal | default(0) | money(true, order.currencyIsoCode) }}</b></div>
+    </div>
+</div>

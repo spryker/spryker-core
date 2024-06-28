@@ -1,0 +1,24 @@
+{# @var merchantOrder \Generated\Shared\Transfer\MerchantOrderTransfer #}
+{# @var merchantData \Generated\Shared\Transfer\OrderTransfer #}
+{# @var grandTotalOrderTotals array #}
+{# @var mainClass string #}
+
+{% block body %}
+    {% set grandTotalOrderTotals = grandTotalOrderTotals | merge([
+        {
+            title: 'Total Commission' | trans,
+            value: merchantOrder.totals.merchantCommissionTotal | money(true, merchantData.currencyIsoCode),
+        },
+        {
+            title: 'Total Refunded Commission' | trans,
+            value: merchantOrder.totals.merchantCommissionRefundedTotal | money(true, merchantData.currencyIsoCode),
+        }
+    ]) %}
+
+    {% block totalsComponent %}
+        <web-mp-manage-order-totals
+            order-totals="{{ grandTotalOrderTotals | json_encode() }}"
+            class="{{ mainClass }}__card-column-item">
+        </web-mp-manage-order-totals>
+    {% endblock %}
+{% endblock %}

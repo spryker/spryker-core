@@ -38,7 +38,7 @@ class SalesMerchantCommissionAclEntityConfigurationExpanderPlugin extends Abstra
                 'Orm\Zed\SalesMerchantCommission\Persistence\SpySalesMerchantCommission',
                 (new AclEntityMetadataTransfer())
                     ->setEntityName('Orm\Zed\SalesMerchantCommission\Persistence\SpySalesMerchantCommission')
-                    ->setParent((new AclEntityParentMetadataTransfer())->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrderItem'))
+                    ->setParent((new AclEntityParentMetadataTransfer())->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrder'))
                     ->setIsSubEntity(true),
             );
 

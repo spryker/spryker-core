@@ -553,12 +553,16 @@ class OrderHydrator implements OrderHydratorInterface
         $taxTotalTransfer->setAmount($salesOrderTotalsEntity->getTaxTotal());
         $totalsTransfer->setTaxTotal($taxTotalTransfer);
 
-        $totalsTransfer->setExpenseTotal($salesOrderTotalsEntity->getOrderExpenseTotal());
-        $totalsTransfer->setRefundTotal($salesOrderTotalsEntity->getRefundTotal());
-        $totalsTransfer->setGrandTotal($salesOrderTotalsEntity->getGrandTotal());
-        $totalsTransfer->setSubtotal($salesOrderTotalsEntity->getSubtotal());
-        $totalsTransfer->setDiscountTotal($salesOrderTotalsEntity->getDiscountTotal());
-        $totalsTransfer->setCanceledTotal($salesOrderTotalsEntity->getCanceledTotal());
+        $plainTotal = $salesOrderTotalsEntity->toArray();
+        unset($plainTotal['tax_total']);
+
+        $totalsTransfer->fromArray($plainTotal, true)
+            ->setExpenseTotal($salesOrderTotalsEntity->getOrderExpenseTotal())
+            ->setRefundTotal($salesOrderTotalsEntity->getRefundTotal())
+            ->setGrandTotal($salesOrderTotalsEntity->getGrandTotal())
+            ->setSubtotal($salesOrderTotalsEntity->getSubtotal())
+            ->setDiscountTotal($salesOrderTotalsEntity->getDiscountTotal())
+            ->setCanceledTotal($salesOrderTotalsEntity->getCanceledTotal());
 
         $orderTransfer->setTotals($totalsTransfer);
     }

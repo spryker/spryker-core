@@ -45,6 +45,7 @@
     },
     "suggest": {
         "spryker/checkout": "If you want to use Checkout plugins. ^4.0.0",
+        "spryker/sales-merchant-commission-merchant-portal-gui": "Use this module if you want to use templates with merchant commission totals.",
         "spryker/sales-product-configuration-gui": "Add the module if you want to display order item configuration."
     },
     "autoload": {

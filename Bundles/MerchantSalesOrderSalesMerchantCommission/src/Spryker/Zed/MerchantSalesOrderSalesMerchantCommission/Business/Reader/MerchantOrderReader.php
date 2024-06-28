@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrderSalesMerchantCommission\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantSalesOrderSalesMerchantCommission\Dependency\Facade\MerchantSalesOrderSalesMerchantCommissionToMerchantSalesOrderFacadeInterface;
@@ -35,12 +36,36 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     public function findMerchantOrder(MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer
     {
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setIdOrder($merchantOrderTransfer->getIdOrderOrFail());
+            ->setIdOrder($merchantOrderTransfer->getIdOrderOrFail())
+            ->setWithOrder(true)
+            ->setWithItems(true);
 
-        return $this->merchantSalesOrderFacade
+        $merchantOrderTransfer = $this->merchantSalesOrderFacade
             ->getMerchantOrderCollection($merchantOrderCriteriaTransfer)
             ->getMerchantOrders()
             ->getIterator()
             ->current();
+
+        if (!$merchantOrderTransfer) {
+            return null;
+        }
+
+        return $this->sanitizeDuplicatedMerchantOrderItems($merchantOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function sanitizeDuplicatedMerchantOrderItems(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        $uniqueMerchantOrderItems = [];
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $idMerchantOrderItem = $merchantOrderItemTransfer->getIdMerchantOrderItemOrFail();
+            $uniqueMerchantOrderItems[$idMerchantOrderItem] = $merchantOrderItemTransfer;
+        }
+
+        return $merchantOrderTransfer->setMerchantOrderItems(new ArrayObject($uniqueMerchantOrderItems));
     }
 }

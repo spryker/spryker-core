@@ -119,8 +119,18 @@ class MerchantSalesOrderSalesMerchantCommissionBusinessTester extends Actor
 
         $merchantReference = $merchantTransfer->getMerchantReference();
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantReference]))->build()->toArray())
-            ->withItem((new ItemBuilder([ItemTransfer::MERCHANT_REFERENCE => $merchantReference]))->build()->toArray())
+            ->withItem((new ItemBuilder([
+                ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
+                ItemTransfer::MERCHANT_COMMISSION_AMOUNT_AGGREGATION => 0,
+                ItemTransfer::MERCHANT_COMMISSION_AMOUNT_FULL_AGGREGATION => 0,
+                ItemTransfer::MERCHANT_COMMISSION_REFUNDED_AMOUNT => static::FAKE_MERCHANT_COMMISSION_AMOUNT_FULL_AGGREGATION,
+            ]))->build()->toArray())
+            ->withItem((new ItemBuilder([
+                ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
+                ItemTransfer::MERCHANT_COMMISSION_AMOUNT_AGGREGATION => static::FAKE_MERCHANT_COMMISSION_AMOUNT_FULL_AGGREGATION,
+                ItemTransfer::MERCHANT_COMMISSION_AMOUNT_FULL_AGGREGATION => static::FAKE_MERCHANT_COMMISSION_AMOUNT_FULL_AGGREGATION,
+                ItemTransfer::MERCHANT_COMMISSION_REFUNDED_AMOUNT => 0,
+            ]))->build()->toArray())
             ->withBillingAddress()
             ->withTotals()
             ->withCustomer()

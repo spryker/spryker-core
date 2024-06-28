@@ -859,6 +859,7 @@
         "spryker/sales-extension": "*",
         "spryker/sales-invoice": "*",
         "spryker/sales-invoice-extension": "*",
+        "spryker/sales-merchant-commission-merchant-portal-gui": "*",
         "spryker/sales-merchant-portal-gui": "*",
         "spryker/sales-merchant-portal-gui-extension": "*",
         "spryker/sales-oms": "*",

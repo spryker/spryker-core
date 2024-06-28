@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesOrderSalesMerchantCommission\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -45,26 +44,12 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
      */
     public function saveMerchantCommissionToMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): void
     {
-        [$merchantCommissionTotal, $merchantCommissionRefundedTotal] = $this->extractMerchantCommissionTotalsFromOrderItems(
-            $merchantOrderTransfer,
-        );
-
         $persistedMerchantOrderTransfer = $this->merchantOrderReader->findMerchantOrder($merchantOrderTransfer);
         if (!$persistedMerchantOrderTransfer) {
             return;
         }
 
-        $totalsTransfer = (new TotalsTransfer())
-            ->fromArray($persistedMerchantOrderTransfer->getTotalsOrFail()->toArray(), true)
-            ->setMerchantCommissionTotal($merchantCommissionTotal)
-            ->setMerchantCommissionRefundedTotal($merchantCommissionRefundedTotal);
-
-        $orderTransfer = (new OrderTransfer())
-            ->addMerchantReference($merchantOrderTransfer->getMerchantReferenceOrFail())
-            ->setIdSalesOrder($merchantOrderTransfer->getIdOrderOrFail())
-            ->setTotals($totalsTransfer);
-
-        $this->merchantSalesOrderFacade->updateMerchantOrderTotals($orderTransfer);
+        $this->updateMerchantOrderTotals($merchantOrderTransfer, $persistedMerchantOrderTransfer->getTotalsOrFail());
     }
 
     /**
@@ -78,50 +63,65 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
         $merchantOrderTransfer = (new MerchantOrderTransfer())
             ->setIdOrder($orderTransfer->getIdSalesOrderOrFail());
 
-        foreach ($itemTransfers as $itemTransfer) {
-            $merchantReference = $itemTransfer->getMerchantReference();
-            if (!$merchantReference) {
-                return;
-            }
-
-            if ($merchantOrderTransfer->getMerchantReference() && $merchantOrderTransfer->getMerchantReference() !== $merchantReference) {
-                return;
-            }
-
-            $merchantOrderTransfer
-                ->setMerchantReference($merchantReference)
-                ->addMerchantOrderItem((new MerchantOrderItemTransfer())->setOrderItem($itemTransfer));
+        if (!$this->checkItemsBelongToSameMerchant($merchantOrderTransfer, $itemTransfers)) {
+            return;
         }
 
-        $this->updateMerchantCommissionTotals($merchantOrderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     *
-     * @return void
-     */
-    protected function updateMerchantCommissionTotals(MerchantOrderTransfer $merchantOrderTransfer): void
-    {
         $persistedMerchantOrderTransfer = $this->merchantOrderReader->findMerchantOrder($merchantOrderTransfer);
         if (!$persistedMerchantOrderTransfer) {
             return;
         }
 
-        $totalsTransfer = $persistedMerchantOrderTransfer->getTotalsOrFail();
+        $this->updateMerchantOrderTotals($persistedMerchantOrderTransfer, $persistedMerchantOrderTransfer->getTotalsOrFail());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return bool
+     */
+    protected function checkItemsBelongToSameMerchant(MerchantOrderTransfer $merchantOrderTransfer, array $itemTransfers): bool
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            $merchantReference = $itemTransfer->getMerchantReference();
+            if (!$merchantReference) {
+                return false;
+            }
+
+            if ($merchantOrderTransfer->getMerchantReference() && $merchantOrderTransfer->getMerchantReference() !== $merchantReference) {
+                return false;
+            }
+
+            $merchantOrderTransfer->setMerchantReference($merchantReference);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return void
+     */
+    protected function updateMerchantOrderTotals(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        TotalsTransfer $totalsTransfer
+    ): void {
         [$merchantCommissionTotal, $merchantCommissionRefundedTotal] = $this->extractMerchantCommissionTotalsFromOrderItems(
             $merchantOrderTransfer,
         );
 
-        $totalsTransfer = (new TotalsTransfer())
-            ->fromArray($persistedMerchantOrderTransfer->getTotalsOrFail()->toArray(), true)
-            ->setMerchantCommissionTotal($totalsTransfer->getMerchantCommissionTotal() - $merchantCommissionRefundedTotal)
-            ->setMerchantCommissionRefundedTotal($totalsTransfer->getMerchantCommissionRefundedTotal() + $merchantCommissionRefundedTotal);
+        $updatedTotalsTransfer = (new TotalsTransfer())
+            ->fromArray($totalsTransfer->toArray(), true)
+            ->setMerchantCommissionTotal($merchantCommissionTotal)
+            ->setMerchantCommissionRefundedTotal($merchantCommissionRefundedTotal);
 
         $orderTransfer = (new OrderTransfer())
             ->addMerchantReference($merchantOrderTransfer->getMerchantReferenceOrFail())
             ->setIdSalesOrder($merchantOrderTransfer->getIdOrderOrFail())
-            ->setTotals($totalsTransfer);
+            ->setTotals($updatedTotalsTransfer);
 
         $this->merchantSalesOrderFacade->updateMerchantOrderTotals($orderTransfer);
     }
