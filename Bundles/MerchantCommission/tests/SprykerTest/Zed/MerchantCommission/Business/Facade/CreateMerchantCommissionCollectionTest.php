@@ -143,18 +143,18 @@ class CreateMerchantCommissionCollectionTest extends Unit
     protected const GLOSSARY_KEY_VALIDATION_CALCULATOR_TYPE_PLUGIN_MISSING = 'merchant_commission.validation.calculator_type_plugin_is_missing';
 
     /**
-     * @uses \Spryker\Zed\RuleEngine\Business\Validator\QueryStringValidator::GLOSSARY_KEY_INVALID_QUERY_STRING
+     * @uses \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\AbstractQueryStringMerchantCommissionValidatorRule::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_QUERY_STRING
      *
      * @var string
      */
-    protected const GLOSSARY_KEY_INVALID_QUERY_STRING = 'rule_engine.validation.invalid_query_string';
+    protected const GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_QUERY_STRING = 'merchant_commission.validation.invalid_query_string';
 
     /**
-     * @uses \Spryker\Zed\RuleEngine\Business\Validator\QueryStringValidator::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE
+     * @uses \Spryker\Zed\MerchantCommission\Business\Validator\Rule\MerchantCommission\AbstractQueryStringMerchantCommissionValidatorRule::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_COMPARE_OPERATOR
      *
      * @var string
      */
-    protected const GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE = 'rule_engine.validation.invalid_compare_operator_value';
+    protected const GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_COMPARE_OPERATOR = 'merchant_commission.validation.invalid_compare_operator';
 
     /**
      * @var \SprykerTest\Zed\MerchantCommission\MerchantCommissionBusinessTester
@@ -788,7 +788,7 @@ class CreateMerchantCommissionCollectionTest extends Unit
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
             $merchantCommissionCollectionResponseTransfer->getErrors(),
-            static::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE,
+            static::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_COMPARE_OPERATOR,
         );
 
         $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
@@ -818,7 +818,7 @@ class CreateMerchantCommissionCollectionTest extends Unit
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
             $merchantCommissionCollectionResponseTransfer->getErrors(),
-            static::GLOSSARY_KEY_INVALID_QUERY_STRING,
+            static::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_QUERY_STRING,
         );
 
         $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
@@ -848,7 +848,7 @@ class CreateMerchantCommissionCollectionTest extends Unit
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
             $merchantCommissionCollectionResponseTransfer->getErrors(),
-            static::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE,
+            static::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_COMPARE_OPERATOR,
         );
 
         $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());
@@ -878,7 +878,7 @@ class CreateMerchantCommissionCollectionTest extends Unit
         // Assert
         $this->tester->assertValidationErrorsContainSingleMessageEqualTo(
             $merchantCommissionCollectionResponseTransfer->getErrors(),
-            static::GLOSSARY_KEY_INVALID_QUERY_STRING,
+            static::GLOSSARY_KEY_VALIDATION_MERCHANT_COMMISSION_INVALID_QUERY_STRING,
         );
 
         $this->assertCount(1, $merchantCommissionCollectionResponseTransfer->getMerchantCommissions());

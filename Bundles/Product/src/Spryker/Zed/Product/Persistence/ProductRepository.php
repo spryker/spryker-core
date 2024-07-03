@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -28,6 +30,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -1003,18 +1006,57 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $paginationTransfer = $productConcreteCriteriaTransfer->getPagination();
         if ($paginationTransfer !== null) {
-            $productConcreteQuery = $this->applyProductConcretePagination($productConcreteQuery, $paginationTransfer);
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
+            $productConcreteQuery = $this->applyPaginationToQuery($productConcreteQuery, $paginationTransfer);
             $productConcreteCollectionTransfer->setPagination($paginationTransfer);
         }
 
         $productConcreteQuery = $this->expandProductConcreteQueryWithProductLocalizedAttributes($productConcreteQuery, $productConcreteCriteriaTransfer);
-        $productConcreteQuery = $this->applyProductConcreteSorting($productConcreteQuery, $productConcreteCriteriaTransfer);
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
+        $productConcreteQuery = $this->applySortingToQuery(
+            $productConcreteQuery,
+            $productConcreteCriteriaTransfer->getSortCollection(),
+        );
 
         return $this->getFactory()
             ->createProductMapper()
             ->mapProductEntitiesToProductConcreteCollection(
                 $productConcreteQuery->find(),
                 $productConcreteCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer
+     */
+    public function getProductAttributeKeyCollection(
+        ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+    ): ProductAttributeKeyCollectionTransfer {
+        $productAttributeKeyCollectionTransfer = new ProductAttributeKeyCollectionTransfer();
+
+        $productAttributeKeyQuery = $this->getFactory()->createProductAttributeKeyQuery();
+        $productAttributeKeyQuery = $this->applyProductAttributeKeyFilters($productAttributeKeyQuery, $productAttributeKeyCriteriaTransfer);
+
+        $paginationTransfer = $productAttributeKeyCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $productAttributeKeyQuery */
+            $productAttributeKeyQuery = $this->applyPaginationToQuery($productAttributeKeyQuery, $paginationTransfer);
+            $productAttributeKeyCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $productAttributeKeyQuery */
+        $productAttributeKeyQuery = $this->applySortingToQuery(
+            $productAttributeKeyQuery,
+            $productAttributeKeyCriteriaTransfer->getSortCollection(),
+        );
+
+        return $this->getFactory()
+            ->createProductAttributeKeyMapper()
+            ->mapProductAttributeKeyEntitiesToProductAttributeKeyCollection(
+                $productAttributeKeyQuery->find(),
+                $productAttributeKeyCollectionTransfer,
             );
     }
 
@@ -1095,26 +1137,26 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyProductConcretePagination(
-        SpyProductQuery $productConcreteQuery,
+    protected function applyPaginationToQuery(
+        ModelCriteria $query,
         PaginationTransfer $paginationTransfer
-    ): SpyProductQuery {
+    ): ModelCriteria {
         if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
-            $paginationTransfer->setNbResults($productConcreteQuery->count());
+            $paginationTransfer->setNbResults($query->count());
 
-            $productConcreteQuery->offset($paginationTransfer->getOffsetOrFail())
+            $query->offset($paginationTransfer->getOffsetOrFail())
                 ->setLimit($paginationTransfer->getLimitOrFail());
 
-            return $productConcreteQuery;
+            return $query;
         }
 
         if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
-            $paginationModel = $productConcreteQuery->paginate(
+            $paginationModel = $query->paginate(
                 $paginationTransfer->getPage(),
                 $paginationTransfer->getMaxPerPage(),
             );
@@ -1127,34 +1169,56 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 ->setNextPage($paginationModel->getNextPage())
                 ->setPreviousPage($paginationModel->getPreviousPage());
 
-            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
-            $productConcreteQuery = $paginationModel->getQuery();
-
-            return $productConcreteQuery;
+            return $paginationModel->getQuery();
         }
 
-        return $productConcreteQuery;
+        return $query;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortCollection
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyProductConcreteSorting(
-        SpyProductQuery $productConcreteQuery,
-        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
-    ): SpyProductQuery {
-        $sortCollection = $productConcreteCriteriaTransfer->getSortCollection();
+    protected function applySortingToQuery(
+        ModelCriteria $query,
+        ArrayObject $sortCollection
+    ): ModelCriteria {
         foreach ($sortCollection as $sortTransfer) {
-            $productConcreteQuery->orderBy(
+            $query->orderBy(
                 $sortTransfer->getFieldOrFail(),
                 $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
             );
         }
 
-        return $productConcreteQuery;
+        return $query;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $productAttributeKeyQuery
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    protected function applyProductAttributeKeyFilters(
+        SpyProductAttributeKeyQuery $productAttributeKeyQuery,
+        ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+    ): SpyProductAttributeKeyQuery {
+        $productAttributeKeyConditionsTransfer = $productAttributeKeyCriteriaTransfer->getProductAttributeKeyConditions();
+        if ($productAttributeKeyConditionsTransfer === null) {
+            return $productAttributeKeyQuery;
+        }
+
+        if ($productAttributeKeyConditionsTransfer->getKeys() !== []) {
+            $productAttributeKeyQuery->filterByKey_In($productAttributeKeyConditionsTransfer->getKeys());
+        }
+
+        if ($productAttributeKeyConditionsTransfer->getIsSuper() !== null) {
+            $productAttributeKeyQuery->filterByIsSuper($productAttributeKeyConditionsTransfer->getIsSuperOrFail());
+        }
+
+        return $productAttributeKeyQuery;
     }
 
     /**

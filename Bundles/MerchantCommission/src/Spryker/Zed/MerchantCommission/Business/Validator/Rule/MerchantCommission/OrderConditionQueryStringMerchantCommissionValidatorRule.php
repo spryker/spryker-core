@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RuleEngineSpecificationProviderRequestTransfer;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToRuleEngineFacadeInterface;
 use Spryker\Zed\MerchantCommission\MerchantCommissionConfig;
 
-class OrderConditionQueryStringMerchantCommissionValidatorRule implements MerchantCommissionValidatorRuleInterface
+class OrderConditionQueryStringMerchantCommissionValidatorRule extends AbstractQueryStringMerchantCommissionValidatorRule
 {
     /**
      * @uses \Spryker\Zed\RuleEngine\RuleEngineConfig::DECISION_RULE_SPECIFICATION_TYPE
@@ -22,6 +22,11 @@ class OrderConditionQueryStringMerchantCommissionValidatorRule implements Mercha
      * @var string
      */
     protected const DECISION_RULE_SPECIFICATION_TYPE = 'decision';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_ORDER_CONDITION = 'order condition';
 
     /**
      * @var \Spryker\Zed\MerchantCommission\MerchantCommissionConfig
@@ -67,7 +72,17 @@ class OrderConditionQueryStringMerchantCommissionValidatorRule implements Mercha
             $ruleEngineQueryStringValidationRequestTransfer,
         );
 
-        return (new ErrorCollectionTransfer())->setErrors($ruleEngineQueryStringValidationResponseTransfer->getErrors());
+        return (new ErrorCollectionTransfer())->setErrors(
+            $this->translateRuleEngineValidationErrors($ruleEngineQueryStringValidationResponseTransfer->getErrors()),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFieldName(): string
+    {
+        return static::FIELD_ORDER_CONDITION;
     }
 
     /**

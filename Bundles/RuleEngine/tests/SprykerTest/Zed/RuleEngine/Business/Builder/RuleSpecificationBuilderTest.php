@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RuleEngineSpecificationRequestTransfer;
 use Spryker\Zed\RuleEngine\Business\Builder\RuleSpecificationBuilder;
 use Spryker\Zed\RuleEngine\Business\Builder\RuleSpecificationBuilderInterface;
 use Spryker\Zed\RuleEngine\Business\Comparator\ComparatorCheckerInterface;
+use Spryker\Zed\RuleEngine\Business\Exception\QueryStringException;
 use Spryker\Zed\RuleEngine\Business\Resolver\RuleSpecificationProviderResolverInterface;
 use Spryker\Zed\RuleEngine\Business\Specification\MetaData\MetaDataProviderInterface;
 use Spryker\Zed\RuleEngine\Business\Tokenizer\Tokenizer;
@@ -123,6 +124,60 @@ class RuleSpecificationBuilderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSpecificationBuildThrowsExceptionWhenQueryStringIsIncomplete(): void
+    {
+        // Arrange
+        $queryString = 'test-field-name = ';
+        $ruleEngineSpecificationRequestTransfer = (new RuleEngineSpecificationRequestBuilder([
+            RuleEngineSpecificationRequestTransfer::QUERY_STRING => $queryString,
+        ]))->withRuleEngineSpecificationProviderRequest()->build();
+
+        // Assert
+        $this->expectException(QueryStringException::class);
+
+        // Act
+        $this->createRuleSpecificationBuilder()->build($ruleEngineSpecificationRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSpecificationBuildThrowsExceptionWhenParenthesisInQueryStringDoNotMatch(): void
+    {
+        // Arrange
+        $queryString = '((test-field-name = "231")';
+        $ruleEngineSpecificationRequestTransfer = (new RuleEngineSpecificationRequestBuilder([
+            RuleEngineSpecificationRequestTransfer::QUERY_STRING => $queryString,
+        ]))->withRuleEngineSpecificationProviderRequest()->build();
+
+        // Assert
+        $this->expectException(QueryStringException::class);
+
+        // Act
+        $this->createRuleSpecificationBuilder()->build($ruleEngineSpecificationRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSpecificationBuildThrowsExceptionWhenTokenCanNotBeIdentified(): void
+    {
+        // Arrange
+        $queryString = 'test-field-name = `231`';
+        $ruleEngineSpecificationRequestTransfer = (new RuleEngineSpecificationRequestBuilder([
+            RuleEngineSpecificationRequestTransfer::QUERY_STRING => $queryString,
+        ]))->withRuleEngineSpecificationProviderRequest()->build();
+
+        // Assert
+        $this->expectException(QueryStringException::class);
+
+        // Act
+        $this->createRuleSpecificationBuilder()->build($ruleEngineSpecificationRequestTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\RuleEngine\Business\Builder\RuleSpecificationBuilderInterface
      */
     protected function createRuleSpecificationBuilder(): RuleSpecificationBuilderInterface
@@ -178,10 +233,7 @@ class RuleSpecificationBuilderTest extends Unit
      */
     protected function createClauseValidatorMock(): ClauseValidatorInterface
     {
-        $clauseValidatorMock = $this->getMockBuilder(ClauseValidatorInterface::class)->getMock();
-        $clauseValidatorMock->expects($this->atLeastOnce())->method('validateClause');
-
-        return $clauseValidatorMock;
+        return $this->getMockBuilder(ClauseValidatorInterface::class)->getMock();
     }
 
     /**

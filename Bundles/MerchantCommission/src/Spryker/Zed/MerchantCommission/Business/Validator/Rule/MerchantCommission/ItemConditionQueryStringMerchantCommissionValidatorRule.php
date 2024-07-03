@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RuleEngineSpecificationProviderRequestTransfer;
 use Spryker\Zed\MerchantCommission\Dependency\Facade\MerchantCommissionToRuleEngineFacadeInterface;
 use Spryker\Zed\MerchantCommission\MerchantCommissionConfig;
 
-class ItemConditionQueryStringMerchantCommissionValidatorRule implements MerchantCommissionValidatorRuleInterface
+class ItemConditionQueryStringMerchantCommissionValidatorRule extends AbstractQueryStringMerchantCommissionValidatorRule
 {
     /**
      * @uses \Spryker\Zed\RuleEngine\RuleEngineConfig::COLLECTOR_RULE_SPECIFICATION_TYPE
@@ -22,6 +22,11 @@ class ItemConditionQueryStringMerchantCommissionValidatorRule implements Merchan
      * @var string
      */
     protected const COLLECTOR_RULE_SPECIFICATION_TYPE = 'collector';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_ITEM_CONDITION = 'item condition';
 
     /**
      * @var \Spryker\Zed\MerchantCommission\MerchantCommissionConfig
@@ -67,7 +72,17 @@ class ItemConditionQueryStringMerchantCommissionValidatorRule implements Merchan
             $ruleEngineQueryStringValidationRequestTransfer,
         );
 
-        return (new ErrorCollectionTransfer())->setErrors($ruleEngineQueryStringValidationResponseTransfer->getErrors());
+        return (new ErrorCollectionTransfer())->setErrors(
+            $this->translateRuleEngineValidationErrors($ruleEngineQueryStringValidationResponseTransfer->getErrors()),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFieldName(): string
+    {
+        return static::FIELD_ITEM_CONDITION;
     }
 
     /**

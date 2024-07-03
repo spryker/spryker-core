@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper;
 use Spryker\Zed\Product\Persistence\Mapper\ProductAbstractStoreMapper;
+use Spryker\Zed\Product\Persistence\Mapper\ProductAttributeKeyMapper;
 use Spryker\Zed\Product\Persistence\Mapper\ProductMapper;
 use Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface;
 use Spryker\Zed\Product\ProductDependencyProvider;
@@ -118,5 +119,13 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractStoreMapper(): ProductAbstractStoreMapper
     {
         return new ProductAbstractStoreMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductAttributeKeyMapper
+     */
+    public function createProductAttributeKeyMapper(): ProductAttributeKeyMapper
+    {
+        return new ProductAttributeKeyMapper();
     }
 }

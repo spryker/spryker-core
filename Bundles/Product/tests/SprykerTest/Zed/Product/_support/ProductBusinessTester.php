@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -340,11 +341,27 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function ensureProductAttributeKeyTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductAttributeKeyQuery());
+    }
+
+    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    protected function getProductAttributeKeyQuery(): SpyProductAttributeKeyQuery
+    {
+        return SpyProductAttributeKeyQuery::create();
     }
 
     /**

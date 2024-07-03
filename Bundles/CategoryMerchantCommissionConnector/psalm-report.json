@@ -1,0 +1,127 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\CollectorRule\\CategoryCollectorRule::getCategoryKeysForProductCategories is more specific than the inferred return type 'array<int, string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/CollectorRule/CategoryCollectorRule.php",
+            "snippet": "     * @return list<string>",
+            "selected_text": "list<string>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 130,
+            "line_to": 130,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, string>' is more general than the declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\CollectorRule\\CategoryCollectorRule::getCategoryKeysForProductCategories",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/CollectorRule/CategoryCollectorRule.php",
+            "snippet": "        return array_unique(array_merge(...$categoryKeys));",
+            "selected_text": "array_unique(array_merge(...$categoryKeys))",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<int>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\CategoryReader::extractCategoryNodeIds is more specific than the inferred return type 'array<int, int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/CategoryReader.php",
+            "snippet": "     * @return list<int>",
+            "selected_text": "list<int>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, int>' is more general than the declared return type 'list<int>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\CategoryReader::extractCategoryNodeIds",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/CategoryReader.php",
+            "snippet": "        return array_unique($categoryNodeIds);",
+            "selected_text": "array_unique($categoryNodeIds)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<int>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\CategoryReader::filterOutCachedCategoryNodeIds is more specific than the inferred return type 'array<int, int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/CategoryReader.php",
+            "snippet": "     * @return list<int>",
+            "selected_text": "list<int>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, int>' is more general than the declared return type 'list<int>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\CategoryReader::filterOutCachedCategoryNodeIds",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/CategoryReader.php",
+            "snippet": "        return array_diff($categoryNodeIds, array_keys(static::$categoryKeysGroupedByIdCategoryNode));",
+            "selected_text": "array_diff($categoryNodeIds, array_keys(static::$categoryKeysGroupedByIdCategoryNode))",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\ProductCategoryReader::filterOutCachedProductConcreteSkus is more specific than the inferred return type 'array<int, string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/ProductCategoryReader.php",
+            "snippet": "     * @return list<string>",
+            "selected_text": "list<string>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, string>' is more general than the declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\ProductCategoryReader::filterOutCachedProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/ProductCategoryReader.php",
+            "snippet": "        return array_diff($productConcreteSkus, array_keys(static::$productCategoryTransfersGroupedBySku));",
+            "selected_text": "array_diff($productConcreteSkus, array_keys(static::$productCategoryTransfersGroupedBySku))",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\ProductReader::filterOutCachedProductConcreteSkus is more specific than the inferred return type 'array<int, string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/ProductReader.php",
+            "snippet": "     * @return list<string>",
+            "selected_text": "list<string>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, string>' is more general than the declared return type 'list<string>' for Spryker\\Zed\\CategoryMerchantCommissionConnector\\Business\\Reader\\ProductReader::filterOutCachedProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryMerchantCommissionConnector/src/Spryker/Zed/CategoryMerchantCommissionConnector/Business/Reader/ProductReader.php",
+            "snippet": "        return array_diff($productConcreteSkus, array_keys(static::$productConcreteTransfersIndexedBySku));",
+            "selected_text": "array_diff($productConcreteSkus, array_keys(static::$productConcreteTransfersIndexedBySku))",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": [],
+    "count": 11
+}

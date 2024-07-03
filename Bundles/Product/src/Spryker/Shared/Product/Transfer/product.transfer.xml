@@ -186,6 +186,22 @@
         <property name="localeNames" type="string[]" singular="localeName"/>
     </transfer>
 
+    <transfer name="ProductAttributeKeyCriteria" strict="true">
+        <property name="productAttributeKeyConditions" type="ProductAttributeKeyConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKeyConditions" strict="true">
+        <property name="keys" type="string[]" singular="key"/>
+        <property name="isSuper" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKeyCollection" strict="true">
+        <property name="productAttributeKeys" type="ProductAttributeKey[]" singular="productAttributeKey"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
         <property name="tenantIdentifier" type="string"/>

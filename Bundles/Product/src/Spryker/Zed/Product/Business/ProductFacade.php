@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
@@ -1299,5 +1301,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer
     {
         return $this->getFactory()->createProductAbstractReader()->getProductAbstractCollection($productAbstractCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer
+     */
+    public function getProductAttributeKeyCollection(
+        ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+    ): ProductAttributeKeyCollectionTransfer {
+        return $this->getRepository()->getProductAttributeKeyCollection($productAttributeKeyCriteriaTransfer);
     }
 }

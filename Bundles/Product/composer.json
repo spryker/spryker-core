@@ -28,6 +28,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/product-attribute": "*",
         "spryker/product-image": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"

@@ -21,12 +21,12 @@ class QueryStringValidator implements QueryStringValidatorInterface
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_INVALID_QUERY_STRING = 'rule_engine.validation.invalid_query_string';
+    protected const GLOSSARY_KEY_RULE_ENGINE_VALIDATION_INVALID_QUERY_STRING = 'rule_engine.validation.invalid_query_string';
 
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE = 'rule_engine.validation.invalid_compare_operator_value';
+    protected const GLOSSARY_KEY_RULE_ENGINE_VALIDATION_INVALID_COMPARE_OPERATOR_VALUE = 'rule_engine.validation.invalid_compare_operator_value';
 
     /**
      * @var \Spryker\Zed\RuleEngine\Business\Builder\RuleSpecificationBuilderInterface
@@ -61,13 +61,13 @@ class QueryStringValidator implements QueryStringValidatorInterface
                 $errorCollectionTransfer = $this->addError(
                     $errorCollectionTransfer,
                     $entityIdentifier,
-                    static::GLOSSARY_KEY_INVALID_QUERY_STRING,
+                    static::GLOSSARY_KEY_RULE_ENGINE_VALIDATION_INVALID_QUERY_STRING,
                 );
             } catch (CompareOperatorException $e) {
                 $errorCollectionTransfer = $this->addError(
                     $errorCollectionTransfer,
                     $entityIdentifier,
-                    static::GLOSSARY_KEY_INVALID_COMPARE_OPERATOR_VALUE,
+                    static::GLOSSARY_KEY_RULE_ENGINE_VALIDATION_INVALID_COMPARE_OPERATOR_VALUE,
                 );
             }
         }

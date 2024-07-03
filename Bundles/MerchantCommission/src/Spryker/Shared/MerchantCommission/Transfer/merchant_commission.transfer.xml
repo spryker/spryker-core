@@ -248,7 +248,7 @@
 
     <transfer name="RuleEngineQueryStringValidationRequest" strict="true">
         <property name="ruleEngineSpecificationProviderRequest" type="RuleEngineSpecificationProviderRequest"/>
-        <property name="queryStrings" type="string[]" singular="queryString"/>
+        <property name="queryStrings" type="string[]" singular="queryString" associative="true"/>
     </transfer>
 
     <transfer name="RuleEngineQueryStringValidationResponse" strict="true">

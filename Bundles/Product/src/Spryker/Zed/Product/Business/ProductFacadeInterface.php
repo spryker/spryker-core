@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer;
+use Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
@@ -1155,4 +1157,25 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
      */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves product attribute key entities filtered by criteria.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.productAttributeKeyConditions.keys` to filter by `key`.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.productAttributeKeyConditions.isSuper` to filter by `isSuper` flag.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.sortCollection.field` to set the `order by` field.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.sortCollection.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.pagination.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductAttributeKeyCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - Returns `ProductAttributeKeyCollectionTransfer` filled with found product attribute keys.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer
+     */
+    public function getProductAttributeKeyCollection(
+        ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
+    ): ProductAttributeKeyCollectionTransfer;
 }

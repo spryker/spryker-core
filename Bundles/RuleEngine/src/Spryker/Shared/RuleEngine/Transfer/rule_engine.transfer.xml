@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="RuleEngineQueryStringValidationRequest" strict="true">
-        <property name="queryStrings" type="string[]" singular="queryString"/>
+        <property name="queryStrings" type="string[]" singular="queryString" associative="true"/>
         <property name="ruleEngineSpecificationProviderRequest" type="RuleEngineSpecificationProviderRequest"/>
     </transfer>
 

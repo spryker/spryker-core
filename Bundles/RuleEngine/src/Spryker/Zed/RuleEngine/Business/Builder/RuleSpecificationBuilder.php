@@ -193,8 +193,7 @@ class RuleSpecificationBuilder implements RuleSpecificationBuilderInterface
             throw new QueryStringException('Parenthesis not matching.');
         }
 
-        /** @phpstan-var \Spryker\Zed\RuleEngineExtension\Communication\Dependency\Specification\RuleSpecificationInterface $leftNode */
-        return $compositeNode ?? $leftNode;
+        return $compositeNode ?? $leftNode ?? throw new QueryStringException('Failed to build specification from query string.');
     }
 
     /**

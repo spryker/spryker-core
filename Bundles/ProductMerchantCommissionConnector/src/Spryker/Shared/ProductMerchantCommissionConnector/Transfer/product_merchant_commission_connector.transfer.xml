@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantCommissionCalculationRequestItem" strict="true">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RuleEngineClause" strict="true">
+        <property name="attribute" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionCalculationRequest" strict="true">
+        <property name="items" type="MerchantCommissionCalculationRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductConcreteConditions" strict="true">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteria" strict="true">
+        <property name="productConcreteConditions" type="ProductConcreteConditions"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKeyCollection" strict="true">
+        <property name="productAttributeKeys" type="ProductAttributeKey[]" singular="productAttributeKey"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKeyCriteria" strict="true">
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKey">
+        <property name="key" type="string"/>
+    </transfer>
+
+</transfers>

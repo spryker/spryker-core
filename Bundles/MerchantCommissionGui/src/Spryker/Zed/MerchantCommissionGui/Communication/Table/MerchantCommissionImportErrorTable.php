@@ -83,7 +83,7 @@ class MerchantCommissionImportErrorTable extends AbstractTable
         $data = [];
         foreach ($this->merchantCommissionCollectionResponseTransfer->getErrors() as $errorTransfer) {
             $data[] = [
-                static::COL_IDENTIFIER => $errorTransfer->getEntityIdentifierOrFail(),
+                static::COL_IDENTIFIER => (int)$errorTransfer->getEntityIdentifierOrFail() + 1,
                 static::COL_ERROR => $this->glossaryFacade->translate(
                     $errorTransfer->getMessageOrFail(),
                     $errorTransfer->getParameters(),
