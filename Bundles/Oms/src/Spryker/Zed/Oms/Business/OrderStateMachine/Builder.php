@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
@@ -59,11 +61,23 @@ class Builder implements BuilderInterface
     protected $subProcessPrefixDelimiter;
 
     /**
+     * @var \Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface
+     */
+    protected ProcessCacheReaderInterface $processCacheReader;
+
+    /**
+     * @var \Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface
+     */
+    protected ProcessCacheWriterInterface $processCacheWriter;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param array|string $processDefinitionLocation
+     * @param \Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface $processCacheReader
+     * @param \Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface $processCacheWriter
      * @param string $subProcessPrefixDelimiter
      */
     public function __construct(
@@ -72,12 +86,16 @@ class Builder implements BuilderInterface
         TransitionInterface $transition,
         ProcessInterface $process,
         $processDefinitionLocation,
+        ProcessCacheReaderInterface $processCacheReader,
+        ProcessCacheWriterInterface $processCacheWriter,
         $subProcessPrefixDelimiter = ' - '
     ) {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
+        $this->processCacheReader = $processCacheReader;
+        $this->processCacheWriter = $processCacheWriter;
         $this->subProcessPrefixDelimiter = $subProcessPrefixDelimiter;
 
         $this->setProcessDefinitionLocation($processDefinitionLocation);
@@ -90,28 +108,50 @@ class Builder implements BuilderInterface
      */
     public function createProcess($processName)
     {
-        if (!isset(static::$processBuffer[$processName])) {
-            $this->rootElement = $this->loadXmlFromProcessName($processName);
-
-            $this->mergeSubProcessFiles();
-
-            /** @var array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap */
-            $processMap = [];
-
-            [$processMap, $mainProcess] = $this->createSubProcess($processMap);
-
-            $stateToProcessMap = $this->createStates($processMap);
-
-            $this->createSubProcesses($processMap);
-
-            $eventMap = $this->createEvents();
-
-            $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
-
-            static::$processBuffer[$processName] = $mainProcess;
+        if (isset(static::$processBuffer[$processName])) {
+            return static::$processBuffer[$processName];
         }
 
+        if ($this->processCacheReader->hasProcess($processName)) {
+            static::$processBuffer[$processName] = $this->processCacheReader->getProcess($processName);
+
+            return static::$processBuffer[$processName];
+        }
+
+        $mainProcess = $this->createMainProcess($processName);
+
+        static::$processBuffer[$processName] = $mainProcess;
+
+        $this->processCacheWriter->cacheProcess($mainProcess, $processName);
+
         return static::$processBuffer[$processName];
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
+     */
+    protected function createMainProcess(string $processName): ProcessInterface
+    {
+        $this->rootElement = $this->loadXmlFromProcessName($processName);
+
+        $this->mergeSubProcessFiles();
+
+        /** @var array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processMap */
+        $processMap = [];
+
+        [$processMap, $mainProcess] = $this->createSubProcess($processMap);
+
+        $stateToProcessMap = $this->createStates($processMap);
+
+        $this->createSubProcesses($processMap);
+
+        $eventMap = $this->createEvents();
+
+        $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
+
+        return $mainProcess->warmupCache();
     }
 
     /**

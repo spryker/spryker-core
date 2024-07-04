@@ -188,4 +188,9 @@ interface ProcessInterface
      * @return string
      */
     public function getFile();
+
+    /**
+     * @return $this
+     */
+    public function warmupCache();
 }

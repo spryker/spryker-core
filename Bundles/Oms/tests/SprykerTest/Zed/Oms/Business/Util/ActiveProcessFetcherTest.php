@@ -19,6 +19,7 @@ use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
+use SprykerTest\Zed\Oms\OmsBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -45,6 +46,11 @@ class ActiveProcessFetcherTest extends Unit
         'new',
         'payment pending',
     ];
+
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected OmsBusinessTester $tester;
 
     /**
      * @return void
@@ -132,6 +138,8 @@ class ActiveProcessFetcherTest extends Unit
             new Transition(),
             new Process($drawerMock),
             [$this->getProcessLocation()],
+            $this->tester->createProcessCacheReader(),
+            $this->tester->createProcessCacheWriter(),
         );
     }
 

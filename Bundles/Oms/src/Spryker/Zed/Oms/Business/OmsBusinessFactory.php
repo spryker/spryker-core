@@ -38,6 +38,8 @@ use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReader;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
 use Spryker\Zed\Oms\Business\Reader\ReservationReader;
 use Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface;
 use Spryker\Zed\Oms\Business\Reader\StateMachineReader;
@@ -54,6 +56,8 @@ use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
 use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriter;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -127,6 +131,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessTransition(),
             $this->createProcessProcess(),
             $this->getConfig()->getProcessDefinitionLocation(),
+            $this->createProcessCacheReader(),
+            $this->createProcessCacheWriter(),
             $this->getConfig()->getSubProcessPrefixDelimiter(),
         );
     }
@@ -597,5 +603,24 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getOmsEventTriggeredListenerPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_EVENT_TRIGGERED_LISTENER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface
+     */
+    public function createProcessCacheReader(): ProcessCacheReaderInterface
+    {
+        return new ProcessCacheReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface
+     */
+    public function createProcessCacheWriter(): ProcessCacheWriterInterface
+    {
+        return new ProcessCacheWriter(
+            $this->getConfig(),
+            $this->createProcessCacheReader(),
+        );
     }
 }

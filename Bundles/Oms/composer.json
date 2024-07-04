@@ -4,6 +4,7 @@
     "description": "Oms module",
     "license": "proprietary",
     "require": {
+        "ext-simplexml": "*",
         "php": ">=8.1",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/decimal-object": "^1.0.0",

@@ -41,4 +41,14 @@ interface OmsConstants
      * @var string
      */
     public const ENABLE_OMS_TRANSITION_LOG = 'OMS:ENABLE_OMS_TRANSITION_LOG';
+
+    /**
+     * Specification:
+     * - Defines where to store cached processes.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PROCESS_CACHE_PATH = 'OMS:PROCESS_CACHE_PATH';
 }

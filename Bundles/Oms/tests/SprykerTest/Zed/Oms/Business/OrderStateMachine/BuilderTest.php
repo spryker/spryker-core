@@ -10,12 +10,14 @@ namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 use Codeception\Test\Unit;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
+use SprykerTest\Zed\Oms\OmsBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +32,11 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
  */
 class BuilderTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected OmsBusinessTester $tester;
+
     /**
      * @return void
      */
@@ -48,11 +55,7 @@ class BuilderTest extends Unit
      */
     public function testInstantiationWithoutXmlFolder(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, null);
+        $builder = $this->createBuilder();
 
         $this->assertInstanceOf(Builder::class, $builder);
     }
@@ -62,11 +65,7 @@ class BuilderTest extends Unit
      */
     public function testInstantiationWithXmlFolderAsString(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, '');
+        $builder = $this->createBuilder('');
 
         $this->assertInstanceOf(Builder::class, $builder);
     }
@@ -76,11 +75,7 @@ class BuilderTest extends Unit
      */
     public function testInstantiationWithXmlFolderAsArray(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, []);
+        $builder = $this->createBuilder([]);
 
         $this->assertInstanceOf(Builder::class, $builder);
     }
@@ -90,11 +85,7 @@ class BuilderTest extends Unit
      */
     public function testGetProcessShouldThrowExceptionWhenProcessFoundInMoreThenOneLocation(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, [$this->getProcessLocationA(), $this->getProcessLocationB()]);
+        $builder = $this->createBuilder([$this->getProcessLocationA(), $this->getProcessLocationB()]);
 
         $processACopyTarget = $this->getProcessLocationB() . DIRECTORY_SEPARATOR . 'process-a.xml';
         copy($this->getProcessLocationA() . DIRECTORY_SEPARATOR . 'process-a.xml', $processACopyTarget);
@@ -108,11 +99,7 @@ class BuilderTest extends Unit
      */
     public function testGetProcessShouldThrowExceptionWhenNoProcessFound(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, [$this->getProcessLocationB()]);
+        $builder = $this->createBuilder([$this->getProcessLocationB()]);
 
         $this->expectException(StatemachineException::class);
         $this->expectExceptionMessage('Could not find "process-a.xml". Please check your process definition location');
@@ -124,12 +111,7 @@ class BuilderTest extends Unit
      */
     public function testGetProcess(): void
     {
-        $eventMock = $this->getEventMock();
-        $stateMock = $this->getStateMock();
-        $transitionMock = $this->getTransitionMock();
-        $process = $this->getProcess();
-
-        $builder = new Builder($eventMock, $stateMock, $transitionMock, $process, [$this->getProcessLocationA(), $this->getProcessLocationB()]);
+        $builder = $this->createBuilder([$this->getProcessLocationA(), $this->getProcessLocationB()]);
 
         $result = $builder->createProcess('process-a');
         $this->assertInstanceOf(ProcessInterface::class, $result);
@@ -191,5 +173,28 @@ class BuilderTest extends Unit
     private function getProcessLocationB(): string
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationB';
+    }
+
+    /**
+     * @param array|string|null $processDefinitionLocation
+     *
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
+     */
+    private function createBuilder(array|string|null $processDefinitionLocation = null): BuilderInterface
+    {
+        $eventMock = $this->getEventMock();
+        $stateMock = $this->getStateMock();
+        $transitionMock = $this->getTransitionMock();
+        $process = $this->getProcess();
+
+        return new Builder(
+            $eventMock,
+            $stateMock,
+            $transitionMock,
+            $process,
+            $processDefinitionLocation,
+            $this->tester->createProcessCacheReader(),
+            $this->tester->createProcessCacheWriter(),
+        );
     }
 }

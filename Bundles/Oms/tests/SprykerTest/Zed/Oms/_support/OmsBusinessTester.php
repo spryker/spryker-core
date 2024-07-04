@@ -33,7 +33,11 @@ use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReader;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriter;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
@@ -473,5 +477,21 @@ class OmsBusinessTester extends Actor
             ->getOrder(
                 (new OrderFilterTransfer())->setSalesOrderId($idSalesOrder),
             );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface
+     */
+    public function createProcessCacheReader(): ProcessCacheReaderInterface
+    {
+        return new ProcessCacheReader(new OmsConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface
+     */
+    public function createProcessCacheWriter(): ProcessCacheWriterInterface
+    {
+        return new ProcessCacheWriter(new OmsConfig(), $this->createProcessCacheReader());
     }
 }

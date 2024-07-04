@@ -29,6 +29,16 @@ class OmsConfig extends AbstractBundleConfig
     public const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
+     * @var int
+     */
+    protected const OMS_PROCESS_CACHE_FILE_PERMISSION = 0777;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_PROCESS_CACHE_PATH = '/data/cache/oms/process/';
+
+    /**
      * @api
      *
      * @return string
@@ -170,5 +180,34 @@ class OmsConfig extends AbstractBundleConfig
             ],
             OrderTransfer::ORDER_REFERENCE => OrderStatusChangedTransfer::ORDER_REFERENCE,
         ];
+    }
+
+    /**
+     * Specification:
+     *  - Defines where to store cached processes.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getProcessCachePath(): string
+    {
+        return $this->get(
+            OmsConstants::PROCESS_CACHE_PATH,
+            sprintf('%s%s', APPLICATION_ROOT_DIR, static::DEFAULT_PROCESS_CACHE_PATH),
+        );
+    }
+
+    /**
+     * Specification:
+     *  - Returns process cache file permission.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getOmsProcessCacheFilePermission(): int
+    {
+        return static::OMS_PROCESS_CACHE_FILE_PERMISSION;
     }
 }

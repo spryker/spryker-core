@@ -21,6 +21,7 @@ use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use SprykerTest\Zed\Oms\OmsBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -49,6 +50,11 @@ class FinderTest extends Unit
      * @var string
      */
     public const TEST_STATE_MACHINE_NAME = 'StateMachine01';
+
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected OmsBusinessTester $tester;
 
     /**
      * @return void
@@ -151,6 +157,8 @@ class FinderTest extends Unit
             new Transition(),
             new Process($drawerMock),
             $this->getProcessLocation(),
+            $this->tester->createProcessCacheReader(),
+            $this->tester->createProcessCacheWriter(),
         );
     }
 
