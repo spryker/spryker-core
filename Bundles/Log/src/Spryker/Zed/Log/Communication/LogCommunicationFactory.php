@@ -10,15 +10,20 @@ namespace Spryker\Zed\Log\Communication;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Spryker\Shared\Log\Handler\TagFilterBufferedStreamHandler;
+use Spryker\Shared\Log\Processor\AuditLogMetaDataProcessor;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
+use Spryker\Shared\Log\Processor\ProcessorInterface;
 use Spryker\Shared\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Processor\ResponseProcessor;
 use Spryker\Shared\Log\Processor\ServerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
+use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Log\Communication\Handler\QueueHandler;
 use Spryker\Zed\Log\Dependency\Facade\LogToLocaleFacadeInterface;
@@ -97,6 +102,14 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createAuditLogRequestProcessor(): ProcessorInterface
+    {
+        return new RequestProcessor($this->createAuditLogSanitizer());
+    }
+
+    /**
      * @deprecated Use {@link createResponseProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
@@ -165,6 +178,14 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createAuditLogMetaDataProcessor(): ProcessorInterface
+    {
+        return new AuditLogMetaDataProcessor();
+    }
+
+    /**
      * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
     protected function createSanitizer()
@@ -173,6 +194,27 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig()->getSanitizerFieldNames(),
             $this->getConfig()->getSanitizedFieldValue(),
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
+     */
+    public function createAuditLogSanitizer(): SanitizerInterface
+    {
+        return new Sanitizer(
+            $this->getConfig()->getAuditLogSanitizerFieldNames(),
+            $this->getConfig()->getAuditLogSanitizedFieldValue(),
+        );
+    }
+
+    /**
+     * @param list<string> $auditLogTagDisallowList
+     *
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    public function createTagFilterBufferedStreamHandler(array $auditLogTagDisallowList = []): HandlerInterface
+    {
+        return new TagFilterBufferedStreamHandler($this->createBufferedStreamHandler(), $auditLogTagDisallowList);
     }
 
     /**
@@ -266,5 +308,37 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
             $this->getConfig()->getQueueName(),
         );
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    public function getZedSecurityAuditLogHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_ZED_SECURITY_AUDIT_LOG_HANDLER);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    public function getMerchantPortalSecurityAuditLogHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_HANDLER);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    public function getZedSecurityAuditLogProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_ZED_SECURITY_AUDIT_LOG_PROCESSOR);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    public function getMerchantPortalSecurityAuditLogProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_PROCESSOR);
     }
 }

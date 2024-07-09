@@ -21,6 +21,10 @@ use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Extender\SecurityBu
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Extender\SecurityBuilderExtender;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Extender\SecurityBuilderExtenderInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Form\AgentMerchantLoginForm;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\AuditLogger;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\AuditLoggerInterface;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\DataProvider\AuditLoggerUserProvider;
+use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\DataProvider\AuditLoggerUserProviderInterface;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Handler\AuthenticationFailureHandler;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Handler\AuthenticationSuccessHandler;
 use Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Plugin\Security\Provider\AgentMerchantUserProvider;
@@ -34,6 +38,7 @@ use Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMe
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -175,6 +180,22 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
     }
 
     /**
+     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger($this->createAuditLoggerUserProvider());
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Communication\Logger\DataProvider\AuditLoggerUserProviderInterface
+     */
+    public function createAuditLoggerUserProvider(): AuditLoggerUserProviderInterface
+    {
+        return new AuditLoggerUserProvider($this->getTokenStorageService());
+    }
+
+    /**
      * @return \Spryker\Zed\AgentSecurityMerchantPortalGui\Dependency\Facade\AgentSecurityMerchantPortalGuiToMessengerFacadeInterface
      */
     public function getMessengerFacade(): AgentSecurityMerchantPortalGuiToMessengerFacadeInterface
@@ -212,5 +233,13 @@ class AgentSecurityMerchantPortalGuiCommunicationFactory extends AbstractCommuni
     public function getAuthorizationCheckerService(): AuthorizationCheckerInterface
     {
         return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    public function getTokenStorageService(): TokenStorageInterface
+    {
+        return $this->getProvidedDependency(AgentSecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 }

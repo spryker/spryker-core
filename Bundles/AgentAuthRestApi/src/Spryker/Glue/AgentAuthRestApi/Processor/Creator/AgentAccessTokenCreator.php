@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer;
 use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -28,15 +29,23 @@ class AgentAccessTokenCreator implements AgentAccessTokenCreatorInterface
     protected $agentAccessTokenRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLoggerInterface
+     */
+    protected AuditLoggerInterface $auditLogger;
+
+    /**
      * @param \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface $oauthClient
      * @param \Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder
+     * @param \Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLoggerInterface $auditLogger
      */
     public function __construct(
         AgentAuthRestApiToOauthClientInterface $oauthClient,
-        AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder
+        AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder,
+        AuditLoggerInterface $auditLogger
     ) {
         $this->oauthClient = $oauthClient;
         $this->agentAccessTokenRestResponseBuilder = $agentAccessTokenRestResponseBuilder;
+        $this->auditLogger = $auditLogger;
     }
 
     /**
@@ -56,8 +65,12 @@ class AgentAccessTokenCreator implements AgentAccessTokenCreatorInterface
         $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
 
         if (!$oauthResponseTransfer->getIsValid()) {
+            $this->auditLogger->addAgentFailedLoginAuditLog($oauthRequestTransfer);
+
             return $this->agentAccessTokenRestResponseBuilder->createInvalidCredentialsErrorResponse();
         }
+
+        $this->auditLogger->addAgentSuccessfulLoginAuditLog($oauthRequestTransfer);
 
         return $this->agentAccessTokenRestResponseBuilder->createAgentAccessTokensRestResponse($oauthResponseTransfer);
     }

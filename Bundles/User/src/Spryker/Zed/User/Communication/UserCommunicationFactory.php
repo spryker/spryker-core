@@ -19,11 +19,14 @@ use Spryker\Zed\User\Communication\Form\UserDeleteConfirmForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 use Spryker\Zed\User\Communication\Plugin\Security\UserSessionHandlerSecurityPlugin;
+use Spryker\Zed\User\Communication\Processor\CurrentUserDataRequestLogProcessor;
+use Spryker\Zed\User\Communication\Processor\CurrentUserDataRequestLogProcessorInterface;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutor;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\UserDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
 
 /**
@@ -143,6 +146,14 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\User\Communication\Processor\CurrentUserDataRequestLogProcessorInterface
+     */
+    public function createCurrentUserDataRequestLogProcessor(): CurrentUserDataRequestLogProcessorInterface
+    {
+        return new CurrentUserDataRequestLogProcessor($this->getRequestStackService());
+    }
+
+    /**
      * @return \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface
      */
     public function getGroupPlugin()
@@ -186,5 +197,13 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     protected function getUserTableDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack|null
+     */
+    public function getRequestStackService(): ?RequestStack
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::SERVICE_REQUEST_STACK);
     }
 }

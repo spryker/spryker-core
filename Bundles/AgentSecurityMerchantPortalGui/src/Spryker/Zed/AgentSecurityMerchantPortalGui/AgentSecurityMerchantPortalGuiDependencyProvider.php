@@ -47,6 +47,13 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
     public const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
+     * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
+     * @var string
+     */
+    public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -60,6 +67,7 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addUserFacade($container);
         $container = $this->addAuthorizationCheckerService($container);
+        $container = $this->addTokenStorageService($container);
 
         return $container;
     }
@@ -137,6 +145,20 @@ class AgentSecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTokenStorageService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_SECURITY_TOKEN_STORAGE);
         });
 
         return $container;

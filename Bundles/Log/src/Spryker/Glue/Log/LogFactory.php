@@ -19,6 +19,8 @@ use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\Log\Dependency\Client\LogToLocaleClientInterface;
 use Spryker\Glue\Log\Handler\QueueHandler;
+use Spryker\Shared\Log\Handler\TagFilterBufferedStreamHandler;
+use Spryker\Shared\Log\Processor\AuditLogMetaDataProcessor;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
 use Spryker\Shared\Log\Processor\ProcessorInterface;
@@ -47,6 +49,16 @@ class LogFactory extends AbstractFactory
     public function getProcessors(): array
     {
         return $this->getProvidedDependency(LogDependencyProvider::LOG_PROCESSORS);
+    }
+
+    /**
+     * @param list<string> $auditLogTagDisallowList
+     *
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    public function createTagFilterBufferedStreamHandler(array $auditLogTagDisallowList = []): HandlerInterface
+    {
+        return new TagFilterBufferedStreamHandler($this->createBufferedStreamHandler(), $auditLogTagDisallowList);
     }
 
     /**
@@ -169,6 +181,14 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
+    public function createAuditLogRequestProcessor(): ProcessorInterface
+    {
+        return new RequestProcessor($this->createAuditLogSanitizer());
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
     public function createResponseProcessor(): ProcessorInterface
     {
         return new ResponseProcessor();
@@ -183,6 +203,14 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createAuditLogMetaDataProcessor(): ProcessorInterface
+    {
+        return new AuditLogMetaDataProcessor();
+    }
+
+    /**
      * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
     public function createSanitizer(): SanitizerInterface
@@ -191,5 +219,48 @@ class LogFactory extends AbstractFactory
             $this->getConfig()->getSanitizerFieldNames(),
             $this->getConfig()->getSanitizedFieldValue(),
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
+     */
+    public function createAuditLogSanitizer(): SanitizerInterface
+    {
+        return new Sanitizer(
+            $this->getConfig()->getAuditLogSanitizerFieldNames(),
+            $this->getConfig()->getAuditLogSanitizedFieldValue(),
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    public function getGlueSecurityAuditLogHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_GLUE_SECURITY_AUDIT_LOG_HANDLER);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    public function getGlueBackendSecurityAuditLogHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_HANDLER);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    public function getGlueSecurityAuditLogProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_GLUE_SECURITY_AUDIT_LOG_PROCESSOR);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    public function getGlueBackendSecurityAuditLogProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_PROCESSOR);
     }
 }

@@ -29,7 +29,27 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_GLUE_SECURITY_AUDIT_LOG_PROCESSOR = 'PLUGINS_GLUE_SECURITY_AUDIT_LOG_PROCESSOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_PROCESSOR = 'PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_PROCESSOR';
+
+    /**
+     * @var string
+     */
     public const LOG_HANDLERS = 'LOG_HANDLERS';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_GLUE_SECURITY_AUDIT_LOG_HANDLER = 'PLUGINS_GLUE_SECURITY_AUDIT_LOG_HANDLER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_HANDLER = 'PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_HANDLER';
 
     /**
      * @var string
@@ -46,7 +66,11 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueueClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addLogHandlers($container);
+        $container = $this->addGlueSecurityAuditLogHandlerPlugins($container);
+        $container = $this->addGlueBackendSecurityAuditLogHandlerPlugins($container);
         $container = $this->addProcessors($container);
+        $container = $this->addGlueSecurityAuditLogProcessorPlugins($container);
+        $container = $this->addGlueBackendSecurityAuditLogProcessorPlugins($container);
 
         return $container;
     }
@@ -106,6 +130,50 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
+    protected function addGlueSecurityAuditLogHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_GLUE_SECURITY_AUDIT_LOG_HANDLER, function () {
+            return $this->getGlueSecurityAuditLogHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    protected function getGlueSecurityAuditLogHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlueBackendSecurityAuditLogHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_HANDLER, function () {
+            return $this->getGlueBackendSecurityAuditLogHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    protected function getGlueBackendSecurityAuditLogHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
     protected function addProcessors(Container $container): Container
     {
         $container->set(static::LOG_PROCESSORS, function () {
@@ -119,6 +187,50 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
      */
     protected function getProcessors(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlueSecurityAuditLogProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_GLUE_SECURITY_AUDIT_LOG_PROCESSOR, function () {
+            return $this->getGlueSecurityAuditLogProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    protected function getGlueSecurityAuditLogProcessorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlueBackendSecurityAuditLogProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_GLUE_BACKEND_SECURITY_AUDIT_LOG_PROCESSOR, function () {
+            return $this->getGlueBackendSecurityAuditLogProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    protected function getGlueBackendSecurityAuditLogProcessorPlugins(): array
     {
         return [];
     }

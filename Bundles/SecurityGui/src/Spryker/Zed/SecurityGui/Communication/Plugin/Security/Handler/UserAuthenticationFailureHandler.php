@@ -41,6 +41,8 @@ class UserAuthenticationFailureHandler extends AbstractPlugin implements Authent
                     ->setValue(static::MESSAGE_AUTHENTICATION_FAILED),
             );
 
+        $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog();
+
         return new RedirectResponse($this->getConfig()->getUrlLogin());
     }
 }

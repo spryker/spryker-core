@@ -15,6 +15,8 @@ use Spryker\Glue\WarehouseOauthBackendApi\Dependency\Service\WarehouseOauthBacke
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Creator\WarehouseTokenCreator;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Creator\WarehouseTokenCreatorInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Expander\WarehouseAuthorizationRequestExpander;
+use Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLogger;
+use Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Reader\GlueRequestReader;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Reader\GlueRequestReaderInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Reader\WarehouseUserAssignmentReader;
@@ -42,6 +44,7 @@ class WarehouseOauthBackendApiFactory extends AbstractBackendApiFactory
             $this->createWarehouseUserAssignmentReader(),
             $this->getAuthenticationFacade(),
             $this->createWarehouseResponseBuilder(),
+            $this->createAuditLogger(),
         );
     }
 
@@ -106,6 +109,14 @@ class WarehouseOauthBackendApiFactory extends AbstractBackendApiFactory
         return new WarehouseUserAssignmentReader(
             $this->getWarehouseUserFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**

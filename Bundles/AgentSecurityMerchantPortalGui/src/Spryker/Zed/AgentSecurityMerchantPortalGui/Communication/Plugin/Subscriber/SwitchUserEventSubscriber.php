@@ -44,10 +44,14 @@ class SwitchUserEventSubscriber extends AbstractPlugin implements EventSubscribe
             $merchantUserTransfer = $targetUser->getMerchantUserTransfer()->setAgentUsername($agentUsername);
 
             $this->getFactory()->getMerchantUserFacade()->authenticateMerchantUser($merchantUserTransfer);
+
+            $this->getFactory()->createAuditLogger()->addImpersonationStartedAuditLog();
         }
 
         if ($targetUser instanceof AgentMerchantUser) {
             $this->getFactory()->getUserFacade()->setCurrentUser($targetUser->getUserTransfer());
+
+            $this->getFactory()->createAuditLogger()->addImpersonationEndedAuditLog();
         }
     }
 

@@ -184,6 +184,16 @@ interface LogConstants
 
     /**
      * Specification:
+     * - Provides an array with names which is used to sanitize data in your audit logs.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOG_SANITIZE_FIELDS = 'LOG:AUDIT_LOG_SANITIZE_FIELDS';
+
+    /**
+     * Specification:
      * - String which is used as value for the sanitized field
      *
      * @api
@@ -191,6 +201,26 @@ interface LogConstants
      * @var string
      */
     public const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
+
+    /**
+     * Specification:
+     * - Provides a string which is used as value for the audit log sanitized fields.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOG_SANITIZED_VALUE = 'LOG:AUDIT_LOG_SANITIZED_VALUE';
+
+    /**
+     * Specification:
+     * - Provides a list of audit log tags that are disallowed for logging.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOG_TAG_DISALLOW_LIST = 'LOG:AUDIT_LOG_TAG_DISALLOW_LIST';
 
     /**
      * Specification:
@@ -252,4 +282,59 @@ interface LogConstants
      * @var string
      */
     public const EXCEPTION_LOG_FILE_PATH_GLUE = 'LOG:EXCEPTION_LOG_FILE_PATH_GLUE';
+
+    /**
+     * Specification:
+     * - Provides class names of the plugins implementing {@link \Spryker\Shared\LogExtension\Dependency\Plugin\AuditLoggerConfigPluginInterface}
+     * which are used to provide configuration for audit logging for Yves application.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOGGER_CONFIG_PLUGINS_YVES = 'LOG:AUDIT_LOGGER_CONFIG_PLUGINS_YVES';
+
+    /**
+     * Specification:
+     * - Provides class names of the plugins implementing {@link \Spryker\Shared\LogExtension\Dependency\Plugin\AuditLoggerConfigPluginInterface}
+     * which are used to provide configuration for audit logging for Zed application.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOGGER_CONFIG_PLUGINS_ZED = 'LOG:AUDIT_LOGGER_CONFIG_PLUGINS_ZED';
+
+    /**
+     * Specification:
+     * - Provides class names of the plugins implementing {@link \Spryker\Shared\LogExtension\Dependency\Plugin\AuditLoggerConfigPluginInterface}
+     * which are used to provide configuration for audit logging for Glue application.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOGGER_CONFIG_PLUGINS_GLUE = 'LOG:AUDIT_LOGGER_CONFIG_PLUGINS_GLUE';
+
+    /**
+     * Specification:
+     * - Provides class names of the plugins implementing {@link \Spryker\Shared\LogExtension\Dependency\Plugin\AuditLoggerConfigPluginInterface}
+     * which are used to provide configuration for audit logging for Glue Backend application.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOGGER_CONFIG_PLUGINS_GLUE_BACKEND = 'LOG:AUDIT_LOGGER_CONFIG_PLUGINS_GLUE_BACKEND';
+
+    /**
+     * Specification:
+     * - Provides class names of the plugins implementing {@link \Spryker\Shared\LogExtension\Dependency\Plugin\AuditLoggerConfigPluginInterface}
+     * which are used to provide configuration for audit logging for Merchant Portal application.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const AUDIT_LOGGER_CONFIG_PLUGINS_MERCHANT_PORTAL = 'LOG:AUDIT_LOGGER_CONFIG_PLUGINS_MERCHANT_PORTAL';
 }

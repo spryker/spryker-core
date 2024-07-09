@@ -20,6 +20,8 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthToken;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthTokenInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidatorInterface;
+use Spryker\Glue\AuthRestApi\Processor\Logger\AuditLogger;
+use Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensRevoker;
@@ -42,6 +44,7 @@ class AuthRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->getConfig(),
+            $this->createAuditLogger(),
         );
     }
 
@@ -101,7 +104,7 @@ class AuthRestApiFactory extends AbstractFactory
      */
     public function createOauthToken(): OauthTokenInterface
     {
-        return new OauthToken($this->getClient());
+        return new OauthToken($this->getClient(), $this->createAuditLogger());
     }
 
     /**
@@ -110,6 +113,14 @@ class AuthRestApiFactory extends AbstractFactory
     public function createSimultaneousAuthenticationRestRequestValidator(): SimultaneousAuthenticationRestRequestValidatorInterface
     {
         return new SimultaneousAuthenticationRestRequestValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**

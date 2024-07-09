@@ -12,6 +12,7 @@
 
     <transfer name="OauthRequest">
         <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="GlueResponse">
@@ -103,6 +104,10 @@
     <transfer name="OauthError">
         <property name="message" type="string"/>
         <property name="errorType" type="string"/>
+    </transfer>
+
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
     </transfer>
 
 </transfers>

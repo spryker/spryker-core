@@ -47,6 +47,7 @@
 
     <transfer name="OauthRequest">
         <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="RestErrorCollection">
@@ -91,6 +92,10 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
     </transfer>
 
 </transfers>

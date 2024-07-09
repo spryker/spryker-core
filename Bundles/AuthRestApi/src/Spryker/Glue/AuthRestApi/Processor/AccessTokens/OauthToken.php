@@ -10,6 +10,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Spryker\Client\AuthRestApi\AuthRestApiClientInterface;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
+use Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OauthToken implements OauthTokenInterface
@@ -28,11 +29,20 @@ class OauthToken implements OauthTokenInterface
     protected $authRestApiClient;
 
     /**
-     * @param \Spryker\Client\AuthRestApi\AuthRestApiClientInterface $authRestApiClient
+     * @var \Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface
      */
-    public function __construct(AuthRestApiClientInterface $authRestApiClient)
-    {
+    protected AuditLoggerInterface $auditLogger;
+
+    /**
+     * @param \Spryker\Client\AuthRestApi\AuthRestApiClientInterface $authRestApiClient
+     * @param \Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface $auditLogger
+     */
+    public function __construct(
+        AuthRestApiClientInterface $authRestApiClient,
+        AuditLoggerInterface $auditLogger
+    ) {
         $this->authRestApiClient = $authRestApiClient;
+        $this->auditLogger = $auditLogger;
     }
 
     /**
@@ -44,6 +54,8 @@ class OauthToken implements OauthTokenInterface
     {
         $response = new JsonResponse();
         if (!in_array($oauthRequestTransfer->getGrantType(), static::ALLOWED_GRANT_TYPES)) {
+            $this->auditLogger->addFailedLoginAuditLog($oauthRequestTransfer);
+
             return $response->setData([
                 'error' => 'invalid_grant',
                 'error_description' => 'The provided authorization grant (e.g., authorization code, resource owner credentials) or refresh token '
@@ -70,11 +82,15 @@ class OauthToken implements OauthTokenInterface
                 ]);
             }
 
+            $this->auditLogger->addFailedLoginAuditLog($oauthRequestTransfer);
+
             return $response->setData([
                 'error' => $oauthResponseTransfer->getError()->getErrorType(),
                 'error_description' => $oauthResponseTransfer->getError()->getMessage(),
             ]);
         }
+
+        $this->auditLogger->addSuccessfulLoginAuditLog($oauthRequestTransfer);
 
         /**
          * @see https://tools.ietf.org/html/rfc6749#section-5.1

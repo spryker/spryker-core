@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Spryker\Glue\WarehouseOauthBackendApi\Dependency\Facade\WarehouseOauthBackendApiToAuthenticationFacadeInterface;
+use Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\Reader\WarehouseUserAssignmentReaderInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\Processor\ResponseBuilder\WarehouseResponseBuilderInterface;
 use Spryker\Glue\WarehouseOauthBackendApi\WarehouseOauthBackendApiConfig;
@@ -42,18 +43,26 @@ class WarehouseTokenCreator implements WarehouseTokenCreatorInterface
     protected WarehouseResponseBuilderInterface $warehouseResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLoggerInterface
+     */
+    protected AuditLoggerInterface $auditLogger;
+
+    /**
      * @param \Spryker\Glue\WarehouseOauthBackendApi\Processor\Reader\WarehouseUserAssignmentReaderInterface $warehouseUserAssignmentReader
      * @param \Spryker\Glue\WarehouseOauthBackendApi\Dependency\Facade\WarehouseOauthBackendApiToAuthenticationFacadeInterface $authenticationFacade
      * @param \Spryker\Glue\WarehouseOauthBackendApi\Processor\ResponseBuilder\WarehouseResponseBuilderInterface $warehouseResponseBuilder
+     * @param \Spryker\Glue\WarehouseOauthBackendApi\Processor\Logger\AuditLoggerInterface $auditLogger
      */
     public function __construct(
         WarehouseUserAssignmentReaderInterface $warehouseUserAssignmentReader,
         WarehouseOauthBackendApiToAuthenticationFacadeInterface $authenticationFacade,
-        WarehouseResponseBuilderInterface $warehouseResponseBuilder
+        WarehouseResponseBuilderInterface $warehouseResponseBuilder,
+        AuditLoggerInterface $auditLogger
     ) {
         $this->warehouseUserAssignmentReader = $warehouseUserAssignmentReader;
         $this->authenticationFacade = $authenticationFacade;
         $this->warehouseResponseBuilder = $warehouseResponseBuilder;
+        $this->auditLogger = $auditLogger;
     }
 
     /**
@@ -66,6 +75,8 @@ class WarehouseTokenCreator implements WarehouseTokenCreatorInterface
         $warehouseUserAssignmentTransfer = $this->warehouseUserAssignmentReader->findActiveWarehouseUserAssignment($glueRequestTransfer);
 
         if (!$warehouseUserAssignmentTransfer) {
+            $this->auditLogger->addWarehouseUserFailedLoginAuditLog($glueRequestTransfer);
+
             return $this->warehouseResponseBuilder->createForbiddenErrorResponse();
         }
 
@@ -84,8 +95,12 @@ class WarehouseTokenCreator implements WarehouseTokenCreatorInterface
         $oauthResponseTransfer = $glueAuthenticationResponseTransfer->getOauthResponseOrFail();
 
         if (!$oauthResponseTransfer->getIsValid()) {
+            $this->auditLogger->addWarehouseUserFailedLoginAuditLog($glueRequestTransfer);
+
             return $this->warehouseResponseBuilder->createOauthBadRequestErrorResponse($oauthResponseTransfer->getErrorOrFail());
         }
+
+        $this->auditLogger->addWarehouseUserSuccessfulLoginAuditLog($glueRequestTransfer);
 
         return $this->warehouseResponseBuilder->createWarehouseTokenResponse($oauthResponseTransfer);
     }

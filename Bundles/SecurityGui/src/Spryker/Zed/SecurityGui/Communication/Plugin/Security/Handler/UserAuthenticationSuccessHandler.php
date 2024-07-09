@@ -43,6 +43,8 @@ class UserAuthenticationSuccessHandler extends AbstractPlugin implements Authent
         $user = $token->getUser();
         $this->getFacade()->authenticateUser($user->getUserTransfer());
 
+        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
+
         return $this->createRedirectResponse($request);
     }
 

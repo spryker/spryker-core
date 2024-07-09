@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use Spryker\Client\AuthRestApi\AuthRestApiClientInterface;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
+use Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -36,18 +37,26 @@ class AccessTokensReader implements AccessTokensReaderInterface
     protected $authRestApiConfig;
 
     /**
+     * @var \Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface
+     */
+    protected AuditLoggerInterface $auditLogger;
+
+    /**
      * @param \Spryker\Client\AuthRestApi\AuthRestApiClientInterface $authRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\AuthRestApi\AuthRestApiConfig $authRestApiConfig
+     * @param \Spryker\Glue\AuthRestApi\Processor\Logger\AuditLoggerInterface $auditLogger
      */
     public function __construct(
         AuthRestApiClientInterface $authRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        AuthRestApiConfig $authRestApiConfig
+        AuthRestApiConfig $authRestApiConfig,
+        AuditLoggerInterface $auditLogger
     ) {
         $this->authRestApiClient = $authRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->authRestApiConfig = $authRestApiConfig;
+        $this->auditLogger = $auditLogger;
     }
 
     /**
@@ -82,6 +91,8 @@ class AccessTokensReader implements AccessTokensReaderInterface
             $response = $this->restResourceBuilder->createRestResponse();
             $response->addError($restErrorTransfer);
 
+            $this->auditLogger->addFailedLoginAuditLog($oauthRequestTransfer);
+
             return $response;
         }
 
@@ -97,6 +108,8 @@ class AccessTokensReader implements AccessTokensReaderInterface
 
         $response = $this->restResourceBuilder->createRestResponse();
         $response->addResource($accessTokenResource);
+
+        $this->auditLogger->addSuccessfulLoginAuditLog($oauthRequestTransfer);
 
         return $response;
     }

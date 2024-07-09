@@ -35,6 +35,8 @@ class AuthenticationSuccessHandler extends AbstractPlugin implements Authenticat
 
         $this->getFactory()->getUserFacade()->setCurrentUser($agentMerchantUser->getUserTransfer());
 
+        $this->getFactory()->createAuditLogger()->addAgentSuccessfulLoginAuditLog();
+
         return $this->createRedirectResponse($request);
     }
 

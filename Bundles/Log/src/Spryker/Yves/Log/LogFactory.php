@@ -10,15 +10,20 @@ namespace Spryker\Yves\Log;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
+use Spryker\Shared\Log\Handler\TagFilterBufferedStreamHandler;
+use Spryker\Shared\Log\Processor\AuditLogMetaDataProcessor;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
+use Spryker\Shared\Log\Processor\ProcessorInterface;
 use Spryker\Shared\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Processor\ResponseProcessor;
 use Spryker\Shared\Log\Processor\ServerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
+use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Log\Dependency\Client\LogToLocaleClientInterface;
 use Spryker\Yves\Log\Handler\QueueHandler;
@@ -95,6 +100,14 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createAuditLogRequestProcessor(): ProcessorInterface
+    {
+        return new RequestProcessor($this->createAuditLogSanitizer());
+    }
+
+    /**
      * @deprecated Use {@link createResponseProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
@@ -163,6 +176,14 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createAuditLogMetaDataProcessor(): ProcessorInterface
+    {
+        return new AuditLogMetaDataProcessor();
+    }
+
+    /**
      * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
     public function createSanitizer()
@@ -171,6 +192,27 @@ class LogFactory extends AbstractFactory
             $this->getConfig()->getSanitizerFieldNames(),
             $this->getConfig()->getSanitizedFieldValue(),
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
+     */
+    public function createAuditLogSanitizer(): SanitizerInterface
+    {
+        return new Sanitizer(
+            $this->getConfig()->getAuditLogSanitizerFieldNames(),
+            $this->getConfig()->getAuditLogSanitizedFieldValue(),
+        );
+    }
+
+    /**
+     * @param list<string> $auditLogTagDisallowList
+     *
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    public function createTagFilterBufferedStreamHandler(array $auditLogTagDisallowList = []): HandlerInterface
+    {
+        return new TagFilterBufferedStreamHandler($this->createBufferedStreamHandler(), $auditLogTagDisallowList);
     }
 
     /**
@@ -258,5 +300,21 @@ class LogFactory extends AbstractFactory
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
             $this->getConfig()->getQueueName(),
         );
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    public function getYvesSecurityAuditLogHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_YVES_SECURITY_AUDIT_LOG_HANDLER);
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    public function getYvesSecurityAuditLogProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::PLUGINS_YVES_SECURITY_AUDIT_LOG_PROCESSOR);
     }
 }

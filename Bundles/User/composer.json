@@ -24,6 +24,7 @@
         "spryker/event-dispatcher": "*",
         "spryker/form": "*",
         "spryker/installer": "*",
+        "spryker/log": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/security": "*",
@@ -36,6 +37,7 @@
     },
     "suggest": {
         "spryker/installer": "If you want to use Installer plugin.",
+        "spryker/log": "If you want to use Log plugins.",
         "spryker/silex": "If you want to use ServiceProvider.",
         "spryker/twig": "Use this module when using plugins that need Twig dependencies."
     },

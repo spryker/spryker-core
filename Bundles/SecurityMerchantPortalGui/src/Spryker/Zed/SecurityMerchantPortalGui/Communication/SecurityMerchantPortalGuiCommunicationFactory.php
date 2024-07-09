@@ -17,6 +17,8 @@ use Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilder
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantLoginForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordRequestForm;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Logger\AuditLogger;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Logger\AuditLoggerInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin;
@@ -118,6 +120,14 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
             $this->getTokenStorageService(),
             $this->getAuthorizationCheckerService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**

@@ -78,6 +78,14 @@ class TokenResourceController extends AbstractBackendApiController
             $glueResponseTransfer->setHttpStatus(Response::HTTP_OK);
         }
 
+        if ($glueAuthenticationResponseTransfer->getOauthResponseOrFail()->getIsValid() === false) {
+            $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog($oauthRequestTransfer);
+
+            return $glueResponseTransfer;
+        }
+
+        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog($oauthRequestTransfer);
+
         return $glueResponseTransfer;
     }
 

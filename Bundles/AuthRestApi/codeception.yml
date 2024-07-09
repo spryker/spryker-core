@@ -1,6 +1,7 @@
 namespace: AuthRestApi
 include:
     - tests/SprykerTest/Zed/AuthRestApi
+    - tests/SprykerTest/Glue/AuthRestApi
 paths:
     tests: tests
     output: tests/_output

@@ -38,6 +38,7 @@
         "spryker/container": "*",
         "spryker/event-dispatcher": "*",
         "spryker/form": "*",
+        "spryker/log": "*",
         "spryker/sales": "*",
         "spryker/testify": "*",
         "spryker/twig": "*",
@@ -46,6 +47,7 @@
     },
     "suggest": {
         "spryker/checkout": "If you want to use Checkout plugins.",
+        "spryker/log": "If you want to use Log plugins.",
         "spryker/sales": "If you want customer information in sales."
     },
     "autoload": {

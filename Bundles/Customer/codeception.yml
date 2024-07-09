@@ -2,6 +2,7 @@ namespace: Customer
 include:
     - tests/SprykerTest/Zed/Customer
     - tests/SprykerTest/Client/Customer
+    - tests/SprykerTest/Yves/Customer
 
 paths:
     tests: tests

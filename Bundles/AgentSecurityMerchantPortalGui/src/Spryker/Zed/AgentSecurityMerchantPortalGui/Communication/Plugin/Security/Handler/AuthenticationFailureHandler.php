@@ -40,6 +40,8 @@ class AuthenticationFailureHandler extends AbstractPlugin implements Authenticat
                 (new MessageTransfer())->setValue(static::MESSAGE_AUTHENTICATION_FAILED),
             );
 
+        $this->getFactory()->createAuditLogger()->addAgentFailedLoginAuditLog();
+
         return new RedirectResponse($this->getConfig()->getUrlLogin());
     }
 }

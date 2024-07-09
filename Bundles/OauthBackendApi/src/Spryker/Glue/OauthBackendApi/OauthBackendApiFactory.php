@@ -18,6 +18,8 @@ use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractor;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\BackendAccessTokenExtractor;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\BackendAccessTokenExtractorInterface;
+use Spryker\Glue\OauthBackendApi\Processor\Logger\AuditLogger;
+use Spryker\Glue\OauthBackendApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\OauthBackendApi\Processor\Mapper\GlueRequestMapper;
 use Spryker\Glue\OauthBackendApi\Processor\Mapper\GlueRequestMapperInterface;
 use Spryker\Glue\OauthBackendApi\Processor\RequestBuilder\UserRequestBuilder;
@@ -107,6 +109,14 @@ class OauthBackendApiFactory extends AbstractBackendApiFactory
         return new UserRequestValidator(
             $this->getUserRequestValidationPreCheckerPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Processor\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**

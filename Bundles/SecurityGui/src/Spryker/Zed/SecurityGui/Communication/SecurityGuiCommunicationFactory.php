@@ -17,6 +17,8 @@ use Spryker\Zed\SecurityGui\Communication\Expander\SecurityBuilderExpanderInterf
 use Spryker\Zed\SecurityGui\Communication\Form\LoginForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordRequestForm;
+use Spryker\Zed\SecurityGui\Communication\Logger\AuditLogger;
+use Spryker\Zed\SecurityGui\Communication\Logger\AuditLoggerInterface;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Handler\UserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityGui\Communication\Plugin\Security\Provider\UserProvider;
@@ -100,6 +102,14 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createUserAuthenticationFailureHandler(): AuthenticationFailureHandlerInterface
     {
         return new UserAuthenticationFailureHandler();
+    }
+
+    /**
+     * @return \Spryker\Zed\SecurityGui\Communication\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**

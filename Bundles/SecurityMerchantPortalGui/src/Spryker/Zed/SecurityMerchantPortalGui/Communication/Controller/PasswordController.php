@@ -153,6 +153,8 @@ class PasswordController extends AbstractController
                 static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS,
             );
 
+            $this->getFactory()->createAuditLogger()->addPasswordResetRequestedAuditLog();
+
             return $this->viewResponse([]);
         }
 
@@ -192,6 +194,8 @@ class PasswordController extends AbstractController
 
             if ($isPasswordReset) {
                 $this->addSuccessMessage(static::MESSAGE_USER_PASSWORD_UPDATE_SUCCESS);
+
+                $this->getFactory()->createAuditLogger()->addPasswordUpdatedAfterResetAuditLog();
             } else {
                 $this->addErrorMessage(static::MESSAGE_USER_PASSWORD_UPDATE_ERROR);
             }

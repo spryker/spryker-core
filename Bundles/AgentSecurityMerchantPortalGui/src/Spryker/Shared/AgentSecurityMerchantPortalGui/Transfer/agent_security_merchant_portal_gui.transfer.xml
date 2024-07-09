@@ -3,6 +3,7 @@
 
     <transfer name="User">
         <property name="username" type="string"/>
+        <property name="uuid" type="string" strict="true"/>
         <property name="password" type="string"/>
     </transfer>
 
@@ -26,11 +27,16 @@
 
     <transfer name="MerchantUser">
         <property name="agentUsername" type="string"/>
+        <property name="user" type="User"/>
     </transfer>
 
     <transfer name="MerchantUserCriteria">
         <property name="status" type="string"/>
         <property name="merchantStatus" type="string"/>
+    </transfer>
+
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
     </transfer>
 
 </transfers>

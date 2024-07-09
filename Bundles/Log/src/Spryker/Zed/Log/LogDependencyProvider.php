@@ -35,12 +35,32 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_ZED_SECURITY_AUDIT_LOG_PROCESSOR = 'PLUGINS_ZED_SECURITY_AUDIT_LOG_PROCESSOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_PROCESSOR = 'PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_PROCESSOR';
+
+    /**
+     * @var string
+     */
     public const LOG_LISTENERS = 'LOG_LISTENERS';
 
     /**
      * @var string
      */
     public const LOG_HANDLERS = 'LOG_HANDLERS';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ZED_SECURITY_AUDIT_LOG_HANDLER = 'PLUGINS_ZED_SECURITY_AUDIT_LOG_HANDLER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_HANDLER = 'PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_HANDLER';
 
     /**
      * @var string
@@ -56,7 +76,11 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addQueueClient($container);
         $container = $this->addLogHandlers($container);
+        $container = $this->addZedSecurityAuditLogHandlerPlugins($container);
+        $container = $this->addMerchantPortalSecurityAuditLogHandlerPlugins($container);
         $container = $this->addProcessors($container);
+        $container = $this->addZedSecurityAuditLogProcessorPlugins($container);
+        $container = $this->addMerchantPortalSecurityAuditLogProcessorPlugins($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -164,6 +188,50 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedSecurityAuditLogHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ZED_SECURITY_AUDIT_LOG_HANDLER, function () {
+            return $this->getZedSecurityAuditLogHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    protected function getZedSecurityAuditLogHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPortalSecurityAuditLogHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_HANDLER, function () {
+            return $this->getMerchantPortalSecurityAuditLogHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
+     */
+    protected function getMerchantPortalSecurityAuditLogHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Kernel\Container*
      */
     protected function addProcessors(Container $container)
@@ -179,6 +247,50 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
      */
     protected function getLogProcessors()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedSecurityAuditLogProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ZED_SECURITY_AUDIT_LOG_PROCESSOR, function () {
+            return $this->getZedSecurityAuditLogProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    protected function getZedSecurityAuditLogProcessorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPortalSecurityAuditLogProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PORTAL_SECURITY_AUDIT_LOG_PROCESSOR, function () {
+            return $this->getMerchantPortalSecurityAuditLogProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    protected function getMerchantPortalSecurityAuditLogProcessorPlugins(): array
     {
         return [];
     }

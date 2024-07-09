@@ -32,6 +32,7 @@
     <transfer name="OauthRequest">
         <property name="customerReference" type="string"/>
         <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="OauthResponse">
@@ -92,4 +93,9 @@
         <property name="username" type="string"/>
         <property name="password" type="string"/>
     </transfer>
+
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
+    </transfer>
+
 </transfers>

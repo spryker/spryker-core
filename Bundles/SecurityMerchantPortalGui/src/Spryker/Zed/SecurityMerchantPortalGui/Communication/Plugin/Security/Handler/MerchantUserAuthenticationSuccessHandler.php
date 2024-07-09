@@ -41,6 +41,8 @@ class MerchantUserAuthenticationSuccessHandler extends AbstractPlugin implements
         $user = $token->getUser();
         $this->getFactory()->getMerchantUserFacade()->authorizeMerchantUser($user->getMerchantUserTransfer());
 
+        $this->getFactory()->createAuditLogger()->addSuccessfulLoginAuditLog();
+
         return $this->createRedirectResponse($request);
     }
 

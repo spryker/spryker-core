@@ -36,6 +36,8 @@ class MerchantUserAuthenticationFailureHandler extends AbstractPlugin implements
                     ->setValue('Authentication failed!'),
             );
 
+        $this->getFactory()->createAuditLogger()->addFailedLoginAuditLog();
+
         return new RedirectResponse($this->getConfig()->getUrlLogin());
     }
 }

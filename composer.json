@@ -400,6 +400,7 @@
         "spryker/locale-extension": "*",
         "spryker/locale-gui": "*",
         "spryker/log": "*",
+        "spryker/log-extension": "*",
         "spryker/mail": "*",
         "spryker/mail-extension": "*",
         "spryker/maintenance": "*",

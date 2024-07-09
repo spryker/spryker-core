@@ -84,6 +84,13 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
+     * @var string
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -113,6 +120,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserTableDataExpanderPlugins($container);
         $container = $this->addUserFormExpanderPlugins($container);
         $container = $this->addUsersTableExtenderPlugins($container);
+        $container = $this->addRequestStackService($container);
 
         return $container;
     }
@@ -154,6 +162,22 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRequestStackService(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->hasApplicationService(static::SERVICE_REQUEST_STACK)
+                ? $container->getApplicationService(static::SERVICE_REQUEST_STACK)
+                : null;
         });
 
         return $container;

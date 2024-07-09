@@ -13,4 +13,8 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="AuditLoggerConfigCriteria" strict="true">
+        <property name="channelName" type="string"/>
+    </transfer>
+
 </transfers>

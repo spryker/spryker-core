@@ -119,6 +119,8 @@ class PasswordController extends AbstractController
             $this->addSuccessMessage(
                 static::SUCCESS_MESSAGE_PASSWORD_RESET_EMAIL_SENT_MESSAGE,
             );
+
+            $this->getFactory()->createAuditLogger()->addPasswordResetRequestedAuditLog();
         }
 
         return $this->viewResponse($responseViewData);
@@ -167,6 +169,8 @@ class PasswordController extends AbstractController
 
             if ($isPasswordReset) {
                 $this->addSuccessMessage('Password updated.');
+
+                $this->getFactory()->createAuditLogger()->addPasswordUpdatedAfterResetAuditLog();
             } else {
                 $this->addErrorMessage('Could not update password.');
             }

@@ -17,6 +17,8 @@ use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAc
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinder;
 use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinderInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLogger;
+use Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLoggerInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapper;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapperInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReader;
@@ -56,6 +58,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
         return new AgentAccessTokenCreator(
             $this->getOauthClient(),
             $this->createAgentAccessTokenRestResponseBuilder(),
+            $this->createAuditLogger(),
         );
     }
 
@@ -122,6 +125,14 @@ class AgentAuthRestApiFactory extends AbstractFactory
             $this->getOauthService(),
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Logger\AuditLoggerInterface
+     */
+    public function createAuditLogger(): AuditLoggerInterface
+    {
+        return new AuditLogger();
     }
 
     /**
