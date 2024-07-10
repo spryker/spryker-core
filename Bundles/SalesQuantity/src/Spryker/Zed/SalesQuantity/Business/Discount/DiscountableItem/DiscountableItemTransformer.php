@@ -46,7 +46,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $singleItemAmountShare = $iterationUnitPrice * $quantity / $totalAmount;
 
         $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
-        $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+        $itemDiscountAmountRounded = $this->roundItemDiscountAmount($itemDiscountAmount);
         $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
@@ -62,6 +62,20 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;
+    }
+
+    /**
+     * @param float $itemDiscountAmount
+     *
+     * @return int
+     */
+    protected function roundItemDiscountAmount(float $itemDiscountAmount): int
+    {
+        if ($itemDiscountAmount > 0 && $itemDiscountAmount < 1) {
+            return 1;
+        }
+
+        return (int)round($itemDiscountAmount);
     }
 
     /**

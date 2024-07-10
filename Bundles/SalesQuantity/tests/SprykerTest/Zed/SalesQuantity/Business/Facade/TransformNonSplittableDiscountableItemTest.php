@@ -310,6 +310,36 @@ class TransformNonSplittableDiscountableItemTest extends Unit
                 2,
                 400,
             ],
+            'total discount amount less than one (percentage)' => [
+                [DiscountTransfer::PRIORITY => 10, DiscountTransfer::CALCULATOR_PLUGIN => static::PLUGIN_CALCULATOR_PERCENTAGE],
+                [
+                    DiscountableItemTransfer::UNIT_PRICE => 1000,
+                    DiscountableItemTransfer::ORIGINAL_ITEM => new ItemTransfer(),
+                ],
+                [
+                    DiscountableItemTransformerTransfer::QUANTITY => 4,
+                    DiscountableItemTransformerTransfer::ROUNDING_ERROR => 0.0,
+                    DiscountableItemTransformerTransfer::TOTAL_AMOUNT => 1000,
+                    DiscountableItemTransformerTransfer::TOTAL_DISCOUNT_AMOUNT => 0.5,
+                ],
+                0,
+                2,
+            ],
+            'total discount amount less than one (fixed)' => [
+                [DiscountTransfer::PRIORITY => 10, DiscountTransfer::CALCULATOR_PLUGIN => static::PLUGIN_CALCULATOR_FIXED],
+                [
+                    DiscountableItemTransfer::UNIT_PRICE => 1000,
+                    DiscountableItemTransfer::ORIGINAL_ITEM => new ItemTransfer(),
+                ],
+                [
+                    DiscountableItemTransformerTransfer::QUANTITY => 4,
+                    DiscountableItemTransformerTransfer::ROUNDING_ERROR => 0.0,
+                    DiscountableItemTransformerTransfer::TOTAL_AMOUNT => 1000,
+                    DiscountableItemTransformerTransfer::TOTAL_DISCOUNT_AMOUNT => 0.5,
+                ],
+                0,
+                2,
+            ],
         ];
     }
 }
