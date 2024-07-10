@@ -14,6 +14,7 @@ interface MerchantSalesOrderSalesMerchantCommissionFacadeInterface
 {
     /**
      * Specification:
+     * - Requires `MerchantOrderTransfer.idMerchantOrder` to be set.
      * - Requires `MerchantOrderTransfer.idOrder` to be set.
      * - Requires `MerchantOrderTransfer.merchantReference` to be set.
      * - Requires `MerchantOrderTransfer.merchantOrderItems.orderItem` to be set.
@@ -31,8 +32,7 @@ interface MerchantSalesOrderSalesMerchantCommissionFacadeInterface
     /**
      * Specification:
      * - Requires `OrderTransfer.idSalesOrder` to be set.
-     * - Expects `OrderTransfer.items.merchantReference` to be provided.
-     * - Expects `OrderTransfer.items.merchantReference` to be the same for all items.
+     * - Requires `OrderTransfer.items.merchantReference` to be provided.
      * - Summarizes merchant commission amounts for the merchant order taken from `OrderTransfer.items`.
      * - Updates `TotalsTransfer.merchantCommissionTotal` and `TotalsTransfer.merchantCommissionRefundedTotal`.
      *

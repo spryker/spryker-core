@@ -419,6 +419,7 @@
         "spryker/merchant-commission-data-import": "*",
         "spryker/merchant-commission-extension": "*",
         "spryker/merchant-commission-gui": "*",
+        "spryker/merchant-commission-gui-extension": "*",
         "spryker/merchant-data-import": "*",
         "spryker/merchant-extension": "*",
         "spryker/merchant-gui": "*",

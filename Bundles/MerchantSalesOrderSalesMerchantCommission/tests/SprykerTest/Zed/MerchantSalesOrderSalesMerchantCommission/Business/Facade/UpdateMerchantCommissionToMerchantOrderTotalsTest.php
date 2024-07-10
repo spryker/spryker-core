@@ -58,60 +58,6 @@ class UpdateMerchantCommissionToMerchantOrderTotalsTest extends Unit
     /**
      * @return void
      */
-    public function testShouldNotUpdateTotalsWhenMerchantReferenceIsAbsent(): void
-    {
-        // Arrange
-        $merchantOrderTransfer = $this->tester->createMerchantOrderWithTwoItems();
-        $orderTransfer = (new OrderTransfer())
-            ->setIdSalesOrder($merchantOrderTransfer->getIdOrder())
-            ->addItem($merchantOrderTransfer->getMerchantOrderItems()->offsetGet(0)->getOrderItem())
-            ->addItem($merchantOrderTransfer->getMerchantOrderItems()->offsetGet(1)->getOrderItem()->setMerchantReference(null));
-
-        // Act
-        $this->tester->getFacade()->updateMerchantCommissionToMerchantOrderTotals(
-            $orderTransfer,
-            $orderTransfer->getItems()->getArrayCopy(),
-        );
-
-        // Assert
-        $merchantSalesOrderTotalsEntity = $this->tester->getMerchantSalesOrderTotalByIdMerchantSalesOrder(
-            $merchantOrderTransfer->getIdMerchantOrder(),
-        );
-
-        $this->assertSame(400, $merchantSalesOrderTotalsEntity->getMerchantCommissionTotal());
-        $this->assertSame(0, $merchantSalesOrderTotalsEntity->getMerchantCommissionRefundedTotal());
-    }
-
-    /**
-     * @return void
-     */
-    public function testShouldNotUpdateTotalsWhenMerchantReferencesAreDifferent(): void
-    {
-        // Arrange
-        $merchantOrderTransfer = $this->tester->createMerchantOrderWithTwoItems();
-        $orderTransfer = (new OrderTransfer())
-            ->setIdSalesOrder($merchantOrderTransfer->getIdOrder())
-            ->addItem($merchantOrderTransfer->getMerchantOrderItems()->offsetGet(0)->getOrderItem())
-            ->addItem($merchantOrderTransfer->getMerchantOrderItems()->offsetGet(1)->getOrderItem()->setMerchantReference(static::FAKE_MERCHANT_REFERENCE));
-
-        // Act
-        $this->tester->getFacade()->updateMerchantCommissionToMerchantOrderTotals(
-            $orderTransfer,
-            $orderTransfer->getItems()->getArrayCopy(),
-        );
-
-        // Assert
-        $merchantSalesOrderTotalsEntity = $this->tester->getMerchantSalesOrderTotalByIdMerchantSalesOrder(
-            $merchantOrderTransfer->getIdMerchantOrder(),
-        );
-
-        $this->assertSame(400, $merchantSalesOrderTotalsEntity->getMerchantCommissionTotal());
-        $this->assertSame(0, $merchantSalesOrderTotalsEntity->getMerchantCommissionRefundedTotal());
-    }
-
-    /**
-     * @return void
-     */
     public function testShouldUpdateMerchantOrderTotals(): void
     {
         // Arrange
@@ -176,6 +122,11 @@ class UpdateMerchantCommissionToMerchantOrderTotalsTest extends Unit
                 (new OrderTransfer())
                     ->setIdSalesOrder(null)
                     ->addItem((new ItemTransfer())->setMerchantReference(static::FAKE_MERCHANT_REFERENCE)),
+            ],
+            'When MerchantReference is not set' => [
+                (new OrderTransfer())
+                    ->setIdSalesOrder(1)
+                    ->addItem((new ItemTransfer())->setMerchantReference(null)),
             ],
         ];
     }

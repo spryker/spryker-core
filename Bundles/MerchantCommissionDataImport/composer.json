@@ -9,7 +9,7 @@
         "spryker/data-import": "^1.3.0",
         "spryker/kernel": "^3.30.0",
         "spryker/merchant": "^3.0.0",
-        "spryker/merchant-commission": "^0.1.0",
+        "spryker/merchant-commission": "^1.0.0",
         "spryker/store": "^1.0.0"
     },
     "require-dev": {

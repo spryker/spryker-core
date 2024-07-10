@@ -24,11 +24,11 @@ use Spryker\Zed\MerchantCommissionGui\Communication\Transformer\MerchantCommissi
 use Spryker\Zed\MerchantCommissionGui\Communication\Validator\MerchantCommissionCsvValidator;
 use Spryker\Zed\MerchantCommissionGui\Communication\Validator\MerchantCommissionCsvValidatorInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToGlossaryFacadeInterface;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionDataExportFacadeInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionFacadeInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilCsvServiceInterface;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantCommissionGui\MerchantCommissionGuiDependencyProvider;
+use Spryker\Zed\MerchantCommissionGuiExtension\Communication\Dependency\Plugin\MerchantCommissionExportPluginInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -126,14 +126,6 @@ class MerchantCommissionGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionDataExportFacadeInterface
-     */
-    public function getMerchantCommissionDataExportFacade(): MerchantCommissionGuiToMerchantCommissionDataExportFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantCommissionGuiDependencyProvider::FACADE_MERCHANT_COMMISSION_DATA_EXPORT);
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToGlossaryFacadeInterface
      */
     public function getGlossaryFacade(): MerchantCommissionGuiToGlossaryFacadeInterface
@@ -163,5 +155,13 @@ class MerchantCommissionGuiCommunicationFactory extends AbstractCommunicationFac
     public function getMerchantCommissionPropelQuery(): SpyMerchantCommissionQuery
     {
         return $this->getProvidedDependency(MerchantCommissionGuiDependencyProvider::PROPEL_QUERY_MERCHANT_COMMISSION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionGuiExtension\Communication\Dependency\Plugin\MerchantCommissionExportPluginInterface
+     */
+    public function getMerchantCommissionExportPlugin(): MerchantCommissionExportPluginInterface
+    {
+        return $this->getProvidedDependency(MerchantCommissionGuiDependencyProvider::PLUGIN_MERCHANT_COMMISSION_EXPORT);
     }
 }

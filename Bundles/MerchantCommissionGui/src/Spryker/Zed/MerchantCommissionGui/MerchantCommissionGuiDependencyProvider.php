@@ -10,11 +10,12 @@ namespace Spryker\Zed\MerchantCommissionGui;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantCommissionGui\Communication\Exception\MissingMerchantCommissionExportPluginException;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToGlossaryFacadeBridge;
-use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionDataExportFacadeBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Facade\MerchantCommissionGuiToMerchantCommissionFacadeBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilCsvServiceBridge;
 use Spryker\Zed\MerchantCommissionGui\Dependency\Service\MerchantCommissionGuiToUtilDateTimeServiceBridge;
+use Spryker\Zed\MerchantCommissionGuiExtension\Communication\Dependency\Plugin\MerchantCommissionExportPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantCommissionGui\MerchantCommissionGuiConfig getConfig()
@@ -25,11 +26,6 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_MERCHANT_COMMISSION = 'FACADE_MERCHANT_COMMISSION';
-
-    /**
-     * @var string
-     */
-    public const FACADE_MERCHANT_COMMISSION_DATA_EXPORT = 'FACADE_MERCHANT_COMMISSION_DATA_EXPORT';
 
     /**
      * @var string
@@ -52,6 +48,11 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
     public const PROPEL_QUERY_MERCHANT_COMMISSION = 'PROPEL_QUERY_MERCHANT_COMMISSION';
 
     /**
+     * @var string
+     */
+    public const PLUGIN_MERCHANT_COMMISSION_EXPORT = 'PLUGIN_MERCHANT_COMMISSION_EXPORT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -60,11 +61,11 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addMerchantCommissionFacade($container);
-        $container = $this->addMerchantCommissionDataExportFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addUtilCsvService($container);
         $container = $this->addMerchantCommissionPropelQuery($container);
+        $container = $this->addMerchantCommissionExportPlugin($container);
 
         return $container;
     }
@@ -79,22 +80,6 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::FACADE_MERCHANT_COMMISSION, function (Container $container) {
             return new MerchantCommissionGuiToMerchantCommissionFacadeBridge(
                 $container->getLocator()->merchantCommission()->facade(),
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantCommissionDataExportFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_MERCHANT_COMMISSION_DATA_EXPORT, function (Container $container) {
-            return new MerchantCommissionGuiToMerchantCommissionDataExportFacadeBridge(
-                $container->getLocator()->merchantCommissionDataExport()->facade(),
             );
         });
 
@@ -159,5 +144,36 @@ class MerchantCommissionGuiDependencyProvider extends AbstractBundleDependencyPr
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantCommissionExportPlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_MERCHANT_COMMISSION_EXPORT, function () {
+            return $this->getMerchantCommissionExportPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\MerchantCommissionGui\Communication\Exception\MissingMerchantCommissionExportPluginException
+     *
+     * @return \Spryker\Zed\MerchantCommissionGuiExtension\Communication\Dependency\Plugin\MerchantCommissionExportPluginInterface
+     */
+    protected function getMerchantCommissionExportPlugin(): MerchantCommissionExportPluginInterface
+    {
+        throw new MissingMerchantCommissionExportPluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure MerchantCommissionExportPlugin ' .
+                'in your own MerchantCommissionGuiDependencyProvider::getMerchantCommissionExportPlugin() ' .
+                'to be able to export merchant commissions.',
+                MerchantCommissionExportPluginInterface::class,
+            ),
+        );
     }
 }

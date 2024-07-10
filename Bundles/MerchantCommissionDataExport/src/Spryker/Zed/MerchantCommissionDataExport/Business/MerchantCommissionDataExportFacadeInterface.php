@@ -7,23 +7,27 @@
 
 namespace Spryker\Zed\MerchantCommissionDataExport\Business;
 
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer;
 
 interface MerchantCommissionDataExportFacadeInterface
 {
     /**
      * Specification:
-     * - Exports merchant commissions according to configuration provided in `DataExportConfigurationTransfer`.
-     * - Returns results of export in `DataExportReportTransfer`.
+     * - Requires `MerchantCommissionExportRequestTransfer.format` to be set.
+     * - Requires `MerchantCommissionExportRequestTransfer.connection` to be set.
+     * - Requires `MerchantCommissionExportRequestTransfer.destination` to be set.
+     * - Expects `MerchantCommissionExportRequestTransfer.fields` to be not empty.
+     * - Exports merchant commissions according to configuration provided in `MerchantCommissionExportRequestTransfer`.
+     * - Returns `MerchantCommissionExportResponseTransfer` with errors if any occurs.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer
      */
-    public function exportMerchantCommission(
-        DataExportConfigurationTransfer $dataExportConfigurationTransfer
-    ): DataExportReportTransfer;
+    public function exportMerchantCommissionsByMerchantCommissionExportRequest(
+        MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
+    ): MerchantCommissionExportResponseTransfer;
 }

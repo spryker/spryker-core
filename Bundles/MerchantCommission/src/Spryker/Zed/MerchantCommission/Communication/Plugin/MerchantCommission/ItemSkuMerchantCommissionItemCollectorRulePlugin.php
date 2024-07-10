@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantCommission\Communication\Plugin\RuleEngine;
+namespace Spryker\Zed\MerchantCommission\Communication\Plugin\MerchantCommission;
 
 use Generated\Shared\Transfer\RuleEngineClauseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\DecisionRulePluginInterface;
+use Spryker\Zed\RuleEngineExtension\Communication\Dependency\Plugin\CollectorRulePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantCommission\MerchantCommissionConfig getConfig()
  * @method \Spryker\Zed\MerchantCommission\Business\MerchantCommissionFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantCommission\Communication\MerchantCommissionCommunicationFactory getFactory()
  */
-class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+class ItemSkuMerchantCommissionItemCollectorRulePlugin extends AbstractPlugin implements CollectorRulePluginInterface
 {
     /**
      * @var string
      */
-    protected const FIELD_NAME_PRICE_MODE = 'price-mode';
+    protected const FIELD_NAME_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\RuleEngine\RuleEngineConfig::DATA_TYPE_STRING
@@ -32,20 +32,28 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     protected const DATA_TYPE_STRING = 'string';
 
     /**
+     * @uses \Spryker\Zed\RuleEngine\RuleEngineConfig::DATA_TYPE_LIST
+     *
+     * @var string
+     */
+    protected const DATA_TYPE_LIST = 'list';
+
+    /**
      * {@inheritDoc}
-     * - Check if the price mode in `RuleEngineClauseTransfer` equals the one provided in `MerchantCommissionCalculationRequestTransfer.priceMode`.
+     * - Requires `MerchantCommissionCalculationRequestTransfer.items.sku` to be set.
+     * - Collects all items that match given SKU in `RuleEngineClauseTransfer`.
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $satisfyingTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $collectableTransfer
      * @param \Generated\Shared\Transfer\RuleEngineClauseTransfer $ruleEngineClauseTransfer
      *
-     * @return bool
+     * @return list<\Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer>
      */
-    public function isSatisfiedBy(TransferInterface $satisfyingTransfer, RuleEngineClauseTransfer $ruleEngineClauseTransfer): bool
+    public function collect(TransferInterface $collectableTransfer, RuleEngineClauseTransfer $ruleEngineClauseTransfer): array
     {
-        /** @phpstan-var \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $satisfyingTransfer */
-        return $this->getFacade()->isPriceModeDecisionRuleSatisfiedBy($satisfyingTransfer, $ruleEngineClauseTransfer);
+        /** @phpstan-var \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $collectableTransfer */
+        return $this->getFacade()->collectByItemSku($collectableTransfer, $ruleEngineClauseTransfer);
     }
 
     /**
@@ -57,7 +65,7 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
      */
     public function getFieldName(): string
     {
-        return static::FIELD_NAME_PRICE_MODE;
+        return static::FIELD_NAME_SKU;
     }
 
     /**
@@ -71,6 +79,7 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     {
         return [
             static::DATA_TYPE_STRING,
+            static::DATA_TYPE_LIST,
         ];
     }
 }

@@ -76,14 +76,14 @@ class MerchantCommissionGroupKeyExistsMerchantCommissionValidatorRule implements
             $merchantCommissionGroupCollectionTransfer->getMerchantCommissionGroups(),
         );
 
-        $nonExistingMerchantCommissionGroupKeyssIndexedEntityIdentifier = array_diff(
+        $nonExistingMerchantCommissionGroupKeysIndexedEntityIdentifier = array_diff(
             $merchantCommissionGroupKeysIndexedByEntityIdentifier,
             $existingMerchantCommissionGroupKeys,
         );
 
         return $this->addErrorsForNonExistingMerchantCommissionGroups(
             new ErrorCollectionTransfer(),
-            $nonExistingMerchantCommissionGroupKeyssIndexedEntityIdentifier,
+            $nonExistingMerchantCommissionGroupKeysIndexedEntityIdentifier,
         );
     }
 

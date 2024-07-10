@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\MerchantCommissionDataExport\Business\Exporter;
 
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer;
 
 interface MerchantCommissionDataExporterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer
      */
-    public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
+    public function exportByMerchantCommissionExportRequest(
+        MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
+    ): MerchantCommissionExportResponseTransfer;
 }

@@ -140,7 +140,7 @@ class MerchantCommissionListTable extends AbstractTable
 
         $config->setUrl($this->getTableUrl());
         $config->setHasSearchableFieldsWithAggregateFunctions(true);
-        $config->setDefaultSortField(static::COL_ID_MERCHANT_COMMISSION, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(static::COL_PRIORITY);
 
         return $config;
     }
@@ -275,7 +275,7 @@ class MerchantCommissionListTable extends AbstractTable
             static::COL_IS_ACTIVE => $this->formatStatusLabel($rowData[static::COL_IS_ACTIVE]),
             static::COL_PRIORITY => $rowData[static::COL_PRIORITY],
             static::COL_GROUP_NAME => $rowData[static::COL_GROUP_NAME],
-            static::COL_STORE => $rowData[static::COL_STORE],
+            static::COL_STORE => $this->formatStores($rowData[static::COL_STORE]),
             static::COL_ACTIONS => $this->getActionsColumnData($rowData),
         ];
     }
@@ -304,6 +304,22 @@ class MerchantCommissionListTable extends AbstractTable
         return $isActive
             ? $this->generateLabel('Active', 'label-info')
             : $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param string $storeNames
+     *
+     * @return string
+     */
+    protected function formatStores(string $storeNames): string
+    {
+        $storeNamesExploded = explode(',', $storeNames);
+        $storeNamesFormatted = [];
+        foreach ($storeNamesExploded as $storeName) {
+            $storeNamesFormatted[] = $this->generateLabel($storeName, 'label-info');
+        }
+
+        return implode(' ', $storeNamesFormatted);
     }
 
     /**

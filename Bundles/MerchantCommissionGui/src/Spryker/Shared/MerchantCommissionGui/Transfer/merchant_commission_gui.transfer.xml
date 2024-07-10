@@ -106,33 +106,15 @@
         <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
-    <transfer name="DataExportConfiguration">
-        <property name="format" type="DataExportFormatConfiguration"/>
-        <property name="connection" type="DataExportConnectionConfiguration"/>
+    <transfer name="MerchantCommissionExportRequest" strict="true">
+        <property name="format" type="string"/>
+        <property name="connection" type="string"/>
         <property name="destination" type="string"/>
         <property name="fields" type="array" singular="field"/>
     </transfer>
 
-    <transfer name="DataExportConnectionConfiguration">
-        <property name="type" type="string"/>
-    </transfer>
-
-    <transfer name="DataExportFormatConfiguration">
-        <property name="type" type="string"/>
-    </transfer>
-
-    <transfer name="DataExportReport">
-        <property name="isSuccessful" type="bool"/>
-        <property name="dataExportResults" type="DataExportResult[]" singular="dataExportResult"/>
-    </transfer>
-
-    <transfer name="DataExportResult">
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
-    </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string"/>
+    <transfer name="MerchantCommissionExportResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
     <transfer name="MerchantCommissionAmountFormatRequest" strict="true">

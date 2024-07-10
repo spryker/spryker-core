@@ -29,6 +29,9 @@ class MerchantCommissionCsvValidator implements MerchantCommissionCsvValidatorIn
      * @var list<string>
      */
     protected const REQUIRED_COLUMNS = [
+        'key',
+        'group',
+        'priority',
         'stores',
     ];
 

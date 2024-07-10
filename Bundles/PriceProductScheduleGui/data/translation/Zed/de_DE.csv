@@ -19,7 +19,7 @@ Error,Error
 "Finish at must be greater than start from","Beenden am muss größer sein als starten ab"
 "Gross and Net Amount must be a positive integer.","Brutto- und Nettobetrag müssen eine positive ganze Zahl sein."
 "If you want to retry your import with corrected data, use ""Import your csv file"" button.","Wenn Sie den Import mit korrigierten Daten wiederholen möchten, klicken Sie auf ""Ihre CSV-Datei importieren""."
-Import,Einführen
+Import,Importieren
 "Import ID","ID importieren"
 "Import n",Importieren
 "Import new scheduled prices","Importieren Sie neue geplante Preise"

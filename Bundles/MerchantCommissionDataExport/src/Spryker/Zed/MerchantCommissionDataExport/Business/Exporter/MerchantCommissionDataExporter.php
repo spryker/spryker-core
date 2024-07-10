@@ -8,9 +8,10 @@
 namespace Spryker\Zed\MerchantCommissionDataExport\Business\Exporter;
 
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
-use Generated\Shared\Transfer\DataExportResultTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer;
 use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapperInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportConfig;
 use Spryker\Zed\MerchantCommissionDataExport\Persistence\MerchantCommissionDataExportRepositoryInterface;
@@ -26,6 +27,11 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_LIMIT = 'limit';
+
+    /**
+     * @var \Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapperInterface
+     */
+    protected MerchantCommissionDataExportMapperInterface $merchantCommissionDataExportMapper;
 
     /**
      * @var \Spryker\Zed\MerchantCommissionDataExport\Persistence\MerchantCommissionDataExportRepositoryInterface
@@ -48,17 +54,20 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
     protected MerchantCommissionDataExportToDataExportServiceInterface $dataExportService;
 
     /**
+     * @param \Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapperInterface $merchantCommissionDataExportMapper
      * @param \Spryker\Zed\MerchantCommissionDataExport\Persistence\MerchantCommissionDataExportRepositoryInterface $merchantCommissionDataExportRepository
      * @param \Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface $merchantCommissionAmountFormatter
      * @param \Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportConfig $merchantCommissionDataExportConfig
      * @param \Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface $dataExportService
      */
     public function __construct(
+        MerchantCommissionDataExportMapperInterface $merchantCommissionDataExportMapper,
         MerchantCommissionDataExportRepositoryInterface $merchantCommissionDataExportRepository,
         MerchantCommissionAmountFormatterInterface $merchantCommissionAmountFormatter,
         MerchantCommissionDataExportConfig $merchantCommissionDataExportConfig,
         MerchantCommissionDataExportToDataExportServiceInterface $dataExportService
     ) {
+        $this->merchantCommissionDataExportMapper = $merchantCommissionDataExportMapper;
         $this->merchantCommissionDataExportRepository = $merchantCommissionDataExportRepository;
         $this->merchantCommissionAmountFormatter = $merchantCommissionAmountFormatter;
         $this->merchantCommissionDataExportConfig = $merchantCommissionDataExportConfig;
@@ -66,13 +75,20 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer
      */
-    public function export(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
-    {
-        $dataExportResultTransfer = (new DataExportResultTransfer())->setIsSuccessful(false);
+    public function exportByMerchantCommissionExportRequest(
+        MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
+    ): MerchantCommissionExportResponseTransfer {
+        $merchantCommissionExportResponseTransfer = new MerchantCommissionExportResponseTransfer();
+
+        $dataExportConfigurationTransfer = $this->merchantCommissionDataExportMapper
+            ->mapMerchantCommissionExportRequestTransferToDataExportConfigurationTransfer(
+                $merchantCommissionExportRequestTransfer,
+                new DataExportConfigurationTransfer(),
+            );
 
         $offset = 0;
         $totalExportedCount = 0;
@@ -88,34 +104,16 @@ class MerchantCommissionDataExporter implements MerchantCommissionDataExporterIn
 
             $dataExportWriteResponseTransfer = $this->dataExportService->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
             if (!$dataExportWriteResponseTransfer->getIsSuccessful()) {
-                $dataExportResultTransfer
-                    ->fromArray($dataExportWriteResponseTransfer->toArray(), true)
-                    ->setExportCount($offset);
-
-                return $this->createDataExportReportTransfer($dataExportResultTransfer);
+                return $this->merchantCommissionDataExportMapper->mapDataExportWriteResponseTransferToMerchantCommissionExportResponseTransfer(
+                    $dataExportWriteResponseTransfer,
+                    $merchantCommissionExportResponseTransfer,
+                );
             }
 
             $totalExportedCount += count($dataExportBatchTransfer->getData());
             $offset += $limit;
         } while ($totalExportedCount === $offset);
 
-        $dataExportResultTransfer
-            ->setIsSuccessful(true)
-            ->setExportCount($totalExportedCount)
-            ->setFileName($dataExportWriteResponseTransfer->getFileName());
-
-        return $this->createDataExportReportTransfer($dataExportResultTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
-     */
-    protected function createDataExportReportTransfer(DataExportResultTransfer $dataExportResultTransfer): DataExportReportTransfer
-    {
-        return (new DataExportReportTransfer())
-            ->setIsSuccessful($dataExportResultTransfer->getIsSuccessful())
-            ->addDataExportResult($dataExportResultTransfer);
+        return $merchantCommissionExportResponseTransfer;
     }
 }

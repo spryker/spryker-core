@@ -12,6 +12,8 @@ use Spryker\Zed\MerchantCommissionDataExport\Business\Exporter\MerchantCommissio
 use Spryker\Zed\MerchantCommissionDataExport\Business\Exporter\MerchantCommissionDataExporterInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatter;
 use Spryker\Zed\MerchantCommissionDataExport\Business\Formatter\MerchantCommissionAmountFormatterInterface;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapper;
+use Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapperInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Facade\MerchantCommissionDataExportToMerchantCommissionFacadeInterface;
 use Spryker\Zed\MerchantCommissionDataExport\Dependency\Service\MerchantCommissionDataExportToDataExportServiceInterface;
 use Spryker\Zed\MerchantCommissionDataExport\MerchantCommissionDataExportDependencyProvider;
@@ -28,11 +30,20 @@ class MerchantCommissionDataExportBusinessFactory extends AbstractBusinessFactor
     public function createMerchantCommissionDataExporter(): MerchantCommissionDataExporterInterface
     {
         return new MerchantCommissionDataExporter(
+            $this->createMerchantCommissionDataExportMapper(),
             $this->getRepository(),
             $this->createMerchantCommissionAmountFormatter(),
             $this->getConfig(),
             $this->getDataExportService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantCommissionDataExport\Business\Mapper\MerchantCommissionDataExportMapperInterface
+     */
+    public function createMerchantCommissionDataExportMapper(): MerchantCommissionDataExportMapperInterface
+    {
+        return new MerchantCommissionDataExportMapper();
     }
 
     /**

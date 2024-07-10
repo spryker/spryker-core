@@ -8,6 +8,14 @@ Store,Store
 Actions,Aktionen
 Active,Aktiv
 Inactive,Inaktiv
+"Valid From","Gültig von"
+"Valid To","Gültig bis"
+"Store Relation",Store-Beziehung
+"Calculator Type",Berechnungstyp
+Fixed,Fixbetrag
+Percentage,Prozentual
+"Item Condition",Artikelbedingung
+"Order Condition",Bestellungsbedingung
 "Merchant Commissions",Händlerprovisionen
 "View Merchant Commission","Händlerprovision anzeigen"
 "Import Merchant Commissions","Händlerprovisionen importieren"
@@ -24,3 +32,8 @@ Documentation,Dokumentation
 "Download template","Vorlage herunterladen"
 "Import CSV file","CSV-Datei importieren"
 "Errors found inside your file","In der CSV-Datei wurden Fehler gefunden"
+"Merchant Commission Calculation","Berechnung der Händlerprovision"
+"Merchant Commission Amounts",Händlerprovisionsbeträge
+"Merchant Allow List","Liste der Zugelassenen Händler"
+Upload,Hochladen
+Import,Importieren

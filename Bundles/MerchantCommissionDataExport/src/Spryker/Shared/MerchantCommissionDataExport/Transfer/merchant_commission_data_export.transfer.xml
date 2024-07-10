@@ -3,21 +3,16 @@
 
     <transfer name="DataExportConfiguration">
         <property name="dataEntity" type="string"/>
-        <property name="filterCriteria" type="array" singular="filterCriterion" associative="true"/>
         <property name="fields" type="array" singular="field"/>
-    </transfer>
-
-    <transfer name="DataExportResult">
-        <property name="dataEntity" type="string"/>
-        <property name="exportCount" type="int"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="fileName" type="string"/>
-        <property name="messages" type="Message[]" singular="message"/>
+        <property name="format" type="DataExportFormatConfiguration"/>
+        <property name="connection" type="DataExportConnectionConfiguration"/>
+        <property name="filterCriteria" type="array" singular="filterCriterion" associative="true"/>
+        <property name="destination" type="string"/>
     </transfer>
 
     <transfer name="DataExportWriteResponse">
+        <property name="messages" type="Message[]" singular="message"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="fileName" type="string"/>
     </transfer>
 
     <transfer name="DataExportBatch">
@@ -26,17 +21,36 @@
         <property name="fields" type="string[]" singular="field"/>
     </transfer>
 
-    <transfer name="DataExportReport">
-        <property name="isSuccessful" type="bool"/>
-        <property name="dataExportResults" type="DataExportResult[]" singular="dataExportResult"/>
-    </transfer>
-
     <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="MerchantCommissionAmountTransformerRequest" strict="true">
         <property name="calculatorTypePlugin" type="string"/>
         <property name="amountFromPersistence" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionExportRequest" strict="true">
+        <property name="format" type="string"/>
+        <property name="connection" type="string"/>
+        <property name="destination" type="string"/>
+        <property name="fields" type="array" singular="field"/>
+    </transfer>
+
+    <transfer name="MerchantCommissionExportResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="DataExportConnectionConfiguration">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="DataExportFormatConfiguration">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

@@ -19,6 +19,7 @@ class UpdateMerchantCommissionTotalsMerchantOrderPostCreatePlugin extends Abstra
 {
     /**
      * {@inheritDoc}
+     * - Requires `MerchantOrderTransfer.idMerchantOrder` to be set.
      * - Requires `MerchantOrderTransfer.idOrder` to be set.
      * - Requires `MerchantOrderTransfer.merchantReference` to be set.
      * - Requires `MerchantOrderTransfer.merchantOrderItems.orderItem` to be set.

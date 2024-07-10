@@ -29,17 +29,44 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param int $idSalesOrder
+     * @param string $merchantReference
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer
+    public function findMerchantOrderByIdSalesOrderAndMerchantReference(int $idSalesOrder, string $merchantReference): ?MerchantOrderTransfer
     {
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setIdOrder($merchantOrderTransfer->getIdOrderOrFail())
+            ->setIdOrder($idSalesOrder)
+            ->setMerchantReference($merchantReference)
             ->setWithOrder(true)
             ->setWithItems(true);
 
+        return $this->findMerchantOrder($merchantOrderCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idMerchantOrder
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantOrderByIdMerchantOrder(int $idMerchantOrder): ?MerchantOrderTransfer
+    {
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setIdMerchantOrder($idMerchantOrder)
+            ->setWithOrder(true)
+            ->setWithItems(true);
+
+        return $this->findMerchantOrder($merchantOrderCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    protected function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
+    {
         $merchantOrderTransfer = $this->merchantSalesOrderFacade
             ->getMerchantOrderCollection($merchantOrderCriteriaTransfer)
             ->getMerchantOrders()

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantCommissionDataExport\Business;
 
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,14 +22,15 @@ class MerchantCommissionDataExportFacade extends AbstractFacade implements Merch
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer
+     * @return \Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer
      */
-    public function exportMerchantCommission(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer
-    {
+    public function exportMerchantCommissionsByMerchantCommissionExportRequest(
+        MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer
+    ): MerchantCommissionExportResponseTransfer {
         return $this->getFactory()
             ->createMerchantCommissionDataExporter()
-            ->export($dataExportConfigurationTransfer);
+            ->exportByMerchantCommissionExportRequest($merchantCommissionExportRequestTransfer);
     }
 }

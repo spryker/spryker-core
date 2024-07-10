@@ -8,8 +8,8 @@
         "spryker/kernel": "^3.30.0",
         "spryker/merchant-sales-order": "^1.5.0",
         "spryker/merchant-sales-order-extension": "^1.0.0",
-        "spryker/sales-merchant-commission": "^0.1.0",
-        "spryker/sales-merchant-commission-extension": "^0.1.0",
+        "spryker/sales-merchant-commission": "^1.0.0",
+        "spryker/sales-merchant-commission-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

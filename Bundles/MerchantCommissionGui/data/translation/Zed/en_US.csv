@@ -8,6 +8,14 @@ Store,Store
 Actions,Actions
 Active,Active
 Inactive,Inactive
+"Valid From","Valid From"
+"Valid To","Valid To"
+"Store Relation","Store Relation"
+"Calculator Type","Calculator Type"
+Fixed,Fixed
+Percentage,Percentage
+"Item Condition","Item Condition"
+"Order Condition","Order Condition"
 "Merchant Commissions","Merchant Commissions"
 "View Merchant Commission","View Merchant Commission"
 "Import Merchant Commissions","Import Merchant Commissions"
@@ -24,3 +32,8 @@ Documentation,Documentation
 "Download template","Download template"
 "Import CSV file","Import CSV file"
 "Errors found inside your file","Errors found inside your file"
+"Merchant Commission Calculation","Merchant Commission Calculation"
+"Merchant Commission Amounts","Merchant Commission Amounts"
+"Merchant Allow List","Merchant Allow List"
+Upload,Upload
+Import,Import

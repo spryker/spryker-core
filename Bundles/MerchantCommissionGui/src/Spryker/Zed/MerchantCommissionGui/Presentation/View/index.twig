@@ -9,7 +9,7 @@
 
 {% extends '@Gui/layout/layout.twig' %}
 
-{% set page_title = 'View Merchant Commisison' | trans ~ ': ' ~ merchantCommission.idMerchantCommission %}
+{% set page_title = 'View Merchant Commission' | trans ~ ': ' ~ merchantCommission.idMerchantCommission %}
 
 {% block head_title page_title %}
 
@@ -44,9 +44,19 @@
                 <div class="col-xs-10">{{ merchantCommission.validTo | formatDateTime }}</div>
             </div>
 
+            {% set statusTitle = 'Active' | trans %}
+            {% set statusLabelClass = 'label-info' %}
+
+            {% if not merchantCommission.isActive %}
+                {% set statusTitle = 'Inactive' | trans %}
+                {% set statusLabelClass = 'label-danger' %}
+            {% endif %}
+
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
-                <div class="col-xs-10">{{ (merchantCommission.isActive ? 'Active' : 'Inactive') | trans }}</div>
+                <div class="col-xs-10">
+                    <span class="label {{ statusLabelClass }}">{{ statusTitle }}</span>
+                </div>
             </div>
 
             <div class="row form-group">

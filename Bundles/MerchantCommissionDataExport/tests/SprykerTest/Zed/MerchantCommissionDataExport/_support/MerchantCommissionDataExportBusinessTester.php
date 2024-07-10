@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\MerchantCommissionDataExport;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer;
+use Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionTransfer;
 use Orm\Zed\MerchantCommission\Persistence\SpyMerchantCommissionQuery;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface;
 
 /**
  * Inherited Methods
@@ -35,78 +37,11 @@ class MerchantCommissionDataExportBusinessTester extends Actor
     use _generated\MerchantCommissionDataExportBusinessTesterActions;
 
     /**
-     * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
-     *
-     * @var string
-     */
-    protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
-
-    /**
-     * @var string
-     */
-    protected const EXPORT_ROOT_DIR = '{application_root_dir}/data/export';
-
-    /**
-     * @var string
-     */
-    protected const DESTINATION = 'php://output';
-
-    /**
-     * @var list<string>
-     */
-    protected const FIELDS = [
-        'key',
-        'name',
-        'description',
-        'valid_from',
-        'valid_to',
-        'is_active',
-        'amount',
-        'calculator_type_plugin',
-        'group',
-        'priority',
-        'item_condition',
-        'order_condition',
-        'stores',
-        'merchants_allow_list',
-        'fixed_amount_configuration',
-    ];
-
-    /**
-     * @var string
-     */
-    protected const FORMATTER_TYPE = 'csv';
-
-    /**
-     * @uses \Spryker\Service\DataExport\Plugin\DataExport\OutputStreamDataExportConnectionPlugin::CONNECTION_TYPE_OUTPUT_STREAM
-     *
-     * @var string
-     */
-    protected const CONNECTION_TYPE = 'output-stream';
-
-    /**
      * @return void
      */
     public function ensureMerchantCommissionTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getMerchantCommissionQuery());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
-     */
-    public function createDataExportConfigurationTransfer(): DataExportConfigurationTransfer
-    {
-        $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())
-            ->setType(static::FORMATTER_TYPE);
-        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
-            ->setType(static::CONNECTION_TYPE);
-
-        return (new DataExportConfigurationTransfer())
-            ->setFields(static::FIELDS)
-            ->setDestination(static::DESTINATION)
-            ->setFormat($dataExportFormatConfigurationTransfer)
-            ->setConnection($dataExportConnectionConfigurationTransfer);
     }
 
     /**
@@ -124,6 +59,92 @@ class MerchantCommissionDataExportBusinessTester extends Actor
         });
 
         return $parsedExportedData;
+    }
+
+    /**
+     * @param int $calculatedAmount
+     * @param string $calculatorPluginType
+     *
+     * @return \Spryker\Zed\MerchantCommissionExtension\Communication\Dependency\Plugin\MerchantCommissionCalculatorPluginInterface
+     */
+    public function getMerchantCommissionCalculatorPlugin(int $calculatedAmount, string $calculatorPluginType): MerchantCommissionCalculatorPluginInterface
+    {
+        return new class ($calculatedAmount, $calculatorPluginType) extends AbstractPlugin implements MerchantCommissionCalculatorPluginInterface
+        {
+            /**
+             * @var int
+             */
+            protected int $calculatedAmount;
+
+            /**
+             * @var string
+             */
+            protected string $calculatorPluginType;
+
+            /**
+             * @param int $calculatedAmount
+             * @param string $calculatorPluginType
+             */
+            public function __construct(int $calculatedAmount, string $calculatorPluginType)
+            {
+                $this->calculatedAmount = $calculatedAmount;
+                $this->calculatorPluginType = $calculatorPluginType;
+            }
+
+            /**
+             * @return string
+             */
+            public function getCalculatorType(): string
+            {
+                return $this->calculatorPluginType;
+            }
+
+            /**
+             * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+             * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+             * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+             *
+             * @return int
+             */
+            public function calculateMerchantCommission(
+                MerchantCommissionTransfer $merchantCommissionTransfer,
+                MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+                MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+            ): int {
+                return $this->calculatedAmount;
+            }
+
+            /**
+             * @param float $merchantCommissionAmount
+             *
+             * @return int
+             */
+            public function transformAmountForPersistence(float $merchantCommissionAmount): int
+            {
+                return (int)$merchantCommissionAmount;
+            }
+
+            /**
+             * @param int $merchantCommissionAmount
+             *
+             * @return float
+             */
+            public function transformAmountFromPersistence(int $merchantCommissionAmount): float
+            {
+                return (float)$merchantCommissionAmount;
+            }
+
+            /**
+             * @param int $merchantCommissionAmount
+             * @param string|null $currencyIsoCode
+             *
+             * @return string
+             */
+            public function formatMerchantCommissionAmount(int $merchantCommissionAmount, ?string $currencyIsoCode = null): string
+            {
+                return (string)$merchantCommissionAmount;
+            }
+        };
     }
 
     /**

@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MerchantCommissionGui\Communication\Controller;
 
-use Generated\Shared\Transfer\DataExportConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportConnectionConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportFormatConfigurationTransfer;
-use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer;
+use Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -61,14 +59,13 @@ class ExportController extends AbstractController
      */
     public function indexAction(): Response
     {
-        $dataExportConfigurationTransfer = $this->createDataExportConfigurationTransfer();
+        $merchantCommissionExportRequestTransfer = $this->createMerchantCommissionExportRequestTransfer();
+        $merchantCommissionExportResponseTransfer = $this->getFactory()
+            ->getMerchantCommissionExportPlugin()
+            ->exportMerchantCommissions($merchantCommissionExportRequestTransfer);
 
-        $dataExportReportTransfer = $this->getFactory()
-            ->getMerchantCommissionDataExportFacade()
-            ->exportMerchantCommission($dataExportConfigurationTransfer);
-
-        if (!$dataExportReportTransfer->getIsSuccessfulOrFail()) {
-            $this->addErrorMessages($dataExportReportTransfer);
+        if ($merchantCommissionExportResponseTransfer->getErrors()->count() !== 0) {
+            $this->addErrorMessages($merchantCommissionExportResponseTransfer);
 
             return $this->redirectResponse(static::URL_MERCHANT_RELATION_REQUEST_LIST);
         }
@@ -85,34 +82,26 @@ class ExportController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\DataExportConfigurationTransfer
+     * @return \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer
      */
-    protected function createDataExportConfigurationTransfer(): DataExportConfigurationTransfer
+    protected function createMerchantCommissionExportRequestTransfer(): MerchantCommissionExportRequestTransfer
     {
-        $dataExportFormatConfigurationTransfer = (new DataExportFormatConfigurationTransfer())
-            ->setType(static::FORMAT_CSV);
-
-        $dataExportConnectionConfigurationTransfer = (new DataExportConnectionConfigurationTransfer())
-            ->setType(static::CONNECTION_TYPE_OUTPUT_STREAM);
-
-        return (new DataExportConfigurationTransfer())
-            ->setFormat($dataExportFormatConfigurationTransfer)
-            ->setConnection($dataExportConnectionConfigurationTransfer)
+        return (new MerchantCommissionExportRequestTransfer())
+            ->setFormat(static::FORMAT_CSV)
+            ->setConnection(static::CONNECTION_TYPE_OUTPUT_STREAM)
             ->setDestination(static::STREAM_PHP_OUTPUT)
             ->setFields($this->getFactory()->getConfig()->getCsvFileRequiredColumnsList());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DataExportReportTransfer $dataExportReportTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionExportResponseTransfer $merchantCommissionExportResponseTransfer
      *
      * @return void
      */
-    protected function addErrorMessages(DataExportReportTransfer $dataExportReportTransfer): void
+    protected function addErrorMessages(MerchantCommissionExportResponseTransfer $merchantCommissionExportResponseTransfer): void
     {
-        foreach ($dataExportReportTransfer->getDataExportResults() as $dataExportResultTransfer) {
-            foreach ($dataExportResultTransfer->getMessages() as $messageTransfer) {
-                $this->addErrorMessage($messageTransfer->getValueOrFail());
-            }
+        foreach ($merchantCommissionExportResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessageOrFail());
         }
     }
 }

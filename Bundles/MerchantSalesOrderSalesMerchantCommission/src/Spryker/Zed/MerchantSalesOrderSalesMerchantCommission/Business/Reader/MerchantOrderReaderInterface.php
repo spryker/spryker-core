@@ -12,9 +12,17 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 interface MerchantOrderReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param int $idSalesOrder
+     * @param string $merchantReference
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderTransfer $merchantOrderTransfer): ?MerchantOrderTransfer;
+    public function findMerchantOrderByIdSalesOrderAndMerchantReference(int $idSalesOrder, string $merchantReference): ?MerchantOrderTransfer;
+
+    /**
+     * @param int $idMerchantOrder
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantOrderByIdMerchantOrder(int $idMerchantOrder): ?MerchantOrderTransfer;
 }

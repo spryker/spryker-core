@@ -44,7 +44,9 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
      */
     public function saveMerchantCommissionToMerchantOrderTotals(MerchantOrderTransfer $merchantOrderTransfer): void
     {
-        $persistedMerchantOrderTransfer = $this->merchantOrderReader->findMerchantOrder($merchantOrderTransfer);
+        $persistedMerchantOrderTransfer = $this->merchantOrderReader->findMerchantOrderByIdMerchantOrder(
+            $merchantOrderTransfer->getIdMerchantOrderOrFail(),
+        );
         if (!$persistedMerchantOrderTransfer) {
             return;
         }
@@ -60,43 +62,18 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
      */
     public function updateMerchantCommissionToMerchantOrderTotals(OrderTransfer $orderTransfer, array $itemTransfers): void
     {
-        $merchantOrderTransfer = (new MerchantOrderTransfer())
-            ->setIdOrder($orderTransfer->getIdSalesOrderOrFail());
-
-        if (!$this->checkItemsBelongToSameMerchant($merchantOrderTransfer, $itemTransfers)) {
-            return;
-        }
-
-        $persistedMerchantOrderTransfer = $this->merchantOrderReader->findMerchantOrder($merchantOrderTransfer);
-        if (!$persistedMerchantOrderTransfer) {
-            return;
-        }
-
-        $this->updateMerchantOrderTotals($persistedMerchantOrderTransfer, $persistedMerchantOrderTransfer->getTotalsOrFail());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
-     * @return bool
-     */
-    protected function checkItemsBelongToSameMerchant(MerchantOrderTransfer $merchantOrderTransfer, array $itemTransfers): bool
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $merchantReference = $itemTransfer->getMerchantReference();
-            if (!$merchantReference) {
-                return false;
+        $itemTransfersGroupedByMerchantReference = $this->getItemTransfersGroupedByMerchantReference($itemTransfers);
+        foreach ($itemTransfersGroupedByMerchantReference as $merchantReference => $itemTransfers) {
+            $merchantOrderTransfer = $this->merchantOrderReader->findMerchantOrderByIdSalesOrderAndMerchantReference(
+                $orderTransfer->getIdSalesOrderOrFail(),
+                $merchantReference,
+            );
+            if (!$merchantOrderTransfer) {
+                continue;
             }
 
-            if ($merchantOrderTransfer->getMerchantReference() && $merchantOrderTransfer->getMerchantReference() !== $merchantReference) {
-                return false;
-            }
-
-            $merchantOrderTransfer->setMerchantReference($merchantReference);
+            $this->updateMerchantOrderTotals($merchantOrderTransfer, $merchantOrderTransfer->getTotalsOrFail());
         }
-
-        return true;
     }
 
     /**
@@ -144,5 +121,20 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
         }
 
         return [$merchantCommissionTotal, $merchantCommissionRefundedTotal];
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ItemTransfer>>
+     */
+    protected function getItemTransfersGroupedByMerchantReference(array $itemTransfers): array
+    {
+        $groupedItemTransfers = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $groupedItemTransfers[$itemTransfer->getMerchantReferenceOrFail()][] = $itemTransfer;
+        }
+
+        return $groupedItemTransfers;
     }
 }

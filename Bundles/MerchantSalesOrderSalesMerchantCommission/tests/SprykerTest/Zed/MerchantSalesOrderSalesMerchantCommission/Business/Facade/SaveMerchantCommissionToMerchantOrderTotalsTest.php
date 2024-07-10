@@ -92,6 +92,26 @@ class SaveMerchantCommissionToMerchantOrderTotalsTest extends Unit
     /**
      * @return void
      */
+    public function testShouldThrowNullValueExceptionWhenIdMerchantOrderIsNotSet(): void
+    {
+        // Arrange
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithTwoItems();
+        $merchantOrderTransfer = (new MerchantOrderTransfer())
+            ->setIdMerchantOrder(null)
+            ->setIdOrder($merchantOrderTransfer->getIdOrderOrFail())
+            ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+            ->addMerchantOrderItem((new MerchantOrderItemTransfer())->setOrderItem(new ItemTransfer()));
+
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->tester->getFacade()->saveMerchantCommissionToMerchantOrderTotals($merchantOrderTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testShouldUpdateMerchantOrderTotals(): void
     {
         // Arrange
