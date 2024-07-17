@@ -37,6 +37,8 @@ class FlysystemFtpFileSystemTest extends Unit
         $adapterConfigTransfer->setHost('ftp://foo.bar');
         $adapterConfigTransfer->setUsername('foo@bar');
         $adapterConfigTransfer->setPassword('foobar');
+        $adapterConfigTransfer->setPort(21);
+        $adapterConfigTransfer->setSsl(false);
 
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName('FtpDocumentFilesystem');
@@ -59,6 +61,8 @@ class FlysystemFtpFileSystemTest extends Unit
         $adapterConfigTransfer->setHost('ftp://foo.bar');
         $adapterConfigTransfer->setUsername('foo@bar');
         $adapterConfigTransfer->setPassword('foobar');
+        $adapterConfigTransfer->setPort(21);
+        $adapterConfigTransfer->setSsl(false);
 
         $configTransfer = new FlysystemConfigTransfer();
         $configTransfer->setName('FtpDocumentFilesystem');

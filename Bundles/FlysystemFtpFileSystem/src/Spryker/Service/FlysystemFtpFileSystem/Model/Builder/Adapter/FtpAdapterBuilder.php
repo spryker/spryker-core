@@ -58,6 +58,8 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
             '',
             $this->adapterConfig->getUsernameOrFail(),
             $this->adapterConfig->getPasswordOrFail(),
+            $this->adapterConfig->getPort() ?? 21,
+            $this->adapterConfig->getSsl() ?? false,
         );
 
         return $this;
