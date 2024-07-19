@@ -96,7 +96,8 @@ class StringFacetAggregation extends AbstractFacetAggregation
         $aggregation = $this
             ->aggregationBuilder
             ->createTermsAggregation($nestedFieldName . static::VALUE_SUFFIX)
-            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE));
+            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE))
+            ->setSize($this->searchConfig->getFacetValueAggregationSize());
 
         $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 

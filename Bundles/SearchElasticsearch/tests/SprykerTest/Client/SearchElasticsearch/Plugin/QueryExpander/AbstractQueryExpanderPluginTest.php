@@ -42,6 +42,16 @@ use SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures\BaseQueryPlugin;
 abstract class AbstractQueryExpanderPluginTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const PARAM_SIZE = 'size';
+
+    /**
+     * @var \SprykerTest\Client\SearchElasticsearch\SearchElasticsearchClientTester
+     */
+    protected $tester;
+
+    /**
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     protected function createBaseQueryPlugin(): QueryInterface
@@ -144,12 +154,15 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
      */
     protected function getExpectedStringFacetAggregation(): AbstractAggregation
     {
+        $searchElasticSearchClientConfig = new ClientSearchElasticsearchConfig();
+
         return (new Nested(PageIndexMap::STRING_FACET, PageIndexMap::STRING_FACET))
             ->addAggregation((new Terms(PageIndexMap::STRING_FACET . '-name'))
                 ->setSize(ClientSearchElasticsearchConfig::FACET_NAME_AGGREGATION_SIZE)
                 ->setField(PageIndexMap::STRING_FACET_FACET_NAME)
                 ->addAggregation((new Terms(PageIndexMap::STRING_FACET . '-value'))
-                    ->setField(PageIndexMap::STRING_FACET_FACET_VALUE)));
+                    ->setField(PageIndexMap::STRING_FACET_FACET_VALUE)
+                    ->setSize($searchElasticSearchClientConfig->getFacetValueAggregationSize())));
     }
 
     /**

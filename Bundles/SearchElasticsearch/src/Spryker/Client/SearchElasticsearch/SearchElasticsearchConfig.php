@@ -21,6 +21,11 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
     /**
+     * @var int
+     */
+    protected const FACET_VALUE_AGGREGATION_SIZE = 10;
+
+    /**
      * @api
      *
      * @return array<string, mixed>
@@ -48,6 +53,19 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function getFacetNameAggregationSize(): int
     {
         return static::FACET_NAME_AGGREGATION_SIZE;
+    }
+
+    /**
+     * Specification:
+     * - Provides the size property value for the facet value aggregation.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getFacetValueAggregationSize(): int
+    {
+        return static::FACET_VALUE_AGGREGATION_SIZE;
     }
 
     /**
