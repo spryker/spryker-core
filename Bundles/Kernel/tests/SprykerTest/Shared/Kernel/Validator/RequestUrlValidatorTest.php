@@ -210,6 +210,13 @@ class RequestUrlValidatorTest extends Unit
                 'redirect request' => true,
                 'validation result' => true,
             ],
+            'relative url to some page with umlauts' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/some-pageäöüÄÖÜß/indexäöüÄÖÜß/some-page-childäöüÄÖÜß',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
             'relative url to some with a few parameters' => [
                 'allowed domains' => ['alloweddomain.com'],
                 'url' => '/en/index?q=Smart&format=svg',
