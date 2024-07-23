@@ -208,7 +208,7 @@ class Worker implements WorkerInterface
             $processCommand = sprintf('%s %s', $command, $queue);
 
             if ($this->queueConfig->getQueueWorkerLogStatus()) {
-                $processCommand = sprintf('%s >> %s', $processCommand, $this->getQueueWorkerOutputFileNameBasedOnType());
+                $processCommand = sprintf('%s >> %s 2>&1', $processCommand, $this->getQueueWorkerOutputFileNameBasedOnType());
             }
 
             $queueProcesses = $this->startProcesses($processCommand, $queue);
