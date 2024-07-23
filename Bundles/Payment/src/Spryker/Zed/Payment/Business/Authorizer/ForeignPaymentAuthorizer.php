@@ -189,12 +189,16 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
     /**
      * @param string $language
      * @param string $urlPath
-     * @param array<mixed> $queryParts
+     * @param array<string, mixed> $queryParts
      *
      * @return string
      */
     protected function generatePaymentRedirectUrl(string $language, string $urlPath, array $queryParts = []): string
     {
+        if ($this->isAbsoluteUrl($urlPath)) {
+            return $this->addQueryParametersToUrl($urlPath, $queryParts);
+        }
+
         $url = sprintf(
             '%s/%s%s',
             $this->paymentConfig->getBaseUrlYves(),
@@ -203,6 +207,38 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
         );
 
         return Url::generate($url, $queryParts)->build();
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isAbsoluteUrl(string $url): bool
+    {
+        $urlComponents = parse_url($url);
+
+        return isset($urlComponents['host']);
+    }
+
+    /**
+     * @param string $url
+     * @param array<string, mixed> $queryParams
+     *
+     * @return string
+     */
+    protected function addQueryParametersToUrl(string $url, array $queryParams): string
+    {
+        if ($queryParams === []) {
+            return $url;
+        }
+
+        $urlComponents = parse_url($url);
+
+        $url .= isset($urlComponents['query']) ? '&' : '?';
+        $url .= http_build_query($queryParams);
+
+        return $url;
     }
 
     /**
@@ -237,9 +273,21 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
             return;
         }
 
+        if ($this->paymentConfig->getStoreFrontPaymentPage() === '') {
+            $checkoutResponseTransfer
+                ->setIsExternalRedirect(true)
+                ->setRedirectUrl($paymentAuthorizeResponseTransfer->getRedirectUrl());
+
+            return;
+        }
+
+        $redirectUrl = $this->addQueryParametersToUrl($this->paymentConfig->getStoreFrontPaymentPage(), [
+            'url' => base64_encode($paymentAuthorizeResponseTransfer->getRedirectUrl()),
+        ]);
+
         $checkoutResponseTransfer
             ->setIsExternalRedirect(true)
-            ->setRedirectUrl($paymentAuthorizeResponseTransfer->getRedirectUrl());
+            ->setRedirectUrl($redirectUrl);
     }
 
     /**

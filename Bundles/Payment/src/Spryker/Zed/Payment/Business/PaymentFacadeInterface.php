@@ -62,6 +62,8 @@ interface PaymentFacadeInterface
      * - Enhances the payment authorization request data by including the tenant identifier value if it is provided.
      * - Sends an HTTP request with all pre-selected quote fields using URL from `PaymentMethod.paymentAuthorizationEndpoint`.
      * - Updates CheckoutResponseTransfer with errors or the redirect URL according to response received.
+     * - The redirect URL can be prefixed with a custom URL from {@link PaymentConfig::getStoreFrontPaymentPage()},
+     * in this case redirect URL will be added as base64-encoded GET parameter `url`.
      *
      * @api
      *

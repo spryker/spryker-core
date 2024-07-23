@@ -28,6 +28,8 @@ class PaymentAuthorizationCheckoutPostSavePlugin extends AbstractPlugin implemen
      * - Sends a request with all pre-selected quote fields using PaymentMethodTransfer.paymentAuthorizationEndpoint.
      * - If the response is free of errors, uses PaymentMethodTransfer.paymentAuthorizationEndpoint and response data to build a redirect URL.
      * - Updates CheckoutResponseTransfer with errors or the redirect URL according to response received.
+     * - The redirect URL can be prefixed with a custom URL from {@link PaymentConfig::getStoreFrontPaymentPage()},
+     *   in this case redirect URL will be added as base64-encoded GET parameter `url`.
      *
      * @api
      *

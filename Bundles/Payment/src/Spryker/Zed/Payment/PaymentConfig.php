@@ -65,16 +65,6 @@ class PaymentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
-     *
-     * @return string
-     */
-    public function getSuccessRoute(): string
-    {
-        return '/payment/order-success';
-    }
-
-    /**
      * Specification:
      * - Returns a map of the payment messages and state machine's processes names.
      *
@@ -106,6 +96,22 @@ class PaymentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves application route or full URL of the page where the customer is redirected after successful order payment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSuccessRoute(): string
+    {
+        return '/payment/order-success';
+    }
+
+    /**
+     * Specification:
+     * - Yves application route or full URL of the page where the customer is taken when decided to cancel the order payment on the external payment page.
+     *
      * @api
      *
      * @return string
@@ -116,6 +122,9 @@ class PaymentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Yves application route or full URL of the page where the customer is taken when clicked Back button on the external payment page.
+     *
      * @api
      *
      * @return string
@@ -123,6 +132,20 @@ class PaymentConfig extends AbstractBundleConfig
     public function getCheckoutSummaryPageRoute(): string
     {
         return '/checkout/summary';
+    }
+
+    /**
+     * Specification:
+     * - The URL to the payment page in Yves (relative) or another store front application (absolute), where the customer is redirected to make the payment.
+     * - When empty value is set, the payment page is provided by a payment provider on an external site.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStoreFrontPaymentPage(): string
+    {
+        return '';
     }
 
     /**

@@ -533,8 +533,6 @@ class PaymentFacadeTest extends Unit
     public function testForeignPaymentAuthorizerReceivesCorrectResponseAndUsingItAddsRedirectUrlWithCorrectData(): void
     {
         // Arrange
-        $this->tester->setStoreReferenceData([static::STORE_NAME => static::STORE_REFERENCE]);
-
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $paymentMethodTransfer = $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_HIDDEN => false,
@@ -599,6 +597,101 @@ class PaymentFacadeTest extends Unit
         // Assert
         $this->assertEquals($initialQuoteTransfer->toArray(), $quoteTransfer->toArray());
         $this->assertEquals($initialCheckoutResponseTransfer->toArray(), $checkoutResponseTransfer->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInitForeignPaymentForCheckoutProcessReturnsRedirectToRelativePaymentPageFromConfig(): void
+    {
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_HIDDEN => false,
+            PaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_AUTHORIZATION_ENDPOINT,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+        ]);
+
+        $paymentTransfer = (new PaymentTransfer())->setPaymentSelection(
+            sprintf('%s[%s]', PaymentTransfer::FOREIGN_PAYMENTS, $paymentMethodTransfer->getPaymentMethodKey()),
+        );
+
+        $quoteTransfer = $this->buildQuoteTransfer();
+        $quoteTransfer->setPayment($paymentTransfer);
+        $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
+
+        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+
+        $paymentClientMock->expects($this->once())
+            ->method('authorizeForeignPayment')
+            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) {
+                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+            }))
+            ->willReturn(
+                (new PaymentAuthorizeResponseTransfer())
+                    ->setIsSuccessful(true)
+                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+            );
+
+        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+
+        $this->tester->mockConfigMethod('getStoreFrontPaymentPage', '/my-custom-payment-page');
+
+        // Act
+        $this->tester->getFacade()->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsExternalRedirect());
+        $this->assertSame(
+            '/my-custom-payment-page?' . http_build_query(['url' => base64_encode(static::PAYMENT_AUTHORIZATION_REDIRECT)]),
+            $checkoutResponseTransfer->getRedirectUrl(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testInitForeignPaymentForCheckoutProcessReturnsRedirectToAbsolutePaymentPageOnAnotherDomainFromConfig(): void
+    {
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_HIDDEN => false,
+            PaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_AUTHORIZATION_ENDPOINT,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+        ]);
+
+        $paymentTransfer = (new PaymentTransfer())->setPaymentSelection(
+            sprintf('%s[%s]', PaymentTransfer::FOREIGN_PAYMENTS, $paymentMethodTransfer->getPaymentMethodKey()),
+        );
+
+        $quoteTransfer = $this->buildQuoteTransfer();
+        $quoteTransfer->setPayment($paymentTransfer);
+        $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
+
+        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+
+        $paymentClientMock->expects($this->once())
+            ->method('authorizeForeignPayment')
+            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) {
+                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+            }))
+            ->willReturn(
+                (new PaymentAuthorizeResponseTransfer())
+                    ->setIsSuccessful(true)
+                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+            );
+
+        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+        $this->tester->mockConfigMethod('getStoreFrontPaymentPage', 'https://my-custom-domain.com/payment?some=param');
+
+        // Act
+        $this->tester->getFacade()->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsExternalRedirect());
+        $this->assertSame(
+            'https://my-custom-domain.com/payment?some=param&' . http_build_query(['url' => base64_encode(static::PAYMENT_AUTHORIZATION_REDIRECT)]),
+            $checkoutResponseTransfer->getRedirectUrl(),
+        );
     }
 
     /**
