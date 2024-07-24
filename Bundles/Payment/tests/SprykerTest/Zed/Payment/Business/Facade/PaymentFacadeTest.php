@@ -30,6 +30,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
+use Ramsey\Uuid\Uuid;
 use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
@@ -569,6 +570,63 @@ class PaymentFacadeTest extends Unit
         // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsExternalRedirect());
         $this->assertSame(static::PAYMENT_AUTHORIZATION_REDIRECT, $checkoutResponseTransfer->getRedirectUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testForeignPaymentAuthorizerForwardsAdditionPaymentDataToThePaymentServiceProviderApp(): void
+    {
+        // Arrange
+        $this->tester->setStoreReferenceData([static::STORE_NAME => static::STORE_REFERENCE]);
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_HIDDEN => false,
+            PaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_AUTHORIZATION_ENDPOINT,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+        ]);
+
+        $paymentTransfer = (new PaymentTransfer())->setPaymentSelection(
+            sprintf('%s[%s]', PaymentTransfer::FOREIGN_PAYMENTS, $paymentMethodTransfer->getPaymentMethodKey()),
+        );
+
+        $additionalPaymentData = [
+            'internalId' => Uuid::uuid4()->toString(),
+            'externalId' => Uuid::uuid4()->toString(),
+        ];
+
+        $paymentTransfer->setAdditionalPaymentData($additionalPaymentData);
+
+        $quoteTransfer = $this->buildQuoteTransfer();
+        $quoteTransfer->setPayment($paymentTransfer);
+        $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
+
+        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+
+        $forwardedAdditionPaymentData = [];
+
+        $paymentClientMock->expects($this->once())
+            ->method('authorizeForeignPayment')
+            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) use (&$forwardedAdditionPaymentData) {
+                // This is what would be sent, we want to compare later.
+                $forwardedAdditionPaymentData = $paymentAuthorizeRequestTransfer->getPostData()['orderData'][PaymentTransfer::ADDITIONAL_PAYMENT_DATA];
+
+                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+            }))
+            ->willReturn(
+                (new PaymentAuthorizeResponseTransfer())
+                    ->setIsSuccessful(true)
+                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+            );
+
+        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+
+        // Act
+        $this->tester->getFacade()->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertSame($forwardedAdditionPaymentData, $additionalPaymentData);
     }
 
     /**
