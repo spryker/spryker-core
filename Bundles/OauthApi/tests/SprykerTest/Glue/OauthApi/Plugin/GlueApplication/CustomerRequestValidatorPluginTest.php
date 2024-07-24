@@ -35,7 +35,7 @@ class CustomerRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTrueWithMissingMeta(): void
+    public function testValidateReturnsTrueWithoutMeta(): void
     {
         //Act
         $result = (new CustomerRequestValidatorPlugin())->validate(new GlueRequestTransfer());

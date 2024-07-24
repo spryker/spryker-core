@@ -35,7 +35,7 @@ class UserRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnsTrueWithMissingMeta(): void
+    public function testValidateReturnsTrueWithoutMeta(): void
     {
         //Act
         $result = (new UserRequestValidatorPlugin())->validate(new GlueRequestTransfer());

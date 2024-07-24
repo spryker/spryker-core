@@ -227,7 +227,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $this->tester->setDependency(
             GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR,
-            $this->mockGlueBackendApiApplicationAuthorizationConnectorFacade(true)
+            $this->mockGlueBackendApiApplicationAuthorizationConnectorFacade(true),
         );
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setMethod(Request::METHOD_POST);
@@ -286,10 +286,11 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     /**
      * @param bool $isProtected
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
      */
-    protected function mockGlueBackendApiApplicationAuthorizationConnectorFacade(bool $isProtected): GlueBackendApiApplicationAuthorizationConnectorFacadeInterface
-    {
+    protected function mockGlueBackendApiApplicationAuthorizationConnectorFacade(
+        bool $isProtected
+    ): GlueBackendApiApplicationAuthorizationConnectorFacadeInterface {
         $glueBackendApiApplicationAuthorizationConnectorFacadeMock = $this->getMockBuilder(GlueBackendApiApplicationAuthorizationConnectorFacade::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['isProtected'])

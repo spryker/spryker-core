@@ -31,7 +31,7 @@ class ResourceResolverTest extends Unit
     /**
      * @return void
      */
-    public function testMissingResourceThrowsException(): void
+    public function testResolveThrowsExceptionWithoutResource(): void
     {
         $this->expectException(RestResourceNotFoundException::class);
 

@@ -28,7 +28,7 @@ class ResourceLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testMissingResourceLocatorThrowsException(): void
+    public function testResolveThrowsExceptionWithoutResourceLocator(): void
     {
         $this->expectException(RestResourceNotFoundException::class);
 

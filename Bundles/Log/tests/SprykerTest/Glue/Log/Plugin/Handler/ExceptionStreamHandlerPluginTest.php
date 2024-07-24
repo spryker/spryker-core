@@ -54,7 +54,7 @@ class ExceptionStreamHandlerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIsHandlingReturnsTrueIfLogLevelIsError(): void
+    public function testIsHandlingReturnsTrueIfLogLevelIsErrored(): void
     {
         $record = ['level' => Logger::ERROR];
 
@@ -64,7 +64,7 @@ class ExceptionStreamHandlerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testIsHandlingReturnsFalseIfLogLevelIsLowerThanError(): void
+    public function testIsHandlingReturnsFalseWhenLogLevelNotErrored(): void
     {
         $record = ['level' => Logger::DEBUG];
 

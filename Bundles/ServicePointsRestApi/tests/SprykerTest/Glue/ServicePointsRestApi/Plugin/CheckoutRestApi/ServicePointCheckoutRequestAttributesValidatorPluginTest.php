@@ -99,7 +99,7 @@ class ServicePointCheckoutRequestAttributesValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAttributesReturnsErrorWhenProvidedServicePointsAreNotAvailableForTheCurrentStore(): void
+    public function testValidateAttributesReturnsBadRequestWhenProvidedServicePointsAreNotAvailableForTheCurrentStore(): void
     {
         // Arrange
         $restServicePointTransfer = (new RestServicePointTransfer())
@@ -126,7 +126,7 @@ class ServicePointCheckoutRequestAttributesValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAttributesReturnsErrorWhenItemsProvidedForTwoDifferentServicePointsAreDuplicated(): void
+    public function testValidateAttributesReturnsBadRequestWhenItemsProvidedForTwoDifferentServicePointsAreDuplicated(): void
     {
         // Arrange
         $restServicePointTransfer1 = (new RestServicePointTransfer())

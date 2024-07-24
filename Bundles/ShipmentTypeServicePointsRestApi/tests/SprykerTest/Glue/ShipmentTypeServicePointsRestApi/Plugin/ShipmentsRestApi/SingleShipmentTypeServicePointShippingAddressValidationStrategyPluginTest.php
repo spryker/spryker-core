@@ -79,7 +79,7 @@ class SingleShipmentTypeServicePointShippingAddressValidationStrategyPluginTest 
     /**
      * @return void
      */
-    public function testValidateReturnsErrorWhenNoServicePointGivenInSingleShipmentRequest(): void
+    public function testValidateReturnsBadRequestWhenNoServicePointGivenInSingleShipmentRequest(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();

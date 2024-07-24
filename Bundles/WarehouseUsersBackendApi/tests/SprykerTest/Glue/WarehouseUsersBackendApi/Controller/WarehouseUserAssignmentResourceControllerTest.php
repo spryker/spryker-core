@@ -157,7 +157,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetCollectionActionReturnsForbiddenErrorWhenUserIsNotProvidedInRequest(): void
+    public function testGetCollectionActionReturnsForbiddenWhenUserIsNotProvidedInRequest(): void
     {
         // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(new GlueRequestUserTransfer());
@@ -178,7 +178,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetCollectionActionReturnsForbiddenErrorWhenInvalidSurrogateUserIdentifierProvidedInRequest(): void
+    public function testGetCollectionActionReturnsForbiddenWhenInvalidSurrogateUserIdentifierProvidedInRequest(): void
     {
         // Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())->setRequestUser(
@@ -266,7 +266,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionReturnsNotFoundErrorForNonExistentWarehouseUserAssignmentsUuid(): void
+    public function testGetActionReturnsNotFoundForNonExistentWarehouseUserAssignmentsUuid(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser();
@@ -331,7 +331,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionReturnsNotFoundErrorWhenAnotherUsersWarehouseUserAssignmentsUuidProvidedForWarehouseUser(): void
+    public function testGetActionReturnsNotFoundWhenAnotherUsersWarehouseUserAssignmentsUuidProvidedForWarehouseUser(): void
     {
         // Arrange
         $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
@@ -365,7 +365,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionReturnsNotFoundErrorWhenUsersIsNotProvidedInRequest(): void
+    public function testGetActionReturnsNotFoundWhenUsersIsNotProvidedInRequest(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser();
@@ -397,7 +397,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionReturnsNotFoundErrorWhenUsersInvalidSurrogateUserIdentifierProvidedInRequest(): void
+    public function testGetActionReturnsNotFoundWhenUsersInvalidSurrogateUserIdentifierProvidedInRequest(): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser();
@@ -468,7 +468,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPostActionReturnsNotFoundErrorWhenWarehouseUserCreatesWarehouseUserAssignmentForAnotherUser(): void
+    public function testPostActionReturnsNotFoundWhenWarehouseUserCreatesWarehouseUserAssignmentForAnotherUser(): void
     {
         // Arrange
         $requestUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);
@@ -542,7 +542,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPostActionReturnsUserNotFoundErrorWhenAdminUserCreatesWarehouseUserAssignmentForNonWarehouseUser(): void
+    public function testPostActionReturnsUserNotFoundWhenAdminUserCreatesWarehouseUserAssignmentForNonWarehouseUser(): void
     {
         // Arrange
         $adminUserTransfer = $this->tester->haveUser();
@@ -661,7 +661,7 @@ class WarehouseUserAssignmentResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPatchActionReturnsNotFoundErrorWhenWarehouseUserUpdatesWarehouseUserAssignmentOfAnotherUser(): void
+    public function testPatchActionReturnsNotFoundWhenWarehouseUserUpdatesWarehouseUserAssignmentOfAnotherUser(): void
     {
         // Arrange
         $warehouseUserTransfer = $this->tester->haveUser([UserTransfer::IS_WAREHOUSE_USER => true]);

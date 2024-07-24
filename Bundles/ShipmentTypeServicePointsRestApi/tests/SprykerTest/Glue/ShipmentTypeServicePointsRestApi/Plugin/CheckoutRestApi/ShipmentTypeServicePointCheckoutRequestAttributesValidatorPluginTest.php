@@ -44,7 +44,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointIsNotProvidedForApplicableShipmentTypeAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointIsNotProvidedForApplicableShipmentTypeAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -78,7 +78,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointIsProvidedForNotApplicableShipmentTypeAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointIsProvidedForNotApplicableShipmentTypeAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $this->tester->mockShipmentTypeStorageClient([]);
@@ -113,7 +113,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointHasNoAddressAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointHasNoAddressAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -153,7 +153,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerFirstNameIsMissedAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerFirstNameIsMissedAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -190,7 +190,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerLastNameIsMissedAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerLastNameIsMissedAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -227,7 +227,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerSalutationIsMissedAndMultiShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerSalutationIsMissedAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -264,7 +264,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsNoErrorsWhenValidAttributesAndMultiShipmentRequestGiven(): void
+    public function testReturnsCorrectResponseWhenValidAttributesAndMultiShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -289,7 +289,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointIsNotProvidedForApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointIsNotProvidedForApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -323,7 +323,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointIsProvidedForNotApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointIsProvidedForNotApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $this->tester->mockShipmentTypeStorageClient([]);
@@ -356,7 +356,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenMultipleServicePointsAreProvidedForApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenMultipleServicePointsAreProvidedForApplicableShipmentTypeAndSingleShipmentRequestGiven(): void
     {
         // Arrange
 
@@ -391,7 +391,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenServicePointHasNoAddressAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenServicePointHasNoAddressAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -431,7 +431,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerFirstNameIsMissedAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerFirstNameIsMissedAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -468,7 +468,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerLastNameIsMissedAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerLastNameIsMissedAndSingleShipmentRequestGiven(): void
     {
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
         $this->tester->mockShipmentTypeStorageClient([$shipmentTypeStorageTransfer]);
@@ -504,7 +504,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsErrorWhenCustomerSalutationIsMissedAndSingleShipmentRequestGiven(): void
+    public function testReturnsUnprocessableEntityWhenCustomerSalutationIsMissedAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -541,7 +541,7 @@ class ShipmentTypeServicePointCheckoutRequestAttributesValidatorPluginTest exten
     /**
      * @return void
      */
-    public function testReturnsNoErrorsWhenValidAttributesAndSingleShipmentRequestGiven(): void
+    public function testReturnsCorrectResponseWhenValidAttributesAndSingleShipmentRequestGiven(): void
     {
         // Arrange
         $shipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();

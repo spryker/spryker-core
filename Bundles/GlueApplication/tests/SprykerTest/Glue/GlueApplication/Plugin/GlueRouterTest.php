@@ -56,7 +56,7 @@ class GlueRouterTest extends Unit
     /**
      * @return void
      */
-    public function testMatchRequestWhenNoPluginRouteMatchedShouldReturnErrorRoute(): void
+    public function testMatchRequestReturnsResourceNotFoundRouteWhenNoPluginRouteMatched(): void
     {
         $glueRouterPlugin = $this->createGlueRouterPlugin();
 
@@ -73,7 +73,7 @@ class GlueRouterTest extends Unit
     /**
      * @return void
      */
-    public function testMatchRequestWhenMethodDoesNotExistShouldReturnErrorRoute(): void
+    public function testMatchRequestReturnsResourceNotFoundRouteWhenMethodDoesNotExists(): void
     {
         $glueRouterPlugin = $this->createGlueRouterPlugin();
 

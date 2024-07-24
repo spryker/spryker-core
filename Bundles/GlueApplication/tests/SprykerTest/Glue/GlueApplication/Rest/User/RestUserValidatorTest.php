@@ -53,7 +53,7 @@ class RestUserValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenPluginFailsShouldReturnError(): void
+    public function testValidateReturnsErroredResponseWhenPluginNotValid(): void
     {
         // Arrange
         $restUserValidatorPluginMock = $this->createRestUserValidatorPluginMock();

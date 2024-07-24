@@ -157,7 +157,7 @@ class MultiShipmentTypeServicePointShippingAddressValidationStrategyPluginTest e
     /**
      * @return void
      */
-    public function testValidateReturnsErrorWhenShippingAddressNotProvidedForNonApplicableItems(): void
+    public function testValidateReturnsBadRequestWhenShippingAddressNotProvidedForNonApplicableItems(): void
     {
         // Arrange
         $applicableShipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();
@@ -196,7 +196,7 @@ class MultiShipmentTypeServicePointShippingAddressValidationStrategyPluginTest e
     /**
      * @return void
      */
-    public function testValidateReturnsNoErrorWhenShippingAddressProvidedForNonApplicableItems(): void
+    public function testValidateReturnsCorrectResponseWhenShippingAddressProvidedForNonApplicableItems(): void
     {
         // Arrange
         $applicableShipmentTypeStorageTransfer = $this->tester->createApplicableShipmentTypeStorageTransfer();

@@ -70,7 +70,7 @@ class RequestPaginationParameterBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMissingOffset(): void
+    public function testBuildRequestReturnsRequestWithoutOffset(): void
     {
         //Act
         $result = $this->buildRequest(null, 10);
@@ -82,7 +82,7 @@ class RequestPaginationParameterBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMissingLimit(): void
+    public function testBuildRequestReturnsRequestWithoutLimit(): void
     {
         //Act
         $result = $this->buildRequest(0, null);

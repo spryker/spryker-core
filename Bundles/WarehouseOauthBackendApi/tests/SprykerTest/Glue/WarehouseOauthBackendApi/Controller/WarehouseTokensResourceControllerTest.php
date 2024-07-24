@@ -39,7 +39,7 @@ class WarehouseTokensResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPostActionAddsWarehouseUserFailedLoginAuditLogWhenActiveWarehouseUserNorFound(): void
+    public function testPostActionAddsWarehouseUserUnsuccessfulLoginAuditLogWhenActiveWarehouseUserNotProvided(): void
     {
         // Arrange
         $warehouseTokensResourceControllerMock = $this->getWarehouseTokensResourceControllerMock(
@@ -56,7 +56,7 @@ class WarehouseTokensResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPostActionAddsWarehouseUserFailedLoginAuditLogWhenOauthResponseIsNotValid(): void
+    public function testPostActionAddsWarehouseUserUnsuccessfulLoginAuditLogWhenOauthResponseIsNotCorrect(): void
     {
         // Arrange
         $warehouseTokensResourceControllerMock = $this->getWarehouseTokensResourceControllerMock(

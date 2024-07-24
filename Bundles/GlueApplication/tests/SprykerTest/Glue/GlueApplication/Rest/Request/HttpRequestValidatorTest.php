@@ -37,7 +37,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAccessControllRequestHeaderError(): void
+    public function testValidateReturnsForbiddenWhenAccessControllRequestHeader(): void
     {
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
@@ -55,7 +55,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAccessControllRequestMethodError(): void
+    public function testValidateReturnsForbiddenWhenAccessControllRequestMethod(): void
     {
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
@@ -76,7 +76,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenContentTypeHeaderEmptyStringShouldReturnUnsupportedMediaTypeError(): void
+    public function testValidateReturnsUnsupportedMediaTypeWhenContentTypeHeaderEmptyString(): void
     {
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => '',
@@ -93,7 +93,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenContentTypeHeaderWithSpacesShouldReturnUnsupportedMediaTypeError(): void
+    public function testValidateReturnsUnsupportedMediaTypeWhenContentTypeHeaderWithSpaces(): void
     {
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => '        ',
@@ -110,7 +110,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenContentTypeHeaderMissingShouldReturnNull(): void
+    public function testValidateReturnsNullWhenContentTypeHeaderNotPresent(): void
     {
         $request = Request::create('/');
 
@@ -124,7 +124,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenAcceptHeaderMissingShouldReturnNotAcceptableError(): void
+    public function testValidateReturnsNotAcceptableWhenAcceptHeaderNotPresent(): void
     {
         $request = $this->createRequestWithMockedHeaders();
 

@@ -37,7 +37,7 @@ class ResponseFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatNoEncoderFoundShouldReturnError(): void
+    public function testFormatNoEncoderFoundReturnsUnsupportedMediaType(): void
     {
         $encoderMatcherMock = $this->createEncoderMatcherMock();
         $responseBuilder = $this->createResponseBuilderMock();
@@ -55,7 +55,7 @@ class ResponseFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatWhenErrorProvidedShouldFormatErrorResponse(): void
+    public function testFormatReturnsBadRequestResponseWithoutEncoder(): void
     {
         $encoderMatcherMock = $this->prepareEncoderMocks();
         $responseBuilder = $this->createResponseBuilderMock();

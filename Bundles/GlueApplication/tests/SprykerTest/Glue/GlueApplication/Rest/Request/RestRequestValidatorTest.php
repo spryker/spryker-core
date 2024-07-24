@@ -36,7 +36,7 @@ class RestRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePostRequestShouldReturnErrorWhenDataMissing(): void
+    public function testValidatePostRequestReturnsErroredResponseWhenDataNotProvided(): void
     {
         $restRequestValidator = $this->createRestRequestValidator();
 
@@ -51,7 +51,7 @@ class RestRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenPluginFailsShouldReturnError(): void
+    public function testValidateReturnsErroredResponseWhenPluginNotValid(): void
     {
         $restRequestValidatorPluginMock = $this->createValidateRestRequestPluginMock();
 
@@ -72,7 +72,7 @@ class RestRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenValidatorPluginFailsShouldReturnError(): void
+    public function testValidateReturnsErroredResponseWhenValidatorPluginNotValid(): void
     {
         $restRequestValidatorPluginMock = $this->createRestRequestValidatorPluginMock();
 

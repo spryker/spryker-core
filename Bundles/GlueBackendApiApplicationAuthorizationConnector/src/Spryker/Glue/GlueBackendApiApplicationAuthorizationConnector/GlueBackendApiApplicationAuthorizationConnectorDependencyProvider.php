@@ -73,6 +73,7 @@ class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends 
      */
     protected function addGlueBackendApiApplicationAuthorizationConnectorFacade(Container $container): Container
     {
+        // phpcs:ignore
         $container->set(static::FACADE_GLUE_BACKEND_API_APPLICATION_AUTHORIZATION_CONNECTOR, function (Container $container) {
             return $container->getLocator()->glueBackendApiApplicationAuthorizationConnector()->facade();
         });

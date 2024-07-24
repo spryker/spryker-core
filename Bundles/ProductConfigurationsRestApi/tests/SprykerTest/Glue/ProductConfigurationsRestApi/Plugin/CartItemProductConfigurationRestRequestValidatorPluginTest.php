@@ -156,7 +156,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWillReturnErrorWhenItemDoesNotHaveDefaultProductConfiguration(): void
+    public function testValidateReturnsUnprocessableEntityWhenItemDoesNotHaveDefaultProductConfiguration(): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -196,7 +196,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWillReturnErrorWhenItemDoesNotHaveProductConfigurationWithGivenConfigurationKey(): void
+    public function testValidateReturnsUnprocessableEntityWhenItemDoesNotHaveProductConfigurationWithGivenConfigurationKey(): void
     {
         // Arrange
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([

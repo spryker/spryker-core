@@ -35,7 +35,7 @@ class TokenResourceControllerTest extends Unit
     /**
      * @return void
      */
-    public function testPostActionAddsFailedLoginAuditLogWhenLoginAttemptFails(): void
+    public function testPostActionAddsUnsuccessfulLoginAuditLogWhenLoginAttemptUnsuccessful(): void
     {
         // Arrange
         $tokenResourceControllerMock = $this->getTokenResourceControllerMock('Failed Login', false);

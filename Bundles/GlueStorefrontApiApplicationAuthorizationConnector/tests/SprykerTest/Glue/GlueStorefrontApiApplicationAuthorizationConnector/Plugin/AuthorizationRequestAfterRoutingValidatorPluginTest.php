@@ -175,7 +175,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidateRequestMissingRouteNotValid(): void
+    public function testValidateReturnsIsNotValidWhenRouteNotProvided(): void
     {
         //Arrange
         $this->tester->setDependency(

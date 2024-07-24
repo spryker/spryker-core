@@ -115,7 +115,7 @@ class GetCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testShouldReturnGlueResponseTransferWithErrorWhileServicePointNotFound(): void
+    public function testReturnsGlueResponseTransferWithNotFound(): void
     {
         // Arrange
         $this->tester->setDependency(

@@ -82,7 +82,7 @@ class GlueControllerFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterWhenUnsupportedMediaTypeProvidedShouldReturnError(): void
+    public function testFilterReturnsUnsupportedMediaTypeWhenUnsupportedMediaTypeProvided(): void
     {
         $request = Request::create(
             static::URL_TEST_RESOURCE,
@@ -170,7 +170,7 @@ class GlueControllerFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterPostWhenBusinessValidationFailsShouldReturnError(): void
+    public function testFilterPostReturnsBadRequestWhenBusinessValidationFails(): void
     {
         $request = Request::create(
             static::URL_TEST_RESOURCE,
