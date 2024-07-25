@@ -58,6 +58,39 @@ class UpdateMerchantCommissionToMerchantOrderTotalsTest extends Unit
     /**
      * @return void
      */
+    public function testShouldSkipOrderItemsWithoutMerchantReference(): void
+    {
+        // Arrange
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithTwoItems();
+
+        $item1 = $merchantOrderTransfer->getMerchantOrderItems()->offsetGet(0)->getOrderItem();
+        $item2 = $merchantOrderTransfer->getMerchantOrderItems()->offsetGet(1)->getOrderItem();
+        $item3 = (new ItemTransfer())->setMerchantReference(null);
+
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder($merchantOrderTransfer->getIdOrder())
+            ->addItem($item1)
+            ->addItem($item2)
+            ->addItem((new ItemTransfer())->setMerchantReference(null));
+
+        // Act
+        $this->tester->getFacade()->updateMerchantCommissionToMerchantOrderTotals(
+            $orderTransfer,
+            [$item1, $item2, $item3],
+        );
+
+        // Assert
+        $merchantSalesOrderTotalsEntity = $this->tester->getMerchantSalesOrderTotalByIdMerchantSalesOrder(
+            $merchantOrderTransfer->getIdMerchantOrder(),
+        );
+
+        $this->assertSame(200, $merchantSalesOrderTotalsEntity->getMerchantCommissionTotal());
+        $this->assertSame(200, $merchantSalesOrderTotalsEntity->getMerchantCommissionRefundedTotal());
+    }
+
+    /**
+     * @return void
+     */
     public function testShouldUpdateMerchantOrderTotals(): void
     {
         // Arrange
@@ -122,11 +155,6 @@ class UpdateMerchantCommissionToMerchantOrderTotalsTest extends Unit
                 (new OrderTransfer())
                     ->setIdSalesOrder(null)
                     ->addItem((new ItemTransfer())->setMerchantReference(static::FAKE_MERCHANT_REFERENCE)),
-            ],
-            'When MerchantReference is not set' => [
-                (new OrderTransfer())
-                    ->setIdSalesOrder(1)
-                    ->addItem((new ItemTransfer())->setMerchantReference(null)),
             ],
         ];
     }

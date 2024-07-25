@@ -32,7 +32,7 @@ interface MerchantSalesOrderSalesMerchantCommissionFacadeInterface
     /**
      * Specification:
      * - Requires `OrderTransfer.idSalesOrder` to be set.
-     * - Requires `OrderTransfer.items.merchantReference` to be provided.
+     * - Expects `OrderTransfer.items.merchantReference` to be provided.
      * - Summarizes merchant commission amounts for the merchant order taken from `OrderTransfer.items`.
      * - Updates `TotalsTransfer.merchantCommissionTotal` and `TotalsTransfer.merchantCommissionRefundedTotal`.
      *

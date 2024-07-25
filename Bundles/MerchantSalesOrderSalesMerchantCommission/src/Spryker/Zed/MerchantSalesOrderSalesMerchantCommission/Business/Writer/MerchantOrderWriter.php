@@ -132,7 +132,9 @@ class MerchantOrderWriter implements MerchantOrderWriterInterface
     {
         $groupedItemTransfers = [];
         foreach ($itemTransfers as $itemTransfer) {
-            $groupedItemTransfers[$itemTransfer->getMerchantReferenceOrFail()][] = $itemTransfer;
+            if ($itemTransfer->getMerchantReference()) {
+                $groupedItemTransfers[$itemTransfer->getMerchantReferenceOrFail()][] = $itemTransfer;
+            }
         }
 
         return $groupedItemTransfers;
