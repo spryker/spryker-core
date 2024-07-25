@@ -20,12 +20,14 @@ use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsStateMachineLockTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Propel;
 use ReflectionClass;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddlewarePlugin;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
@@ -79,6 +81,11 @@ class OmsBusinessTester extends Actor
      * @var string
      */
     public const FAKE_SKU = 'FAKE_SKU';
+
+    /**
+     * @var string
+     */
+    protected const LOCKED_ENTITY_IDENTIFIER = '1';
 
     /**
      * @return void
@@ -477,6 +484,25 @@ class OmsBusinessTester extends Actor
             ->getOrder(
                 (new OrderFilterTransfer())->setSalesOrderId($idSalesOrder),
             );
+    }
+
+    /**
+     * @param int $identifier
+     *
+     * @return void
+     */
+    public function insertOmsStateMachineLockByIdUsingRawQuery(int $identifier): void
+    {
+        $query = sprintf(
+            "INSERT INTO %s (id_oms_state_machine_lock, identifier, expires) VALUES (%d, '%s', '%s')",
+            SpyOmsStateMachineLockTableMap::TABLE_NAME,
+            $identifier,
+            static::LOCKED_ENTITY_IDENTIFIER,
+            '2025-01-01 00:00:00',
+        );
+
+        $connection = Propel::getConnection();
+        $connection->query($query);
     }
 
     /**

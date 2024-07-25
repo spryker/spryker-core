@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateInterval;
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Spryker\Zed\Oms\Business\Exception\LockException;
 
 /**
@@ -26,6 +27,11 @@ use Spryker\Zed\Oms\Business\Exception\LockException;
  */
 class TriggerLockerTest extends Unit
 {
+    /**
+     * @var int
+     */
+    protected const INTEGER_OVERFLOW_VALUE = 2147483648;
+
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
      */
@@ -117,5 +123,20 @@ class TriggerLockerTest extends Unit
         $this->tester->assertLockedEntityCount(1);
         $triggerLocker->clearLocks();
         $this->tester->assertLockedEntityCount(0);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBigintLockIdIsSupported(): void
+    {
+        // Act
+        $this->tester->insertOmsStateMachineLockByIdUsingRawQuery(static::INTEGER_OVERFLOW_VALUE);
+
+        $omsStateMachineLockQuery = new SpyOmsStateMachineLockQuery();
+        $lockEntity = $omsStateMachineLockQuery->findOneByIdOmsStateMachineLock(static::INTEGER_OVERFLOW_VALUE);
+
+        //Assert
+        $this->assertNotNull($lockEntity);
     }
 }
