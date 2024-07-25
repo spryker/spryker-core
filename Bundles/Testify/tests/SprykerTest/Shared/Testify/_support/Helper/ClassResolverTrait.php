@@ -73,8 +73,9 @@ trait ClassResolverTrait
     {
         $classNameFromConfiguration = $this->getClassNameFromConfiguration($classNamePattern, $moduleName);
 
+        $config = Configuration::config();
+
         if (!$applicationName) {
-            $config = Configuration::config();
             $namespaceParts = explode('\\', $config['namespace']);
             // When `application` is configured in the codeception.yml use this value instead of guessing it.
             $applicationName = $config['application'] ?? $namespaceParts[1];
@@ -82,6 +83,12 @@ trait ClassResolverTrait
 
         $classNameCandidates = [];
         $classNameCandidates[] = $classNameFromConfiguration;
+
+        if (isset($config['projectNamespaces']) && is_array($config['projectNamespaces'])) {
+            foreach ($config['projectNamespaces'] as $projectNamespace) {
+                $classNameCandidates[] = sprintf($classNamePattern, $projectNamespace, $applicationName, $moduleName);
+            }
+        }
 
         foreach ($this->coreNamespaces as $coreNamespace) {
             $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $applicationName, $moduleName);
