@@ -53,6 +53,10 @@ class MerchantCommissionAdder implements MerchantCommissionAdderInterface
             $merchantCommissionTransfer->getMerchants(),
         );
         foreach ($collectedMerchantCommissionCalculationRequestItems as $merchantCommissionCalculationRequestItem) {
+            if (!$merchantCommissionCalculationRequestItem->getMerchantReference()) {
+                continue;
+            }
+
             if (!$this->isAllowedMerchantItem($merchantCommissionCalculationRequestItem, $merchantReferences)) {
                 continue;
             }

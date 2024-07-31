@@ -439,6 +439,45 @@ class CalculateMerchantCommissionTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCalculatesMerchantCommissionForItemsAndOrderWhenMerchantCommissionRequestDoNotContainMerchantReference(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->createMerchantCommission([
+            MerchantCommissionTransfer::STORE_RELATION => (new StoreRelationTransfer())->addStores($storeTransfer),
+            MerchantCommissionTransfer::MERCHANTS => [],
+        ]);
+        $merchantCommissionCalculationRequestTransfer = (new MerchantCommissionCalculationRequestBuilder([
+            MerchantCommissionCalculationRequestTransfer::ID_SALES_ORDER => 1,
+        ]))->withItem([
+            MerchantCommissionCalculationRequestItemTransfer::ID_SALES_ORDER => 1,
+            MerchantCommissionCalculationRequestItemTransfer::ID_SALES_ORDER_ITEM => 1,
+            MerchantCommissionCalculationRequestItemTransfer::MERCHANT_REFERENCE => null,
+        ])
+            ->withAnotherItem([
+                MerchantCommissionCalculationRequestItemTransfer::ID_SALES_ORDER => 1,
+                MerchantCommissionCalculationRequestItemTransfer::ID_SALES_ORDER_ITEM => 2,
+                MerchantCommissionCalculationRequestItemTransfer::MERCHANT_REFERENCE => static::TEST_MERCHANT_REFERENCE,
+            ])
+            ->withStore($storeTransfer->toArray())
+            ->build();
+
+        $this->tester->setDependency(
+            static::FACADE_RULE_ENGINE,
+            $this->getRuleEngineFacadeMock($merchantCommissionCalculationRequestTransfer->getItems()->getArrayCopy()),
+        );
+
+        // Act
+        $merchantCommissionCalculationResponseTransfer = $this->tester->getFacade()
+            ->calculateMerchantCommission($merchantCommissionCalculationRequestTransfer);
+
+        // Assert
+        $this->assertCount(1, $merchantCommissionCalculationResponseTransfer->getItems());
+    }
+
+    /**
      * @param list<\Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer> $merchantCommissionCalculationRequestItemTransfers
      * @param bool $isSatisfiedBy
      *
