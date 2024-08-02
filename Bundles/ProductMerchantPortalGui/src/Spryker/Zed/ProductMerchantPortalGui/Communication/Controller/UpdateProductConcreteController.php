@@ -313,7 +313,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 'productAttributeTableConfiguration' => $this->getFactory()
                     ->createProductConcreteAttributeGuiTableConfigurationProvider()
                     ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $attributesInitialData),
-                'reservedStock' => $this->getReservedStock($productConcreteTransfer->getSkuOrFail()),
+                'reservedStock' => $this->getReservedStock($productConcreteTransfer),
             ])->getContent(),
         ];
 
@@ -553,19 +553,15 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @param string $productConcreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return float
      */
-    protected function getReservedStock(string $productConcreteSku): float
+    protected function getReservedStock(ProductConcreteTransfer $productConcreteTransfer): float
     {
-        if (!$this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
-            return $this->getReservationQuantity($productConcreteSku, $this->getFactory()->getStoreFacade()->getCurrentStore());
-        }
-
         $reservedStock = 0;
-        foreach ($this->getFactory()->getStoreFacade()->getAllStores() as $storeTransfer) {
-            $reservedStock += $this->getReservationQuantity($productConcreteSku, $storeTransfer);
+        foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
+            $reservedStock += $this->getReservationQuantity($productConcreteTransfer->getSkuOrFail(), $storeTransfer);
         }
 
         return $reservedStock;

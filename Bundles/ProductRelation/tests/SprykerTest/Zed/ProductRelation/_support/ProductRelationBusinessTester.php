@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\ProductRelation;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleBridge;
+use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +30,25 @@ use Codeception\Actor;
 class ProductRelationBusinessTester extends Actor
 {
     use _generated\ProductRelationBusinessTesterActions;
+
+    /**
+     * @var int
+     */
+    public const ID_TEST_LOCALE = 66;
+
+    /**
+     * @return void
+     */
+    public function mockLocale(): void
+    {
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setIdLocale(static::ID_TEST_LOCALE);
+        $productRelationToLocaleBridge = Stub::makeEmpty(
+            ProductRelationToLocaleBridge::class,
+            [
+                'getLocale' => $localeTransfer,
+            ],
+        );
+        $this->setDependency(ProductRelationDependencyProvider::FACADE_LOCALE, $productRelationToLocaleBridge);
+    }
 }

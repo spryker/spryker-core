@@ -10,7 +10,6 @@ namespace Spryker\Zed\Currency\Business\Writer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyEntityManagerInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -35,23 +34,15 @@ class CurrencyStoreWriter implements CurrencyStoreWriterInterface
     protected CurrencyEntityManagerInterface $entityManager;
 
     /**
-     * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
-     */
-    protected CurrencyToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface $currencyRepository
      * @param \Spryker\Zed\Currency\Persistence\CurrencyEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         CurrencyRepositoryInterface $currencyRepository,
-        CurrencyEntityManagerInterface $entityManager,
-        CurrencyToStoreFacadeInterface $storeFacade
+        CurrencyEntityManagerInterface $entityManager
     ) {
         $this->currencyRepository = $currencyRepository;
         $this->entityManager = $entityManager;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -61,10 +52,6 @@ class CurrencyStoreWriter implements CurrencyStoreWriterInterface
      */
     public function updateStoreCurrencies(StoreTransfer $storeTransfer): StoreResponseTransfer
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->getSuccessfulResponse($storeTransfer);
-        }
-
         return $this->getTransactionHandler()->handleTransaction(function () use ($storeTransfer) {
             return $this->executeUpdateStoreCurrenciesTransaction($storeTransfer);
         });

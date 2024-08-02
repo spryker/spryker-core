@@ -12,9 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
-use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
-use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface;
-use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface;
 
 abstract class AbstractRelatedProductTable extends AbstractTable
@@ -27,8 +24,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     public const COL_PRODUCT_ABSTRACT_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
 
     public const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
-
-    public const COL_PRODUCT_ABSTRACT_PRICE = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE;
 
     public const COL_PRODUCT_ABSTRACT_STATUS = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV;
 
@@ -48,16 +43,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $tableQueryBuilder;
 
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
      */
     protected $localeFacade;
@@ -73,35 +58,21 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $idProductLabel;
 
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface
-     */
-    protected ProductLabelGuiToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface $productLabelGuiRepository
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface $storeFacade
      * @param int|null $idProductLabel
      */
     public function __construct(
         RelatedProductTableQueryBuilderInterface $tableQueryBuilder,
-        ProductLabelGuiToMoneyInterface $moneyFacade,
-        ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductLabelGuiToLocaleInterface $localeFacade,
         ProductLabelGuiRepositoryInterface $productLabelGuiRepository,
-        ProductLabelGuiToStoreFacadeInterface $storeFacade,
         ?int $idProductLabel = null
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
-        $this->moneyFacade = $moneyFacade;
-        $this->priceProductFacade = $priceProductFacade;
         $this->localeFacade = $localeFacade;
         $this->productLabelGuiRepository = $productLabelGuiRepository;
         $this->idProductLabel = $idProductLabel;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -150,7 +121,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         return [
             static::COL_PRODUCT_ABSTRACT_NAME => $this->getNameColumn($productAbstractEntity),
             static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoriesColumn($productAbstractEntity),
-            static::COL_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
             static::COL_PRODUCT_ABSTRACT_STATUS => $this->getStatusColumn($productAbstractEntity),
         ];
     }
@@ -169,10 +139,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
             static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoryNameColumn($categoryNames, $productAbstractEntity->getIdProductAbstract()),
             static::COL_PRODUCT_ABSTRACT_STATUS => $this->getStatusColumn($productAbstractEntity),
         ];
-
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $rowData[static::COL_PRODUCT_ABSTRACT_PRICE] = $this->getPriceColumn($productAbstractEntity);
-        }
 
         return $rowData;
     }
@@ -202,24 +168,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         return $productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_NAME,
         );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getPriceColumn(SpyProductAbstract $productAbstractEntity)
-    {
-        $price = $this->priceProductFacade->findPriceBySku($productAbstractEntity->getSku());
-
-        if ($price === null) {
-            return 'N/A';
-        }
-
-        $moneyTransfer = $this->moneyFacade->fromInteger($price);
-
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
 
     /**

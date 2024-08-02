@@ -18,6 +18,7 @@
         "spryker/propel-orm": "^1.1.0",
         "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/twig": "^3.16.0",
         "spryker/util-text": "^1.1.0"
     },

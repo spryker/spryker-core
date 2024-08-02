@@ -59,7 +59,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
         $localeFacade = $this->getFactory()->getLocaleFacade();
         $storeFacade = $this->getFactory()->getStoreFacade();
 
-        if (!$storeFacade->isDynamicStoreEnabled()) {
+        if ($storeFacade->isCurrentStoreDefined()) {
             $response->headers->set('X-Store', $storeFacade->getCurrentStore()->getNameOrFail());
         }
 

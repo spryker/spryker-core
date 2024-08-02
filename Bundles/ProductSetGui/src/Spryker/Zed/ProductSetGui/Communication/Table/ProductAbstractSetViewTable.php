@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -71,21 +70,14 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected $localeTransfer;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
      * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface $storeFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
-        ProductSetGuiToStoreFacadeInterface $storeFacade,
         LocaleTransfer $localeTransfer,
         $idProductSet
     ) {
@@ -93,7 +85,6 @@ class ProductAbstractSetViewTable extends AbstractTable
         $this->localeTransfer = $localeTransfer;
         $this->idProductSet = $idProductSet;
         $this->productAbstractTableHelper = $productAbstractTableHelper;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -183,13 +174,6 @@ class ProductAbstractSetViewTable extends AbstractTable
             '<small>SKU: %s</small><br/>',
             $productAbstractEntity->getSku(),
         );
-
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $rawContentParts[] = sprintf(
-                '<small>Price: %s</small>',
-                $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
-            );
-        }
 
         return '<p>' . implode('<br>', $rawContentParts) . '</p>'
             . $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity);

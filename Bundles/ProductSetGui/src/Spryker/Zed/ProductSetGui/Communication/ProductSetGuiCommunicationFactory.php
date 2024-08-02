@@ -34,7 +34,6 @@ use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetInterface;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToUrlInterface;
 use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetInterface as QueryContainerProductSetGuiToProductSetInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingInterface;
@@ -191,7 +190,6 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->createProductAbstractTableHelper(),
             $localeTransfer,
-            $this->getStoreFacade(),
             $idProductSet,
         );
     }
@@ -207,7 +205,6 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductAbstractSetUpdateTable(
             $this->getQueryContainer(),
             $this->createProductAbstractTableHelper(),
-            $this->getStoreFacade(),
             $localeTransfer,
             $idProductSet,
         );
@@ -224,7 +221,6 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductAbstractSetViewTable(
             $this->getQueryContainer(),
             $this->createProductAbstractTableHelper(),
-            $this->getStoreFacade(),
             $localeTransfer,
             $idProductSet,
         );
@@ -299,8 +295,6 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractTableHelper(
             $this->getProductImageFacade(),
-            $this->getPriceProductFacade(),
-            $this->getMoneyFacade(),
         );
     }
 
@@ -374,13 +368,5 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductSetQueryContainer(): QueryContainerProductSetGuiToProductSetInterface
     {
         return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductSetGuiToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_STORE);
     }
 }

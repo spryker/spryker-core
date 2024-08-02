@@ -32,6 +32,11 @@ class StoreStorageCommunicationTester extends Actor
     use _generated\StoreStorageCommunicationTesterActions;
 
     /**
+     * @var string
+     */
+    public const LOCALE_DE = 'de_DE';
+
+    /**
      * @param int $idStore
      *
      * @return \Orm\Zed\StoreStorage\Persistence\SpyStoreStorage|null

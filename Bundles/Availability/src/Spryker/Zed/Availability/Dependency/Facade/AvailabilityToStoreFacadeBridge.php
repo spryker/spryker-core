@@ -33,11 +33,13 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     }
 
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(bool $fallbackToDefault = false)
     {
-        return $this->storeFacade->getCurrentStore();
+        return $this->storeFacade->getCurrentStore($fallbackToDefault);
     }
 
     /**

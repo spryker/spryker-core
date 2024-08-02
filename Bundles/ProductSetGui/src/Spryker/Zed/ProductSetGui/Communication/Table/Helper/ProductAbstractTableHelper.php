@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductSetGui\Communication\Table\Helper;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface;
 
 class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
@@ -20,28 +18,11 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface $productImageFacade
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface $moneyFacade
      */
-    public function __construct(
-        ProductSetGuiToProductImageInterface $productImageFacade,
-        ProductSetGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductSetGuiToMoneyInterface $moneyFacade
-    ) {
+    public function __construct(ProductSetGuiToProductImageInterface $productImageFacade)
+    {
         $this->productImageFacade = $productImageFacade;
-        $this->priceProductFacade = $priceProductFacade;
-        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -55,22 +36,6 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
             '<img src="%s">',
             $this->getProductPreviewUrl($productAbstractEntity),
         );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string|null
-     */
-    public function getProductPrice(SpyProductAbstract $productAbstractEntity)
-    {
-        $price = $this->priceProductFacade->findPriceBySku($productAbstractEntity->getSku());
-        if ($price === null) {
-            return 'N/A';
-        }
-        $moneyTransfer = $this->moneyFacade->fromInteger($price);
-
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
 
     /**

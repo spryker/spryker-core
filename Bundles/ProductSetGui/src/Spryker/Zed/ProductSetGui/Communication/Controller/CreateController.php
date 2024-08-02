@@ -59,7 +59,6 @@ class CreateController extends AbstractProductSetController
             'productSetFormTabs' => $this->getFactory()->createProductSetFormTabs()->createView(),
             'localeCollection' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'productTable' => $this->getFactory()->createProductTable($localeTransfer)->render(),
-            'isDynamicStoreEnabled' => $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled(),
         ]);
     }
 }

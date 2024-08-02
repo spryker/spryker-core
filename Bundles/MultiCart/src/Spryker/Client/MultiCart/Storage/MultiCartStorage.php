@@ -93,10 +93,6 @@ class MultiCartStorage implements MultiCartStorageInterface
      */
     protected function getQuoteCollectionKey(): string
     {
-        if (!$this->storeClient->isDynamicStoreEnabled()) {
-            return static::SESSION_KEY_QUOTE_COLLECTION;
-        }
-
         return sprintf(
             '%s_%s',
             $this->storeClient->getCurrentStore()->getNameOrFail(),

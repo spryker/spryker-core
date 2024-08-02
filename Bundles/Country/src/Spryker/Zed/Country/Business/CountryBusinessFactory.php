@@ -25,8 +25,6 @@ use Spryker\Zed\Country\Business\Region\RegionWriter;
 use Spryker\Zed\Country\Business\Region\RegionWriterInterface;
 use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidator;
 use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidatorInterface;
-use Spryker\Zed\Country\CountryDependencyProvider;
-use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -86,7 +84,6 @@ class CountryBusinessFactory extends AbstractBusinessFactory
         return new CountryWriter(
             $this->getEntityManager(),
             $this->createCountryReader(),
-            $this->getStoreFacade(),
         );
     }
 
@@ -139,14 +136,6 @@ class CountryBusinessFactory extends AbstractBusinessFactory
      */
     public function createStoreExpander(): StoreExpanderInterface
     {
-        return new StoreExpander($this->getRepository(), $this->getStoreFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
-     */
-    public function getStoreFacade(): CountryToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(CountryDependencyProvider::FACADE_STORE);
+        return new StoreExpander($this->getRepository());
     }
 }

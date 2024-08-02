@@ -44,18 +44,31 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreByName($storeName)
     {
+        $availableLocaleIsoCodes = $this->store->getAvailableLocaleIsoCodesFor($storeName);
+
         $storeTransfer = (new StoreTransfer())
             ->setName($storeName)
             ->setQueuePools($this->store->getQueuePools())
             ->setSelectedCurrencyIsoCode($this->store->getCurrentStoreSelectedCurrencyIsoCode())
             ->setDefaultCurrencyIsoCode($this->store->getDefaultCurrencyFor($storeName))
             ->setAvailableCurrencyIsoCodes($this->store->getAvailableCurrenciesFor($storeName))
-            ->setAvailableLocaleIsoCodes($this->store->getAvailableLocaleIsoCodesFor($storeName))
+            ->setAvailableLocaleIsoCodes($availableLocaleIsoCodes)
+            ->setDefaultLocaleIsoCode($this->findDefaultLocaleIsoCode($availableLocaleIsoCodes))
             ->setStoresWithSharedPersistence($this->store->getStoresWithSharedPersistence())
             ->setCountries($this->store->getCountries())
             ->setTimezone($this->store->getTimezone());
 
         return $this->expandStore($storeTransfer);
+    }
+
+    /**
+     * @param array<string> $availableLocaleIsoCodes
+     *
+     * @return string|null
+     */
+    protected function findDefaultLocaleIsoCode(array $availableLocaleIsoCodes): ?string
+    {
+        return $availableLocaleIsoCodes[0] ?? null;
     }
 
     /**

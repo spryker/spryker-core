@@ -144,7 +144,6 @@ interface CountryFacadeInterface
     /**
      * Specification:
      * - Expands collection of store transfers with country names and codes.
-     * - Expands collection of store transfers only if `Dynamic Store` is enabled.
      *
      * @api
      *

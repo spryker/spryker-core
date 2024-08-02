@@ -88,30 +88,15 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
             return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
         }
 
-        if ($this->storeFacade->isDynamicStoreEnabled()) {
-            $productSchedulePricesForEnable = [];
-
-            if ($this->storeFacade->isCurrentStoreDefined()) {
-                return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($this->storeFacade->getCurrentStore());
-            }
-
-            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-                $productSchedulePricesForEnable[] = $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
-            }
-
-            return array_merge(...$productSchedulePricesForEnable);
+        if ($this->storeFacade->isCurrentStoreDefined()) {
+            return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($this->storeFacade->getCurrentStore());
         }
 
-        return $this->findPriceProductSchedulesToEnableForCurrentStore();
-    }
+        $productSchedulePricesForEnable = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productSchedulePricesForEnable[] = $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
+        }
 
-    /**
-     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
-     */
-    protected function findPriceProductSchedulesToEnableForCurrentStore(): array
-    {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
+        return array_merge(...$productSchedulePricesForEnable);
     }
 }

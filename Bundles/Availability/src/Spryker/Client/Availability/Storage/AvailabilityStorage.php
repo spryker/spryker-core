@@ -62,10 +62,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function getProductAvailability($idProductAbstract)
     {
-        $storeName = null;
-        if ($this->storeClient->isDynamicStoreEnabled()) {
-            $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
-        }
+        $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
 
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale, $storeName);
         $availability = $this->storageClient->get($key);
@@ -100,10 +97,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function getProductAvailabilityFromStorage($idProductAbstract)
     {
-        $storeName = null;
-        if ($this->storeClient->isDynamicStoreEnabled()) {
-            $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
-        }
+        $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
 
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale, $storeName);
         $availability = $this->storageClient->get($key);

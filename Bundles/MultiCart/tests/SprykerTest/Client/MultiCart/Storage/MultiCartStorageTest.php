@@ -39,10 +39,6 @@ class MultiCartStorageTest extends Unit
      */
     public function testSetQuoteCollectionSetsQuoteKeyWithCurrentStorePrefixIfDynamicStoreIsEnabled(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('This test requires DynamicStore to be enabled.');
-        }
-
         //Arrange
         $quoteCollectionTransfer = (new QuoteCollectionTransfer())
             ->addQuote($this->tester->haveQuote())
@@ -73,42 +69,6 @@ class MultiCartStorageTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testSetQuoteCollectionSetsQuoteKeyWithoutCurrentStorePrefixIfDynamicStoreIsDisabled(): void
-    {
-        if ($this->tester->isDynamicStoreEnabled() === true) {
-            $this->markTestSkipped('This test requires DynamicStore to be disabled.');
-        }
-
-        //Arrange
-        $quoteCollectionTransfer = (new QuoteCollectionTransfer())
-            ->addQuote($this->tester->haveQuote())
-            ->addQuote($this->tester->haveQuote());
-        $storeTransfer = $this->tester->getLocator()->store()->client()->getCurrentStore();
-
-        //Assert
-        $storeClientMock = $this->createStoreClientMock();
-        $storeClientMock->expects($this->never())
-            ->method('getCurrentStore');
-
-        $sessionClientMock = $this->createSessionClientMock();
-        $sessionClientMock->expects($this->once())
-            ->method('set')
-            ->willReturnCallback(function (string $quoteCollectionKey) {
-                $this->assertSame($this->tester::SESSION_KEY_QUOTE_COLLECTION, $quoteCollectionKey);
-            });
-
-        //Act
-        $multiCartStorage = new MultiCartStorage(
-            $sessionClientMock,
-            $storeClientMock,
-            $this->createMultiCartConfig(),
-        );
-        $multiCartStorage->setQuoteCollection($quoteCollectionTransfer);
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
      */
     protected function createSessionClientMock(): MultiCartToSessionClientInterface
@@ -122,9 +82,6 @@ class MultiCartStorageTest extends Unit
     protected function createStoreClientMock(): MultiCartToStoreClientInterface
     {
         $storeClientMock = $this->createMock(MultiCartToStoreClientInterface::class);
-        $storeClientMock->expects($this->once())
-            ->method('isDynamicStoreEnabled')
-            ->willReturn($this->tester->isDynamicStoreEnabled());
 
         return $storeClientMock;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Language;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToLocaleServiceInterface;
 
@@ -47,36 +46,23 @@ class LanguageNegotiation implements LanguageNegotiationInterface
     {
         $storeTransfer = $this->storeClient->getCurrentStore();
         $storeLocaleCodes = $storeTransfer->getAvailableLocaleIsoCodes();
+        /** @phpstan-var string $defaultLocaleIsoCode */
+        $defaultLocaleIsoCode = $storeTransfer->getDefaultLocaleIsoCode() ?? current($storeLocaleCodes);
 
-        if (!$acceptLanguage) {
-            return $this->getDefaultLocaleCode($storeTransfer, $storeLocaleCodes);
+        if ($acceptLanguage === '') {
+            return $defaultLocaleIsoCode;
         }
 
         $acceptLanguageTransfer = $this->localeService->getAcceptLanguage($acceptLanguage, array_keys($storeLocaleCodes));
 
         if (!$acceptLanguageTransfer || $acceptLanguageTransfer->getType() === null) {
-            return $this->getDefaultLocaleCode($storeTransfer, $storeLocaleCodes);
+            return $defaultLocaleIsoCode;
         }
 
         if (!isset($storeLocaleCodes[$acceptLanguageTransfer->getType()])) {
-            return $this->getDefaultLocaleCode($storeTransfer, $storeLocaleCodes);
+            return $defaultLocaleIsoCode;
         }
 
         return $storeLocaleCodes[$acceptLanguageTransfer->getType()];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param array<string> $storeLocaleCodes
-     *
-     * @return string
-     */
-    protected function getDefaultLocaleCode(StoreTransfer $storeTransfer, array $storeLocaleCodes): string
-    {
-        if (!$this->storeClient->isDynamicStoreEnabled()) {
-            return array_shift($storeLocaleCodes);
-        }
-
-        return $storeTransfer->getDefaultLocaleIsoCode();
     }
 }

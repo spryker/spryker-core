@@ -284,10 +284,6 @@ class CountryFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithCountriesSuccessful(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $idCountry = $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::ISO2_COUNTRY_DE])->getIdCountryOrFail();
@@ -314,10 +310,6 @@ class CountryFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithCountriesWithoutCountryStoreRelations(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 

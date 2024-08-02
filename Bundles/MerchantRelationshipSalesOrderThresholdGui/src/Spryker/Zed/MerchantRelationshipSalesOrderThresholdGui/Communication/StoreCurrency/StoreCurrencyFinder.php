@@ -46,15 +46,7 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
     public function getCurrencyTransferFromRequestParam(StoreTransfer $storeTransfer, ?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         if (!$storeCurrencyRequestParam) {
-            if (!$this->storeFacade->isDynamicStoreEnabled()) {
-                $currencyTransfer = $this->currencyFacade->getCurrent();
-
-                if ($currencyTransfer->getIdCurrency() !== null) {
-                    return $currencyTransfer;
-                }
-            }
-
-            return $this->currencyFacade->fromIsoCode(current($storeTransfer->getAvailableCurrencyIsoCodes()));
+            return $this->currencyFacade->fromIsoCode($storeTransfer->getDefaultCurrencyIsoCodeOrFail());
         }
 
         [$_, $currencyCode] = explode(
@@ -73,12 +65,7 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
     public function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer
     {
         if (!$storeCurrencyRequestParam) {
-            if (!$this->storeFacade->isDynamicStoreEnabled()) {
-                return $this->storeFacade->getCurrentStore();
-            }
-
-            /** @phpstan-var \Generated\Shared\Transfer\StoreTransfer */
-            return current($this->storeFacade->getAllStores());
+            return $this->storeFacade->getCurrentStore(true);
         }
 
         [$storeName] = explode(

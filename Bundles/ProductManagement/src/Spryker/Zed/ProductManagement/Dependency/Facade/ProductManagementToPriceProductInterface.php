@@ -12,14 +12,6 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 interface ProductManagementToPriceProductInterface
 {
     /**
-     * @param string $sku
-     * @param string|null $priceTypeName
-     *
-     * @return int|null
-     */
-    public function findPriceBySku($sku, $priceTypeName = null): ?int;
-
-    /**
      * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues(): array;

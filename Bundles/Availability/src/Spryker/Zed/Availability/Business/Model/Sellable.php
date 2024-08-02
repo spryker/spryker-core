@@ -393,7 +393,7 @@ class Sellable implements SellableInterface
      */
     public function isProductConcreteAvailable(int $idProductConcrete): bool
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->storeFacade->getCurrentStore(true);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityByIdProductConcreteAndStore($idProductConcrete, $storeTransfer);
 

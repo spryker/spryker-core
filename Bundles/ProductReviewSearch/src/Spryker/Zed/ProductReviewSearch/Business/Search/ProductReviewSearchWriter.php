@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewSearch\Business\Search;
 
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewSearchTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch;
@@ -158,7 +157,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected function mapToSearchData(SpyProductReview $productReviewEntity)
     {
         return [
-            ProductReviewIndexMap::STORE => $this->getStore()->getName(),
+            ProductReviewIndexMap::STORE => $this->storeFacade->getCurrentStore(true)->getName(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
             ProductReviewIndexMap::RATING => $productReviewEntity->getRating(),
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($productReviewEntity),
@@ -193,20 +192,5 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
         $productReviewTransfer->fromArray($spyProductReview->toArray(), true);
 
         return $productReviewTransfer->modifiedToArray();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getStore(): StoreTransfer
-    {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->storeFacade->getCurrentStore();
-        }
-
-        /** @phpstan-var non-empty-array<int, \Generated\Shared\Transfer\StoreTransfer> $storeTransfers */
-        $storeTransfers = $this->storeFacade->getAllStores();
-
-        return reset($storeTransfers);
     }
 }

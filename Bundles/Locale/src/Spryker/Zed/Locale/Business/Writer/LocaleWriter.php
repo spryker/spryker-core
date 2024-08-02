@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface;
-use Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface;
 use Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface;
 
 class LocaleWriter implements LocaleWriterInterface
@@ -30,23 +29,15 @@ class LocaleWriter implements LocaleWriterInterface
     protected LocaleEntityManagerInterface $localeEntityManager;
 
     /**
-     * @var \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface
-     */
-    protected LocaleToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Locale\Business\Reader\LocaleReaderInterface $localeReader
      * @param \Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface $localeEntityManager
-     * @param \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         LocaleReaderInterface $localeReader,
-        LocaleEntityManagerInterface $localeEntityManager,
-        LocaleToStoreFacadeInterface $storeFacade
+        LocaleEntityManagerInterface $localeEntityManager
     ) {
         $this->localeReader = $localeReader;
         $this->localeEntityManager = $localeEntityManager;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -80,10 +71,6 @@ class LocaleWriter implements LocaleWriterInterface
      */
     public function updateStoreLocales(StoreTransfer $storeTransfer): StoreResponseTransfer
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->getSuccessfulResponse($storeTransfer);
-        }
-
         $localeTransfers = $this->localeReader->getLocaleCollection(
             (new LocaleCriteriaTransfer())
                 ->setLocaleConditions((new LocaleConditionsTransfer())
@@ -124,10 +111,6 @@ class LocaleWriter implements LocaleWriterInterface
      */
     public function updateStoreDefaultLocale(StoreTransfer $storeTransfer): StoreResponseTransfer
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->getSuccessfulResponse($storeTransfer);
-        }
-
         $localeTransfer = $this->localeReader->getLocaleByName($storeTransfer->getDefaultLocaleIsoCodeOrFail());
 
         $this->localeEntityManager->updateStoreDefaultLocale(

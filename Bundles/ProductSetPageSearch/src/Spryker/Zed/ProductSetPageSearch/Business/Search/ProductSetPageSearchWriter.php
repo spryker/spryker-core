@@ -92,16 +92,8 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetEntities = $this->findProductSetLocalizedEntities($productSetIds);
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
 
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $storeTransfer = $this->storeFacade->getCurrentStore();
-            $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
-
-            return;
-        }
-
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
-        }
+        $storeTransfer = $this->storeFacade->getCurrentStore(true);
+        $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
     }
 
     /**

@@ -43,21 +43,22 @@ class LanguageNegotiation implements LanguageNegotiationInterface
     {
         $storeTransfer = $this->storeFacade->getCurrentStore(true);
         $storeLocaleCodes = $storeTransfer->getAvailableLocaleIsoCodes();
-        if ($this->storeFacade->isDynamicStoreEnabled()) {
-            $storeLocaleCodes = $this->getLocaleCodesIndexedByLanguageCode($storeLocaleCodes);
-        }
+        $storeLocaleCodes = $this->getLocaleCodesIndexedByLanguageCode($storeLocaleCodes);
 
-        if (!$acceptLanguage) {
+        if ($acceptLanguage === '') {
+            /** @phpstan-var string */
             return array_shift($storeLocaleCodes);
         }
 
         $acceptLanguageTransfer = $this->localeService->getAcceptLanguage($acceptLanguage, array_keys($storeLocaleCodes));
 
         if (!$acceptLanguageTransfer || $acceptLanguageTransfer->getType() === null) {
+            /** @phpstan-var string */
             return array_shift($storeLocaleCodes);
         }
 
         if (!isset($storeLocaleCodes[$acceptLanguageTransfer->getType()])) {
+            /** @phpstan-var string */
             return array_shift($storeLocaleCodes);
         }
 

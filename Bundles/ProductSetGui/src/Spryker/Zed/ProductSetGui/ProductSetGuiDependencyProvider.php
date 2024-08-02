@@ -14,7 +14,6 @@ use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductBridgeProductFacade;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetBridge;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToUrlBridge;
 use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductBridge;
 use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetBridge as ProductSetGuiToProductSetQueryContainerBridge;
@@ -25,11 +24,6 @@ use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingBrid
  */
 class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const FACADE_STORE = 'FACADE_STORE';
-
     /**
      * @var string
      */
@@ -88,7 +82,6 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideProductImageFacade($container);
         $this->providePriceProductFacade($container);
         $this->provideMoneyFacade($container);
-        $this->addStoreFacade($container);
 
         $this->provideUtilEncodingService($container);
 
@@ -214,21 +207,5 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductSetGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         });
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new ProductSetGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade(),
-            );
-        });
-
-        return $container;
     }
 }

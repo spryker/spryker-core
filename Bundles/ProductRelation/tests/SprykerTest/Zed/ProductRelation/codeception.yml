@@ -27,6 +27,8 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
     Business:
         path: Business
         actor: ProductRelationBusinessTester

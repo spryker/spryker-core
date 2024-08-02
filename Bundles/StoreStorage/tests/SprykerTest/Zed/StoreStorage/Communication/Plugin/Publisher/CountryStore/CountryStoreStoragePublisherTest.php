@@ -104,6 +104,9 @@ class CountryStoreStoragePublisherTest extends Unit
      */
     protected function getStoreToStoreInterface(): StoreToStoreInterface
     {
-        return $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock = $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock->method('getAvailableLocaleIsoCodesFor')->willReturn([$this->tester::LOCALE_DE]);
+
+        return $storeToStoreInterfaceMock;
     }
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Country\Business\Exception\CountryExistsException;
-use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Country\Persistence\CountryEntityManagerInterface;
 
 class CountryWriter implements CountryWriterInterface
@@ -27,23 +26,15 @@ class CountryWriter implements CountryWriterInterface
     protected CountryReaderInterface $countryReader;
 
     /**
-     * @var \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
-     */
-    protected CountryToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Country\Persistence\CountryEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Country\Business\Country\CountryReaderInterface $countryReader
-     * @param \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         CountryEntityManagerInterface $entityManager,
-        CountryReaderInterface $countryReader,
-        CountryToStoreFacadeInterface $storeFacade
+        CountryReaderInterface $countryReader
     ) {
         $this->entityManager = $entityManager;
         $this->countryReader = $countryReader;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -65,10 +56,6 @@ class CountryWriter implements CountryWriterInterface
      */
     public function updateStoreCountries(StoreTransfer $storeTransfer): StoreResponseTransfer
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->getSuccessfulResponse($storeTransfer);
-        }
-
         $countryCollectionTransfer = $this->countryReader->getCountriesByIso2Codes($storeTransfer->getCountries());
 
         $countryIds = [];

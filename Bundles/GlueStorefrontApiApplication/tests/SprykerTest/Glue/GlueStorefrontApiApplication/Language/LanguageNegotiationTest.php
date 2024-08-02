@@ -91,7 +91,7 @@ class LanguageNegotiationTest extends Unit
     ): void {
         // Arrange
         $storeTransfer = $this->createStoreTransfer(static::AVAILABLE_LOCALE_ISO_CODES_DYNAMIC_STORE);
-        $storeFacadeMock = $this->createStoreClientMock($storeTransfer, true);
+        $storeFacadeMock = $this->createStoreClientMock($storeTransfer);
 
         $languageNegotiation = new LanguageNegotiation(
             $storeFacadeMock,
@@ -156,20 +156,17 @@ class LanguageNegotiationTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param bool $isDynamicStoreEnabled
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientInterface
      */
     protected function createStoreClientMock(
-        StoreTransfer $storeTransfer,
-        bool $isDynamicStoreEnabled = false
+        StoreTransfer $storeTransfer
     ): GlueStorefrontApiApplicationToStoreClientInterface {
         $storeClientMock = $this->getMockBuilder(GlueStorefrontApiApplicationToStoreClientInterface::class)
-            ->onlyMethods(['getCurrentStore', 'isDynamicStoreEnabled'])
+            ->onlyMethods(['getCurrentStore'])
             ->getMock();
 
         $storeClientMock->method('getCurrentStore')->willReturn($storeTransfer);
-        $storeClientMock->method('isDynamicStoreEnabled')->willReturn($isDynamicStoreEnabled);
 
         return $storeClientMock;
     }

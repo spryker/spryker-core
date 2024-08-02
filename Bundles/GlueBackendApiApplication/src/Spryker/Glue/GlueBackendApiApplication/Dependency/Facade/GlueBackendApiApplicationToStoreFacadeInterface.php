@@ -17,9 +17,4 @@ interface GlueBackendApiApplicationToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool;
 }

@@ -80,7 +80,6 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
         return new CurrencyStoreWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getStoreFacade(),
         );
     }
 
@@ -89,7 +88,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
      */
     public function createStoreExpander(): StoreExpanderInterface
     {
-        return new StoreExpander($this->getRepository(), $this->getStoreFacade());
+        return new StoreExpander($this->getRepository());
     }
 
     /**

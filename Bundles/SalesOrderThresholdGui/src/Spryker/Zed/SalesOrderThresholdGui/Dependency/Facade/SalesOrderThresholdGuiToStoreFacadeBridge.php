@@ -45,14 +45,6 @@ class SalesOrderThresholdGuiToStoreFacadeBridge implements SalesOrderThresholdGu
     }
 
     /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeFacade->isDynamicStoreEnabled();
-    }
-
-    /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array

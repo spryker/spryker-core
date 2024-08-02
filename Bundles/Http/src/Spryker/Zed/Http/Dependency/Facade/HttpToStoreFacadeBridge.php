@@ -37,8 +37,8 @@ class HttpToStoreFacadeBridge implements HttpToStoreFacadeInterface
     /**
      * @return bool
      */
-    public function isDynamicStoreEnabled(): bool
+    public function isCurrentStoreDefined(): bool
     {
-        return $this->storeFacade->isDynamicStoreEnabled();
+        return $this->storeFacade->isCurrentStoreDefined();
     }
 }

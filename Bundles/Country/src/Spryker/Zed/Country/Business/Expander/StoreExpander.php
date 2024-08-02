@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Country\Business\Expander;
 
-use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class StoreExpander implements StoreExpanderInterface
@@ -28,20 +27,12 @@ class StoreExpander implements StoreExpanderInterface
     protected CountryRepositoryInterface $countryRepository;
 
     /**
-     * @var \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
-     */
-    protected CountryToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Country\Persistence\CountryRepositoryInterface $countryRepository
-     * @param \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        CountryRepositoryInterface $countryRepository,
-        CountryToStoreFacadeInterface $storeFacade
+        CountryRepositoryInterface $countryRepository
     ) {
         $this->countryRepository = $countryRepository;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -51,10 +42,6 @@ class StoreExpander implements StoreExpanderInterface
      */
     public function expandStoreTransfersWithCountries(array $storeTransfers): array
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $storeTransfers;
-        }
-
         $storeIds = [];
 
         foreach ($storeTransfers as $storeTransfer) {

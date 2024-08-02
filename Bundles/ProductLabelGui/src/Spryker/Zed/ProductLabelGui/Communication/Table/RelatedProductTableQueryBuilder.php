@@ -30,11 +30,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     /**
      * @var string
      */
-    public const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
-
-    /**
-     * @var string
-     */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
 
     /**

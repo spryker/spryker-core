@@ -156,11 +156,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new AvailableProductTable(
             $this->createRelatedProductTableQueryBuilder(),
-            $this->getMoneyFacade(),
-            $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
-            $this->getStoreFacade(),
             $idProductLabel,
         );
     }
@@ -174,11 +171,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new AssignedProductTable(
             $this->createRelatedProductTableQueryBuilder(),
-            $this->getMoneyFacade(),
-            $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
-            $this->getStoreFacade(),
             $idProductLabel,
         );
     }
@@ -192,11 +186,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RelatedProductOverviewTable(
             $this->createRelatedProductTableQueryBuilder(),
-            $this->getMoneyFacade(),
-            $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
-            $this->getStoreFacade(),
             $idProductLabel,
         );
     }

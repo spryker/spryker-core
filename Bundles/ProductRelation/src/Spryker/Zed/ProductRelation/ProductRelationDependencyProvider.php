@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelation;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleBridge;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreFacadeBridge;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchBridge;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductBridge as QueryContainerProductRelationToProductBridge;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToPropelQueryBuilderBridge;
@@ -25,11 +24,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
-
-    /**
-     * @var string
-     */
-    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -77,7 +71,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerPropelQueryBuilder($container);
 
         $container = $this->addFacadeLocale($container);
-        $container = $this->addFacadeStore($container);
         $container = $this->addServiceUtilEncoding($container);
 
         return $container;
@@ -125,22 +118,6 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductRelationToLocaleBridge(
                 $container->getLocator()->locale()->facade(),
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addFacadeStore(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new ProductRelationToStoreFacadeBridge(
-                $container->getLocator()->store()->facade(),
             );
         });
 

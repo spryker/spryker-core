@@ -38,9 +38,9 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 class ProductRelationFacadeTest extends Unit
 {
     /**
-     * @var int
+     * @var \SprykerTest\Zed\ProductRelation\ProductRelationBusinessTester
      */
-    public const ID_TEST_LOCALE = 66;
+    protected $tester;
 
     /**
      * @return void
@@ -49,6 +49,7 @@ class ProductRelationFacadeTest extends Unit
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
+        $this->tester->mockLocale();
 
         $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
 
@@ -62,6 +63,7 @@ class ProductRelationFacadeTest extends Unit
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
+        $this->tester->mockLocale();
 
         $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
@@ -85,6 +87,7 @@ class ProductRelationFacadeTest extends Unit
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
+        $this->tester->mockLocale();
 
         $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
         $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
@@ -103,6 +106,7 @@ class ProductRelationFacadeTest extends Unit
     {
         $productRelationFacade = $this->createProductRelationFacade();
         $productRelationTransfer = $this->createProductRelationTransfer(123);
+        $this->tester->mockLocale();
 
         $productRelationFacade->createProductRelation($productRelationTransfer);
 
@@ -111,6 +115,27 @@ class ProductRelationFacadeTest extends Unit
             $productRelationTransfer->getProductRelationType()->getKey(),
             $productRelationFacade->getProductRelationTypeList()[0]->getKey(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteProductRelationShouldDropExistingRelationFromPersistence(): void
+    {
+        $productRelationFacade = $this->createProductRelationFacade();
+        $productRelationTransfer = $this->createProductRelationTransfer(123);
+        $this->tester->mockLocale();
+
+        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
+        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
+        $idProductRelation = $productRelationTransfer->getIdProductRelation();
+
+        $isDeleted = $productRelationFacade->deleteProductRelation($idProductRelation)->getIsSuccessful();
+
+        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation)->getProductRelation();
+
+        $this->assertNull($productRelationTransfer);
+        $this->assertTrue($isDeleted);
     }
 
     /**
@@ -137,7 +162,7 @@ class ProductRelationFacadeTest extends Unit
         $categoryLocalizedAttributesTransfer->setName($categoryName);
 
         $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setIdLocale(static::ID_TEST_LOCALE);
+        $localeTransfer->setIdLocale($this->tester::ID_TEST_LOCALE);
         $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
 
         $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
@@ -150,26 +175,6 @@ class ProductRelationFacadeTest extends Unit
         $productCategoryFacade->createProductCategoryMappings($categoryTransfer->getIdCategory(), $productToAssign);
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteProductRelationShouldDropExistingRelationFromPersistence(): void
-    {
-        $productRelationFacade = $this->createProductRelationFacade();
-        $productRelationTransfer = $this->createProductRelationTransfer(123);
-
-        $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
-        $productRelationTransfer = $productRelationResponseTransfer->getProductRelation();
-        $idProductRelation = $productRelationTransfer->getIdProductRelation();
-
-        $deleted = $productRelationFacade->deleteProductRelation($idProductRelation)->getIsSuccessful();
-
-        $productRelationTransfer = $productRelationFacade->findProductRelationById($idProductRelation)->getProductRelation();
-
-        $this->assertNull($productRelationTransfer);
-        $this->assertTrue($deleted);
     }
 
     /**

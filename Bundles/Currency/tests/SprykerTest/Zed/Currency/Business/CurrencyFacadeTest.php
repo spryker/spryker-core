@@ -204,10 +204,6 @@ class CurrencyFacadeTest extends Unit
      */
     public function testUpdateStoreCountriesWithAddingNewAndRemovingOldRelations(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_NAME_DE,
@@ -239,10 +235,6 @@ class CurrencyFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithCurrenciesSuccessful(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
@@ -270,10 +262,6 @@ class CurrencyFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithCurrenciesSuccessfulWithoutCurrencyStoreRelations(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 

@@ -19,5 +19,5 @@ interface HttpToStoreFacadeInterface
     /**
      * @return bool
      */
-    public function isDynamicStoreEnabled(): bool;
+    public function isCurrentStoreDefined(): bool;
 }

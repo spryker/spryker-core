@@ -25,26 +25,12 @@ class ProductReviewSearchToStoreFacadeBridge implements ProductReviewSearchToSto
     }
 
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer
     {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeFacade->isDynamicStoreEnabled();
-    }
-
-    /**
-     * @return array<\Generated\Shared\Transfer\StoreTransfer>
-     */
-    public function getAllStores(): array
-    {
-        return $this->storeFacade->getAllStores();
+        return $this->storeFacade->getCurrentStore($fallbackToDefault);
     }
 }

@@ -19,9 +19,11 @@ interface AvailabilityToStoreFacadeInterface
     public function getStoreById($idStore);
 
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(bool $fallbackToDefault = false);
 
     /**
      * @param string $storeName

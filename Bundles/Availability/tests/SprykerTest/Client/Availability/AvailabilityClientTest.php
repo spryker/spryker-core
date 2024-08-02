@@ -133,9 +133,6 @@ class AvailabilityClientTest extends Unit
 
         $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
 
-        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
-            ->willReturn(true);
-
         $availabilityToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
 
@@ -168,14 +165,10 @@ class AvailabilityClientTest extends Unit
             ->with(
                 $this->greaterThan(0),
                 $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
-                $this->isNull(),
             )
             ->willReturn($this->tester::MOCK_RETURN_KEY);
 
         $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
-
-        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
-            ->willReturn(false);
 
         $availabilityToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
@@ -214,9 +207,6 @@ class AvailabilityClientTest extends Unit
 
         $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
 
-        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
-            ->willReturn(true);
-
         $availabilityToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
 
@@ -249,14 +239,10 @@ class AvailabilityClientTest extends Unit
             ->with(
                 $this->greaterThan(0),
                 $this->stringContains($this->tester::DEFAULT_LOCALE_SHORT_NAME),
-                $this->isNull(),
             )
             ->willReturn($this->tester::MOCK_RETURN_KEY);
 
         $availabilityToStoreClientMock = $this->getAvailabilityToStoreClientMock();
-
-        $availabilityToStoreClientMock->method('isDynamicStoreEnabled')
-            ->willReturn(false);
 
         $availabilityToStoreClientMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())->setName($this->tester::DEFAULT_STORE_NAME));
@@ -396,7 +382,7 @@ class AvailabilityClientTest extends Unit
     protected function getAvailabilityToStoreClientMock(): AvailabilityToStoreClientInterface
     {
         $availabilityToStoreClientMock = $this->getMockBuilder(AvailabilityToStoreClientInterface::class)
-            ->setMethods(['isDynamicStoreEnabled', 'getCurrentStore'])
+            ->setMethods(['getCurrentStore'])
             ->disableOriginalConstructor()
             ->getMock();
 

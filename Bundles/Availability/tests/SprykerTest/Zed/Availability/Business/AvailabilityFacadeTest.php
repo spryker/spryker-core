@@ -629,10 +629,6 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testIsProductConcreteAvailable(): void
     {
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $this->markTestSkipped('Deprecated code is not used with Dynamic Store');
-        }
-
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConcreteTransfer2 = $this->tester->haveProduct();
@@ -670,9 +666,7 @@ class AvailabilityFacadeTest extends Unit
             ['is_never_out_of_stock' => true],
             $storeTransfer,
         );
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $productConcreteTransfer->addStores($storeTransfer);
-        }
+        $productConcreteTransfer->addStores($storeTransfer);
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -696,9 +690,7 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 2],
             $storeTransfer,
         );
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $productConcreteTransfer->addStores($storeTransfer);
-        }
+        $productConcreteTransfer->addStores($storeTransfer);
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -722,9 +714,7 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 0],
             $storeTransfer,
         );
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $productConcreteTransfer->addStores($storeTransfer);
-        }
+        $productConcreteTransfer->addStores($storeTransfer);
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -742,9 +732,7 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $productConcreteTransfer->addStores($storeTransfer);
-        }
+        $productConcreteTransfer->addStores($storeTransfer);
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
@@ -777,10 +765,8 @@ class AvailabilityFacadeTest extends Unit
             ['quantity' => 2],
             $storeTransfer,
         );
-        if ($this->tester->isDynamicStoreEnabled()) {
-            $firstProductConcreteTransfer->addStores($storeTransfer);
-            $secondProductConcreteTransfer->addStores($storeTransfer);
-        }
+        $firstProductConcreteTransfer->addStores($storeTransfer);
+        $secondProductConcreteTransfer->addStores($storeTransfer);
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()

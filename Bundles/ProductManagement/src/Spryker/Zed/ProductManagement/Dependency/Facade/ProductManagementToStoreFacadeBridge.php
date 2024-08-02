@@ -25,18 +25,12 @@ class ProductManagementToStoreFacadeBridge implements ProductManagementToStoreFa
     }
 
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer
     {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeFacade->isDynamicStoreEnabled();
+        return $this->storeFacade->getCurrentStore($fallbackToDefault);
     }
 }

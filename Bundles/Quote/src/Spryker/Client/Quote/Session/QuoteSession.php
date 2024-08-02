@@ -162,10 +162,6 @@ class QuoteSession implements QuoteSessionInterface
      */
     protected function getQuoteSessionIdentifier(): string
     {
-        if (!$this->storeClient->isDynamicStoreEnabled()) {
-            return static::QUOTE_SESSION_IDENTIFIER;
-        }
-
         return sprintf(
             '%s %s',
             $this->storeClient->getCurrentStore()->getNameOrFail(),

@@ -13,9 +13,4 @@ interface RestRequestValidatorToStoreFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool;
 }

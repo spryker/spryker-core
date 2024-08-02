@@ -39,12 +39,4 @@ class ProductMerchantPortalGuiToStoreFacadeBridge implements ProductMerchantPort
     {
         return $this->storeFacade->getCurrentStore();
     }
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeFacade->isDynamicStoreEnabled();
-    }
 }

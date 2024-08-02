@@ -67,6 +67,7 @@ class CreateProductRelationTest extends Unit
     {
         // Arrange
         $this->tester->ensureProductRelationTableIsEmpty();
+        $this->tester->mockLocale();
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',

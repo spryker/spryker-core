@@ -168,7 +168,7 @@ class StoreInfoHeaderEventDispatcherPluginTest extends Unit
      */
     protected function setStoreDependency(): void
     {
-        $httpToStoreFacadeMock = $this->getMockBuilder(HttpToStoreFacadeInterface::class)->onlyMethods(['getCurrentStore', 'isDynamicStoreEnabled'])->getMock();
+        $httpToStoreFacadeMock = $this->getMockBuilder(HttpToStoreFacadeInterface::class)->onlyMethods(['getCurrentStore', 'isCurrentStoreDefined'])->getMock();
 
         $httpToStoreFacadeMock->method('getCurrentStore')
             ->willReturn((new StoreTransfer())->setName(static::DEFAULT_STORE));

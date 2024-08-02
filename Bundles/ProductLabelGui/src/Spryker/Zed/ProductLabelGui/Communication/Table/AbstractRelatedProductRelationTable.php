@@ -47,10 +47,6 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV => 'Status',
         ];
 
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $header[RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE] = 'Price';
-        }
-
         $config->setHeader($header);
     }
 
@@ -168,7 +164,6 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
                 SpyProductAbstractTableMap::COL_SKU => $productAbstractEntity->getSku(),
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $this->getNameColumn($productAbstractEntity),
                 RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV => $this->getCategoriesColumn($productAbstractEntity),
-                RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
                 RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV => $this->getStatusColumn($productAbstractEntity),
             ];
         }

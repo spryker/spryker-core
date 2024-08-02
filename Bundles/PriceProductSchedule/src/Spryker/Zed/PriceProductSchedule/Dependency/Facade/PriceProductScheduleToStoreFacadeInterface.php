@@ -24,11 +24,6 @@ interface PriceProductScheduleToStoreFacadeInterface
     public function findStoreByName(string $storeName): ?StoreTransfer;
 
     /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool;
-
-    /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array;

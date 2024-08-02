@@ -194,7 +194,7 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockStore = $this->createPartialMock(
             RestRequestValidatorToStoreFacadeInterface::class,
             [
-                'getAllStores', 'isDynamicStoreEnabled',
+                'getAllStores',
             ],
         );
 

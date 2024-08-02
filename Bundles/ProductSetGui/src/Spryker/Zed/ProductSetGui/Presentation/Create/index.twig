@@ -17,13 +17,10 @@
     {{ form_start(productSetForm) }}
     {{ form_errors(productSetForm) }}
 
-    {% set isDynamicStoreEnabled = isDynamicStoreEnabled | default(false) %}
-
     {{ tabs(productSetFormTabs, {
         'productSetForm': productSetForm,
         'localeCollection': localeCollection,
         'productTable': productTable,
-        'isDynamicStoreEnabled': isDynamicStoreEnabled,
     }) }}
 
     {{ form_end(productSetForm) }}

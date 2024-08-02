@@ -155,7 +155,6 @@ interface LocaleFacadeInterface
     /**
      * Specification:
      * - Expands collection of store transfers with available locale codes.
-     * - Expands collection only if `Dynamic Store` is enabled
      *
      * @api
      *

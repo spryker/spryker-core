@@ -21,13 +21,6 @@ interface ProductAbstractTableHelperInterface
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
-     * @return string|null
-     */
-    public function getProductPrice(SpyProductAbstract $productAbstractEntity);
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
      * @return string
      */
     public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity);

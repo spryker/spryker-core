@@ -31,12 +31,4 @@ class GlueStorefrontApiApplicationToStoreClientBridge implements GlueStorefrontA
     {
         return $this->storeClient->getCurrentStore();
     }
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeClient->isDynamicStoreEnabled();
-    }
 }

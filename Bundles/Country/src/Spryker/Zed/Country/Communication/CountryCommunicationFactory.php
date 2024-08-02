@@ -9,8 +9,6 @@ namespace Spryker\Zed\Country\Communication;
 
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
-use Spryker\Zed\Country\CountryDependencyProvider;
-use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -37,13 +35,5 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
     public function getCountryQuery(): SpyCountryQuery
     {
         return SpyCountryQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
-     */
-    public function getStoreFacade(): CountryToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(CountryDependencyProvider::FACADE_STORE);
     }
 }

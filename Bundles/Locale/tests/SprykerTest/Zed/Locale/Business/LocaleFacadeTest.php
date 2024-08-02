@@ -124,10 +124,6 @@ class LocaleFacadeTest extends Unit
      */
     public function testUpdateStoreLocalesWithAddingNewAndRemovingOldRelations(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->deleteLocaleStore($storeTransfer->getIdStoreOrFail());
@@ -156,10 +152,6 @@ class LocaleFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithLocalesSuccessful(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
@@ -182,10 +174,6 @@ class LocaleFacadeTest extends Unit
      */
     public function testExpandStoreTransfersWithLocalesWithoutLocaleStoreRelations(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
@@ -266,10 +254,6 @@ class LocaleFacadeTest extends Unit
      */
     public function testUpdateStoreDefaultLocaleSuccessful(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
-        }
-
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $idLocaleDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE])->getIdLocaleOrFail();

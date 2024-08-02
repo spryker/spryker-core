@@ -65,10 +65,6 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
     public function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer
     {
         if (!$storeCurrencyRequestParam) {
-            if (!$this->storeFacade->isDynamicStoreEnabled()) {
-                return $this->storeFacade->getCurrentStore();
-            }
-
             return $this->storeFacade->getCurrentStore(true);
         }
 

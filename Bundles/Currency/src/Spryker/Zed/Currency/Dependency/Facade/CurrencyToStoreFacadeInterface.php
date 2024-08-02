@@ -34,9 +34,4 @@ interface CurrencyToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById(int $idStore): StoreTransfer;
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool;
 }

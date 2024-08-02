@@ -33,6 +33,7 @@
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdLocalizedMessage">

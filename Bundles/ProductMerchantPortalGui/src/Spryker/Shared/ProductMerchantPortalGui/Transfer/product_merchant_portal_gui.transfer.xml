@@ -357,6 +357,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="stocks" type="StockProduct[]" singular="stock"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeCollection">

@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
 use Spryker\Zed\ProductSetGui\Communication\Form\Table\ProductAbstractSetUpdateFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -44,11 +43,6 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      * @var string
      */
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-
-    /**
-     * @var string
-     */
-    public const COL_PRICE = 'price';
 
     /**
      * @var string
@@ -86,21 +80,14 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     protected $localeTransfer;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface
-     */
-    protected ProductSetGuiToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
      * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface $storeFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
-        ProductSetGuiToStoreFacadeInterface $storeFacade,
         LocaleTransfer $localeTransfer,
         $idProductSet
     ) {
@@ -108,7 +95,6 @@ class ProductAbstractSetUpdateTable extends AbstractTable
         $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
         $this->idProductSet = $idProductSet;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -128,10 +114,6 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_SKU => 'SKU',
             static::COL_NAME => 'Name',
         ];
-
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $header[static::COL_PRICE] = 'Price';
-        }
 
         $header = array_merge($header, [
             static::COL_STATUS => 'Status',
@@ -202,10 +184,6 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             static::COL_POSITION => $this->getPositionField($productAbstractEntity),
             static::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
         ];
-
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $row[static::COL_PRICE] = $this->productAbstractTableHelper->getProductPrice($productAbstractEntity);
-        }
 
         return $row;
     }

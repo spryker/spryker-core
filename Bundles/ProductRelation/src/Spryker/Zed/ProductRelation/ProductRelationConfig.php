@@ -73,10 +73,18 @@ class ProductRelationConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement in the next Major release.
+     *
+     * @param string|null $locale
+     *
      * @return string
      */
-    public function getFallbackLocale(): string
+    public function getFallbackLocale(?string $locale): string
     {
+        if ($locale && self::LOCALE_FALLBACK === static::LOCALE_FALLBACK) { // phpcs:ignore
+            return $locale;
+        }
+
         return static::LOCALE_FALLBACK;
     }
 }

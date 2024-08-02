@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Locale\Business\Expander;
 
-use Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface;
 use Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface;
 
 class StoreExpander implements StoreExpanderInterface
@@ -18,18 +17,11 @@ class StoreExpander implements StoreExpanderInterface
     protected LocaleRepositoryInterface $localeRepository;
 
     /**
-     * @var \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface
-     */
-    protected LocaleToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface $localeRepository
-     * @param \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface $storeFacade
      */
-    public function __construct(LocaleRepositoryInterface $localeRepository, LocaleToStoreFacadeInterface $storeFacade)
+    public function __construct(LocaleRepositoryInterface $localeRepository)
     {
         $this->localeRepository = $localeRepository;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -39,10 +31,6 @@ class StoreExpander implements StoreExpanderInterface
      */
     public function expandStoreTransfersWithLocales(array $storeTransfers): array
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $storeTransfers;
-        }
-
         $storeIds = [];
 
         foreach ($storeTransfers as $storeTransfer) {

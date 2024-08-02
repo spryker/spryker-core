@@ -5,7 +5,7 @@
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
         <property name="selectedCurrencyIsoCode" type="string"/>
-        <property name="defaultCurrencyIsoCode" type="string" deprecated="Will be empty after dynamic store enablement"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
         <property name="defaultLocaleIsoCode" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>

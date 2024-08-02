@@ -38,7 +38,6 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
         return new LocaleWriter(
             $this->createLocaleReader(),
             $this->getEntityManager(),
-            $this->getStoreFacade(),
         );
     }
 
@@ -103,7 +102,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
      */
     public function createStoreExpander(): StoreExpanderInterface
     {
-        return new StoreExpander($this->getRepository(), $this->getStoreFacade());
+        return new StoreExpander($this->getRepository());
     }
 
     /**

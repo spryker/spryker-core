@@ -43,6 +43,11 @@ class StoreFacadeTest extends Unit
     protected const US_STORE_NAME = 'US';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
+    /**
      * @uses \Spryker\Zed\Store\Business\Writer\StoreWriter::ERROR_MESSAGE_NAME_IS_NOT_UNIQUE
      *
      * @var string
@@ -633,7 +638,10 @@ class StoreFacadeTest extends Unit
      */
     protected function getStoreToStoreInterface(): StoreToStoreInterface
     {
-        return $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock = $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock->method('getAvailableLocaleIsoCodesFor')->willReturn([static::LOCALE_DE]);
+
+        return $storeToStoreInterfaceMock;
     }
 
     /**

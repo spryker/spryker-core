@@ -118,9 +118,8 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             $this->headers,
         );
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+
+        $this->mockStore();
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -147,9 +146,8 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+
+        $this->mockStore();
 
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
@@ -183,9 +181,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+
+        $this->mockStore();
+
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -219,9 +217,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+
+        $this->mockStore();
+
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -249,9 +247,8 @@ class GlueControllerFilterPluginTest extends Unit
 
         $request->attributes->add($this->attributes + [RequestConstantsInterface::ATTRIBUTE_ID => '1']);
 
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+        $this->mockStore();
+
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -287,9 +284,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-        if ($this->isDynamicStoreEnabled()) {
-            $this->mockDinamicStore();
-        }
+
+        $this->mockStore();
+
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -349,7 +346,7 @@ class GlueControllerFilterPluginTest extends Unit
     /**
      * @return void
      */
-    protected function mockDinamicStore(): void
+    protected function mockStore(): void
     {
         $glueApplicationToStoreClientBridge = $this->createMock(GlueApplicationToStoreClientBridge::class);
         $storeTransfer = new StoreTransfer();
@@ -358,14 +355,7 @@ class GlueControllerFilterPluginTest extends Unit
         $glueApplicationToStoreClientBridge
             ->method('getCurrentStore')
             ->willReturn($storeTransfer);
-        $this->tester->setDependency(GlueApplicationDependencyProvider::CLIENT_STORE, $glueApplicationToStoreClientBridge);
-    }
 
-    /**
-     * @return bool
-     */
-    protected function isDynamicStoreEnabled(): bool
-    {
-        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+        $this->tester->setDependency(GlueApplicationDependencyProvider::CLIENT_STORE, $glueApplicationToStoreClientBridge);
     }
 }

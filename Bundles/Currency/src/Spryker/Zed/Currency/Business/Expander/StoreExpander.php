@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Currency\Business\Expander;
 
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface;
 
 class StoreExpander implements StoreExpanderInterface
@@ -17,16 +16,12 @@ class StoreExpander implements StoreExpanderInterface
      */
     protected CurrencyRepositoryInterface $currencyRepository;
 
-    protected CurrencyToStoreFacadeInterface $storeFacade;
-
     /**
      * @param \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface $currencyRepository
-     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface $storeFacade
      */
-    public function __construct(CurrencyRepositoryInterface $currencyRepository, CurrencyToStoreFacadeInterface $storeFacade)
+    public function __construct(CurrencyRepositoryInterface $currencyRepository)
     {
         $this->currencyRepository = $currencyRepository;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -36,10 +31,6 @@ class StoreExpander implements StoreExpanderInterface
      */
     public function expandStoreTransfersWithCurrencies(array $storeTransfers): array
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $storeTransfers;
-        }
-
         $storeIds = [];
 
         foreach ($storeTransfers as $storeTransfer) {

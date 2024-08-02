@@ -306,10 +306,6 @@ class PriceProductScheduleApplyTest extends Unit
      */
     public function testPriceProductScheduleWithDifferentConcreteProductsPriceTypesAndCurrenciesShouldApplyIfStoreServiceEmpty(): void
     {
-        if ($this->tester->isDynamicStoreEnabled() === false) {
-            $this->markTestSkipped('This test requires DynamicStore to be enabled.');
-        }
-
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $productAbstractTransfer = $this->tester->haveProductAbstract();

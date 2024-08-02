@@ -53,6 +53,7 @@ class UpdateProductRelationTest extends Unit
     {
         // Arrange
         $this->tester->ensureProductRelationTableIsEmpty();
+        $this->tester->mockLocale();
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $relatedProductAbstractTransfer = $this->tester->haveProductAbstract();
 

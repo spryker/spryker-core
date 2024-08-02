@@ -73,10 +73,6 @@ class CustomerUpdateForm extends CustomerForm
      */
     protected function addStoreField(FormBuilderInterface $builder, array $choices)
     {
-        if (!$this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
-            return $this;
-        }
-
         $builder->add(static::FIELD_STORE_NAME, ChoiceType::class, [
             'label' => 'Store',
             'placeholder' => 'Select one',

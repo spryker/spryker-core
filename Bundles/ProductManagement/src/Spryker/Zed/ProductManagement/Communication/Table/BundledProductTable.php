@@ -36,11 +36,6 @@ class BundledProductTable extends AbstractTable
     /**
      * @var string
      */
-    public const COL_PRICE = 'price';
-
-    /**
-     * @var string
-     */
     public const COL_AVAILABILITY = 'availability';
 
     /**
@@ -158,25 +153,21 @@ class BundledProductTable extends AbstractTable
 
         $defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
 
-        $priceLabel = sprintf('Price (%s)', $defaultPriceMode);
-
         $header = [
             static::COL_SELECT => 'Select',
             static::COL_ID_PRODUCT_CONCRETE => 'id product',
             SpyProductLocalizedAttributesTableMap::COL_NAME => 'Product name',
             SpyProductTableMap::COL_SKU => 'SKU',
+            static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => 'Stock',
+            static::COL_AVAILABILITY => 'Availability',
+            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => 'Is never out of stock',
+
         ];
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $header[static::COL_PRICE] = $priceLabel;
-            $header[static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY] = 'Stock';
-            $header[static::COL_AVAILABILITY] = 'Availability';
-            $header[SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK] = 'Is never out of stock';
-        }
+
         $config->setHeader($header);
 
         $config->setRawColumns([
             static::COL_SELECT,
-            static::COL_PRICE,
             static::COL_AVAILABILITY,
             SpyProductTableMap::COL_SKU,
         ]);
@@ -240,11 +231,8 @@ class BundledProductTable extends AbstractTable
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
             ];
 
-            if (!$this->storeFacade->isDynamicStoreEnabled()) {
-                $availability = $this->getAvailability($productEntity)->trim();
-                $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_PRICE] = $this->getFormattedPrice($productEntity->getSku());
-                $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_AVAILABILITY] = $this->formatFloat($availability->toFloat());
-            }
+            $availability = $this->getAvailability($productEntity)->trim();
+            $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_AVAILABILITY] = $this->formatFloat($availability->toFloat());
         }
 
         return $productAbstractCollection;
@@ -267,24 +255,6 @@ class BundledProductTable extends AbstractTable
         $pageEditLink = '<a target="_blank" href="' . $pageEditUrl . '">' . $sku . '</a>';
 
         return $pageEditLink;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return string
-     */
-    protected function getFormattedPrice($sku)
-    {
-        $priceInCents = $this->priceProductFacade->findPriceBySku($sku);
-
-        if ($priceInCents === null) {
-            return 'N/A';
-        }
-
-        $moneyTransfer = $this->moneyFacade->fromInteger($priceInCents);
-
-        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
 
     /**
@@ -323,7 +293,7 @@ class BundledProductTable extends AbstractTable
             return $this->availabilityFacade
                 ->calculateAvailabilityForProductWithStore(
                     $productConcreteEntity->getSku(),
-                    $this->storeFacade->getCurrentStore(),
+                    $this->storeFacade->getCurrentStore(true),
                 );
         }
 

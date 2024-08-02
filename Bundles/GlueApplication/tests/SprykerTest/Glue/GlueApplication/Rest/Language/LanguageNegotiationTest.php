@@ -67,10 +67,6 @@ class LanguageNegotiationTest extends Unit
      */
     public function testGetLanguageWhenNoHeaderProviderMustReturnFirstLocale(): void
     {
-        if ($this->isDynamicStoreEnabled()) {
-            $this->markTestSkipped('With a full suite, at some point tests stores, that are not compatible with a code in this test, are created. Tech Debt ticket is added to fix it properly.');
-        }
-
         $languageNegotiation = $this->createLanguageNegotiation();
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('');
@@ -82,10 +78,6 @@ class LanguageNegotiationTest extends Unit
      */
     public function testGetLanguageWhenHeaderInvalidFormatterMustReturnFirstLocale(): void
     {
-        if ($this->isDynamicStoreEnabled()) {
-            $this->markTestSkipped('With a full suite, at some point tests stores, that are not compatible with a code in this test, are created. Tech Debt ticket is added to fix it properly.');
-        }
-
         $languageNegotiation = $this->createLanguageNegotiation();
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('wrong');
@@ -106,15 +98,14 @@ class LanguageNegotiationTest extends Unit
     protected function createStoreClientMock(): GlueApplicationToStoreClientInterface
     {
         $storeClientMock = $this->getMockBuilder(GlueApplicationToStoreClientInterface::class)
-            ->setMethods(['getCurrentStore', 'isDynamicStoreEnabled'])
+            ->setMethods(['getCurrentStore'])
             ->getMock();
 
-        $storeTransfer = (new StoreTransfer())->setAvailableLocaleIsoCodes($this->locales);
+        $storeTransfer = (new StoreTransfer())
+            ->setAvailableLocaleIsoCodes($this->locales);
 
         $storeClientMock->method('getCurrentStore')
             ->willReturn($storeTransfer);
-        $storeClientMock->method('isDynamicStoreEnabled')
-            ->willReturn($this->isDynamicStoreEnabled());
 
         return $storeClientMock;
     }
@@ -127,13 +118,5 @@ class LanguageNegotiationTest extends Unit
         return new GlueApplicationToLocaleServiceBridge(
             $this->tester->getLocator()->locale()->service(),
         );
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDynamicStoreEnabled(): bool
-    {
-        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

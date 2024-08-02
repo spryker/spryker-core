@@ -7,20 +7,14 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductReviewSearchToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
-
-    /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool;
-
-    /**
-     * @return array<\Generated\Shared\Transfer\StoreTransfer>
-     */
-    public function getAllStores(): array;
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
 }

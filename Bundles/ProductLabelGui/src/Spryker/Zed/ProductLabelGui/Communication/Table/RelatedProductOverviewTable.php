@@ -79,10 +79,6 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             static::COL_PRODUCT_ABSTRACT_CATEGORIES => 'Categories',
         ];
 
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            $header[static::COL_PRODUCT_ABSTRACT_PRICE] = 'Price';
-        }
-
         $header = array_merge($header, [
             static::COL_PRODUCT_ABSTRACT_RELATION_COUNT => '# of Other Labels',
             static::COL_PRODUCT_ABSTRACT_STATUS => 'Status',

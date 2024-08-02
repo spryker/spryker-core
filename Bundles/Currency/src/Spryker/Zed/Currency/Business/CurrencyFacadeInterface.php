@@ -152,7 +152,6 @@ interface CurrencyFacadeInterface
     /**
      * Specification:
      * - Expands collection of store transfers with available currency codes.
-     * - Expands collection of store transfers only if `Dynamic Store` is enabled.
      *
      * @api
      *

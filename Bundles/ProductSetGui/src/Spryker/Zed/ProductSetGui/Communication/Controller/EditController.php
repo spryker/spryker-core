@@ -62,7 +62,6 @@ class EditController extends AbstractProductSetController
             'localeCollection' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'productTable' => $this->getFactory()->createProductTable($localeTransfer, $idProductSet)->render(),
             'productAbstractSetTable' => $this->getFactory()->createProductAbstractSetUpdateTable($localeTransfer, $idProductSet)->render(),
-            'isDynamicStoreEnabled' => $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled(),
         ]);
     }
 

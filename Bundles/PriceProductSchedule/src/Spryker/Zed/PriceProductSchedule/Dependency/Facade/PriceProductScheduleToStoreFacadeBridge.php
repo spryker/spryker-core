@@ -43,14 +43,6 @@ class PriceProductScheduleToStoreFacadeBridge implements PriceProductScheduleToS
     }
 
     /**
-     * @return bool
-     */
-    public function isDynamicStoreEnabled(): bool
-    {
-        return $this->storeFacade->isDynamicStoreEnabled();
-    }
-
-    /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array

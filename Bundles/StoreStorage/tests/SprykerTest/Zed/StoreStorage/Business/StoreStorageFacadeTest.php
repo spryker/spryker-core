@@ -41,6 +41,11 @@ class StoreStorageFacadeTest extends Unit
     protected const STORE_NAME = 'DE';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
+    /**
      * @var \SprykerTest\Zed\StoreStorage\StoreStorageBusinessTester
      */
     protected $tester;
@@ -110,6 +115,9 @@ class StoreStorageFacadeTest extends Unit
      */
     protected function getStoreToStoreInterface(): StoreToStoreInterface
     {
-        return $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock = $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+        $storeToStoreInterfaceMock->method('getAvailableLocaleIsoCodesFor')->willReturn([static::LOCALE_DE]);
+
+        return $storeToStoreInterfaceMock;
     }
 }

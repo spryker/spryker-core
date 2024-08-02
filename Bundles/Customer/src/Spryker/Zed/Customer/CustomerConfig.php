@@ -9,7 +9,6 @@ namespace Spryker\Zed\Customer;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -200,10 +199,6 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getCustomerReferenceDefaults(?string $sequenceNumberPrefix = null)
     {
-        if (!$sequenceNumberPrefix) {
-            $storeName = $this->getStoreName();
-        }
-
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
         $sequenceNumberSettingsTransfer->setName(CustomerConstants::NAME_CUSTOMER_REFERENCE);
@@ -366,15 +361,5 @@ class CustomerConfig extends AbstractBundleConfig
     protected function getUniqueIdentifierSeparator()
     {
         return '-';
-    }
-
-    /**
-     * @deprecated Will be removed in the next major without replacement.
-     *
-     * @return string
-     */
-    protected function getStoreName(): string
-    {
-        return Store::getInstance()->getStoreName();
     }
 }
