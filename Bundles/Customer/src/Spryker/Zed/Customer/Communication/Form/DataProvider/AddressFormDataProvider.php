@@ -90,9 +90,7 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
      */
     protected function getContries(): array
     {
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeFacade->isDynamicStoreEnabled()) {
             return $this->countryFacade->getAvailableCountries()
                 ->getCountries()

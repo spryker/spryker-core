@@ -25,9 +25,7 @@ class MaintenanceController extends AbstractController
      */
     public function dropTimestampsAction()
     {
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COLLECTORS_NOT_SUPPORTED_IN_DMS_ON_MODE);
 

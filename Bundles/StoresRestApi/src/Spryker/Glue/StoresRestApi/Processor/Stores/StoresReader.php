@@ -73,9 +73,7 @@ class StoresReader implements StoresReaderInterface
      */
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeClient->isDynamicStoreEnabled()) {
             return $this->getDynamicStoreStoresAttributes($restRequest);
         }
@@ -133,9 +131,7 @@ class StoresReader implements StoresReaderInterface
             $this->currencyReader->getStoresCurrencyAttributes($storeTransfer->getAvailableCurrencyIsoCodes()),
         );
 
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeClient->isDynamicStoreEnabled()) {
             $restAttributesTransfer = $this->storesResourceMapper->mapStoresRestAttributesTransferToDynamicStoreRestAttributesTransfer(
                 $restAttributesTransfer,

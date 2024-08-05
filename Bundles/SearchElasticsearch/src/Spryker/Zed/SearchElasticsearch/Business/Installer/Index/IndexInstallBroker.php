@@ -83,9 +83,7 @@ class IndexInstallBroker implements IndexInstallBrokerInterface
             $this->indexDefinitionBuilder->build($storeName);
         }
 
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $this->indexDefinitionBuilder->build($this->getCurrentStore());
         }

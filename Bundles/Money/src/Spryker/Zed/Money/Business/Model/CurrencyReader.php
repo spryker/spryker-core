@@ -37,9 +37,7 @@ class CurrencyReader implements CurrencyReaderInterface
      */
     public function readCurrencyIsoCode(): ?string
     {
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeFacade->isDynamicStoreEnabled()) {
             return null;
         }
