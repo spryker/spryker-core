@@ -51,9 +51,7 @@ class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
             return false;
         }
 
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeFacade->isDynamicStoreEnabled() === false) {
             return isset($this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()]);
         }
@@ -72,9 +70,7 @@ class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
             return '';
         }
 
-        /**
-         * Required by infrastructure, exists only for BC reasons with DMS mode.
-         */
+        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
         if ($this->storeFacade->isDynamicStoreEnabled() === false) {
             $yvesHost = $this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()];
 
