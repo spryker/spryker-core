@@ -217,9 +217,7 @@ class SynchronizationSearch implements SynchronizationInterface
             $searchDocumentTransfer->setId($key);
             $searchDocumentTransfer->setData($value);
 
-            /**
-             * Required by infrastructure, exists only for BC reasons with DMS mode.
-             */
+            /* Required by infrastructure, exists only for BC reasons with DMS mode. */
             if ($this->storeFacade->isDynamicStoreEnabled()) {
                 $store = $datum[static::STORE];
                 $searchDocumentTransfer->setStoreName($store);
