@@ -58,7 +58,7 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
      */
     public function getCurrentLocale(): string
     {
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->getStoreFacade()->isDynamicStoreEnabled()) {
             return Store::getInstance()->getCurrentLocale();
         }

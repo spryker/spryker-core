@@ -71,7 +71,7 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
                 return $locales[$localeCode];
             }
         }
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($storeName !== null && $this->getFactory()->getStoreClient()->isDynamicStoreEnabled()) {
             $storeTransfer = $this->getFactory()->getStoreClient()->getStoreByName($storeName);
 

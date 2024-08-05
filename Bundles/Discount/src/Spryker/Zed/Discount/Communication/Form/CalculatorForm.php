@@ -239,7 +239,7 @@ class CalculatorForm extends AbstractType
     }
 
     /**
-     * Required by infrastructure, exists only for BC reasons with DMS mode.
+     * Required by infrastructure, exists only for BC with DMS OFF mode.
      *
      * @return bool
      */

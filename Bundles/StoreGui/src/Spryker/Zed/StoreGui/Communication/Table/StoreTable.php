@@ -236,7 +236,7 @@ class StoreTable extends AbstractTable
     protected function buildLinks(StoreTransfer $storeTransfer): string
     {
         $buttons = [];
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($this->storeFacade->isDynamicStoreEnabled()) {
             $buttons[] = $this->createViewButton($storeTransfer);
             $buttons[] = $this->createEditButton($storeTransfer);

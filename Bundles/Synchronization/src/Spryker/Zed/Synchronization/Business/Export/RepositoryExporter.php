@@ -216,7 +216,7 @@ class RepositoryExporter implements ExporterInterface
         ?string $store = null
     ): array {
         $synchronizationQueueMessageTransfers = [];
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($store || !$this->storeFacade->isDynamicStoreEnabled()) {
             return $this->createSynchronizationQueueMessageTransfers(
                 $plugin,

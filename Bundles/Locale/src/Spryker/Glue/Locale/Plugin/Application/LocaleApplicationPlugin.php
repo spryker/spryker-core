@@ -90,7 +90,7 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     protected function setStoreCurrentLocale(string $locale): void
     {
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($this->getFactory()->getStoreClient()->isDynamicStoreEnabled()) {
             return;
         }

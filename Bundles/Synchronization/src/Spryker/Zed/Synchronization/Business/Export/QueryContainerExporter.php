@@ -159,7 +159,7 @@ class QueryContainerExporter implements ExporterInterface
         array $queueSendTransfers
     ): array {
         $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
-        /* Required by infrastructure, exists only for BC reasons with DMS mode. */
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($store || !$this->storeFacade->isDynamicStoreEnabled()) {
             $queueSendTransfers[] = $this->createSynchronizationQueueMessageTransfer($plugin, $synchronizationEntity, $store);
 
