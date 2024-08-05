@@ -151,6 +151,9 @@ class LocaleReader implements LocaleReaderInterface
      */
     protected function getLocaleTransfers(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
     {
+        /**
+         * Required by infrastructure, exists only for BC reasons with DMS mode.
+         */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             $availableLocales = Store::getInstance()->getLocales();
 

@@ -293,6 +293,9 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      */
     public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer
     {
+        /**
+         * Required by infrastructure, exists only for BC reasons with DMS mode.
+         */
         if ($this->isDynamicStoreEnabled()) {
             return $accessTokenRequestTransfer;
         }
@@ -332,6 +335,9 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     public function expandMessageAttributes(
         MessageAttributesTransfer $messageAttributesTransfer
     ): MessageAttributesTransfer {
+        /**
+         * Required by infrastructure, exists only for BC reasons with DMS mode.
+         */
         if ($this->isDynamicStoreEnabled()) {
             return $messageAttributesTransfer;
         }

@@ -239,6 +239,8 @@ class CalculatorForm extends AbstractType
     }
 
     /**
+     * Required by infrastructure, exists only for BC reasons with DMS mode.
+     *
      * @return bool
      */
     protected function getOptionAmountPerCurrencyValue(): bool

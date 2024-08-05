@@ -50,6 +50,9 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
         $discountConfiguratorTransfer = $this->formatDiscountMoneyAmounts($discountConfiguratorTransfer, $calculatorPlugin);
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $defaultIsoCode = null;
+        /**
+         * Required by infrastructure, exists only for BC reasons with DMS mode.
+         */
         if ($this->storeFacade->isDynamicStoreEnabled() && $discountCalculatorTransfer->getMoneyValueCollection()->count() > 0) {
             $moneyValueTransfer = $discountCalculatorTransfer->getMoneyValueCollection()->offsetGet(0);
             $defaultIsoCode = $moneyValueTransfer->getCurrency()->getCode();
