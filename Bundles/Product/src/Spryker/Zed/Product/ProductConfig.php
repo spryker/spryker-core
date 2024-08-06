@@ -103,4 +103,17 @@ class ProductConfig extends AbstractBundleConfig
     {
         return $this->get(ProductConstants::TENANT_IDENTIFIER, '');
     }
+
+    /**
+     * Specification:
+     * - Defines if full locale name in URL is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isFullLocaleNamesInUrlEnabled(): bool
+    {
+        return false;
+    }
 }

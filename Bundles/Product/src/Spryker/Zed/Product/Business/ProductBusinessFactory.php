@@ -193,6 +193,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractNameGenerator(),
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
+            $this->getConfig(),
         );
     }
 

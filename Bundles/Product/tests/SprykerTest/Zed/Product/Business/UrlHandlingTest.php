@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Shared\Url\UrlConfig;
+use Spryker\Zed\Product\Business\ProductBusinessFactory;
+use Spryker\Zed\Product\ProductConfig;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
@@ -28,8 +30,48 @@ class UrlHandlingTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $configMock = $this->createMock(ProductConfig::class);
+        $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(true);
+        $productBusinessFactory = new ProductBusinessFactory();
+        $productBusinessFactory->setConfig($configMock);
+        $this->productFacade->setFactory($productBusinessFactory);
+    }
+
+        /**
+         * @return void
+         */
     public function testCreateProductUrlShouldCreateNewUrlForProductAbstract(): void
     {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+        $expectedENUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract);
+        $expectedDEUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de-de/product-name-dede-' . $idProductAbstract);
+
+        $productUrl = $this->productFacade->createProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrl, $expectedENUrl);
+        $this->assertProductUrl($productUrl, $expectedDEUrl);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductUrlShouldCreateNewUrlForProductAbstractBCCheck(): void
+    {
+        $configMock = $this->createMock(ProductConfig::class);
+        $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(false);
+        $productBusinessFactory = new ProductBusinessFactory();
+        $productBusinessFactory->setConfig($configMock);
+        $this->productFacade->setFactory($productBusinessFactory);
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
@@ -57,10 +99,10 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $expectedENUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['en_US'])
-            ->setUrl('/en/new-product-name-enus-' . $idProductAbstract);
+            ->setUrl('/en-us/new-product-name-enus-' . $idProductAbstract);
         $expectedDEUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['de_DE'])
-            ->setUrl('/de/new-product-name-dede-' . $idProductAbstract);
+            ->setUrl('/de-de/new-product-name-dede-' . $idProductAbstract);
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName('New ' . $localizedAttribute->getName());
@@ -152,10 +194,10 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $expectedENUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['en_US'])
-            ->setUrl('/en/product-name-enus-' . $idProductAbstract);
+            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract);
         $expectedDEUrl = (new LocalizedUrlTransfer())
             ->setLocale($this->locales['de_DE'])
-            ->setUrl('/de/product-name-dede-' . $idProductAbstract);
+            ->setUrl('/de-de/product-name-dede-' . $idProductAbstract);
 
         $productUrl = $this->productFacade->getProductUrl($this->productAbstractTransfer);
 
