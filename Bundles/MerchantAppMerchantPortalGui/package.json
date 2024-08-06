@@ -1,0 +1,24 @@
+{
+    "name": "mp-app",
+    "version": "0.0.1",
+    "private": true,
+    "peerDependencies": {
+        "@angular/animations": "^17.3.0",
+        "@angular/cdk": "^17.3.0",
+        "@angular/common": "^17.3.0",
+        "@angular/core": "^17.3.0",
+        "@angular/elements": "^17.3.0",
+        "@angular/forms": "^17.3.0",
+        "@angular/platform-browser": "^17.3.0",
+        "rxjs": "~7.8.1"
+    },
+    "dependencies": {
+        "@spryker/button": "^2.0.0",
+        "@spryker/card": "^2.0.0",
+        "@spryker/headline": "^2.0.0",
+        "@spryker/icon": "^2.0.0",
+        "@spryker/styles": "^2.0.0",
+        "@spryker/utils": "^2.0.0",
+        "@spryker/web-components": "^2.0.0"
+    }
+}

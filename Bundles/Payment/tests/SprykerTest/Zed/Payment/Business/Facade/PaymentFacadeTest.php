@@ -1453,4 +1453,13 @@ class PaymentFacadeTest extends Unit
     {
         return (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d\TH:i:s.u');
     }
+
+    /**
+     * @return void
+     */
+    public function testGeneratePaymentMethodKeyReturnsPaymentMethodKeyForGivenProviderAndMethod(): void
+    {
+        // Arrange, Act, Assert
+        $this->assertSame('foo-bar-baz', $this->paymentFacade->generatePaymentMethodKey('foo', 'bar baz'));
+    }
 }

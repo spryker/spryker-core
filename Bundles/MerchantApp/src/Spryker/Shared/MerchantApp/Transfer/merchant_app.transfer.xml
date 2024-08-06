@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="ReadyForMerchantAppOnboarding" strict="true">
+        <property name="onboarding" type="Onboarding"/>
+        <property name="type" type="string" description="Could be an App Category name e.g. Payment"/>
+        <property name="appName" type="string" description="The name of an App that supports the onboarding of Merchants"/>
+        <property name="appIdentifier" type="string" description="The identifier of an App that supports the onboarding of Merchants"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+        <property name="additionalLinks" type="Link[]" singular="additionalLink" description="Additional URLs that are needed for the onboarding process or displayed for merchants."/>
+        <property name="merchantOnboardingStates" type="MerchantOnboardingState[]" singular="merchantOnboardingState" description="States and a mapping for texts to be displayed"/>
+    </transfer>
+
+    <transfer name="MerchantOnboardingState" strict="true">
+        <property name="name" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute" description="Key-value array with HTML or other attributes that can be used in the UI logic."/>
+    </transfer>
+
+    <transfer name="Onboarding" strict="true">
+        <property name="url" type="string" description="URL that will be used together with the onboarding type to determine how to start the onboarding process"/>
+        <property name="strategy" type="string" description="Onboarding strategy which could be oneOf: iframe, redirect, api"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingStatusChanged" strict="true">
+        <property name="merchantReference" type="string"/>
+        <property name="appIdentifier" type="string" description="The identifier of an App that supports the onboarding of Merchants"/>
+        <property name="status" type="string" description="Can be oneOf: initialized, failed, completed"/>
+        <property name="type" type="string" description="E.g. The category of the App"/>
+        <property name="additionalInfo" type="string" description="JSON representation of additional data to be used for displaying e.g. in the Merchant Portal"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboarding" strict="true">
+        <property name="idMerchantAppOnboarding" type="int"/>
+        <property name="onboarding" type="Onboarding"/>
+        <property name="type" type="string" description="Could be an App Category name e.g. Payment"/>
+        <property name="appName" type="string" description="The name of an App that supports the onboarding of Merchants"/>
+        <property name="appIdentifier" type="string" description="The identifier of an App that supports the onboarding of Merchants"/>
+        <property name="status" type="string"/>
+        <property name="additionalContent" type="MerchantOnboardingContent" description="Additional content (text, links) to display in the Merchant Portal UI for merchants."/>
+    </transfer>
+
+    <transfer name="MerchantOnboardingContent" strict="true">
+        <property name="links" type="Link[]" singular="additionalLink" description="Additional URLs that are needed for the onboarding process or displayed for merchants."/>
+        <property name="merchantOnboardingStates" type="MerchantOnboardingState[]" singular="merchantOnboardingState" description="States and a mapping for texts to be displayed"/>
+    </transfer>
+
+    <transfer name="Link" strict="true">
+        <property name="label" type="string"/>
+        <property name="url" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute" description="Key-value array with HTML or other attributes that can be used in the UI logic."/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingCollection" strict="true">
+        <property name="onboardings" type="MerchantAppOnboarding[]" singular="onboarding"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingStatusCollection" strict="true">
+        <property name="statuses" type="MerchantAppOnboardingStatus[]" singular="status"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingStatus" strict="true">
+        <property name="merchantAppOnboarding" type="MerchantAppOnboarding"/>
+        <property name="idMerchantAppOnboardingStatus" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="appIdentifier" type="string" description="The identifier of an App that supports the onboarding of Merchants"/>
+        <property name="status" type="string" description="Can be oneOf: initialized, failed, completed"/>
+    </transfer>
+
+    <transfer name="MessageAttributes"/>
+
+    <transfer name="MerchantAppOnboardingCriteria" strict="true">
+        <property name="type" type="string" description="Could be an App Category name e.g. Payment"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="appIdentifiers" type="string[]" singular="appIdentifier" description="The identifier of an App that provides the onboarding for Merchants"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingInitializationRequest" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="appIdentifier" type="string" description="The identifier of an App that supports the onboarding of Merchants"/>
+        <property name="localeName" type="string"/>
+        <property name="type" type="string" description="The type which is used in the details table e.g. payment."/>
+        <property name="successUrl" type="string" description="[Optional] can be used to pass a URL that is known where the initialization request is created otherwise defaults to /merchant-app/success."/>
+        <property name="refreshUrl" type="string" description="[Optional] can be used to pass a URL that is known where the initialization request is created otherwise defaults to /merchant-app/refresh."/>
+        <property name="cancelUrl" type="string" description="[Optional] can be used to pass a URL that is known where the initialization request is created otherwise defaults to /merchant-app/cancel."/>
+        <property name="errorUrl" type="string" description="[Optional] can be used to pass a URL that is known where the initialization request is created otherwise defaults to /merchant-app/error."/>
+
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingInitializationResponse" strict="true">
+        <property name="strategy" type="string" description="Can be oneOf: content, redirect"/>
+        <property name="content" type="string" description="Used when strategy is 'content'"/>
+        <property name="url" type="string" description="Used when strategy is 'redirect'"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="method" type="string"/>
+        <property name="uri" type="string"/>
+        <property name="body" type="string"/>
+        <property name="headers" type="array" associative="true" singular="header"/>
+    </transfer>
+
+    <transfer name="AcpHttpResponse" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
+
+</transfers>

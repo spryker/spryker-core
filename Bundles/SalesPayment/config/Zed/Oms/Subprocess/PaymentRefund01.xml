@@ -6,9 +6,6 @@
 >
 
     <process name="PaymentRefund">
-        <subprocesses>
-            <process>ItemClose</process>
-        </subprocesses>
 
         <states>
             <state name="payment refund ready" display="oms.state.waiting"/>
@@ -61,10 +58,16 @@
                 <event>retry payment refund</event>
             </transition>
 
+            <transition condition="SalesPaymentMerchant/IsMerchantPaidOut">
+                <source>payment refunded</source>
+                <target>merchant payout reverse ready</target>
+                <event>reverse merchant payout</event>
+            </transition>
+
             <transition>
                 <source>payment refunded</source>
                 <target>canceled</target>
-                <event>close</event>
+                <event>reverse merchant payout</event>
             </transition>
         </transitions>
 
@@ -73,7 +76,7 @@
             <event name="payment refund failed"/>
             <event name="retry payment refund" manual="true"/>
             <event name="confirm payment refund" manual="true" timeout="7 day" command="Payment/Refund/Confirm"/>
-            <event name="refund" manual="true"/>
+            <event name="reverse merchant payout" onEnter="true"/>
             <event name="start refund" onEnter="true" command="Payment/Refund"/>
         </events>
     </process>

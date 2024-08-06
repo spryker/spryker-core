@@ -1,0 +1,203 @@
+#!/usr/bin/env php
+<?php
+
+define('LOCAL_CI_ROOT', dirname(__DIR__, 5));
+
+require_once LOCAL_CI_ROOT . '/vendor/autoload.php';
+
+use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+
+$application = new Application('Local CI', '1.0.0');
+$application->add(new class extends Command {
+    /**
+     * @return void
+     */
+    protected function configure(): void
+    {
+        $this->setName('local-ci');
+        $this->addOption('module', 'm', InputOption::VALUE_REQUIRED, 'Run only for the specified module. Use Fully Qualified Module name e.g. Spryker.FooBar');
+        $this->addOption('command', 'c', InputOption::VALUE_REQUIRED, 'Run only the specified command.');
+        $this->addOption('full', 'f', InputOption::VALUE_NONE, 'Full-run including preCommands (Transfer & DataBuilder)');
+        $this->addOption('pre', 'p', InputOption::VALUE_NONE, 'Run preCommands (Transfer & DataBuilder)');
+        $this->setHelp(<<<DESC
+The <info>%command.name%</info> command runs the local CI for the Spryker modules.
+
+Options ro run
+
+<fg=green>vendor/bin/console local-ci</>  - Runs the local CI for all modules
+<fg=green>vendor/bin/console local-ci --module=Spryker.FooBar</> - Runs the local CI for the specified module
+<fg=green>vendor/bin/console local-ci --command=CodeStyleSniffer</> - Runs the specified command for all modules
+<fg=green>vendor/bin/console local-ci --full</> - Runs the full local CI including preCommands
+<fg=green>vendor/bin/console local-ci --pre</> - Runs the preCommands (Transfer & DataBuilder)
+<fg=green> vendor/bin/console local-ci --module=Spryker.FooBar --command=CodeStyleSniffer</> - Runs the specified command for the specified module
+DESC
+);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $output->writeln('Running Local CI');
+
+        if (extension_loaded('xdebug')) {
+            $output->writeln('');
+            $output->writeln('*********************************************************************');
+            $output->writeln('* <fg=yellow>Xdebug is enabled, you should disable it for performance reasons.</> *');
+            $output->writeln('*********************************************************************');
+            $output->writeln('');
+        }
+
+        $errors = [];
+
+        $moduleList = $this->getModuleList();
+        $commandList = $this->getCommands();
+
+        if ($input->getOption('pre')) {
+            $this->runPreCommands($output);
+        }
+
+        foreach ($moduleList as $moduleData) {
+            $moduleName = $moduleData['module'];
+
+            if ($input->getOption('module') && $input->getOption('module') !== $moduleName) {
+                continue;
+            }
+
+            $output->writeln(sprintf('Module <fg=green>%s</>', $moduleName), OutputInterface::VERBOSITY_NORMAL);
+
+            foreach ($commandList as $commandName => $commandData) {
+
+                if ($input->getOption('command') && $input->getOption('command') !== $commandName) {
+                    continue;
+                }
+
+                // When the command is marked as skipped for the module, skip it
+                if (in_array($commandName, $moduleData['skip'])) {
+                    if (!isset($skippedModuleCommands[$moduleName])) {
+                        $skippedModuleCommands[$moduleName] = [];
+                    }
+
+                    $output->writeln(sprintf('Skipping command %s for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_VERBOSE);
+
+                    $skippedModuleCommands[$moduleName][] = $commandName;
+
+                    continue;
+                }
+
+                $output->writeln(sprintf('Command <fg=yellow>%s</>', $commandName), OutputInterface::VERBOSITY_VERBOSE);
+
+                // When we need to run a command with the short module name, explode Namespace.ModuleName and use the short name
+                if (isset($commandData['useFullName']) && $commandData['useFullName'] === false) {
+                    $moduleName = explode('.', $moduleName)[1];
+                }
+
+                if ($commandData['hasModule'] === true) {
+                    if (isset($commandData['hasModuleInArgument']) && $commandData['hasModuleInArgument']) {
+
+                        $commandData['command'][$commandData['moduleArgument']] = sprintf($commandData['command'][$commandData['moduleArgument']], $moduleName);
+                    }
+
+                    if (!isset($commandData['hasModuleInArgument']) || !$commandData['hasModuleInArgument']) {
+                        $commandData['command'][] = $moduleName;
+                    }
+                }
+
+                $output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
+
+                $process = new Process($commandData['command']);
+
+                $process->run(function ($type, $buffer) use ($output) {
+                    if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+                        echo $buffer;
+                    }
+                });
+
+                if (!$process->isSuccessful()) {
+                    $errors[$moduleName][] = $commandName;
+                    $output->writeln(sprintf('Command <fg=red>%s failed</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
+                    continue;
+                }
+
+                $output->writeln(sprintf('Command <fg=green>%s succeeded</> for module %s', $commandName, $moduleName), OutputInterface::VERBOSITY_NORMAL);
+            }
+
+            $output->writeln('');
+        }
+
+        $this->printErrors($errors, $output);
+
+        return count($errors) ? static::FAILURE : static::SUCCESS;
+    }
+
+    protected function getModuleList(): array
+    {
+        $moduleListFile = file_exists(LOCAL_CI_ROOT . '/.local-ci.modules') ? '.local-ci.modules' : '.local-ci.modules.dist';
+
+        return require LOCAL_CI_ROOT . '/' . $moduleListFile;
+    }
+
+    /**
+     * @return array<string, array<string|bool|array<string>>>
+     */
+    protected function getCommands(): array
+    {
+        return include_once __DIR__ . '/commandList.php';
+    }
+
+    /**
+     * @return array<string, array<string|bool|array<string>>>
+     */
+    protected function getPreCommands(): array
+    {
+        return include_once __DIR__ . '/preCommandList.php';
+    }
+
+    protected function runPreCommands(OutputInterface $output): void
+    {
+        $output->writeln('Running preCommands', OutputInterface::VERBOSITY_NORMAL);
+
+        $preCommandList = $this->getPreCommands();
+
+        foreach ($preCommandList as $commandData) {
+            $output->writeln(sprintf('Running <fg=yellow>%s</>', $commandData['command']), OutputInterface::VERBOSITY_NORMAL);
+            $output->writeln(implode(' ', $commandData['command']), OutputInterface::VERBOSITY_VERBOSE);
+
+            $process = new Process($commandData['command']);
+
+            $process->run(function ($type, $buffer) use ($output) {
+                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+                    echo $buffer;
+                }
+            });
+        }
+    }
+
+    /**
+     * @param array<string, array<string>> $errors
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return void
+     */
+    protected function printErrors(array $errors, OutputInterface $output): void
+    {
+        foreach ($errors as $moduleName => $failedCommands) {
+            $output->writeln(sprintf('Module <fg=red>%s</> failed the following commands:', $moduleName));
+            foreach ($failedCommands as $failedCommand) {
+                $output->writeln(sprintf(' - %s', $failedCommand));
+            }
+            $output->writeln('');
+        }
+    }
+});
+
+$application->setDefaultCommand('local-ci', true);
+$application->run();

@@ -26,9 +26,12 @@ class OauthClientEntityManager extends AbstractEntityManager implements OauthCli
     ): AccessTokenCacheTransfer {
         $oauthClientMapper = $this->getFactory()->createOauthClientMapper();
 
+        $oauthClientAccessTokenCacheEntity = $this->getFactory()->createSpyOauthClientAccessTokenCacheQuery()
+            ->findOneByCacheKey((string)$accessTokenCacheTransfer->getCacheKey());
+
         $oauthClientAccessTokenCacheEntity = $oauthClientMapper->mapAccessTokenCacheTransferToOauthClientAccessTokenCacheEntity(
             $accessTokenCacheTransfer,
-            new SpyOauthClientAccessTokenCache(),
+            $oauthClientAccessTokenCacheEntity ?? new SpyOauthClientAccessTokenCache(),
         );
 
         $oauthClientAccessTokenCacheEntity->save();

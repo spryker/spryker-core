@@ -82,8 +82,15 @@ class PaymentDataHelper extends Module
             ->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey() ?? $paymentMethodTransfer->getMethodName())
             ->filterByName($paymentMethodTransfer->getName())
             ->findOneOrCreate();
+
+        $modifiedPaymentMethodData = $paymentMethodTransfer->modifiedToArray();
+
+        if (isset($modifiedPaymentMethodData['payment_method_app_configuration'])) {
+            $modifiedPaymentMethodData['payment_method_app_configuration'] = json_encode($modifiedPaymentMethodData['payment_method_app_configuration']);
+        }
+
         $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
-        $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
+        $paymentMethodEntity->fromArray($modifiedPaymentMethodData);
 
         $paymentMethodEntity->save();
 

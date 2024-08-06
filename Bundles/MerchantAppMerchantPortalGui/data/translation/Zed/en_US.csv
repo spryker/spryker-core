@@ -1,0 +1,23 @@
+"Payment Settings","Payment Settings"
+"Onboarding State","Onboarding State"
+"Not started","Not started"
+Incomplete,Incomplete
+Pending,Pending
+Completed,Completed
+Enabled,Enabled
+Restricted,Restricted
+"Restricted soon","Restricted soon"
+Rejected,Rejected
+"Update Profile","Update Profile"
+"Your %s account has been successfully connected to the Marketplace account. You can get your payout.","Your %s account has been successfully connected to the Marketplace account. You can get your payout."
+"Your %s account has been successfully connected to the Marketplace account. %s may require more information once transaction volume increases.","Your %s account has been successfully connected to the Marketplace account. %s may require more information once transaction volume increases."
+"Connect to the Marketplace account","Connect to the Marketplace account"
+"You are connected to the Marketplace account","You are connected to the Marketplace account"
+"Start Onboarding","Start Onboarding"
+"Continue Onboarding","Continue Onboarding"
+"You are required to provide more details to %s","You are required to provide more details to %s"
+"You are required to provide more details for your %s account. This step is required so that your payouts are not paused.","You are required to provide more details for your %s account. This step is required so that your payouts are not paused."
+"This Marketplace does not have any Payment Provider activated from the Spryker App Composition Platform.","This Marketplace does not have any Payment Provider activated from the Spryker App Composition Platform."
+"Click the button below to get connected to the Marketplace account. This step is required for you to get your payout.","Click the button below to get connected to the Marketplace account. This step is required for you to get your payout."
+"Your %s account has been rejected by the Marketplace. Payouts are paused. Please contact the Marketplace to resolve this.","Your %s account has been rejected by the Marketplace. Payouts are paused. Please contact the Marketplace to resolve this."
+"Your %s account is disabled from the Marketplace account","Your %s account is disabled from the Marketplace account"

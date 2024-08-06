@@ -69,7 +69,14 @@ class PaymentMapper
         SpyPaymentMethod $paymentMethodEntity,
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer {
-        $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
+        $paymentMethodData = $paymentMethodEntity->toArray();
+
+        if (isset($paymentMethodData['payment_method_app_configuration'])) {
+            $paymentMethodData['payment_method_app_configuration'] = json_decode($paymentMethodData['payment_method_app_configuration'], true);
+        }
+
+        $paymentMethodTransfer->fromArray($paymentMethodData, true);
+
         /** @deprecated property usage for BC */
         $paymentMethodTransfer->setMethodName($paymentMethodEntity->getPaymentMethodKey());
 
@@ -103,10 +110,18 @@ class PaymentMapper
         PaymentMethodTransfer $paymentMethodTransfer,
         SpyPaymentMethod $paymentMethodEntity
     ): SpyPaymentMethod {
-        $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
+        $paymentMethodData = $paymentMethodTransfer->modifiedToArray();
+
+        if (isset($paymentMethodData['payment_method_app_configuration'])) {
+            $paymentMethodData['payment_method_app_configuration'] = json_encode($paymentMethodData['payment_method_app_configuration']);
+        }
+
+        $paymentMethodEntity->fromArray($paymentMethodData);
+
         if ($paymentMethodTransfer->getIdPaymentProvider()) {
             $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
         }
+
         $paymentMethodEntity->setPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey() ?? $paymentMethodTransfer->getMethodName());
 
         return $paymentMethodEntity;

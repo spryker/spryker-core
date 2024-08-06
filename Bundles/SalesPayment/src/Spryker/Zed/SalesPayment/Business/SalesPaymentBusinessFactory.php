@@ -16,6 +16,8 @@ use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpander;
 use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpanderInterface;
 use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitter;
 use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitterInterface;
+use Spryker\Zed\SalesPayment\Business\Reader\SalesPaymentReader;
+use Spryker\Zed\SalesPayment\Business\Reader\SalesPaymentReaderInterface;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriter;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriterInterface;
 use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToMessageBrokerFacadeInterface;
@@ -111,5 +113,15 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesPaymentToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesPaymentDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Business\Reader\SalesPaymentReaderInterface
+     */
+    public function createSalesPaymentReader(): SalesPaymentReaderInterface
+    {
+        return new SalesPaymentReader(
+            $this->getRepository(),
+        );
     }
 }

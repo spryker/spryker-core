@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\KernelApp\Persistence" package="src.Orm.Zed.KernelApp.Persistence">
+
+    <table name="spy_app_config">
+        <column name="id_app_config" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="app_identifier" required="true" type="VARCHAR" size="36"/>
+        <column name="status" type="VARCHAR" size="64"/>
+        <column name="is_active" default="true" type="BOOLEAN"/>
+        <column name="config" type="LONGVARCHAR"/>
+
+        <unique name="spy_app_config-unique-app_identifier">
+            <unique-column name="app_identifier"/>
+        </unique>
+
+        <id-method-parameter value="spy_app_config_pk_seq"/>
+    </table>
+
+</database>

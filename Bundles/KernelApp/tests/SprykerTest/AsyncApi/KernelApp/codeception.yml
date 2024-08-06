@@ -1,0 +1,35 @@
+namespace: SprykerTest\AsyncApi\KernelApp
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/Spryker/*/KernelApp/*'
+suites:
+    AsyncApi:
+        path: KernelAppTests
+        actor: KernelAppAsyncApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\KernelApp\Helper\KernelAppHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces:
+                          - Spryker
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                      asyncapi: resources/api/asyncapi.yml
+                      handlers:
+                          - \Spryker\Zed\KernelApp\Communication\Plugin\MessageBroker\AppConfigMessageHandlerPlugin

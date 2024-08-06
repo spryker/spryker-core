@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesPaymentMerchant\Persistence" package="src.Orm.Zed.SalesPaymentMerchant.Persistence">
+
+    <table name="spy_sales_payment_merchant_payout">
+        <column name="id_sales_payment_merchant_payout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="transfer_id" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
+        <column name="merchant_reference" type="VARCHAR" size="36" description="In case of a failure this may be empty."/>
+        <column name="order_reference" type="VARCHAR" size="36" required="true"/>
+        <column name="item_references" type="LONGVARCHAR" required="true"/>
+        <column name="amount" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
+        <column name="is_successful" type="BOOLEAN" required="true"/>
+        <column name="failure_message" type="LONGVARCHAR"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_sales_payment_merchant_payout-merchant_reference" foreignTable="spy_merchant">
+            <reference local="merchant_reference" foreign="merchant_reference"/>
+        </foreign-key>
+
+        <foreign-key name="spy_sales_payment_merchant_payout-order_reference" foreignTable="spy_sales_order">
+            <reference local="order_reference" foreign="order_reference"/>
+        </foreign-key>
+
+        <index name="index-sales_payment_merchant_payout-merchant_reference">
+            <index-column name="merchant_reference"/>
+        </index>
+
+        <index name="index-sales_payment_merchant_payout-order_reference">
+            <index-column name="order_reference"/>
+        </index>
+
+        <id-method-parameter value="spy_sales_payment_merchant_payout_pk_seq"/>
+    </table>
+    <table name="spy_sales_payment_merchant_payout_reversal">
+        <column name="id_sales_payment_merchant_payout_reversal" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="transfer_id" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
+        <column name="merchant_reference" type="VARCHAR" size="36" description="In case of a failure this may be empty."/>
+        <column name="order_reference" type="VARCHAR" size="36" required="true"/>
+        <column name="item_references" type="LONGVARCHAR" required="true"/>
+        <column name="amount" type="VARCHAR" size="128" description="In case of a failure this may be empty."/>
+        <column name="is_successful" type="BOOLEAN" required="true"/>
+        <column name="failure_message" type="LONGVARCHAR"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_sales_payment_merchant_refund-merchant_reference" foreignTable="spy_merchant">
+            <reference local="merchant_reference" foreign="merchant_reference"/>
+        </foreign-key>
+
+        <foreign-key name="spy_sales_payment_merchant_refund-order_reference" foreignTable="spy_sales_order">
+            <reference local="order_reference" foreign="order_reference"/>
+        </foreign-key>
+
+        <index name="index-sales_payment_merchant_refund-merchant_reference">
+            <index-column name="merchant_reference"/>
+        </index>
+
+        <index name="index-sales_payment_merchant_refund-order_reference">
+            <index-column name="order_reference"/>
+        </index>
+
+        <id-method-parameter value="spy_sales_payment_merchant_refund_pk_seq"/>
+    </table>
+
+</database>

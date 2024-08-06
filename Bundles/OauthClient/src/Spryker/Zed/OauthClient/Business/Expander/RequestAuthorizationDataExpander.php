@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business\Expander;
 
 use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
@@ -43,6 +44,28 @@ class RequestAuthorizationDataExpander implements RequestAuthorizationDataExpand
     ) {
         $this->oauthAccessTokenProvider = $oauthAccessTokenProvider;
         $this->oauthClientConfig = $oauthClientConfig;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AcpHttpRequestTransfer
+     */
+    public function expandAcpRequest(
+        AcpHttpRequestTransfer $acpHttpRequestTransfer
+    ): AcpHttpRequestTransfer {
+        $accessTokenRequestOptionsTransfer = (new AccessTokenRequestOptionsTransfer())
+            ->setAudience($this->oauthClientConfig->getOauthOptionAudienceForAcp());
+
+        $accessTokenRequestTransfer = (new AccessTokenRequestTransfer())
+            ->setGrantType($this->oauthClientConfig->getOauthGrantTypeForAcp())
+            ->setProviderName($this->oauthClientConfig->getOauthProviderNameForAcp())
+            ->setAccessTokenRequestOptions($accessTokenRequestOptionsTransfer);
+
+        return $acpHttpRequestTransfer->addHeader(
+            static::HEADER_AUTHORIZATION,
+            $this->getAuthorizationValue($accessTokenRequestTransfer),
+        );
     }
 
     /**

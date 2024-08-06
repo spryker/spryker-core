@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthClient\Business\Expander;
 
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
@@ -30,6 +31,15 @@ interface RequestAuthorizationDataExpanderInterface
     public function expandPaymentAuthorizeRequest(
         PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
     ): PaymentAuthorizeRequestTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AcpHttpRequestTransfer
+     */
+    public function expandAcpRequest(
+        AcpHttpRequestTransfer $acpHttpRequestTransfer
+    ): AcpHttpRequestTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer

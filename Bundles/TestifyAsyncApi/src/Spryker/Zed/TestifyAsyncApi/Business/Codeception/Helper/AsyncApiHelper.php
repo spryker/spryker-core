@@ -199,7 +199,7 @@ class AsyncApiHelper extends Module
 
             $sentMessageTransfer = $this->getInMemoryMessageBrokerHelper()->getMessageTransferByMessageName($messageTransfer::class);
 
-            $messagePropertiesValidationResponseTransfer = $this->validateMessage($messageNameToTest, $messageTransfer, $asyncApiMessage);
+            $messagePropertiesValidationResponseTransfer = $this->validateMessage($messageNameToTest, $sentMessageTransfer, $asyncApiMessage);
             $this->assertTrue($messagePropertiesValidationResponseTransfer->getIsSuccessful(), $messagePropertiesValidationResponseTransfer->getErrorMessage() ?? '');
 
             // Callable can be passed from outside and must accept the Message that was expected to be sent e.g.

@@ -91,7 +91,18 @@
         <property name="isHidden" type="bool"/>
         <property name="lastMessageTimestamp" type="string" strict="true"/>
         <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
         <property name="isForeign" type="bool"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAppConfiguration" strict="true">
+        <property name="baseUrl" type="string"/>
+        <property name="endpoints" type="Endpoint[]" singular="endpoint"/>
+    </transfer>
+
+    <transfer name="Endpoint" strict="true">
+        <property name="name" type="string"/>
+        <property name="path" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -254,6 +265,7 @@
         <property name="name" type="string"/>
         <property name="providerName" type="string"/>
         <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 

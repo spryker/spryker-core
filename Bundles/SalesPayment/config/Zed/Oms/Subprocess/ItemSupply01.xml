@@ -6,9 +6,6 @@
 >
 
     <process name="ItemSupply">
-        <subprocesses>
-            <process>ItemClose</process>
-        </subprocesses>
 
         <states>
             <state name="delivered" display="oms.state.delivered"/>
@@ -17,14 +14,13 @@
         <transitions>
             <transition happy="true">
                 <source>delivered</source>
-                <target>closed</target>
-                <event>close</event>
+                <target>merchant payout ready</target>
+                <event>merchant payout</event>
             </transition>
         </transitions>
 
         <events>
-            <event name="deliver" manual="true"/>
-            <event name="ship" manual="true"/>
+            <event name="merchant payout" onEnter="true"/>
         </events>
     </process>
 

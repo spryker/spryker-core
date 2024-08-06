@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Service\Payment\PaymentServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Payment\Business\Exception\AuthorizationEndpointNotFoundException;
 use Spryker\Zed\Payment\Business\Mapper\QuoteDataMapperInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
@@ -123,7 +124,7 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
             (new PaymentMethodTransfer())->setPaymentMethodKey($paymentMethodKey),
         );
 
-        if (!$paymentMethodTransfer || empty($paymentMethodTransfer->getPaymentAuthorizationEndpoint())) {
+        if (!$paymentMethodTransfer || (!$paymentMethodTransfer->getPaymentAuthorizationEndpoint() && !$paymentMethodTransfer->getPaymentMethodAppConfiguration())) {
             return;
         }
 
@@ -175,8 +176,10 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
             ),
         ];
 
+        $authorizationEndpoint = $this->getAuthorizationEndpoint($paymentMethodTransfer);
+
         $paymentAuthorizeRequestTransfer = (new PaymentAuthorizeRequestTransfer())
-            ->setRequestUrl($paymentMethodTransfer->getPaymentAuthorizationEndpoint())
+            ->setRequestUrl($authorizationEndpoint)
             ->setStoreReference($this->findCurrentStoreReference($quoteTransfer))
             ->setTenantIdentifier($this->paymentConfig->getTenantIdentifier())
             ->setPostData($postData);
@@ -184,6 +187,30 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
         $paymentAuthorizeRequestTransfer = $this->executePaymentAuthorizeRequestExpanderPlugins($paymentAuthorizeRequestTransfer);
 
         return $this->paymentClient->authorizeForeignPayment($paymentAuthorizeRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @throws \Spryker\Zed\Payment\Business\Exception\AuthorizationEndpointNotFoundException
+     *
+     * @return string
+     */
+    protected function getAuthorizationEndpoint(PaymentMethodTransfer $paymentMethodTransfer): string
+    {
+        $paymentMethodAppConfigurationTransfer = $paymentMethodTransfer->getPaymentMethodAppConfiguration();
+
+        if (!$paymentMethodAppConfigurationTransfer) {
+            return $paymentMethodTransfer->getPaymentAuthorizationEndpoint();
+        }
+
+        foreach ($paymentMethodAppConfigurationTransfer->getEndpoints() as $endpointTransfer) {
+            if ($endpointTransfer->getNameOrFail() === 'authorization') {
+                return sprintf('%s%s', $paymentMethodAppConfigurationTransfer->getBaseUrlOrFail(), $endpointTransfer->getPathOrFail());
+            }
+        }
+
+        throw new AuthorizationEndpointNotFoundException(sprintf('Could not find an authorization endpoint for payment method "%s"', $paymentMethodTransfer->getPaymentMethodKey()));
     }
 
     /**

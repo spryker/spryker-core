@@ -1,0 +1,56 @@
+namespace: SprykerTest\Zed\MerchantAppMerchantPortalGui
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/Spryker/*/MerchantAppMerchantPortalGui/*'
+suites:
+    Communication:
+        path: Communication
+        actor: MerchantAppMerchantPortalGuiCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\MerchantApp\Helper\MerchantAppHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces:
+                          - Spryker
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\CommunicationHelper
+                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
+                - \SprykerTest\Zed\Form\Helper\FormHelper:
+                      formPlugins:
+                          - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
+                          - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
+                - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Zed\Twig\Helper\TwigHelper:
+                      twigPlugins:
+                          - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
+                          - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
+                          - \Spryker\Zed\ZedUi\Communication\Plugin\ZedUiNavigationTwigPlugin
+                          - \SprykerTest\Zed\MerchantAppMerchantPortalGui\Helper\IsGrantedTwigPlugin
+                - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
+                - \SprykerTest\Zed\Router\Helper\RouterHelper
+                - \SprykerTest\Zed\Application\Helper\ApplicationHelper

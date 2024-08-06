@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="MerchantAppOnboardingCriteria" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="type" type="string"/>
+        <property name="appIdentifiers" type="string[]" singular="appIdentifier"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingInitializationRequest" strict="true">
+        <property name="merchant" type="Merchant"/>
+        <property name="type" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="appIdentifier" type="string"/>
+        <property name="successUrl" type="string"/>
+        <property name="refreshUrl" type="string"/>
+        <property name="cancelUrl" type="string"/>
+        <property name="errorUrl" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingInitializationResponse" strict="true">
+        <property name="strategy" type="string"/>
+        <property name="url" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingDetailsCollection" strict="true">
+        <property name="onboardings" type="MerchantAppOnboarding[]" singular="onboarding"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboarding" strict="true">
+        <property name="appName" type="string"/>
+        <property name="appIdentifier" type="string"/>
+        <property name="type" type="string"/>
+        <property name="status" type="string"/>
+        <property name="additionalContent" type="MerchantOnboardingContent"/>
+    </transfer>
+
+    <transfer name="MerchantOnboardingContent" strict="true">
+        <property name="links" type="Link[]" singular="additionalLink"/>
+        <property name="merchantOnboardingStates" type="MerchantOnboardingState[]" singular="merchantOnboardingState"/>
+    </transfer>
+
+    <transfer name="Link" strict="true">
+        <property name="label" type="string"/>
+        <property name="url" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+    </transfer>
+
+    <transfer name="MerchantOnboardingState" strict="true">
+        <property name="name" type="string"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="merchant" type="Merchant"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingCollection" strict="true">
+        <property name="onboardings" type="MerchantAppOnboarding[]" singular="onboarding"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+</transfers>

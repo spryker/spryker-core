@@ -46,6 +46,8 @@ interface OauthClientConstants
      * Specification:
      * - Oauth provider name for payment authorization.
      *
+     * @deprecated Use `OAUTH_PROVIDER_NAME_FOR_ACP` instead.
+     *
      * @api
      *
      * @var string
@@ -55,6 +57,8 @@ interface OauthClientConstants
     /**
      * Specification:
      * - Oauth grant type for payment authorization.
+     *
+     * @deprecated Use `OAUTH_GRANT_TYPE_FOR_ACP` instead.
      *
      * @api
      *
@@ -66,11 +70,43 @@ interface OauthClientConstants
      * Specification:
      * - Oauth audience option for payment authorization.
      *
+     * @deprecated Use `OAUTH_OPTION_AUDIENCE_FOR_ACP` instead.
+     *
      * @api
      *
      * @var string
      */
     public const OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE = 'OAUTH_CLIENT:OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE';
+
+    /**
+     * Specification:
+     * - Oauth provider name for ACP communications.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const OAUTH_PROVIDER_NAME_FOR_ACP = 'OAUTH_CLIENT:OAUTH_PROVIDER_NAME_FOR_ACP';
+
+    /**
+     * Specification:
+     * - Oauth grant type for ACP communications.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const OAUTH_GRANT_TYPE_FOR_ACP = 'OAUTH_CLIENT:OAUTH_GRANT_TYPE_FOR_ACP';
+
+    /**
+     * Specification:
+     * - Oauth audience option for ACP communications.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const OAUTH_OPTION_AUDIENCE_FOR_ACP = 'OAUTH_CLIENT:OAUTH_OPTION_AUDIENCE_FOR_ACP';
 
     /**
      * @var string

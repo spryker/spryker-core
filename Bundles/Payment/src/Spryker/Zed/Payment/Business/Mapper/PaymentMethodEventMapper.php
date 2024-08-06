@@ -26,7 +26,8 @@ class PaymentMethodEventMapper implements PaymentMethodEventMapperInterface
         $paymentMethodTransfer
             ->setLabelName($addPaymentMethodTransfer->getName())
             ->setGroupName($addPaymentMethodTransfer->getProviderName())
-            ->setPaymentAuthorizationEndpoint($addPaymentMethodTransfer->getPaymentAuthorizationEndpoint());
+            ->setPaymentAuthorizationEndpoint($addPaymentMethodTransfer->getPaymentAuthorizationEndpoint())
+            ->setPaymentMethodAppConfiguration($addPaymentMethodTransfer->getPaymentMethodAppConfiguration());
 
         return $paymentMethodTransfer;
     }

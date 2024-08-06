@@ -1,0 +1,43 @@
+asyncapi: 2.6.0
+info:
+    title: 'PBC AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    app-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/AppConfigUpdated'
+components:
+    messages:
+        AppConfigUpdated:
+            x-spryker:
+                module: AppConfig
+            name: AppConfigUpdated
+            title: Contains information about an updated App configuration.
+            summary: 'Contains information about an updated App configuration.'
+            payload:
+                $ref: '#/components/schemas/AppConfigUpdated'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+    schemas:
+        AppConfigUpdated:
+            type: object
+            properties:
+                appIdentifier:
+                    type: string
+                    description: The app identifier to identify the PBC.
+                status:
+                    type: boolean
+                    description: The status of PBC (new, connected).
+                isActive:
+                    type: boolean
+                config:
+                    type: array
+            required:
+                - appIdentifier
+                - status
+                - isActive
+                - config
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

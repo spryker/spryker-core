@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\SalesPaymentMerchant\Dependency\Facade;
+
+use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
+use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
+
+interface SalesPaymentMerchantToPaymentFacadeInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodCollectionTransfer
+     */
+    public function getPaymentMethodCollection(PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer): PaymentMethodCollectionTransfer;
+
+    /**
+     * @param string $paymentProvider
+     * @param string $paymentMethod
+     *
+     * @return string
+     */
+    public function generatePaymentMethodKey(string $paymentProvider, string $paymentMethod): string;
+}

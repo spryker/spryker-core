@@ -15,6 +15,9 @@
             <process>PaymentRefund</process>
             <process>PaymentCancel</process>
             <process>ItemClose</process>
+            <process>MerchantOrder</process>
+            <process>MerchantPayout</process>
+            <process>MerchantPayoutReverse</process>
         </subprocesses>
 
         <states>
@@ -63,8 +66,8 @@
 
             <transition happy="true">
                 <source>payment captured</source>
-                <target>delivered</target>
-                <event>deliver</event>
+                <target>commission calculated</target>
+                <event>commission calculate</event>
             </transition>
 
             <transition>
@@ -81,6 +84,7 @@
         </transitions>
 
         <events>
+            <event name="commission calculate" onEnter="true" command="MerchantCommission/Calculate"/>
             <event name="created" onEnter="true"/>
             <event name="cancel payment by timeout" timeout="7 day"/>
         </events>
@@ -93,5 +97,8 @@
     <process name="PaymentRefund" file="Subprocess/PaymentRefund01.xml"/>
     <process name="PaymentCancel" file="Subprocess/PaymentCancel01.xml"/>
     <process name="ItemClose" file="Subprocess/ItemClose01.xml"/>
+    <process name="MerchantOrder" file="Subprocess/MerchantOrder01.xml"/>
+    <process name="MerchantPayout" file="Subprocess/MerchantPayout01.xml"/>
+    <process name="MerchantPayoutReverse" file="Subprocess/MerchantPayoutReverse01.xml"/>
 
 </statemachine>

@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business;
 
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
@@ -47,6 +48,21 @@ interface OauthClientFacadeInterface
      * @return \Generated\Shared\Transfer\MessageAttributesTransfer
      */
     public function expandMessageAttributes(MessageAttributesTransfer $messageAttributesTransfer): MessageAttributesTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves an access token from an access token provider by AccessTokenRequestTransfer.
+     * - Throws exception `AccessTokenNotFoundException` in case if `AccessTokenResponseTransfer::isSuccessful = false`.
+     * - Adds the authorization header to the `AcpHttpRequestTransfer`.
+     * - Returns the `AcpHttpRequestTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AcpHttpRequestTransfer
+     */
+    public function expandRequest(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpRequestTransfer;
 
     /**
      * Specification:

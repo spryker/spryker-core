@@ -6,15 +6,31 @@
 >
 
     <process name="ItemClose">
+
+        <subprocesses>
+            <process>PaymentRefund</process>
+        </subprocesses>
+
         <states>
             <state name="canceled" display="oms.state.canceled"/>
             <state name="closed" display="oms.state.closed"/>
         </states>
 
         <events>
+            <event name="refund" manual="true"/>
             <event name="cancel" manual="true"/>
             <event name="close" manual="true" timeout="14 day"/>
         </events>
+
+        <transitions>
+
+            <transition>
+                <source>closed</source>
+                <target>payment refund ready</target>
+                <event>refund</event>
+            </transition>
+
+        </transitions>
     </process>
 
 </statemachine>

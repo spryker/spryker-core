@@ -218,12 +218,25 @@ components:
                     type: string
                 paymentAuthorizationEndpoint:
                     type: string
-            required:
-                - name
-                - providerName
-                - checkoutOrderTokenUrl
-                - checkoutRedirectUrl
-
+                paymentMethodAppConfiguration:
+                    type: object
+                    properties:
+                        baseUrl:
+                            type: string
+                            example: www.example.com
+                        endpoints:
+                            type: array
+                            properties:
+                                name:
+                                    type: string
+                                    example:
+                                        - authorization
+                                        - transfer
+                                path:
+                                    type: string
+                                    example:
+                                        - /authorization
+                                        - /transfer
         PaymentPayload:
             type: object
             properties:

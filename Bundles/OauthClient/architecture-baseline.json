@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/OauthClient/Business/OauthClientFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\OauthClient\\Business\\OauthClientFacade::expandRequest()()` is using an invalid return type `\\Psr\\Http\\Message\\RequestInterface` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

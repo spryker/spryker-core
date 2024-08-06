@@ -1,0 +1,82 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Payment Settings' | trans -}}
+{% endblock %}
+
+{% block content %}
+    <web-mp-payments cloak>
+        {% block title %}
+            <h1 title>{{ 'Payment Settings' | trans }}</h1>
+        {% endblock %}
+
+        {% block payments %}
+            {% if paymentProviders is empty %}
+                {% block emptyPayments %}
+                    <div class="spy-row spy-row-direction-column spy-row-align-row-center">
+                        <web-spy-icon class="spy-col-basis-auto mp-payments-empty__icon" name="no-data"></web-spy-icon>
+                        <p class="spy-col-basis-auto mp-payments-empty__text">{{ 'This Marketplace does not have any Payment Provider activated from the Spryker App Composition Platform.' | trans }}</p>
+                    </div>
+                {% endblock %}
+            {% else %}
+                <div class="spy-row spy-row-gutter-md">
+                    {% for paymentProvider in paymentProviders %}
+                        {% block paymentItem %}
+                            <div class="spy-col-12 spy-col-gutter-md">
+                                {% block payment %}
+                                    <web-spy-card cloak spy-title="{{ paymentProvider.title }} {{ 'Payment Settings' | trans }}">
+                                        {% block paymentContent %}
+                                            <web-mp-payment>
+                                                {% block paymentInner %}
+                                                    {% block paymentStatus %}
+                                                        <div status>
+                                                            <span class="mp-payment__status-label">{{ 'Onboarding State' | trans }}</span>
+                                                            <web-spy-chips class="mp-payment__status-chip" max-width="none" color="{{ paymentProvider.colorChip }}">{{ paymentProvider.status | trans }}</web-spy-chips>
+                                                            <p>{{ paymentProvider.displayText | trans({ '%s': paymentProvider.title }) }}</p>
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block paymentActions %}
+                                                        {% for actionButton in paymentProvider.actionButtons %}
+                                                            <div class="spy-row spy-row-align-col-center spy-row-gutter-md">
+                                                                {% block paymentActionLabel %}
+                                                                    <div class="spy-col-basis-auto spy-col-gutter-md">
+                                                                        <span class="mp-payment__action-label">{{ paymentProvider.buttonInfo | trans({ '%s': paymentProvider.title }) }}</span>
+                                                                    </div>
+                                                                {% endblock %}
+
+                                                                {% block paymentActionButton %}
+                                                                    {% if paymentProvider.showButton %}
+                                                                        <div class="spy-col-basis-auto spy-col-gutter-md">
+                                                                            <web-spy-button-link url="{{ actionButton.url }}" size="md">{{ actionButton.label | trans }}</web-spy-button-link>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endblock %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% endblock %}
+
+                                                    {% block paymentFooter %}
+                                                        <div footer>
+                                                            {{ paymentProvider.additionalContent | default('') | trans }}
+                                                            {% for additionalLink in paymentProvider.additionalLinks %}
+                                                                <web-spy-button-link variant="link" url="{{ additionalLink.url }}" size="sm" attrs='{{ additionalLink.attributes | json_encode | raw }}'>
+                                                                    {{ additionalLink.label | trans }}
+                                                                </web-spy-button-link>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endblock %}
+                                                {% endblock %}
+                                            </web-mp-payment>
+                                        {% endblock %}
+                                    </web-spy-card>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endblock %}
+    </web-mp-payments>
+{% endblock %}
