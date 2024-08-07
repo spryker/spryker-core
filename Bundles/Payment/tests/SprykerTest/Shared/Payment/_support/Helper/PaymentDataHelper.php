@@ -90,6 +90,9 @@ class PaymentDataHelper extends Module
         }
 
         $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
+        if ($paymentMethodTransfer->getPaymentProvider()) {
+            $paymentMethodEntity->setGroupName($paymentMethodTransfer->getPaymentProvider()->getName());
+        }
         $paymentMethodEntity->fromArray($modifiedPaymentMethodData);
 
         $paymentMethodEntity->save();
