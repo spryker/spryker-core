@@ -20,6 +20,7 @@
         <property name="details" type="string" strict="true"/>
         <property name="structuredDetails" type="array" strict="true" singular="detail"/>
         <property name="createdAt" type="string" strict="true"/>
+        <property name="updatedAt" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Order">

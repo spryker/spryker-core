@@ -13,7 +13,7 @@
                     <tbody>
                     {% if salesPaymentDetail %}
                         <tr>
-                            <td>{{ salesPaymentDetail.created_at | date }}</td>
+                            <td>{{ salesPaymentDetail.updated_at | date }}</td>
                             <td>{{ salesPaymentDetail.payment_reference }}</td>
                             <td>
                                 {% for name, detail in salesPaymentDetail.structured_details %}
