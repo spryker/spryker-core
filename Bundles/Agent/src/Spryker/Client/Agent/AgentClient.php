@@ -83,6 +83,20 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      *
      * @api
      *
+     * @return void
+     */
+    public function invalidateAgentSession(): void
+    {
+        $this->getFactory()
+            ->createAgentSession()
+            ->invalidateAgent();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
