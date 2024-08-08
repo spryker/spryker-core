@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker;
 
 use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
@@ -33,6 +34,20 @@ class PaymentCreatedMessageHandlerPlugin extends AbstractPlugin implements Messa
 
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentUpdatedTransfer $paymentUpdatedTransfer
+     *
+     * @return void
+     */
+    public function onPaymentUpdated(PaymentUpdatedTransfer $paymentUpdatedTransfer): void
+    {
+        $this->getFacade()->handlePaymentUpdated($paymentUpdatedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      * Return an array where the key is the class name to be handled and the value is the callable that handles the message.
      *
      * @api
@@ -41,6 +56,9 @@ class PaymentCreatedMessageHandlerPlugin extends AbstractPlugin implements Messa
      */
     public function handles(): iterable
     {
-        yield PaymentCreatedTransfer::class => [$this, 'onPaymentCreated'];
+        return [
+            PaymentCreatedTransfer::class => [$this, 'onPaymentCreated'],
+            PaymentUpdatedTransfer::class => [$this, 'onPaymentUpdated'],
+        ];
     }
 }

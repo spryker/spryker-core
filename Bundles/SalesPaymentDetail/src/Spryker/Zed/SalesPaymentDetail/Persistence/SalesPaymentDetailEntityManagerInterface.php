@@ -17,4 +17,11 @@ interface SalesPaymentDetailEntityManagerInterface
      * @return \Generated\Shared\Transfer\SalesPaymentDetailTransfer
      */
     public function createSalesPaymentDetails(SalesPaymentDetailTransfer $salesPaymentDetailTransfer): SalesPaymentDetailTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesPaymentDetailTransfer $salesPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesPaymentDetailTransfer
+     */
+    public function updateSalesPaymentDetails(SalesPaymentDetailTransfer $salesPaymentDetailTransfer): SalesPaymentDetailTransfer;
 }

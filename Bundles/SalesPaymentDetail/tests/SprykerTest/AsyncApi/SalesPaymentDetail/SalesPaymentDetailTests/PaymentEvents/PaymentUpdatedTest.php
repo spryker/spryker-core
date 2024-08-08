@@ -21,10 +21,10 @@ use SprykerTest\AsyncApi\SalesPaymentDetail\SalesPaymentDetailAsyncApiTester;
  * @group SalesPaymentDetail
  * @group SalesPaymentDetailTests
  * @group PaymentEvents
- * @group PaymentCreatedTest
+ * @group PaymentUpdatedTest
  * Add your own group annotations below this line
  */
-class PaymentCreatedTest extends Unit
+class PaymentUpdatedTest extends Unit
 {
     /**
      * @var \SprykerTest\AsyncApi\SalesPaymentDetail\SalesPaymentDetailAsyncApiTester
@@ -34,36 +34,28 @@ class PaymentCreatedTest extends Unit
     /**
      * @return void
      */
-    public function testPaymentCreatedMessagePersistPaymentReferenceForTheOrderFoundForTheOrderReference(): void
+    public function testPaymentUpdatedMessagePersistPaymentReferenceForTheOrderFoundForTheOrderReference(): void
     {
         // Arrange
         $paymentReference = Uuid::uuid4()->toString();
 
         $salesOrderEntity = $this->tester->haveSalesOrderEntity();
-        $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
+        $paymentUpdatedTransfer = $this->tester->havePaymentUpdatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
             PaymentCreatedTransfer::DETAILS => '{"test": "value"}',
         ]);
 
         // Act: This will trigger the MessageHandlerPlugin for this message.
-        $this->tester->runMessageReceiveTest($paymentCreatedTransfer, 'payment-events');
+        $this->tester->runMessageReceiveTest($paymentUpdatedTransfer, 'payment-events');
 
-        // Assert
-        $salesPaymentDetailTransfer = new SalesPaymentDetailTransfer();
-        $salesPaymentDetailTransfer
-            ->setPaymentReference($paymentReference)
-            ->setEntityReference($salesOrderEntity->getOrderReference())
-            ->setStructuredDetails(['test' => 'value'])
-            ->setDetails('{"test": "value"}');
-
-        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
+        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsNotFound($paymentReference);
     }
 
     /**
      * @return void
      */
-    public function testPaymentCreatedMessageIsIgnoredWhenPaymentReferenceForOrderReferenceAlreadyExists(): void
+    public function testPaymentUpdatedMessageIsIgnoredWhenPaymentReferenceForOrderReferenceAlreadyExists(): void
     {
         // Arrange
         $paymentReference = Uuid::uuid4()->toString();
@@ -75,15 +67,17 @@ class PaymentCreatedTest extends Unit
             SalesPaymentDetailTransfer::DETAILS => '{"foo": "bar"}',
             SalesPaymentDetailTransfer::STRUCTURED_DETAILS => ['foo' => 'bar'],
         ]);
+        $salesPaymentDetailTransfer->setDetails('{"foo": "hasChanged"}');
+        $salesPaymentDetailTransfer->setStructuredDetails(['foo' => 'hasChanged']);
 
-        $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
+        $paymentUpdatedTransfer = $this->tester->havePaymentUpdatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
             PaymentCreatedTransfer::DETAILS => '{"foo": "hasChanged"}',
         ]);
 
         // Act: This will trigger the MessageHandlerPlugin for this message.
-        $this->tester->runMessageReceiveTest($paymentCreatedTransfer, 'payment-events');
+        $this->tester->runMessageReceiveTest($paymentUpdatedTransfer, 'payment-events');
 
         // Assert
         $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
