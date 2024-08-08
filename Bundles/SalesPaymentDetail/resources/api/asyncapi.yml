@@ -8,6 +8,7 @@ channels:
             message:
                 oneOf:
                     - $ref: '#/components/messages/PaymentCreated'
+                    - $ref: '#/components/messages/PaymentUpdated'
 
 components:
     messages:
@@ -20,8 +21,30 @@ components:
                 $ref: '#/components/schemas/PaymentCreatedPayload'
             headers:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        PaymentUpdated:
+            name: PaymentUpdated
+            x-spryker:
+                module: SalesPaymentDetail
+            summary: 'Informs about a new Payment was updated for an order.'
+            payload:
+                $ref: '#/components/schemas/PaymentUpdatedPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
     schemas:
         PaymentCreatedPayload:
+            type: object
+            properties:
+                entityReference:
+                    description: 'The reference to the entity that was created for this payment.'
+                    type: string
+                paymentReference:
+                    type: string
+                details:
+                    type: string
+            required:
+                - entityReference
+                - paymentReference
+        PaymentUpdatedPayload:
             type: object
             properties:
                 entityReference:

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesPaymentDetail\Business;
 
 use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -29,5 +30,19 @@ class SalesPaymentDetailFacade extends AbstractFacade implements SalesPaymentDet
     public function handlePaymentCreated(PaymentCreatedTransfer $paymentCreatedTransfer): void
     {
         $this->getFactory()->createPaymentCreatedMessageHandler()->handlePaymentCreated($paymentCreatedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentUpdatedTransfer $paymentUpdatedTransfer
+     *
+     * @return void
+     */
+    public function handlePaymentUpdated(PaymentUpdatedTransfer $paymentUpdatedTransfer): void
+    {
+        $this->getFactory()->createPaymentUpdatedMessageHandler()->handlePaymentUpdated($paymentUpdatedTransfer);
     }
 }

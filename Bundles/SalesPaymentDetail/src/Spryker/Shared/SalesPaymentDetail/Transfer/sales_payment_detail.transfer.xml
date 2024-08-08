@@ -7,10 +7,23 @@
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
+    <transfer name="PaymentUpdated" strict="true">
+        <property name="entityReference" type="string" strict="true"/>
+        <property name="paymentReference" type="string" strict="true"/>
+        <property name="details" type="string" strict="true"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
     <transfer name="SalesPaymentDetail" strict="true">
         <property name="entityReference" type="string" strict="true"/>
         <property name="paymentReference" type="string" strict="true"/>
         <property name="details" type="string" strict="true"/>
+        <property name="structuredDetails" type="array" strict="true" singular="detail"/>
+        <property name="createdAt" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="MessageAttributes">

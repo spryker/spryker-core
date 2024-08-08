@@ -28,4 +28,24 @@ class SalesPaymentDetailEntityManager extends AbstractEntityManager implements S
 
         return $salesPaymentDetailTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesPaymentDetailTransfer $salesPaymentDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesPaymentDetailTransfer
+     */
+    public function updateSalesPaymentDetails(SalesPaymentDetailTransfer $salesPaymentDetailTransfer): SalesPaymentDetailTransfer
+    {
+        $salesPaymentDetailEntity = $this->getFactory()->createSalesPaymentDetailQuery()
+            ->filterByPaymentReference($salesPaymentDetailTransfer->getPaymentReference())
+        ->findOne();
+
+        if ($salesPaymentDetailEntity === null) {
+            return $salesPaymentDetailTransfer;
+        }
+        $salesPaymentDetailEntity->fromArray($salesPaymentDetailTransfer->toArray());
+        $salesPaymentDetailEntity->save();
+
+        return $salesPaymentDetailTransfer;
+    }
 }

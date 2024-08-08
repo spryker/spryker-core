@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesPaymentDetail\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesPaymentDetail\Business\MessageBroker\PaymentCreatedMessageHandler;
 use Spryker\Zed\SalesPaymentDetail\Business\MessageBroker\PaymentCreatedMessageHandlerInterface;
+use Spryker\Zed\SalesPaymentDetail\Business\MessageBroker\PaymentUpdatedMessageHandler;
+use Spryker\Zed\SalesPaymentDetail\Business\MessageBroker\PaymentUpdatedMessageHandlerInterface;
 
 /**
  * @method \Spryker\Zed\SalesPaymentDetail\SalesPaymentDetailConfig getConfig()
@@ -24,5 +26,13 @@ class SalesPaymentDetailBusinessFactory extends AbstractBusinessFactory
     public function createPaymentCreatedMessageHandler(): PaymentCreatedMessageHandlerInterface
     {
         return new PaymentCreatedMessageHandler($this->getRepository(), $this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPaymentDetail\Business\MessageBroker\PaymentUpdatedMessageHandlerInterface
+     */
+    public function createPaymentUpdatedMessageHandler(): PaymentUpdatedMessageHandlerInterface
+    {
+        return new PaymentUpdatedMessageHandler($this->getRepository(), $this->getEntityManager());
     }
 }

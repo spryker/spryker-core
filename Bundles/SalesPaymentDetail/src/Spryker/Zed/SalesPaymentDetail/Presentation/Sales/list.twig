@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-12">
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Payment Metadata' } %}
+            {% block widget_content %}
+                <table class="footable table table-striped toggle-arrow-tiny">
+                    <thead>
+                    <tr class="text-left">
+                        <th>{{ "Transaction Date" | trans }}</th>
+                        <th>{{ "Transaction ID" | trans }}</th>
+                        <th>{{ "Details" | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if salesPaymentDetail %}
+                        <tr>
+                            <td>{{ salesPaymentDetail.created_at | date }}</td>
+                            <td>{{ salesPaymentDetail.payment_reference }}</td>
+                            <td>
+                                {% for name, detail in salesPaymentDetail.structured_details %}
+                                        <strong>{{ name | capitalize }}</strong>:
+                                        {% if detail is iterable %}
+                                            <br />
+                                        {% for key,value in detail %}
+                                            <span>{{ key | capitalize }}</span>: {{ value }}<br />
+                                        {% endfor %}
+                                        {% else %}
+                                            {{ detail | capitalize }}
+                                        {% endif %}
+                                        <br />
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            {% endblock %}
+        {% endembed %}
+    </div>
+</div>

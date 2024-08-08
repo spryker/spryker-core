@@ -35,6 +35,9 @@ class SalesPaymentDetailMapper
         SpySalesPaymentDetail $salesPaymentDetailEntity,
         SalesPaymentDetailTransfer $salesPaymentDetailTransfer
     ): SalesPaymentDetailTransfer {
-        return $salesPaymentDetailTransfer->fromArray($salesPaymentDetailEntity->toArray(), true);
+        $salesPaymentDetailTransfer->fromArray($salesPaymentDetailEntity->toArray(), true);
+        $salesPaymentDetailTransfer->setStructuredDetails(json_decode((string)$salesPaymentDetailEntity->getDetails(), true));
+
+        return $salesPaymentDetailTransfer;
     }
 }

@@ -9,4 +9,9 @@
         <property name="paymentReference" dataBuilderRule="word()"/>
     </transfer>
 
+    <transfer name="PaymentUpdated" strict="true">
+        <property name="entityReference" dataBuilderRule="word()"/>
+        <property name="paymentReference" dataBuilderRule="word()"/>
+    </transfer>
+
 </transfers>
