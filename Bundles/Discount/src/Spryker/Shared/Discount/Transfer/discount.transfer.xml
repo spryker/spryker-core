@@ -220,6 +220,7 @@
     <transfer name="Totals">
         <property name="grandTotal" type="int"/>
         <property name="subtotal" type="int"/>
+        <property name="discountTotal" type="int"/>
     </transfer>
 
     <transfer name="Expense">
