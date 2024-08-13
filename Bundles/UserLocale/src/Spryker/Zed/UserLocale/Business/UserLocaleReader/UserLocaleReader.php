@@ -80,7 +80,6 @@ class UserLocaleReader implements UserLocaleReaderInterface
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $this->localeFacade->getCurrentLocale();
         }
