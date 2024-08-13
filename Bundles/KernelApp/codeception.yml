@@ -1,0 +1,19 @@
+namespace: SprykerTest
+
+include:
+    - tests/SprykerTest/AsyncApi/KernelApp/
+    - tests/SprykerTest/Client/
+    - tests/SprykerTest/Zed/KernelApp/
+
+paths:
+    tests: tests
+    support: .
+    output: tests/_output
+    data: tests/_data
+    envs: tests/_envs
+
+settings:
+    suite_class: \PHPUnit\Framework\TestSuite
+    colors: true
+    memory_limit: 1024M
+    log: true

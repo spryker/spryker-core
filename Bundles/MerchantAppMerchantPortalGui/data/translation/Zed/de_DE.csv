@@ -1,0 +1,23 @@
+"Payment Settings",Zahlungseinstellungen
+"Onboarding State",Onboarding-Status
+"Not started","Nicht angefangen"
+Incomplete,Unvollständig
+Pending,Ausstehend
+Completed,Abgeschlossen
+Enabled,Aktiviert
+Restricted,Eingeschränkt
+"Restricted soon","Bald eingeschränkt"
+Rejected,Abgelehnt
+"Update Profile","Profil aktualisieren"
+"Your %s account has been successfully connected to the Marketplace account. You can get your payout.","Ihr %s-Konto wurde erfolgreich mit Ihrem Marktplatz-Konto verbunden. Sie können Ihre Auszahlung erhalten."
+"Your %s account has been successfully connected to the Marketplace account. %s may require more information once transaction volume increases.","Ihr %s-Konto wurde erfolgreich mit Ihrem Marktplatz-Konto verbunden. %s benötigt möglicherweise weitere Informationen, sobald das Transaktionsvolumen steigt."
+"Connect to the Marketplace account","Mit dem Marktplatz-Konto verbinden"
+"You are connected to the Marketplace account","Sie sind mit dem Marktplatz-Konto verbunden"
+"Start Onboarding","Starten Sie das Onboarding"
+"Continue Onboarding","Onboarding fortsetzen"
+"You are required to provide more details to %s","Sie müssen %s weitere Details angeben"
+"You are required to provide more details for your %s account. This step is required so that your payouts are not paused.","Sie müssen weitere Details für Ihr %s-Konto angeben. Dieser Schritt ist erforderlich, damit Ihre Auszahlungen nicht pausiert werden."
+"This Marketplace does not have any Payment Provider activated from the Spryker App Composition Platform.","Auf diesem Marktplatz ist kein Zahlungsanbieter über die Spryker App Composition Platform aktiviert."
+"Click the button below to get connected to the Marketplace account. This step is required for you to get your payout.","Klicken Sie auf die Schaltfläche unten, um sich mit dem Marktplatz-Konto zu verbinden. Dieser Schritt ist erforderlich, damit Sie Ihre Auszahlung erhalten."
+"Your %s account has been rejected by the Marketplace. Payouts are paused. Please contact the Marketplace to resolve this.","Ihr %s-Konto wurde vom Marktplatz abgelehnt. Auszahlungen sind pausiert. Bitte kontaktieren Sie den Marktplatz, um dieses Problem zu lösen."
+"Your %s account is disabled from the Marketplace account","Ihr %s-Konto ist vom Marktplatz-Konto deaktiviert"

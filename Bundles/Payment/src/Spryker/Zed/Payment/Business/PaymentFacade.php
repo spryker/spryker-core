@@ -585,4 +585,21 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->createPaymentExpander()
             ->expandPaymentWithPaymentSelection($paymentTransfer, $storeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $paymentProvider
+     * @param string $paymentMethod
+     *
+     * @return string
+     */
+    public function generatePaymentMethodKey(string $paymentProvider, string $paymentMethod): string
+    {
+        return $this->getFactory()
+            ->createPaymentMethodKeyGenerator()
+            ->generate($paymentProvider, $paymentMethod);
+    }
 }

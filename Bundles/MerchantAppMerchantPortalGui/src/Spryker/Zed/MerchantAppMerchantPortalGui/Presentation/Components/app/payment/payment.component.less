@@ -1,0 +1,58 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@payment-status-padding-bottom: var(--payment-status-padding-bottom, 24px);
+@payment-status-label-font-size: var(--payment-status-label-font-size, 12px);
+@payment-status-label-transform: var(--payment-status-label-transform, uppercase);
+@payment-status-label-padding-bottom: var(--payment-status-label-padding-bottom, 3px);
+@payment-status-color: var(--payment-status-color, @ink);
+@payment-status-chip-margin-bottom: var(--payment-status-chip-margin-bottom, 10px);
+@payment-action-background: var(--payment-action-background, @gray-lighter);
+@payment-action-indents: var(--payment-action-indents, 10px 20px);
+@payment-action-border-radius: var(--payment-action-border-radius, 6px);
+@payment-action-label-font-size: var(--payment-action-label-font-size, 16px);
+@payment-action-label-font-weight: var(--payment-action-label-font-weight, 600);
+@payment-action-label-color: var(--payment-action-label-color, @ink);
+@payment-content-padding-bottom: var(--payment-content-padding-bottom, 30px);
+@payment-content-border-bottom: var(--payment-content-border-bottom, 1px solid @gray-light);
+@payment-footer-padding-top: var(--payment-footer-padding-top, 15px);
+@payment-footer-margin-bottom: var(--payment-footer-margin-bottom, -10px);
+
+.mp-payment {
+    &__status {
+        color: @payment-status-color;
+        padding-bottom: @payment-status-padding-bottom;
+    }
+
+    &__status-chip {
+        margin-bottom: @payment-status-chip-margin-bottom;
+    }
+
+    &__status-label {
+        display: block;
+        text-transform: @payment-status-label-transform;
+        padding-bottom: @payment-status-label-padding-bottom;
+        font-size: @payment-status-label-font-size;
+    }
+
+    &__action {
+        padding: @payment-action-indents;
+        background: @payment-action-background;
+        border-radius: @payment-action-border-radius;
+    }
+
+    &__action-label {
+        font-weight: @payment-action-label-font-weight;
+        font-size: @payment-action-label-font-size;
+        color: @payment-action-label-color;
+    }
+
+    &__content {
+        padding-bottom: @payment-content-padding-bottom;
+        border-bottom: @payment-content-border-bottom;
+    }
+
+    &__footer {
+        padding-top: @payment-footer-padding-top;
+        margin-bottom: @payment-footer-margin-bottom;
+    }
+}

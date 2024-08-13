@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="ReadyForMerchantAppOnboarding" strict="true">
+        <property name="appName" dataBuilderRule="word()"/>
+        <property name="appIdentifier" dataBuilderRule="uuid()"/>
+        <property name="type" dataBuilderRule="=payment"/>
+    </transfer>
+
+    <transfer name="Link" strict="true">
+        <property name="label" type="string" dataBuilderRule="word()"/>
+        <property name="url" type="string" dataBuilderRule="url()"/>
+        <property name="attributes" type="string[]" dataBuilderRule="words(3)"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboarding" strict="true">
+        <property name="appName" type="string" dataBuilderRule="word()"/>
+        <property name="appIdentifier" type="string" dataBuilderRule="uuid()"/>
+        <property name="type" type="string" dataBuilderRule="=payment"/>
+    </transfer>
+
+    <transfer name="MerchantOnboardingContent" strict="true">
+        <property name="links" type="Link[]"/>
+    </transfer>
+
+    <transfer name="Onboarding" strict="true">
+        <property name="url" dataBuilderRule="url()"/>
+        <property name="strategy" dataBuilderRule="=api"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingStatus" strict="true">
+        <property name="merchantReference" type="string" dataBuilderRule="uuid()"/>
+        <property name="appIdentifier" type="string" dataBuilderRule="uuid()"/>
+    </transfer>
+
+    <transfer name="MerchantAppOnboardingStatusChanged" strict="true">
+        <property name="merchantReference" type="string" dataBuilderRule="word()"/>
+        <property name="appIdentifier" type="string" dataBuilderRule="uuid()"/>
+    </transfer>
+
+</transfers>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantApp\Persistence" package="src.Orm.Zed.MerchantApp.Persistence">
+    <table name="spy_merchant_app_onboarding">
+        <column name="id_merchant_app_onboarding" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="onboarding_url" required="true" type="VARCHAR" size="255"/>
+        <column name="onboarding_strategy" required="true" type="ENUM" valueSet="iframe, redirect, api"/>
+        <column name="type" required="true" type="VARCHAR" size="128" description="Type can be e.g. 'payment' or 'legal' which is used to identify if a specific entity can be displayed and what. F.e. if onboarding of Payment Apps should be displayed in the Merchant Portal."/>
+        <column name="app_name" required="true" type="VARCHAR" size="255"/>
+        <column name="app_identifier" required="true" type="VARCHAR" size="36"/>
+        <column name="additional_content" type="LONGVARCHAR" description="Additional content (text, links) to display for merchants."/>
+
+        <unique name="spy_merchant_app_onboarding-unique-type-app_identifier">
+            <unique-column name="app_identifier"/>
+            <unique-column name="type"/>
+        </unique>
+
+        <foreign-key name="spy_merchant_app_onboarding-app_identifier" foreignTable="spy_app_config" onDelete="CASCADE">
+            <reference local="app_identifier" foreign="app_identifier"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_merchant_app_onboarding_pk_seq"/>
+
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="spy_merchant_app_onboarding_status">
+        <column name="id_merchant_app_onboarding_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_merchant_app_onboarding" type="INTEGER" required="true"/>
+        <column name="merchant_reference" required="true" size="128" type="VARCHAR"/>
+        <column name="status" required="true" type="VARCHAR" size="36"/>
+        <column name="additional_info" type="LONGVARCHAR" description="JSON string containing additional info to be displayed"/>
+
+        <unique name="spy_merchant_app_onboarding_status-unique-merchant_reference-app_identifier">
+            <unique-column name="merchant_reference"/>
+            <unique-column name="fk_merchant_app_onboarding"/>
+        </unique>
+
+        <id-method-parameter value="spy_merchant_app_onboarding_status_pk_seq"/>
+
+        <foreign-key name="spy_merchant_app_onboarding_status-merchant_app_onboarding" foreignTable="spy_merchant_app_onboarding">
+            <reference local="fk_merchant_app_onboarding" foreign="id_merchant_app_onboarding"/>
+        </foreign-key>
+
+        <foreign-key name="spy_merchant_app_onboarding_status-merchant" foreignTable="spy_merchant">
+            <reference local="merchant_reference" foreign="merchant_reference"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+    </table>
+</database>

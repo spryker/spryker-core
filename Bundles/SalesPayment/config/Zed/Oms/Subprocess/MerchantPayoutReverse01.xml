@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
+
+    <process name="MerchantPayoutReverse">
+
+        <states>
+            <state name="merchant payout reverse ready" display="oms.state.payout-reversed"/>
+            <state name="reverse payout failed" display="oms.state.payout-reversal-failed"/>
+        </states>
+
+        <transitions>
+
+            <transition condition="SalesPaymentMerchant/IsMerchantPayoutReversed">
+                <source>merchant payout reverse ready</source>
+                <target>canceled</target>
+                <event>reverse payout</event>
+            </transition>
+
+            <transition>
+                <source>merchant payout reverse ready</source>
+                <target>reverse payout failed</target>
+                <event>reverse payout</event>
+            </transition>
+
+            <transition>
+                <source>reverse payout failed</source>
+                <target>merchant payout reverse ready</target>
+                <event>retry reverse payout</event>
+            </transition>
+
+        </transitions>
+
+        <events>
+            <event name="reverse payout" onEnter="true" command="SalesPaymentMerchant/ReversePayout"/>
+            <event name="retry reverse payout" manual="true"/>
+            <event name="canceled" manual="true"/>
+        </events>
+    </process>
+
+</statemachine>

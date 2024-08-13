@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthClient\Business;
 
 use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
@@ -50,6 +51,22 @@ class OauthClientFacade extends AbstractFacade implements OauthClientFacadeInter
         return $this->getFactory()
             ->createRequestAuthorizationDataExpander()
             ->expandMessageAttributes($messageAttributesTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AcpHttpRequestTransfer
+     */
+    public function expandRequest(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpRequestTransfer
+    {
+        return $this->getFactory()
+            ->createRequestAuthorizationDataExpander()
+            ->expandAcpRequest($acpHttpRequestTransfer);
     }
 
     /**

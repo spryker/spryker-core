@@ -27,4 +27,9 @@ interface AgentSessionInterface
      * @return void
      */
     public function setAgent(UserTransfer $userTransfer): void;
+
+    /**
+     * @return void
+     */
+    public function invalidateAgent(): void;
 }

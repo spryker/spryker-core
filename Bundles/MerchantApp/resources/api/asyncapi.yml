@@ -1,0 +1,122 @@
+asyncapi: 2.6.0
+info:
+    title: 'MerchantApp AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    merchant-app-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/ReadyForMerchantAppOnboarding'
+                    - $ref: '#/components/messages/MerchantAppOnboardingStatusChanged'
+
+components:
+    messages:
+        ReadyForMerchantAppOnboarding:
+            x-spryker:
+                module: MerchantApp
+            name: ReadyForMerchantAppOnboarding
+            title: Inform about the App readiness for the Merchant onboarding.
+            summary: The message is sent by an App to inform the Tenant that it is ready to onboard Merchants.
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/ReadyForMerchantAppOnboarding'
+
+        MerchantAppOnboardingStatusChanged:
+            x-spryker:
+                module: MerchantApp
+            name: MerchantAppOnboardingStatusChanged
+            title: Inform about a Merchant onboarding status change.
+            summary: The message is sent by an App to inform the Tenant that the Merchant onboarding status has been changed.
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/MerchantAppOnboardingStatusChanged'
+
+    schemas:
+        ReadyForMerchantAppOnboarding:
+            type: object
+            properties:
+                onboarding:
+                    type: object
+                    properties:
+                        url:
+                            type: string
+                            description: The URI of the App Merchant onboarding endpoint.
+                        strategy:
+                            type: string
+                            description: The onboarding strategy this App supports for initialization of the Merchant onboarding process. This describes the way the Tenant can interact with the App to onboard Merchants.
+                            enum:
+                                - iframe
+                                - redirect
+                                - api
+                type:
+                    type: string
+                    description: The category of the App.
+                    examples:
+                        - payment
+                        - pim
+
+                appName:
+                    type: string
+                    description: The name of the App.
+                    examples:
+                        - Stripe
+                        - Algolia
+
+                appIdentifier:
+                    type: string
+                    description: The identifier of the App.
+                    examples:
+                        - app-12345-6789-abcd-efgh
+
+                additionalLinks:
+                    type: string
+                    description: Additional links to be displayed e.g. in the MerchantPortal.
+                merchantOnboardingStates:
+                    type: string
+                    description: Status Map to be used to map status of an onboarding to specific texts.
+
+            required:
+                - onboarding.url
+                - onboarding.strategy
+                - type
+                - appName
+                - appIdentifier
+
+        MerchantAppOnboardingStatusChanged:
+            type: object
+            properties:
+                merchantReference:
+                    type: string
+                    description: The reference of the Merchant.
+                appIdentifier:
+                    type: string
+                    description: The identifier of the App.
+                type:
+                    type: string
+                    description: E.g. The category of the App.
+                    examples:
+                        - payment
+                        - pim
+                status:
+                    type: string
+                    description: The status of the onboarding.
+                display_text:
+                    type: string
+                    description: Informative text to be displayed on the Merchant Portal Page.
+                button_text:
+                    type: string
+                    description: Text that should be used on the button for further actions.
+                button_info:
+                    type: string
+                    description: Text that should be used next to the button for detailed action information.
+            required:
+                - merchantReference
+                - appIdentifier
+                - status
+                - type
+
+        message-broker:
+            $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

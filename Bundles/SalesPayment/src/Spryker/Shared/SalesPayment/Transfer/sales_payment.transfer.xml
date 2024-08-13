@@ -4,6 +4,7 @@
     <transfer name="SalesPayment">
         <property name="idSalesPayment" type="int" strict="true"/>
         <property name="fkSalesOrder" type="int"/>
+        <property name="fkPaymentMethodType" type="int"/>
         <property name="paymentProvider" type="string"/>
         <property name="paymentMethod" type="string"/>
         <property name="amount" type="int" strict="true"/>
@@ -50,6 +51,18 @@
         <property name="idSalesPayment" type="int"/>
         <property name="isLimitedAmount" type="bool"/>
         <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method"/>
+    </transfer>
+
+    <transfer name="SalesPaymentCriteria">
+        <property name="salesPaymentConditions" type="SalesPaymentConditions"/>
+    </transfer>
+
+    <transfer name="SalesPaymentConditions">
+        <property name="salesOrderIds" type="array" singular="idSalesOrder"/>
+    </transfer>
+
+    <transfer name="SalesPaymentCollection">
+        <property name="salesPayments" type="SalesPayment[]" singular="salesPayment"/>
     </transfer>
 
     <transfer name="ProductOption">

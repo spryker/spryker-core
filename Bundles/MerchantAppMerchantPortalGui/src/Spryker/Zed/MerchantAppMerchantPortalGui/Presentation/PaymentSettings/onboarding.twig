@@ -1,0 +1,19 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Payment Settings' | trans -}}
+{% endblock %}
+
+{% block content %}
+    <web-mp-payments cloak>
+        <h1 title>{{ 'Payment Provider Onboarding' | trans }}</h1>
+        <div>
+            {% if strategy is 'iframe' and url is not empty %}
+                <iframe src="{{ url | raw }}" style="width: 100%; height: 100%" allowfullscreen></iframe>
+            {% elseif strategy is 'content' %}
+                {{ content | default('') | raw }}
+            {% endif %}
+        </div>
+    </web-mp-payments>
+{% endblock %}

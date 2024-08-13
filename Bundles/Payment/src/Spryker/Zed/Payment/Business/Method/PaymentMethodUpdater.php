@@ -177,6 +177,8 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
             new PaymentMethodTransfer(),
         );
 
+        $paymentMethodTransfer->setPaymentMethodKey($this->getPaymentMethodKey($paymentMethodTransfer));
+
         $messageAttributes = $addPaymentMethodTransfer->getMessageAttributesOrFail();
         $existingPaymentMethodTransfer = $this->findExistentPaymentMethod($paymentMethodTransfer);
 
@@ -352,12 +354,12 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
             $paymentMethodTransfer
                 ->setName($paymentMethodTransfer->getLabelName())
                 ->setIdPaymentProvider($paymentProviderTransfer->getIdPaymentProvider())
-                ->setPaymentMethodKey($paymentMethodKey);
+                ->setPaymentMethodKey($paymentMethodKey)
+                ->setIsActive(false)
+                ->setIsForeign(true);
         }
 
         $paymentMethodTransfer
-            ->setIsActive(false)
-            ->setIsForeign(true)
             ->setLastMessageTimestamp($messageTimestamp);
 
         return $paymentMethodTransfer;

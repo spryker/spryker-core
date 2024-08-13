@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+    <transfer name="MerchantAppOnboarding" strict="true">
+        <property name="appName" type="string" dataBuilderRule="word()"/>
+        <property name="appIdentifier" type="string" dataBuilderRule="uuid()"/>
+        <property name="type" type="string" dataBuilderRule="=payment"/>
+    </transfer>
+
+</transfers>

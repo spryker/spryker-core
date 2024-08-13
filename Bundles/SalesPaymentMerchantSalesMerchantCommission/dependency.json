@@ -1,0 +1,8 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
+        "spryker/sales-payment-merchant": "Provides sales payment base functionality.",
+        "spryker/sales-merchant-commission": "Provides sales merchant commission functionality and access to transfer fields from the domain.",
+        "spryker/tax": "Provides tax calculation functionality and access to transfer fields from the domain."
+    }
+}

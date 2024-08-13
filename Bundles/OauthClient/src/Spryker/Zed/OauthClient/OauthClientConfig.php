@@ -65,6 +65,8 @@ class OauthClientConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use `OAuthClientConfig::getOauthProviderNameForAcp()` instead.
+     *
      * @return string
      */
     public function getOauthProviderNameForPaymentAuthorize(): string
@@ -74,6 +76,8 @@ class OauthClientConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Use `OAuthClientConfig::getOauthGrantTypeForAcp()` instead.
      *
      * @return string
      */
@@ -85,11 +89,43 @@ class OauthClientConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use `OAuthClientConfig::getOauthOptionAudienceForAcp()` instead.
+     *
      * @return string
      */
     public function getOauthOptionAudienceForPaymentAuthorize(): string
     {
         return $this->get(OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_PAYMENT_AUTHORIZE, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthProviderNameForAcp(): string
+    {
+        return $this->get(OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_ACP, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthGrantTypeForAcp(): string
+    {
+        return $this->get(OauthClientConstants::OAUTH_GRANT_TYPE_FOR_ACP, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthOptionAudienceForAcp(): string
+    {
+        return $this->get(OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_ACP, '');
     }
 
     /**

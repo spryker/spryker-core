@@ -44,4 +44,9 @@
     <transfer name="PaymentAuthorizeRequest">
         <property name="authorization" type="string"/>
     </transfer>
+
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="headers" type="array" associative="true" singular="header"/>
+    </transfer>
+
 </transfers>

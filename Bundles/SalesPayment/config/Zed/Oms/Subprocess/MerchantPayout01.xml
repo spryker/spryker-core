@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
+
+    <process name="MerchantPayout">
+
+        <states>
+            <state name="merchant payout ready" display="oms.state.payout-merchant"/>
+            <state name="payout failed" display="oms.state.payout-failed"/>
+        </states>
+
+        <transitions>
+
+            <transition condition="SalesPaymentMerchant/IsMerchantPaidOut" happy="true">
+                <source>merchant payout ready</source>
+                <target>closed</target>
+                <event>payout merchant</event>
+            </transition>
+
+            <transition>
+                <source>merchant payout ready</source>
+                <target>payout failed</target>
+                <event>payout merchant</event>
+            </transition>
+
+            <transition>
+                <source>payout failed</source>
+                <target>merchant payout ready</target>
+                <event>retry payout merchant</event>
+            </transition>
+
+        </transitions>
+
+        <events>
+            <event name="payout merchant" onEnter="true" command="SalesPaymentMerchant/Payout"/>
+            <event name="retry payout merchant" manual="true"/>
+            <event name="close" manual="true"/>
+        </events>
+    </process>
+
+</statemachine>

@@ -43,6 +43,7 @@ class PaymentCreatedTest extends Unit
         $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
+            PaymentCreatedTransfer::DETAILS => '{"test": "value"}',
         ]);
 
         // Act: This will trigger the MessageHandlerPlugin for this message.
@@ -52,7 +53,9 @@ class PaymentCreatedTest extends Unit
         $salesPaymentDetailTransfer = new SalesPaymentDetailTransfer();
         $salesPaymentDetailTransfer
             ->setPaymentReference($paymentReference)
-            ->setEntityReference($salesOrderEntity->getOrderReference());
+            ->setEntityReference($salesOrderEntity->getOrderReference())
+            ->setStructuredDetails(['test' => 'value'])
+            ->setDetails('{"test": "value"}');
 
         $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
     }
@@ -69,13 +72,14 @@ class PaymentCreatedTest extends Unit
         $salesPaymentDetailTransfer = $this->tester->haveSalesPaymentDetail([
             SalesPaymentDetailTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             SalesPaymentDetailTransfer::PAYMENT_REFERENCE => $paymentReference,
-            SalesPaymentDetailTransfer::DETAILS => '{foo: bar}',
+            SalesPaymentDetailTransfer::DETAILS => '{"foo": "bar"}',
+            SalesPaymentDetailTransfer::STRUCTURED_DETAILS => ['foo' => 'bar'],
         ]);
 
         $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
-            PaymentCreatedTransfer::DETAILS => '{foo: hasChanged}',
+            PaymentCreatedTransfer::DETAILS => '{"foo": "hasChanged"}',
         ]);
 
         // Act: This will trigger the MessageHandlerPlugin for this message.

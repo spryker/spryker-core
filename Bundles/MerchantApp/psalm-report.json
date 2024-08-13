@@ -1,0 +1,116 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\MerchantAppOnboardingDetailsTransfer, but \"0\" provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Business/MerchantAppOnboarding/MerchantAppOnboarding.php",
+            "snippet": "        $merchantAppOnboardingDetailsTransfer = $merchantAppOnboardingDetailsTransferCollection->getMerchantAppOnboardingDetails()->offsetGet('0');",
+            "selected_text": "'0'",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, callable>' for Spryker\\Zed\\MerchantApp\\Communication\\Plugin\\MessageBroker\\MerchantAppOnboardingMessageHandlerPlugin::handles is incorrect, got 'Generator<Generated\\Shared\\Transfer\\MerchantAppOnboardingInitializedTransfer::class|Generated\\Shared\\Transfer\\MerchantAppOnboardingStatusChangedTransfer::class|Generated\\Shared\\Transfer\\ReadyForMerchantAppOnboardingTransfer::class, array{Spryker\\Zed\\MerchantApp\\Communication\\Plugin\\MessageBroker\\MerchantAppOnboardingMessageHandlerPlugin&static, \"onMerchantAppOnboardingInitialized\"|\"onMerchantAppOnboardingStatusChanged\"|\"onReadyForMerchantAppOnboarding\"}, mixed, void>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Communication/Plugin/MessageBroker/MerchantAppOnboardingMessageHandlerPlugin.php",
+            "snippet": "     * @return array<string, callable>",
+            "selected_text": "array<string, callable>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantApp\\Persistence\\MerchantAppRepository::getMerchantReferences expects ArrayObject<int, Generated\\Shared\\Transfer\\MerchantTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\MerchantTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Persistence/MerchantAppRepository.php",
+            "snippet": "            $merchantAppOnboardingStatusQuery->filterByMerchantReference_In($this->getMerchantReferences($merchantAppOnboardingCriteriaTransfer->getMerchants()));",
+            "selected_text": "$merchantAppOnboardingCriteriaTransfer->getMerchants()",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantApp\\Persistence\\MerchantAppRepository::getMerchantReferences expects ArrayObject<int, Generated\\Shared\\Transfer\\MerchantTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\MerchantTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Persistence/MerchantAppRepository.php",
+            "snippet": "            $merchantReferences = $this->getMerchantReferences($merchantAppOnboardingCriteriaTransfer->getMerchants());",
+            "selected_text": "$merchantAppOnboardingCriteriaTransfer->getMerchants()",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Shared/MerchantApp/Message/MerchantAppMessage.php",
+            "snippet": "        return sprintf('The Onboarding for the Merchant with reference \"%s\" was already initialized.', $merchantTransfer->getMerchantReference());",
+            "selected_text": "$merchantTransfer->getMerchantReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\MerchantAppOnboardingCriteriaTransfer::addMerchant cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Business/MerchantAppOnboarding/MerchantAppOnboarding.php",
+            "snippet": "            $merchantAppOnboardingStatusCriteriaTransfer->addMerchant($merchantAppOnboardingInitializationRequestTransfer->getMerchant());",
+            "selected_text": "$merchantAppOnboardingInitializationRequestTransfer->getMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMerchantReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Business/MerchantAppOnboarding/MerchantAppOnboarding.php",
+            "snippet": "        if (!$merchantAppOnboardingInitializationRequestTransfer->getMerchant() || !$merchantAppOnboardingInitializationRequestTransfer->getMerchant()->getMerchantReference()) {",
+            "selected_text": "getMerchantReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantApp\\Persistence\\SpyMerchantAppOnboardingStatusQuery::filterByAppIdentifier_In cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Persistence/MerchantAppRepository.php",
+            "snippet": "            $merchantAppOnboardingStatusQuery->filterByAppIdentifier_In($merchantAppOnboardingCriteriaTransfer->getAppIdentifier());",
+            "selected_text": "$merchantAppOnboardingCriteriaTransfer->getAppIdentifier()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantApp\\Persistence\\SpyMerchantAppOnboardingDetailsQuery::filterByAppIdentifier_In cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantApp/src/Spryker/Zed/MerchantApp/Persistence/MerchantAppRepository.php",
+            "snippet": "            $merchantAppOnboardingDetailsQuery->filterByAppIdentifier_In($merchantAppOnboardingCriteriaTransfer->getAppIdentifier());",
+            "selected_text": "$merchantAppOnboardingCriteriaTransfer->getAppIdentifier()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [],
+    "count": 9
+}

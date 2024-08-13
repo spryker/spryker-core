@@ -1,0 +1,4 @@
+oms.state.payout-failed,"Merchant Auszahlung fehlgeschlagen"
+oms.state.payout-reversal-failed,"Merchant zurückholung der Auszahlung fehlgeschlagen"
+oms.state.payout-merchant,"Merchant Auszahlung"
+oms.state.payout-reversed,"Merchant Auszahlung zurückgeholt"

@@ -33,6 +33,8 @@ use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(\SprykerTest\Zed\Payment\PHPMD)
+ *
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade(?string $moduleName = NULL)
  */
 class PaymentBusinessTester extends Actor
 {

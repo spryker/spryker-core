@@ -47,6 +47,7 @@ class SalesOrderExpander implements SalesOrderExpanderInterface
         foreach ($salesPaymentTransfers as $salesPaymentTransfer) {
             $paymentTransfer = (new PaymentTransfer())->fromArray($salesPaymentTransfer->toArray(), true);
             $paymentTransfer = $this->executeOrderPaymentExpanderPlugins($paymentTransfer, $orderTransfer);
+
             $orderTransfer->addPayment($paymentTransfer);
         }
 

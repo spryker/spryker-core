@@ -53,6 +53,49 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
     }
 
     /**
+     * @dataProvider grandTotalDataProvider
+     *
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param int $clauseValue
+     * @param bool $expectedResult
+     *
+     * @return void
+     */
+    public function testGrandTotalDecisionRuleIsSatisfiedBy(TotalsTransfer $totalsTransfer, int $clauseValue, bool $expectedResult): void
+    {
+        $comparatorMock = $this->createComparatorMock();
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
+            return $clauseTransfer->getValue() <= $grandTotal;
+        });
+
+        $grandTotalDecisionRule = $this->createGrandTotalDecisionRule($comparatorMock);
+
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $isSatisfied = $grandTotalDecisionRule->isSatisfiedBy(
+            $quoteTransfer,
+            $this->createItemTransfer(),
+            $this->createClauseTransfer(500),
+        );
+
+        $this->assertTrue($isSatisfied);
+    }
+
+    /**
+     * @return array<string, array<\Generated\Shared\Transfer\TotalsTransfer|bool|int>>
+     */
+    protected function grandTotalDataProvider(): array
+    {
+        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000)->setDiscountTotal(50000);
+
+        return [
+            'sum of grand total and discount total greater then clause value' => [$totalsTransfer, 500, true],
+            'sum of grand total and discount total less then clause value' => [$totalsTransfer, 700, false],
+        ];
+    }
+
+    /**
      * @return void
      */
     public function testWhenGrandTotalNotMatchingShouldReturnFalse(): void

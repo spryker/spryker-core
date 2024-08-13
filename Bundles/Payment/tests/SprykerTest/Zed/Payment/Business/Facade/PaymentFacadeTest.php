@@ -35,8 +35,10 @@ use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\PaymentBusinessFactory;
+use Spryker\Zed\Payment\Business\PaymentFacade;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
+use SprykerTest\Zed\Payment\PaymentBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -80,7 +82,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @var \SprykerTest\Zed\Payment\PaymentBusinessTester
      */
-    protected $tester;
+    protected PaymentBusinessTester $tester;
 
     /**
      * @var \Spryker\Zed\Payment\Business\PaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
@@ -822,6 +824,86 @@ class PaymentFacadeTest extends Unit
     }
 
     /**
+     * Reflecting an Update of a PaymentMethod.
+     *
+     * @return void
+     */
+    public function testGivenThePaymentMethodAlreadyExistsAndIsActiveWhenTheAddPaymentMethodMessageIsHandledThenThePaymentMethodIsUpdatedAndIsStillActive(): void
+    {
+        // Arrange
+        $paymentMethodName = 'MethodName' . Uuid::uuid4()->toString();
+        $paymentProviderKey = 'ProviderKey' . Uuid::uuid4()->toString();
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider([PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => $paymentProviderKey]);
+
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => (new PaymentFacade())->generatePaymentMethodKey($paymentProviderKey, $paymentMethodName),
+            PaymentMethodTransfer::NAME => $paymentMethodName,
+            PaymentMethodTransfer::PAYMENT_PROVIDER => $paymentProviderTransfer,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_FOREIGN => true,
+        ]);
+
+        $addPaymentMethodTransfer = $this->tester->haveAddPaymentMethodTransfer(
+            [
+                AddPaymentMethodTransfer::NAME => $paymentMethodName,
+                AddPaymentMethodTransfer::PROVIDER_NAME => $paymentProviderKey,
+                AddPaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => 'redirect-url',
+            ],
+        );
+
+        // Act
+        $createdPaymentMethodTransfer = $this->tester->getFacade()->addPaymentMethod($addPaymentMethodTransfer);
+
+        // Assert
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentMethod());
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentProvider());
+        $this->assertFalse($createdPaymentMethodTransfer->getIsHidden(), 'Expected that the payment method is visible but it is hidden');
+        $this->assertTrue($createdPaymentMethodTransfer->getIsActive(), 'Expected that the payment method is active but it is inactive');
+    }
+
+    /**
+     * Reflecting an Update of a PaymentMethod.
+     *
+     * @return void
+     */
+    public function testGivenThePaymentMethodAlreadyExistsAndIsInactiveWhenTheAddPaymentMethodMessageIsHandledThenThePaymentMethodIsUpdatedAndIsStillInctive(): void
+    {
+        // Arrange
+        $paymentMethodName = 'MethodName' . Uuid::uuid4()->toString();
+        $paymentProviderKey = 'ProviderKey' . Uuid::uuid4()->toString();
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider([PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => $paymentProviderKey]);
+
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => false,
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => (new PaymentFacade())->generatePaymentMethodKey($paymentProviderKey, $paymentMethodName),
+            PaymentMethodTransfer::NAME => $paymentMethodName,
+            PaymentMethodTransfer::PAYMENT_PROVIDER => $paymentProviderTransfer,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_FOREIGN => true,
+        ]);
+
+        $addPaymentMethodTransfer = $this->tester->haveAddPaymentMethodTransfer(
+            [
+                AddPaymentMethodTransfer::NAME => $paymentMethodName,
+                AddPaymentMethodTransfer::PROVIDER_NAME => $paymentProviderKey,
+                AddPaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => 'redirect-url',
+            ],
+        );
+
+        // Act
+        $createdPaymentMethodTransfer = $this->tester->getFacade()->addPaymentMethod($addPaymentMethodTransfer);
+
+        // Assert
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentMethod());
+        $this->assertNotNull($createdPaymentMethodTransfer->getIdPaymentProvider());
+        $this->assertFalse($createdPaymentMethodTransfer->getIsHidden(), 'Expected that the payment method is visible but it is hidden');
+        $this->assertFalse($createdPaymentMethodTransfer->getIsActive(), 'Expected that the payment method is inactive but it is active');
+    }
+
+    /**
      * @return void
      */
     public function testDisableForeignPaymentMethodSetsPaymentMethodIsDeletedFlagToTrueWithCorrectData(): void
@@ -1452,5 +1534,14 @@ class PaymentFacadeTest extends Unit
     protected function generateNowTimestamp(): string
     {
         return (new DateTime('now', new DateTimeZone('UTC')))->format('Y-m-d\TH:i:s.u');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratePaymentMethodKeyReturnsPaymentMethodKeyForGivenProviderAndMethod(): void
+    {
+        // Arrange, Act, Assert
+        $this->assertSame('foo-bar-baz', $this->paymentFacade->generatePaymentMethodKey('foo', 'bar baz'));
     }
 }

@@ -51,6 +51,13 @@ class MerchantPortalApplicationConfig extends AbstractBundleConfig
     protected const HEADER_PERMISSION_POLICY_VALUE = '';
 
     /**
+     * @uses \Spryker\Shared\Application\ApplicationConstants::ENABLE_APPLICATION_DEBUG
+     *
+     * @var string
+     */
+    protected const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
+
+    /**
      * Specification:
      * - Enables/disables global setting for merchant portal debug mode.
      * - Defaults to false.
@@ -61,7 +68,7 @@ class MerchantPortalApplicationConfig extends AbstractBundleConfig
      */
     public function isDebugModeEnabled(): bool
     {
-        return (bool)$this->get(MerchantPortalConstants::ENABLE_APPLICATION_DEBUG, false);
+        return (bool)$this->get(MerchantPortalConstants::ENABLE_APPLICATION_DEBUG, false) || (bool)$this->get(static::ENABLE_APPLICATION_DEBUG, false);
     }
 
     /**

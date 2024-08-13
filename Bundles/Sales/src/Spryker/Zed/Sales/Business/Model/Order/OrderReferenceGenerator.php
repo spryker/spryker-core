@@ -51,6 +51,10 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
      */
     public function generateOrderReference(QuoteTransfer $quoteTransfer)
     {
+        if ($quoteTransfer->getOrderReference()) {
+            return $quoteTransfer->getOrderReference();
+        }
+
         $storeName = $quoteTransfer->getStore() ? $quoteTransfer->getStore()->getName() : $this->salesFacade->getCurrentStore()->getName();
         $sequenceNumberSetting = $this->salesConfig->getOrderReferenceDefaults($storeName);
 

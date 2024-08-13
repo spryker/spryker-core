@@ -542,4 +542,19 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
     public function expandPaymentWithPaymentSelection(PaymentTransfer $paymentTransfer, StoreTransfer $storeTransfer): PaymentTransfer;
+
+    /**
+     * Specification:
+     * - Requires `paymentProvider` to be set.
+     * - Requires `paymentMethod` to be set.
+     * - Returns the payment method key.
+     *
+     * @api
+     *
+     * @param string $paymentProvider
+     * @param string $paymentMethod
+     *
+     * @return string
+     */
+    public function generatePaymentMethodKey(string $paymentProvider, string $paymentMethod): string;
 }

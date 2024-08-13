@@ -21,7 +21,8 @@
         <column name="label_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for ACP."/>
         <column name="group_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for ACP."/>
         <column name="is_hidden" type="BOOLEAN" default="false" required="true" description="Optional field, used only for ACP."/>
-        <column name="payment_authorization_endpoint" type="VARCHAR" size="1000" required="false" description="Optional field, used only for ACP."/>
+        <column name="payment_authorization_endpoint" type="VARCHAR" size="1000" required="false" description="[DEPRECATED] Optional field, used only for ACP."/>
+        <column name="payment_method_app_configuration" type="LONGVARCHAR" required="false" description="Optional field, used only for ACP."/>
         <column name="is_foreign" type="BOOLEAN" default="false" required="false" description="Optional field, used only for ACP."/>
         <column name="last_message_timestamp" type="TIMESTAMP" size="6" required="false" description="Optional field. Used to manage asynchronous message ordering."/>
 

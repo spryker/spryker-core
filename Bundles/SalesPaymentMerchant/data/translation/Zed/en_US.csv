@@ -1,0 +1,4 @@
+oms.state.payout-failed,"Merchant Payout failed"
+oms.state.payout-reversal-failed,"Merchant Payout Reversal failed"
+oms.state.payout-merchant,"Merchant Payout"
+oms.state.payout-reversed,"Merchant Payout reversed"

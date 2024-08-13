@@ -9,8 +9,10 @@ namespace SprykerTest\AsyncApi\SalesPaymentDetail\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\PaymentCreatedBuilder;
+use Generated\Shared\DataBuilder\PaymentUpdatedBuilder;
 use Generated\Shared\DataBuilder\SalesPaymentDetailBuilder;
 use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 use Generated\Shared\Transfer\SalesPaymentDetailTransfer;
 use Orm\Zed\SalesPaymentDetail\Persistence\SpySalesPaymentDetail;
 use Orm\Zed\SalesPaymentDetail\Persistence\SpySalesPaymentDetailQuery;
@@ -25,6 +27,16 @@ class SalesPaymentDetailHelper extends Module
     public function havePaymentCreatedTransfer(array $seed = []): PaymentCreatedTransfer
     {
         return (new PaymentCreatedBuilder($seed))->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\PaymentUpdatedTransfer
+     */
+    public function havePaymentUpdatedTransfer(array $seed = []): PaymentUpdatedTransfer
+    {
+        return (new PaymentUpdatedBuilder($seed))->build();
     }
 
     /**
@@ -66,5 +78,19 @@ class SalesPaymentDetailHelper extends Module
         $this->assertSame($salesPaymentDetailTransfer->getPaymentReference(), $salesPaymentDetailEntity->getPaymentReference());
         $this->assertSame($salesPaymentDetailTransfer->getEntityReference(), $salesPaymentDetailEntity->getEntityReference());
         $this->assertSame($salesPaymentDetailTransfer->getDetails(), $salesPaymentDetailEntity->getDetails());
+        $this->assertSame($salesPaymentDetailTransfer->getStructuredDetails(), json_decode($salesPaymentDetailEntity->getDetails(), true));
+    }
+
+    /**
+     * @param string $paymentReference
+     *
+     * @return void
+     */
+    public function assertSalesPaymentDetailByPaymentReferenceIsNotFound(string $paymentReference): void
+    {
+        $salesPaymentDetailQuery = new SpySalesPaymentDetailQuery();
+        $salesPaymentDetailCollection = $salesPaymentDetailQuery->findByPaymentReference($paymentReference);
+
+        $this->assertCount(0, $salesPaymentDetailCollection);
     }
 }

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface;
 
 /**
+ * @deprecated Use `KernelAppFacadeInterface::request()` and `\Spryker\Zed\OauthClient\Communication\Plugin\KernelApp\AcpRequestExpanderPluginPlugin` for ACP communication instead.
+ *
  * @method \Spryker\Zed\OauthClient\Business\OauthClientFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthClient\OauthClientConfig getConfig()
  */

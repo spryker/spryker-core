@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductUrlTransfer;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
+use Spryker\Zed\Product\ProductConfig;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
@@ -33,18 +34,36 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\Product\ProductConfig
+     */
+    protected ProductConfig $productConfig;
+
+    /**
+     * @var string
+     */
+    protected const STR_SEARCH = '_';
+
+    /**
+     * @var string
+     */
+    protected const STR_REPLACE = '-';
+
+    /**
      * @param \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface $productAbstractNameGenerator
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
+     * @param \Spryker\Zed\Product\ProductConfig $productConfig
      */
     public function __construct(
         ProductAbstractNameGeneratorInterface $productAbstractNameGenerator,
         ProductToLocaleInterface $localeFacade,
-        ProductToUtilTextInterface $utilTextService
+        ProductToUtilTextInterface $utilTextService,
+        ProductConfig $productConfig
     ) {
         $this->productAbstractNameGenerator = $productAbstractNameGenerator;
         $this->localeFacade = $localeFacade;
         $this->utilTextService = $utilTextService;
+        $this->productConfig = $productConfig;
     }
 
     /**
@@ -84,6 +103,13 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
             $this->productAbstractNameGenerator->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer),
         );
 
-        return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();
+        return $this->productConfig->isFullLocaleNamesInUrlEnabled() ?
+            sprintf(
+                '/%s/%s-%s',
+                str_replace(static::STR_SEARCH, static::STR_REPLACE, strtolower($localeTransfer->getLocaleName())),
+                $productName,
+                $productAbstractTransfer->getIdProductAbstract(),
+            )
+            : '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();
     }
 }

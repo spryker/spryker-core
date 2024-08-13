@@ -18,6 +18,7 @@ use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenera
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
+use Spryker\Zed\Product\ProductConfig;
 
 /**
  * Auto-generated group annotations
@@ -167,11 +168,11 @@ class ProductUrlGeneratorTest extends Unit
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())
         ->setLocale($this->locales['de_DE'])
-        ->setUrl('/de/product-name-dede-1');
+        ->setUrl('/de-de/product-name-dede-1');
 
         $expectedENUrl = (new LocalizedUrlTransfer())
         ->setLocale($this->locales['en_US'])
-        ->setUrl('/en/product-name-enus-1');
+        ->setUrl('/en-us/product-name-enus-1');
 
         $productUrlExpected = (new ProductUrlTransfer())
         ->setAbstractSku(
@@ -187,7 +188,47 @@ class ProductUrlGeneratorTest extends Unit
         ->withConsecutive([static::PRODUCT_NAME['de_DE']], [static::PRODUCT_NAME['en_US']])
         ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
 
-        $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);
+        $configMock = $this->createMock(ProductConfig::class);
+        $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(true);
+
+        $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService, $configMock);
+        $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
+
+        $this->assertSame($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
+        $this->assertEquals($productUrlExpected, $productUrl);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlShouldReturnTransferBCCheck(): void
+    {
+        $expectedDEUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de/product-name-dede-1');
+
+        $expectedENUrl = (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en/product-name-enus-1');
+
+        $productUrlExpected = (new ProductUrlTransfer())
+            ->setAbstractSku(
+                $this->productAbstractTransfer->getSku(),
+            )
+            ->setUrls(
+                new ArrayObject([$expectedDEUrl, $expectedENUrl]),
+            );
+
+        $this->utilTextService
+            ->expects($this->exactly(2))
+            ->method('generateSlug')
+            ->withConsecutive([static::PRODUCT_NAME['de_DE']], [static::PRODUCT_NAME['en_US']])
+            ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
+
+        $configMock = $this->createMock(ProductConfig::class);
+        $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(false);
+
+        $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService, $configMock);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
 
         $this->assertSame($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());

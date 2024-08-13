@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesPayment\Business;
 use Generated\Shared\Transfer\EventPaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesPaymentCollectionTransfer;
+use Generated\Shared\Transfer\SalesPaymentCriteriaTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesPaymentFacadeInterface
@@ -135,4 +137,18 @@ interface SalesPaymentFacadeInterface
      * @return void
      */
     public function sendRefundPaymentMessage(EventPaymentTransfer $eventPaymentTransfer): void;
+
+    /**
+     * Specification:
+     * - Returns a `SalesPaymentCollectionTransfer` with `SalesPaymentTransfers` filtered by the provided criteria.
+     * - Requires `SalesPaymentCollectionTransfer::ID_SALES_ORDER` to be set.
+     * - Returns an empty `SalesPaymentCollectionTransfer` if no payments are found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesPaymentCriteriaTransfer $salesPaymentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesPaymentCollectionTransfer
+     */
+    public function getSalesPaymentCollection(SalesPaymentCriteriaTransfer $salesPaymentCriteriaTransfer): SalesPaymentCollectionTransfer;
 }

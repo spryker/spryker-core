@@ -1,0 +1,17 @@
+<div class="mp-payment__status">
+    <ng-content select="[status]"></ng-content>
+</div>
+
+<div class="mp-payment__content">
+    <div class="spy-row">
+        <div class="spy-col-basis-auto">
+            <div class="mp-payment__action">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mp-payment__footer">
+    <ng-content select="[footer]"></ng-content>
+</div>

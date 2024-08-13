@@ -1,0 +1,21 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@payments-empty-icon-size: var(--payments-empty-icon-size, 180px);
+@payments-empty-icon-margin-bottom: var(--payments-empty-icon-margin-bottom, -20px);
+@payments-empty-text-font-size: var(--payments-empty-text-font-size, 16px);
+@payments-empty-text-font-weight: var(--payments-empty-text-font-weight, 600);
+@payments-empty-text-align: var(--payments-empty-text-align, center);
+
+.mp-payments {
+    &-empty__icon {
+        display: block;
+        font-size: @payments-empty-icon-size;
+        margin-bottom: @payments-empty-icon-margin-bottom;
+    }
+
+    &-empty__text {
+        font-size: @payments-empty-text-font-size;
+        font-weight: @payments-empty-text-font-weight;
+        text-align: @payments-empty-text-align;
+    }
+}

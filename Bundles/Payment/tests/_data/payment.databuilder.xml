@@ -12,8 +12,8 @@
     </transfer>
 
     <transfer name="PaymentProvider">
-        <property name="name" dataBuilderRule="unique()->word(1)"/>
-        <property name="paymentProviderKey" dataBuilderRule="unique()->word(3)"/>
+        <property name="name" dataBuilderRule="unique()->uuid()"/>
+        <property name="paymentProviderKey" dataBuilderRule="unique()->uuid()"/>
     </transfer>
 
     <transfer name="Quote">

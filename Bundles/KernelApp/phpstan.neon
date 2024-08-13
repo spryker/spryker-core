@@ -1,0 +1,9 @@
+parameters:
+    level: 8
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
+        - APPLICATION_CODE_BUCKET
