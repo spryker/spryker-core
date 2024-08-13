@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesPaymentMerchant\Business\Expander;
 
-use Exception;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\SalesPaymentMerchantPayoutReaderInterface;
 
@@ -46,8 +45,11 @@ class OrderItemExpander implements OrderItemExpanderInterface
         array $orderItemTransfers,
         OrderTransfer $orderTransfer
     ): array {
-        $salesPaymentMerchantPayoutCollectionTransfer = $this->salesPaymentMerchantPayoutReader->getSalesPaymentMerchantPayoutCollectionByOrderReference(
+        $merchantReferences = $this->extractMerchantReferencesFromOrderItems($orderItemTransfers);
+
+        $salesPaymentMerchantPayoutCollectionTransfer = $this->salesPaymentMerchantPayoutReader->getSalesPaymentMerchantPayoutCollectionByOrderReferenceAndMerchants(
             $orderTransfer->getOrderReferenceOrFail(),
+            $merchantReferences,
         );
 
         $salesPaymentMerchantPayoutTransferItemReferencesIndexedByTransferId = $this->salesPaymentMerchantPayoutReader
@@ -60,25 +62,29 @@ class OrderItemExpander implements OrderItemExpanderInterface
      * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
      * @param array<string, array<string, string>> $salesPaymentMerchantPayoutTransferItemReferencesIndexedByTransferId
      *
-     * @throws \Exception
-     *
      * @return list<\Generated\Shared\Transfer\OrderItemTransfer>
      */
     protected function mapOrderItemsWithTransferId(
         array $orderItemTransfers,
         array $salesPaymentMerchantPayoutTransferItemReferencesIndexedByTransferId
     ): array {
+        $orderItemsTransferWithTransferId = [];
+
         foreach ($orderItemTransfers as $orderItemTransfer) {
             $itemReference = $orderItemTransfer->getItemReferenceOrFail();
             $transferId = $this->findTransferIdForItemReference($itemReference, $salesPaymentMerchantPayoutTransferItemReferencesIndexedByTransferId);
+
             if (!$transferId) {
-                throw new Exception(static::EXCEPTION_MESSAGE_TRANSFER_ID_NOT_FOUND);
+                // We may have entities in the Database that have been failed and do not have a transfer ID. We filter out orderItems that do not have a successful transfer made.
+                continue;
             }
 
             $orderItemTransfer->setTransferId($transferId);
+
+            $orderItemsTransferWithTransferId[] = $orderItemTransfer;
         }
 
-        return $orderItemTransfers;
+        return $orderItemsTransferWithTransferId;
     }
 
     /**
@@ -98,5 +104,20 @@ class OrderItemExpander implements OrderItemExpanderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
+     *
+     * @return list<string>
+     */
+    protected function extractMerchantReferencesFromOrderItems(array $orderItemTransfers): array
+    {
+        $merchantReferences = [];
+        foreach ($orderItemTransfers as $orderItemTransfer) {
+            $merchantReferences[] = $orderItemTransfer->getMerchantReferenceOrFail();
+        }
+
+        return $merchantReferences;
     }
 }

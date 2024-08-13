@@ -173,6 +173,93 @@ class MerchantRefundCommandPluginTest extends Unit
     /**
      * @return void
      */
+    public function testGivenAnOrderWithTwoOrderItemsFromDifferentMerchantsWhenTheCommandIsExecutedAndTheExternalPSPReturnsASuccessfulResponseThenAllOrderItemsOfThisMerchantArePersisted(): void
+    {
+        // Arrange
+        $transferId = Uuid::uuid4()->toString();
+        $merchantReferenceOne = Uuid::uuid4()->toString();
+        $merchantReferenceTwo = Uuid::uuid4()->toString();
+        $orderReference = Uuid::uuid4()->toString();
+
+        $globalContainer = new GlobalContainer();
+        $globalContainer->setContainer(new Container([
+            'locale' => 'de_DE',
+        ]));
+
+        $paymentProviderTransfer = $this->tester->havePaymentProvider([
+            PaymentProviderTransfer::NAME => 'Foo',
+            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'foo',
+        ]);
+
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::NAME => 'bar',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'foo-bar',
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::PAYMENT_METHOD_APP_CONFIGURATION => [
+                PaymentMethodAppConfigurationTransfer::BASE_URL => 'http://localhost:8080',
+                PaymentMethodAppConfigurationTransfer::ENDPOINTS => [
+                    [
+                        EndpointTransfer::NAME => 'transfer',
+                        EndpointTransfer::PATH => '/reverse-payouts',
+                    ],
+                ],
+            ],
+        ]);
+
+        $this->tester->mockHydrateOrderPluginsInSalesModule();
+
+        $this->tester->haveMerchant([
+            MerchantTransfer::MERCHANT_REFERENCE => $merchantReferenceOne,
+        ]);
+
+        $this->tester->haveMerchant([
+            MerchantTransfer::MERCHANT_REFERENCE => $merchantReferenceTwo,
+        ]);
+
+        $salesOrderItemWithMerchantOne = $this->tester->createSalesOrderItemEntity($merchantReferenceOne);
+        $salesOrderItemWithMerchantTwo = $this->tester->createSalesOrderItemEntity($merchantReferenceTwo);
+
+        $salesOrderEntity = $this->tester->mockSalesOrderEntity([$salesOrderItemWithMerchantOne, $salesOrderItemWithMerchantTwo], $merchantReferenceOne, $orderReference);
+        $orderItems = $salesOrderEntity->getItems()->getArrayCopy();
+
+        $salesPaymentMerchantPayoutEntityErrored = $this->tester->haveSalesPaymentMerchantPayoutPersisted([
+            'transfer_id' => null, // A failed response does not have a transfer id
+            'order_reference' => $orderReference,
+            'item_references' => '',
+            'is_successful' => false,
+            'amount' => 0,
+        ]);
+
+        $salesPaymentMerchantPayoutEntity = $this->tester->haveSalesPaymentMerchantPayoutPersisted([
+            'transfer_id' => $transferId,
+            'merchant_reference' => $merchantReferenceOne,
+            'order_reference' => $orderReference,
+            'item_references' => $salesOrderItemWithMerchantOne->getOrderItemReference(),
+            'is_successful' => true,
+            'amount' => 900,
+        ]);
+
+        $salesOrderEntity->addSpySalesPaymentMerchantPayout($salesPaymentMerchantPayoutEntity);
+        $salesOrderEntity->addSpySalesPaymentMerchantPayout($salesPaymentMerchantPayoutEntityErrored);
+
+        $this->tester->mockExpectedResponseFromApp(
+            $merchantReferenceOne,
+            $orderReference,
+            [['itemReference' => $salesOrderItemWithMerchantOne->getOrderItemReference()]],
+            '-900',
+        );
+
+        // Act
+        $merchantPayoutCommandPlugin = new MerchantPayoutReverseCommandByOrderPlugin();
+        $merchantPayoutCommandPlugin->run($orderItems, $salesOrderEntity, new ReadOnlyArrayObject([]));
+
+        // Assert
+        $this->tester->assertSalesPaymentMerchantRefundEntity($merchantReferenceOne, $orderReference, [$salesOrderItemWithMerchantOne]);
+    }
+
+    /**
+     * @return void
+     */
     public function testMerchantPayoutReverseAmountCalculatorPluginIsCalled(): void
     {
         // Arrange

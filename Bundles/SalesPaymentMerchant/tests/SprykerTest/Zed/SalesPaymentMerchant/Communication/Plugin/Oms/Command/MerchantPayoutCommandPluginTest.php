@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\SalesPaymentMerchant\Communication\Plugin\Oms\Command;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\EndpointTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaymentMethodAppConfigurationTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
@@ -156,10 +154,6 @@ class MerchantPayoutCommandPluginTest extends Unit
         // Arrange
         $merchantReference = Uuid::uuid4()->toString();
         $orderReference = Uuid::uuid4()->toString();
-        $itemTransfer = (new ItemBuilder([
-            ItemTransfer::MERCHANT_REFERENCE => $merchantReference,
-            ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 100,
-        ]))->build();
 
         $paymentProviderTransfer = $this->tester->havePaymentProvider([
             PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'foo',

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesPaymentMerchant\Persistence;
 
-use Generated\Shared\Transfer\TransferResponseTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseTransfer;
 use Orm\Zed\SalesPaymentMerchant\Persistence\SpySalesPaymentMerchantPayout;
 use Orm\Zed\SalesPaymentMerchant\Persistence\SpySalesPaymentMerchantPayoutReversal;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -17,28 +17,28 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class SalesPaymentMerchantEntityManager extends AbstractEntityManager implements SalesPaymentMerchantEntityManagerInterface
 {
- /**
-  * @param \Generated\Shared\Transfer\TransferResponseTransfer $transferResponseTransfer
-  *
-  * @return void
-  */
-    public function saveSalesPaymentMerchantPayout(TransferResponseTransfer $transferResponseTransfer): void
+    /**
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+     *
+     * @return void
+     */
+    public function saveSalesPaymentMerchantPayout(PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer): void
     {
         $salesPaymentMerchantPayoutEntity = new SpySalesPaymentMerchantPayout();
-        $salesPaymentMerchantPayoutEntity->fromArray($transferResponseTransfer->toArray());
+        $salesPaymentMerchantPayoutEntity->fromArray($paymentTransmissionResponseTransfer->toArray());
         $salesPaymentMerchantPayoutEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TransferResponseTransfer $transferResponseTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
      *
      * @return void
      */
     public function saveSalesPaymentMerchantPayoutReversal(
-        TransferResponseTransfer $transferResponseTransfer
+        PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
     ): void {
         $salesPaymentMerchantPayoutReversalEntity = new SpySalesPaymentMerchantPayoutReversal();
-        $salesPaymentMerchantPayoutReversalEntity->fromArray($transferResponseTransfer->toArray());
+        $salesPaymentMerchantPayoutReversalEntity->fromArray($paymentTransmissionResponseTransfer->toArray());
         $salesPaymentMerchantPayoutReversalEntity->save();
     }
 }

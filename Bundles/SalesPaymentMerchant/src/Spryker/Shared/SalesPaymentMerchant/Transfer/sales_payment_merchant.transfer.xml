@@ -16,7 +16,7 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="TransferResponse">
+    <transfer name="PaymentTransmissionResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="merchantReference" type="string"/>
         <property name="orderReference" type="string"/>
@@ -25,6 +25,25 @@
         <property name="failureMessage" type="string"/>
         <property name="amount" type="string"/>
         <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="PaymentTransmissionResponseCollection">
+        <property name="paymentTransmissions" type="PaymentTransmissionResponse[]" singular="paymentTransmission"/>
+    </transfer>
+
+    <transfer name="TransferResponse" deprecated="In some projects the generated class will have the wrong name">
+        <property name="isSuccessful" type="bool"/>
+        <property name="merchantReference" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="itemReferences" type="string"/>
+        <property name="transferId" type="string"/>
+        <property name="failureMessage" type="string"/>
+        <property name="amount" type="string"/>
+        <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="TransferResponseCollection" deprecated="In some projects the generated class will have the wrong name">
+        <property name="transfers" type="TransferResponse[]" singular="transferResponse"/>
     </transfer>
 
     <transfer name="PaymentMethodCollection">
@@ -74,10 +93,6 @@
 
     <transfer name="AcpHttpResponse" strict="true">
         <property name="content" type="string"/>
-    </transfer>
-
-    <transfer name="TransferResponseCollection">
-        <property name="transfers" type="TransferResponse[]" singular="transferResponse"/>
     </transfer>
 
     <transfer name="Expense">

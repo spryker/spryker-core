@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesPaymentMerchant\Business\Sender;
 
-use Generated\Shared\Transfer\TransferResponseCollectionTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseCollectionTransfer;
 
 interface TransferRequestSenderInterface
 {
@@ -15,10 +15,10 @@ interface TransferRequestSenderInterface
      * @param array<string, array<int, array<string, mixed>>|int> $transferRequestData
      * @param string $transferEndpoint
      *
-     * @return \Generated\Shared\Transfer\TransferResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\PaymentTransmissionResponseCollectionTransfer
      */
     public function requestTransfer(
         array $transferRequestData,
         string $transferEndpoint
-    ): TransferResponseCollectionTransfer;
+    ): PaymentTransmissionResponseCollectionTransfer;
 }

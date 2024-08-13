@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesPaymentMerchant\Business\Sender;
 
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
-use Generated\Shared\Transfer\TransferResponseCollectionTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseCollectionTransfer;
 use Spryker\Zed\SalesPaymentMerchant\Dependency\Facade\SalesPaymentMerchantToKernelAppFacadeInterface;
 use Spryker\Zed\SalesPaymentMerchant\Dependency\Service\SalesPaymentMerchantToUtilEncodingServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,12 +41,12 @@ class TransferRequestSender implements TransferRequestSenderInterface
      * @param array<string, array<int, array<string, mixed>>|int> $transferRequestData
      * @param string $transferEndpoint
      *
-     * @return \Generated\Shared\Transfer\TransferResponseCollectionTransfer
+     * @return \Generated\Shared\Transfer\PaymentTransmissionResponseCollectionTransfer
      */
     public function requestTransfer(
         array $transferRequestData,
         string $transferEndpoint
-    ): TransferResponseCollectionTransfer {
+    ): PaymentTransmissionResponseCollectionTransfer {
         $acpHttpRequestTransfer = $this->createAcpHttpRequestTransfer($transferEndpoint, $transferRequestData);
         $acpHttpResponseTransfer = $this->kernelAppFacade->makeRequest($acpHttpRequestTransfer);
 
@@ -55,10 +55,10 @@ class TransferRequestSender implements TransferRequestSenderInterface
             true,
         );
 
-        $transferResponseCollectionTransfer = new TransferResponseCollectionTransfer();
-        $transferResponseCollectionTransfer->fromArray($decodedResponse);
+        $paymentTransmissionResponseCollectionTransfer = new PaymentTransmissionResponseCollectionTransfer();
+        $paymentTransmissionResponseCollectionTransfer->fromArray([PaymentTransmissionResponseCollectionTransfer::PAYMENT_TRANSMISSIONS => $decodedResponse['transfers']]);
 
-        return $transferResponseCollectionTransfer;
+        return $paymentTransmissionResponseCollectionTransfer;
     }
 
     /**

@@ -22,11 +22,13 @@ class MerchantPayoutReverse extends AbstractMerchantTransfer implements Merchant
     public function reversePayoutMerchants(array $salesOrderItemTransfers, OrderTransfer $orderTransfer): void
     {
         $transferEndpointUrl = $this->transferEndpointReader->getTransferEndpointUrl($orderTransfer);
+
         if (!$transferEndpointUrl) {
             return;
         }
 
         $orderItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
+
         if (count($orderItemTransfers) === 0) {
             return;
         }
@@ -35,14 +37,15 @@ class MerchantPayoutReverse extends AbstractMerchantTransfer implements Merchant
         $orderExpenseTransfers = $this->getOrderExpensesForTransfer($orderTransfer);
         $transferRequestData = $this->createTransferRequestData($orderItemTransfers, $orderExpenseTransfers);
 
-        $transferResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
+        $paymentTransmissionResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
             $transferRequestData,
             $transferEndpointUrl,
         );
-        foreach ($transferResponseCollectionTransfer->getTransfers() as $transferResponseTransfer) {
-            $transferResponseTransfer->setItemReferences($this->getItemReferences($transferResponseTransfer));
 
-            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayoutReversal($transferResponseTransfer);
+        foreach ($paymentTransmissionResponseCollectionTransfer->getPaymentTransmissions() as $paymentTransmissionResponseTransfer) {
+            $paymentTransmissionResponseTransfer->setItemReferences($this->getItemReferences($paymentTransmissionResponseTransfer));
+
+            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayoutReversal($paymentTransmissionResponseTransfer);
         }
     }
 

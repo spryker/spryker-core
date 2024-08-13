@@ -55,6 +55,7 @@ class SalesPaymentMerchantRepository extends AbstractRepository implements Sales
         }
 
         $salesPaymentMerchantPayoutEntities = $salesPaymentMerchantPayoutQuery->find();
+
         if ($salesPaymentMerchantPayoutEntities->count() === 0) {
             return $salesPaymentMerchantPayoutCollectionTransfer;
         }
@@ -99,6 +100,9 @@ class SalesPaymentMerchantRepository extends AbstractRepository implements Sales
                 $salesPaymentMerchantPayoutConditionsTransfer->getIsSuccessful(),
             );
         }
+
+        // Only fetch entities that have a transferId and are not failed.
+        $salesPaymentMerchantPayoutQuery->filterByTransferId(null, Criteria::ISNOTNULL);
 
         return $salesPaymentMerchantPayoutQuery;
     }

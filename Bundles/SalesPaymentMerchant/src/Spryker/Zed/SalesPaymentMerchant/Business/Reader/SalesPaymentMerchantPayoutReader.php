@@ -30,13 +30,18 @@ class SalesPaymentMerchantPayoutReader implements SalesPaymentMerchantPayoutRead
 
     /**
      * @param string $orderReference
+     * @param list<string> $merchantReferences
      *
      * @return \Generated\Shared\Transfer\SalesPaymentMerchantPayoutCollectionTransfer
      */
-    public function getSalesPaymentMerchantPayoutCollectionByOrderReference(
-        string $orderReference
+    public function getSalesPaymentMerchantPayoutCollectionByOrderReferenceAndMerchants(
+        string $orderReference,
+        array $merchantReferences
     ): SalesPaymentMerchantPayoutCollectionTransfer {
-        $salesPaymentMerchantPayoutConditionsTransfer = (new SalesPaymentMerchantPayoutConditionsTransfer())->addOrderReference($orderReference);
+        $salesPaymentMerchantPayoutConditionsTransfer = (new SalesPaymentMerchantPayoutConditionsTransfer())
+            ->addOrderReference($orderReference)
+            ->setMerchantReferences($merchantReferences);
+
         $salesPaymentMerchantPayoutCriteriaTransfer = $this->createPaymentMerchantPayoutCriteriaTransfer($salesPaymentMerchantPayoutConditionsTransfer);
 
         return $this->salesPaymentMerchantRepository->getSalesPaymentMerchantPayoutCollection($salesPaymentMerchantPayoutCriteriaTransfer);
@@ -73,6 +78,7 @@ class SalesPaymentMerchantPayoutReader implements SalesPaymentMerchantPayoutRead
         SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
     ): array {
         $salesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId = [];
+
         foreach ($salesPaymentMerchantPayoutCollectionTransfer->getSalesPaymentMerchantPayouts() as $salesPaymentMerchantPayoutTransfer) {
             $transferId = $salesPaymentMerchantPayoutTransfer->getTransferIdOrFail();
             $itemReferences = explode(SalesPaymentMerchantConfig::ITEM_REFERENCE_SEPARATOR, $salesPaymentMerchantPayoutTransfer->getItemReferencesOrFail());

@@ -13,11 +13,13 @@ interface SalesPaymentMerchantPayoutReaderInterface
 {
     /**
      * @param string $orderReference
+     * @param list<string> $merchantReferences
      *
      * @return \Generated\Shared\Transfer\SalesPaymentMerchantPayoutCollectionTransfer
      */
-    public function getSalesPaymentMerchantPayoutCollectionByOrderReference(
-        string $orderReference
+    public function getSalesPaymentMerchantPayoutCollectionByOrderReferenceAndMerchants(
+        string $orderReference,
+        array $merchantReferences
     ): SalesPaymentMerchantPayoutCollectionTransfer;
 
     /**

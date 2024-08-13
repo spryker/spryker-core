@@ -27,6 +27,7 @@ class MerchantPayout extends AbstractMerchantTransfer implements MerchantPayoutI
         }
 
         $orderItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
+
         if (count($orderItemTransfers) === 0) {
             return;
         }
@@ -34,15 +35,15 @@ class MerchantPayout extends AbstractMerchantTransfer implements MerchantPayoutI
         $orderExpenseTransfers = $this->getOrderExpensesForTransfer($orderTransfer);
         $transferRequestData = $this->createTransferRequestData($orderItemTransfers, $orderExpenseTransfers);
 
-        $transferResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
+        $paymentTransmissionResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
             $transferRequestData,
             $transferEndpointUrl,
         );
-        /** @var \Generated\Shared\Transfer\TransferResponseTransfer $transferResponseTransfer */
-        foreach ($transferResponseCollectionTransfer->getTransfers() as $transferResponseTransfer) {
-            $transferResponseTransfer->setItemReferences($this->getItemReferences($transferResponseTransfer));
+        /** @var \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer */
+        foreach ($paymentTransmissionResponseCollectionTransfer->getPaymentTransmissions() as $paymentTransmissionResponseTransfer) {
+            $paymentTransmissionResponseTransfer->setItemReferences($this->getItemReferences($paymentTransmissionResponseTransfer));
 
-            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayout($transferResponseTransfer);
+            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayout($paymentTransmissionResponseTransfer);
         }
     }
 

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderExpenseTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TransferResponseTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseTransfer;
 use Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutCalculatorInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\TransferEndpointReaderInterface;
@@ -120,15 +120,15 @@ abstract class AbstractMerchantTransfer
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TransferResponseTransfer $transferResponseTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
      *
      * @return string
      */
-    protected function getItemReferences(TransferResponseTransfer $transferResponseTransfer): string
+    protected function getItemReferences(PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer): string
     {
         $itemReferences = [];
 
-        foreach ($transferResponseTransfer->getOrderItems() as $orderItemTransfer) {
+        foreach ($paymentTransmissionResponseTransfer->getOrderItems() as $orderItemTransfer) {
             $itemReferences[] = $orderItemTransfer->getItemReferenceOrFail();
         }
 
