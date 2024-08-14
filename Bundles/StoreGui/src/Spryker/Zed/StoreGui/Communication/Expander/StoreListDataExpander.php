@@ -51,6 +51,7 @@ class StoreListDataExpander implements StoreListDataExpanderInterface
      */
     public function expandData(array $viewData): array
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $viewData;
         }

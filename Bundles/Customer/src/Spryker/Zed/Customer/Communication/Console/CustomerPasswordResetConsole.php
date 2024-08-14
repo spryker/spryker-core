@@ -72,6 +72,7 @@ class CustomerPasswordResetConsole extends StoreAwareConsole
         $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($noToken);
         $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
 
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($this->getFactory()->getStoreFacade()->isDynamicStoreEnabled() === true) {
             $storeName = $this->getStore($input);
             if ($storeName === null) {

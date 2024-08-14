@@ -102,13 +102,13 @@ interface SearchFacadeInterface
     public function searchKeys($searchString, $limit = null, $offset = null);
 
     /**
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
      * - The transformation is based on the given page map what configures which data goes into which field
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array<string, mixed> $data

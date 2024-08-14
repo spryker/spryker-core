@@ -43,6 +43,7 @@ class StoreTableExpander implements StoreTableExpanderInterface
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $config;
         }
@@ -63,6 +64,7 @@ class StoreTableExpander implements StoreTableExpanderInterface
      */
     public function expandDataItem(array $storeDataItem, StoreTransfer $storeTransfer): array
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $storeDataItem;
         }

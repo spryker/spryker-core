@@ -33,6 +33,7 @@ class MaintenanceController extends AbstractController
      */
     public function indexAction()
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         $isDynamicStoreEnabled = $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled();
 
         return $this->viewResponse([

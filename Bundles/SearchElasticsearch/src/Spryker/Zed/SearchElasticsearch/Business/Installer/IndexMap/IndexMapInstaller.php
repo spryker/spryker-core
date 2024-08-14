@@ -83,6 +83,7 @@ class IndexMapInstaller implements IndexMapInstallerInterface
      */
     protected function getGetIndexDefinitionTransfers(): array
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeFacade->isDynamicStoreEnabled()) {
             return $this->indexDefinitionBuilder->build($this->getCurrentStore());
         }

@@ -183,6 +183,7 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function writeBulk(array $data): void
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($this->storeFacade->isDynamicStoreEnabled()) {
             $data = $this->expandWithStoreNames($data);
         }
@@ -216,6 +217,7 @@ class SynchronizationSearch implements SynchronizationInterface
             $searchDocumentTransfer->setId($key);
             $searchDocumentTransfer->setData($value);
 
+            /* Required by infrastructure, exists only for BC with DMS OFF mode. */
             if ($this->storeFacade->isDynamicStoreEnabled()) {
                 $store = $datum[static::STORE];
                 $searchDocumentTransfer->setStoreName($store);
@@ -234,6 +236,7 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function deleteBulk(array $data): void
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if ($this->storeFacade->isDynamicStoreEnabled()) {
             $data = $this->expandWithStoreNames($data);
         }

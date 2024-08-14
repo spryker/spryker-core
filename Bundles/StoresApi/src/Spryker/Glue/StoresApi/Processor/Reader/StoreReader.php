@@ -75,6 +75,7 @@ class StoreReader implements StoreReaderInterface
         $currentLocale = $this->localeClient->getCurrentLocale();
         $storeStorageTransfer = $this->storeStorageClient->findStoreByName($store);
 
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeClient->isDynamicStoreEnabled()) {
             $storeTransfer = $this->storeClient->getCurrentStore();
             $storeStorageTransfer = $this->storesApiResponseBuilder
@@ -111,6 +112,7 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreCollection(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
+        /* Required by infrastructure, exists only for BC with DMS OFF mode. */
         if (!$this->storeClient->isDynamicStoreEnabled()) {
             $storeTransfer = $this->storeClient->getCurrentStore();
             $storeStorageTransfer = $this->storesApiResponseBuilder
