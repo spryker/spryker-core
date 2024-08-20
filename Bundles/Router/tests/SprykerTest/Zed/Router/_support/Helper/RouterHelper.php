@@ -164,7 +164,7 @@ class RouterHelper extends Module
         $resource = function () {
             return $this->getRouteCollection();
         };
-        $router = new Router($loader, $resource, []);
+        $router = new Router($loader, $resource, $this->getConfig(), []);
         $chainRouter->add($router);
     }
 

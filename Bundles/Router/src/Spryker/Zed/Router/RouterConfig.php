@@ -24,6 +24,11 @@ class RouterConfig extends AbstractBundleConfig
     protected const DIRECTORY_NAME_MERCHANT_PORTAL_APPLICATION = 'MerchantPortalApplication';
 
     /**
+     * @var bool
+     */
+    protected const IS_ROUTING_CACHE_ENABLED = false;
+
+    /**
      * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
@@ -307,5 +312,20 @@ class RouterConfig extends AbstractBundleConfig
         return [
             static::DIRECTORY_NAME_MERCHANT_PORTAL_APPLICATION,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns whether the Router cache is enabled.
+     *
+     * @api
+     *
+     * @deprecated Cache will be enabled by default in next major.
+     *
+     * @return bool
+     */
+    public function isRoutingCacheEnabled(): bool
+    {
+        return static::IS_ROUTING_CACHE_ENABLED;
     }
 }

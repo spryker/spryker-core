@@ -16,13 +16,13 @@ use Spryker\Zed\Router\Business\Router\RouterInterface;
 interface RouterFacadeInterface
 {
     /**
+     * Specification:
+     * - Returns a ChainRouter which is added to the Application.
+     * - Executes {@link \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface} plugin stack to add Router to the ChainRouter.
+     *
      * @api
      *
      * @internal
-     *
-     * Specification:
-     * - Returns a ChainRouter which is added to the Application.
-     * - Uses RouterExtensionPluginInterfaces to add Router to the ChainRouter.
      *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
@@ -53,13 +53,13 @@ interface RouterFacadeInterface
     public function getBackofficeRouter(): RouterInterface;
 
     /**
+     * Specification:
+     * - Returns a ChainRouter which is added to the BackendGateway Application.
+     * - Executes {@link \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface} plugin stack to add Router to the ChainRouter.
+     *
      * @api
      *
      * @internal
-     *
-     * Specification:
-     * - Returns a ChainRouter which is added to the BackendGateway Application.
-     * - Uses RouterExtensionPluginInterfaces to add Router to the ChainRouter.
      *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
@@ -78,10 +78,6 @@ interface RouterFacadeInterface
     public function getMerchantPortalRouter(): RouterInterface;
 
     /**
-     * @api
-     *
-     * @internal
-     *
      * Specification:
      * - Returns Router which handles BackendGateway routes.
      *
@@ -96,7 +92,7 @@ interface RouterFacadeInterface
     /**
      * Specification:
      * - Returns a ChainRouter which is added to the BackendApi Application.
-     * - Uses RouterExtensionPluginInterfaces to add Router to the ChainRouter.
+     * - Executes {@link \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface} plugin stack to add Router to the ChainRouter.
      *
      * @api
      *
@@ -137,25 +133,25 @@ interface RouterFacadeInterface
     public function warmUpBackendGatewayRouterCache(): void;
 
     /**
+     * Specification:
+     * - Returns Router which handles Zed routes.
+     *
      * @api
      *
      * @internal
-     *
-     * Specification:
-     * - Returns Router which handles Zed routes.
      *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedRouter(): RouterInterface;
 
     /**
+     * Specification:
+     * - Returns a ChainRouter which is added to the Application.
+     * - Executes {@link \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface} plugin stack to add Router to the ChainRouter.
+     *
      * @api
      *
      * @internal
-     *
-     * Specification:
-     * - Returns a ChainRouter which is added to the Application.
-     * - Uses RouterExtensionPluginInterfaces to add Router to the ChainRouter.
      *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
@@ -174,10 +170,10 @@ interface RouterFacadeInterface
     public function getZedFallbackRouter(): RouterInterface;
 
     /**
-     * @api
-     *
      * Specification:
      * - Builds the cache for the Router.
+     *
+     * @api
      *
      * @return void
      */

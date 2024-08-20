@@ -26,4 +26,51 @@ use Codeception\Actor;
 class RouterBusinessTester extends Actor
 {
     use _generated\RouterBusinessTesterActions;
+
+    /**
+     * @var int
+     */
+    protected const MODULE_ROOT_DIRECTORY_LEVEL = 5;
+
+    /**
+     * @var string
+     */
+    protected const CACHE_DIR = '/tests/_data/cache/';
+
+    /**
+     * @var string
+     */
+    protected const CACHE_FILE = 'url_generating_routes.php';
+
+    /**
+     * @return void
+     */
+    public function cleanCache(): void
+    {
+        $dirName = $this->getCacheDir();
+        if (file_exists($dirName . static::CACHE_FILE)) {
+            array_map('unlink', glob("$dirName/*.*", GLOB_NOSORT));
+            rmdir($dirName);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheDir(): string
+    {
+        $moduleRoot = realpath(
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
+        );
+
+        return $moduleRoot . static::CACHE_DIR;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheFileName(): string
+    {
+        return $this->getCacheDir() . static::CACHE_FILE;
+    }
 }

@@ -27,6 +27,7 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
 
     Communication:
         path: ./Communication
