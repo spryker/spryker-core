@@ -56,7 +56,7 @@ class RedisDataCollector extends DataCollector
     /**
      * @return void
      */
-    public function reset()
+    public function reset(): void
     {
         $this->data = [];
     }

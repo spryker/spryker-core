@@ -18,6 +18,8 @@ class RedisConfig extends AbstractBundleConfig
      */
     public function isDevelopmentMode(): bool
     {
-        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
+        return APPLICATION_ENV === 'development'
+            || APPLICATION_ENV === 'docker.dev'
+            || APPLICATION_ENV === 'docker.acp.dev';
     }
 }
