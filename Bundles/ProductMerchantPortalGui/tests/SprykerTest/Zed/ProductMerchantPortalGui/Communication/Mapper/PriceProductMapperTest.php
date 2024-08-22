@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
@@ -81,5 +82,32 @@ class PriceProductMapperTest extends Unit
         // Assert
         $this->assertSame((int)static::ID_PRODUCT_ABSTRACT, $priceProductCriteriaTransfer->getIdProductAbstract());
         $this->assertSame([], $priceProductCriteriaTransfer->getPriceProductStoreIds());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapTableRowsToPriceProductTransfersProcessesNewPriceProductsWithMissingCurrencyOrStoreInformation(): void
+    {
+        // Arrange
+        $newPriceProducts = [
+            [
+                'store' => '',
+                'currency' => '',
+                'default[moneyValue][netAmount]' => '100',
+                'default[moneyValue][grossAmount]' => '120',
+                'original[moneyValue][netAmount]' => '130',
+                'original[moneyValue][grossAmount]' => '150',
+                'volumeQuantity' => '1',
+            ],
+        ];
+        $priceProductTransfers = new ArrayObject();
+        $priceProductMapper = $this->tester->createPriceProductMapper();
+
+        // Act
+        $result = $priceProductMapper->mapTableRowsToPriceProductTransfers($newPriceProducts, $priceProductTransfers);
+
+        // Assert
+        $this->tester->assertCount(1, $result);
     }
 }

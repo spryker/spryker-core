@@ -252,6 +252,18 @@ class PriceProductMapper implements PriceProductMapperInterface
                 continue;
             }
 
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $newPriceProductTransfer->getMoneyValue();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->getCurrency();
+            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+            $storeTransfer = $moneyValueTransfer->getStore();
+            if (!$storeTransfer->getIdStore() || !$currencyTransfer->getIdCurrency()) {
+                $priceProductTransfers->append($newPriceProductTransfer);
+
+                return $priceProductTransfers;
+            }
+
             $priceProductTransfers = $this->priceProductMerger->mergePriceProducts(
                 $newPriceProductTransfer,
                 $priceProductTransfers,
@@ -375,8 +387,8 @@ class PriceProductMapper implements PriceProductMapperInterface
         return (new MoneyValueTransfer())
             ->setCurrency($currencyTransfer)
             ->setStore($storeTransfer)
-            ->setFkStore((int)$newPriceProduct[PriceProductTableViewTransfer::STORE])
-            ->setFkCurrency((int)$newPriceProduct[PriceProductTableViewTransfer::CURRENCY])
+            ->setFkStore($newPriceProduct[PriceProductTableViewTransfer::STORE] ? (int)$newPriceProduct[PriceProductTableViewTransfer::STORE] : null)
+            ->setFkCurrency($newPriceProduct[PriceProductTableViewTransfer::CURRENCY] ? (int)$newPriceProduct[PriceProductTableViewTransfer::CURRENCY] : null)
             ->setNetAmount($netAmount)
             ->setGrossAmount($grossAmount);
     }

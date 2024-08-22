@@ -82,7 +82,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     {
         $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
-        $initialStore = $initialDataRow[PriceProductTableViewTransfer::STORE];
+        $initialStore = $initialDataRow[PriceProductTableViewTransfer::STORE] ?: null;
 
         return $initialStore === $moneyValueTransfer->getFkStore();
     }
@@ -97,7 +97,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     {
         $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
-        $initialCurrency = $initialDataRow[PriceProductTableViewTransfer::CURRENCY];
+        $initialCurrency = $initialDataRow[PriceProductTableViewTransfer::CURRENCY] ?: null;
 
         return $initialCurrency === $moneyValueTransfer->getFkCurrency();
     }
