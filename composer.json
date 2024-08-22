@@ -843,6 +843,7 @@
         "spryker/quote-approval": "*",
         "spryker/quote-approval-extension": "*",
         "spryker/quote-approval-shipment-connector": "*",
+        "spryker/quote-checkout-connector": "*",
         "spryker/quote-extension": "*",
         "spryker/quote-request": "*",
         "spryker/quote-request-agent": "*",
