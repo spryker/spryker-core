@@ -116,7 +116,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         $quoteTransfer = $this->quoteSession->getQuote();
 
         foreach ($this->databaseStrategyReaderPlugins as $databaseStrategyReaderPlugin) {
-            $databaseStrategyReaderPlugin->execute($quoteTransfer);
+            $quoteTransfer = $databaseStrategyReaderPlugin->execute($quoteTransfer);
         }
 
         return $quoteTransfer;

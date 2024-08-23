@@ -26,4 +26,12 @@ use Codeception\Actor;
 class QuoteClientTester extends Actor
 {
     use _generated\QuoteClientTesterActions;
+
+    /**
+     * @return \SprykerTest\Client\Quote\TestDatabaseStrategyReaderPlugin
+     */
+    public function createTestDatabaseStrategyReaderPlugin()
+    {
+        return new TestDatabaseStrategyReaderPlugin();
+    }
 }
