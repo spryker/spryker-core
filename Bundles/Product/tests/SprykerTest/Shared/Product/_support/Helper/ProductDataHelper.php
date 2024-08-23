@@ -112,7 +112,7 @@ class ProductDataHelper extends Module
             $localizedAttributes = (new LocalizedAttributesBuilder([
                 LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
                 LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
-                LocalizedAttributesTransfer::ATTRIBUTES => $productConcreteOverride[ProductConcreteTransfer::ATTRIBUTES] ?? [],
+                LocalizedAttributesTransfer::ATTRIBUTES => $productAbstractOverride[ProductAbstractTransfer::ATTRIBUTES] ?? [],
             ]))->build()->toArray();
 
             $productAbstractTransfer->withLocalizedAttributes($localizedAttributes);
