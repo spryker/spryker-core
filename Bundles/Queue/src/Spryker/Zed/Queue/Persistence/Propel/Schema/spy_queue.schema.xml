@@ -16,6 +16,9 @@
             <index-column name="server_id"/>
             <index-column name="queue_name"/>
         </index>
+        <index name="spy_queue_process-index-process_pid-key">
+            <index-column name="process_pid"/>
+        </index>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_queue_process_pk_seq"/>
     </table>
