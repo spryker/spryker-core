@@ -103,7 +103,9 @@ class ProcessManager implements ProcessManagerInterface
             }
         }
 
-        $this->deleteProcesses($cleanupProcesses);
+        if ($cleanupProcesses !== []) {
+            $this->deleteProcesses($cleanupProcesses);
+        }
 
         return $busyProcessIndex;
     }
