@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payment;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaymentAuthorizationFailedTransfer;
@@ -176,6 +177,7 @@ class PaymentConfig extends AbstractBundleConfig
     {
         return [
             QuoteTransfer::ORDER_REFERENCE => 'orderReference',
+            QuoteTransfer::PRICE_MODE => 'priceMode',
             QuoteTransfer::STORE => [
                 StoreTransfer::NAME => 'storeName',
             ],
@@ -190,6 +192,27 @@ class PaymentConfig extends AbstractBundleConfig
                 AddressTransfer::ISO2_CODE => 'countryCode',
                 AddressTransfer::FIRST_NAME => 'customerFirstName',
                 AddressTransfer::LAST_NAME => 'customerLastName',
+                AddressTransfer::SALUTATION => 'salutation',
+                AddressTransfer::CITY => 'city',
+                AddressTransfer::STATE => 'state',
+                AddressTransfer::ADDRESS1 => 'address1',
+                AddressTransfer::ADDRESS2 => 'address2',
+                AddressTransfer::ADDRESS3 => 'address3',
+                AddressTransfer::ZIP_CODE => 'zip',
+                AddressTransfer::PHONE => 'phone',
+            ],
+            QuoteTransfer::SHIPPING_ADDRESS => [
+                AddressTransfer::ISO2_CODE => 'shippingCountryCode',
+                AddressTransfer::FIRST_NAME => 'shippingFirstName',
+                AddressTransfer::LAST_NAME => 'shippingLastName',
+                AddressTransfer::SALUTATION => 'shippingSalutation',
+                AddressTransfer::CITY => 'shippingCity',
+                AddressTransfer::STATE => 'shippingState',
+                AddressTransfer::ADDRESS1 => 'shippingAddress1',
+                AddressTransfer::ADDRESS2 => 'shippingAddress2',
+                AddressTransfer::ADDRESS3 => 'shippingAddress3',
+                AddressTransfer::ZIP_CODE => 'shippingZip',
+                AddressTransfer::PHONE => 'shippingPhone',
             ],
             QuoteTransfer::CURRENCY => [
                 CurrencyTransfer::CODE => 'currencyCode',
@@ -202,6 +225,15 @@ class PaymentConfig extends AbstractBundleConfig
             QuoteTransfer::ITEMS => [
                 ItemTransfer::ID_SALES_ORDER_ITEM => 'idSalesOrderItem',
                 ItemTransfer::NAME => 'name',
+                ItemTransfer::SKU => 'sku',
+                ItemTransfer::QUANTITY => 'quantity',
+                ItemTransfer::UNIT_PRICE => 'unitPrice',
+            ],
+            QuoteTransfer::EXPENSES => [
+                ExpenseTransfer::TYPE => 'type',
+                ExpenseTransfer::NAME => 'name',
+                ExpenseTransfer::QUANTITY => 'quantity',
+                ExpenseTransfer::UNIT_PRICE => 'unitPrice',
             ],
         ];
     }

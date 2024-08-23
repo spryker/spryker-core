@@ -22,6 +22,9 @@
         <property name="billingAddress" type="Address"/>
         <property name="currency" type="Currency"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -175,6 +178,11 @@
     <transfer name="Address">
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="city" type="string"/>
+        <property name="state" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
     </transfer>
 
     <transfer name="Currency">
@@ -184,6 +192,16 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
         <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="unitPrice" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string"/>
+        <property name="name" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="MessageResponse">

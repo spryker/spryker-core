@@ -1495,6 +1495,7 @@ class PaymentFacadeTest extends Unit
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
+            ->withShippingAddress()
             ->build();
     }
 
