@@ -12,7 +12,6 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
-use Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
@@ -135,8 +134,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
 
     /**
      * @param string $command
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException
      *
      * @return \Symfony\Component\Process\Process
      */

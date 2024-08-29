@@ -11,7 +11,6 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
-use Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
@@ -143,8 +142,6 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 
     /**
      * @param string $command
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException
      *
      * @return \Symfony\Component\Process\Process
      */
