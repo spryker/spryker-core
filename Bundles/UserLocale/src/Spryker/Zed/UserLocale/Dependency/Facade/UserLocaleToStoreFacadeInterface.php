@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\UserLocale\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface UserLocaleToStoreFacadeInterface
 {
     /**
-     * @return bool
+     * @param bool $fallbackToDefault
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function isDynamicStoreEnabled(): bool;
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
 }

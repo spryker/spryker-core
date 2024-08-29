@@ -60,18 +60,18 @@ class MoneyCollectionTypeMultiStoreCollectionDataProvider extends BaseMoneyColle
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyValueCollectionTransfer $currentFormMoneyValueCollection
+     * @param \Generated\Shared\Transfer\MoneyValueCollectionTransfer $currentFormMoneyValueCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueCollectionTransfer
      */
-    public function mergeMissingMoneyValues(MoneyValueCollectionTransfer $currentFormMoneyValueCollection): MoneyValueCollectionTransfer
+    public function mergeMissingMoneyValues(MoneyValueCollectionTransfer $currentFormMoneyValueCollectionTransfer): MoneyValueCollectionTransfer
     {
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
 
-        $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
+        $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollectionTransfer);
 
         return $this->mergeMultiStoreMoneyCollection(
-            $currentFormMoneyValueCollection,
+            $currentFormMoneyValueCollectionTransfer,
             $storeWithCurrencyTransfers,
             $existingCurrencyMap,
         );

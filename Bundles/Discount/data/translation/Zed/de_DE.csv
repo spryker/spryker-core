@@ -103,3 +103,4 @@ Generate,Generieren
 "Invalid entry. Please enter an integer %min%-%max%","Ungültiger Eintrag. Bitte geben Sie eine ganze Zahl ein %min%-%max%"
 Priority,Priorität
 "Enter an integer %min%-%max%.","Geben Sie eine ganze Zahl von %min%-%max% ein."
+"If you need to create different values for the same currency in different stores - please create different discounts per store.","Wenn Sie für dieselbe Währung in verschiedenen Stores unterschiedliche Werte erstellen müssen, erstellen Sie bitte unterschiedliche Rabatte pro Store."

@@ -196,10 +196,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDiscountAmountFormatter()
     {
-        return new DiscountAmountFormatter(
-            $this->getCalculatorPlugins(),
-            $this->getStoreFacade(),
-        );
+        return new DiscountAmountFormatter($this->getCalculatorPlugins());
     }
 
     /**

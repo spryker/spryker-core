@@ -47,7 +47,7 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     /**
      * @param int|null $idCustomerAddress
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getData($idCustomerAddress = null)
     {
@@ -76,33 +76,27 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
      */
     protected function getCountryChoices(): array
     {
+        $countries = $this->countryFacade->getAvailableCountries()
+            ->getCountries()
+            ->getIterator()
+            ->getArrayCopy();
+
+        return $this->getCountryNamesIndexedByCountryId($countries);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\CountryTransfer> $countries
+     *
+     * @return array<int|string, string|null>
+     */
+    protected function getCountryNamesIndexedByCountryId(array $countries): array
+    {
         $result = [];
 
-        foreach ($this->getContries() as $countryTransfer) {
+        foreach ($countries as $countryTransfer) {
             $result[$countryTransfer->getIdCountry()] = $countryTransfer->getName();
         }
 
         return $result;
-    }
-
-    /**
-     * @return array<\Generated\Shared\Transfer\CountryTransfer>
-     */
-    protected function getContries(): array
-    {
-        if ($this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->countryFacade->getAvailableCountries()
-                ->getCountries()
-                ->getIterator()
-                ->getArrayCopy();
-        }
-
-        $countryTransfers = [];
-
-        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
-            $countryTransfers[] = $this->countryFacade->getCountryByIso2Code($iso2Code);
-        }
-
-        return $countryTransfers;
     }
 }

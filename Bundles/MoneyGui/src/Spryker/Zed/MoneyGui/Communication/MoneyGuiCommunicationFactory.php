@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeAllStoreCurrenciesDataProvider;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeDataProviderInterface;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeMultiStoreCollectionDataProvider;
-use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeSingleStoreDataProvider;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyTypeDataProvider;
 use Spryker\Zed\MoneyGui\Communication\Mapper\MoneyValueMapper;
 use Spryker\Zed\MoneyGui\Communication\Mapper\MoneyValueMapperInterface;
@@ -30,17 +29,6 @@ class MoneyGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMoneyTypeDataProvider(): MoneyTypeDataProvider
     {
         return new MoneyTypeDataProvider($this->getStoreFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeDataProviderInterface
-     */
-    public function createMoneyCollectionTypeSingleStoreDataProvider(): MoneyCollectionTypeDataProviderInterface
-    {
-        return new MoneyCollectionTypeSingleStoreDataProvider(
-            $this->getCurrencyFacade(),
-            $this->createMoneyValueMapper(),
-        );
     }
 
     /**

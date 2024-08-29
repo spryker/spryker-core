@@ -80,14 +80,8 @@ class UserLocaleReader implements UserLocaleReaderInterface
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        if (!$this->storeFacade->isDynamicStoreEnabled()) {
-            return $this->localeFacade->getCurrentLocale();
-        }
+        $defaultLocaleIsoCode = $this->storeFacade->getCurrentStore(true)->getDefaultLocaleIsoCode();
 
-        $supportedLocaleCodes = $this->localeFacade->getSupportedLocaleCodes();
-        /** @phpstan-var string */
-        $supportedLocaleCode = reset($supportedLocaleCodes);
-
-        return $this->localeFacade->getLocale($supportedLocaleCode);
+        return $this->localeFacade->getLocale($defaultLocaleIsoCode);
     }
 }

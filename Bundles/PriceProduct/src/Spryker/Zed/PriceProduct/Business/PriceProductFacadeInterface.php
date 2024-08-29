@@ -71,7 +71,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Searches for persisted price in database by given price filter transfer.
      *  - If currency not set it will use default store currency.
-     *  - If store not set it will use default store.
+     *  - If store not set it will use default store in Dynamic Store OFF mode.
+     *  - Requires `PriceProductFilterTransfer::storeName` in Dynamic Store ON mode.
      *  - If product price type is not set it will use default.
      *  - If it's a concrete product and it doesn't have any price assigned explicitly, then the price of the
      * abstract product will be returned instead.

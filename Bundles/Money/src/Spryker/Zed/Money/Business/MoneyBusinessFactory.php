@@ -17,8 +17,6 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Parser\Parser;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Money\Business\Model\CurrencyReader;
-use Spryker\Zed\Money\Business\Model\CurrencyReaderInterface;
 use Spryker\Zed\Money\Business\Model\Mapper\MoneyToTransferMapper;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
@@ -37,7 +35,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getCurrencyIsoCode(),
+            $this->getStoreFacade()->getCurrentStore(true)->getDefaultCurrencyIsoCode(),
         );
     }
 
@@ -167,24 +165,5 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MoneyToStoreInterface
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Money\Business\Model\CurrencyReaderInterface
-     */
-    public function createCurrencyReader(): CurrencyReaderInterface
-    {
-        return new CurrencyReader(
-            $this->getStoreFacade(),
-            $this->getCurrencyFacade(),
-        );
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCurrencyIsoCode(): ?string
-    {
-        return $this->createCurrencyReader()->readCurrencyIsoCode();
     }
 }

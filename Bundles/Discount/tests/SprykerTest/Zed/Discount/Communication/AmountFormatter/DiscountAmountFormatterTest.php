@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Discount\Communication\AmountFormatter;
 use Codeception\Test\Unit;
 use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
 use Spryker\Zed\Discount\Communication\DiscountCommunicationFactory;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use SprykerTest\Zed\Discount\DiscountCommunicationTester;
 
 /**
@@ -37,10 +36,7 @@ class DiscountAmountFormatterTest extends Unit
     public function testFormatFormatsAmount(): void
     {
         // Arrange
-        $discountAmountFormatter = new DiscountAmountFormatter(
-            (new DiscountCommunicationFactory())->getCalculatorPlugins(),
-            $this->mockStoreFacade(),
-        );
+        $discountAmountFormatter = new DiscountAmountFormatter((new DiscountCommunicationFactory())->getCalculatorPlugins());
 
         $discountConfiguratorTransfer = $this->tester->haveDiscountConfiguratorTransfer();
 
@@ -49,20 +45,5 @@ class DiscountAmountFormatterTest extends Unit
 
         // Assert
         $this->assertSame('€0.01', $formattedAmount->getDiscountCalculator()->getAmount());
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter
-     */
-    protected function mockStoreFacade(): DiscountToStoreFacadeInterface
-    {
-        $storeFacadeMock = $this->getMockBuilder(DiscountToStoreFacadeInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $storeFacadeMock->method('isDynamicStoreEnabled')
-            ->willReturn($this->tester->isDynamicStoreEnabled());
-
-        return $storeFacadeMock;
     }
 }

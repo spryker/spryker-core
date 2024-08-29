@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Discount\Communication\AmountFormatter;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 class DiscountAmountFormatter implements DiscountAmountFormatterInterface
@@ -19,18 +18,11 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
     protected $calculatorPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
-     */
-    protected DiscountToStoreFacadeInterface $storeFacade;
-
-    /**
      * @param array<string, \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
      */
-    public function __construct(array $calculatorPlugins, DiscountToStoreFacadeInterface $storeFacade)
+    public function __construct(array $calculatorPlugins)
     {
         $this->calculatorPlugins = $calculatorPlugins;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -50,7 +42,8 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
         $discountConfiguratorTransfer = $this->formatDiscountMoneyAmounts($discountConfiguratorTransfer, $calculatorPlugin);
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $defaultIsoCode = null;
-        if ($this->storeFacade->isDynamicStoreEnabled() && $discountCalculatorTransfer->getMoneyValueCollection()->count() > 0) {
+
+        if ($discountCalculatorTransfer->getMoneyValueCollection()->count() > 0) {
             $moneyValueTransfer = $discountCalculatorTransfer->getMoneyValueCollection()->offsetGet(0);
             $defaultIsoCode = $moneyValueTransfer->getCurrency()->getCode();
         }

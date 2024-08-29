@@ -15,4 +15,8 @@
         <property name="users" type="User[]" singular="user"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="defaultLocaleIsoCode" type="string"/>
+    </transfer>
+
 </transfers>

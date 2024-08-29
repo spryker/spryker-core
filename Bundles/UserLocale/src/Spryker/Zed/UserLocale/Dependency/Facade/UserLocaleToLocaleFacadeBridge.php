@@ -45,14 +45,6 @@ class UserLocaleToLocaleFacadeBridge implements UserLocaleToLocaleFacadeBridgeIn
     }
 
     /**
-     * @return array<int, string>
-     */
-    public function getSupportedLocaleCodes(): array
-    {
-        return $this->localeFacade->getSupportedLocaleCodes();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale(): LocaleTransfer
