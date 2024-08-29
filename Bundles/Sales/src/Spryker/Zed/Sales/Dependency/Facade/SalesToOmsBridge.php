@@ -45,6 +45,8 @@ class SalesToOmsBridge implements SalesToOmsInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array
      */
     public function getOrderItemMatrix(): array

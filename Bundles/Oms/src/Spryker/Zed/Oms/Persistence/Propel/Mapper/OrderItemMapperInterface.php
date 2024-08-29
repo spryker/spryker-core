@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
 use Propel\Runtime\Collection\Collection;
 
 interface OrderItemMapperInterface
@@ -35,4 +36,15 @@ interface OrderItemMapperInterface
     public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
         Collection $salesOrderItemEntityCollection
     ): array;
+
+    /**
+     * @param array<array<string|int>> $orderItemEntities
+     * @param \Generated\Shared\Transfer\OrderMatrixCollectionTransfer $orderMatrixCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixCollectionTransfer
+     */
+    public function mapSalesOrderItemEntitiesToOrderMatrixCollectionTransfer(
+        array $orderItemEntities,
+        OrderMatrixCollectionTransfer $orderMatrixCollectionTransfer
+    ): OrderMatrixCollectionTransfer;
 }

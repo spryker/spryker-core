@@ -9,6 +9,8 @@ namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
+use Generated\Shared\Transfer\OrderMatrixTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
@@ -81,5 +83,39 @@ class OrderItemMapper implements OrderItemMapperInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param array<array<string|int>> $orderItemEntities
+     * @param \Generated\Shared\Transfer\OrderMatrixCollectionTransfer $orderMatrixCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixCollectionTransfer
+     */
+    public function mapSalesOrderItemEntitiesToOrderMatrixCollectionTransfer(
+        array $orderItemEntities,
+        OrderMatrixCollectionTransfer $orderMatrixCollectionTransfer
+    ): OrderMatrixCollectionTransfer {
+        foreach ($orderItemEntities as $orderItemEntity) {
+            $orderMatrixTransfer = $this->mapSalesOrderItemEntityToOrderMatrixTransfer($orderItemEntity, new OrderMatrixTransfer());
+            $orderMatrixCollectionTransfer->addOrderMatrix($orderMatrixTransfer);
+        }
+
+        return $orderMatrixCollectionTransfer;
+    }
+
+    /**
+     * @param array<string|int> $orderItemEntity
+     * @param \Generated\Shared\Transfer\OrderMatrixTransfer $orderMatrixTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixTransfer
+     */
+    protected function mapSalesOrderItemEntityToOrderMatrixTransfer(array $orderItemEntity, OrderMatrixTransfer $orderMatrixTransfer): OrderMatrixTransfer
+    {
+        return $orderMatrixTransfer->setProcessName((string)$orderItemEntity['processName'])
+            ->setStateName((string)$orderItemEntity['stateName'])
+            ->setDateWindow((string)$orderItemEntity['dateWindow'])
+            ->setItemsCount((int)$orderItemEntity['itemsCount'])
+            ->setIdProcess((int)$orderItemEntity['sub.fk_oms_order_process'])
+            ->setIdState((int)$orderItemEntity['sub.fk_oms_order_item_state']);
     }
 }

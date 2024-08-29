@@ -62,6 +62,8 @@ interface SalesToOmsInterface
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array
      */
     public function getOrderItemMatrix(): array;

@@ -288,4 +288,32 @@
         <property name="idSalesOrder" type="int"/>
         <property name="eventData" type="array" singular="eventData"/>
     </transfer>
+
+    <transfer name="OrderMatrixCriteria" strict="true">
+        <property name="orderMatrixConditions" type="OrderMatrixConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="OrderMatrixConditions" strict="true">
+        <property name="processIds" type="int[]" singular="processId"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="OrderMatrix" strict="true">
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="itemsCount" type="int"/>
+        <property name="dateWindow" type="string"/>
+        <property name="idProcess" type="int"/>
+        <property name="idState" type="int"/>
+    </transfer>
+
+    <transfer name="OrderMatrixCollection" strict="true">
+        <property name="orderMatrices" type="OrderMatrix[]" singular="orderMatrix"/>
+    </transfer>
+
 </transfers>

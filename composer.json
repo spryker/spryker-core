@@ -570,6 +570,8 @@
         "spryker/oms-rest-api": "*",
         "spryker/order-custom-reference": "*",
         "spryker/order-custom-reference-gui": "*",
+        "spryker/order-matrix": "*",
+        "spryker/order-matrix-gui": "*",
         "spryker/order-payments-rest-api": "*",
         "spryker/order-payments-rest-api-extension": "*",
         "spryker/orders-rest-api": "*",

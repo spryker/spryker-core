@@ -559,6 +559,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array<string> $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
@@ -575,6 +577,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $orderItemStates
      *

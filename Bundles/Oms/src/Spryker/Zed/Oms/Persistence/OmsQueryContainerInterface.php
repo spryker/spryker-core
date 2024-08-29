@@ -198,6 +198,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array<string> $activeProcesses
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
@@ -209,6 +211,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $orderItemStates
      *

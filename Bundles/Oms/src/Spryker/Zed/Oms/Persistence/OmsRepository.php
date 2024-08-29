@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
+use Generated\Shared\Transfer\OrderMatrixCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
@@ -30,9 +33,66 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     /**
      * @var string
      */
+    protected const ITEMS_COUNT = 'itemsCount';
+
+    /**
+     * @var string
+     */
+    protected const DATE_WINDOW = 'dateWindow';
+
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_RESERVATION_TOTAL_QUANTITY = 'productReservationTotalQuantity';
 
     /**
+     * @var string
+     */
+    protected const STATE_NAME = 'stateName';
+
+    /**
+     * @var string
+     */
+    protected const PROCESS_NAME = 'processName';
+
+    /**
+     * @var string
+     */
+    protected const DATE_CASE_EXPRESSION = "(CASE WHEN %s > '%s' THEN 'day' WHEN %s > '%s' THEN 'week' ELSE 'other' END)";
+
+    /**
+     * @var string
+     */
+    protected const DATE_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @var string
+     */
+    protected const FK_OMS_ORDER_ITEM_STATE = 'fk_oms_order_item_state';
+
+    /**
+     * @var string
+     */
+    protected const FK_OMS_ORDER_PROCESS = 'fk_oms_order_process';
+
+    /**
+     * @var string
+     */
+    protected const SUBQUERY_ALIAS = 'sub';
+
+    /**
+     * @var string
+     */
+    protected const SUBQUERY_FIELD_PLACEHOLDER = '%s.%s';
+
+    /**
+     * @var string
+     */
+    protected const COUNT_ALL_KEYWORD = 'COUNT(*)';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getOrderMatrixCollection()} instead.
+     *
      * @param array<int> $processIds
      * @param array<int> $stateBlackList
      *
@@ -47,6 +107,104 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         return $this->getFactory()
             ->createOrderItemMapper()
             ->mapOrderItemMatrix($orderItemsMatrixResult->getArrayCopy());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixCollectionTransfer
+     */
+    public function getOrderMatrixCollection(OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer): OrderMatrixCollectionTransfer
+    {
+        $subQuery = $this->getOrderMatrixSubquery($orderMatrixCriteriaTransfer);
+
+        $query = $this->getFactory()
+            ->getSalesOrderItemPropelQuery()
+            ->addSelectQuery($subQuery, static::SUBQUERY_ALIAS)
+            ->select([
+                sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::FK_OMS_ORDER_ITEM_STATE),
+                sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::FK_OMS_ORDER_PROCESS),
+            ])
+            ->withColumn(static::COUNT_ALL_KEYWORD, static::ITEMS_COUNT)
+            ->withColumn(sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::DATE_WINDOW), static::DATE_WINDOW)
+            ->withColumn(sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::PROCESS_NAME), static::PROCESS_NAME)
+            ->withColumn(sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::STATE_NAME), static::STATE_NAME)
+            ->groupBy([
+                sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::FK_OMS_ORDER_ITEM_STATE),
+                sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::FK_OMS_ORDER_PROCESS),
+            ])
+            ->addGroupByColumn(sprintf(static::SUBQUERY_FIELD_PLACEHOLDER, static::SUBQUERY_ALIAS, static::DATE_WINDOW));
+
+        $orderItemEntities = $query->find()->getArrayCopy();
+
+        return $this->getFactory()
+            ->createOrderItemMapper()
+            ->mapSalesOrderItemEntitiesToOrderMatrixCollectionTransfer($orderItemEntities, new OrderMatrixCollectionTransfer());
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getProcessNamesIndexedByIdOmsOrderProcess(): array
+    {
+        $activeProcesses = $this->getFactory()
+            ->getConfig()
+            ->getActiveProcesses();
+        $query = $this->getFactory()
+            ->createOmsOrderProcessQuery();
+
+        $processEntities = $query->filterByName($activeProcesses, Criteria::IN)
+            ->find()
+            ->getArrayCopy();
+
+        return $this->getFactory()
+            ->createProcessIndexer()
+            ->getProcessNamesIndexedByIdOmsOrderProcess($processEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function getOrderMatrixSubquery(OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer): SpySalesOrderItemQuery
+    {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $subQuery */
+        $subQuery = $this->getFactory()
+            ->getSalesOrderItemPropelQuery();
+
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $subQuery */
+        $subQuery = $subQuery->filterByFkOmsOrderProcess($orderMatrixCriteriaTransfer->getOrderMatrixConditions()->getProcessIds(), Criteria::IN)
+            ->useStateQuery()
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME)
+            ->endUse();
+
+        $subQuery->useProcessQuery()
+                ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME)
+            ->endUse()
+            ->withColumn(sprintf(
+                static::DATE_CASE_EXPRESSION,
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-1 day'))->format(static::DATE_FORMAT),
+                SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
+                (new DateTime('-7 day'))->format(static::DATE_FORMAT),
+            ), static::DATE_WINDOW)
+            ->withColumn(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS, static::FK_OMS_ORDER_PROCESS)
+            ->withColumn(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, static::FK_OMS_ORDER_ITEM_STATE);
+
+        if ($orderMatrixCriteriaTransfer->getPagination() && $orderMatrixCriteriaTransfer->getPagination()->getLimit()) {
+            $subQuery->limit($orderMatrixCriteriaTransfer->getPagination()->getLimit())
+                ->offset($orderMatrixCriteriaTransfer->getPagination()->getOffset());
+        }
+        $stateBlackList = $this->getFactory()->getConfig()->getStateBlacklist();
+
+        if ($stateBlackList) {
+            $subQuery->useStateQuery()
+                ->filterByName($stateBlackList, Criteria::NOT_IN)
+            ->endUse();
+        }
+
+        return $subQuery;
     }
 
     /**

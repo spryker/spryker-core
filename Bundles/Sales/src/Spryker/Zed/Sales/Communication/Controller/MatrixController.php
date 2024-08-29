@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
+ *
+ * @deprecated Use {@link \Spryker\Zed\OrderMatrixGui\Communication\Controller\MatrixController} instead.
  */
 class MatrixController extends AbstractController
 {

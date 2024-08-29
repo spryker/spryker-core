@@ -1,0 +1,51 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Overview of Order Matrix' | trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning">
+        <div class="alert__text">
+            {{ 'Order matrix statistics is synchronized once per hour.' | trans }}
+        </div>
+    </div>
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Matrix' | trans } %}
+
+        {% block widget_content %}
+
+            <table class="table">
+                <thead>
+                {% for row in matrix | slice(0, 1) %}
+                    <tr>
+                        {% for element in row %}
+                            <th>
+                                {{ element | raw }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </thead>
+                <tbody>
+                {% for row in matrix | slice(1) %}
+                    <tr>
+                        {% for element in row %}
+                            <td>
+                                {{ element | raw }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+            <h3>{{ 'Legend' | trans }}</h3>
+            <p>{{ '<1d | 1d-7d | >7d' | trans }}</p>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

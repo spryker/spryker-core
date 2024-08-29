@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
+use Generated\Shared\Transfer\OrderMatrixCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ReservationResponseTransfer;
@@ -454,9 +456,33 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Oms\Business\OmsFacadeInterface::getOrderMatrixCollection()} instead.
+     *
      * @return array
      */
     public function getOrderItemMatrix();
+
+    /**
+     * Specification:
+     * - Retrieves a batch of matrix order items based on provided criteria filter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixCollectionTransfer
+     */
+    public function getOrderMatrixCollection(OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer): OrderMatrixCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves all active processes from the database.
+     *
+     * @api
+     *
+     * @return array<int, string>
+     */
+    public function getProcessNamesIndexedByIdOmsOrderProcess(): array;
 
     /**
      * Specification:

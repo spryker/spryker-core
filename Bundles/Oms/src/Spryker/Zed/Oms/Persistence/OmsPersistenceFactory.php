@@ -19,6 +19,8 @@ use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\Oms\Persistence\Propel\Indexer\ProcessIndexer;
+use Spryker\Zed\Oms\Persistence\Propel\Indexer\ProcessIndexerInterface;
 use Spryker\Zed\Oms\Persistence\Propel\Mapper\OmsMapper;
 use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapper;
 use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapperInterface;
@@ -128,8 +130,6 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory::getSalesQueryContainer()} to get the required query instead.
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
@@ -143,5 +143,13 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsMapper(): OmsMapper
     {
         return new OmsMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Persistence\Propel\Indexer\ProcessIndexerInterface
+     */
+    public function createProcessIndexer(): ProcessIndexerInterface
+    {
+        return new ProcessIndexer();
     }
 }

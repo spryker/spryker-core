@@ -47,6 +47,11 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     protected const KEY_ROLE = 'role';
 
     /**
+     * @var string
+     */
+    protected const KEY_GLOBAL = 'global';
+
+    /**
      * @var \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface
      */
     protected $jobsFilter;
@@ -179,12 +184,16 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     }
 
     /**
-     * @param array $job
+     * @param array<mixed> $job
      *
      * @return array<string>
      */
     protected function getStoreNamesFromJob(array $job): array
     {
+        if ($this->isJobGlobal($job)) {
+            return [];
+        }
+
         $storeNames = array_key_exists(static::KEY_STORES, $job) ? (array)$job[static::KEY_STORES] : [];
 
         if (!$storeNames && !$this->isDynamicStoreEnabled()) {
@@ -192,6 +201,16 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
         }
 
         return $storeNames;
+    }
+
+    /**
+     * @param array<mixed> $job
+     *
+     * @return bool
+     */
+    protected function isJobGlobal(array $job): bool
+    {
+        return isset($job[static::KEY_GLOBAL]) && $job[static::KEY_GLOBAL] === true;
     }
 
     /**

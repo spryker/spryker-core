@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="OrderMatrix" strict="true">
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="itemsCount" type="int"/>
+        <property name="dateWindow" type="string"/>
+        <property name="idProcess" type="int"/>
+        <property name="idState" type="int"/>
+    </transfer>
+
+    <transfer name="IndexedOrderMatrixResponse" strict="true">
+        <property name="matrices" type="array" singular="matrix"/>
+    </transfer>
+
+    <transfer name="OrderMatrixCriteria" strict="true">
+        <property name="orderMatrixConditions" type="OrderMatrixConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="OrderMatrixConditions" strict="true">
+        <property name="processIds" type="int[]" singular="processId"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="OrderMatrixCollection" strict="true">
+        <property name="orderMatrices" type="OrderMatrix[]" singular="orderMatrix"/>
+    </transfer>
+
+</transfers>

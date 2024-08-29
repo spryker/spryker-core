@@ -12,6 +12,9 @@ use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class OrderItemMatrix
 {
     /**

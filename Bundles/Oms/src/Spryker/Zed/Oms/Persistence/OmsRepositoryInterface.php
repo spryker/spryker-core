@@ -9,6 +9,8 @@ namespace Spryker\Zed\Oms\Persistence;
 
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\OrderMatrixCollectionTransfer;
+use Generated\Shared\Transfer\OrderMatrixCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -16,12 +18,26 @@ use Spryker\DecimalObject\Decimal;
 interface OmsRepositoryInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getOrderMatrixCollection()} instead.
+     *
      * @param array<int> $processIds
      * @param array<int> $stateBlackList
      *
      * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderMatrixCollectionTransfer
+     */
+    public function getOrderMatrixCollection(OrderMatrixCriteriaTransfer $orderMatrixCriteriaTransfer): OrderMatrixCollectionTransfer;
+
+    /**
+     * @return array<int, string>
+     */
+    public function getProcessNamesIndexedByIdOmsOrderProcess(): array;
 
     /**
      * @param array<string> $stateNames
