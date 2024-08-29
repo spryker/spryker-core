@@ -130,6 +130,10 @@ class PaymentSettingsController extends AbstractController
     protected function getColorForStatus(string $status): string
     {
         return match ($status) {
+            MerchantAppOnboardingStatusInterface::ENABLED => 'green',
+            MerchantAppOnboardingStatusInterface::PENDING => 'yellow',
+            MerchantAppOnboardingStatusInterface::RESTRICTED => 'red',
+            MerchantAppOnboardingStatusInterface::RESTRICTED_SOON => 'red',
             MerchantAppOnboardingStatusInterface::INCOMPLETE => 'red',
             MerchantAppOnboardingStatusInterface::COMPLETED => 'green',
             default => 'grey',
