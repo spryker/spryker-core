@@ -387,6 +387,8 @@
         "spryker/health-check-extension": "*",
         "spryker/http": "*",
         "spryker/http-extension": "*",
+        "spryker/incremental-installer": "*",
+        "spryker/incremental-installer-extension": "*",
         "spryker/index-generator": "*",
         "spryker/installer": "*",
         "spryker/installer-extension": "*",

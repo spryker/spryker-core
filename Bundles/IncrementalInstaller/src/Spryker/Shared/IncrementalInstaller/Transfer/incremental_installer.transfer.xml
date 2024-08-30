@@ -1,0 +1,33 @@
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="IncrementalInstallerCollectionRequest" strict="true">
+        <property name="incrementalInstallers" type="IncrementalInstaller[]" singular="incrementalInstaller"/>
+    </transfer>
+
+    <transfer name="IncrementalInstallerCollectionResponse" strict="true">
+        <property name="incrementalInstallers" type="IncrementalInstaller[]" singular="incrementalInstaller"/>
+        <property name="errors" type="IncrementalInstallerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="IncrementalInstaller" strict="true">
+        <property name="installer" type="string"/>
+        <property name="batch" type="int"/>
+    </transfer>
+
+    <transfer name="IncrementalInstallerError" strict="true">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="IncrementalInstallerCriteria" strict="true">
+        <property name="incrementalInstallerConditions" type="IncrementalInstallerConditions"/>
+    </transfer>
+
+    <transfer name="IncrementalInstallerConditions" strict="true">
+        <property name="batch" type="int"/>
+    </transfer>
+
+    <transfer name="IncrementalInstallerCollection" strict="true">
+        <property name="incrementalInstallers" type="IncrementalInstaller[]" singular="incrementalInstaller"/>
+    </transfer>
+</transfers>
