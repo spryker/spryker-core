@@ -15,7 +15,7 @@ class OptionsBuilder implements OptionsBuilderInterface
     /**
      * @var string
      */
-    protected const MERCHANT_PORTAL_ROUTE_PATTER = '^/(.+)-merchant-portal-gui/';
+    protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/(.+)-merchant-portal-gui/';
 
     /**
      * @uses \Spryker\Zed\SecurityMerchantPortalGui\Communication\Expander\SecurityBuilderExpander::SECURITY_MERCHANT_PORTAL_LOGIN_FORM_AUTHENTICATOR
@@ -38,6 +38,11 @@ class OptionsBuilder implements OptionsBuilderInterface
      * @var string
      */
     protected const PATH_LOGOUT = '/security-merchant-portal-gui/logout';
+
+    /**
+     * @var string
+     */
+    protected const APPLICATION_MERCHANT_PORTAL = 'MERCHANT_PORTAL';
 
     /**
      * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
@@ -65,7 +70,7 @@ class OptionsBuilder implements OptionsBuilderInterface
     public function buildOptions(): array
     {
         return [
-            'pattern' => static::MERCHANT_PORTAL_ROUTE_PATTER,
+            'pattern' => $this->getMerchantPortalRoutePattern(),
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
                 'check_path' => static::PATH_LOGIN_CHECK,
@@ -88,5 +93,17 @@ class OptionsBuilder implements OptionsBuilderInterface
             },
             'user_session_handler' => true,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMerchantPortalRoutePattern(): string
+    {
+        if (APPLICATION == static::APPLICATION_MERCHANT_PORTAL) {
+            return sprintf('(^/$|%s)', static::MERCHANT_PORTAL_ROUTE_PATTERN);
+        }
+
+        return static::MERCHANT_PORTAL_ROUTE_PATTERN;
     }
 }

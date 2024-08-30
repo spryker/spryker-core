@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantPortalApplication;
 
 use Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Shared\MerchantPortalApplication\MerchantPortalApplicationConfig getSharedConfig()
@@ -89,5 +90,18 @@ class MerchantPortalApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Permissions-Policy' => static::HEADER_PERMISSION_POLICY_VALUE,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Provides a default homepage URL for the MerchantPortal application.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getHomePageUrl(): string
+    {
+        throw new NotFoundHttpException('Homepage URL is not configured.');
     }
 }

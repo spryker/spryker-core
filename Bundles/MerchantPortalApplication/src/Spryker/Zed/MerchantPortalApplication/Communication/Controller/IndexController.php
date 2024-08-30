@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantPortalApplication\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method \Spryker\Zed\MerchantPortalApplication\Business\MerchantPortalApplicationFacadeInterface getFacade()
@@ -16,9 +17,14 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     /**
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(): void
+    public function indexAction(): RedirectResponse
     {
+        $homePageUrl = $this->getFactory()
+            ->getConfig()
+            ->getHomePageUrl();
+
+        return $this->redirectResponse($homePageUrl);
     }
 }

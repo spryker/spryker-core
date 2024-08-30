@@ -28,6 +28,11 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     /**
      * @var string
      */
+    protected const APPLICATION_MERCHANT_PORTAL = 'MERCHANT_PORTAL';
+
+    /**
+     * @var string
+     */
     protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/(.+)-merchant-portal-gui/';
 
     /**
@@ -103,7 +108,7 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
                 static::ACCESS_MODE_PUBLIC,
             ],
             [
-                static::MERCHANT_PORTAL_ROUTE_PATTERN,
+                $this->getMerchantPortalRoutePattern(),
                 SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER,
             ],
         ]);
@@ -119,5 +124,17 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
         $container->set(static::SECURITY_MERCHANT_PORTAL_LOGIN_FORM_AUTHENTICATOR, function () {
             return $this->authenticator;
         });
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMerchantPortalRoutePattern(): string
+    {
+        if (APPLICATION == static::APPLICATION_MERCHANT_PORTAL) {
+            return sprintf('(^/$|%s)', static::MERCHANT_PORTAL_ROUTE_PATTERN);
+        }
+
+        return static::MERCHANT_PORTAL_ROUTE_PATTERN;
     }
 }

@@ -8,17 +8,16 @@
         "spryker/application": "^3.0.0",
         "spryker/container": "^1.0.0",
         "spryker/event-dispatcher-extension": "^1.0.0",
-        "spryker/kernel": "^3.30.0"
+        "spryker/kernel": "^3.30.0",
+        "spryker/symfony": "^3.5.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/event-dispatcher": "*",
-        "spryker/symfony": "*"
+        "spryker/event-dispatcher": "*"
     },
     "suggest": {
         "spryker/event-dispatcher": "If you want to use EventDispatcherPlugin.",
-        "spryker/log": "For logging request and response.",
-        "spryker/symfony": "If you want to use plugins with symfony components."
+        "spryker/log": "For logging request and response."
     },
     "autoload": {
         "psr-4": {
