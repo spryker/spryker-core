@@ -3,8 +3,10 @@
 
 {% block body %}
     {% if app.twig.getFunction('navigation') != false %}
-        {% set navigationConfig = render_navigation_component_config(navigation('main').menu) %}
-        {% set userMenuNavigationItems = navigation('secondary').menu %}
+        {% set mainMerchantNavigationType = mainMerchantNavigationType | default('main') %}
+        {% set secondaryMerchantNavigationType = secondaryMerchantNavigationType | default('secondary') %}
+        {% set navigationConfig = render_navigation_component_config(navigation(mainMerchantNavigationType).menu) %}
+        {% set userMenuNavigationItems = navigation(secondaryMerchantNavigationType).menu %}
 
         {% block merchantLayoutMain %}
             <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
