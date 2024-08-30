@@ -105,6 +105,16 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
+     * @return \SessionHandlerInterface
+     */
+    public function createSessionHandlerRedisWriteOnlyLocking(): SessionHandlerInterface
+    {
+        return $this->createSessionHandlerFactory()->createSessionHandlerRedisWriteOnlyLocking(
+            $this->createSessionRedisWrapper(),
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
      */
     public function createSessionRedisWrapper(): SessionRedisWrapperInterface

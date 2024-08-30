@@ -129,6 +129,22 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
+     * @return \SessionHandlerInterface
+     */
+    public function createSessionHandlerRedisWriteOnlyLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
+    {
+        return new SessionHandlerRedisWriteOnlyLocking(
+            $redisClient,
+            $this->createSessionSpinLockLocker($redisClient),
+            $this->createSessionKeyBuilder(),
+            $this->sessionRedisLifeTimeCalculator,
+            $this->getSessionConflictResolvers(),
+        );
+    }
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
      * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
      */
     public function createSessionSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface
@@ -140,6 +156,14 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
             $this->lockingRetryDelayMilliseconds,
             $this->lockingLockTtlMilliseconds,
         );
+    }
+
+    /**
+     * @return array<\Spryker\Shared\SessionRedis\SessionConflictResolver\SessionConflictResolverInterface>
+     */
+    public function getSessionConflictResolvers(): array
+    {
+        return [];
     }
 
     /**

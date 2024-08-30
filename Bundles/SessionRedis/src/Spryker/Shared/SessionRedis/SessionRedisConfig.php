@@ -22,6 +22,11 @@ class SessionRedisConfig extends AbstractSharedConfig
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
 
     /**
+     * @var string
+     */
+    public const SESSION_HANDLER_REDIS_WRITE_ONLY_LOCKING = 'redis_write_only_locking';
+
+    /**
      * @var int
      */
     protected const DEFAULT_REDIS_DATABASE = 0;
@@ -44,6 +49,16 @@ class SessionRedisConfig extends AbstractSharedConfig
     public function getSessionHandlerRedisLockingName(): string
     {
         return static::SESSION_HANDLER_REDIS_LOCKING;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSessionHandlerRedisWriteOnlyLockingName(): string
+    {
+        return static::SESSION_HANDLER_REDIS_WRITE_ONLY_LOCKING;
     }
 
     /**

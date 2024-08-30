@@ -45,6 +45,13 @@ interface SessionHandlerFactoryInterface
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
+     * @return \SessionHandlerInterface
+     */
+    public function createSessionHandlerRedisWriteOnlyLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
      * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
      */
     public function createSessionSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface;
