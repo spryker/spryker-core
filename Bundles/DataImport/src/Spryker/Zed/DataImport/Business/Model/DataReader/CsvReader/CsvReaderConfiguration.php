@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use SplFileObject;
 use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface;
+use Spryker\Zed\DataImport\DataImportConfig;
 
 class CsvReaderConfiguration implements CsvReaderConfigurationInterface
 {
@@ -36,6 +37,11 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     public const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_FILE_SYSTEM = 'files-import';
+
+    /**
      * @var \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
      */
     protected $dataImporterReaderConfigurationTransfer;
@@ -46,13 +52,23 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     protected $fileResolver;
 
     /**
+     * @var \Spryker\Zed\DataImport\DataImportConfig
+     */
+    protected DataImportConfig $dataImportConfig;
+
+    /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface $fileResolver
+     * @param \Spryker\Zed\DataImport\DataImportConfig $dataImportConfig
      */
-    public function __construct(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer, FileResolverInterface $fileResolver)
-    {
+    public function __construct(
+        DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer,
+        FileResolverInterface $fileResolver,
+        DataImportConfig $dataImportConfig
+    ) {
         $this->dataImporterReaderConfigurationTransfer = $dataImporterReaderConfigurationTransfer;
         $this->fileResolver = $fileResolver;
+        $this->dataImportConfig = $dataImportConfig;
     }
 
     /**
@@ -74,9 +90,13 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
-        return $this->fileResolver->resolveFile($this->dataImporterReaderConfigurationTransfer);
+        if ($this->dataImportConfig->isDataImportFromOtherSourceEnabled() === false) {
+            return $this->fileResolver->resolveFile($this->dataImporterReaderConfigurationTransfer);
+        }
+
+        return $this->dataImporterReaderConfigurationTransfer->getFileName();
     }
 
     /**
@@ -153,5 +173,13 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     public function getLimit()
     {
         return (int)$this->dataImporterReaderConfigurationTransfer->getLimit();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileSystem(): string
+    {
+        return $this->dataImporterReaderConfigurationTransfer->getFileSystem() ?? static::DEFAULT_FILE_SYSTEM;
     }
 }

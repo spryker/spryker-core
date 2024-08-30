@@ -67,7 +67,7 @@ class DataImportConfigurationYamlParser implements DataImportConfigurationParser
     {
         foreach ($dataImportConfigurationTransfer->getActions() as $dataImportConfigurationActionTransfer) {
             if ($dataImportConfigurationActionTransfer->getSource()) {
-                $dataImportConfigurationActionTransfer->setSource($this->resolveSourcePath($dataImportConfigurationActionTransfer->getSource()));
+                $dataImportConfigurationActionTransfer->setSource($dataImportConfigurationActionTransfer->getSource());
             }
         }
 

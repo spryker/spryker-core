@@ -14,6 +14,8 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToFlysystemServiceBridge;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToFlysystemServiceInterface;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceBridge;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -85,6 +87,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
     /**
+     * @var string
+     */
+    public const SERVICE_FLYSYSTEM = 'SERVICE_FLYSYSTEM';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -102,6 +109,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueueClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addDataImportStoreFacade($container);
+        $container = $this->addFlysystemService($container);
 
         return $container;
     }
@@ -323,6 +331,22 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::DATA_IMPORT_STORE_FACADE, function (Container $container) {
             return new DataImportToStoreFacadeBridge(
                 $container->getLocator()->store()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFlysystemService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FLYSYSTEM, function (Container $container): DataImportToFlysystemServiceInterface {
+            return new DataImportToFlysystemServiceBridge(
+                $container->getLocator()->flysystem()->service(),
             );
         });
 

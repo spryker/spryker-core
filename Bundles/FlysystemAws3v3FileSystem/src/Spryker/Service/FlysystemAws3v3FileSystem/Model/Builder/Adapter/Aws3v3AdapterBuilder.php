@@ -99,10 +99,12 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     protected function buildAdapter()
     {
         $bucket = $this->adapterConfig->getBucket();
+
         if ($bucket === null) {
             throw new NoBucketException('Bucket not set in adapter configuration.');
         }
-        $this->adapter = new AwsS3V3Adapter($this->client, $bucket);
+
+        $this->adapter = new AwsS3V3Adapter($this->client, $bucket, '', null, null, [], false);
 
         return $this;
     }

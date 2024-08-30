@@ -18,6 +18,7 @@ use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporter;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueDataImporterInterface;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelper;
 use Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface;
+use Spryker\Zed\DataImport\Business\DataReader\CsvReader\CsvAdapterReader;
 use Spryker\Zed\DataImport\Business\DataReader\QueueReader\QueueReader;
 use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriter;
 use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface;
@@ -51,6 +52,7 @@ use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToFlysystemServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -274,9 +276,14 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         $csvReaderConfiguration = new CsvReaderConfiguration(
             $dataImporterReaderConfigurationTransfer,
             $this->createFileResolver(),
+            $this->getConfig(),
         );
 
-        return $this->createCsvReader($csvReaderConfiguration);
+        if ($this->getConfig()->isDataImportFromOtherSourceEnabled() === false) {
+            return $this->createCsvReader($csvReaderConfiguration);
+        }
+
+        return $this->createCsvAdapterReader($csvReaderConfiguration);
     }
 
     /**
@@ -288,6 +295,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportBusinessFactory::createCsvAdapterReader()} instead.
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface $csvReaderConfiguration
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
@@ -297,6 +306,20 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
         $csvReader = new CsvReader($csvReaderConfiguration, $this->createDataSet());
 
         return $csvReader;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface $csvReaderConfiguration
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader|\Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
+     */
+    public function createCsvAdapterReader(CsvReaderConfigurationInterface $csvReaderConfiguration)
+    {
+        return new CsvAdapterReader(
+            $csvReaderConfiguration,
+            $this->getFlysystemService(),
+            $this->createDataSet(),
+        );
     }
 
     /**
@@ -467,5 +490,13 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     public function getDataImportStoreFacade(): DataImportToStoreFacadeInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_STORE_FACADE);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Service\DataImportToFlysystemServiceInterface
+     */
+    protected function getFlysystemService(): DataImportToFlysystemServiceInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::SERVICE_FLYSYSTEM);
     }
 }

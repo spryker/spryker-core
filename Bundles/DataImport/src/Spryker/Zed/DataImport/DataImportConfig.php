@@ -214,7 +214,8 @@ class DataImportConfig extends AbstractBundleConfig
     ): DataImporterConfigurationTransfer {
         $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImportReaderConfigurationTransfer
-            ->setFileName($dataImportConfigurationActionTransfer->getSource());
+            ->setFileName($dataImportConfigurationActionTransfer->getSource())
+            ->setFileSystem($dataImportConfigurationActionTransfer->getFilesystem());
 
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
@@ -222,6 +223,21 @@ class DataImportConfig extends AbstractBundleConfig
             ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
 
         return $dataImporterConfigurationTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Returns true if data import from other source is enabled.
+     *
+     * @api
+     *
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @return bool
+     */
+    public function isDataImportFromOtherSourceEnabled(): bool
+    {
+        return false;
     }
 
     /**

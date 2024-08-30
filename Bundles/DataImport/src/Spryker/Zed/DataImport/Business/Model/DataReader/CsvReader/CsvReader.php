@@ -17,6 +17,9 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use ValueError;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataReader\CsvReader\CsvAdapterReader} instead.
+ */
 class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface, Countable
 {
     /**

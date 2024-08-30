@@ -35,6 +35,7 @@
         <property name="directories" type="array" singular="directory"/>
         <property name="fileEncoding" type="string"/>
         <property name="fileName" type="string"/>
+        <property name="fileSystem" type="string" strict="true"/>
     </transfer>
 
     <transfer name="DataImporterReport">
@@ -77,6 +78,7 @@
     <transfer name="DataImportConfigurationAction">
         <property name="dataEntity" type="string"/>
         <property name="source" type="string"/>
+        <property name="fileSystem" type="string" strict="true"/>
     </transfer>
 
     <transfer name="EventEntity">
