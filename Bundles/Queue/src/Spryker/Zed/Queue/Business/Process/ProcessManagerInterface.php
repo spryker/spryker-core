@@ -30,6 +30,11 @@ interface ProcessManagerInterface
     public function flushIdleProcesses();
 
     /**
+     * @return void
+     */
+    public function flushAllWorkerProcesses(): void;
+
+    /**
      * @param int $processId
      *
      * @return bool

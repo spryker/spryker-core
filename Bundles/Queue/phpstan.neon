@@ -1,3 +1,5 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Propel\\Runtime\\Collection\\Collection::toArray\(\).#'

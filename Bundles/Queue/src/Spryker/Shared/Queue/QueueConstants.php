@@ -123,4 +123,34 @@ interface QueueConstants
      * @var string
      */
     public const QUEUE_WORKER_LOOP = 'QUEUE_WORKER_LOOP';
+
+    /**
+     * Specification:
+     * - Whether wait limiting feature is enabled or not
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_WORKER_WAIT_LIMIT_ENABLED = 'QUEUE:QUEUE_WORKER_WAIT_LIMIT_ENABLED';
+
+    /**
+     * Specification:
+     * - Defines maximum waiting time in seconds for a pending queue worker process.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_WORKER_MAX_WAITING_SECONDS = 'QUEUE:QUEUE_WORKER_MAX_WAITING_SECONDS';
+
+    /**
+     * Specification:
+     * - Defines maximum waiting rounds for a pending queue worker process.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_WORKER_MAX_WAITING_ROUNDS = 'QUEUE:QUEUE_WORKER_MAX_WAITING_ROUNDS';
 }

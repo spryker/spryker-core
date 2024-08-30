@@ -9,6 +9,7 @@ namespace Spryker\Zed\Queue\Business\Process;
 
 use Generated\Shared\Transfer\QueueProcessTransfer;
 use Orm\Zed\Queue\Persistence\SpyQueueProcess;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
 use Symfony\Component\Process\Process;
 
@@ -82,6 +83,23 @@ class ProcessManager implements ProcessManagerInterface
 
         if ($processIds) {
             $this->releaseIdleProcesses($processIds);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function flushAllWorkerProcesses(): void
+    {
+        /** @var array<int> $processIds */
+        $processIds = $this->queryContainer
+            ->queryProcessesByServerId($this->serverUniqueId)
+            ->setFormatter(SimpleArrayFormatter::class)
+            ->find()
+            ->toArray();
+
+        if ($processIds) {
+            $this->deleteProcesses($processIds);
         }
     }
 

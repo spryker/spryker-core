@@ -235,4 +235,34 @@ class QueueConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isQueueWorkerWaitLimitEnabled(): bool
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_WAIT_LIMIT_ENABLED, false);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getQueueWorkerMaxWaitingSeconds(): int
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_MAX_WAITING_SECONDS, 30);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getQueueWorkerMaxWaitingRounds(): int
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_MAX_WAITING_ROUNDS, 3);
+    }
 }

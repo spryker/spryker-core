@@ -161,6 +161,19 @@ class Worker implements WorkerInterface
         int $delayIntervalSeconds,
         array $options = []
     ): void {
+        static $waitTimeStart = 0;
+        $waitTimeStart = $waitTimeStart ?: microtime(true);
+        $maxWaitSeconds = $this->queueConfig->getQueueWorkerMaxWaitingSeconds();
+        $maxWaitRounds = $this->queueConfig->getQueueWorkerMaxWaitingRounds();
+        $waitLimitEnabled = $this->queueConfig->isQueueWorkerWaitLimitEnabled();
+        $waitingLimitReached = $round > $maxWaitRounds || (microtime(true) - $waitTimeStart >= $maxWaitSeconds);
+        if ($waitLimitEnabled && $waitingLimitReached) {
+            // pending processes will be killed automatically
+            $this->processManager->flushAllWorkerProcesses();
+
+            return;
+        }
+
         usleep($delayIntervalSeconds * static::SECOND_TO_MILLISECONDS);
         $pendingProcesses = $this->getPendingProcesses($processes);
 
