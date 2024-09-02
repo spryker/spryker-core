@@ -119,6 +119,9 @@ function AttributeManager() {
                 '" ' +
                 ' data-locale_code="' +
                 localeData['locale_name'] +
+                '" ' +
+                ' data-input_type="' +
+                attributeMetadata.input_type +
                 '"' +
                 readOnly +
                 '>' +
@@ -127,11 +130,16 @@ function AttributeManager() {
             dataToAdd.push(item);
         }
 
-        dataToAdd.push(
+        var removeButtonHtml =
             '<div style="text-align: left;"><a data-key="' +
-                key +
-                '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a></div>',
-        );
+            key +
+            '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>';
+
+        if (attributeMetadata.input_type === 'multiselect') {
+            removeButtonHtml += '<span class="has-error help-block">Use comma separator.</span>';
+        }
+
+        dataToAdd.push(removeButtonHtml + '</div>');
 
         return dataToAdd;
     };
@@ -197,12 +205,14 @@ function AttributeManager() {
             var idAttribute = input.attr('data-id_attribute') || null;
             var locale_code = input.attr('data-locale_code') || null;
             var key = input.attr('data-attribute_key') || null;
+            var inputType = input.attr('data-input_type') || null;
 
             formData.push({
                 key: key,
                 id: idAttribute,
                 locale_code: locale_code,
                 value: attributeValue,
+                input_type: inputType,
             });
         });
 
@@ -358,7 +368,8 @@ function updateAttributeInputsWithAutoComplete() {
                 var input = $(this);
                 var value = input.val().trim();
                 var selectedValue = ui.item ? ui.item.label : '';
-                var allowInput = castToBoolean(input.attr('data-allow_input'));
+                var inputType = input.attr('data-input_type');
+                var allowInput = castToBoolean(input.attr('data-allow_input')) || inputType === 'multiselect';
 
                 if (value === '') {
                     input.attr('data-value', '');

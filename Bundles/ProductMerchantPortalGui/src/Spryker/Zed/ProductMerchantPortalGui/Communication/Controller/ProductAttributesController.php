@@ -82,6 +82,13 @@ class ProductAttributesController extends AbstractController
     protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';
 
     /**
+     * @see \Spryker\Shared\ProductAttribute\ProductAttributeConfig::INPUT_TYPE_MULTISELECT
+     *
+     * @var string
+     */
+    protected const INPUT_TYPE_MULTISELECT = 'multiselect';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -103,7 +110,10 @@ class ProductAttributesController extends AbstractController
             return new JsonResponse(['type' => $inputType, 'typeOptions' => $typeOptions]);
         }
 
-        $typeOptions = ['options' => $this->getOptions($productManagementAttribute)];
+        $typeOptions = [
+            'options' => $this->getOptions($productManagementAttribute),
+            'multiple' => $productManagementAttribute->getInputType() === static::INPUT_TYPE_MULTISELECT,
+        ];
 
         $inputType = $productManagementAttribute->getAllowInput() ?
             GuiTableConfigurationBuilderInterface::COLUMN_TYPE_AUTOCOMPLETE :
@@ -418,11 +428,11 @@ class ProductAttributesController extends AbstractController
     /**
      * @param array<string, string> $attributes
      * @param string $attributeName
-     * @param string|null $attributeValue
+     * @param list<string>|string|null $attributeValue
      *
-     * @return array<string, string>
+     * @return array<mixed>
      */
-    protected function updateAttribute(array $attributes, string $attributeName, ?string $attributeValue): array
+    protected function updateAttribute(array $attributes, string $attributeName, $attributeValue): array
     {
         unset($attributes[$attributeName]);
 

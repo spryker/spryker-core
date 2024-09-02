@@ -369,6 +369,7 @@
         <property name="key" type="string"/>
         <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
         <property name="allowInput" type="bool"/>
+        <property name="inputType" type="string"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeFilter">

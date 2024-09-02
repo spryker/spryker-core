@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeConditionsTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
+use Spryker\Shared\ProductAttribute\ProductAttributeConfig as SharedProductAttributeConfig;
 use SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester;
 
 /**
@@ -143,5 +144,28 @@ class GetProductManagementAttributeCollectionTest extends Unit
         // Assert
         $this->assertCount(2, $productManagementAttributeCollectionTransfer->getProductManagementAttributes());
         $this->assertSame(4, $productManagementAttributeCollectionTransfer->getPagination()->getNbResults());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnMultiSelectProductAttribute(): void
+    {
+        // Arrange
+        $this->tester->haveProductManagementAttributeEntity([
+            'input_type' => SharedProductAttributeConfig::INPUT_TYPE_MULTISELECT,
+        ]);
+
+        // Act
+        $productManagementAttributeCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getProductManagementAttributeCollection(new ProductManagementAttributeCriteriaTransfer());
+
+        // Assert
+        $this->assertCount(1, $productManagementAttributeCollectionTransfer->getProductManagementAttributes());
+        $this->assertSame(
+            SharedProductAttributeConfig::INPUT_TYPE_MULTISELECT,
+            $productManagementAttributeCollectionTransfer->getProductManagementAttributes()->offsetGet(0)->getInputType(),
+        );
     }
 }

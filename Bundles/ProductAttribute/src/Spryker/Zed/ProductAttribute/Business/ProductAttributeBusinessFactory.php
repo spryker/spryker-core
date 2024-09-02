@@ -73,6 +73,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createProductReader(),
             $this->getUtilSanitizeXssService(),
+            $this->getProductAttributeDataFormatterPlugins(),
         );
     }
 
@@ -257,5 +258,13 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     public function getUtilSanitizeXssService(): ProductAttributeToUtilSanitizeXssServiceInterface
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface>
+     */
+    public function getProductAttributeDataFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::PLUGINS_PRODUCT_ATTRIBUTES_DATA_FORMATTER);
     }
 }

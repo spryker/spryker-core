@@ -22,6 +22,8 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryBri
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductBridge;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
+use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
+use Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface;
 use SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester;
 
 /**
@@ -496,6 +498,80 @@ class ProductAttributeFacadeTest extends Unit
         ]);
 
         $this->assertSame(2, count($uniqueSuperAttributes));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveAbstractAttributesExecutesProductAttributeDataFormatterPlugins(): void
+    {
+        // Arrange
+        $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
+        $fooMetaAttributeTransfer = $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY);
+
+        $attributesToSave = [
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => '_',
+                'value' => 'New Foo Value',
+
+            ],
+        ];
+
+        $productAttributeDataFormatterPluginMock = $this->getMockBuilder(ProductAttributeDataFormatterPluginInterface::class)->getMock();
+        $this->tester->setDependency(
+            ProductAttributeDependencyProvider::PLUGINS_PRODUCT_ATTRIBUTES_DATA_FORMATTER,
+            [$productAttributeDataFormatterPluginMock],
+        );
+
+        // Assert
+        $productAttributeDataFormatterPluginMock
+            ->expects($this->once())
+            ->method('format');
+
+        // Act
+        $this->productAttributeFacade->saveAbstractAttributes(
+            $productAbstractTransfer->getIdProductAbstract(),
+            $attributesToSave,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveConcreteAttributesExecutesProductAttributeDataFormatterPlugins(): void
+    {
+        // Arrange
+        $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
+        $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
+        $fooMetaAttributeTransfer = $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY);
+
+        $attributesToSave = [
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => '_',
+                'value' => 'New Foo Value',
+            ],
+        ];
+
+        $productAttributeDataFormatterPluginMock = $this->getMockBuilder(ProductAttributeDataFormatterPluginInterface::class)->getMock();
+        $this->tester->setDependency(
+            ProductAttributeDependencyProvider::PLUGINS_PRODUCT_ATTRIBUTES_DATA_FORMATTER,
+            [$productAttributeDataFormatterPluginMock],
+        );
+
+        // Assert
+        $productAttributeDataFormatterPluginMock
+            ->expects($this->once())
+            ->method('format');
+
+        // Act
+        $this->productAttributeFacade->saveConcreteAttributes(
+            $productTransfer->getIdProductConcrete(),
+            $attributesToSave,
+        );
     }
 
     /**

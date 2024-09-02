@@ -42,29 +42,37 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $utilSanitizeXssService;
 
     /**
+     * @var list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface>
+     */
+    protected array $productAttributeDataFormatterPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface $productReader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface $utilSanitizeXssService
+     * @param list<\Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface> $productAttributeDataFormatterPlugins
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
         ProductAttributeToLocaleInterface $localeFacade,
         ProductAttributeToProductInterface $productFacade,
         ProductReaderInterface $productReader,
-        ProductAttributeToUtilSanitizeXssServiceInterface $utilSanitizeXssService
+        ProductAttributeToUtilSanitizeXssServiceInterface $utilSanitizeXssService,
+        array $productAttributeDataFormatterPlugins
     ) {
         $this->reader = $reader;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
         $this->productReader = $productReader;
         $this->utilSanitizeXssService = $utilSanitizeXssService;
+        $this->productAttributeDataFormatterPlugins = $productAttributeDataFormatterPlugins;
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array $attributes
+     * @param array<mixed> $attributes
      *
      * @return void
      */
@@ -87,7 +95,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
 
     /**
      * @param int $idProduct
-     * @param array $attributes
+     * @param array<mixed> $attributes
      *
      * @return void
      */
@@ -109,7 +117,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     }
 
     /**
-     * @param array $attributesToSave
+     * @param array<mixed> $attributesToSave
      * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransferCollection
      *
      * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
@@ -133,9 +141,9 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     }
 
     /**
-     * @param array $attributes
+     * @param array<mixed> $attributes
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getAttributesDataToSave(array $attributes)
     {
@@ -153,7 +161,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
             $attributeData[$localeCode][$key] = $value;
         }
 
-        return $attributeData;
+        return $this->executeProductAttributeDataFormatterPlugins($attributes, $attributeData);
     }
 
     /**
@@ -167,9 +175,9 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     }
 
     /**
-     * @param array $attributeData
+     * @param array<mixed> $attributeData
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getNonLocalizedAttributes(array $attributeData)
     {
@@ -179,5 +187,20 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         }
 
         return $productAbstractAttributes;
+    }
+
+    /**
+     * @param array<mixed> $attributes
+     * @param array<mixed> $formattedAttributes
+     *
+     * @return array<mixed>
+     */
+    protected function executeProductAttributeDataFormatterPlugins(array $attributes, array $formattedAttributes): array
+    {
+        foreach ($this->productAttributeDataFormatterPlugins as $productAttributeDataFormatterPlugin) {
+            $formattedAttributes = $productAttributeDataFormatterPlugin->format($attributes, $formattedAttributes);
+        }
+
+        return $formattedAttributes;
     }
 }

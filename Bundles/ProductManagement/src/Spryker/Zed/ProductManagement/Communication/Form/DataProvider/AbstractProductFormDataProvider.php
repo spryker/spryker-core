@@ -609,6 +609,9 @@ class AbstractProductFormDataProvider
             $inputType = static::DEFAULT_INPUT_TYPE;
             $allowInput = false;
             $value = $productAttributeValues[$type] ?? null;
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            }
             $shouldBeTextArea = $value && mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;

@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
  * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Communication\ProductAttributeCommunicationFactory getFactory()
  */
 class ProductAttributeAclEntityConfigurationExpanderPlugin extends AbstractPlugin implements AclEntityConfigurationExpanderPluginInterface
 {

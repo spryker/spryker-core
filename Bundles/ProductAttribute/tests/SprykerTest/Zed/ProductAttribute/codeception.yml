@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         actor: ProductAttributeBusinessTester
         modules:
             enabled:
@@ -28,3 +28,10 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+
+    Communication:
+        path: Communication
+        actor: ProductAttributeCommunicationTester
+        modules:
+            enabled:
+                - Asserts

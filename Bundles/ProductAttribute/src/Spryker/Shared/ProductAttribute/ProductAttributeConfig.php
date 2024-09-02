@@ -15,4 +15,14 @@ class ProductAttributeConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
+
+    /**
+     * Specification:
+     * - Defines the multiselect input type for the product attribute.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const INPUT_TYPE_MULTISELECT = 'multiselect';
 }

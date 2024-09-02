@@ -11,6 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductAttributesRestApi\Dependency\Client\ProductAttributesRestApiToProductAttributeClientInterface;
 use Spryker\Glue\ProductAttributesRestApi\Processor\Builder\RestProductAttributeResponseBuilder;
 use Spryker\Glue\ProductAttributesRestApi\Processor\Builder\RestProductAttributeResponseBuilderInterface;
+use Spryker\Glue\ProductAttributesRestApi\Processor\Formatter\MultiSelectAttributeFormatter;
+use Spryker\Glue\ProductAttributesRestApi\Processor\Formatter\MultiSelectAttributeFormatterInterface;
 use Spryker\Glue\ProductAttributesRestApi\Processor\Mapper\ProductAttributeMapper;
 use Spryker\Glue\ProductAttributesRestApi\Processor\Mapper\ProductAttributeMapperInterface;
 use Spryker\Glue\ProductAttributesRestApi\Processor\Reader\ProductAttributeReader;
@@ -49,6 +51,14 @@ class ProductAttributesRestApiFactory extends AbstractFactory
     public function createProductAttributeMapper(): ProductAttributeMapperInterface
     {
         return new ProductAttributeMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAttributesRestApi\Processor\Formatter\MultiSelectAttributeFormatterInterface
+     */
+    public function createMultiSelectAttributeFormatter(): MultiSelectAttributeFormatterInterface
+    {
+        return new MultiSelectAttributeFormatter();
     }
 
     /**

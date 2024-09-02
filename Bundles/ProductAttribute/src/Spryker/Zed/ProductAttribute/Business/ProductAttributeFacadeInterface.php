@@ -82,7 +82,8 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Save product abstract attributes
+     * - Executes {@link \Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface} plugin stack.
+     * - Save product abstract attributes.
      *
      * $attributes format
      * [
@@ -102,7 +103,8 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Save product concrete attributes
+     * - Executes {@link \Spryker\Zed\ProductAttributeExtension\Dependency\Plugin\ProductAttributeDataFormatterPluginInterface} plugin stack.
+     * - Save product concrete attributes.
      *
      * $attributes format
      * [

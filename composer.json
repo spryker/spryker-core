@@ -644,6 +644,7 @@
         "spryker/product-approval-data-import": "*",
         "spryker/product-approval-gui": "*",
         "spryker/product-attribute": "*",
+        "spryker/product-attribute-extension": "*",
         "spryker/product-attribute-gui": "*",
         "spryker/product-attributes-backend-api": "*",
         "spryker/product-attributes-rest-api": "*",

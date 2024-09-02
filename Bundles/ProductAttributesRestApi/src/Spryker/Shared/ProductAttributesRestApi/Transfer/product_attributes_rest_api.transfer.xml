@@ -60,4 +60,12 @@
         <property name="keyTranslation" type="string"/>
     </transfer>
 
+    <transfer name="AbstractProductsRestAttributes">
+        <property name="attributes" type="array" singular="attributes"/>
+    </transfer>
+
+    <transfer name="ConcreteProductsRestAttributes">
+        <property name="attributes" type="array" singular="attributes"/>
+    </transfer>
+
 </transfers>
