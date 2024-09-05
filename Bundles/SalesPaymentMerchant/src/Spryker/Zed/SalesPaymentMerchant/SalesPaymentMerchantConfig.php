@@ -12,29 +12,34 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesPaymentMerchantConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Represents the type for order items in payment transmission.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PAYMENT_TRANSMISSION_ITEM_TYPE_ORDER_ITEM = 'order-item';
+
+    /**
+     * Specification:
+     * - Represents the type for order expenses in payment transmission.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PAYMENT_TRANSMISSION_ITEM_TYPE_ORDER_EXPENSE = 'order-expense';
+
+    /**
      * @var string
      */
     public const ITEM_REFERENCE_SEPARATOR = ',';
 
     /**
-     * @var string
+     * @var array<string, list<string>>
      */
-    protected const OMS_STATE_PAYMENT_CAPTURE_PENDING = 'payment capture pending';
-
-    /**
-     * @var string
-     */
-    protected const OMS_STATE_PAYMENT_REFUND_PENDING = 'payment refund pending';
-
-    /**
-     * @var string
-     */
-    protected const OMS_STATE_PAYMENT_CAPTURED = 'payment captured';
-
-    /**
-     * @var string
-     */
-    protected const OMS_STATE_PAYMENT_REFUNDED = 'payment refunded';
+    protected const EXCLUDED_EXPENSE_TYPES_FOR_STORE = [];
 
     /**
      * @var string
@@ -42,56 +47,19 @@ class SalesPaymentMerchantConfig extends AbstractBundleConfig
     protected const OMS_STATE_PAYMENT_CANCELED = 'canceled';
 
     /**
-     * @api
-     *
-     * @return array<string>
+     * @var string
      */
-    public function getPaymentCaptureRequestBlockingStates(): array
-    {
-        return [
-            static::OMS_STATE_PAYMENT_CAPTURE_PENDING,
-            static::OMS_STATE_PAYMENT_REFUND_PENDING,
-        ];
-    }
+    protected const OMS_STATE_PAYMENT_CLOSED = 'closed';
 
     /**
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::getCapturePaymentStates()} instead.
-     *
-     * @return array<string>
+     * @var bool
      */
-    public function getPaymentConfirmationRequestedStates(): array
-    {
-        return [];
-    }
+    protected const ORDER_EXPENSE_INCLUDED_IN_PAYMENT_PROCESS = false;
 
     /**
-     * @api
+     * Specification:
+     * - Provides a list of OMS states that are considered as refused payment states.
      *
-     * @return array<string>
-     */
-    public function getCapturePaymentStates(): array
-    {
-        return [
-            static::OMS_STATE_PAYMENT_CAPTURED,
-        ];
-    }
-
-    /**
-     * @api
-     *
-     * @return array<string>
-     */
-    public function getPaymentRefundRequestBlockingStates(): array
-    {
-        return [
-            static::OMS_STATE_PAYMENT_CAPTURE_PENDING,
-            static::OMS_STATE_PAYMENT_REFUND_PENDING,
-        ];
-    }
-
-    /**
      * @api
      *
      * @return array<string>
@@ -99,8 +67,36 @@ class SalesPaymentMerchantConfig extends AbstractBundleConfig
     public function getItemRefusedStates(): array
     {
         return [
-            static::OMS_STATE_PAYMENT_REFUNDED,
             static::OMS_STATE_PAYMENT_CANCELED,
+            static::OMS_STATE_PAYMENT_CLOSED,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Provides a list of expense types to be excluded from the transfer process for the given store.
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return list<string>
+     */
+    public function getExcludedExpenseTypesForStore(string $storeName): array
+    {
+        return static::EXCLUDED_EXPENSE_TYPES_FOR_STORE[$storeName] ?? [];
+    }
+
+    /**
+     * Specification:
+     * - Determines whether order expenses should be included in the transfer process.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isOrderExpenseIncludedInPaymentProcess(): bool
+    {
+        return static::ORDER_EXPENSE_INCLUDED_IN_PAYMENT_PROCESS;
     }
 }

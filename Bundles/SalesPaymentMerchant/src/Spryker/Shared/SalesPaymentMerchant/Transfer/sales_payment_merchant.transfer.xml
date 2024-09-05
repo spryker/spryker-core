@@ -7,6 +7,8 @@
         <property name="canceledAmount" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
         <property name="orderItemReference" type="string" strict="true"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
+        <property name="state" type="ItemState"/>
     </transfer>
 
     <transfer name="Order">
@@ -14,6 +16,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="idSalesOrder" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="PaymentTransmissionResponse">
@@ -24,7 +27,8 @@
         <property name="transferId" type="string"/>
         <property name="failureMessage" type="string"/>
         <property name="amount" type="string"/>
-        <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
+        <property name="orderItems" type="OrderItem[]" singular="orderItem" deprecated="Use {@link \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer::PAYMENT_TRANSMISSION_ITEMS} instead."/>
+        <property name="paymentTransmissionItems" type="PaymentTransmissionItem[]" singular="paymentTransmissionItem"/>
     </transfer>
 
     <transfer name="PaymentTransmissionResponseCollection">
@@ -100,6 +104,9 @@
         <property name="idSalesExpense" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="type" type="string"/>
+        <property name="canceledAmount" type="int"/>
     </transfer>
 
     <transfer name="PaymentMethodAppConfiguration" strict="true">
@@ -117,10 +124,11 @@
         <property name="failureMessage" type="string"/>
     </transfer>
 
-    <transfer name="OrderExpense">
+    <transfer name="OrderExpense" deprecated="Use `PaymentTransmissionItem` instead.">
         <property name="merchantReference" type="string"/>
         <property name="orderReference" type="string"/>
-        <property name="expenseReference" type="string" description="UUID of the spy_sales_expense"/>
+        <property name="transferId" type="string"/>
+        <property name="itemReference" type="string" description="UUID of the spy_sales_expense"/>
         <property name="amount" type="string" description="Amount in lowest denominator (cents, YEN). When negative money has to be refunded, when positive money has to be transferred."/>
     </transfer>
 
@@ -142,6 +150,7 @@
     <transfer name="SalesPaymentMerchantPayoutConditions" strict="true">
         <property name="orderReferences" type="string[]" singular="orderReference"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="itemReferences" type="string[]" singular="itemReference"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
@@ -193,6 +202,21 @@
         <property name="lastPage" type="int"/>
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentTransmissionItem">
+        <property name="transferId" type="string" description="The ID returned from the Platform implementation"/>
+        <property name="type" type="string" description="Indicates whether the item is an order item or an order expense. Can be 'order-item', 'order-expense', or any additional type."/>
+        <property name="merchantReference" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="itemReference" type="string" description="UUID of the sales_order_item or spy_sales_expense"/>
+        <property name="amount" type="string" description="Amount in lowest denominator (cents, YEN). When negative money has to be refunded, when positive money has to be transferred."/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="failureMessage" type="string"/>
     </transfer>
 
 </transfers>

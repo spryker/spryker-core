@@ -24,6 +24,7 @@
         "spryker/oms": "*",
         "spryker/propel": "*",
         "spryker/ramsey-uuid": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesPaymentMerchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpander;
-use Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpander;
+use Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpanderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutAmountCalculatorFallback;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutCalculator;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutCalculatorInterface;
@@ -22,6 +22,9 @@ use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Refund\Checker\PaymentMet
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Refund\Checker\PaymentMethodPayoutReverseCheckerInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Refund\MerchantPayoutReverse;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Refund\MerchantPayoutReverseInterface;
+use Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReader;
+use Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface;
+use Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderRefundExpenseReader;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\PaymentMethodReader;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\PaymentMethodReaderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\SalesPaymentMerchantPayoutReader;
@@ -57,7 +60,9 @@ class SalesPaymentMerchantBusinessFactory extends AbstractBusinessFactory
             $this->createTransferEndpointReader(),
             $this->createTransferRequestSender(),
             $this->getEntityManager(),
-            $this->createOrderItemExpander(),
+            $this->createPaymentTransmissionItemExpander(),
+            $this->createOrderExpenseReader(),
+            $this->getConfig(),
         );
     }
 
@@ -71,7 +76,9 @@ class SalesPaymentMerchantBusinessFactory extends AbstractBusinessFactory
             $this->createTransferEndpointReader(),
             $this->createTransferRequestSender(),
             $this->getEntityManager(),
-            $this->createOrderItemExpander(),
+            $this->createPaymentTransmissionItemExpander(),
+            $this->createOrderRefundExpenseReader(),
+            $this->getConfig(),
         );
     }
 
@@ -144,11 +151,11 @@ class SalesPaymentMerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface
+     * @return \Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpanderInterface
      */
-    public function createOrderItemExpander(): OrderItemExpanderInterface
+    public function createPaymentTransmissionItemExpander(): PaymentTransmissionItemExpanderInterface
     {
-        return new OrderItemExpander(
+        return new PaymentTransmissionItemExpander(
             $this->createSalesPaymentMerchantPayoutReader(),
         );
     }
@@ -189,6 +196,22 @@ class SalesPaymentMerchantBusinessFactory extends AbstractBusinessFactory
             $this->createTransferEndpointReader(),
             $this->createSalesPaymentMerchantPayoutReversalReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface
+     */
+    public function createOrderExpenseReader(): OrderExpenseReaderInterface
+    {
+        return new OrderExpenseReader($this->getConfig(), $this->createSalesPaymentMerchantPayoutReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface
+     */
+    public function createOrderRefundExpenseReader(): OrderExpenseReaderInterface
+    {
+        return new OrderRefundExpenseReader($this->getConfig());
     }
 
     /**

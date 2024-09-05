@@ -60,7 +60,7 @@ class PaymentMethodPayoutChecker implements PaymentMethodPayoutCheckerInterface
 
         $salesPaymentMerchantPayoutCollectionTransfer = $this->salesPaymentMerchantPayoutReader->getSalesPaymentMerchantPayoutCollectionByMerchantAndOrderReference(
             $orderTransfer->getOrderReferenceOrFail(),
-            $salesOrderItemTransfer->getMerchantReference(),
+            $salesOrderItemTransfer->getMerchantReferenceOrFail(),
             true,
         );
 

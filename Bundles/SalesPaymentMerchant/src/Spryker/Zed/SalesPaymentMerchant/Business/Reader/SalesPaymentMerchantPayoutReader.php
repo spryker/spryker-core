@@ -70,23 +70,53 @@ class SalesPaymentMerchantPayoutReader implements SalesPaymentMerchantPayoutRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
+     * @param string $orderReference
+     * @param list<string> $itemReferences
      *
-     * @return array<string, array<string, string>>
+     * @return array<string, \Generated\Shared\Transfer\SalesPaymentMerchantPayoutTransfer>
      */
-    public function getSalesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId(
-        SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
+    public function getSalesPaymentMerchantPayoutMapByItemReferences(
+        string $orderReference,
+        array $itemReferences
     ): array {
-        $salesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId = [];
+        $salesPaymentMerchantPayoutConditionsTransfer = (new SalesPaymentMerchantPayoutConditionsTransfer())
+            ->addOrderReference($orderReference)
+            ->setItemReferences($itemReferences)
+            ->setIsSuccessful(true);
 
+        $salesPaymentMerchantPayoutCriteriaTransfer = $this->createPaymentMerchantPayoutCriteriaTransfer($salesPaymentMerchantPayoutConditionsTransfer);
+        $salesPaymentMerchantPayoutCollectionTransfer = $this->salesPaymentMerchantRepository->getSalesPaymentMerchantPayoutCollection($salesPaymentMerchantPayoutCriteriaTransfer);
+
+        $salesPaymentMerchantPayoutMapByItemReferences = [];
         foreach ($salesPaymentMerchantPayoutCollectionTransfer->getSalesPaymentMerchantPayouts() as $salesPaymentMerchantPayoutTransfer) {
-            $transferId = $salesPaymentMerchantPayoutTransfer->getTransferIdOrFail();
-            $itemReferences = explode(SalesPaymentMerchantConfig::ITEM_REFERENCE_SEPARATOR, $salesPaymentMerchantPayoutTransfer->getItemReferencesOrFail());
-
-            $salesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId[$transferId] = array_combine($itemReferences, $itemReferences);
+            $salesPaymentMerchantPayoutMapByItemReferences[$salesPaymentMerchantPayoutTransfer->getItemReferencesOrFail()] = $salesPaymentMerchantPayoutTransfer;
         }
 
-        return $salesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId;
+        return $salesPaymentMerchantPayoutMapByItemReferences;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
+     *
+     * @return array<string, string>
+     */
+    public function getSalesPaymentMerchantPayoutTransferTransferIdMapIndexedByItemReference(
+        SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
+    ): array {
+        $salesPaymentMerchantPayoutTransferTransferIdMapIndexedByItemReference = [];
+        foreach ($salesPaymentMerchantPayoutCollectionTransfer->getSalesPaymentMerchantPayouts() as $salesPaymentMerchantPayoutTransfer) {
+            $transferId = $salesPaymentMerchantPayoutTransfer->getTransferIdOrFail();
+            $itemReferences = explode(
+                SalesPaymentMerchantConfig::ITEM_REFERENCE_SEPARATOR,
+                $salesPaymentMerchantPayoutTransfer->getItemReferencesOrFail(),
+            );
+
+            foreach ($itemReferences as $itemReference) {
+                $salesPaymentMerchantPayoutTransferTransferIdMapIndexedByItemReference[$itemReference] = $transferId;
+            }
+        }
+
+        return $salesPaymentMerchantPayoutTransferTransferIdMapIndexedByItemReference;
     }
 
     /**

@@ -155,8 +155,12 @@ class SalesPaymentMerchantCommunicationTester extends Actor
      *
      * @return void
      */
-    public function mockExpectedResponseFromApp(string $merchantReference, string $orderReference, array $orderItemReferences, string $amount): void
-    {
+    public function mockExpectedResponseFromApp(
+        string $merchantReference,
+        string $orderReference,
+        array $orderItemReferences,
+        string $amount
+    ): void {
         $string = json_encode([
             'transfers' => [
                 [
@@ -168,6 +172,7 @@ class SalesPaymentMerchantCommunicationTester extends Actor
                 ],
             ],
         ]);
+
         $acpHttpResponseTransfer = new AcpHttpResponseTransfer();
         $acpHttpResponseTransfer->setContent($string);
 

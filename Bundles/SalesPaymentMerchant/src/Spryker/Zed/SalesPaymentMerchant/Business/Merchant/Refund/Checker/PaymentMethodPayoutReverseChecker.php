@@ -60,7 +60,7 @@ class PaymentMethodPayoutReverseChecker implements PaymentMethodPayoutReverseChe
 
         $salesPaymentMerchantPayoutReversalCollectionTransfer = $this->salesPaymentMerchantPayoutReversalReader->getSalesPaymentMerchantPayoutReversalCollectionByMerchantAndOrderReference(
             $orderTransfer->getOrderReferenceOrFail(),
-            $salesOrderItemTransfer->getMerchantReference(),
+            $salesOrderItemTransfer->getMerchantReferenceOrFail(),
             true,
         );
 

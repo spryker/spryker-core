@@ -33,3 +33,4 @@ suites:
                 - \SprykerTest\Zed\SalesPayment\Helper\SalesPaymentHelper
                 - \SprykerTest\Shared\Payment\Helper\PaymentDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

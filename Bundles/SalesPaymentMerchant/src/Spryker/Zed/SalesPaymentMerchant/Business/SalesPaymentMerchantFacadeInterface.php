@@ -47,6 +47,10 @@ interface SalesPaymentMerchantFacadeInterface
      * - If the transfer endpoint URL is not found, returns without performing the transfer.
      * - Fetches the order items and expenses for the transfer.
      * - Calculates the payout amount using {@link \Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\MerchantPayoutCalculatorPluginInterface::calculatePayoutAmount} if it's set.
+     * - Prepares the order expenses to be transferred if {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::isOrderExpenseIncludedInPaymentProcess()} is set.
+     * - Otherwise, the order expenses are not transferred.
+     * - Uses the following configuration to filter out the order expenses for store by type {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::getExcludedExpenseTypesForStore()}.
+     * - Checks if the order expenses has been already transferred for the merchant order, in case of yes, skips the transfer.
      * - Sends the transfer request to the PSP App.
      * - Saves the transfer response to the persistence.
      *
@@ -91,10 +95,15 @@ interface SalesPaymentMerchantFacadeInterface
      * - Requires the `ExpenseTransfer.merchantReference` property to be set.
      * - Requires the `ExpenseTransfer.orderReference` property to be set.
      * - Requires the `ExpenseTransfer.uuid` property to be set.
-     * - Requires the `ExpenseTransfer.sumPriceToPayAggregation` property to be set.
+     * - Requires the `ExpenseTransfer.refundableAmount` property to be set.
+     * - Requires the `ExpenseTransfer.canceledAmount` property to be set in case `ExpenseTransfer.refundableAmount` is not set.
      * - If the transfer endpoint URL is not found, returns without performing the transfer.
      * - Fetches the order items and expenses for the transfer.
      * - Calculates the payout reverse amount using {@link \Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\MerchantPayoutCalculatorPluginInterface::calculatePayoutAmount} if it's set.
+     * - Prepares the order expenses to be transferred if {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::isOrderExpenseIncludedInPaymentProcess()} is set.
+     * - Otherwise, the order expenses are not transferred.
+     * - Uses the following configuration to filter out the order expenses for store by type {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::getExcludedExpenseTypesForStore()}.
+     * - The order expenses are not transferred until at least one order item is in the refused state {@link \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig::getItemRefusedStates()}.
      * - Sends the transfer reverse request to the PSP App.
      * - Saves the transfer response to the persistence.
      *

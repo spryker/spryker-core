@@ -19,12 +19,4 @@ interface MerchantPayoutCalculatorInterface
      * @return int
      */
     public function calculatePayoutAmount(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): int;
-
-    /**
-     * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
-     * @param list<\Generated\Shared\Transfer\OrderExpenseTransfer> $orderExpenseTransfers
-     *
-     * @return int
-     */
-    public function calculatePayoutAmountForOrder(array $orderItemTransfers, array $orderExpenseTransfers): int;
 }

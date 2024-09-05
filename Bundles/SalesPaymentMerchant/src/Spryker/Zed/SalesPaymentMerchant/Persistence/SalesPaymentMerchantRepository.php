@@ -101,6 +101,12 @@ class SalesPaymentMerchantRepository extends AbstractRepository implements Sales
             );
         }
 
+        if ($salesPaymentMerchantPayoutConditionsTransfer->getItemReferences() !== []) {
+            $salesPaymentMerchantPayoutQuery->filterByItemReferences_In(
+                $salesPaymentMerchantPayoutConditionsTransfer->getItemReferences(),
+            );
+        }
+
         // Only fetch entities that have a transferId and are not failed.
         $salesPaymentMerchantPayoutQuery->filterByTransferId(null, Criteria::ISNOTNULL);
 

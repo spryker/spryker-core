@@ -8,15 +8,16 @@
 namespace Spryker\Zed\SalesPaymentMerchant\Business\Merchant;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderExpenseTransfer;
-use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionItemTransfer;
 use Generated\Shared\Transfer\PaymentTransmissionResponseTransfer;
-use Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpanderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutCalculatorInterface;
+use Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Reader\TransferEndpointReaderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Business\Sender\TransferRequestSenderInterface;
 use Spryker\Zed\SalesPaymentMerchant\Persistence\SalesPaymentMerchantEntityManagerInterface;
+use Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig;
 
 abstract class AbstractMerchantTransfer
 {
@@ -41,29 +42,45 @@ abstract class AbstractMerchantTransfer
     protected SalesPaymentMerchantEntityManagerInterface $salesPaymentMerchantEntityManager;
 
     /**
-     * @var \Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface
+     * @var \Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpanderInterface
      */
-    protected OrderItemExpanderInterface $orderItemExpander;
+    protected PaymentTransmissionItemExpanderInterface $paymentTransmissionItemExpander;
+
+    /**
+     * @var \Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface
+     */
+    protected OrderExpenseReaderInterface $orderExpenseReader;
+
+    /**
+     * @var \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig
+     */
+    protected SalesPaymentMerchantConfig $salesPaymentMerchantConfig;
 
     /**
      * @param \Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Calculator\MerchantPayoutCalculatorInterface $merchantPayoutCalculator
      * @param \Spryker\Zed\SalesPaymentMerchant\Business\Reader\TransferEndpointReaderInterface $transferEndpointReader
      * @param \Spryker\Zed\SalesPaymentMerchant\Business\Sender\TransferRequestSenderInterface $transferRequestSender
      * @param \Spryker\Zed\SalesPaymentMerchant\Persistence\SalesPaymentMerchantEntityManagerInterface $salesPaymentMerchantEntityManager
-     * @param \Spryker\Zed\SalesPaymentMerchant\Business\Expander\OrderItemExpanderInterface $orderItemExpander
+     * @param \Spryker\Zed\SalesPaymentMerchant\Business\Expander\PaymentTransmissionItemExpanderInterface $paymentTransmissionItemExpander
+     * @param \Spryker\Zed\SalesPaymentMerchant\Business\Reader\OrderExpenseReaderInterface $orderExpenseReader
+     * @param \Spryker\Zed\SalesPaymentMerchant\SalesPaymentMerchantConfig $salesPaymentMerchantConfig
      */
     public function __construct(
         MerchantPayoutCalculatorInterface $merchantPayoutCalculator,
         TransferEndpointReaderInterface $transferEndpointReader,
         TransferRequestSenderInterface $transferRequestSender,
         SalesPaymentMerchantEntityManagerInterface $salesPaymentMerchantEntityManager,
-        OrderItemExpanderInterface $orderItemExpander
+        PaymentTransmissionItemExpanderInterface $paymentTransmissionItemExpander,
+        OrderExpenseReaderInterface $orderExpenseReader,
+        SalesPaymentMerchantConfig $salesPaymentMerchantConfig
     ) {
         $this->merchantPayoutCalculator = $merchantPayoutCalculator;
         $this->transferEndpointReader = $transferEndpointReader;
         $this->transferRequestSender = $transferRequestSender;
         $this->salesPaymentMerchantEntityManager = $salesPaymentMerchantEntityManager;
-        $this->orderItemExpander = $orderItemExpander;
+        $this->paymentTransmissionItemExpander = $paymentTransmissionItemExpander;
+        $this->orderExpenseReader = $orderExpenseReader;
+        $this->salesPaymentMerchantConfig = $salesPaymentMerchantConfig;
     }
 
     /**
@@ -75,48 +92,38 @@ abstract class AbstractMerchantTransfer
     abstract protected function calculatePayoutAmount(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): int;
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+     *
+     * @return void
+     */
+    abstract protected function savePaymentTransmissionResponse(
+        PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+    ): void;
+
+    /**
      * @param list<\Generated\Shared\Transfer\ItemTransfer> $salesOrderItemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return list<\Generated\Shared\Transfer\OrderItemTransfer>
+     * @return list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer>
      */
     protected function getOrderItemsForTransfer(array $salesOrderItemTransfers, OrderTransfer $orderTransfer): array
     {
-        $orderItemTransfers = [];
+        $orderItemPaymentTransmissionItemTransfers = [];
         foreach ($salesOrderItemTransfers as $itemTransfer) {
             if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }
 
-            $orderItemTransfers[] = (new OrderItemTransfer())
+            $orderItemPaymentTransmissionItemTransfers[] = (new PaymentTransmissionItemTransfer())
                 ->fromArray($itemTransfer->toArray(), true)
+                ->setType(SalesPaymentMerchantConfig::PAYMENT_TRANSMISSION_ITEM_TYPE_ORDER_ITEM)
                 ->setMerchantReference($itemTransfer->getMerchantReferenceOrFail())
                 ->setOrderReference($orderTransfer->getOrderReferenceOrFail())
                 ->setItemReference($itemTransfer->getOrderItemReferenceOrFail())
                 ->setAmount((string)$this->calculatePayoutAmount($itemTransfer, $orderTransfer));
         }
 
-        return $orderItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return list<\Generated\Shared\Transfer\OrderExpenseTransfer>
-     */
-    protected function getOrderExpensesForTransfer(OrderTransfer $orderTransfer): array
-    {
-        $orderExpenseTransfers = [];
-        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            $orderExpenseTransfers[] = (new OrderExpenseTransfer())
-                ->fromArray($expenseTransfer->toArray(), true)
-                ->setMerchantReference($expenseTransfer->getMerchantReferenceOrFail())
-                ->setOrderReference($orderTransfer->getOrderReferenceOrFail())
-                ->setExpenseReference($expenseTransfer->getUuidOrFail())
-                ->setAmount((string)$expenseTransfer->getSumPriceToPayAggregationOrFail());
-        }
-
-        return $orderExpenseTransfers;
+        return $orderItemPaymentTransmissionItemTransfers;
     }
 
     /**
@@ -124,34 +131,61 @@ abstract class AbstractMerchantTransfer
      *
      * @return string
      */
-    protected function getItemReferences(PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer): string
-    {
-        $itemReferences = [];
+    protected function getItemReferences(
+        PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+    ): string {
+        $paymentTransmissionItemTransfers = $paymentTransmissionResponseTransfer->getPaymentTransmissionItems()->count() > 0 ?
+            $paymentTransmissionResponseTransfer->getPaymentTransmissionItems() :
+            $paymentTransmissionResponseTransfer->getOrderItems();
 
-        foreach ($paymentTransmissionResponseTransfer->getOrderItems() as $orderItemTransfer) {
-            $itemReferences[] = $orderItemTransfer->getItemReferenceOrFail();
+        $itemReferences = [];
+        foreach ($paymentTransmissionItemTransfers as $paymentTransmissionItemTransfer) {
+            $itemReferences[] = $paymentTransmissionItemTransfer->getItemReferenceOrFail();
         }
 
         return implode(',', $itemReferences);
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
-     * @param list<\Generated\Shared\Transfer\OrderExpenseTransfer> $orderExpenseTransfers
+     * @param list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer> $paymentTransmissionItemTransfers
+     * @param string $transferEndpointUrl
+     *
+     * @return void
+     */
+    protected function executePayoutTransmissionTransaction(
+        array $paymentTransmissionItemTransfers,
+        string $transferEndpointUrl
+    ): void {
+        $transferRequestData = $this->createTransferRequestData($paymentTransmissionItemTransfers);
+        $paymentTransmissionResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
+            $transferRequestData,
+            $transferEndpointUrl,
+        );
+
+        /** @var \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer */
+        foreach ($paymentTransmissionResponseCollectionTransfer->getPaymentTransmissions() as $paymentTransmissionResponseTransfer) {
+            $paymentTransmissionResponseTransfer->setItemReferences($this->getItemReferences($paymentTransmissionResponseTransfer));
+
+            $this->savePaymentTransmissionResponse($paymentTransmissionResponseTransfer);
+        }
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer> $paymentTransmissionItemTransfers
      *
      * @return array<string, array<int, array<string, mixed>>|int>
      */
-    protected function createTransferRequestData(array $orderItemTransfers, array $orderExpenseTransfers): array
-    {
-        $orderAmountTotal = $this->merchantPayoutCalculator->calculatePayoutAmountForOrder($orderItemTransfers, $orderExpenseTransfers);
-
-        $orderItemTransfersArray = array_map(fn ($itemTransfer) => $itemTransfer->toArray(), $orderItemTransfers);
-        $orderExpenseTransfersArray = array_map(fn ($expenseTransfer) => $expenseTransfer->toArray(), $orderExpenseTransfers);
+    protected function createTransferRequestData(
+        array $paymentTransmissionItemTransfers
+    ): array {
+        $paymentTransmissionItemTransfersArray = array_map(
+            fn (PaymentTransmissionItemTransfer $paymentTransmissionItem) => $paymentTransmissionItem->toArray(),
+            $paymentTransmissionItemTransfers,
+        );
 
         return [
-            'orderItems' => $orderItemTransfersArray,
-            'orderExpenses' => $orderExpenseTransfersArray,
-            'orderAmountTotal' => $orderAmountTotal,
+            'orderItems' => $paymentTransmissionItemTransfersArray,
+            'paymentTransmissionItems' => $paymentTransmissionItemTransfersArray,
         ];
     }
 }

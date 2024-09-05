@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Refund;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseTransfer;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\AbstractMerchantTransfer;
 
 class MerchantPayoutReverse extends AbstractMerchantTransfer implements MerchantPayoutReverseInterface
@@ -22,31 +23,58 @@ class MerchantPayoutReverse extends AbstractMerchantTransfer implements Merchant
     public function reversePayoutMerchants(array $salesOrderItemTransfers, OrderTransfer $orderTransfer): void
     {
         $transferEndpointUrl = $this->transferEndpointReader->getTransferEndpointUrl($orderTransfer);
-
         if (!$transferEndpointUrl) {
             return;
         }
 
-        $orderItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
-
-        if (count($orderItemTransfers) === 0) {
+        $orderItemPaymentTransmissionItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
+        if (count($orderItemPaymentTransmissionItemTransfers) === 0) {
             return;
         }
 
-        $orderItemTransfers = $this->orderItemExpander->expandOrderItemsWithTransferId($orderItemTransfers, $orderTransfer);
-        $orderExpenseTransfers = $this->getOrderExpensesForTransfer($orderTransfer);
-        $transferRequestData = $this->createTransferRequestData($orderItemTransfers, $orderExpenseTransfers);
+        $orderItemPaymentTransmissionItemTransfers = $this->paymentTransmissionItemExpander
+            ->expandPaymentTransmissionItemsWithTransferId($orderItemPaymentTransmissionItemTransfers, $orderTransfer);
+        $this->executeGroupedPayoutTransmissionTransaction($orderItemPaymentTransmissionItemTransfers, $transferEndpointUrl);
 
-        $paymentTransmissionResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
-            $transferRequestData,
-            $transferEndpointUrl,
-        );
-
-        foreach ($paymentTransmissionResponseCollectionTransfer->getPaymentTransmissions() as $paymentTransmissionResponseTransfer) {
-            $paymentTransmissionResponseTransfer->setItemReferences($this->getItemReferences($paymentTransmissionResponseTransfer));
-
-            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayoutReversal($paymentTransmissionResponseTransfer);
+        if (!$this->salesPaymentMerchantConfig->isOrderExpenseIncludedInPaymentProcess()) {
+            return;
         }
+
+        $orderExpensePaymentTransmissionItemTransfers = $this->orderExpenseReader->getOrderExpensesForTransfer($orderTransfer, $orderItemPaymentTransmissionItemTransfers);
+        if (count($orderExpensePaymentTransmissionItemTransfers) === 0) {
+            return;
+        }
+
+        $orderExpensePaymentTransmissionItemTransfers = $this->paymentTransmissionItemExpander
+            ->expandPaymentTransmissionItemsWithTransferId($orderExpensePaymentTransmissionItemTransfers, $orderTransfer);
+        $this->executePayoutTransmissionTransaction($orderExpensePaymentTransmissionItemTransfers, $transferEndpointUrl);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer> $orderItemPaymentTransmissionItemTransfers
+     * @param string $transferEndpointUrl
+     *
+     * @return void
+     */
+    public function executeGroupedPayoutTransmissionTransaction(
+        array $orderItemPaymentTransmissionItemTransfers,
+        string $transferEndpointUrl
+    ): void {
+        $groupedPaymentTransmissionItemsByTransferId = $this->groupPaymentTransmissionItemsByTransferId($orderItemPaymentTransmissionItemTransfers);
+        foreach ($groupedPaymentTransmissionItemsByTransferId as $paymentTransmissionItemTransfers) {
+            $this->executePayoutTransmissionTransaction($paymentTransmissionItemTransfers, $transferEndpointUrl);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+     *
+     * @return void
+     */
+    protected function savePaymentTransmissionResponse(
+        PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+    ): void {
+        $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayoutReversal($paymentTransmissionResponseTransfer);
     }
 
     /**
@@ -58,5 +86,20 @@ class MerchantPayoutReverse extends AbstractMerchantTransfer implements Merchant
     protected function calculatePayoutAmount(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): int
     {
         return $this->merchantPayoutCalculator->calculatePayoutAmount($itemTransfer, $orderTransfer) * -1;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer> $orderItemPaymentTransmissionItemTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer>>
+     */
+    protected function groupPaymentTransmissionItemsByTransferId(array $orderItemPaymentTransmissionItemTransfers): array
+    {
+        $groupedPaymentTransmissionItems = [];
+        foreach ($orderItemPaymentTransmissionItemTransfers as $paymentTransmissionItemTransfer) {
+            $groupedPaymentTransmissionItems[$paymentTransmissionItemTransfer->getTransferIdOrFail()][] = $paymentTransmissionItemTransfer;
+        }
+
+        return $groupedPaymentTransmissionItems;
     }
 }

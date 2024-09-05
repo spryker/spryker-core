@@ -91,11 +91,11 @@ class SalesPaymentMerchantHelper extends AbstractHelper
     /**
      * @param string $merchantReference
      * @param string $orderReference
-     * @param array $salesOrderItems
+     * @param list<string> $salesPaymentPayoutReferences
      *
      * @return void
      */
-    public function assertSalesPaymentMerchantPayoutEntity(string $merchantReference, string $orderReference, array $salesOrderItems): void
+    public function assertSalesPaymentMerchantPayoutEntity(string $merchantReference, string $orderReference, array $salesPaymentPayoutReferences): void
     {
         $salesPaymentMerchantPayoutEntity = SpySalesPaymentMerchantPayoutQuery::create()
             ->filterByMerchantReference($merchantReference)
@@ -106,19 +106,19 @@ class SalesPaymentMerchantHelper extends AbstractHelper
 
         $itemReferences = explode(',', $salesPaymentMerchantPayoutEntity->getItemReferences());
 
-        foreach ($salesOrderItems as $salesOrderItem) {
-            $this->assertContains($salesOrderItem->getOrderItemReference(), $itemReferences);
+        foreach ($salesPaymentPayoutReferences as $salesPaymentPayoutReference) {
+            $this->assertContains($salesPaymentPayoutReference, $itemReferences);
         }
     }
 
     /**
      * @param string $merchantReference
      * @param string $orderReference
-     * @param array $salesOrderItems
+     * @param list<string> $salesPaymentMerchantRefundReferences
      *
      * @return void
      */
-    public function assertSalesPaymentMerchantRefundEntity(string $merchantReference, string $orderReference, array $salesOrderItems): void
+    public function assertSalesPaymentMerchantRefundEntity(string $merchantReference, string $orderReference, array $salesPaymentMerchantRefundReferences): void
     {
         $salesPaymentMerchantRefundEntity = SpySalesPaymentMerchantPayoutReversalQuery::create()
             ->filterByMerchantReference($merchantReference)
@@ -129,8 +129,8 @@ class SalesPaymentMerchantHelper extends AbstractHelper
 
         $itemReferences = explode(',', $salesPaymentMerchantRefundEntity->getItemReferences());
 
-        foreach ($salesOrderItems as $salesOrderItem) {
-            $this->assertContains($salesOrderItem->getOrderItemReference(), $itemReferences);
+        foreach ($salesPaymentMerchantRefundReferences as $salesPaymentMerchantRefundReference) {
+            $this->assertContains($salesPaymentMerchantRefundReference, $itemReferences);
         }
     }
 }

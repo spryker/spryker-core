@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesPaymentMerchant\Business\Merchant\Payout;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentTransmissionResponseTransfer;
 use Spryker\Zed\SalesPaymentMerchant\Business\Merchant\AbstractMerchantTransfer;
 
 class MerchantPayout extends AbstractMerchantTransfer implements MerchantPayoutInterface
@@ -26,25 +27,34 @@ class MerchantPayout extends AbstractMerchantTransfer implements MerchantPayoutI
             return;
         }
 
-        $orderItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
-
-        if (count($orderItemTransfers) === 0) {
+        $orderItemPaymentTransmissionItemTransfers = $this->getOrderItemsForTransfer($salesOrderItemTransfers, $orderTransfer);
+        if (count($orderItemPaymentTransmissionItemTransfers) === 0) {
             return;
         }
 
-        $orderExpenseTransfers = $this->getOrderExpensesForTransfer($orderTransfer);
-        $transferRequestData = $this->createTransferRequestData($orderItemTransfers, $orderExpenseTransfers);
+        $this->executePayoutTransmissionTransaction($orderItemPaymentTransmissionItemTransfers, $transferEndpointUrl);
 
-        $paymentTransmissionResponseCollectionTransfer = $this->transferRequestSender->requestTransfer(
-            $transferRequestData,
-            $transferEndpointUrl,
-        );
-        /** @var \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer */
-        foreach ($paymentTransmissionResponseCollectionTransfer->getPaymentTransmissions() as $paymentTransmissionResponseTransfer) {
-            $paymentTransmissionResponseTransfer->setItemReferences($this->getItemReferences($paymentTransmissionResponseTransfer));
-
-            $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayout($paymentTransmissionResponseTransfer);
+        if (!$this->salesPaymentMerchantConfig->isOrderExpenseIncludedInPaymentProcess()) {
+            return;
         }
+
+        $orderExpensePaymentTransmissionItemTransfers = $this->orderExpenseReader->getOrderExpensesForTransfer($orderTransfer, $orderItemPaymentTransmissionItemTransfers);
+        if (count($orderExpensePaymentTransmissionItemTransfers) === 0) {
+            return;
+        }
+
+        $this->executePayoutTransmissionTransaction($orderExpensePaymentTransmissionItemTransfers, $transferEndpointUrl);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+     *
+     * @return void
+     */
+    protected function savePaymentTransmissionResponse(
+        PaymentTransmissionResponseTransfer $paymentTransmissionResponseTransfer
+    ): void {
+        $this->salesPaymentMerchantEntityManager->saveSalesPaymentMerchantPayout($paymentTransmissionResponseTransfer);
     }
 
     /**

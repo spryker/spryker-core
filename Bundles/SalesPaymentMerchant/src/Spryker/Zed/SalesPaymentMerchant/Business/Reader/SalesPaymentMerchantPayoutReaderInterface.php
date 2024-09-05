@@ -38,9 +38,20 @@ interface SalesPaymentMerchantPayoutReaderInterface
     /**
      * @param \Generated\Shared\Transfer\SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
      *
-     * @return array<string, array<string, string>>
+     * @return array<string, string>
      */
-    public function getSalesPaymentMerchantPayoutTransferItemReferencesMapIndexedByTransferId(
+    public function getSalesPaymentMerchantPayoutTransferTransferIdMapIndexedByItemReference(
         SalesPaymentMerchantPayoutCollectionTransfer $salesPaymentMerchantPayoutCollectionTransfer
+    ): array;
+
+    /**
+     * @param string $orderReference
+     * @param list<string> $itemReferences
+     *
+     * @return array<string, \Generated\Shared\Transfer\SalesPaymentMerchantPayoutTransfer>
+     */
+    public function getSalesPaymentMerchantPayoutMapByItemReferences(
+        string $orderReference,
+        array $itemReferences
     ): array;
 }

@@ -8,16 +8,21 @@
 namespace SprykerTest\Shared\Sales\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -236,6 +241,29 @@ class SalesDataHelper extends Module
     }
 
     /**
+     * @param array<mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function haveSalesExpense(array $seedData = []): ExpenseTransfer
+    {
+        $expenseTransfer = (new ExpenseBuilder($seedData))->build();
+
+        $salesExpenseEntity = SpySalesExpenseQuery::create()
+            ->filterByUuid($expenseTransfer->getUuid())
+            ->findOneOrCreate();
+
+        $salesExpenseEntity = $this->createSalesExpenseMapper()->mapExpenseTransferToSalesExpenseEntity($expenseTransfer, $salesExpenseEntity);
+        $salesExpenseEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesExpenseEntity): void {
+            $salesExpenseEntity->delete();
+        });
+
+        return $this->createSalesExpenseMapper()->mapExpenseEntityToSalesExpenseTransfer($expenseTransfer, $salesExpenseEntity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -270,5 +298,13 @@ class SalesDataHelper extends Module
         $this->createSalesOrderAddressQuery()
             ->findByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress())
             ->delete();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface
+     */
+    protected function createSalesExpenseMapper(): SalesExpenseMapperInterface
+    {
+        return new SalesExpenseMapper();
     }
 }

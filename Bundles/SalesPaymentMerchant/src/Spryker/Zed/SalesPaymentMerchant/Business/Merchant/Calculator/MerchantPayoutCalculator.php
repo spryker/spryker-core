@@ -14,11 +14,6 @@ use Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\Me
 class MerchantPayoutCalculator implements MerchantPayoutCalculatorInterface
 {
     /**
-     * @var string
-     */
-    protected const FIELD_NAME_AMOUNT = 'amount';
-
-    /**
      * @var \Spryker\Zed\SalesPaymentMerchantExtension\Communication\Dependency\Plugin\MerchantPayoutCalculatorPluginInterface|null
      */
     protected ?MerchantPayoutCalculatorPluginInterface $amountCalculatorPlugin;
@@ -53,25 +48,5 @@ class MerchantPayoutCalculator implements MerchantPayoutCalculatorInterface
         }
 
         return $this->amountCalculatorFallback->calculatePayoutAmount($itemTransfer, $orderTransfer);
-    }
-
-    /**
-     * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
-     * @param list<\Generated\Shared\Transfer\OrderExpenseTransfer> $orderExpenseTransfers
-     *
-     * @return int
-     */
-    public function calculatePayoutAmountForOrder(array $orderItemTransfers, array $orderExpenseTransfers): int
-    {
-        $orderAmountTotal = 0;
-        foreach ($orderItemTransfers as $orderItemTransfer) {
-            $orderAmountTotal += $orderItemTransfer->getAmount() ?? 0;
-        }
-
-        foreach ($orderExpenseTransfers as $orderExpenseTransfer) {
-            $orderAmountTotal += $orderExpenseTransfer->getAmount() ?? 0;
-        }
-
-        return $orderAmountTotal;
     }
 }

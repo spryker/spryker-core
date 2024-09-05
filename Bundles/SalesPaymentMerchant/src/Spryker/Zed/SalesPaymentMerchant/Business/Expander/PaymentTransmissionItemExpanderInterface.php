@@ -9,16 +9,16 @@ namespace Spryker\Zed\SalesPaymentMerchant\Business\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OrderItemExpanderInterface
+interface PaymentTransmissionItemExpanderInterface
 {
     /**
-     * @param list<\Generated\Shared\Transfer\OrderItemTransfer> $orderItemTransfers
+     * @param list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer> $paymentTransmissionItemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return list<\Generated\Shared\Transfer\OrderItemTransfer>
+     * @return list<\Generated\Shared\Transfer\PaymentTransmissionItemTransfer>
      */
-    public function expandOrderItemsWithTransferId(
-        array $orderItemTransfers,
+    public function expandPaymentTransmissionItemsWithTransferId(
+        array $paymentTransmissionItemTransfers,
         OrderTransfer $orderTransfer
     ): array;
 }

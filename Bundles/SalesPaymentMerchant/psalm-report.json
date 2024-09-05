@@ -1,6 +1,93 @@
 {
-    "error": [],
-    "warning": [],
-    "deprecation": [],
-    "count": 0
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SalesPaymentMerchant\\Persistence\\SalesPaymentMerchantRepository::applySorting expects ArrayObject<array-key, Generated\\Shared\\Transfer\\SortTransfer>, but ArrayObject<Generated\\Shared\\Transfer\\SortTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Persistence/SalesPaymentMerchantRepository.php",
+            "snippet": "        $salesPaymentMerchantPayoutReversalQuery = $this->applySorting($salesPaymentMerchantPayoutReversalQuery, $sortTransfers);",
+            "selected_text": "$sortTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SalesPaymentMerchant\\Business\\Reader\\SalesPaymentMerchantPayoutReaderInterface::getSalesPaymentMerchantPayoutCollectionByMerchantAndOrderReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Merchant/Payout/Checker/PaymentMethodPayoutChecker.php",
+            "snippet": "            $salesOrderItemTransfer->getMerchantReference(),",
+            "selected_text": "$salesOrderItemTransfer->getMerchantReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SalesPaymentMerchant\\Business\\Reader\\SalesPaymentMerchantPayoutReversalReaderInterface::getSalesPaymentMerchantPayoutReversalCollectionByMerchantAndOrderReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Merchant/Refund/Checker/PaymentMethodPayoutReverseChecker.php",
+            "snippet": "            $salesOrderItemTransfer->getMerchantReference(),",
+            "selected_text": "$salesOrderItemTransfer->getMerchantReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $groupedPaymentTransmissionItems[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Merchant/Refund/MerchantPayoutReverse.php",
+            "snippet": "            $groupedPaymentTransmissionItems[$paymentTransmissionItemTransfer->getTransferId()][] = $paymentTransmissionItemTransfer;",
+            "selected_text": "$groupedPaymentTransmissionItems",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Reader/OrderRefundExpenseReader.php",
+            "snippet": "        return $reverseAmount * -1;",
+            "selected_text": "$reverseAmount",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "DeprecatedClass",
+            "message": "Class Generated\\Shared\\Transfer\\OrderItemTransfer is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Merchant/AbstractMerchantTransfer.php",
+            "snippet": "            $paymentTransmissionResponseTransfer->getOrderItems();",
+            "selected_text": "$paymentTransmissionResponseTransfer->getOrderItems()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentTransmissionResponseTransfer::getOrderItems has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesPaymentMerchant/src/Spryker/Zed/SalesPaymentMerchant/Business/Merchant/AbstractMerchantTransfer.php",
+            "snippet": "            $paymentTransmissionResponseTransfer->getOrderItems();",
+            "selected_text": "getOrderItems",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 7
 }
