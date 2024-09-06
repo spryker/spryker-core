@@ -194,9 +194,13 @@ class MerchantAppOnboarding implements MerchantAppOnboardingInterface
             $content = json_decode($content, true);
 
             $merchantAppOnboardingInitializationResponseTransfer
-                ->setUrl($content['url'])
-                ->setStrategy($content['strategy'])
+                ->setUrl($content['url'] ?? null)
+                ->setStrategy($content['strategy'] ?? null)
                 ->setContent($content['content'] ?? null);
+
+            if (isset($content['errors'])) {
+                $merchantAppOnboardingInitializationResponseTransfer->setErrors(array_map(fn (array $error) => $error['message'], $content['errors']));
+            }
 
             return $merchantAppOnboardingInitializationResponseTransfer;
         }

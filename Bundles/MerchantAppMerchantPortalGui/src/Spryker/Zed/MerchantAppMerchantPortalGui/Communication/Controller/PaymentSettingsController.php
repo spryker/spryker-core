@@ -163,6 +163,12 @@ class PaymentSettingsController extends AbstractController
 
         $merchantAppOnboardingInitializationResponseTransfer = $this->getFactory()->getMerchantAppFacade()->initializeMerchantAppOnboarding($merchantAppOnboardingInitializationRequestTransfer);
 
+        if ($merchantAppOnboardingInitializationResponseTransfer->getErrors()) {
+            array_map(fn (string $error) => $this->addErrorMessage($error), $merchantAppOnboardingInitializationResponseTransfer->getErrors());
+
+            return new RedirectResponse(static::CONTROLLER_URL_PATH);
+        }
+
         if ($merchantAppOnboardingInitializationResponseTransfer->getStrategy() === 'redirect') {
             return new RedirectResponse($merchantAppOnboardingInitializationResponseTransfer->getUrlOrFail());
         }
@@ -189,7 +195,12 @@ class PaymentSettingsController extends AbstractController
         }
 
         foreach ($merchantOnboardingContentTransfer->getLinks() as $linkTransfer) {
-            $url = str_replace('_merchantReference_', $merchantTransfer->getMerchantReferenceOrFail(), $linkTransfer->getUrlOrFail());
+            $url = str_replace(
+                ['_merchantReference_', '_locale_'],
+                [$merchantTransfer->getMerchantReferenceOrFail(), $this->getApplication()->get('locale')],
+                $linkTransfer->getUrlOrFail(),
+            );
+
             $linkTransfer->setUrl($url);
         }
 

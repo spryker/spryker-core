@@ -67,9 +67,9 @@ class KernelAppDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addKernelAppClient(Container $container): Container
     {
-        $container[static::CLIENT_KERNEL_APP] = function (Container $container): KernelAppClientInterface {
+        $container->set(static::CLIENT_KERNEL_APP, function (Container $container): KernelAppClientInterface {
             return $container->getLocator()->kernelApp()->client();
-        };
+        });
 
         return $container;
     }

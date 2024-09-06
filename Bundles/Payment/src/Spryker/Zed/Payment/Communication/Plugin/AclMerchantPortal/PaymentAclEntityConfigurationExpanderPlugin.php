@@ -54,6 +54,19 @@ class PaymentAclEntityConfigurationExpanderPlugin extends AbstractPlugin impleme
                 (new AclEntityMetadataTransfer())
                     ->setEntityName('Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType')
                     ->setDefaultGlobalOperationMask(static::OPERATION_MASK_READ),
+            )
+            ->addAclEntityMetadata(
+                'Orm\Zed\Payment\Persistence\SpyPaymentMethod',
+                (new AclEntityMetadataTransfer())
+                    ->setEntityName('Orm\Zed\Payment\Persistence\SpyPaymentMethod')
+                    ->setParent((new AclEntityParentMetadataTransfer())->setEntityName('Orm\Zed\Payment\Persistence\SpyPaymentProvider'))
+                    ->setDefaultGlobalOperationMask(static::OPERATION_MASK_READ),
+            )
+            ->addAclEntityMetadata(
+                'Orm\Zed\Payment\Persistence\SpyPaymentProvider',
+                (new AclEntityMetadataTransfer())
+                    ->setEntityName('Orm\Zed\Payment\Persistence\SpyPaymentProvider')
+                    ->setDefaultGlobalOperationMask(static::OPERATION_MASK_READ),
             );
 
         return $aclEntityMetadataConfigTransfer;

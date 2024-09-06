@@ -94,6 +94,7 @@
         <property name="strategy" type="string" description="Can be oneOf: content, redirect"/>
         <property name="content" type="string" description="Used when strategy is 'content'"/>
         <property name="url" type="string" description="Used when strategy is 'redirect'"/>
+        <property name="errors" type="array" singular="error" description="Used when contains errors"/>
     </transfer>
 
     <transfer name="MerchantUser">

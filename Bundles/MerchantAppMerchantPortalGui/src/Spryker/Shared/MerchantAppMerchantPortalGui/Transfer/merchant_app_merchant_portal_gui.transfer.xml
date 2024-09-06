@@ -21,6 +21,7 @@
         <property name="strategy" type="string"/>
         <property name="url" type="string"/>
         <property name="content" type="string"/>
+        <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="MerchantAppOnboardingDetailsCollection" strict="true">

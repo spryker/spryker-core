@@ -197,6 +197,50 @@ class MerchantAppFacadeInitializeOnboardingTest extends Unit
     /**
      * @return void
      */
+    public function testGivenMerchantAppOnboardingWithApiStrategyWhenIInitializeTheOnboardingProcessThenTheOnboardingStatusIsInitializedAndTheAppApiIsCalledAndTheResponseContainsErrors(): void
+    {
+        // Arrange
+        $appIdentifier = Uuid::uuid4()->toString();
+
+        $this->tester->haveAppConfigPersisted([AppConfigTransfer::APP_IDENTIFIER => $appIdentifier]);
+
+        $this->tester->haveMerchantAppOnboardingPersisted([
+            MerchantAppOnboardingTransfer::APP_IDENTIFIER => $appIdentifier,
+            MerchantAppOnboardingTransfer::TYPE => static::ONBOARDING_TYPE,
+            OnboardingTransfer::STRATEGY => MerchantAppOnboarding::STRATEGY_API,
+            OnboardingTransfer::URL => 'api-url',
+        ]);
+
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $merchantAppOnboardingInitializationRequestTransfer = new MerchantAppOnboardingInitializationRequestTransfer();
+        $merchantAppOnboardingInitializationRequestTransfer->setAppIdentifier($appIdentifier);
+        $merchantAppOnboardingInitializationRequestTransfer->setType(static::ONBOARDING_TYPE);
+        $merchantAppOnboardingInitializationRequestTransfer->setMerchant($merchantTransfer);
+
+        $acpHttpResponseTransfer = new AcpHttpResponseTransfer();
+        $acpHttpResponseTransfer->setContent(json_encode([
+            'errors' => [[
+                    'message' => 'error message',
+
+            ]],
+        ]));
+
+        $kernelAppFacadeMock = $this->tester->mockFacadeMethod('makeRequest', $acpHttpResponseTransfer, 'KernelApp');
+        $this->tester->setDependency(MerchantAppDependencyProvider::FACADE_KERNEL_APP, new MerchantAppToKernelAppFacadeBridge($kernelAppFacadeMock));
+
+        // Act
+        $merchantAppOnboardingInitializationResponseTransfer = $this->tester->getFacade()->initializeMerchantAppOnboarding($merchantAppOnboardingInitializationRequestTransfer);
+
+        // Assert
+        $this->assertNull($merchantAppOnboardingInitializationResponseTransfer->getStrategy());
+        $this->assertNull($merchantAppOnboardingInitializationResponseTransfer->getUrl());
+        $this->assertSame(['error message'], $merchantAppOnboardingInitializationResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
     public function testValidationThrowsExceptionWhenTheOnboardingTypeIsMissingInTheInitializationRequest(): void
     {
         // Arrange

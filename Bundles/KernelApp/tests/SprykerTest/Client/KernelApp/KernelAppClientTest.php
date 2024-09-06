@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Stream\StreamInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -110,5 +111,84 @@ class KernelAppClientTest extends Unit
 
         // Assert
         $this->assertInstanceOf(AcpHttpResponseTransfer::class, $acpHttpResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestIsExpandedWithHeaderFromExpanderPluginBeforeRequestReturnsError(): void
+    {
+        // Arrange
+        $kernelAppClient = new KernelAppClient();
+        $expectedXMas = Uuid::uuid4()->toString();
+
+        $this->tester->mockEnvironmentConfig(KernelAppConstants::TENANT_IDENTIFIER, 'tenant-identifier');
+
+        // Mock GuzzleClient to be able to introspect the RequestInterface and manipulate the returned response
+        $clientMock = Stub::make(Client::class, [
+            'send' => function (RequestInterface $request) use ($expectedXMas): ResponseInterface {
+                $this->assertTrue($request->hasHeader('x-mas'));
+                $xMas = $request->getHeader('x-mas')[0];
+                $this->assertSame($expectedXMas, $xMas);
+
+                throw new RequestException(
+                    'test',
+                    $request,
+                    Stub::makeEmpty(ResponseInterface::class, [
+                        'getBody' => function () {
+                            $streamMock = Stub::makeEmpty(StreamInterface::class, [
+                                'getContents' => function () {
+                                    return '{"errors": {"message" : "error"}}';
+                                },
+                            ]);
+
+                            return $streamMock;
+                        },
+                        'getStatusCode' => 422,
+                    ]),
+                );
+            },
+        ]);
+
+        $this->tester->setDependency(KernelAppDependencyProvider::CLIENT_HTTP, new KernelAppToGuzzleHttpClientAdapter($clientMock));
+        $this->tester->setDependency(KernelAppDependencyProvider::REQUEST_EXPANDER_PLUGINS, [
+            new class ($expectedXMas) implements RequestExpanderPluginInterface {
+                /**
+                 * @var string
+                 */
+                protected string $xMas;
+
+                /**
+                 * @param string $xMas
+                 */
+                public function __construct(string $xMas)
+                {
+                    $this->xMas = $xMas;
+                }
+
+                /**
+                 * @param \Psr\Http\Message\RequestInterface $acpHttpRequestTransfer
+                 *
+                 * @return \Psr\Http\Message\RequestInterface
+                 */
+                public function expandRequest(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpRequestTransfer
+                {
+                    return $acpHttpRequestTransfer->addHeader('x-mas', $this->xMas);
+                }
+            },
+        ]);
+
+        // Act
+        $acpHttpRequestTransfer = new AcpHttpRequestTransfer();
+        $acpHttpRequestTransfer
+            ->setMethod('POST')
+            ->setUri('www.example.com')
+            ->setBody('{"foo": "bar"}');
+
+        $acpHttpResponseTransfer = $kernelAppClient->request($acpHttpRequestTransfer);
+
+        // Assert
+        $this->assertInstanceOf(AcpHttpResponseTransfer::class, $acpHttpResponseTransfer);
+        $this->assertSame(422, $acpHttpResponseTransfer->getHttpStatusCode());
     }
 }

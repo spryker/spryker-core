@@ -10,6 +10,7 @@ namespace Spryker\Client\KernelApp\Dependency\External;
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 
 class KernelAppToGuzzleHttpClientAdapter implements KernelAppToHttpClientAdapterInterface
@@ -41,7 +42,16 @@ class KernelAppToGuzzleHttpClientAdapter implements KernelAppToHttpClientAdapter
             $acpHttpRequestTransfer->getBodyOrFail(),
         );
 
-        $response = $this->httpClient->send($request);
+        try {
+            $response = $this->httpClient->send($request);
+        } catch (RequestException $e) {
+            $acpHttpResponseTransfer = new AcpHttpResponseTransfer();
+            $acpHttpResponseTransfer
+                ->setHttpStatusCode($e->getResponse() ? $e->getResponse()->getStatusCode() : null)
+                ->setContent($e->getResponse() ? $e->getResponse()->getBody()->getContents() : null);
+
+            return $acpHttpResponseTransfer;
+        }
 
         $responseBody = $response->getBody()->getContents();
 
