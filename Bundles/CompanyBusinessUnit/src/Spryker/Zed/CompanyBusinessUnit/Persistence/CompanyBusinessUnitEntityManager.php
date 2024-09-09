@@ -115,7 +115,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
 
         return $this->getMapper()->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
             $companyBusinessUnitEntity,
-            new CompanyBusinessUnitTransfer(),
+            $companyBusinessUnitTransfer,
         );
     }
 

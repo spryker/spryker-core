@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester;
 
 /**
  * Auto-generated group annotations
@@ -43,7 +44,7 @@ class UpdateTest extends Unit
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester
      */
-    protected $tester;
+    protected CompanyBusinessUnitTester $tester;
 
     /**
      * @return void
@@ -124,5 +125,43 @@ class UpdateTest extends Unit
             static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE,
             $companyBusinessUnitResponseTransfer->getMessages()[0]->getText(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateSuccessfullyReturnsCompanyInfo(): void
+    {
+        // Arrange
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+
+        $headCompanyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $idCompany,
+        ]);
+
+        $regionalCompanyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $idCompany,
+            CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT => $headCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+        ]);
+
+        $localCompanyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::NAME => static::INITIAL_NAME,
+            CompanyBusinessUnitTransfer::FK_COMPANY => $idCompany,
+            CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT => $headCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
+        ]);
+
+        $localCompanyBusinessUnitTransfer->setName(static::FINAL_NAME);
+        $localCompanyBusinessUnitTransfer->setFkParentCompanyBusinessUnit($regionalCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail());
+
+        // Act
+        $companyBusinessUnitResponseTransfer = $this->tester
+            ->getFacade()
+            ->update($localCompanyBusinessUnitTransfer);
+        $responseCompany = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getCompany();
+
+        // Assert
+        $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessfulOrFail());
+        $this->tester->assertNotNull($responseCompany);
+        $this->tester->assertEquals($responseCompany->getIdCompany(), $idCompany);
     }
 }
