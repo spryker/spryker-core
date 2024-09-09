@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\IncrementalInstaller\Persistence;
 
+use Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerTransfer;
 use Orm\Zed\IncrementalInstaller\Persistence\SpyIncrementalInstaller;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -34,5 +35,22 @@ class IncrementalInstallerEntityManager extends AbstractEntityManager implements
             ->setInstaller($installerName)
             ->setBatch($batch)
             ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer $incremetalInstallerCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteIncrementalInstallerCollection(
+        IncrementalInstallerCollectionDeleteCriteriaTransfer $incremetalInstallerCollectionDeleteCriteriaTransfer
+    ): void {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $incrementalInstallerEntities */
+        $incrementalInstallerEntities = $this->getFactory()
+            ->createIncrementalInstallerPropelQuery()
+            ->filterByInstaller_In($incremetalInstallerCollectionDeleteCriteriaTransfer->getIncrementalInstallerNames())
+            ->find();
+
+        $incrementalInstallerEntities->delete();
     }
 }

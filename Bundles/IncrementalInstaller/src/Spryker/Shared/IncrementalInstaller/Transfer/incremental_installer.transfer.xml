@@ -30,4 +30,8 @@
     <transfer name="IncrementalInstallerCollection" strict="true">
         <property name="incrementalInstallers" type="IncrementalInstaller[]" singular="incrementalInstaller"/>
     </transfer>
+
+    <transfer name="IncrementalInstallerCollectionDeleteCriteria" strict="true">
+        <property name="incrementalInstallerNames" type="string[]" singular="incrementalInstallerName"/>
+    </transfer>
 </transfers>

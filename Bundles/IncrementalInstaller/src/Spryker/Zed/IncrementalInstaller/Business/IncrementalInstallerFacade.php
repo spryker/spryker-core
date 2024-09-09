@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\IncrementalInstaller\Business;
 
+use Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionRequestTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionResponseTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionTransfer;
@@ -50,5 +51,22 @@ class IncrementalInstallerFacade extends AbstractFacade implements IncrementalIn
         IncrementalInstallerCriteriaTransfer $incrementalInstallerCriteriaTransfer
     ): IncrementalInstallerCollectionTransfer {
         return $this->getRepository()->getIncrementalInstallerCollection($incrementalInstallerCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer $incrementalInstallerCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\IncrementalInstallerCollectionResponseTransfer
+     */
+    public function deleteIncrementalInstallerCollection(
+        IncrementalInstallerCollectionDeleteCriteriaTransfer $incrementalInstallerCollectionDeleteCriteriaTransfer
+    ): IncrementalInstallerCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createIncrementalInstallerDeleter()
+            ->deleteIncrementalInstallerCollection($incrementalInstallerCollectionDeleteCriteriaTransfer);
     }
 }

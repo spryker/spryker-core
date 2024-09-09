@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\IncrementalInstaller\Persistence;
 
+use Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerTransfer;
 
 interface IncrementalInstallerEntityManagerInterface
@@ -17,4 +18,13 @@ interface IncrementalInstallerEntityManagerInterface
      * @return void
      */
     public function createIncrementalInstaller(IncrementalInstallerTransfer $incrementalInstallerTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer $incremetalInstallerCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteIncrementalInstallerCollection(
+        IncrementalInstallerCollectionDeleteCriteriaTransfer $incremetalInstallerCollectionDeleteCriteriaTransfer
+    ): void;
 }

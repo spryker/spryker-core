@@ -28,4 +28,14 @@ interface IncrementalInstallerPluginInterface
      * @return void
      */
     public function execute(): void;
+
+    /**
+     * Specification:
+     * - Rolls back the incremental installer.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function rollback(): void;
 }

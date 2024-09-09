@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\IncrementalInstaller\Business;
 
+use Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionRequestTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionResponseTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionTransfer;
@@ -44,4 +45,18 @@ interface IncrementalInstallerFacadeInterface
     public function getIncrementalInstallerCollection(
         IncrementalInstallerCriteriaTransfer $incrementalInstallerCriteriaTransfer
     ): IncrementalInstallerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Deletes incremental installer entities from the database by provided criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer $incrementalInstallerCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\IncrementalInstallerCollectionResponseTransfer
+     */
+    public function deleteIncrementalInstallerCollection(
+        IncrementalInstallerCollectionDeleteCriteriaTransfer $incrementalInstallerCollectionDeleteCriteriaTransfer
+    ): IncrementalInstallerCollectionResponseTransfer;
 }

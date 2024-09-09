@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\IncrementalInstaller\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\IncrementalInstallerCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCollectionRequestTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerConditionsTransfer;
 use Generated\Shared\Transfer\IncrementalInstallerCriteriaTransfer;
@@ -97,5 +98,22 @@ class IncrementalInstallerFacadeTest extends Unit
 
         // Assert
         $this->tester->assertTrue($incrementalInstallerCollectionTransfer->getIncrementalInstallers()->count() > 0);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteIncrementalInstallerCollectionSuccessfullyDeletesRowsFromDatabase(): void
+    {
+        // Arrange
+        $this->tester->haveIncrementalInstaller(static::INSTALLER_NAME, static::BATCH_NUMBER);
+        $incrementalInstallerCollectionDeleteCriteriaTransfer = (new IncrementalInstallerCollectionDeleteCriteriaTransfer())
+            ->addIncrementalInstallerName(static::INSTALLER_NAME);
+
+        // Act
+        $incrementalInstallerCollectionTransfer = $this->incrementalInstallerFacade->deleteIncrementalInstallerCollection($incrementalInstallerCollectionDeleteCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertNull($this->tester->getInstallerByName(static::INSTALLER_NAME));
     }
 }

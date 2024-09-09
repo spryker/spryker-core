@@ -9,6 +9,8 @@ namespace Spryker\Zed\IncrementalInstaller\Business;
 
 use Spryker\Zed\IncrementalInstaller\Business\Creator\IncrementalInstallerCreator;
 use Spryker\Zed\IncrementalInstaller\Business\Creator\IncrementalInstallerCreatorInterface;
+use Spryker\Zed\IncrementalInstaller\Business\Deleter\IncrementalInstallerDeleter;
+use Spryker\Zed\IncrementalInstaller\Business\Deleter\IncrementalInstallerDeleterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,5 +26,13 @@ class IncrementalInstallerBusinessFactory extends AbstractBusinessFactory
     public function createIncrementalInstallerCreator(): IncrementalInstallerCreatorInterface
     {
         return new IncrementalInstallerCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\IncrementalInstaller\Business\Deleter\IncrementalInstallerDeleterInterface
+     */
+    public function createIncrementalInstallerDeleter(): IncrementalInstallerDeleterInterface
+    {
+        return new IncrementalInstallerDeleter($this->getEntityManager());
     }
 }
