@@ -379,10 +379,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
         MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
     ): SpyMerchantProductAbstractQuery {
-        $orderColumn = $merchantProductTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_PRODUCT_ABSTRACT_SKU;
         $orderDirection = $merchantProductTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
+        $orderColumn = $merchantProductTableCriteriaTransfer->getOrderBy();
+        if ($orderColumn === null) {
+            $merchantProductAbstractQuery->orderByIdMerchantProductAbstract($orderDirection);
 
-        if (!$orderColumn || !$orderDirection) {
             return $merchantProductAbstractQuery;
         }
 
