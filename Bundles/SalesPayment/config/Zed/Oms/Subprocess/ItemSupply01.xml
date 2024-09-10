@@ -20,7 +20,7 @@
         </transitions>
 
         <events>
-            <event name="merchant payout" onEnter="true"/>
+            <event name="merchant payout" manual="true"/>
         </events>
     </process>
 
