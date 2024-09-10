@@ -842,6 +842,7 @@
         "spryker/push-notification-web-push-php": "*",
         "spryker/push-notifications-backend-api": "*",
         "spryker/queue": "*",
+        "spryker/queue-extension": "*",
         "spryker/quick-order": "*",
         "spryker/quick-order-extension": "*",
         "spryker/quote": "*",

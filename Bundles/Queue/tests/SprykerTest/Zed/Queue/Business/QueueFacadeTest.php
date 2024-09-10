@@ -12,16 +12,21 @@ use Generated\Shared\Transfer\QueueDumpRequestTransfer;
 use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueClient;
-use Spryker\Shared\Event\EventConstants;
+use Spryker\Client\Queue\QueueDependencyProvider as SprykerQueueDependencyProvider;
+use Spryker\Shared\Queue\QueueConfig as SharedQueueConfig;
 use Spryker\Shared\Queue\QueueConstants;
-use Spryker\Zed\Event\Communication\Plugin\Queue\EventQueueMessageProcessorPlugin;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\Business\QueueBusinessFactory;
 use Spryker\Zed\Queue\Business\QueueFacade;
 use Spryker\Zed\Queue\Business\QueueFacadeInterface;
+use Spryker\Zed\Queue\Business\Worker\Worker;
+use Spryker\Zed\Queue\Business\Worker\WorkerInterface;
 use Spryker\Zed\Queue\QueueConfig;
 use Spryker\Zed\Queue\QueueDependencyProvider;
+use Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Auto-generated group annotations
@@ -62,6 +67,21 @@ class QueueFacadeTest extends Unit
     protected const NO_ACK_OPTION = 0;
 
     /**
+     * @var int
+     */
+    protected const MESSAGE_AMOUNT = 500;
+
+    /**
+     * @var int
+     */
+    protected const QUEUE_WORKER_MAX_THRESHOLD_SECONDS = 59;
+
+    /**
+     * @var int
+     */
+    protected const QUEUE_WORKER_INTERVAL_MILLISECONDS = 1000;
+
+    /**
      * @var \Spryker\Zed\Queue\Business\QueueFacadeInterface
      */
     protected $queueFacade;
@@ -76,11 +96,82 @@ class QueueFacadeTest extends Unit
      */
     protected function _before(): void
     {
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS, [
-            EventConstants::EVENT_QUEUE => new EventQueueMessageProcessorPlugin(),
-        ]);
+        $this->tester->setDependency(SprykerQueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+    }
 
-        $this->tester->setDependency(QueueDependencyProvider::CLIENT_QUEUE, $this->createQueueClientMock());
+    /**
+     * @return void
+     */
+    public function testQueueWorkerShouldStopIfQueuesDontHaveMessages(): void
+    {
+        // Arrange
+        $queueWorkerMock = $this->getQueueWorkerMock();
+
+        $queueWorkerMock->method('areQueuesEmpty')
+            ->willReturn(true);
+
+        // Assert
+        $queueWorkerMock->expects($this->exactly(1))
+            ->method('executeOperation');
+
+        // Act
+        $queueWorkerMock->start(
+            $this->tester->getCommandSignature(),
+            [SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY => true],
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueueWorkerShouldRestartIfQueuesHaveMessages(): void
+    {
+        // Arrange
+        $queueWorkerMock = $this->getQueueWorkerMock();
+
+        $queueWorkerMock->method('areQueuesEmpty')
+            ->willReturnOnConsecutiveCalls(false, true);
+
+        // Assert
+        $queueWorkerMock->expects($this->exactly(2))
+            ->method('executeOperation');
+
+        // Act
+        $queueWorkerMock->start(
+            $this->tester->getCommandSignature(),
+            [SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY => true],
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Business\Worker\WorkerInterface
+     */
+    protected function getQueueWorkerMock(): WorkerInterface
+    {
+        $queueBusinessFactory = new QueueBusinessFactory();
+
+        $queueWorkerMock = $this->getMockBuilder(Worker::class)
+            ->setConstructorArgs([
+                $queueBusinessFactory->createProcessManager(),
+                $queueBusinessFactory->getConfig(),
+                $queueBusinessFactory->createWorkerProgressbar(new ConsoleOutput()),
+                $queueBusinessFactory->getQueueClient(),
+                $queueBusinessFactory->getQueueNames(),
+                $queueBusinessFactory->createQueueWorkerSignalDispatcher(),
+                $queueBusinessFactory->getQueueMessageCheckerPlugins(),
+            ])
+            ->setMethods(['areQueuesEmpty', 'getPendingProcesses', 'executeOperation'])
+            ->getMock();
+
+        $queueWorkerMock
+            ->method('getPendingProcesses')
+            ->willReturn([]);
+
+        return $queueWorkerMock;
     }
 
     /**
@@ -88,6 +179,8 @@ class QueueFacadeTest extends Unit
      */
     public function testQueueDumpWithAcknowledge(): void
     {
+        $this->tester->setDependency(QueueDependencyProvider::CLIENT_QUEUE, $this->createQueueClientMock());
+
         $queueFacade = $this->getFacade(static::REGISTERED_QUEUE_NAME);
         $queueDumpRequestTransfer = $this->createQueueDumpRequestTransfer(static::REGISTERED_QUEUE_NAME);
         $queueDumpResponseTransfer = $queueFacade->queueDump($queueDumpRequestTransfer);
@@ -100,6 +193,8 @@ class QueueFacadeTest extends Unit
      */
     public function testQueueDumpWithNonExistingQueue(): void
     {
+        $this->tester->setDependency(QueueDependencyProvider::CLIENT_QUEUE, $this->createQueueClientMock());
+
         $queueFacade = $this->getFacade(static::UNREGISTERED_QUEUE_NAME);
         $queueDumpRequestTransfer = $this->createQueueDumpRequestTransfer(static::UNREGISTERED_QUEUE_NAME);
 
@@ -124,24 +219,40 @@ class QueueFacadeTest extends Unit
     }
 
     /**
-     * @param string $queueName
+     * @param string|null $queueName
      *
      * @return \Spryker\Zed\Queue\Business\QueueFacadeInterface
      */
-    protected function getFacade(string $queueName): QueueFacadeInterface
+    protected function getFacade($queueName = null): QueueFacadeInterface
     {
-        $configMock = $this->getMockBuilder(QueueConfig::class)->getMock();
-        $configMock
-            ->method('getQueueReceiverOption')
-            ->willReturn($this->getQueueReceiverOptions($queueName));
+        $queueConfigMock = $this->getMockBuilder(QueueConfig::class)->getMock();
 
-        $factory = new QueueBusinessFactory();
-        $factory->setConfig($configMock);
+        if ($queueName) {
+            $queueConfigMock
+                ->method('getQueueReceiverOption')
+                ->willReturn($this->getQueueReceiverOptions($queueName));
+        }
 
-        $facade = new QueueFacade();
-        $facade->setFactory($factory);
+        $queueConfigMock
+            ->method('getWorkerMessageCheckOption')
+            ->willReturn($this->tester->getQueueReceiverOptions());
+        $queueConfigMock
+            ->method('getQueueWorkerMaxThreshold')
+            ->willReturn(static::QUEUE_WORKER_MAX_THRESHOLD_SECONDS);
+        $queueConfigMock
+            ->method('getQueueWorkerInterval')
+            ->willReturn(static::QUEUE_WORKER_INTERVAL_MILLISECONDS);
+        $queueConfigMock
+            ->method('getQueueServerId')
+            ->willReturn($this->tester->getServerName());
 
-        return $facade;
+        $queueBusinessFactory = new QueueBusinessFactory();
+        $queueBusinessFactory->setConfig($queueConfigMock);
+
+        $queueFacade = new QueueFacade();
+        $queueFacade->setFactory($queueBusinessFactory);
+
+        return $queueFacade;
     }
 
     /**
@@ -193,5 +304,21 @@ class QueueFacadeTest extends Unit
         $queueOptionTransfer->setNoWait(false);
 
         return $queueOptionTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setQueueMessageCheckerPluginDependency(): void
+    {
+        $queueCheckerPluginInterfaceMock = $this
+            ->getMockBuilder(QueueMessageCheckerPluginInterface::class)
+            ->getMock();
+
+        $queueCheckerPluginInterfaceMock
+            ->method('isApplicable')
+            ->willReturn(true);
+
+        $this->tester->setDependency(QueueDependencyProvider::PLUGINS_QUEUE_MESSAGE_CHECKER, [$queueCheckerPluginInterfaceMock]);
     }
 }

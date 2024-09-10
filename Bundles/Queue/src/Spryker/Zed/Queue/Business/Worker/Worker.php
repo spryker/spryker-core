@@ -79,12 +79,18 @@ class Worker implements WorkerInterface
     protected $signalDispatcher;
 
     /**
+     * @var array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface>
+     */
+    protected $queueMessageCheckerPlugins;
+
+    /**
      * @param \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface $processManager
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
      * @param \Spryker\Zed\Queue\Business\Worker\WorkerProgressBarInterface $workerProgressBar
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
-     * @param array $queueNames
+     * @param array<string> $queueNames
      * @param \Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface $signalDispatcher
+     * @param array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface> $queueMessageCheckerPlugins
      */
     public function __construct(
         ProcessManagerInterface $processManager,
@@ -92,7 +98,8 @@ class Worker implements WorkerInterface
         WorkerProgressBarInterface $workerProgressBar,
         QueueClientInterface $queueClient,
         array $queueNames,
-        SignalDispatcherInterface $signalDispatcher
+        SignalDispatcherInterface $signalDispatcher,
+        array $queueMessageCheckerPlugins
     ) {
         $this->processManager = $processManager;
         $this->workerProgressBar = $workerProgressBar;
@@ -101,6 +108,7 @@ class Worker implements WorkerInterface
         $this->queueNames = $queueNames;
         $this->signalDispatcher = $signalDispatcher;
         $this->signalDispatcher->dispatch($this->queueConfig->getSignalsForGracefulWorkerShutdown());
+        $this->queueMessageCheckerPlugins = $queueMessageCheckerPlugins;
     }
 
     /**
@@ -125,9 +133,8 @@ class Worker implements WorkerInterface
         while ($totalPassedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
-            $isEmptyQueue = $this->isEmptyQueue($pendingProcesses, $options);
 
-            if ($isEmptyQueue) {
+            if ($this->isEmptyQueue($pendingProcesses, $options)) {
                 return;
             }
 
@@ -290,13 +297,7 @@ class Worker implements WorkerInterface
      */
     protected function getMaxQueueWorker(string $queueName): int
     {
-        $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
-
-        if (!$adapterConfiguration || !array_key_exists($queueName, $adapterConfiguration)) {
-            $adapterConfiguration = $this->getQueueAdapterDefaultConfiguration($queueName);
-        }
-
-        $queueAdapterConfiguration = $adapterConfiguration[$queueName];
+        $queueAdapterConfiguration = $this->getQueueConfiguration($queueName);
 
         if (!array_key_exists(SharedQueueConfig::CONFIG_MAX_WORKER_NUMBER, $queueAdapterConfiguration)) {
             return static::DEFAULT_MAX_QUEUE_WORKER;
@@ -339,7 +340,45 @@ class Worker implements WorkerInterface
      */
     protected function isEmptyQueue(array $pendingProcesses, array $options): bool
     {
-        return count($pendingProcesses) === 0 && $this->isWorkerStopsWhenEmptyQueueEnabled($options);
+        if (!$this->isWorkerStopsWhenEmptyQueueEnabled($options) || $pendingProcesses) {
+            return false;
+        }
+
+        return $this->areQueuesEmpty();
+    }
+
+    /**
+     * @param string $queueName
+     *
+     * @return array<string, mixed>
+     */
+    protected function getQueueConfiguration(string $queueName): array
+    {
+        $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
+
+        if (!$adapterConfiguration || !array_key_exists($queueName, $adapterConfiguration)) {
+            $adapterConfiguration = $this->getQueueAdapterDefaultConfiguration($queueName);
+        }
+
+        return $adapterConfiguration[$queueName];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function areQueuesEmpty(): bool
+    {
+        foreach ($this->queueMessageCheckerPlugins as $queueMessageCheckerPlugin) {
+            if (
+                $queueMessageCheckerPlugin->isApplicable(
+                    $this->getQueueConfiguration($this->queueNames[0])[SharedQueueConfig::CONFIG_QUEUE_ADAPTER],
+                )
+            ) {
+                return $queueMessageCheckerPlugin->areQueuesEmpty($this->queueNames);
+            }
+        }
+
+        return true;
     }
 
     /**

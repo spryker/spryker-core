@@ -32,6 +32,11 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_QUEUE_MESSAGE_CHECKER = 'PLUGINS_QUEUE_MESSAGE_CHECKER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -50,6 +55,8 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
             return new QueueToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         });
 
+        $container = $this->addQueueMessageCheckerPlugins($container);
+
         return $container;
     }
 
@@ -67,5 +74,27 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     protected function getProcessorMessagePlugins(Container $container)
     {
         return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface>
+     */
+    protected function getQueueMessageCheckerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueMessageCheckerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUEUE_MESSAGE_CHECKER, function () {
+            return $this->getQueueMessageCheckerPlugins();
+        });
+
+        return $container;
     }
 }

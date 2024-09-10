@@ -57,6 +57,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->getQueueNames(),
             $this->createQueueWorkerSignalDispatcher(),
+            $this->getQueueMessageCheckerPlugins(),
         );
     }
 
@@ -115,6 +116,14 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     public function getProcessorMessagePlugins()
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface>
+     */
+    public function getQueueMessageCheckerPlugins(): array
+    {
+        return $this->getProvidedDependency(QueueDependencyProvider::PLUGINS_QUEUE_MESSAGE_CHECKER);
     }
 
     /**
