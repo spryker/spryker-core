@@ -50,6 +50,11 @@ class ProductApprovalFacadeTest extends Unit
     protected const PRODUCT_ABSTRACT_3_SKU = 'abstractSku3';
 
     /**
+     * @var int
+     */
+    protected const FAKE_ID_PRODUCT = 123456;
+
+    /**
      * @var \SprykerTest\Zed\ProductApproval\ProductApprovalBusinessTester
      */
     protected $tester;
@@ -760,6 +765,46 @@ class ProductApprovalFacadeTest extends Unit
             $this->tester->getModuleConfig()->getDefaultProductApprovalStatus(),
             $productAbstractTransfer->getApprovalStatusOrFail(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductConcreteStorageCollectionFilterOutProductsWithWrongIdProductConcrete(): void
+    {
+        // Arrange
+        $productConcrete1Transfer = $this->tester->haveFullProduct(
+            [],
+            [
+                ProductAbstractTransfer::APPROVAL_STATUS => ProductApprovalConfig::STATUS_APPROVED,
+                ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_1_SKU,
+            ],
+        );
+        $productConcrete2Transfer = $this->tester->haveFullProduct(
+            [],
+            [
+                ProductAbstractTransfer::APPROVAL_STATUS => ProductApprovalConfig::STATUS_APPROVED,
+                ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_2_SKU,
+            ],
+        );
+        $productConcreteStorageTransfers = [
+            (new ProductConcreteStorageTransfer())
+                ->setIdProductConcrete($productConcrete1Transfer->getIdProductConcreteOrFail())
+                ->setIdProductAbstract($productConcrete1Transfer->getFkProductAbstractOrFail())
+                ->setSku($productConcrete1Transfer->getSkuOrFail()),
+            (new ProductConcreteStorageTransfer())
+                ->setIdProductConcrete(static::FAKE_ID_PRODUCT)
+                ->setIdProductAbstract($productConcrete2Transfer->getFkProductAbstractOrFail())
+                ->setSku($productConcrete2Transfer->getSkuOrFail()),
+        ];
+
+        // Act
+        $filteredProductConcreteStorageTransfers = $this->tester
+            ->getFacade()
+            ->filterProductConcreteStorageCollection($productConcreteStorageTransfers);
+
+        // Assert
+        $this->assertCount(1, $filteredProductConcreteStorageTransfers);
     }
 
     /**

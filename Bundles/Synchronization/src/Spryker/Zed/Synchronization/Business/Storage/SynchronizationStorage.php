@@ -25,6 +25,11 @@ class SynchronizationStorage implements SynchronizationInterface
     public const VALUE = 'value';
 
     /**
+     * @var string
+     */
+    protected const DESTINATION_TYPE = 'storage';
+
+    /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface
      */
     protected $storageClient;
@@ -173,5 +178,15 @@ class SynchronizationStorage implements SynchronizationInterface
         }
 
         $this->storageClient->deleteMulti($keysToDelete);
+    }
+
+    /**
+     * @param string $destinationType
+     *
+     * @return bool
+     */
+    public function isDestinationTypeApplicable(string $destinationType): bool
+    {
+        return $destinationType === static::DESTINATION_TYPE;
     }
 }

@@ -182,6 +182,10 @@ class AssetStorageWriter implements AssetStorageWriterInterface
      */
     protected function publishByAssetTransfer(AssetTransfer $assetTransfer): void
     {
+        if (!$assetTransfer->getIdAsset()) {
+            return;
+        }
+
         if ($assetTransfer->getAssetSlot() === null || $assetTransfer->getStores() === []) {
             $assetTransfer = $this->findAsset($assetTransfer);
         }

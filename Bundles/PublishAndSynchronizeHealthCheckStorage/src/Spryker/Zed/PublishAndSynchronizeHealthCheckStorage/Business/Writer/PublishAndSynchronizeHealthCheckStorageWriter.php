@@ -43,7 +43,9 @@ class PublishAndSynchronizeHealthCheckStorageWriter implements PublishAndSynchro
      */
     public function writePublishAndSynchronizeHealthCheckStorageCollectionByPublishAndSynchronizeHealthCheckEvents(array $eventTransfers): void
     {
-        $publishAndSynchronizeHealthCheckStorageIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $publishAndSynchronizeHealthCheckStorageIds = array_filter(
+            $this->eventBehaviorFacade->getEventTransferIds($eventTransfers),
+        );
 
         $this->writerPublishAndSynchronizeHealthCheckStorageCollection($publishAndSynchronizeHealthCheckStorageIds);
     }

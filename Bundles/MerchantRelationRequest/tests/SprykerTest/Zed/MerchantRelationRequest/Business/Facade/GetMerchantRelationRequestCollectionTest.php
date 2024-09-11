@@ -1103,13 +1103,13 @@ class GetMerchantRelationRequestCollectionTest extends Unit
     {
         // Arrange
         [$merchantRelationRequestTransfer1] = $this->tester->createTwoMerchantRelationRequestsToSameMerchant([], [], [
-            CompanyBusinessUnitTransfer::NAME => 'abc',
+            CompanyBusinessUnitTransfer::NAME => 'unique-business-unit-name',
         ]);
 
         $merchantRelationRequestConditionsTransfer = (new MerchantRelationRequestConditionsTransfer())
             ->addIdMerchant($merchantRelationRequestTransfer1->getMerchant()->getIdMerchant());
         $merchantRelationRequestSearchConditionsTransfer = (new MerchantRelationRequestSearchConditionsTransfer())
-            ->setOwnerCompanyBusinessUnitName('bc');
+            ->setOwnerCompanyBusinessUnitName('unique-business-unit');
 
         $merchantRelationRequestCriteriaTransfer = (new MerchantRelationRequestCriteriaTransfer())
             ->setMerchantRelationRequestConditions($merchantRelationRequestConditionsTransfer)
@@ -1122,7 +1122,7 @@ class GetMerchantRelationRequestCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $merchantRelationRequestTransfers);
-        $this->assertSame('abc', $merchantRelationRequestTransfers->offsetGet(0)->getOwnerCompanyBusinessUnitOrFail()->getName());
+        $this->assertSame('unique-business-unit-name', $merchantRelationRequestTransfers->offsetGet(0)->getOwnerCompanyBusinessUnitOrFail()->getName());
     }
 
     /**

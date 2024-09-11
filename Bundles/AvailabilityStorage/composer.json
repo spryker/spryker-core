@@ -21,13 +21,10 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/container": "*",
         "spryker/decimal-object": "*",
         "spryker/event": "*",
         "spryker/product-storage": "*",
         "spryker/propel": "*",
-        "spryker/publisher": "*",
-        "spryker/queue": "*",
         "spryker/testify": "*"
     },
     "suggest": {

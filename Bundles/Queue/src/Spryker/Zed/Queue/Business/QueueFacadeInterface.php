@@ -17,6 +17,7 @@ interface QueueFacadeInterface
     /**
      * Specification:
      *  - Starts receiving and processing messages task for one specific queue.
+     *  - Gets butch size from {@link QueueConfig::getQueueMessageChunkSizeMap()} by queue name, with fallback to processor plugin.
      *
      * @api
      *
@@ -30,6 +31,7 @@ interface QueueFacadeInterface
     /**
      * Specification:
      *  - Starts receiving and processing messages task for one specific queue.
+     *  - Gets butch size from {@link QueueConfig::getQueueMessageChunkSizeMap()} by queue name, with fallback to processor plugin.
      *  - Returns a QueueTaskResponseTransfer which is either successful or not, can be used for debugging purposes.
      *
      * @api

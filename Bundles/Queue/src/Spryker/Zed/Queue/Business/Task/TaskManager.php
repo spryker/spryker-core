@@ -10,7 +10,9 @@ namespace Spryker\Zed\Queue\Business\Task;
 use Generated\Shared\Transfer\QueueTaskResponseTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedConfig;
+use Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageCheckerInterface;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 class TaskManager implements TaskManagerInterface
@@ -26,6 +28,11 @@ class TaskManager implements TaskManagerInterface
     protected $queueConfig;
 
     /**
+     * @var \Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageCheckerInterface
+     */
+    protected TaskMemoryUsageCheckerInterface $taskMemoryUsageChecker;
+
+    /**
      * @var array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface>
      */
     protected $messageProcessorPlugins;
@@ -33,12 +40,18 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param \Spryker\Client\Queue\QueueClientInterface $client
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
+     * @param \Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageCheckerInterface $taskMemoryUsageChecker
      * @param array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface> $messageProcessorPlugins
      */
-    public function __construct(QueueClientInterface $client, QueueConfig $queueConfig, array $messageProcessorPlugins)
-    {
+    public function __construct(
+        QueueClientInterface $client,
+        QueueConfig $queueConfig,
+        TaskMemoryUsageCheckerInterface $taskMemoryUsageChecker,
+        array $messageProcessorPlugins
+    ) {
         $this->client = $client;
         $this->queueConfig = $queueConfig;
+        $this->taskMemoryUsageChecker = $taskMemoryUsageChecker;
         $this->messageProcessorPlugins = $messageProcessorPlugins;
     }
 
@@ -55,7 +68,9 @@ class TaskManager implements TaskManagerInterface
 
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
-        $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize(), $queueOptions);
+        $chunkSize = $this->getChunkSize($queueName, $processorPlugin);
+
+        $messages = $this->receiveMessages($queueName, $chunkSize, $queueOptions);
 
         if (!$messages) {
             $queueTaskResponseTransfer->setMessage(sprintf('No messages received from the queue "%s".', $queueName));
@@ -63,6 +78,7 @@ class TaskManager implements TaskManagerInterface
             return $queueTaskResponseTransfer;
         }
 
+        $this->taskMemoryUsageChecker->check($queueName, $messages, $chunkSize);
         $queueTaskResponseTransfer->setReceivedMessageCount(count($messages));
 
         $processedMessages = $processorPlugin->processMessages($messages);
@@ -115,7 +131,7 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueueReceiverOptions($queueName)
     {
@@ -159,5 +175,24 @@ class TaskManager implements TaskManagerInterface
                 $this->client->handleError($queueReceiveMessageTransfer);
             }
         }
+    }
+
+    /**
+     * @param string $queueName
+     * @param \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface $queueMessageProcessorPlugin
+     *
+     * @return int
+     */
+    protected function getChunkSize(
+        string $queueName,
+        QueueMessageProcessorPluginInterface $queueMessageProcessorPlugin
+    ): int {
+        $queueMessageChunkSizeMap = $this->queueConfig->getQueueMessageChunkSizeMap();
+
+        if (isset($queueMessageChunkSizeMap[$queueName])) {
+            return $queueMessageChunkSizeMap[$queueName];
+        }
+
+        return $queueMessageProcessorPlugin->getChunkSize();
     }
 }

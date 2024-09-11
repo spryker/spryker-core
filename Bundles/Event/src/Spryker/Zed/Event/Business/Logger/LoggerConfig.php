@@ -9,7 +9,6 @@ namespace Spryker\Zed\Event\Business\Logger;
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Zed\Event\EventConfig;
@@ -68,9 +67,7 @@ class LoggerConfig implements LoggerConfigInterface
             return new NullHandler();
         }
 
-        return new StreamHandler(
-            $eventLogPath,
-            Logger::INFO,
-        );
+        // @phpstan-ignore-next-line
+        return new StreamHandler($eventLogPath, $this->eventConfig->getEventLoggerMinLevel());
     }
 }

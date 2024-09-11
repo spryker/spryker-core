@@ -577,21 +577,21 @@ class GetServicePointCollectionTest extends Unit
         $this->assertSame($servicePointTransfer->getIdServicePoint(), $resultServicePointTransfer->getIdServicePoint());
         $this->assertCount(2, $resultServicePointTransfer->getServices());
 
-        /** @var \Generated\Shared\Transfer\ServiceTransfer $resultServiceTransfer */
-        $resultServiceTransfer = $resultServicePointTransfer->getServices()->offsetGet(0);
-        $this->assertSame($serviceTransfer->getIdService(), $resultServiceTransfer->getIdService());
-        $this->assertSame($serviceTransfer->getUuid(), $resultServiceTransfer->getUuid());
-        $this->assertSame($serviceTransfer->getKey(), $resultServiceTransfer->getKey());
-        $this->assertSame($serviceTransfer->getIsActive(), $resultServiceTransfer->getIsActive());
-        $this->assertSame($serviceTransfer->getServiceType()->toArray(), $resultServiceTransfer->getServiceType()->toArray());
+        $expectedServices = [$serviceTransfer, $secondServiceTransfer];
+        $actualServices = $resultServicePointTransfer->getServices()->getArrayCopy();
 
-        /** @var \Generated\Shared\Transfer\ServiceTransfer $resultSecondServiceTransfer */
-        $resultSecondServiceTransfer = $resultServicePointTransfer->getServices()->offsetGet(1);
-        $this->assertSame($secondServiceTransfer->getIdService(), $resultSecondServiceTransfer->getIdService());
-        $this->assertSame($secondServiceTransfer->getUuid(), $resultSecondServiceTransfer->getUuid());
-        $this->assertSame($secondServiceTransfer->getKey(), $resultSecondServiceTransfer->getKey());
-        $this->assertSame($secondServiceTransfer->getIsActive(), $resultSecondServiceTransfer->getIsActive());
-        $this->assertSame($secondServiceTransfer->getServiceType()->toArray(), $resultSecondServiceTransfer->getServiceType()->toArray());
+        usort($expectedServices, fn ($a, $b) => $a->getIdService() <=> $b->getIdService());
+        usort($actualServices, fn ($a, $b) => $a->getIdService() <=> $b->getIdService());
+
+        foreach ($expectedServices as $index => $expectedServiceTransfer) {
+            $actualServiceTransfer = $actualServices[$index];
+
+            $this->assertSame($expectedServiceTransfer->getIdService(), $actualServiceTransfer->getIdService());
+            $this->assertSame($expectedServiceTransfer->getUuid(), $actualServiceTransfer->getUuid());
+            $this->assertSame($expectedServiceTransfer->getKey(), $actualServiceTransfer->getKey());
+            $this->assertSame($expectedServiceTransfer->getIsActive(), $actualServiceTransfer->getIsActive());
+            $this->assertSame($expectedServiceTransfer->getServiceType()->toArray(), $actualServiceTransfer->getServiceType()->toArray());
+        }
 
         /** @var \Generated\Shared\Transfer\ServicePointTransfer $resultSecondServicePointTransfer */
         $resultSecondServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->offsetGet(1);

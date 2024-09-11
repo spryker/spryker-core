@@ -51,4 +51,14 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="SynchronizationMessage" strict="true">
+        <property name="data" type="array" singular="data"/>
+        <property name="fallbackQueueMessage" type="QueueSendMessage"/>
+        <property name="fallbackQueueName" type="string"/>
+        <property name="syncDestinationType" type="string"/>
+        <property name="operationType" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="resource" type="string"/>
+    </transfer>
+
 </transfers>

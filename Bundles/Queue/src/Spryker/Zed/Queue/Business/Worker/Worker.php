@@ -10,6 +10,7 @@ namespace Spryker\Zed\Queue\Business\Worker;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedQueueConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
+use Spryker\Zed\Queue\Business\Reader\QueueConfigReaderInterface;
 use Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
@@ -79,6 +80,11 @@ class Worker implements WorkerInterface
     protected $signalDispatcher;
 
     /**
+     * @var \Spryker\Zed\Queue\Business\Reader\QueueConfigReaderInterface
+     */
+    protected QueueConfigReaderInterface $queueConfigReader;
+
+    /**
      * @var array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface>
      */
     protected $queueMessageCheckerPlugins;
@@ -90,6 +96,7 @@ class Worker implements WorkerInterface
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param array<string> $queueNames
      * @param \Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface $signalDispatcher
+     * @param \Spryker\Zed\Queue\Business\Reader\QueueConfigReaderInterface $queueConfigReader
      * @param array<\Spryker\Zed\QueueExtension\Dependency\Plugin\QueueMessageCheckerPluginInterface> $queueMessageCheckerPlugins
      */
     public function __construct(
@@ -99,6 +106,7 @@ class Worker implements WorkerInterface
         QueueClientInterface $queueClient,
         array $queueNames,
         SignalDispatcherInterface $signalDispatcher,
+        QueueConfigReaderInterface $queueConfigReader,
         array $queueMessageCheckerPlugins
     ) {
         $this->processManager = $processManager;
@@ -107,6 +115,7 @@ class Worker implements WorkerInterface
         $this->queueClient = $queueClient;
         $this->queueNames = $queueNames;
         $this->signalDispatcher = $signalDispatcher;
+        $this->queueConfigReader = $queueConfigReader;
         $this->signalDispatcher->dispatch($this->queueConfig->getSignalsForGracefulWorkerShutdown());
         $this->queueMessageCheckerPlugins = $queueMessageCheckerPlugins;
     }
@@ -269,7 +278,7 @@ class Worker implements WorkerInterface
     protected function startProcesses(string $command, string $queue): array
     {
         $busyProcessNumber = $this->processManager->getBusyProcessNumber($queue);
-        $numberOfWorkers = $this->getMaxQueueWorker($queue) - $busyProcessNumber;
+        $numberOfWorkers = $this->queueConfigReader->getMaxQueueWorkerByQueueName($queue) - $busyProcessNumber;
 
         $processes = [];
         $message = $this->queueClient->receiveMessage($queue, $this->queueConfig->getWorkerMessageCheckOption() ?: []);
@@ -288,22 +297,6 @@ class Worker implements WorkerInterface
             static::PROCESS_NEW => $numberOfWorkers,
             static::PROCESSES_INSTANCES => $processes,
         ];
-    }
-
-    /**
-     * @param string $queueName
-     *
-     * @return int
-     */
-    protected function getMaxQueueWorker(string $queueName): int
-    {
-        $queueAdapterConfiguration = $this->getQueueConfiguration($queueName);
-
-        if (!array_key_exists(SharedQueueConfig::CONFIG_MAX_WORKER_NUMBER, $queueAdapterConfiguration)) {
-            return static::DEFAULT_MAX_QUEUE_WORKER;
-        }
-
-        return $queueAdapterConfiguration[SharedQueueConfig::CONFIG_MAX_WORKER_NUMBER];
     }
 
     /**

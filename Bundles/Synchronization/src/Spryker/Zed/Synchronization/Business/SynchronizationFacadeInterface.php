@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Synchronization\Business;
 
+use Generated\Shared\Transfer\SynchronizationMessageTransfer;
+
 interface SynchronizationFacadeInterface
 {
     /**
@@ -135,4 +137,29 @@ interface SynchronizationFacadeInterface
      * @return array<string>
      */
     public function getAvailableResourceNames(): array;
+
+    /**
+     * Specification:
+     * - Adds a message to buffer storage.
+     * - The message will be synchronized to storage/search when {@link flushSynchronizationMessagesFromBuffer()} is called.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SynchronizationMessageTransfer $synchronizationMessage
+     *
+     * @return void
+     */
+    public function addSynchronizationMessageToBuffer(SynchronizationMessageTransfer $synchronizationMessage): void;
+
+    /**
+     * Specification:
+     * - Syncs the buffered messages to storage/search.
+     * - Marks the messages as failed if error occurs.
+     * - Sends failed messages to queue as a fallback.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function flushSynchronizationMessagesFromBuffer(): void;
 }

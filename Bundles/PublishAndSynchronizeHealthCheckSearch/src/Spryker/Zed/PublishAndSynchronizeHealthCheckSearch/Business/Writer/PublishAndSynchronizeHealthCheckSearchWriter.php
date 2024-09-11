@@ -43,7 +43,9 @@ class PublishAndSynchronizeHealthCheckSearchWriter implements PublishAndSynchron
      */
     public function writePublishAndSynchronizeHealthCheckSearchCollectionByPublishAndSynchronizeHealthCheckEvents(array $eventTransfers): void
     {
-        $publishAndSynchronizeHealthCheckSearchIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $publishAndSynchronizeHealthCheckSearchIds = array_filter(
+            $this->eventBehaviorFacade->getEventTransferIds($eventTransfers),
+        );
 
         $this->writerPublishAndSynchronizeHealthCheckSearchCollection($publishAndSynchronizeHealthCheckSearchIds);
     }

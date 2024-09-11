@@ -47,6 +47,11 @@ class SynchronizationSearch implements SynchronizationInterface
     protected const STORE = 'store';
 
     /**
+     * @var string
+     */
+    protected const DESTINATION_TYPE = 'search';
+
+    /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface
      */
     protected $searchClient;
@@ -247,6 +252,16 @@ class SynchronizationSearch implements SynchronizationInterface
         }
 
         $this->searchClient->deleteBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * @param string $destinationType
+     *
+     * @return bool
+     */
+    public function isDestinationTypeApplicable(string $destinationType): bool
+    {
+        return $destinationType === static::DESTINATION_TYPE;
     }
 
     /**

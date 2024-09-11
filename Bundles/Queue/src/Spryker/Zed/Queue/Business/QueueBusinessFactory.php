@@ -8,9 +8,13 @@
 namespace Spryker\Zed\Queue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageChecker;
+use Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageCheckerInterface;
 use Spryker\Zed\Queue\Business\Process\ProcessManager;
 use Spryker\Zed\Queue\Business\QueueDumper\QueueDumper;
 use Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface;
+use Spryker\Zed\Queue\Business\Reader\QueueConfigReader;
+use Spryker\Zed\Queue\Business\Reader\QueueConfigReaderInterface;
 use Spryker\Zed\Queue\Business\SignalHandler\QueueWorkerSignalDispatcher;
 use Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface;
 use Spryker\Zed\Queue\Business\Task\TaskManager;
@@ -39,6 +43,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
         return new TaskManager(
             $this->getQueueClient(),
             $this->getConfig(),
+            $this->createTaskMemoryUsageChecker(),
             $this->getProcessorMessagePlugins(),
         );
     }
@@ -57,6 +62,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->getQueueNames(),
             $this->createQueueWorkerSignalDispatcher(),
+            $this->createQueueConfigReader(),
             $this->getQueueMessageCheckerPlugins(),
         );
     }
@@ -95,7 +101,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getQueueNames()
     {
@@ -156,6 +162,27 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->createProcessManager(),
             $this->getConfig(),
             $this->getQueueNames(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Business\Checker\TaskMemoryUsageCheckerInterface
+     */
+    public function createTaskMemoryUsageChecker(): TaskMemoryUsageCheckerInterface
+    {
+        return new TaskMemoryUsageChecker(
+            $this->getConfig(),
+            $this->createQueueConfigReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Queue\Business\Reader\QueueConfigReaderInterface
+     */
+    public function createQueueConfigReader(): QueueConfigReaderInterface
+    {
+        return new QueueConfigReader(
+            $this->getConfig(),
         );
     }
 }

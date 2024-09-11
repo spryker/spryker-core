@@ -126,6 +126,42 @@ interface QueueConstants
 
     /**
      * Specification:
+     * - Configuration of chunk size for queue message retrieval.
+     * - Example: $config[QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP] = ['queueName' => 100].
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const QUEUE_MESSAGE_CHUNK_SIZE_MAP = 'QUEUE:QUEUE_MESSAGE_CHUNK_SIZE_MAP';
+
+    /**
+     * Specification:
+     * - Recommended (optimal) memory of queue task chunk size for event message processing in KB.
+     * - Used to log a warning if the task chunk data size exceeds this limit.
+     * - Example: $config[QueueConstants::MAX_QUEUE_TASK_MEMORY_CHUNK_SIZE] = 1024 (1024 KB).
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MAX_QUEUE_TASK_MEMORY_CHUNK_SIZE = 'QUEUE:MAX_QUEUE_TASK_MEMORY_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Recommended (optimal) memory limit for the entire queue task process in MB.
+     * - Used to log a warning if the task exceeds this memory limit.
+     * - The memory value should be chosen based on the total scheduler memory and the count of workers.
+     * - Example: $config[QueueConstants::MAX_QUEUE_TASK_MEMORY_SIZE] = 1024 (1024 MB).
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MAX_QUEUE_TASK_MEMORY_SIZE = 'QUEUE:MAX_QUEUE_TASK_MEMORY_SIZE';
+
+    /**
+     * Specification:
      * - Whether wait limiting feature is enabled or not
      *
      * @api

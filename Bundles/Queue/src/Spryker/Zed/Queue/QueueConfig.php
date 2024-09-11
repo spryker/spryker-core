@@ -33,6 +33,28 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_THRESHOLD = 59;
 
     /**
+     * Specification:
+     * - The threshold for the memory usage of the queue task.
+     * - If the memory usage exceeds the threshold, the task throws a warning.
+     * - The threshold is defined as a fraction of the total available memory per worker.
+     *
+     * @api
+     *
+     * @var float
+     */
+    public const QUEUE_TASK_MEMORY_USAGE_THRESHOLD = 0.75;
+
+    /**
+     * Specification:
+     * - The default maximum number of workers that can be started for the given queue.
+     *
+     * @api
+     *
+     * @var int
+     */
+    public const DEFAULT_MAX_QUEUE_WORKER = 1;
+
+    /**
      * @uses \SIGINT
      *
      * @var int
@@ -61,9 +83,19 @@ class QueueConfig extends AbstractBundleConfig
     protected const SIGTERM = 15;
 
     /**
+     * @var int
+     */
+    protected const DEFAULT_QUEUE_TASK_MEMORY_CHUNK_SIZE = 1024;
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_QUEUE_TASK_MEMORY_SIZE = 1024;
+
+    /**
      * @api
      *
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getWorkerMessageCheckOption()
     {
@@ -81,7 +113,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      * @param string $queueName
      *
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function getQueueReceiverOption($queueName)
     {
@@ -234,6 +266,48 @@ class QueueConfig extends AbstractBundleConfig
     public function getSignalsForGracefulWorkerShutdown(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns a map that associates the queue name with the number of messages to be fetched from that queue in a single chunk.
+     *
+     * @api
+     *
+     * @return array<string, int>
+     */
+    public function getQueueMessageChunkSizeMap(): array
+    {
+        return $this->get(QueueConstants::QUEUE_MESSAGE_CHUNK_SIZE_MAP, []);
+    }
+
+    /**
+     * Specification:
+     * - Recommended (optimal) memory of queue task chunk size for event message processing in KB.
+     * - Used to log a warning if the task chunk data size exceeds this limit.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxQueueTaskMemoryChunkSize(): int
+    {
+        return $this->get(QueueConstants::MAX_QUEUE_TASK_MEMORY_CHUNK_SIZE, static::DEFAULT_QUEUE_TASK_MEMORY_CHUNK_SIZE);
+    }
+
+    /**
+     * Specification:
+     * - Recommended (optimal) memory limit for the entire queue task process in MB.
+     * - Used to log a warning if the task exceeds this memory limit.
+     * - The memory value should be chosen based on the total scheduler memory and the count of workers.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaxQueueTaskMemorySize(): int
+    {
+        return $this->get(QueueConstants::MAX_QUEUE_TASK_MEMORY_SIZE, static::DEFAULT_QUEUE_TASK_MEMORY_SIZE);
     }
 
     /**

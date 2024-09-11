@@ -54,7 +54,8 @@ class ProductConcreteStorageCollectionFilter implements ProductConcreteStorageCo
         $filteredProductConcreteStorageTransfers = [];
         foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
             $idProduct = $productConcreteStorageTransfer->getIdProductConcreteOrFail();
-            if ($approvalStatusesIndexedByIdProduct[$idProduct] === ProductApprovalConfig::STATUS_APPROVED) {
+            $approvalStatus = $approvalStatusesIndexedByIdProduct[$idProduct] ?? null;
+            if ($approvalStatus === ProductApprovalConfig::STATUS_APPROVED) {
                 $filteredProductConcreteStorageTransfers[] = $productConcreteStorageTransfer;
             }
         }

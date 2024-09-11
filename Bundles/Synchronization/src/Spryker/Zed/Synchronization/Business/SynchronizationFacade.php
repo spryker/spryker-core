@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Business;
 
+use Generated\Shared\Transfer\SynchronizationMessageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -147,5 +148,31 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function getAvailableResourceNames(): array
     {
         return $this->getFactory()->createExporterPluginResolver()->getAvailableResourceNames();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SynchronizationMessageTransfer $synchronizationMessage
+     *
+     * @return void
+     */
+    public function addSynchronizationMessageToBuffer(SynchronizationMessageTransfer $synchronizationMessage): void
+    {
+        $this->getFactory()->createInMemoryMessageSynchronizer()->addSynchronizationMessage($synchronizationMessage);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function flushSynchronizationMessagesFromBuffer(): void
+    {
+        $this->getFactory()->createInMemoryMessageSynchronizer()->flushSynchronizationMessages();
     }
 }

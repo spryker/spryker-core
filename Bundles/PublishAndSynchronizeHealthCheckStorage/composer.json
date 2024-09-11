@@ -16,12 +16,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/event": "*",
         "spryker/propel": "*",
-        "spryker/publish-and-synchronize-health-check-search": "*",
-        "spryker/publisher": "*",
-        "spryker/queue": "*",
-        "spryker/synchronization": "*",
         "spryker/testify": "*"
     },
     "autoload": {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event;
 
+use Monolog\Logger;
 use Spryker\Client\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
 use Spryker\Client\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Shared\Event\EventConstants;
@@ -33,6 +34,11 @@ class EventConfig extends AbstractBundleConfig
      * @var int
      */
     public const NO_RETRY = 0;
+
+    /**
+     * @var string|int
+     */
+    protected const DEFAULT_EVENT_LOGGER_MIN_LEVEL = Logger::INFO;
 
     /**
      * @api
@@ -115,6 +121,21 @@ class EventConfig extends AbstractBundleConfig
     public function isInstancePoolingAllowed(): bool
     {
         return $this->get(EventConstants::IS_INSTANCE_POOLING_ALLOWED, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the minimum logging level for the Event logger.
+     * - Only messages at this level and above will be logged.
+     * - Applicable for the EventLogger, which logs events and listeners triggered during the `queue:task:start` command and other event-related methods.
+     *
+     * @api
+     *
+     * @return string|int
+     */
+    public function getEventLoggerMinLevel(): string|int
+    {
+        return $this->getConfig()->get(EventConstants::EVENT_LOGGER_LEVEL, static::DEFAULT_EVENT_LOGGER_MIN_LEVEL);
     }
 
     /**

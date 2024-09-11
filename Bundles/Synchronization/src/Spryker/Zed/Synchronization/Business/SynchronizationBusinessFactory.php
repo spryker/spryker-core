@@ -19,6 +19,8 @@ use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface;
 use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
+use Spryker\Zed\Synchronization\Business\Synchronizer\InMemoryMessageSynchronizer;
+use Spryker\Zed\Synchronization\Business\Synchronizer\MessageSynchronizerInterface;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
 use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
@@ -29,6 +31,11 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
  */
 class SynchronizationBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @var \Spryker\Zed\Synchronization\Business\Synchronizer\MessageSynchronizerInterface|null
+     */
+    protected static $inMemoryMessageSynchronizer;
+
     /**
      * @return \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
      */
@@ -151,6 +158,32 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new QueueMessageCreator(
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Synchronizer\MessageSynchronizerInterface
+     */
+    public function createInMemoryMessageSynchronizer(): MessageSynchronizerInterface
+    {
+        if (!static::$inMemoryMessageSynchronizer) {
+            static::$inMemoryMessageSynchronizer = new InMemoryMessageSynchronizer(
+                $this->getQueueClient(),
+                $this->createSynchronizationWriters(),
+            );
+        }
+
+        return static::$inMemoryMessageSynchronizer;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface>
+     */
+    public function createSynchronizationWriters(): array
+    {
+        return [
+            $this->createStorageManager(),
+            $this->createSearchManager(),
+        ];
     }
 
     /**

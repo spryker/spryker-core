@@ -102,4 +102,14 @@ interface EventConstants
      * @var string
      */
     public const IS_INSTANCE_POOLING_ALLOWED = 'EVENT:IS_INSTANCE_POOLING_ALLOWED';
+
+    /**
+     * Specification:
+     * - Specifies the minimum logging level for the Event logger.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const EVENT_LOGGER_LEVEL = 'EVENT:EVENT_LOGGER_LEVEL';
 }

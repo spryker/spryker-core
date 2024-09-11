@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\AssetStorage\Communication\Plugin\Publisher\Asset;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\AssetStorage\Persistence\SpyAssetSlotStorageQuery;
 use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin;
 use SprykerTest\Zed\AssetStorage\AssetStorageCommunicationTester;
@@ -275,5 +276,26 @@ class AssetWritePublisherTest extends Unit
                 ],
             ],
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSkipPersistenceDueToMissingRequiredIdAsset(): void
+    {
+        // Arrange
+        $this->assetTransfer->setIdAsset(null);
+        $assetWritePublisherPlugin = new AssetWritePublisherPlugin();
+        $assetWritePublisherPlugin->setFacade($this->tester->getFacade());
+
+        $eventTransfer = (new EventEntityTransfer())
+            ->setId($this->assetTransfer->getIdAsset())
+            ->setAdditionalValues($this->assetTransfer->toArray());
+
+        // Act
+        $assetWritePublisherPlugin->handleBulk([$eventTransfer], AssetConfig::ASSET_PUBLISH);
+
+        // Assert
+        $this->assertSame(0, (new SpyAssetSlotStorageQuery())->filterByAssetSlot(AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT)->count());
     }
 }

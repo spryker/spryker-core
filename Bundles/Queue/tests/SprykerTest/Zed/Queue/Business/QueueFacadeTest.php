@@ -162,6 +162,7 @@ class QueueFacadeTest extends Unit
                 $queueBusinessFactory->getQueueClient(),
                 $queueBusinessFactory->getQueueNames(),
                 $queueBusinessFactory->createQueueWorkerSignalDispatcher(),
+                $queueBusinessFactory->createQueueConfigReader(),
                 $queueBusinessFactory->getQueueMessageCheckerPlugins(),
             ])
             ->setMethods(['areQueuesEmpty', 'getPendingProcesses', 'executeOperation'])
