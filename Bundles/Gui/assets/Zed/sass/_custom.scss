@@ -1908,3 +1908,25 @@ a.label {
         }
     }
 }
+
+.form-wrapper-clickable-affix:has(.select2),
+.form-wrapper-clickable-affix:has(.form-control) {
+    position: relative;
+
+    .form-control,
+    .select2-selection {
+        padding-right: 43px;
+    }
+
+    .form-wrapper-clickable-affix__trigger {
+        position: absolute;
+        right: 10px;
+        bottom: 6px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}

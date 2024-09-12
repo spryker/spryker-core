@@ -29,6 +29,12 @@
             </div>
         </div>
         <div class="col-lg-12">
+            {% for child in form %}
+                {% if child.vars.attr.template_path is defined and not child.isRendered %}
+                    {% include child.vars.attr.template_path with {'form': child} %}
+                {% endif %}
+            {% endfor %}
+
             {{ form_rest(form) }}
         </div>
         <div class="col-lg-12">

@@ -242,11 +242,8 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $imageSet = (new ProductImageSetStorageTransfer())
                 ->setName($imageLocalizedSet->getName());
             foreach ($imageLocalizedSet->getSpyProductImageSetToProductImages() as $imageSetToProductImage) {
-                $productImage = $imageSetToProductImage->getSpyProductImage();
-                $imageSet->addImage((new ProductImageStorageTransfer())
-                    ->setIdProductImage($productImage->getIdProductImage())
-                    ->setExternalUrlLarge($productImage->getExternalUrlLarge())
-                    ->setExternalUrlSmall($productImage->getExternalUrlSmall()));
+                $productImageEntity = $imageSetToProductImage->getSpyProductImage();
+                $imageSet->addImage((new ProductImageStorageTransfer())->fromArray($productImageEntity->toArray(), true));
             }
             $productImageSetStorageTransfers[] = $imageSet;
         }

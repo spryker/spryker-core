@@ -167,6 +167,14 @@ $(document).ready(function () {
         tags: true,
     });
 
+    const dropdownWithParent = $('.spryker-form-select2combobox[dropdown-parent]');
+
+    if (dropdownWithParent) {
+        dropdownWithParent.select2({
+            dropdownParent: dropdownWithParent.closest(dropdownWithParent.attr('dropdown-parent')),
+        });
+    }
+
     $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
         tags: false,
         preLoaded: false,

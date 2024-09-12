@@ -312,14 +312,12 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         foreach ($productImageSetEntityTransfers as $productImageSetEntityTransfer) {
             $imageSet = (new ProductImageSetStorageTransfer())
                 ->setName($productImageSetEntityTransfer->getName());
-            foreach ($productImageSetEntityTransfer->getSpyProductImageSetToProductImages() as $productImageSetToProductImageTransfer) {
-                $productImageTransfer = $productImageSetToProductImageTransfer->getSpyProductImage();
 
-                $imageSet->addImage((new ProductImageStorageTransfer())
-                    ->setIdProductImage($productImageTransfer->getIdProductImage())
-                    ->setExternalUrlLarge($productImageTransfer->getExternalUrlLarge())
-                    ->setExternalUrlSmall($productImageTransfer->getExternalUrlSmall()));
+            foreach ($productImageSetEntityTransfer->getSpyProductImageSetToProductImages() as $productImageSetToProductImageTransfer) {
+                $productImageEntity = $productImageSetToProductImageTransfer->getSpyProductImage();
+                $imageSet->addImage((new ProductImageStorageTransfer())->fromArray($productImageEntity->toArray(), true));
             }
+
             $productImageSetStorageTransfers[] = $imageSet;
         }
 

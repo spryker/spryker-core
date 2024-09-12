@@ -51,3 +51,12 @@
 .btn-remove {
     @include coloredButton(#ed5565, #ffffff);
 }
+
+.btn-naked {
+    background: none;
+    border: none;
+
+    &:is(:hover, :focus) {
+        opacity: 0.8;
+    }
+}
