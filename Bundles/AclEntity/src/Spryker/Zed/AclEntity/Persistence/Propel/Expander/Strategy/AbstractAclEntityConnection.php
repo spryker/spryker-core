@@ -15,12 +15,11 @@ use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
-use Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
 use Spryker\Zed\AclEntity\Persistence\Exception\RelationNotFoundException;
-use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface;
 
 abstract class AbstractAclEntityConnection
 {
@@ -30,9 +29,9 @@ abstract class AbstractAclEntityConnection
     protected const PATTERN_ACL_TABLE_JOIN_ALIAS = '/\w+' . AclEntityAliasGenerator::SUFFIX_TABLE . '\d?/';
 
     /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface
      */
-    protected $joinComparator;
+    protected JoinMatcherInterface $joinMatcher;
 
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface
@@ -45,16 +44,16 @@ abstract class AbstractAclEntityConnection
     protected $propelServiceContainer;
 
     /**
-     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface $joinComparator
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface $joinMatcher
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface $queryAliasGenerator
      * @param \Propel\Runtime\ServiceContainer\ServiceContainerInterface $propelServiceContainer
      */
     public function __construct(
-        JoinComparatorInterface $joinComparator,
+        JoinMatcherInterface $joinMatcher,
         AclEntityAliasGeneratorInterface $queryAliasGenerator,
         ServiceContainerInterface $propelServiceContainer
     ) {
-        $this->joinComparator = $joinComparator;
+        $this->joinMatcher = $joinMatcher;
         $this->queryAliasGenerator = $queryAliasGenerator;
         $this->propelServiceContainer = $propelServiceContainer;
     }
@@ -92,12 +91,12 @@ abstract class AbstractAclEntityConnection
         $parentTableName = $this->getTableMapByEntityClass(
             $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         )->getNameOrFail();
+
         if (!$this->hasTableNameOrAlias($query, $parentTableName)) {
             return $query->addJoinObject($aclEntityJoin, $parentRelationName);
         }
 
-        $queryJoin = $this->getQueryJoinByTableName($query, $parentTableName);
-        if ($this->joinComparator->areEqual($queryJoin, $aclEntityJoin)) {
+        if ($this->joinMatcher->matchByCompleteEquality($aclEntityJoin, $query->getJoins())) {
             return $query;
         }
 
@@ -151,25 +150,6 @@ abstract class AbstractAclEntityConnection
         }
 
         return $relationName;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     * @param string $tableName
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException
-     *
-     * @return \Propel\Runtime\ActiveQuery\Join
-     */
-    protected function getQueryJoinByTableName(ModelCriteria $query, string $tableName): Join
-    {
-        foreach ($query->getJoins() as $join) {
-            if ($join->getRightTableName() === $tableName) {
-                return $join;
-            }
-        }
-
-        throw new JoinNotFoundException($query, $tableName);
     }
 
     /**

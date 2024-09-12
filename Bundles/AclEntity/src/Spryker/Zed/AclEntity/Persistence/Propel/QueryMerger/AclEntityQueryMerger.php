@@ -12,8 +12,8 @@ use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\AclEntity\AclEntityServiceInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
-use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface;
 
 class AclEntityQueryMerger implements AclEntityQueryMergerInterface
 {
@@ -23,9 +23,9 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
     protected const JOIN_CONDITION_TEMPLATE = '%s.%s %s %s.%s';
 
     /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface
      */
-    protected $joinComparator;
+    protected JoinMatcherInterface $joinMatcher;
 
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface
@@ -38,16 +38,16 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
     protected $aclEntityService;
 
     /**
-     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface $joinComparator
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface $joinMatcher
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface $queryAliasGenerator
      * @param \Spryker\Service\AclEntity\AclEntityServiceInterface $aclEntityService
      */
     public function __construct(
-        JoinComparatorInterface $joinComparator,
+        JoinMatcherInterface $joinMatcher,
         AclEntityAliasGeneratorInterface $queryAliasGenerator,
         AclEntityServiceInterface $aclEntityService
     ) {
-        $this->joinComparator = $joinComparator;
+        $this->joinMatcher = $joinMatcher;
         $this->queryAliasGenerator = $queryAliasGenerator;
         $this->aclEntityService = $aclEntityService;
     }
@@ -78,14 +78,13 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
                 continue;
             }
 
-            $foundJoin = $this->searchJoinInJoinCollection($srcJoin, $dstQuery->getJoins());
-            if (!$foundJoin) {
+            if (!$this->joinMatcher->matchByRightTableName((string)$srcJoin->getRightTableName(), $dstQuery->getJoins())) {
                 $dstQuery->addJoinObject($srcJoin, $alias);
 
                 continue;
             }
 
-            if ($this->joinComparator->areEqual($foundJoin, $srcJoin)) {
+            if ($this->joinMatcher->matchByCompleteEquality($srcJoin, $dstQuery->getJoins())) {
                 continue;
             }
 
@@ -105,23 +104,6 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
         $dstQuery->putAll($srcQuery->getMap());
 
         return $dstQuery;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\Join $searchJoin
-     * @param array<\Propel\Runtime\ActiveQuery\Join> $joins
-     *
-     * @return \Propel\Runtime\ActiveQuery\Join|null
-     */
-    protected function searchJoinInJoinCollection(Join $searchJoin, array $joins): ?Join
-    {
-        foreach ($joins as $srcJoin) {
-            if ($srcJoin->getRightTableName() === $searchJoin->getRightTableName()) {
-                return $srcJoin;
-            }
-        }
-
-        return null;
     }
 
     /**

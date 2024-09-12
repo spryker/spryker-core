@@ -74,8 +74,17 @@ class LeftAclJoin extends AbstractAclJoin
     {
         $aclEntitySegmentJoin = $this->getAclEntitySegmentJoin($query);
 
-        $aclEntitySegmentPrimaryKeyColumn = $this->getPrimaryKeyColumn($aclEntitySegmentJoin->getRightTableName() ?: '');
-        $joinPrimaryKeyColumn = $this->getPrimaryKeyColumn($join->getRightTableName() ?: '');
+        $aclEntitySegmentPrimaryKeyColumn = sprintf(
+            '%s.%s',
+            $aclEntitySegmentJoin->getRightTableAliasOrName(),
+            $this->getPrimaryKeyColumn($aclEntitySegmentJoin->getRightTableName() ?: ''),
+        );
+
+        $joinPrimaryKeyColumn = sprintf(
+            '%s.%s',
+            $join->getRightTableAliasOrName(),
+            $this->getPrimaryKeyColumn($join->getRightTableName() ?: ''),
+        );
 
         /** @var literal-string $where */
         $where = sprintf(
@@ -83,6 +92,7 @@ class LeftAclJoin extends AbstractAclJoin
             $aclEntitySegmentPrimaryKeyColumn,
             $joinPrimaryKeyColumn,
         );
+
         $query->where($where);
 
         return $query;

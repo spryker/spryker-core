@@ -15,6 +15,7 @@ use Spryker\Service\AclEntity\AclEntityService;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
 use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
+use Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcher;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMerger;
 
 /**
@@ -49,7 +50,9 @@ class AclEntityQueryMergerTest extends Unit
         parent::_before();
 
         $this->merger = new AclEntityQueryMerger(
-            new JoinComparator(),
+            new JoinMatcher(
+                new JoinComparator(),
+            ),
             new AclEntityAliasGenerator(),
             new AclEntityService(),
         );
@@ -137,8 +140,9 @@ class AclEntityQueryMergerTest extends Unit
         $joinDstMock->method('getRightTableName')->willReturn('Table1');
         $joinDstMock->method('getRightTableAliasOrName')->willReturn('Table1');
         $joinDstMock->method('getRightColumn')->willReturn('table1.rightColumn');
-        $joinDstMock->method('getLeftColumn')->willReturn('leftColumn');
+        $joinDstMock->method('getLeftColumn')->willReturn('table2.leftColumn');
         $joinDstMock->method('getJoinType')->willReturn(Join::INNER_JOIN);
+
         $joinAliasDst = 'joinAliasDst';
 
         // Assert

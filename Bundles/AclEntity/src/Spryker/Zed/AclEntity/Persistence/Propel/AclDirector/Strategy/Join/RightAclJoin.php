@@ -74,7 +74,6 @@ class RightAclJoin extends AbstractAclJoin
     {
         /** @var \Propel\Runtime\Map\ColumnMap $queryPrimaryKey */
         $queryPrimaryKey = current($this->getPrimaryKeys($query->getTableMapOrFail()->getNameOrFail()));
-
         $aclEntitySegmentJoin = $this->getAclEntitySegmentJoin($query);
 
         /** @var string $rightTableName */
@@ -86,9 +85,10 @@ class RightAclJoin extends AbstractAclJoin
         /** @var literal-string $where */
         $where = sprintf(
             '%s IS NULL OR %s IS NOT NULL',
-            $queryPrimaryKey->getFullyQualifiedName(),
-            $aclEntitySegmentPrimaryKey->getFullyQualifiedName(),
+            $query->getModelAliasOrName() . '.' . $queryPrimaryKey->getName(),
+            $aclEntitySegmentJoin->getRightTableAliasOrName() . '.' . $aclEntitySegmentPrimaryKey->getName(),
         );
+
         $query->where($where);
 
         return $query;

@@ -12,6 +12,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
+use Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException;
 
 /**
  * @deprecated Use the combination of {@link \Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\ForeignKeyEntityConnection}
@@ -141,6 +142,8 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      * @param string $joinType
      *
+     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException
+     *
      * @return \Propel\Runtime\ActiveQuery\Join
      */
     protected function generateAclEntityJoin(
@@ -151,12 +154,20 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
         $query = $this->addJoinToPivotTable($query, $aclEntityMetadataTransfer, $joinType);
         $query = $this->addJoinToTargetTable($query, $aclEntityMetadataTransfer, $joinType);
 
-        return $this->getQueryJoinByTableName(
-            $query,
-            $this->getTableMapByEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
-            )->getNameOrFail(),
+        $tableName = $this->getTableMapByEntityClass(
+            $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
+        )->getNameOrFail();
+
+        $join = $this->joinMatcher->matchOneByRightTableName(
+            $tableName,
+            $query->getJoins(),
         );
+
+        if (!$join) {
+            throw new JoinNotFoundException($query, $tableName);
+        }
+
+        return $join;
     }
 
     /**

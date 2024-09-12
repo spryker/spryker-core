@@ -62,6 +62,8 @@ use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntityRuleMapper;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntitySegmentMapper;
+use Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcher;
+use Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProvider;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProvider;
@@ -153,7 +155,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createAclEntityQueryMerger(): AclEntityQueryMergerInterface
     {
         return new AclEntityQueryMerger(
-            $this->createJoinComparator(),
+            $this->createJoinMatcher(),
             $this->createQueryAliasGenerator(),
             $this->getAclEntityService(),
         );
@@ -173,6 +175,16 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createJoinComparator(): JoinComparatorInterface
     {
         return new JoinComparator();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Matcher\JoinMatcherInterface
+     */
+    public function createJoinMatcher(): JoinMatcherInterface
+    {
+        return new JoinMatcher(
+            $this->createJoinComparator(),
+        );
     }
 
     /**
@@ -462,7 +474,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createForeignKeyAclEntityConnection(): AclEntityConnectionInterface
     {
         return new ForeignKeyEntityConnection(
-            $this->createJoinComparator(),
+            $this->createJoinMatcher(),
             $this->createQueryAliasGenerator(),
             $this->getPropelServiceContainer(),
         );
@@ -474,7 +486,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createReferenceColumnAclEntityConnection(): AclEntityConnectionInterface
     {
         return new ReferenceColumnEntityConnection(
-            $this->createJoinComparator(),
+            $this->createJoinMatcher(),
             $this->createQueryAliasGenerator(),
             $this->getPropelServiceContainer(),
         );
@@ -488,7 +500,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createPivotTableAclEntityConnection(): AclEntityConnectionInterface
     {
         return new PivotTableEntityConnection(
-            $this->createJoinComparator(),
+            $this->createJoinMatcher(),
             $this->createQueryAliasGenerator(),
             $this->getPropelServiceContainer(),
         );

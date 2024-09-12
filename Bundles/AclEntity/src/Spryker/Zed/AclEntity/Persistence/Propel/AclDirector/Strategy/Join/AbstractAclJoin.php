@@ -284,6 +284,6 @@ abstract class AbstractAclJoin implements AclJoinInterface
             throw new TablePrimaryKeyNotFoundException($table);
         }
 
-        return $primaryKey->getFullyQualifiedName() ?: '';
+        return $primaryKey->getName() ?: '';
     }
 }
