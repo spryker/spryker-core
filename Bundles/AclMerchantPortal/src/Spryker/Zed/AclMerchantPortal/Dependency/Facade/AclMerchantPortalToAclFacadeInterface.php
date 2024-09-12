@@ -34,11 +34,33 @@ interface AclMerchantPortalToAclFacadeInterface
     public function createGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer): GroupTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\GroupTransfer $transfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer): GroupTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function createRole(RoleTransfer $roleTransfer): RoleTransfer;
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function getRoleByName(string $name): RoleTransfer;
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function existsRoleByName(string $name): bool;
 
     /**
      * @param \Generated\Shared\Transfer\GroupCriteriaTransfer $groupCriteriaTransfer
@@ -63,6 +85,13 @@ interface AclMerchantPortalToAclFacadeInterface
     public function getUserGroups(int $idUser): GroupsTransfer;
 
     /**
+     * @param int $idGroup
+     *
+     * @return \Generated\Shared\Transfer\RolesTransfer
+     */
+    public function getGroupRoles(int $idGroup): RolesTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AclUserHasGroupCollectionTransfer
@@ -70,4 +99,21 @@ interface AclMerchantPortalToAclFacadeInterface
     public function getAclUserHasGroupCollection(
         AclUserHasGroupCriteriaTransfer $aclUserHasGroupCriteriaTransfer
     ): AclUserHasGroupCollectionTransfer;
+
+    /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule(
+        int $idAclRole,
+        string $bundle,
+        string $controller,
+        string $action,
+        string $type
+    ): bool;
 }

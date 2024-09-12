@@ -103,4 +103,64 @@ class AclMerchantPortalToAclFacadeBridge implements AclMerchantPortalToAclFacade
     ): AclUserHasGroupCollectionTransfer {
         return $this->aclFacade->getAclUserHasGroupCollection($aclUserHasGroupCriteriaTransfer);
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function getRoleByName(string $name): RoleTransfer
+    {
+        return $this->aclFacade->getRoleByName($name);
+    }
+
+    /**
+     * @param int $idAclRole
+     * @param string $bundle
+     * @param string $controller
+     * @param string $action
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function existsRoleRule(
+        int $idAclRole,
+        string $bundle,
+        string $controller,
+        string $action,
+        string $type
+    ): bool {
+        return $this->aclFacade->existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GroupTransfer $transfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer): GroupTransfer
+    {
+        return $this->aclFacade->updateGroup($transfer, $rolesTransfer);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function existsRoleByName(string $name): bool
+    {
+        return $this->aclFacade->existsRoleByName($name);
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return \Generated\Shared\Transfer\RolesTransfer
+     */
+    public function getGroupRoles(int $idGroup): RolesTransfer
+    {
+        return $this->aclFacade->getGroupRoles($idGroup);
+    }
 }

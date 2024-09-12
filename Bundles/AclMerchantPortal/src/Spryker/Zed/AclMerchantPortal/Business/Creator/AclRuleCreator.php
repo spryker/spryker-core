@@ -50,10 +50,7 @@ class AclRuleCreator implements AclRuleCreatorInterface
     public function createMerchantAclRules(RoleTransfer $roleTransfer): array
     {
         $ruleTransfers = $this->executeMerchantAclRuleExpanderPlugins([]);
-        foreach ($ruleTransfers as $ruleTransfer) {
-            $ruleTransfer->setFkAclRole($roleTransfer->getIdAclRole());
-            $this->aclFacade->addRule($ruleTransfer);
-        }
+        $ruleTransfers = $this->createAclRules($ruleTransfers, $roleTransfer);
 
         return $ruleTransfers;
     }
@@ -66,10 +63,7 @@ class AclRuleCreator implements AclRuleCreatorInterface
     public function createMerchantUserAclRules(RoleTransfer $roleTransfer): array
     {
         $ruleTransfers = $this->executeMerchantUserAclRuleExpanderPlugins([]);
-        foreach ($ruleTransfers as $ruleTransfer) {
-            $ruleTransfer->setFkAclRole($roleTransfer->getIdAclRole());
-            $this->aclFacade->addRule($ruleTransfer);
-        }
+        $ruleTransfers = $this->createAclRules($ruleTransfers, $roleTransfer);
 
         return $ruleTransfers;
     }
@@ -97,6 +91,35 @@ class AclRuleCreator implements AclRuleCreatorInterface
     {
         foreach ($this->merchantUserAclRuleExpanderPlugins as $merchantUserAclRuleExpanderPlugin) {
             $ruleTransfers = $merchantUserAclRuleExpanderPlugin->expand($ruleTransfers);
+        }
+
+        return $ruleTransfers;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\RuleTransfer> $ruleTransfers
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\RuleTransfer>
+     */
+    public function createAclRules(array $ruleTransfers, RoleTransfer $roleTransfer): array
+    {
+        foreach ($ruleTransfers as $ruleTransfer) {
+            $ruleTransfer->setFkAclRole($roleTransfer->getIdAclRole());
+
+            $isRoleRuleExists = $this->aclFacade->existsRoleRule(
+                $ruleTransfer->getFkAclRoleOrFail(),
+                $ruleTransfer->getBundleOrFail(),
+                $ruleTransfer->getControllerOrFail(),
+                $ruleTransfer->getActionOrFail(),
+                $ruleTransfer->getTypeOrFail(),
+            );
+
+            if ($isRoleRuleExists) {
+                continue;
+            }
+
+            $this->aclFacade->addRule($ruleTransfer);
         }
 
         return $ruleTransfers;

@@ -10,8 +10,12 @@ namespace Spryker\Zed\AclEntity\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
+use Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer;
 use Generated\Shared\Transfer\AclEntityRuleRequestTransfer;
 use Generated\Shared\Transfer\AclEntityRuleResponseTransfer;
+use Generated\Shared\Transfer\AclEntitySegmentCollectionTransfer;
+use Generated\Shared\Transfer\AclEntitySegmentCriteriaTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentRequestTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentResponseTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
@@ -33,6 +37,21 @@ class AclEntityFacade extends AbstractFacade implements AclEntityFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\AclEntitySegmentCriteriaTransfer $aclEntitySegmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntitySegmentCollectionTransfer
+     */
+    public function getAclEntitySegmentCollection(
+        AclEntitySegmentCriteriaTransfer $aclEntitySegmentCriteriaTransfer
+    ): AclEntitySegmentCollectionTransfer {
+        return $this->getRepository()->getAclEntitySegmentCollection($aclEntitySegmentCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AclEntitySegmentRequestTransfer $aclEntitySegmentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\AclEntitySegmentResponseTransfer
@@ -40,6 +59,21 @@ class AclEntityFacade extends AbstractFacade implements AclEntityFacadeInterface
     public function createAclEntitySegment(AclEntitySegmentRequestTransfer $aclEntitySegmentRequestTransfer): AclEntitySegmentResponseTransfer
     {
         return $this->getFactory()->createAclEntitySegmentWriter()->create($aclEntitySegmentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer
+     */
+    public function getAclEntityRuleCollection(
+        AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer
+    ): AclEntityRuleCollectionTransfer {
+        return $this->getRepository()->getAclEntityRuleCollection($aclEntityRuleCriteriaTransfer);
     }
 
     /**

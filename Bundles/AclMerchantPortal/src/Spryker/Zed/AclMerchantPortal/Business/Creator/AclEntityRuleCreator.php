@@ -10,6 +10,7 @@ namespace Spryker\Zed\AclMerchantPortal\Business\Creator;
 use ArrayObject;
 use Generated\Shared\Transfer\AclEntitySegmentTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
+use Spryker\Zed\AclMerchantPortal\Business\Filter\AclEntityRuleFilterInterface;
 use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclEntityFacadeInterface;
 
 class AclEntityRuleCreator implements AclEntityRuleCreatorInterface
@@ -37,18 +38,26 @@ class AclEntityRuleCreator implements AclEntityRuleCreatorInterface
     protected array $merchantUserAclEntityRuleExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\AclMerchantPortal\Business\Filter\AclEntityRuleFilterInterface
+     */
+    protected AclEntityRuleFilterInterface $aclEntityRuleFilter;
+
+    /**
      * @param \Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclEntityFacadeInterface $aclEntityFacade
+     * @param \Spryker\Zed\AclMerchantPortal\Business\Filter\AclEntityRuleFilterInterface $aclEntityRuleFilter
      * @param list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclEntityRuleExpanderPluginInterface> $merchantAclEntityRuleExpanderPlugins
      * @param list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclEntityRuleExpanderPluginInterface> $merchantUserAclEntityRuleExpanderPlugins
      */
     public function __construct(
         AclMerchantPortalToAclEntityFacadeInterface $aclEntityFacade,
+        AclEntityRuleFilterInterface $aclEntityRuleFilter,
         array $merchantAclEntityRuleExpanderPlugins,
         array $merchantUserAclEntityRuleExpanderPlugins
     ) {
         $this->aclEntityFacade = $aclEntityFacade;
         $this->merchantAclEntityRuleExpanderPlugins = $merchantAclEntityRuleExpanderPlugins;
         $this->merchantUserAclEntityRuleExpanderPlugins = $merchantUserAclEntityRuleExpanderPlugins;
+        $this->aclEntityRuleFilter = $aclEntityRuleFilter;
     }
 
     /**
@@ -62,12 +71,10 @@ class AclEntityRuleCreator implements AclEntityRuleCreatorInterface
         AclEntitySegmentTransfer $aclEntitySegmentTransfer
     ): array {
         $aclEntityRuleTransfers = $this->executeMerchantAclEntityRuleExpanderPlugins([]);
-        foreach ($aclEntityRuleTransfers as $aclEntityRuleTransfer) {
-            $aclEntityRuleTransfer->setIdAclRole($roleTransfer->getIdAclRole());
-
-            if ($aclEntityRuleTransfer->getScope() === static::SCOPE_SEGMENT) {
-                $aclEntityRuleTransfer->setIdAclEntitySegment($aclEntitySegmentTransfer->getIdAclEntitySegmentOrFail());
-            }
+        $aclEntityRuleTransfers = $this->expandAclEntityRulesWithRoleAndSegment($aclEntityRuleTransfers, $roleTransfer, $aclEntitySegmentTransfer);
+        $aclEntityRuleTransfers = $this->aclEntityRuleFilter->filterOutExistingAclEntityRules($aclEntityRuleTransfers);
+        if (!$aclEntityRuleTransfers) {
+            return [];
         }
 
         $this->aclEntityFacade->saveAclEntityRules(new ArrayObject($aclEntityRuleTransfers));
@@ -86,12 +93,10 @@ class AclEntityRuleCreator implements AclEntityRuleCreatorInterface
         AclEntitySegmentTransfer $aclEntitySegmentTransfer
     ): array {
         $aclEntityRuleTransfers = $this->executeMerchantUserAclEntityRuleExpanderPlugins([]);
-        foreach ($aclEntityRuleTransfers as $aclEntityRuleTransfer) {
-            $aclEntityRuleTransfer->setIdAclRole($roleTransfer->getIdAclRole());
-
-            if ($aclEntityRuleTransfer->getScope() === static::SCOPE_SEGMENT) {
-                $aclEntityRuleTransfer->setIdAclEntitySegment($aclEntitySegmentTransfer->getIdAclEntitySegmentOrFail());
-            }
+        $aclEntityRuleTransfers = $this->expandAclEntityRulesWithRoleAndSegment($aclEntityRuleTransfers, $roleTransfer, $aclEntitySegmentTransfer);
+        $aclEntityRuleTransfers = $this->aclEntityRuleFilter->filterOutExistingAclEntityRules($aclEntityRuleTransfers);
+        if (!$aclEntityRuleTransfers) {
+            return [];
         }
 
         $this->aclEntityFacade->saveAclEntityRules(new ArrayObject($aclEntityRuleTransfers));
@@ -122,6 +127,29 @@ class AclEntityRuleCreator implements AclEntityRuleCreatorInterface
     {
         foreach ($this->merchantUserAclEntityRuleExpanderPlugins as $merchantUserAclEntityRuleExpanderPlugin) {
             $aclEntityRuleTransfers = $merchantUserAclEntityRuleExpanderPlugin->expand($aclEntityRuleTransfers);
+        }
+
+        return $aclEntityRuleTransfers;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\AclEntityRuleTransfer> $aclEntityRuleTransfers
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     * @param \Generated\Shared\Transfer\AclEntitySegmentTransfer $aclEntitySegmentTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\AclEntityRuleTransfer>
+     */
+    public function expandAclEntityRulesWithRoleAndSegment(
+        array $aclEntityRuleTransfers,
+        RoleTransfer $roleTransfer,
+        AclEntitySegmentTransfer $aclEntitySegmentTransfer
+    ): array {
+        foreach ($aclEntityRuleTransfers as $aclEntityRuleTransfer) {
+            $aclEntityRuleTransfer->setIdAclRole($roleTransfer->getIdAclRole());
+
+            if ($aclEntityRuleTransfer->getScope() === static::SCOPE_SEGMENT) {
+                $aclEntityRuleTransfer->setIdAclEntitySegment($aclEntitySegmentTransfer->getIdAclEntitySegmentOrFail());
+            }
         }
 
         return $aclEntityRuleTransfers;

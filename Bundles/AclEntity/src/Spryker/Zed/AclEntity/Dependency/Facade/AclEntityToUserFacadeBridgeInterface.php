@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\AclEntity\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 interface AclEntityToUserFacadeBridgeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 
     /**
      * @return bool
      */
-    public function hasCurrentUser();
+    public function hasCurrentUser(): bool;
 }

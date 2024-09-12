@@ -146,4 +146,53 @@
         <property name="groupNames" type="string[]" singular="groupName"/>
     </transfer>
 
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantUserCollection" strict="true">
+        <property name="merchantUsers" type="MerchantUser[]" singular="merchantUser"/>
+    </transfer>
+
+    <transfer name="MerchantUserCriteria">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentCriteria">
+        <property name="aclEntitySegmentConditions" type="AclEntitySegmentConditions"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentConditions" strict="true">
+        <property name="references" type="string[]" singular="reference"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentCollection" strict="true">
+        <property name="aclEntitySegments" type="AclEntitySegment[]" singular="aclEntitySegment"/>
+    </transfer>
+
+    <transfer name="AclEntityRuleCriteriaConditions" strict="true">
+        <property name="entities" type="string[]" singular="entity"/>
+        <property name="aclEntitySegmentIds" type="int[]" singular="idAclEntitySegment"/>
+        <property name="aclRoleIds" type="int[]" singular="idAclRole"/>
+        <property name="scopes" type="string[]" singular="scope"/>
+        <property name="permissionMasks" type="int[]" singular="permissionMask"/>
+    </transfer>
+
+    <transfer name="AclEntityRuleCriteria">
+        <property name="aclEntityRuleCriteriaConditions" type="AclEntityRuleCriteriaConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="AclEntityRuleCollection">
+        <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
+    </transfer>
+
 </transfers>

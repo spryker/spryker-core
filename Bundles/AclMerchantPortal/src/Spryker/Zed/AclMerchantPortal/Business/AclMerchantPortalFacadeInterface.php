@@ -165,4 +165,27 @@ interface AclMerchantPortalFacadeInterface
     public function expandAgentDashboardMerchantUserTableData(
         GuiTableDataResponseTransfer $guiTableDataResponseTransfer
     ): GuiTableDataResponseTransfer;
+
+    /**
+     * Specification:
+     * - Loops over all merchants and their users.
+     * - Uses the transaction mechanism to avoid partial updates.
+     * - Creates or updates ACL entities for each merchant and their users.
+     * - Creates ACL entity segment for each merchant if it's not created yet.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclRuleExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclEntityRuleExpanderPluginInterface} plugin stack.
+     * - Creates or updates ACL role, ACL rules, ACL entity rules, ACL group for each merchant.
+     * - Creates ACL entity segment for each merchant user if it's not created yet.
+     * - Uses the following configuration to control the merchant read batch size {@link \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig::getAclEntitySynchronizationMerchantReadBatchSize()}.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclRuleExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclEntityRuleExpanderPluginInterface} plugin stack.
+     * - Creates or updates ACL role, ACL rules, ACL entity rules, ACL group for each merchant user.
+     * - Adds merchant user to merchant ACL group.
+     * - Uses the following configuration to control the merchant user read batch size {@link \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig::getAclEntitySynchronizationMerchantUserReadBatchSize()}.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function synchronizeAclEntitiesForMerchantsAndMerchantUsers(): void;
 }

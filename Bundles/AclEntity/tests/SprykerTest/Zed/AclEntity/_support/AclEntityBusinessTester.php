@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\AclEntity;
 
 use Codeception\Actor;
+use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery;
+use Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery;
 use Orm\Zed\Merchant\Persistence\SpyAclEntitySegmentMerchantQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -27,6 +29,8 @@ use Propel\Runtime\Collection\ObjectCollection;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\AclEntity\Business\AclEntityFacadeInterface getFacade(?string $moduleName = null)
  */
 class AclEntityBusinessTester extends Actor
 {
@@ -35,9 +39,17 @@ class AclEntityBusinessTester extends Actor
     /**
      * @return void
      */
-    public function clearAclEntityRuleData(): void
+    public function ensureAclEntityRuleDatabaseIsEmpty(): void
     {
-        $this->getAclEntityRuleQuery()->deleteAll();
+        $this->ensureDatabaseTableIsEmpty($this->getAclEntityRuleQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureAclRoleDatabaseIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getAclRoleQuery());
     }
 
     /**
@@ -61,6 +73,14 @@ class AclEntityBusinessTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function ensureAclEntitySegmentDatabaseIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getAclEntitySegmentQuery());
+    }
+
+    /**
      * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery
      */
     protected function getAclEntityRuleQuery(): SpyAclEntityRuleQuery
@@ -74,5 +94,21 @@ class AclEntityBusinessTester extends Actor
     protected function getAclEntitySegmentMerchantQuery(): SpyAclEntitySegmentMerchantQuery
     {
         return SpyAclEntitySegmentMerchantQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery
+     */
+    protected function getAclEntitySegmentQuery(): SpyAclEntitySegmentQuery
+    {
+        return SpyAclEntitySegmentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
+     */
+    protected function getAclRoleQuery(): SpyAclRoleQuery
+    {
+        return SpyAclRoleQuery::create();
     }
 }

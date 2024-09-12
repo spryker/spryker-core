@@ -169,4 +169,18 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
             ->createAgentDashboardMerchantUserTableExpander()
             ->expand($guiTableDataResponseTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function synchronizeAclEntitiesForMerchantsAndMerchantUsers(): void
+    {
+        $this->getFactory()
+            ->createAclEntitySynchronizer()
+            ->synchronizeAclEntitiesForMerchantsAndMerchantUsers();
+    }
 }

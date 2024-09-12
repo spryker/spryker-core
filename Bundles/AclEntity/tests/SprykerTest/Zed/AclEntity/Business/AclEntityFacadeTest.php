@@ -9,17 +9,14 @@ namespace SprykerTest\Zed\AclEntity\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Exception;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
-use Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer;
 use Generated\Shared\Transfer\AclEntityRuleTransfer;
-use Generated\Shared\Transfer\AclEntitySegmentCriteriaTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentRequestTransfer;
-use Generated\Shared\Transfer\AclRoleCriteriaTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigInvalidKeyException;
@@ -83,24 +80,6 @@ class AclEntityFacadeTest extends Unit
         ]);
 
         $this->roleTransfer = $this->tester->haveRole([RoleTransfer::NAME => static::ACL_ROLE_TEST_NAME]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function _tearDown(): void
-    {
-        parent::_tearDown();
-
-        $this->tester->deleteRoles(
-            (new AclRoleCriteriaTransfer())->setName(static::ACL_ROLE_TEST_NAME),
-        );
-        $this->tester->deleteAclEntityRules(
-            (new AclEntityRuleCriteriaTransfer())->addIdAclRole($this->roleTransfer->getIdAclRole()),
-        );
-        $this->tester->deleteAclEntitySegments(
-            (new AclEntitySegmentCriteriaTransfer())->addReference(static::TEST_MERCHANT_REFERENCE),
-        );
     }
 
     /**
@@ -277,10 +256,10 @@ class AclEntityFacadeTest extends Unit
         $aclEntitySegmentRequestTransfer = (new AclEntitySegmentRequestTransfer())
             ->setName('Test')
             ->setEntity(SpyMerchant::class)
-            ->setEntityIds([444])
+            ->setEntityIds([-199])
             ->setReference($reference);
 
-        $this->expectException(PropelException::class);
+        $this->expectException(Exception::class);
 
         // Act
         $this->tester->getFacade()->createAclEntitySegment($aclEntitySegmentRequestTransfer);

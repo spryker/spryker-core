@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AclEntity\Dependency\Facade;
 
+use Generated\Shared\Transfer\RolesTransfer;
+
 interface AclEntityToAclFacadeBridgeInterface
 {
     /**
@@ -14,5 +16,5 @@ interface AclEntityToAclFacadeBridgeInterface
      *
      * @return \Generated\Shared\Transfer\RolesTransfer
      */
-    public function getUserRoles($idUser);
+    public function getUserRoles(int $idUser): RolesTransfer;
 }

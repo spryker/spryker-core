@@ -1,18 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeInterface::getUserGroups cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/AclMerchantPortal/src/Spryker/Zed/AclMerchantPortal/Business/ConditionChecker/MerchantUser/UserRoleFilterConditionChecker.php",
-            "snippet": "            $userTransfer->getIdUser(),",
-            "selected_text": "$userTransfer->getIdUser()",
-            "error_level": 3,
-            "shortcode": 78
-        }
-    ],
-    "deprecation": []
+    "warning": [],
+    "deprecation": [],
+    "count": 0
 }

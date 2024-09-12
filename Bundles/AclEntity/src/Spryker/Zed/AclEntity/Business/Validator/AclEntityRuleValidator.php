@@ -113,7 +113,7 @@ class AclEntityRuleValidator implements AclEntityRuleValidatorInterface
             $aclEntityRuleCriteriaTransfer->addIdAclEntitySegment($idAclEntitySegment);
         }
 
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRules($aclEntityRuleCriteriaTransfer);
+        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRuleCollection($aclEntityRuleCriteriaTransfer);
         if ($aclEntityRuleCollectionTransfer->getAclEntityRules()->count()) {
             throw new DuplicatedAclEntityRuleException(
                 $aclEntityRuleTransfer->getEntityOrFail(),

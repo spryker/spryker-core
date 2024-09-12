@@ -25,6 +25,9 @@ suites:
                 - \SprykerTest\Zed\AclEntity\Helper\AclEntityHelper
                 - \SprykerTest\Zed\Acl\Helper\AclHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
     Persistence:
         path: Persistence
         actor: AclEntityPersistenceTester

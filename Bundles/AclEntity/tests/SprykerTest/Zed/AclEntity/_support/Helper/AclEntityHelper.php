@@ -25,7 +25,7 @@ class AclEntityHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param array $seedData
+     * @param array<mixed> $seedData
      *
      * @return \Generated\Shared\Transfer\AclEntitySegmentTransfer
      */
@@ -67,7 +67,7 @@ class AclEntityHelper extends Module
     }
 
     /**
-     * @param array $seedData
+     * @param array<mixed> $seedData
      *
      * @return \Generated\Shared\Transfer\AclEntityRuleTransfer
      */

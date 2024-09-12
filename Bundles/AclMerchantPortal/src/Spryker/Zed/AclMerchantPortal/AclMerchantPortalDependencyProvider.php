@@ -9,6 +9,8 @@ namespace Spryker\Zed\AclMerchantPortal;
 
 use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclEntityFacadeBridge;
 use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclFacadeBridge;
+use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToMerchantFacadeBridge;
+use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToMerchantUserFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -26,6 +28,11 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_ACL = 'FACADE_ACL';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
      * @var string
@@ -68,6 +75,8 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addAclEntityFacade($container);
         $container = $this->addAclFacade($container);
+        $container = $this->addMerchantFacade($container);
+        $container = $this->addMerchantUserFacade($container);
         $container = $this->addMerchantAclEntityRuleExpanderPlugins($container);
         $container = $this->addMerchantAclRuleExpanderPlugins($container);
         $container = $this->addMerchantUserAclEntityRuleExpanderPlugins($container);
@@ -103,6 +112,38 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::FACADE_ACL_ENTITY, function (Container $container) {
             return new AclMerchantPortalToAclEntityFacadeBridge(
                 $container->getLocator()->aclEntity()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new AclMerchantPortalToMerchantFacadeBridge(
+                $container->getLocator()->merchant()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
+            return new AclMerchantPortalToMerchantUserFacadeBridge(
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 

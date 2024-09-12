@@ -7,6 +7,17 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="AclEntitySegmentConditions" strict="true">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="references" type="string[]" singular="reference"/>
+        <property name="aclEntitySegmentIds" type="int[]" singular="idAclEntitySegment"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentCollection" strict="true">
+        <property name="aclEntitySegments" type="AclEntitySegment[]" singular="aclEntitySegment"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="AclEntitySegmentRequest">
         <property name="idAclEntitySegment" type="int"/>
         <property name="name" type="string"/>
@@ -35,6 +46,7 @@
 
     <transfer name="AclEntityRuleCollection">
         <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="AclEntitySegmentResponse">
@@ -43,10 +55,25 @@
     </transfer>
 
     <transfer name="AclEntitySegmentCriteria">
-        <property name="references" type="array" singular="reference"/>
+        <property name="references" type="array" singular="reference" deprecated="Use `AclEntitySegmentCriteria.aclEntitySegmentConditions.referense` instead."/>
+        <property name="aclEntitySegmentConditions" type="AclEntitySegmentConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="AclEntityRuleCriteria">
+        <property name="aclEntityRuleCriteriaConditions" type="AclEntityRuleCriteriaConditions" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+        <property name="aclRoleIds" type="int[]" singular="idAclRole" deprecated="Use `AclEntityRuleCriteriaConditions.aclRoleIds` instead."/>
+        <property name="entities" type="string[]" singular="entity" deprecated="Use `AclEntityRuleCriteriaConditions.entities` instead."/>
+        <property name="scopes" type="string[]" singular="scope" deprecated="Use `AclEntityRuleCriteriaConditions.scopes` instead."/>
+        <property name="permissionMasks" type="int[]" singular="permissionMask" deprecated="Use `AclEntityRuleCriteriaConditions.permissionMasks` instead."/>
+        <property name="aclEntitySegmentIds" type="int[]" singular="idAclEntitySegment" deprecated="Use `AclEntityRuleCriteriaConditions.aclEntitySegmentIds` instead."/>
+    </transfer>
+
+    <transfer name="AclEntityRuleCriteriaConditions" strict="true">
+        <property name="aclEntityRuleIds" type="int[]" singular="idAclEntityRule"/>
         <property name="aclRoleIds" type="int[]" singular="idAclRole"/>
         <property name="entities" type="string[]" singular="entity"/>
         <property name="scopes" type="string[]" singular="scope"/>
@@ -104,6 +131,25 @@
 
     <transfer name="Roles">
         <property name="roles" type="Role[]" singular="role"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
     </transfer>
 
 </transfers>

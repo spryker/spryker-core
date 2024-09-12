@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\AclEntity\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\AclEntitySegmentCollectionTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentRequestTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentTransfer;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class AclEntitySegmentMapper
 {
@@ -54,5 +56,24 @@ class AclEntitySegmentMapper
         $spyAclEntitySegment->fromArray($aclEntitySegmentTransfer->toArray(false));
 
         return $spyAclEntitySegment;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment> $aclEntitySegmentEntityCollection
+     * @param \Generated\Shared\Transfer\AclEntitySegmentCollectionTransfer $aclEntitySegmentCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntitySegmentCollectionTransfer
+     */
+    public function mapAclEntitySegmentEntityCollectionToAclEntitySegmentCollectionTransfer(
+        ObjectCollection $aclEntitySegmentEntityCollection,
+        AclEntitySegmentCollectionTransfer $aclEntitySegmentCollectionTransfer
+    ): AclEntitySegmentCollectionTransfer {
+        foreach ($aclEntitySegmentEntityCollection as $aclEntitySegmentEntity) {
+            $aclEntitySegmentCollectionTransfer->addAclEntitySegment(
+                $this->mapAclEntitySegmentEntityToTransfer($aclEntitySegmentEntity, new AclEntitySegmentTransfer()),
+            );
+        }
+
+        return $aclEntitySegmentCollectionTransfer;
     }
 }

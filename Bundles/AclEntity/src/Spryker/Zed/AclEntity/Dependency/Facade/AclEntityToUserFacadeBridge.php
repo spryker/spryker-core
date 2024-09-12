@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AclEntity\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 class AclEntityToUserFacadeBridge implements AclEntityToUserFacadeBridgeInterface
 {
     /**
@@ -25,7 +27,7 @@ class AclEntityToUserFacadeBridge implements AclEntityToUserFacadeBridgeInterfac
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): UserTransfer
     {
         return $this->userFacade->getCurrentUser();
     }
@@ -33,7 +35,7 @@ class AclEntityToUserFacadeBridge implements AclEntityToUserFacadeBridgeInterfac
     /**
      * @return bool
      */
-    public function hasCurrentUser()
+    public function hasCurrentUser(): bool
     {
         return $this->userFacade->hasCurrentUser();
     }

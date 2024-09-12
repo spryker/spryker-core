@@ -76,6 +76,7 @@ interface MerchantFacadeInterface
      * - Executes {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantBulkExpanderPluginInterface} plugin stack.
      * - Pagination, filter and ordering options can be passed to criteria.
      * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     * - Uses `MerchantCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
      * - Filter supports ordering by field.
      * - Default order by merchant name.
      *

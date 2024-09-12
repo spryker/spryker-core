@@ -70,6 +70,16 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @var int
+     */
+    protected const ACL_ENTITY_SYNCHRONIZATION_MERCHANT_READ_BATCH_SIZE = 1000;
+
+    /**
+     * @var int
+     */
+    protected const ACL_ENTITY_SYNCHRONIZATION_MERCHANT_USER_READ_BATCH_SIZE = 1000;
+
+    /**
      * Specification:
      * - Defines set of AclRules to assigned for merchant-specific AclRole.
      *
@@ -526,5 +536,31 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     public function isMerchantToMerchantUserConjunctionByUsernameEnabled(): bool
     {
         return static::IS_MERCHANT_TO_MERCHANT_USER_CONJUNCTION_BY_USERNAME_ENABLED;
+    }
+
+    /**
+     * Specification:
+     * - Returns the batch size for reading merchants during the ACL entity synchronization.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getAclEntitySynchronizationMerchantReadBatchSize(): int
+    {
+        return static::ACL_ENTITY_SYNCHRONIZATION_MERCHANT_READ_BATCH_SIZE;
+    }
+
+    /**
+     * Specification:
+     * - Returns the batch size for reading merchant users during the ACL entity synchronization.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getAclEntitySynchronizationMerchantUserReadBatchSize(): int
+    {
+        return static::ACL_ENTITY_SYNCHRONIZATION_MERCHANT_USER_READ_BATCH_SIZE;
     }
 }

@@ -44,6 +44,8 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="MerchantResponse">

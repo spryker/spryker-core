@@ -198,37 +198,45 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
      * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
-    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
-    {
-        if ($paginationTransfer !== null) {
-            /** @var int $page */
-            $page = $paginationTransfer
-                ->requirePage()
-                ->getPage();
-
-            /** @var int $maxPerPage */
-            $maxPerPage = $paginationTransfer
-                ->requireMaxPerPage()
-                ->getMaxPerPage();
-
-            $paginationModel = $query->paginate($page, $maxPerPage);
-
-            $paginationTransfer->setNbResults($paginationModel->getNbResults());
-            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-            $paginationTransfer->setLastPage($paginationModel->getLastPage());
-            $paginationTransfer->setNextPage($paginationModel->getNextPage());
-            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-            return $paginationModel->getResults();
+    protected function getPaginatedCollection(
+        ModelCriteria $modelCriteria,
+        ?PaginationTransfer $paginationTransfer
+    ) {
+        if ($paginationTransfer === null) {
+            return $modelCriteria->find();
         }
 
-        return $query->find();
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($modelCriteria->count());
+
+            return $modelCriteria
+                ->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail())
+                ->find();
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
+            $propelModelPager = $modelCriteria->paginate(
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
+            );
+
+            $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+                ->setFirstIndex($propelModelPager->getFirstIndex())
+                ->setLastIndex($propelModelPager->getLastIndex())
+                ->setFirstPage($propelModelPager->getFirstPage())
+                ->setLastPage($propelModelPager->getLastPage())
+                ->setNextPage($propelModelPager->getNextPage())
+                ->setPreviousPage($propelModelPager->getPreviousPage());
+
+            return $propelModelPager->getResults();
+        }
+
+        return $modelCriteria->find();
     }
 }

@@ -190,4 +190,34 @@ class GetMerchantDataTest extends Unit
         $this->assertTrue(is_array($applicableMerchantStatuses));
         $this->assertEmpty($applicableMerchantStatuses);
     }
+
+    /**
+     * @return void
+     */
+    public function testReturnsMerchantsPaginatedByLimitAndOffset(): void
+    {
+        // Arrange
+        $this->tester->truncateMerchantRelations();
+        $this->tester->haveMerchant();
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setLimit(1)
+            ->setOffset(1);
+
+        $filterTransfer = new FilterTransfer();
+        $filterTransfer->setOrderBy(SpyMerchantTableMap::COL_ID_MERCHANT);
+        $filterTransfer->setOrderDirection('ASC');
+
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
+            ->setPagination($paginationTransfer)
+            ->setFilter($filterTransfer);
+
+        // Act
+        $merchantCollectionTransfer = $this->tester->getFacade()->get($merchantCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $merchantCollectionTransfer->getMerchants());
+        $this->assertSame($merchantTransfer->getIdMerchant(), $merchantCollectionTransfer->getMerchants()->offsetGet(0)->getIdMerchant());
+    }
 }
