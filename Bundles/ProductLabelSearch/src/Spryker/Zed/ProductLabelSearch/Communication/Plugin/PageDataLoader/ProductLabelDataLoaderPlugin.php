@@ -22,6 +22,8 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
 {
     /**
      * {@inheritDoc}
+     * - Expects `ProductPageLoadTransfer.productAbstractIds` to be provided.
+     * - Expands product page load transfer with product label IDs mapped by ID product abstract and store name.
      *
      * @api
      *

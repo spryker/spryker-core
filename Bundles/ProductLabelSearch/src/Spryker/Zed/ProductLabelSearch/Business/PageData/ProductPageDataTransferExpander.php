@@ -50,6 +50,10 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
     {
         $productLabelCollectionTransfer = $this->getProductLabelCollection($productPageLoadTransfer);
 
+        if (!$productLabelCollectionTransfer->getProductLabels()->count()) {
+            return $productPageLoadTransfer;
+        }
+
         $productLabelIdsMappedByIdProductAbstract = $this->productLabelMapper
             ->getProductLabelIdsMappedByIdProductAbstractAndStoreName($productLabelCollectionTransfer);
 
@@ -91,6 +95,10 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
      */
     protected function getProductLabelCollection(ProductPageLoadTransfer $productPageLoadTransfer): ProductLabelCollectionTransfer
     {
+        if (!$productPageLoadTransfer->getProductAbstractIds()) {
+            return new ProductLabelCollectionTransfer();
+        }
+
         $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
             ->setProductLabelConditions(
                 (new ProductLabelConditionsTransfer())

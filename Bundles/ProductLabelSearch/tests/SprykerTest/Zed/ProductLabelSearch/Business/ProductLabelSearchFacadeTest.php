@@ -362,6 +362,68 @@ class ProductLabelSearchFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandProductPageDataTransferWithProductLabelIdsShouldAvoidExpandingWhenProductAbstractIdsAreEmpty(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productTransfer2 = $this->tester->haveProduct();
+
+        $productPageLoadTransfer = (new ProductPageLoadTransfer())
+            ->setProductAbstractIds([])
+            ->setPayloadTransfers([
+                $this->getProductPayloadTransfer([
+                    ProductPayloadTransfer::ID_PRODUCT_ABSTRACT => $productTransfer1->getFkProductAbstract(),
+                ]),
+                $this->getProductPayloadTransfer([
+                    ProductPayloadTransfer::ID_PRODUCT_ABSTRACT => $productTransfer2->getFkProductAbstract(),
+                ]),
+            ]);
+
+        // Act
+        $expandedProductPageLoadTransfer = $this->tester->getFacade()
+            ->expandProductPageDataTransferWithProductLabelIds($productPageLoadTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer */
+        foreach ($expandedProductPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
+            $this->assertEmpty($payloadTransfer->getLabelIds());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductPageDataTransferWithProductLabelIdsShouldAvoidExpandingWhenProductAbstractIdsIsNull(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productTransfer2 = $this->tester->haveProduct();
+
+        $productPageLoadTransfer = (new ProductPageLoadTransfer())
+            ->setProductAbstractIds(null)
+            ->setPayloadTransfers([
+                $this->getProductPayloadTransfer([
+                    ProductPayloadTransfer::ID_PRODUCT_ABSTRACT => $productTransfer1->getFkProductAbstract(),
+                ]),
+                $this->getProductPayloadTransfer([
+                    ProductPayloadTransfer::ID_PRODUCT_ABSTRACT => $productTransfer2->getFkProductAbstract(),
+                ]),
+            ]);
+
+        // Act
+        $expandedProductPageLoadTransfer = $this->tester->getFacade()
+            ->expandProductPageDataTransferWithProductLabelIds($productPageLoadTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer */
+        foreach ($expandedProductPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
+            $this->assertEmpty($payloadTransfer->getLabelIds());
+        }
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchInterface
      */
     protected function getProductPageSearchFacadeMock(): ProductLabelSearchToProductPageSearchInterface

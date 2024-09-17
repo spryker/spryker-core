@@ -59,7 +59,8 @@ interface ProductLabelSearchFacadeInterface
 
     /**
      * Specification:
-     * - Expands product page load transfer with product label ids mapped by id product abstract and store name.
+     * - Expects `ProductPageLoadTransfer.productAbstractIds` to be provided.
+     * - Expands product page load transfer with product label IDs mapped by ID product abstract and store name.
      *
      * @api
      *
