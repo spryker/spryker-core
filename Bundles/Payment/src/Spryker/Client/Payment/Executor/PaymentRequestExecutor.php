@@ -15,15 +15,23 @@ use Spryker\Client\Payment\Dependency\External\PaymentToHttpClientAdapterInterfa
 use Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface;
 use Spryker\Client\Payment\Http\Exception\PaymentHttpRequestException;
 use Spryker\Client\Payment\PaymentConfig;
+use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentRequestExecutor implements PaymentRequestExecutorInterface
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
-    protected const MESSAGE_ERROR_PAYMENT_AUTHORIZATION = 'Something went wrong with your payment.';
+    public const MESSAGE_ERROR_PAYMENT_AUTHORIZATION = 'Payment provider is currently unavailable, please try again later.';
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_ERROR_LOG_PAYMENT_AUTHORIZATION = 'Something went wrong with your payment.';
 
     /**
      * @var \Spryker\Client\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface
@@ -73,41 +81,65 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
                 ],
             );
         } catch (PaymentHttpRequestException $e) {
-            return $this->getFailedPaymentAuthorizeResponse($e->getResponse());
+            return $this->getFailedPaymentAuthorizeResponse($paymentAuthorizeRequestTransfer, $e->getResponse());
         }
 
         if ($response->getStatusCode() !== Response::HTTP_OK) {
-            return $this->getFailedPaymentAuthorizeResponse($response);
+            return $this->getFailedPaymentAuthorizeResponse($paymentAuthorizeRequestTransfer, $response);
         }
 
         $responseData = $this->utilEncodingService->decodeJson($response->getBody()->getContents(), true);
+        $paymentAuthorizeResponseTransfer = (new PaymentAuthorizeResponseTransfer())->fromArray($responseData, true);
+        $this->getLogger()->error(
+            static::MESSAGE_ERROR_LOG_PAYMENT_AUTHORIZATION,
+            [
+                'payment_request' => $paymentAuthorizeRequestTransfer->toArray(),
+                'response' => $paymentAuthorizeResponseTransfer->toArray(),
+            ],
+        );
 
-        return (new PaymentAuthorizeResponseTransfer())->fromArray($responseData, true);
+        if ($paymentAuthorizeResponseTransfer->getIsSuccessful() === false && !$this->config->isDebugEnabled()) {
+            $paymentAuthorizeResponseTransfer->setMessage(static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION);
+        }
+
+        return $paymentAuthorizeResponseTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
      * @param \Psr\Http\Message\ResponseInterface|null $response
      *
      * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
      */
-    protected function getFailedPaymentAuthorizeResponse(?ResponseInterface $response): PaymentAuthorizeResponseTransfer
-    {
+    protected function getFailedPaymentAuthorizeResponse(
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer,
+        ?ResponseInterface $response
+    ): PaymentAuthorizeResponseTransfer {
         return (new PaymentAuthorizeResponseTransfer())
             ->setIsSuccessful(false)
-            ->setMessage($this->getPaymentAuthorizationErrorMessage($response));
+            ->setMessage($this->getPaymentAuthorizationErrorMessage($paymentAuthorizeRequestTransfer, $response));
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
      * @param \Psr\Http\Message\ResponseInterface|null $response
      *
      * @return string
      */
-    protected function getPaymentAuthorizationErrorMessage(?ResponseInterface $response): string
-    {
-        $message = static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION;
+    protected function getPaymentAuthorizationErrorMessage(
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer,
+        ?ResponseInterface $response
+    ): string {
+        $this->getLogger()->error(
+            static::MESSAGE_ERROR_LOG_PAYMENT_AUTHORIZATION,
+            [
+                'payment_request' => $paymentAuthorizeRequestTransfer->toArray(),
+                'response' => $response ? $response->getBody()->getContents() : null,
+            ],
+        );
 
         if (!$response || !$this->config->isDebugEnabled()) {
-            return $message;
+            return static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION;
         }
 
         return $response->getBody()->getContents();

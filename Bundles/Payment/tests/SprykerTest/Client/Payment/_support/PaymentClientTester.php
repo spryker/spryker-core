@@ -29,4 +29,9 @@ use Codeception\Actor;
 class PaymentClientTester extends Actor
 {
     use _generated\PaymentClientTesterActions;
+
+    /**
+     * @var string
+     */
+    public const LOCALE = 'en_US';
 }

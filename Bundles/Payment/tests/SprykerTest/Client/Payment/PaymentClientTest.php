@@ -15,7 +15,9 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\StreamInterface;
+use Spryker\Client\Locale\LocaleDependencyProvider;
 use Spryker\Client\Payment\Dependency\External\PaymentToGuzzleHttpClientAdapter;
+use Spryker\Client\Payment\Executor\PaymentRequestExecutor;
 use Spryker\Client\Payment\PaymentDependencyProvider;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
@@ -52,6 +54,7 @@ class PaymentClientTest extends Unit
             KernelConstants::ENABLE_CONTAINER_OVERRIDING,
             true,
         );
+        $this->tester->setDependency(LocaleDependencyProvider::LOCALE_CURRENT, $this->tester::LOCALE);
     }
 
     /**
@@ -129,6 +132,29 @@ class PaymentClientTest extends Unit
         $this->assertFalse($paymentAuthorizeResponseTransfer->getIsSuccessful());
 
         $this->assertSame($this->getFixture('error_response.json'), $paymentAuthorizeResponseTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAuthorizePaymentUsesContentOfResponseInErrorMessageWhenDebugingIsDisabled(): void
+    {
+        // Arrange
+        $httpClientMock = $this->getHttpClientMock();
+        $this->getConfigHelper()->setConfig(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+
+        $responseMock = $this->getResponseMock('error_response.json', SymfonyHttpResponse::HTTP_BAD_REQUEST);
+        $requestException = new RequestException('something went wrong', new Request('POST', 'url'), $responseMock);
+        $httpClientMock->method('request')->willThrowException($requestException);
+
+        // Act
+        $paymentAuthorizeResponseTransfer = $this->tester->getClient()
+            ->authorizeForeignPayment($this->getPaymentAuthorizeRequestTransfer());
+
+        // Assert
+        $this->assertFalse($paymentAuthorizeResponseTransfer->getIsSuccessful());
+
+        $this->assertSame(PaymentRequestExecutor::MESSAGE_ERROR_PAYMENT_AUTHORIZATION, $paymentAuthorizeResponseTransfer->getMessage());
     }
 
     /**
