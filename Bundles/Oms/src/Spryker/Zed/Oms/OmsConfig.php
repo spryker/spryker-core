@@ -200,6 +200,19 @@ class OmsConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     *  - Defines if automatic processes caching is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isProcessCacheEnabled(): bool
+    {
+        return (bool)$this->get(OmsConstants::ENABLE_PROCESS_CACHE, true);
+    }
+
+    /**
+     * Specification:
      *  - Returns process cache file permission.
      *
      * @api

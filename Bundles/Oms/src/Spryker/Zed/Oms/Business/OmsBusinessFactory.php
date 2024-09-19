@@ -133,6 +133,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getProcessDefinitionLocation(),
             $this->createProcessCacheReader(),
             $this->createProcessCacheWriter(),
+            $this->getConfig(),
             $this->getConfig()->getSubProcessPrefixDelimiter(),
         );
     }

@@ -16,6 +16,7 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
 use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
 use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
@@ -71,6 +72,11 @@ class Builder implements BuilderInterface
     protected ProcessCacheWriterInterface $processCacheWriter;
 
     /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected OmsConfig $config;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
@@ -78,6 +84,7 @@ class Builder implements BuilderInterface
      * @param array|string $processDefinitionLocation
      * @param \Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface $processCacheReader
      * @param \Spryker\Zed\Oms\Business\Writer\ProcessCacheWriterInterface $processCacheWriter
+     * @param \Spryker\Zed\Oms\OmsConfig $config
      * @param string $subProcessPrefixDelimiter
      */
     public function __construct(
@@ -88,6 +95,7 @@ class Builder implements BuilderInterface
         $processDefinitionLocation,
         ProcessCacheReaderInterface $processCacheReader,
         ProcessCacheWriterInterface $processCacheWriter,
+        OmsConfig $config,
         $subProcessPrefixDelimiter = ' - '
     ) {
         $this->event = $event;
@@ -96,6 +104,7 @@ class Builder implements BuilderInterface
         $this->process = $process;
         $this->processCacheReader = $processCacheReader;
         $this->processCacheWriter = $processCacheWriter;
+        $this->config = $config;
         $this->subProcessPrefixDelimiter = $subProcessPrefixDelimiter;
 
         $this->setProcessDefinitionLocation($processDefinitionLocation);
@@ -112,17 +121,26 @@ class Builder implements BuilderInterface
             return static::$processBuffer[$processName];
         }
 
-        if ($this->processCacheReader->hasProcess($processName)) {
-            static::$processBuffer[$processName] = $this->processCacheReader->getProcess($processName);
+        if (!$this->config->isProcessCacheEnabled()) {
+            $mainProcess = $this->createMainProcess($processName);
+
+            static::$processBuffer[$processName] = $mainProcess;
 
             return static::$processBuffer[$processName];
         }
 
-        $mainProcess = $this->createMainProcess($processName);
+        $isProcessCached = $this->processCacheReader->hasProcess($processName);
 
-        static::$processBuffer[$processName] = $mainProcess;
+        if ($isProcessCached) {
+            $process = $this->processCacheReader->getProcess($processName);
+        }
 
-        $this->processCacheWriter->cacheProcess($mainProcess, $processName);
+        if (!$isProcessCached) {
+            $process = $this->createMainProcess($processName);
+            $this->processCacheWriter->cacheProcess($process, $processName);
+        }
+
+        static::$processBuffer[$processName] = $process;
 
         return static::$processBuffer[$processName];
     }

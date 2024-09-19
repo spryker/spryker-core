@@ -51,4 +51,14 @@ interface OmsConstants
      * @var string
      */
     public const PROCESS_CACHE_PATH = 'OMS:PROCESS_CACHE_PATH';
+
+    /**
+     * Specification:
+     *  - Defines if automatic processes caching is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENABLE_PROCESS_CACHE = 'OMS:ENABLE_PROCESS_CACHE';
 }

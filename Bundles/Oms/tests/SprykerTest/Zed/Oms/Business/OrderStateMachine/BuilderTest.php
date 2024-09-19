@@ -16,7 +16,11 @@ use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReader;
+use Spryker\Zed\Oms\Business\Reader\ProcessCacheReaderInterface;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
+use Spryker\Zed\Oms\Business\Writer\ProcessCacheWriter;
+use Spryker\Zed\Oms\OmsConfig;
 use SprykerTest\Zed\Oms\OmsBusinessTester;
 
 /**
@@ -118,6 +122,157 @@ class BuilderTest extends Unit
     }
 
     /**
+     * @dataProvider omsProcessCachingReaderDataProvider
+     *
+     * @param bool $cacheIsEnabled
+     * @param int $expectedReaderCalls
+     *
+     * @return void
+     */
+    public function testCreateProcessShouldReadFromCacheIfCacheIsEnabled(
+        bool $cacheIsEnabled,
+        int $expectedReaderCalls
+    ): void {
+        // Arrange
+        $process = $this->getProcess();
+        $omsConfigMock = $this->createMock(OmsConfig::class);
+        $omsConfigMock
+            ->method('isProcessCacheEnabled')
+            ->willReturn($cacheIsEnabled);
+
+        $processCacheReaderMock = $this->getMockBuilder(ProcessCacheReader::class)
+            ->setConstructorArgs([new OmsConfig()])
+            ->onlyMethods(['getProcess'])
+            ->getMock();
+
+        if (file_exists($processCacheReaderMock->getFullFilename('process-a'))) {
+            unlink($processCacheReaderMock->getFullFilename('process-a'));
+        }
+
+        $builder = new Builder(
+            $this->getEventMock(),
+            $this->getStateMock(),
+            $this->getTransitionMock(),
+            $process,
+            [$this->getProcessLocationA()],
+            $processCacheReaderMock,
+            $this->tester->createProcessCacheWriter(),
+            $omsConfigMock,
+        );
+
+        // Assert
+        $processCacheReaderMock
+            ->expects($this->exactly($expectedReaderCalls))
+            ->method('getProcess')
+            ->with('process-a')
+            ->willReturn($process);
+
+        // Act
+        $this->tester->resetProcessBuffer();
+        $builder->createProcess('process-a');
+
+        $this->tester->resetProcessBuffer();
+        $builder->createProcess('process-a');
+
+        $this->tester->resetProcessBuffer();
+        $builder->createProcess('process-a');
+    }
+
+    /**
+     * @dataProvider omsProcessCachingWriterDataProvider
+     *
+     * @param bool $cacheIsEnabled
+     * @param int $expectedReaderCalls
+     * @param int $expectedWriterCalls
+     *
+     * @return void
+     */
+    public function testCreateProcessShouldWriteToCacheIfCacheIsEnabled(
+        bool $cacheIsEnabled,
+        int $expectedReaderCalls,
+        int $expectedWriterCalls
+    ): void {
+        // Arrange
+        $omsConfigMock = $this->createMock(OmsConfig::class);
+        $omsConfigMock
+            ->method('isProcessCacheEnabled')
+            ->willReturn($cacheIsEnabled);
+
+        $processCacheReaderMock = $this->createMock(ProcessCacheReaderInterface::class);
+
+        $processCacheWriterMock = $this->getMockBuilder(ProcessCacheWriter::class)
+            ->setConstructorArgs([$omsConfigMock, $this->tester->createProcessCacheReader()])
+            ->onlyMethods(['cacheProcess'])
+            ->getMock();
+
+        // Assert
+        $processCacheReaderMock
+            ->expects($this->exactly($expectedReaderCalls))
+            ->method('hasProcess')
+            ->withConsecutive(['process-a'], ['process-a'])
+            ->willReturnOnConsecutiveCalls(false, true);
+
+        $processCacheWriterMock
+            ->expects($this->exactly($expectedWriterCalls))
+            ->method('cacheProcess')
+            ->willReturn($this->tester->createProcessCacheReader()->getFullFilename('process-a'));
+
+        $builder = new Builder(
+            $this->getEventMock(),
+            $this->getStateMock(),
+            $this->getTransitionMock(),
+            $this->getProcess(),
+            [$this->getProcessLocationA()],
+            $processCacheReaderMock,
+            $processCacheWriterMock,
+            $omsConfigMock,
+        );
+
+        // Act
+        $this->tester->resetProcessBuffer();
+        $builder->createProcess('process-a');
+
+        $this->tester->resetProcessBuffer();
+        $builder->createProcess('process-a');
+    }
+
+    /**
+     * @return array<string, array<string|mixed>>
+     */
+    protected function omsProcessCachingWriterDataProvider(): array
+    {
+        return [
+            'test when cache is enabled' => [
+                'cacheIsEnabled' => true,
+                'expectedReaderCalls' => 2,
+                'expectedWriterCalls' => 1,
+            ],
+            'test when cache is disabled' => [
+                'cacheIsEnabled' => false,
+                'expectedReaderCalls' => 0,
+                'expectedWriterCalls' => 0,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, array<string|mixed>>
+     */
+    protected function omsProcessCachingReaderDataProvider(): array
+    {
+        return [
+            'test when cache is enabled' => [
+                'cacheIsEnabled' => true,
+                'expectedReaderCalls' => 2,
+            ],
+            'test when cache is disabled' => [
+                'cacheIsEnabled' => false,
+                'expectedReaderCalls' => 0,
+            ],
+        ];
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Process\EventInterface
      */
     private function getEventMock(): EventInterface
@@ -195,6 +350,7 @@ class BuilderTest extends Unit
             $processDefinitionLocation,
             $this->tester->createProcessCacheReader(),
             $this->tester->createProcessCacheWriter(),
+            new OmsConfig(),
         );
     }
 }

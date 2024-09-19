@@ -33,6 +33,7 @@ use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\ValidationMiddl
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
 use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
+use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
 use Spryker\Zed\Oms\Business\Reader\ProcessCacheReader;
@@ -519,5 +520,16 @@ class OmsBusinessTester extends Actor
     public function createProcessCacheWriter(): ProcessCacheWriterInterface
     {
         return new ProcessCacheWriter(new OmsConfig(), $this->createProcessCacheReader());
+    }
+
+    /**
+     * @return void
+     */
+    public function resetProcessBuffer(): void
+    {
+        $reflection = new ReflectionClass(Builder::class);
+        $property = $reflection->getProperty('processBuffer');
+        $property->setAccessible(true);
+        $property->setValue(null, []);
     }
 }

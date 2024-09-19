@@ -20,6 +20,7 @@ use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Util\DrawerInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerTest\Zed\Oms\OmsBusinessTester;
 
@@ -159,6 +160,7 @@ class FinderTest extends Unit
             $this->getProcessLocation(),
             $this->tester->createProcessCacheReader(),
             $this->tester->createProcessCacheWriter(),
+            new OmsConfig(),
         );
     }
 
