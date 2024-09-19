@@ -125,6 +125,28 @@ class CmsContentWidgetFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandCmsBlockCollectorDataDoesNotThrowExceptionForNonExistingGlossaryTranslationKey(): void
+    {
+        // Arrange
+        $cmsContentWidgetFacade = $this->createCmsContentWidgetFacade();
+
+        // Assert
+        $this->expectNotToPerformAssertions();
+
+        // Act
+        $cmsContentWidgetFacade->expandCmsBlockCollectorData(
+            [
+                'placeholders' => [
+                    'content' => 'this_key_does_not_exist',
+                ],
+            ],
+            $this->tester->buildLocaleTransferObject(),
+        );
+    }
+
+    /**
      * @return array
      */
     public function getContentWidgetDataProvider(): array

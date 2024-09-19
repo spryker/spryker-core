@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CmsContentWidget;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,21 @@ use Codeception\Actor;
 class CmsContentWidgetBusinessTester extends Actor
 {
     use _generated\CmsContentWidgetBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_US = 'en_US';
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function buildLocaleTransferObject(): LocaleTransfer
+    {
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setLocaleName(static::LOCALE_US);
+        $localeTransfer->setIsActive(true);
+
+        return $localeTransfer;
+    }
 }

@@ -19,4 +19,12 @@ interface CmsContentWidgetToGlossaryInterface
      * @return string
      */
     public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return bool
+     */
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
 }

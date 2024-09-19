@@ -88,9 +88,11 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
      */
     public function mapByTranslationKey($translationKey, LocaleTransfer $localeTransfer)
     {
-        $content = $this->glossaryFacade->translate($translationKey, [], $localeTransfer);
+        if (!$this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
+            return $this->map($translationKey);
+        }
 
-        return $this->map($content);
+        return $this->map($this->glossaryFacade->translate($translationKey, [], $localeTransfer));
     }
 
     /**

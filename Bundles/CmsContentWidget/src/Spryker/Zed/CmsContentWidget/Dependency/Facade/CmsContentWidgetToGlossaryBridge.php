@@ -35,4 +35,15 @@ class CmsContentWidgetToGlossaryBridge implements CmsContentWidgetToGlossaryInte
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return bool
+     */
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool
+    {
+        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
+    }
 }
