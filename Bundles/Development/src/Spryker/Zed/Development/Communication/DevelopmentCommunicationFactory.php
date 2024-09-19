@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Communication;
 
 use Generated\Shared\Transfer\ModuleTransfer;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizer;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface;
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
 use Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -44,5 +46,13 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
         );
 
         return $bundleFormDataProvider;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface
+     */
+    public function createNameNormalizer(): NameNormalizerInterface
+    {
+        return new NameNormalizer();
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface;
 use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -69,18 +70,26 @@ class CodeTester
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface
+     */
+    protected NameNormalizerInterface $nameNormalizer;
+
+    /**
      * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $developmentToModuleFinderFacade
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface $argumentBuilder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface $nameNormalizer
      */
     public function __construct(
         DevelopmentToModuleFinderFacadeInterface $developmentToModuleFinderFacade,
         CodeceptionArgumentsBuilderInterface $argumentBuilder,
-        DevelopmentConfig $config
+        DevelopmentConfig $config,
+        NameNormalizerInterface $nameNormalizer
     ) {
         $this->developmentToModuleFinderFacade = $developmentToModuleFinderFacade;
         $this->argumentBuilder = $argumentBuilder;
         $this->config = $config;
+        $this->nameNormalizer = $nameNormalizer;
     }
 
     /**
@@ -96,7 +105,7 @@ class CodeTester
      */
     public function runTest(?string $moduleName, array $options = []): int
     {
-        if (!$moduleName) {
+        if ($moduleName === null || $moduleName === '') {
             if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
                 $this->runCodeceptionBuild($options);
             }
@@ -107,6 +116,12 @@ class CodeTester
         $moduleFilterTransfer = $this->buildModuleFilterTransfer($moduleName);
         $modules = $this->developmentToModuleFinderFacade->getModules($moduleFilterTransfer);
         if (!$modules) {
+            if ($this->config->isStandaloneMode()) {
+                $path = $this->getCommonModulePath($moduleName);
+
+                return $this->runTestCommand($path, $options) ? static::CODE_SUCCESS : static::CODE_ERROR;
+            }
+
             throw new RuntimeException('No matching core modules found.');
         }
 
@@ -135,7 +150,7 @@ class CodeTester
      */
     public function runFixtures(?string $moduleName, array $options = []): int
     {
-        if (!$moduleName) {
+        if ($moduleName === null || $moduleName === '') {
             if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
                 $this->runCodeceptionBuild($options);
             }
@@ -146,6 +161,12 @@ class CodeTester
         $moduleFilterTransfer = $this->buildModuleFilterTransfer($moduleName);
         $modules = $this->developmentToModuleFinderFacade->getModules($moduleFilterTransfer);
         if (!$modules) {
+            if ($this->config->isStandaloneMode()) {
+                $path = $this->getCommonModulePath($moduleName);
+
+                return $this->runFixturesCommand($path, $options) ? static::CODE_SUCCESS : static::CODE_ERROR;
+            }
+
             throw new RuntimeException('No matching core modules found.');
         }
 
@@ -258,7 +279,7 @@ class CodeTester
     protected function runFixturesCommand(?string $path, array $options): int
     {
         if ($options[static::OPTION_INITIALIZE] && !$options[static::OPTION_DRY_RUN]) {
-            $this->runCodeceptionBuild($options);
+            $this->runCodeceptionBuild($options, $path);
         }
 
         $commandLine = [];
@@ -283,14 +304,16 @@ class CodeTester
 
     /**
      * @param array<string, mixed> $options
+     * @param string|null $path
      *
      * @return void
      */
-    protected function runCodeceptionBuild(array $options): void
+    protected function runCodeceptionBuild(array $options, ?string $path = null): void
     {
         $commandLine = [];
 
-        $commandLine[] = 'vendor/bin/codecept';
+        $commandPath = $path ?? '';
+        $commandLine[] = $commandPath . 'vendor/bin/codecept';
         $commandLine[] = 'build';
 
         $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());
@@ -318,5 +341,25 @@ class CodeTester
         echo implode(' ', $output) . PHP_EOL;
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return string
+     */
+    protected function getCommonModulePath(string $module): string
+    {
+        [$namespace, $module] = explode('.', $module);
+
+        $moduleVendor = $this->nameNormalizer->dasherize($namespace);
+        $module = $this->nameNormalizer->dasherize($module);
+
+        return sprintf(
+            '%s/vendor/%s/%s/',
+            $this->config->getPathToRoot(),
+            $moduleVendor,
+            $module,
+        );
     }
 }

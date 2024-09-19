@@ -30,11 +30,6 @@ class ModuleBuilder
     protected const NAMESPACE_SPRYKER = 'Spryker';
 
     /**
-     * @var string
-     */
-    protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
-
-    /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;

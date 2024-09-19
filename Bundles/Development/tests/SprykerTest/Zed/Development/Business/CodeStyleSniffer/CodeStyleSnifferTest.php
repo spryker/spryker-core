@@ -12,6 +12,7 @@ use ReflectionMethod;
 use ReflectionObject;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
+use Spryker\Zed\Development\Business\Resolver\CodeStylePathResolver;
 
 /**
  * Auto-generated group annotations
@@ -148,7 +149,7 @@ class CodeStyleSnifferTest extends Unit
             ->getMockBuilder(CodeStyleSniffer::class)
             ->setConstructorArgs([
                 $developmentConfig,
-                $this->tester->createCodeStyleSnifferConfigurationLoader(),
+                $this->tester->createCodeStylePathResolver(),
             ])
             ->setMethods(['runSnifferCommand'])
             ->getMock();
@@ -177,10 +178,9 @@ class CodeStyleSnifferTest extends Unit
                 'module' => $module,
             ] + $this->defaultOptions;
 
-        $reflectedResolvePathsMethod = new ReflectionMethod(CodeStyleSniffer::class, 'resolvePaths');
-        $reflectedResolvePathsMethod->setAccessible(true);
+        $reflectedResolvePathsMethod = new ReflectionMethod(CodeStylePathResolver::class, 'resolvePaths');
         $paths = $reflectedResolvePathsMethod->invokeArgs(
-            $this->tester->createCodeStyleSniffer(),
+            $this->tester->createCodeStylePathResolver(),
             ['all', 'Spryker', null, $options],
         );
 

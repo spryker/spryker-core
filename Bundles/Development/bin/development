@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This binary file includes commands that were prepared to work in standalone mode
+ */
+putenv('DEVELOPMENT_STANDALONE_MODE=true');
+
+defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'development');
+defined('APPLICATION_CODE_BUCKET') || define('APPLICATION_CODE_BUCKET', 'development');
+
+defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', getcwd());
+
+defined('DEVELOPMENT_ROOT_DIR') || define('DEVELOPMENT_ROOT_DIR', dirname(__DIR__, 4));
+
+defined('APPLICATION_SOURCE_DIR')
+|| define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src');
+
+defined('APPLICATION_VENDOR_DIR')
+||  define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor');
+
+require APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+use Spryker\Zed\Development\Communication\Console\CodeArchitectureSnifferConsole;
+use Spryker\Zed\Development\Communication\Console\CodePhpMessDetectorConsole;
+use Spryker\Zed\Development\Communication\Console\CodePhpstanConsole;
+use Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole;
+use Symfony\Component\Console\Application;
+
+$configWasAdded = false;
+if (!file_exists(getcwd() . '/config/Shared/config_default.php')) {
+    mkdir(getcwd() . '/config/Shared/', 0777, true);
+    copy(getcwd() . '/vendor/spryker/development/config/Shared/config_default.php', getcwd() . '/config/Shared/config_default.php');
+    $configWasAdded = true;
+}
+
+$application = new Application();
+
+$application->addCommands(
+    [
+        new CodeArchitectureSnifferConsole(),
+        new CodePhpMessDetectorConsole(),
+        new CodePhpstanConsole(),
+        new CodeStyleSnifferConsole(),
+    ],
+);
+
+$application->run();
+
+if ($configWasAdded) {
+    unlink(getcwd() . '/config/Shared/config_default.php');
+}

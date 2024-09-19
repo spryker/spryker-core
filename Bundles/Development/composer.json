@@ -16,6 +16,8 @@
         "spryker/twig": "^3.16.0"
     },
     "require-dev": {
+        "spryker-sdk/phpstan-spryker": "*",
+        "spryker/architecture-sniffer": "*",
         "spryker/code-sniffer": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
@@ -50,5 +52,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    }
+    },
+    "bin": [
+        "bin/development"
+    ]
 }

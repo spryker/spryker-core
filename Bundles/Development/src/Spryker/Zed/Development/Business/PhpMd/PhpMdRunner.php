@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Development\Business\PhpMd;
 
 use ErrorException;
-use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 
@@ -18,6 +18,11 @@ class PhpMdRunner
      * @var int
      */
     public const CODE_SUCCESS = 0;
+
+    /**
+     * @var string
+     */
+    protected const CONFIG_LOCAL = 'phpmd.xml';
 
     /**
      * @var string
@@ -35,16 +40,35 @@ class PhpMdRunner
     public const OPTION_FORMAT = 'format';
 
     /**
+     * @var string
+     */
+    protected const OPTION_IGNORE = 'ignore';
+
+    /**
+     * @var string
+     */
+    protected const CUSTOM_RULESET = 'phpmd-ruleset.xml';
+
+    /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @var \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface $nameNormalizer
      */
-    public function __construct(DevelopmentConfig $config)
-    {
+    protected NameNormalizerInterface $nameNormalizer;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface $nameNormalizer
+     */
+    public function __construct(
+        DevelopmentConfig $config,
+        NameNormalizerInterface $nameNormalizer
+    ) {
         $this->config = $config;
+        $this->nameNormalizer = $nameNormalizer;
     }
 
     /**
@@ -68,26 +92,23 @@ class PhpMdRunner
             throw new ErrorException($message);
         }
 
-        $defaults = [
-            'ignore' => $bundle ? '' : 'vendor/',
-        ];
-        $options += $defaults;
+        $options += $this->getDefaultIgnoredPath($bundle);
 
         return $this->runPhpMdCommand($path, $options);
     }
 
     /**
-     * @param string $value
+     * @param string|null $bundle
      *
-     * @return string
+     * @return array<string, string|null>
      */
-    protected function convertToCamelCase(string $value): string
+    protected function getDefaultIgnoredPath(?string $bundle = null): array
     {
-        $filter = new UnderscoreToCamelCase();
-        /** @var string $camelCasedValue */
-        $camelCasedValue = $filter->filter($value);
+        $dontIgnoreVendor = $bundle !== null || $this->config->isStandaloneMode();
 
-        return ucfirst($camelCasedValue);
+        return [
+            static::OPTION_IGNORE => $dontIgnoreVendor ? null : 'vendor/',
+        ];
     }
 
     /**
@@ -102,7 +123,7 @@ class PhpMdRunner
                 return $this->config->getPathToCore();
             }
 
-            $bundle = $this->convertToCamelCase($bundle);
+            $bundle = $this->nameNormalizer->camelize($bundle);
 
             return $this->getPathToBundle($bundle);
         }
@@ -134,15 +155,48 @@ class PhpMdRunner
         [$namespace, $module] = explode('.', $module, 2);
 
         $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($namespace !== null && $pathToInternalNamespace === null) {
+            return $this->resolveCommonModulePath($module, $namespace);
+        }
+
         if ($pathToInternalNamespace !== null && is_dir($pathToInternalNamespace . $module)) {
             return $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
         }
 
-        $namespace = $this->convertToCamelCase($namespace);
-        $module = $this->convertToCamelCase($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+        $namespace = $this->nameNormalizer->camelize($namespace);
+        $module = $this->nameNormalizer->camelize($module);
 
-        return $path;
+        return $this->getFullPathFromRoot($namespace, $module);
+    }
+
+    /**
+     * @param string $module
+     * @param string $namespace
+     *
+     * @return string
+     */
+    protected function resolveCommonModulePath(string $module, string $namespace): string
+    {
+        $moduleVendor = $this->nameNormalizer->dasherize($namespace);
+        $module = $this->nameNormalizer->dasherize($module);
+
+        return $this->getFullPathFromRoot($moduleVendor, $module);
+    }
+
+    /**
+     * @param string $moduleVendor
+     * @param string $module
+     *
+     * @return string
+     */
+    protected function getFullPathFromRoot(string $moduleVendor, string $module): string
+    {
+        return sprintf(
+            '%s/vendor/%s/%s/',
+            $this->config->getPathToRoot(),
+            $moduleVendor,
+            $module,
+        );
     }
 
     /**
@@ -163,7 +217,7 @@ class PhpMdRunner
             $format = $options[static::OPTION_FORMAT];
         }
 
-        $config = $this->config->getArchitectureStandard();
+        $config = $this->resolveRulesetPath($path);
 
         if ($options['ignore']) {
             $config .= ' --exclude ' . $options['ignore'];
@@ -183,5 +237,41 @@ class PhpMdRunner
         });
 
         return $process->getExitCode();
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return string
+     */
+    protected function resolveRulesetPath(string $directory): string
+    {
+        $rulesetFilepath = $directory . static::CUSTOM_RULESET;
+
+        if (file_exists($rulesetFilepath) === true) {
+            return $rulesetFilepath;
+        }
+
+        return $this->getArchitectureStandard($rulesetFilepath);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function getArchitectureStandard(string $path): string
+    {
+        $standardConfig = $this->config->getArchitectureStandard();
+        if (!$this->config->isStandaloneMode()) {
+            return $standardConfig;
+        }
+
+        $configPath = $path . static::CONFIG_LOCAL;
+        if (file_exists($configPath)) {
+            return $configPath;
+        }
+
+        return $standardConfig;
     }
 }

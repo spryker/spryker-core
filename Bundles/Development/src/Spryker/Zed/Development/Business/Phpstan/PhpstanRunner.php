@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\Development\Business\Phpstan;
 
-use Laminas\Filter\FilterChain;
-use Laminas\Filter\StringToLower;
-use Laminas\Filter\Word\CamelCaseToDash;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
 use RegexIterator;
 use RuntimeException;
 use SplFileInfo;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
 use Spryker\Zed\Development\Business\Traits\PathTrait;
@@ -27,11 +25,6 @@ use Symfony\Component\Finder\Finder;
 class PhpstanRunner implements PhpstanRunnerInterface
 {
     use PathTrait;
-
-    /**
-     * @var string
-     */
-    public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
 
     /**
      * @var string
@@ -79,6 +72,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const OPTION_OFFSET = 'offset';
 
     /**
+     * @var string
+     */
+    public const OPTION_IS_MERGABLE_CONFIG = 'is-mergable-config';
+
+    /**
      * @var int
      */
     protected const SUCCESS_EXIT_CODE = 0;
@@ -109,6 +107,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected $phpstanConfigFileManager;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface $nameNormalizer
+     */
+    protected NameNormalizerInterface $nameNormalizer;
+
+    /**
      * @var int
      */
     protected $errorCount = 0;
@@ -117,15 +120,18 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      * @param \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface $phpstanConfigFileFinder
      * @param \Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface $phpstanConfigFileManager
+     * @param \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface $nameNormalizer
      */
     public function __construct(
         DevelopmentConfig $config,
         PhpstanConfigFileFinderInterface $phpstanConfigFileFinder,
-        PhpstanConfigFileManagerInterface $phpstanConfigFileManager
+        PhpstanConfigFileManagerInterface $phpstanConfigFileManager,
+        NameNormalizerInterface $nameNormalizer
     ) {
         $this->config = $config;
         $this->phpstanConfigFileFinder = $phpstanConfigFileFinder;
         $this->phpstanConfigFileManager = $phpstanConfigFileManager;
+        $this->nameNormalizer = $nameNormalizer;
     }
 
     /**
@@ -139,14 +145,10 @@ class PhpstanRunner implements PhpstanRunnerInterface
         /** @var string|null $module */
         $module = $input->getOption(static::OPTION_MODULE);
 
-        $message = 'Run PHPStan in PROJECT level';
-        if ($module) {
-            $message = 'Run PHPStan in module ' . $module;
-        }
-
+        $message = $this->buildMessage($module);
         $output->writeln($message);
 
-        $paths = $this->getPathsToAnalyze($module);
+        $paths = $this->getPathsToAnalyze($module, $input);
         $resultCode = 0;
         $count = 0;
         $total = count($paths);
@@ -282,8 +284,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function getLevel(InputInterface $input, string $path, string $configFilePath): int
     {
         $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
-        /** @var string $level */
+        /** @var string|null $level */
         $level = $input->getOption(static::OPTION_LEVEL);
+
+        if ($level === null) {
+            return $defaultLevel;
+        }
 
         if (preg_match('/^([+])(\d)$/', $level, $matches)) {
             return $defaultLevel + (int)$matches[2];
@@ -294,15 +300,16 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
     /**
      * @param string|bool|null $module
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @throws \RuntimeException
      *
      * @return array
      */
-    protected function getPathsToAnalyze($module): array
+    protected function getPathsToAnalyze($module, InputInterface $input): array
     {
         if (is_string($module) && $module) {
-            $paths = $this->getPaths($module);
+            $paths = $this->getPaths($module, $input);
 
             if (!$paths) {
                 throw new RuntimeException('No path found for module ' . $module);
@@ -326,18 +333,93 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
     /**
      * @param string $module
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return array
      */
-    protected function getPaths($module)
+    protected function getPaths($module, InputInterface $input)
     {
         if (strpos($module, '.') !== false) {
-            $paths = $this->resolveCorePaths($module);
+            $paths = $this->resolveCorePaths($module, $input);
         } else {
             $paths = $this->resolveProjectPaths($module);
         }
 
         return $paths;
+    }
+
+    /**
+     * @param string $module
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @throws \RuntimeException
+     *
+     * @return array<string, string>
+     */
+    protected function resolveCorePaths($module, InputInterface $input)
+    {
+        $paths = [];
+        [$namespace, $module] = explode('.', $module, 2);
+
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($namespace !== null && $pathToInternalNamespace === null) {
+            return $this->resolveCommonModulePath([], $module, $namespace, $input);
+        }
+
+        if ($module === 'all') {
+            if ($pathToInternalNamespace === null) {
+                throw new RuntimeException('Namespace invalid: ' . $namespace);
+            }
+
+            return $this->resolveCoreModules($paths, $pathToInternalNamespace, $namespace, $input);
+        }
+
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
+            return $this->addPath($paths, $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $namespace, $input);
+        }
+
+        return $this->resolveCommonModulePath($paths, $module, $namespace, $input);
+    }
+
+    /**
+     * @param array $paths
+     * @param string $pathToInternalNamespace
+     * @param string $namespace
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array<string>
+     */
+    protected function resolveCoreModules(array $paths, string $pathToInternalNamespace, string $namespace, InputInterface $input): array
+    {
+        $modules = $this->getCoreModules($pathToInternalNamespace);
+        foreach ($modules as $module) {
+            $path = $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
+            $paths = $this->addPath($paths, $path, $namespace, $input);
+        }
+
+        return $paths;
+    }
+
+    /**
+     * @param array $paths
+     * @param string|null $module
+     * @param string|null $namespace
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return array<string>
+     */
+    protected function resolveCommonModulePath(array $paths, ?string $module, ?string $namespace, InputInterface $input): array
+    {
+        $moduleVendor = $this->nameNormalizer->dasherize($namespace);
+        $module = $this->nameNormalizer->dasherize($module);
+        $path = sprintf(
+            '%s/vendor/%s/%s/',
+            $this->config->getPathToRoot(),
+            $moduleVendor,
+            $module,
+        );
+
+        return $this->addPath($paths, $path, $namespace, $input);
     }
 
     /**
@@ -349,7 +431,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function resolveProjectPaths($module, $pathSuffix = null)
     {
         $projectNamespaces = $this->config->getProjectNamespaces();
-        $namespaces = array_merge(DevelopmentConfig::APPLICATION_NAMESPACES, $projectNamespaces);
+        $namespaces = array_merge($this->config->getApplicationNamespaces(), $projectNamespaces);
         $pathToRoot = $this->config->getPathToRoot();
 
         $paths = [];
@@ -378,12 +460,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param array<string, string> $paths
      * @param string $moduleDirectoryPath
      * @param string|null $namespace
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return array<string, string>
      */
-    protected function addPath(array $paths, string $moduleDirectoryPath, $namespace = null): array
+    protected function addPath(array $paths, string $moduleDirectoryPath, $namespace, InputInterface $input): array
     {
-        $paths[$moduleDirectoryPath] = $this->getConfigFilePathByModuleDirectory($moduleDirectoryPath, $namespace);
+        $paths[$moduleDirectoryPath] = $this->getConfigFilePathByModuleDirectory($moduleDirectoryPath, $namespace, $input);
 
         return $paths;
     }
@@ -391,10 +474,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     /**
      * @param string $moduleDirectoryPath
      * @param string|null $namespace
+     * @param \Symfony\Component\Console\Input\InputInterface $input
      *
      * @return string
      */
-    protected function getConfigFilePathByModuleDirectory(string $moduleDirectoryPath, $namespace = null): string
+    protected function getConfigFilePathByModuleDirectory(string $moduleDirectoryPath, $namespace, InputInterface $input): string
     {
         $moduleConfigFile = $this->phpstanConfigFileFinder
             ->searchIn($moduleDirectoryPath);
@@ -404,7 +488,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $vendorConfigFile = $this->phpstanConfigFileFinder
             ->searchIn($vendorDirectoryPath);
 
-        if ($moduleConfigFile && $vendorConfigFile) {
+        $isMergable = $input->getOption(static::OPTION_IS_MERGABLE_CONFIG);
+
+        if ($moduleConfigFile && $vendorConfigFile && $isMergable === true) {
             return $this->phpstanConfigFileManager->merge(
                 [$moduleConfigFile, $vendorConfigFile],
                 $this->getConfigFilenameForMerge($moduleConfigFile),
@@ -457,61 +543,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $pathToModules = $this->config->getPathToInternalNamespace($namespace);
 
         return dirname($pathToModules) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @throws \RuntimeException
-     *
-     * @return array<string, string>
-     */
-    protected function resolveCorePaths($module)
-    {
-        $paths = [];
-        [$namespace, $module] = explode('.', $module, 2);
-
-        if ($module === 'all') {
-            $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
-            if ($pathToInternalNamespace === null) {
-                throw new RuntimeException('Namespace invalid: ' . $namespace);
-            }
-
-            $modules = $this->getCoreModules($pathToInternalNamespace);
-            foreach ($modules as $module) {
-                $path = $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
-                $paths = $this->addPath($paths, $path, $namespace);
-            }
-
-            return $paths;
-        }
-
-        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
-        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
-            return $this->addPath($paths, $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $namespace);
-        }
-
-        $vendor = $this->dasherize($namespace);
-        $module = $this->dasherize($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
-        $paths = $this->addPath($paths, $path, $namespace);
-
-        return $paths;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function dasherize($name)
-    {
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
-
-        return $filterChain->filter($name);
     }
 
     /**
@@ -662,5 +693,24 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param string|null $module
+     *
+     * @return string
+     */
+    protected function buildMessage(?string $module = null): string
+    {
+        $message = 'Run PHPStan in ';
+        if ($this->config->isStandaloneMode()) {
+            return $message . 'Standalone Mode';
+        }
+
+        if ($module !== null) {
+            return $message . 'module ' . $module;
+        }
+
+        return $message . 'PROJECT level';
     }
 }

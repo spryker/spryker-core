@@ -91,6 +91,21 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @var string
      */
+    protected const CUSTOM_RULESET = 'architectural-ruleset.xml';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_RULESET_PATTERN = '/\s\/[^\s]+\/ruleset\.xml/';
+
+    /**
+     * @var string
+     */
+    protected const REPLACEMENT_PLACEHOLDER = ' %s';
+
+    /**
+     * @var string
+     */
     protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
 
     /**
@@ -294,7 +309,8 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runCommand($directory, array $options = [])
     {
-        $command = explode(' ', str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command));
+        $command = $this->resolveRulesetPath($directory);
+        $command = explode(' ', str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $command));
         $command[] = '--minimumpriority';
         $command[] = $options[static::OPTION_PRIORITY];
 
@@ -323,6 +339,27 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $output = $process->getOutput();
 
         return $output;
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return string
+     */
+    protected function resolveRulesetPath(string $directory): string
+    {
+        $architecturalRulesetFilepath = dirname($directory) . DIRECTORY_SEPARATOR . static::CUSTOM_RULESET;
+        $command = $this->command;
+
+        if (file_exists($architecturalRulesetFilepath) === true) {
+            $command = preg_replace(
+                static::DEFAULT_RULESET_PATTERN,
+                sprintf(static::REPLACEMENT_PLACEHOLDER, $architecturalRulesetFilepath),
+                $command,
+            );
+        }
+
+        return $command;
     }
 
     /**

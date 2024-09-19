@@ -179,12 +179,23 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
 
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
 
-        if (strpos($path, $vendorDir) !== false) {
-            if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
-                return $this->developmentConfig->getCodeSnifferStrictRuleset();
-            }
+        $localConfigPath = '';
+        if (strpos($path, $vendorDir) === false && !$this->developmentConfig->isStandaloneMode()) {
+            return $this->developmentConfig->getCodingStandard();
+        }
 
-            return $this->developmentConfig->getCodeSnifferRuleset();
+        if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
+            $localConfigPath = $this->developmentConfig->getCodeSnifferStrictRuleset();
+        }
+
+        if (file_exists($localConfigPath)) {
+            return $localConfigPath;
+        }
+
+        $localConfigPath = $this->developmentConfig->getCodeSnifferRuleset();
+
+        if (file_exists($localConfigPath)) {
+            return $localConfigPath;
         }
 
         return $this->developmentConfig->getCodingStandard();

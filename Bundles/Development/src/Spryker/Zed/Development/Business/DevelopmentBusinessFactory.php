@@ -182,6 +182,8 @@ use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBui
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandaloneModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinder;
 use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizer;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface;
 use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinder;
 use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinderInterface;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
@@ -194,6 +196,8 @@ use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileSaverInterf
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
+use Spryker\Zed\Development\Business\Resolver\CodeStylePathResolver;
+use Spryker\Zed\Development\Business\Resolver\PathResolverInterface;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
@@ -219,7 +223,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeStyleSniffer(
             $this->getConfig(),
-            $this->createCodeStyleSnifferConfigurationLoader(),
+            $this->createCodeStylePathResolver(),
         );
     }
 
@@ -251,6 +255,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getModuleFinderFacade(),
             $this->createConfigArgumentCollectionBuilder(),
             $this->getConfig(),
+            $this->createNameNormalizer(),
         );
     }
 
@@ -261,6 +266,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new PhpMdRunner(
             $this->getConfig(),
+            $this->createNameNormalizer(),
         );
     }
 
@@ -273,6 +279,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createPhpstanConfigFileFinder(),
             $this->createPhpstanConfigFileManager(),
+            $this->createNameNormalizer(),
         );
     }
 
@@ -2200,5 +2207,25 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function getPhpstanFileAdapters(): array
     {
         return $this->getProvidedDependency(DevelopmentDependencyProvider::PHPSTAN_ADAPTERS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Resolver\PathResolverInterface
+     */
+    public function createCodeStylePathResolver(): PathResolverInterface
+    {
+        return new CodeStylePathResolver(
+            $this->getConfig(),
+            $this->createNameNormalizer(),
+            $this->createCodeStyleSnifferConfigurationLoader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Normalizer\NameNormalizerInterface
+     */
+    public function createNameNormalizer(): NameNormalizerInterface
+    {
+        return new NameNormalizer();
     }
 }

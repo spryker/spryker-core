@@ -61,6 +61,11 @@ class CodeStyleSnifferConsole extends Console
     protected const OPTION_LEVEL = 'level';
 
     /**
+     * @var string
+     */
+    protected const RUN_IN_STANDALONE_MODE = 'Run Code Style Sniffer in Standalone Mode';
+
+    /**
      * @return void
      */
     protected function configure(): void
@@ -108,16 +113,20 @@ class CodeStyleSnifferConsole extends Console
      */
     protected function buildMessage($module, $path)
     {
+        if ($this->getFactory()->getConfig()->isStandaloneMode()) {
+            return static::RUN_IN_STANDALONE_MODE;
+        }
+
         $isCore = strpos($module, '.') !== false;
         $message = sprintf('Run Code Style Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
         if ($module) {
             $module = $this->normalizeModuleName($module);
-            $message .= ' in ' . $module . ' module';
+            $message = sprintf('%s in %s module', $message, $module);
         }
 
         if ($path) {
-            $message .= ' (' . $path . ')';
+            $message = sprintf('%s (%s)', $message, $path);
         }
 
         return $message;

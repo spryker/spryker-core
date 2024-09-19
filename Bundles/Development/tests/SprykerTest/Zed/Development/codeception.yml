@@ -25,3 +25,14 @@ suites:
                 - \SprykerTest\Zed\Development\Helper\IdeAutoCompletion
                 - \SprykerTest\Zed\Development\Helper\DependencyValidatorModule
                 - \SprykerTest\Zed\Development\Helper\SnifferConfigurationHelper
+    Communication:
+        path: Communication
+        actor: DevelopmentCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - Filesystem
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper

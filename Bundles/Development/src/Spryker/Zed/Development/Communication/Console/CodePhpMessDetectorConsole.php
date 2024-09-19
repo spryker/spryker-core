@@ -71,15 +71,32 @@ class CodePhpMessDetectorConsole extends Console
         /** @var string|null $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
 
-        $message = 'Run PHPMD in PROJECT level';
-        if ($module) {
-            $message = 'Run PHPMD in all CORE modules';
-            if ($module !== static::OPTION_MODULE_ALL) {
-                $message = 'Run PHPMD in ' . $module . ' CORE module';
-            }
-        }
+        $message = $this->buildMessage($module);
         $this->info($message);
 
         return $this->getFacade()->runPhpMd($module, $this->input->getOptions());
+    }
+
+    /**
+     * @param string|null $module
+     *
+     * @return string
+     */
+    protected function buildMessage(?string $module = null): string
+    {
+        $message = 'Run PHPMD in';
+        if ($this->getFactory()->getConfig()->isStandaloneMode()) {
+            return sprintf('%s Standalone Mode', $message);
+        }
+
+        if ($module === null) {
+            return sprintf('%s PROJECT level', $message);
+        }
+
+        if ($module !== static::OPTION_MODULE_ALL) {
+            return sprintf('%s %s CORE module', $message, $module);
+        }
+
+        return sprintf('%s all CORE modules', $message);
     }
 }

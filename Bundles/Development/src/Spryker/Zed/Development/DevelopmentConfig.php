@@ -80,6 +80,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @var array
+     */
+    protected const APPLICATION_LAYERS = [
+        'Zed',
+        'Client',
+        'Yves',
+        'Glue',
+        'Service',
+        'Shared',
+    ];
+
+    /**
      * @var array<string>
      */
     protected const INTERNAL_NAMESPACES_LIST = [
@@ -178,6 +190,19 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getApplicationNamespaces()
     {
         return static::APPLICATION_NAMESPACES;
+    }
+
+    /**
+     * Specification:
+     * - Gets Application layers.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getApplicationLayers(): array
+    {
+        return static::APPLICATION_LAYERS;
     }
 
     /**
@@ -819,6 +844,32 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns Spryker namespace.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getNamespaceSpryker(): string
+    {
+        return static::NAMESPACE_SPRYKER;
+    }
+
+    /**
+     * Specification:
+     * - Returns Spryker Shop namespace.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getNamespaceSprykerShop(): string
+    {
+        return static::NAMESPACE_SPRYKER_SHOP;
+    }
+
+    /**
      * @api
      *
      * @return int
@@ -826,5 +877,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getProcessTimeout(): int
     {
         return static::TIMEOUT_DEFAULT;
+    }
+
+    /**
+     * Specification:
+     * - Is used to determine if the application is in the standalone mode e.g. without the project context.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStandaloneMode(): bool
+    {
+        return (bool)getenv('DEVELOPMENT_STANDALONE_MODE');
     }
 }

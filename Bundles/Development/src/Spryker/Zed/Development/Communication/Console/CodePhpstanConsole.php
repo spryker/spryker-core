@@ -24,13 +24,30 @@ class CodePhpstanConsole extends Console
      */
     protected const COMMAND_NAME = 'code:phpstan';
 
+    /**
+     * @var string
+     */
     protected const OPTION_MODULE = PhpstanRunner::OPTION_MODULE;
 
+    /**
+     * @var string
+     */
     protected const OPTION_DRY_RUN = PhpstanRunner::OPTION_DRY_RUN;
 
+    /**
+     * @var string
+     */
     protected const OPTION_LEVEL = PhpstanRunner::OPTION_LEVEL;
 
+    /**
+     * @var string
+     */
     protected const OPTION_OFFSET = PhpstanRunner::OPTION_OFFSET;
+
+    /**
+     * @var string
+     */
+    protected const OPTION_IS_MERGABLE_CONFIG = PhpstanRunner::OPTION_IS_MERGABLE_CONFIG;
 
     /**
      * @deprecated Not Used
@@ -55,6 +72,7 @@ class CodePhpstanConsole extends Console
         $this->addOption(static::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, json, md]');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, display it only');
         $this->addOption(static::OPTION_LEVEL, 'l', InputOption::VALUE_OPTIONAL, 'Level of rule options - the higher the stricter');
+        $this->addOption(static::OPTION_IS_MERGABLE_CONFIG, 'c', InputOption::VALUE_OPTIONAL, 'Defines whether the module config is mergable with the default one or not. If not set to false, the command will merge the module config with the default one.', true);
 
         $description = 'Offset to use for path splitting. Mainly for core, where it is needed for runtime reasons.';
         $description .= PHP_EOL . 'Syntax: {offset}[,{limit}]';

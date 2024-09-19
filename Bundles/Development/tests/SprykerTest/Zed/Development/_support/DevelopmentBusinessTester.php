@@ -11,6 +11,9 @@ use Codeception\Actor;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoader;
+use Spryker\Zed\Development\Business\Normalizer\NameNormalizer;
+use Spryker\Zed\Development\Business\Resolver\CodeStylePathResolver;
+use Spryker\Zed\Development\Business\Resolver\PathResolverInterface;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
@@ -127,6 +130,18 @@ class DevelopmentBusinessTester extends Actor
     {
         return new CodeStyleSniffer(
             $this->createDevelopmentConfig(),
+            $this->createCodeStylePathResolver(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Resolver\PathResolverInterface
+     */
+    public function createCodeStylePathResolver(): PathResolverInterface
+    {
+        return new CodeStylePathResolver(
+            $this->createDevelopmentConfig(),
+            new NameNormalizer(),
             $this->createCodeStyleSnifferConfigurationLoader(),
         );
     }
