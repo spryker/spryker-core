@@ -4,7 +4,7 @@
     "description": "CommentGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/comment": "^1.4.0",
         "spryker/gui": "^3.53.0",
         "spryker/kernel": "^3.33.0",

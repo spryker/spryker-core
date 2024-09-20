@@ -4,7 +4,7 @@
     "description": "CompanyUserDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/company": "^1.0.0",
         "spryker/company-user": "^2.9.0",
         "spryker/customer": "^4.1.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",

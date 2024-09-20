@@ -86,7 +86,7 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
         array $schemaFormatterPlugins,
         ContentGeneratorStrategyPluginInterface $contentGeneratorStrategyPlugin,
         DocumentationGeneratorApiToStorageClientInterface $storageClient,
-        DocumentationGenerationApiToUtilEncodingServiceInterface $utilEncodingService,
+        DocumentationGenerationApiToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->apiApplicationProviderPlugins = $apiApplicationProviderPlugins;
         $this->contextExpanderCollection = $contextExpanderCollection;

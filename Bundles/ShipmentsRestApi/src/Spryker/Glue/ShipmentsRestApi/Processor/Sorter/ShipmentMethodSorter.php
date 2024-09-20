@@ -40,9 +40,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         $callback = function (
             RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
             RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
-        ) use (
-            $resourceSorts
-        ) {
+        ) use ($resourceSorts) {
             foreach ($resourceSorts as $resourceSort) {
                 $currentSortedPropertyValue = $this->getPropertyValueBySort($currentRestShipmentMethodAttributeTransfer, $resourceSort);
                 $nextSortedPropertyValue = $this->getPropertyValueBySort($nextRestShipmentMethodAttributeTransfer, $resourceSort);

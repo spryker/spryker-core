@@ -107,6 +107,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
      * @param array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $strategies
      * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
      * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
+     *
      * @return \Generated\Shared\Transfer\AuthorizationResponseTransfer
      */
     protected function authorizeStrategies(

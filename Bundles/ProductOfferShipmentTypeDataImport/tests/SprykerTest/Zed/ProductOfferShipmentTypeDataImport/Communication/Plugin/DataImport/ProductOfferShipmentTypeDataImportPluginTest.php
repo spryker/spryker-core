@@ -140,6 +140,7 @@ class ProductOfferShipmentTypeDataImportPluginTest extends Unit
 
     /**
      * @group test
+     *
      * @return void
      */
     public function testImportDoesntImportDataWithAnEmptyProductOfferReference(): void

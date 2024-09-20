@@ -112,7 +112,7 @@ SCRIPT;
      *
      * @return string
      */
-    protected function addFilterByColLike(Column $col)
+    protected function addFilterByColLike(Column $col): string
     {
         $script = '';
 

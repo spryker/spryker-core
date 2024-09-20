@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 
 class ProductPricesMapper implements ProductPricesMapperInterface

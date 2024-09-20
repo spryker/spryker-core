@@ -4,7 +4,7 @@
     "description": "ProductApproval module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/cart-extension": "^4.0.0",
         "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",

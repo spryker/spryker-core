@@ -6,7 +6,7 @@
     "require": {
         "everon/criteria-builder": "~1.1.6",
         "everon/factory": "~1.1.4",
-        "php": ">=8.1"
+        "php": ">=8.2"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

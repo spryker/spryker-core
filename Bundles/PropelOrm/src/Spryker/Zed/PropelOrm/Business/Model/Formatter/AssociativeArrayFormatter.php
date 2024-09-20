@@ -42,7 +42,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
      *
      * @return string
      */
-    protected function getKeyName($key)
+    protected function getKeyName($key): string
     {
         if ($this->isPhpName($key)) {
             if (strpos($key, '.') === false) {
@@ -68,7 +68,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
      *
      * @return bool
      */
-    protected function isPhpName($keyName)
+    protected function isPhpName($keyName): bool
     {
         return strpos($keyName, '\\') !== false;
     }

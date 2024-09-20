@@ -30,7 +30,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     protected ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\QuoteItemExpanderPluginInterface>
      */
     protected array $quoteItemExpanderPlugins;
 

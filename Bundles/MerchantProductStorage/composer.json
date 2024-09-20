@@ -4,7 +4,7 @@
     "description": "MerchantProductStorage module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/event-behavior": "^1.17.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.5.0 || ^4.0.0",

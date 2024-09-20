@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "nette/di": "^2.4.7 || ^3.2.0",
-        "php": ">=8.1",
+        "php": ">=8.2",
         "phpmd/phpmd": "^2.0.0",
         "spryker/config": "^3.0.0",
         "spryker/graph": "^3.0.0",

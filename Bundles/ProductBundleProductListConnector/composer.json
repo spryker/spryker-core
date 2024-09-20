@@ -4,7 +4,7 @@
     "description": "ProductBundleProductListConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/kernel": "^3.30.0",
         "spryker/product": "^6.4.0",
         "spryker/product-bundle": "^4.11.0 || ^6.0.0 || ^7.0.0",

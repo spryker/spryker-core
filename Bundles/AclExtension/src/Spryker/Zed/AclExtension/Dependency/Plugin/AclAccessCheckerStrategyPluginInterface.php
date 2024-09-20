@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\AclExtension\Dependency\Plugin;
@@ -32,6 +32,8 @@ interface AclAccessCheckerStrategyPluginInterface
      * Specification:
      * - Checks if the given user has access according to the given rule.
      * - Returns `true` if access should be granted, otherwise returns `false`.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer

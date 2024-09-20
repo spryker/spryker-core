@@ -45,6 +45,8 @@ class SetupCommunicationTester extends Actor
     }
 
     /**
+     * @param string $pathToDirectory
+     *
      * @return void
      */
     public function clearDirectory(string $pathToDirectory): void

@@ -63,7 +63,7 @@ class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
      *
      * @return void
      */
-    public function setConnection(ConnectionInterface $connection)
+    public function setConnection(ConnectionInterface $connection): void
     {
         $this->connection = $connection;
     }
@@ -73,7 +73,7 @@ class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
      *
      * @return void
      */
-    protected function preventTransaction()
+    protected function preventTransaction(): void
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');

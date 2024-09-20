@@ -4,7 +4,7 @@
     "description": "CategoryDynamicEntityConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/category": "^5.16.0",
         "spryker/dynamic-entity": "^1.0.0",
         "spryker/dynamic-entity-extension": "^1.0.0",

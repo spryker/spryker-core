@@ -4,7 +4,7 @@
     "description": "FileManagerGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/file-manager": "^2.3.0",
         "spryker/file-system-extension": "^1.0.0",
         "spryker/gui": "^3.45.0",

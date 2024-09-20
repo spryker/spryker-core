@@ -26,12 +26,12 @@ interface MailFacadeInterface
     public function handleMail(MailTransfer $mailTransfer);
 
     /**
+     * Specification:
+     * - Sends the mail.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\Business\SymfonyMailerFacadeInterface::send()} instead.
-     *
-     * Specification:
-     * - Sends the mail.
      *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *

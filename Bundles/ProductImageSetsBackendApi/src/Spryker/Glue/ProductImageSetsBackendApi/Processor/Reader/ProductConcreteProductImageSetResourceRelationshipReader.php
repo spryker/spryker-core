@@ -46,8 +46,10 @@ class ProductConcreteProductImageSetResourceRelationshipReader implements Produc
      *
      * @return \Generated\Shared\Transfer\ProductImageSetResourceCollectionTransfer
      */
-    protected function getConcreteProductImageSetResourceCollection(array $productConcreteSkus, ?string $localeName = null): ProductImageSetResourceCollectionTransfer
-    {
+    protected function getConcreteProductImageSetResourceCollection(
+        array $productConcreteSkus,
+        ?string $localeName = null
+    ): ProductImageSetResourceCollectionTransfer {
         $productImageSetConditionsTransfer = (new ProductImageSetConditionsTransfer())
             ->setSkus($productConcreteSkus);
 

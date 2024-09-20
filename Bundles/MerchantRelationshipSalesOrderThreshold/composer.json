@@ -4,7 +4,7 @@
     "description": "MerchantRelationshipSalesOrderThreshold module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/currency": "^3.0.0 || ^4.0.0",
         "spryker/glossary": "^3.1.0",
         "spryker/kernel": "^3.30.0",

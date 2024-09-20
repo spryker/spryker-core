@@ -4,7 +4,7 @@
     "description": "DynamicEntityGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/doctrine-inflector": "^1.0.0",
         "spryker/dynamic-entity": "^1.14.0",
         "spryker/gui": "^3.38.0",

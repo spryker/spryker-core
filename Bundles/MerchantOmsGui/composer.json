@@ -4,7 +4,7 @@
     "description": "MerchantOmsGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant-oms": "^1.0.0",
         "spryker/sales-extension": "^1.8.0"

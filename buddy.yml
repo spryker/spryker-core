@@ -14,7 +14,7 @@
         type: 'BUILD'
         main_service_name: 'post'
         docker_image_name: 'spryker/php'
-        docker_image_tag: '8.1'
+        docker_image_tag: '8.2'
         execute_commands:
             - 'COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
         shell: 'BASH'
@@ -33,7 +33,7 @@
       - action: 'PHP Validation'
         type: 'BUILD'
         docker_image_name: 'spryker/php'
-        docker_image_tag: '8.1'
+        docker_image_tag: '8.2'
         execute_commands:
             - 'chmod +x *.sh'
             - 'bash travis_check_touched_modules.sh'

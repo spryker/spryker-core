@@ -61,7 +61,7 @@ trait DatabaseTransactionHandlerTrait
      *
      * @return void
      */
-    protected function preventTransaction()
+    protected function preventTransaction(): void
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');

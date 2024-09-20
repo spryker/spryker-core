@@ -46,7 +46,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      *
      * @return array
      */
-    public function format(?DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null): array
     {
         $this->checkInit();
         if ($dataFetcher) {

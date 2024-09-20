@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PushNotificationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PushNotificationCollectionRequestTransfer;
-use Generated\Shared\Transfer\PushNotificationCollectionResponseTransfer;
 
 /**
  * Plugins are executed before push notification send.

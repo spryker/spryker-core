@@ -104,7 +104,7 @@ class VoucherCode implements VoucherCodeInterface
     protected function decrementNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
         $numberOfUses = $discountVoucherEntity->getNumberOfUses();
-        $discountVoucherEntity->setNumberOfUses(--$numberOfUses);
+        $discountVoucherEntity->setNumberOfUses($numberOfUses !== null ? --$numberOfUses : 0);
     }
 
     /**

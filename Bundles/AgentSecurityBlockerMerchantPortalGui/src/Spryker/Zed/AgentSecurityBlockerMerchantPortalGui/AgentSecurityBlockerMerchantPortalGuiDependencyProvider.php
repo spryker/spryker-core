@@ -8,9 +8,9 @@
 namespace Spryker\Zed\AgentSecurityBlockerMerchantPortalGui;
 
 use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Dependency\Client\AgentSecurityBlockerMerchantPortalGuiToSecurityBlockerClientBridge;
+use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Dependency\Facade\AgentSecurityBlockerMerchantPortalGuiToGlossaryFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Dependency\Facade\AgentSecurityBlockerMerchantPortalGuiToGlossaryFacadeBridge;
 
 /**
  * @method \Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\AgentSecurityBlockerMerchantPortalGuiConfig getConfig()
@@ -49,7 +49,7 @@ class AgentSecurityBlockerMerchantPortalGuiDependencyProvider extends AbstractBu
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        
+
         $container = $this->addAgentSecurityBlockerClient($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addRequestStack($container);

@@ -233,7 +233,6 @@ class DocumentationGeneratorApiDependencyProvider extends AbstractBundleDependen
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
-     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
      * @return \Spryker\Glue\Kernel\Container
      */

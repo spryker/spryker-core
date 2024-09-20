@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\AgentSecurityBlockerMerchantPortal;
 
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\AgentSecurityBlockerMerchantPortal\Expander\MerchantPortalConfigurationSettingsExpander;
 use Spryker\Client\AgentSecurityBlockerMerchantPortal\Expander\MerchantPortalConfigurationSettingsExpanderInterface;
+use Spryker\Client\Kernel\AbstractFactory;
 
 /**
  * @method \Spryker\Client\AgentSecurityBlockerMerchantPortal\AgentSecurityBlockerMerchantPortalConfig getConfig()

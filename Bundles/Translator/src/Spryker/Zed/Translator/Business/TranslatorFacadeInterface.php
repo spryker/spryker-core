@@ -59,12 +59,12 @@ interface TranslatorFacadeInterface extends TranslatorInterface
     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
+     * Specification:
+     * - Translates the given choice message by choosing a translation according to a number.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Translator\Business\TranslatorFacadeInterface::trans()} instead with a `%count%` parameter.
-     *
-     * Specification:
-     * - Translates the given choice message by choosing a translation according to a number.
      *
      * @param string $id
      * @param int $number
@@ -77,14 +77,14 @@ interface TranslatorFacadeInterface extends TranslatorInterface
     public function transChoice(string $id, int $number, array $parameters = [], $domain = null, $locale = null): string;
 
     /**
+     * Specification:
+     * - Sets the current locale to Translator.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
      *
      * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
-     * Specification:
-     * - Sets the current locale to Translator.
      *
      * @param string $locale
      *
@@ -93,14 +93,14 @@ interface TranslatorFacadeInterface extends TranslatorInterface
     public function setLocale($locale): void;
 
     /**
+     * Specification:
+     * - Returns the current locale of Translator.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
      *
      * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
-     * Specification:
-     * - Returns the current locale of Translator.
      *
      * @return string The locale
      */

@@ -4,7 +4,7 @@
     "description": "GlueBackendApiApplication module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/application": "^3.28.0",
         "spryker/container": "^1.4.5",
         "spryker/documentation-generator-api-extension": "^1.0.0",

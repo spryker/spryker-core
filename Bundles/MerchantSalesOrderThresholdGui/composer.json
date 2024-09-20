@@ -4,7 +4,7 @@
     "description": "MerchantSalesOrderThresholdGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/sales-order-threshold-gui": "^1.6.0"
     },
     "require-dev": {

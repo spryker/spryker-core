@@ -113,12 +113,12 @@ interface GiftCardFacadeInterface
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * Specification:
+     * - Creates gift card payments.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::saveOrderGiftCards()} instead.
-     *
-     * Specification:
-     * - Creates gift card payments.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse

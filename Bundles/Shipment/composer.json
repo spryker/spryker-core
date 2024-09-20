@@ -4,7 +4,7 @@
     "description": "Shipment module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/calculation": "^4.9.0",
         "spryker/calculation-extension": "^1.0.0",

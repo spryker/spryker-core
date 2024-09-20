@@ -8,8 +8,8 @@
 namespace Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Communication\EventSubscriber;
 
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
-use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Communication\Builder\MessageBuilderInterface;
 use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\AgentSecurityBlockerMerchantPortalGuiConfig;
+use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Communication\Builder\MessageBuilderInterface;
 use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Communication\Checker\SymfonyVersionChecker;
 use Spryker\Zed\AgentSecurityBlockerMerchantPortalGui\Dependency\Client\AgentSecurityBlockerMerchantPortalGuiToSecurityBlockerClientInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -92,7 +92,7 @@ class SecurityBlockerAgentMerchantPortalEventSubscriber implements EventSubscrib
     }
 
     /**
-     * @return array<string, array<int, int|string>|string>
+     * @return array<int|string, array<int, int|string>|string>
      */
     public static function getSubscribedEvents(): array
     {
@@ -102,7 +102,6 @@ class SecurityBlockerAgentMerchantPortalEventSubscriber implements EventSubscrib
         ];
 
         if (SymfonyVersionChecker::isSymfonyVersion5()) {
-            /** @var array<string, array<int, int|string>|string> $subscribedEvents */
             $subscribedEvents[AuthenticationEvents::AUTHENTICATION_FAILURE] = static::AUTHENTICATION_FAILURE_EVENT;
         }
 

@@ -228,6 +228,8 @@ class FileValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
+     * @param string $mimeType
+     *
      * @return \Symfony\Component\HttpFoundation\File\UploadedFile
      */
     protected function createUploadedFile(string $mimeType): UploadedFile

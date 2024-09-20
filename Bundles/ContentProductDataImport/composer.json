@@ -4,7 +4,7 @@
     "description": "ContentProductDataImport module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/content": "^2.1.0",
         "spryker/content-product": "^1.0.0",
         "spryker/data-import": "^1.4.0",

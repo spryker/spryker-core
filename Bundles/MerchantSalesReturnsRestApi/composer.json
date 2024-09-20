@@ -4,7 +4,7 @@
     "description": "MerchantSalesReturnsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/merchant-sales-return": "^1.0.0"
     },
     "require-dev": {

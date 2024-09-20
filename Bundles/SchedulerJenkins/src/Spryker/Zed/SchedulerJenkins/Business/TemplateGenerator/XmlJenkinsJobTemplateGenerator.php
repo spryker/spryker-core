@@ -90,7 +90,7 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
         }
 
         $jobPayload[static::KEY_LOG_ROTATE_DAYS] = $this->schedulerJenkinsConfig->getAmountOfDaysForLogFileRotation();
-        
+
         if (array_key_exists(static::KEY_NUM_BUILDS_TO_KEEP, $jobPayload) && is_int($jobPayload[static::KEY_NUM_BUILDS_TO_KEEP])) {
             return $jobTransfer;
         }

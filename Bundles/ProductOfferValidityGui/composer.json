@@ -4,7 +4,7 @@
     "description": "ProductOfferValidityGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "spryker/kernel": "^3.30.0",
         "spryker/product-offer-gui-extension": "^1.0.0",
         "spryker/product-offer-validity": "^1.0.0"

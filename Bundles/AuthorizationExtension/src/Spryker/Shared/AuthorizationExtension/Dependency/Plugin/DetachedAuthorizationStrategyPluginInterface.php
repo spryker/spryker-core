@@ -13,5 +13,4 @@ namespace Spryker\Shared\AuthorizationExtension\Dependency\Plugin;
  */
 interface DetachedAuthorizationStrategyPluginInterface
 {
-
 }

@@ -9,11 +9,9 @@ namespace SprykerTest\Shared\AuthenticationOauth\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\GlueAuthenticationRequestBuilder;
-use Generated\Shared\DataBuilder\OauthRequestBuilder;
 use Generated\Shared\Transfer\ApiTokenAttributesTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestContextTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestTransfer;
-use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;

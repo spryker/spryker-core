@@ -22,6 +22,7 @@ interface UserQueryCriteriaExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */

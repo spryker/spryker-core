@@ -86,28 +86,46 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
      */
     public function testIsInvalidatedWithIntervalAsEmptyStringWillCallWarning(): void
     {
+        if (PHP_VERSION_ID >= 80300) {
+            $this->markTestSkipped('This test only applies to PHP <= 8.2 where warnings are generated instead of exceptions.');
+        }
+
+        //Assert
+        $this->expectWarning();
+        $this->expectExceptionMessage('DateInterval::createFromDateString(): Unknown or bad format () at position 0 ( ): Empty string');
+
+        $this->runIsInvalidatedWithIntervalAsEmptyString();
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsInvalidatedWithIntervalAsEmptyStringWillThrowException(): void
+    {
+        if (PHP_VERSION_ID < 80300) {
+            $this->markTestSkipped('This test only applies to PHP <= 8.3 where exceptions are generated instead of warnings.');
+        }
+
+        //Assert
+        $this->expectExceptionMessage('Unknown or bad format () at position 0 ( ): Empty string');
+
+        $this->runIsInvalidatedWithIntervalAsEmptyString();
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsInvalidatedWillCallWarning(): void
+    {
+        if (PHP_VERSION_ID >= 80300) {
+            $this->markTestSkipped('This test only applies to PHP <= 8.2 where warnings are generated instead of exceptions.');
+        }
+
         // Assert
         $this->expectWarning();
-        $this->expectWarningMessage('DateInterval::createFromDateString(): Unknown or bad format () at position 0 ( ): Empty string');
+        $this->expectWarningMessage('DateInterval::createFromDateString(): Unknown or bad format (9999999) at position 4 (9): Unexpected character');
 
-        // Arrange
-        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
-        $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(new ArrayObject([]));
-
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock
-            ->method('getDynamicEntityConfigurationCollection')
-            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
-
-        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
-        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
-
-        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
-        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
-        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('');
-
-        // Act
-        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $this->runIsInvalidatedWithIntervalAsUnexpectedCharacter();
     }
 
     /**
@@ -115,28 +133,14 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
      */
     public function testIsInvalidatedWillCallException(): void
     {
+        if (PHP_VERSION_ID < 80300) {
+            $this->markTestSkipped('This test only applies to PHP <= 8.3 where exceptions are generated instead of warnings.');
+        }
+
         // Assert
-        $this->expectWarning();
-        $this->expectWarningMessage('DateInterval::createFromDateString(): Unknown or bad format (9999999) at position 4 (9): Unexpected character');
+        $this->expectExceptionMessage('Unknown or bad format (9999999) at position 4 (9): Unexpected character');
 
-        // Arrange
-        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
-        $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(new ArrayObject([]));
-
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
-        $dynamicEntityBackendApiToDynamicEntityFacadeMock
-            ->method('getDynamicEntityConfigurationCollection')
-            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
-
-        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
-        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
-
-        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
-        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
-        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('9999999');
-
-        // Act
-        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+        $this->runIsInvalidatedWithIntervalAsUnexpectedCharacter();
     }
 
     /**
@@ -231,5 +235,55 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
         return (new DynamicEntityConfigurationCollectionTransfer())
             ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-1'))
             ->addDynamicEntityConfiguration((new DynamicEntityConfigurationTransfer())->setTableAlias('/resource-2'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function runIsInvalidatedWithIntervalAsEmptyString(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(new ArrayObject([]));
+
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock
+            ->method('getDynamicEntityConfigurationCollection')
+            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+
+        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
+
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
+        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('');
+
+        // Act
+        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function runIsInvalidatedWithIntervalAsUnexpectedCharacter(): void
+    {
+        // Arrange
+        $dynamicEntityConfigurationCollectionTransfer = new DynamicEntityConfigurationCollectionTransfer();
+        $dynamicEntityConfigurationCollectionTransfer->setDynamicEntityConfigurations(new ArrayObject([]));
+
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock = $this->createMock(DynamicEntityBackendApiToDynamicEntityFacadeInterface::class);
+        $dynamicEntityBackendApiToDynamicEntityFacadeMock
+            ->method('getDynamicEntityConfigurationCollection')
+            ->willReturn($dynamicEntityConfigurationCollectionTransfer);
+
+        $this->tester->mockFactoryMethod('getDynamicEntityFacade', $dynamicEntityBackendApiToDynamicEntityFacadeMock);
+        $this->tester->mockFactoryMethod('getStorageFacade', $this->createStorageFacadeMock(['created_at' => time()]));
+
+        $dynamicEntityDocumentationInvalidationVoterPlugin = $this->createDynamicEntityDocumentationInvalidationVoterPlugin();
+        $dynamicEntityDocumentationInvalidationVoterPlugin->setFactory($this->tester->getFactory());
+        $documentationInvalidationVoterRequestTransfer = (new DocumentationInvalidationVoterRequestTransfer())->setInterval('9999999');
+
+        // Act
+        $dynamicEntityDocumentationInvalidationVoterPlugin->isInvalidated($documentationInvalidationVoterRequestTransfer);
     }
 }
