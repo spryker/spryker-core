@@ -66,6 +66,7 @@
         <property name="filterFields" type="FilterField[]" singular="filterField"/>
         <property name="format" type="OrderListFormat"/>
         <property name="queryJoins" type="QueryJoinCollection"/>
+        <property name="withoutSearchOrderExpanders" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="OrderListFormat">

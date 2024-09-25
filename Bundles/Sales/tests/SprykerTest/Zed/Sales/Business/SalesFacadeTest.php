@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
+use Spryker\Zed\Sales\SalesDependencyProvider;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -444,6 +446,41 @@ class SalesFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider searchOrderExpanderProvider
+     *
+     * @param bool $expectedExecution
+     * @param bool|null $withoutSearchOrderExpanders
+     *
+     * @return void
+     */
+    public function testGetCustomerOrdersWithSearchOrderExpanderPlugins(
+        bool $expectedExecution,
+        ?bool $withoutSearchOrderExpanders
+    ): void {
+        // Arrange
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $this->tester->createSalesOrderTotals($orderTransfer->getIdSalesOrderOrFail(), [
+            static::COL_CREATED_AT => new DateTime(),
+            static::COL_GRAND_TOTAL => 500,
+        ]);
+
+        $orderListTransfer = (new OrderListTransfer())
+            ->setWithoutSearchOrderExpanders($withoutSearchOrderExpanders);
+
+        // Assert
+        $this->tester->setDependency(SalesDependencyProvider::PLUGINS_SEARCH_ORDER_EXPANDER, [
+            $this->createSearchOrderExpanderPluginMock($expectedExecution),
+        ]);
+
+        // Act
+        $this->tester->getFacade()
+            ->getCustomerOrders($orderListTransfer, $orderTransfer->getCustomerOrFail()->getIdCustomerOrFail())
+            ->getOrders();
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     protected function createSalesFacade(): SalesFacadeInterface
@@ -459,5 +496,35 @@ class SalesFacadeTest extends Unit
     protected function createOrderTransferWithParams(array $data): OrderTransfer
     {
         return (new OrderBuilder())->build()->fromArray($data);
+    }
+
+    /**
+     * @param bool $isExecuted
+     *
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface
+     */
+    protected function createSearchOrderExpanderPluginMock(bool $isExecuted): SearchOrderExpanderPluginInterface
+    {
+        $searchOrderExpanderPluginMock = $this->getMockBuilder(SearchOrderExpanderPluginInterface::class)
+            ->getMock();
+
+        $searchOrderExpanderPluginMock
+            ->expects($isExecuted ? $this->once() : $this->never())
+            ->method('expand')
+            ->willReturn([]);
+
+        return $searchOrderExpanderPluginMock;
+    }
+
+    /**
+     * @return array<string, list<bool>>
+     */
+    protected function searchOrderExpanderProvider(): array
+    {
+        return [
+            'skip search order expander plugins' => [false, true],
+            'do not skip search order expander plugins' => [true, false],
+            'execute search order expander plugins' => [true, null],
+        ];
     }
 }

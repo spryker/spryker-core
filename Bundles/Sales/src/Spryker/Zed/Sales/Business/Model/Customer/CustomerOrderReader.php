@@ -69,10 +69,13 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             ->find();
 
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
-        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orders->getArrayCopy());
-        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
+        $orderTransfers = $orders->getArrayCopy();
 
-        return $orderListTransfer;
+        if (!$orderListTransfer->getWithoutSearchOrderExpanders()) {
+            $orderTransfers = $this->executeSearchOrderExpanderPlugins($orderTransfers);
+        }
+
+        return $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
     }
 
     /**

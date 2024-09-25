@@ -194,6 +194,7 @@ interface SalesFacadeInterface
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Executes SearchOrderExpanderPluginInterface plugin stack.
+     *  - Skips execution of `SearchOrderExpanderPluginInterface` plugins stack when `OrderListTransfer.withoutSearchOrderExpander` is set to true.
      *
      * @api
      *

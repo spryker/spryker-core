@@ -873,6 +873,7 @@
         "spryker/sales": "*",
         "spryker/sales-configurable-bundle": "*",
         "spryker/sales-data-export": "*",
+        "spryker/sales-discount-connector": "*",
         "spryker/sales-extension": "*",
         "spryker/sales-invoice": "*",
         "spryker/sales-invoice-extension": "*",

@@ -15,7 +15,7 @@
         <property name="contactPersonFirstName" dataBuilderRule="firstName()"/>
         <property name="contactPersonLastName" dataBuilderRule="lastName()"/>
         <property name="contactPersonPhone" dataBuilderRule="lexify('??????????')"/>
-        <property name="logoUrl" dataBuilderRule="lexify('??????????')"/>
+        <property name="logoUrl" dataBuilderRule="=https://d2s0ynfc62ej12.cloudfront.net/merchant/sonyexperts-logo.png"/>
         <property name="publicEmail" dataBuilderRule="email()"/>
         <property name="publicPhone" dataBuilderRule="lexify('??????????')"/>
         <property name="descriptionGlossaryKey" dataBuilderRule="lexify('??????????')"/>
