@@ -43,13 +43,33 @@ class ProductsConcreteController extends AbstractController
     protected const PARAM_PRODUCT_IDS = 'product-ids';
 
     /**
+     * @var string
+     */
+    protected const ID_TABLE_PRODUCT_CONCRETE_LIST = 'product-concrete-list';
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function indexAction(): array
+    {
+        return $this->viewResponse([
+            'productConcreteTableConfiguration' => $this->getFactory()
+                ->createProductGuiTableConfigurationProvider()
+                ->getConfiguration(),
+            'idTableProductConcreteList' => static::ID_TABLE_PRODUCT_CONCRETE_LIST,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function tableDataAction(Request $request): Response
     {
-        $idProductAbstract = $this->castId($request->get(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT));
+        $idProductAbstract = $request->query->has(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT) ?
+            $this->castId($request->get(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT))
+            : null;
 
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,

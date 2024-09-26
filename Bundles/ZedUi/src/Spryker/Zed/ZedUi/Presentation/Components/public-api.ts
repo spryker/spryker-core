@@ -21,6 +21,8 @@ export * from './app/layout-main/layout-main.component';
 export * from './app/layout-main/layout-main.module';
 export * from './app/merchant-layout-centered/merchant-layout-centered.component';
 export * from './app/merchant-layout-centered/merchant-layout-centered.module';
+export * from './app/merchant-layout-content/merchant-layout-content.component';
+export * from './app/merchant-layout-content/merchant-layout-content.module';
 export * from './app/merchant-layout-main/merchant-layout-main.component';
 export * from './app/merchant-layout-main/merchant-layout-main.module';
 export { ComponentsNgModule, registerNgModule } from './app/registry';

@@ -601,16 +601,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         ProductTableCriteriaTransfer $productTableCriteriaTransfer,
         LocaleTransfer $localeTransfer
     ): SpyProductQuery {
-        /** @var int $idLocale */
         $idLocale = $localeTransfer->getIdLocaleOrFail();
-        /** @var int $idMerchant */
         $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
-        /** @var int $idProductAbstract */
-        $idProductAbstract = $productTableCriteriaTransfer->getIdProductAbstractOrFail();
 
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
         $productConcreteQuery->leftJoinSpyProductValidity()
-            ->filterByFkProductAbstract($idProductAbstract)
             ->useSpyProductAbstractQuery()
                 ->joinSpyMerchantProductAbstract()
                 ->useSpyMerchantProductAbstractQuery()
@@ -649,6 +644,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
             ])
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK);
+
+        if ($productTableCriteriaTransfer->getIdProductAbstract() !== null) {
+            $productConcreteQuery->filterByFkProductAbstract($productTableCriteriaTransfer->getIdProductAbstractOrFail());
+        }
 
         return $productConcreteQuery;
     }

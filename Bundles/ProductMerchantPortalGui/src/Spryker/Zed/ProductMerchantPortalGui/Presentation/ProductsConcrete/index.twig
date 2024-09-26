@@ -1,0 +1,22 @@
+{#
+@var productConcreteTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+#}
+
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
+
+{% block headSubTitle %}
+    {{- 'Variants' | trans -}}
+{% endblock %}
+
+{% block content %}
+    <web-mp-merchant-layout-content cloak>
+        <h1 title>{{ 'Variants' | trans }}</h1>
+        <web-mp-table
+            cloak
+            table-id="{{ idTableProductConcreteList }}"
+            config='{{ guiTableConfiguration(productConcreteTableConfiguration) }}'
+        >
+        </web-mp-table>
+    </web-mp-merchant-layout-content>
+{% endblock %}

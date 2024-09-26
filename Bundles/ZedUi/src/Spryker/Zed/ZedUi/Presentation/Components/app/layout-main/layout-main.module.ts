@@ -12,9 +12,10 @@ import {
     IconDashboardModule,
     IconOffersModule,
     IconOrdersModule,
+    IconProductsModule,
     IconProfileModule,
     IconUserGroupModule,
-    IconProductsModule,
+    IconVariantsModule,
 } from '../../icons';
 import { LayoutMainComponent } from './layout-main.component';
 
@@ -34,6 +35,7 @@ import { LayoutMainComponent } from './layout-main.component';
         IconContractsModule,
         IconUserGroupModule,
         IconProductsModule,
+        IconVariantsModule,
     ],
     declarations: [LayoutMainComponent],
     exports: [LayoutMainComponent],

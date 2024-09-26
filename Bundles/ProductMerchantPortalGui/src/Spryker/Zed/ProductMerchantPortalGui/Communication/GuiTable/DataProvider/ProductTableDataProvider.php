@@ -25,9 +25,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRep
 class ProductTableDataProvider extends AbstractGuiTableDataProvider
 {
     /**
-     * @var int
+     * @var int|null
      */
-    protected int $idProductAbstract;
+    protected ?int $idProductAbstract;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface
@@ -60,30 +60,30 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     protected array $productConcreteTableExpanderPlugins;
 
     /**
-     * @param int $idProductAbstract
      * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface $localizedAttributesExtractor
-     * @param array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface> $productConcreteTableExpanderPlugins
+     * @param int|null $idProductAbstract
+     * @param list<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface> $productConcreteTableExpanderPlugins
      */
     public function __construct(
-        int $idProductAbstract,
         ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         LocalizedAttributesExtractorInterface $localizedAttributesExtractor,
+        ?int $idProductAbstract,
         array $productConcreteTableExpanderPlugins = []
     ) {
-        $this->idProductAbstract = $idProductAbstract;
         $this->productMerchantPortalGuiRepository = $productMerchantPortalGuiRepository;
         $this->localeFacade = $localeFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->translatorFacade = $translatorFacade;
         $this->localizedAttributesExtractor = $localizedAttributesExtractor;
         $this->productConcreteTableExpanderPlugins = $productConcreteTableExpanderPlugins;
+        $this->idProductAbstract = $idProductAbstract;
     }
 
     /**
@@ -93,10 +93,15 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
-        return (new ProductTableCriteriaTransfer())
-            ->setIdProductAbstract($this->idProductAbstract)
+        $productTableCriteriaTransfer = (new ProductTableCriteriaTransfer())
             ->setLocale($this->localeFacade->getCurrentLocale())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
+
+        if ($this->idProductAbstract !== null) {
+            $productTableCriteriaTransfer->setIdProductAbstract($this->idProductAbstract);
+        }
+
+        return $productTableCriteriaTransfer;
     }
 
     /**

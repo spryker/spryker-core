@@ -127,11 +127,11 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int|null $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(int $idProductAbstract): GuiTableConfigurationTransfer
+    public function getConfiguration(?int $idProductAbstract = null): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
@@ -140,12 +140,15 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder = $this->addBatchActions($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
-        $dataSourceUrl = sprintf(
-            '%s?%s=%s',
-            static::DATA_URL,
-            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
-            $idProductAbstract,
-        );
+        $dataSourceUrl = static::DATA_URL;
+        if ($idProductAbstract !== null) {
+            $dataSourceUrl = sprintf(
+                '%s?%s=%s',
+                $dataSourceUrl,
+                ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
+                $idProductAbstract,
+            );
+        }
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl($dataSourceUrl)

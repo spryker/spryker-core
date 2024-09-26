@@ -769,19 +769,19 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int|null $idProductAbstract
      *
      * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
-    public function createProductTableDataProvider(int $idProductAbstract): GuiTableDataProviderInterface
+    public function createProductTableDataProvider(?int $idProductAbstract): GuiTableDataProviderInterface
     {
         return new ProductTableDataProvider(
-            $idProductAbstract,
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
             $this->getTranslatorFacade(),
             $this->createLocalizedAttributesExtractor(),
+            $idProductAbstract,
             $this->getProductConcreteTableExpanderPlugins(),
         );
     }

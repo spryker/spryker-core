@@ -25,6 +25,8 @@ import { LayoutMainComponent } from './layout-main/layout-main.component';
 import { LayoutMainModule } from './layout-main/layout-main.module';
 import { MerchantLayoutCenteredComponent } from './merchant-layout-centered/merchant-layout-centered.component';
 import { MerchantLayoutCenteredModule } from './merchant-layout-centered/merchant-layout-centered.module';
+import { MerchantLayoutContentComponent } from './merchant-layout-content/merchant-layout-content.component';
+import { MerchantLayoutContentModule } from './merchant-layout-content/merchant-layout-content.module';
 import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-layout-main.component';
 import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
 
@@ -54,6 +56,7 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
             LogoComponent,
             DatasourceDependableComponent,
             FormSubmitterComponent,
+            MerchantLayoutContentComponent,
         ]),
         LayoutCenteredModule,
         MerchantLayoutCenteredModule,
@@ -74,6 +77,7 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
         LogoModule,
         DatasourceDependableModule,
         FormSubmitterModule,
+        MerchantLayoutContentModule,
     ],
     declarations: [RootComponent],
 })
