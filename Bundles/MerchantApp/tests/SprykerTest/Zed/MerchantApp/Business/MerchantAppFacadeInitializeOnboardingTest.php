@@ -175,8 +175,17 @@ class MerchantAppFacadeInitializeOnboardingTest extends Unit
             'strategy' => MerchantAppOnboarding::STRATEGY_REDIRECT,
             'url' => 'new-url',
         ]));
-
+        /** @var \Spryker\Zed\KernelApp\Business\KernelAppFacadeInterface|\PHPUnit\Framework\MockObject\MockObject $kernelAppFacadeMock */
         $kernelAppFacadeMock = $this->tester->mockFacadeMethod('makeRequest', $acpHttpResponseTransfer, 'KernelApp');
+        $kernelAppFacadeMock->method('makeRequest')->with($this->callback(function ($acpHttpRequestTransfer) {
+            $body = json_decode($acpHttpRequestTransfer->getBody(), true);
+
+            $this->assertArrayHasKey('merchant', $body);
+            $this->assertArrayHasKey('name', $body['merchant']);
+            $this->assertArrayHasKey('merchantReference', $body['merchant']);
+
+            return true;
+        }));
         $this->tester->setDependency(MerchantAppDependencyProvider::FACADE_KERNEL_APP, new MerchantAppToKernelAppFacadeBridge($kernelAppFacadeMock));
 
         // Act

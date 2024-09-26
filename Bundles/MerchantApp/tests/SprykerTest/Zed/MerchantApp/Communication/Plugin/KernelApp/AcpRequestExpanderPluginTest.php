@@ -46,9 +46,11 @@ class AcpRequestExpanderPluginTest extends Unit
     {
         // Arrange
         $merchantReference = Uuid::uuid4()->toString();
+        $merchantName = Uuid::uuid4()->toString();
         $merchantUserTransfer = new MerchantUserTransfer();
         $merchantTransfer = new MerchantTransfer();
         $merchantTransfer->setMerchantReference($merchantReference);
+        $merchantTransfer->setName($merchantName);
         $merchantUserTransfer->setMerchant($merchantTransfer);
 
         $merchantUserFacadeMock = Stub::makeEmpty(MerchantUserFacadeInterface::class, [

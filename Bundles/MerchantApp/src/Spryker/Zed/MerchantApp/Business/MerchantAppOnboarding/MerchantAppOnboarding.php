@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantAppOnboardingInitializationRequestTransfer
 use Generated\Shared\Transfer\MerchantAppOnboardingInitializationResponseTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingStatusTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Shared\MerchantApp\Message\MerchantAppMessage;
 use Spryker\Zed\MerchantApp\Business\Exception\MerchantAppOnboardingLogicException;
 use Spryker\Zed\MerchantApp\Business\Exception\MerchantAppOnboardingNotFoundException;
@@ -176,7 +177,13 @@ class MerchantAppOnboarding implements MerchantAppOnboardingInterface
 
         if ($merchantAppOnboardingTransfer->getOnboardingOrFail()->getStrategy() === static::STRATEGY_API) {
             $bodyData = [
-                'merchant' => $merchantAppOnboardingInitializationRequestTransfer->getMerchant(),
+                MerchantAppOnboardingInitializationRequestTransfer::MERCHANT => array_filter(
+                    $merchantAppOnboardingInitializationRequestTransfer->getMerchantOrFail()->toArray(true, true),
+                    function ($key) {
+                        return in_array($key, [MerchantTransfer::MERCHANT_REFERENCE, MerchantTransfer::NAME]);
+                    },
+                    ARRAY_FILTER_USE_KEY,
+                ),
                 'successUrl' => $merchantAppOnboardingInitializationRequestTransfer->getSuccessUrl(),
                 'refreshUrl' => $merchantAppOnboardingInitializationRequestTransfer->getRefreshUrl(),
                 'cancelUrl' => $merchantAppOnboardingInitializationRequestTransfer->getCancelUrl(),

@@ -61,7 +61,7 @@ interface MerchantAppFacadeInterface
     /**
      * Specification:
      * - Initialize the onboarding process of a Merchant to a specific app.
-     * - Requires `MerchantAppOnboardingInitializationRequestTransfer::MERCHANT::MERCHANT_REFERENCE` to be set.
+     * - Requires `MerchantAppOnboardingInitializationRequestTransfer::MERCHANT` to be set.
      * - Requires `MerchantAppOnboardingInitializationRequestTransfer::APP_IDENTIFIER` to be set.
      * - Returns a `MerchantAppOnboardingInitializationResponseTransfer`.
      *
