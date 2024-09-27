@@ -14,9 +14,11 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Session\EventSubscriber\OnKernelResponseEventSubscriber;
 use Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface;
 use Spryker\Yves\Session\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
@@ -159,6 +161,14 @@ class SessionFactory extends AbstractFactory
         return new SessionHealthCheck(
             $this->getSessionClient(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createOnKernelResponseEventSubscriber(): EventSubscriberInterface
+    {
+        return new OnKernelResponseEventSubscriber();
     }
 
     /**
