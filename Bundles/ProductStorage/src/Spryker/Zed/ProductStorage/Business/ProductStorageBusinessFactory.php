@@ -19,6 +19,7 @@ use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  */
 class ProductStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -32,6 +33,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeMap(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
+            $this->getRepository(),
             $this->getConfig()->isSendingToQueue(),
             $this->getProductAbstractStorageExpanderPlugins(),
             $this->getProductAbstractStorageCollectionFilterPlugins(),

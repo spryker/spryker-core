@@ -19,6 +19,8 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepository::getProductAbstractsByIds()} for better performance.
+     *
      * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery

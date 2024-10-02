@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeBridge;
@@ -63,6 +65,16 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER = 'PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER';
 
     /**
+     * @var string
+     */
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -101,6 +113,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         });
+
+        $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductAbstractLocalizedAttributesPropelQuery($container);
 
         return $container;
     }
@@ -233,5 +248,33 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getProductConcreteStorageCollectionFilterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (): SpyProductQuery {
+            return SpyProductQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractLocalizedAttributesPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES, $container->factory(function (): SpyProductAbstractLocalizedAttributesQuery {
+            return SpyProductAbstractLocalizedAttributesQuery::create();
+        }));
+
+        return $container;
     }
 }
