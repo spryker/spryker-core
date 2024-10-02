@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToOmsFacadeBridge;
@@ -16,6 +17,8 @@ use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
+use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilEncodingServiceBridge;
+use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceBridge;
 
 /**
@@ -32,6 +35,11 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @var string
@@ -76,6 +84,8 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     public const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface} which uses the KernelApp instead.
+     *
      * @var string
      */
     public const PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER = 'PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER';
@@ -89,6 +99,11 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_KERNEL_APP = 'PAYMENT:FACADE_KERNEL_APP';
 
     /**
      * @var string
@@ -120,7 +135,9 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentService($container);
         $container = $this->addPaymentClient($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addKernelAppFacade($container);
         $container = $this->addUtilTextService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addPaymentAuthorizeRequestExpanderPlugins($container);
@@ -147,12 +164,40 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): PaymentToUtilEncodingServiceInterface {
+            return new PaymentToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new PaymentToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addKernelAppFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_KERNEL_APP, function (Container $container) {
+            return new PaymentToKernelAppFacadeBridge($container->getLocator()->kernelApp()->facade());
         });
 
         return $container;
@@ -281,6 +326,8 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface} which uses the KernelApp instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -295,6 +342,8 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface} which uses the KernelApp instead.
+     *
      * @return array<int, \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface>
      */
     protected function getPaymentAuthorizeRequestExpanderPlugins(): array

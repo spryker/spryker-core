@@ -9,6 +9,14 @@ return [
             '-m',
         ],
     ],
+    'PHPStan' => [
+        'hasModule' => true,
+        'command' => [
+            'vendor/bin/console',
+            'code:phpstan',
+            '-m',
+        ],
+    ],
     'ArchitectureSniffer' => [
         'hasModule' => true,
         'command' => [

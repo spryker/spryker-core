@@ -59,7 +59,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
         $paymentMethodsTransfer = $this->findPaymentMethods($quoteTransfer);
         $paymentMethodsTransfer = $this->applyFilterPlugins($paymentMethodsTransfer, $quoteTransfer);
@@ -190,7 +190,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    protected function applyFilterPlugins(PaymentMethodsTransfer $paymentMethodsTransfer, $quoteTransfer)
+    protected function applyFilterPlugins(PaymentMethodsTransfer $paymentMethodsTransfer, $quoteTransfer): PaymentMethodsTransfer
     {
         foreach ($this->paymentMethodFilterPlugins as $paymentMethodFilterPlugin) {
             $paymentMethodsTransfer = $paymentMethodFilterPlugin->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);

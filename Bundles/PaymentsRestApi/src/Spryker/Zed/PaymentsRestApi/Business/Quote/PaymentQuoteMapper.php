@@ -38,7 +38,24 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
+        $quoteTransfer = $this->mapPaymentTransfersToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        return $this->mapPreOrderPaymentDataToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapPaymentTransfersToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
         $restPaymentTransfers = $restCheckoutRequestAttributesTransfer->getPayments();
+
+        $quoteTransfer->setPreOrderPaymentData($restCheckoutRequestAttributesTransfer->getPreOrderPaymentData());
 
         if (!$restPaymentTransfers->count()) {
             return $quoteTransfer;
@@ -49,6 +66,21 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
         $paymentTransfer = $this->paymentFacade->expandPaymentWithPaymentSelection($paymentTransfer, $quoteTransfer->getStore());
 
         $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapPreOrderPaymentDataToQuote(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $quoteTransfer->setPreOrderPaymentData($restCheckoutRequestAttributesTransfer->getPreOrderPaymentData());
 
         return $quoteTransfer;
     }

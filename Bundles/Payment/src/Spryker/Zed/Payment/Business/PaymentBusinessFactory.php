@@ -10,10 +10,10 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Service\Payment\PaymentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Payment\Business\Authorizer\ForeignPaymentAuthorizer;
-use Spryker\Zed\Payment\Business\Authorizer\ForeignPaymentAuthorizerInterface;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
+use Spryker\Zed\Payment\Business\Calculation\PaymentCalculatorInterface;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface;
 use Spryker\Zed\Payment\Business\Creator\PaymentMethodCreator;
 use Spryker\Zed\Payment\Business\Creator\PaymentMethodCreatorInterface;
 use Spryker\Zed\Payment\Business\Creator\PaymentProviderCreator;
@@ -26,17 +26,22 @@ use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitter;
 use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitterInterface;
 use Spryker\Zed\Payment\Business\Expander\PaymentExpander;
 use Spryker\Zed\Payment\Business\Expander\PaymentExpanderInterface;
+use Spryker\Zed\Payment\Business\ForeignPayment\ForeignPayment;
+use Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGenerator;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapper;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface;
 use Spryker\Zed\Payment\Business\Mapper\QuoteDataMapper;
 use Spryker\Zed\Payment\Business\Mapper\QuoteDataMapperInterface;
+use Spryker\Zed\Payment\Business\MessageConsumer\PaymentMessageConsumer;
+use Spryker\Zed\Payment\Business\MessageConsumer\PaymentMessageConsumerInterface;
 use Spryker\Zed\Payment\Business\MessageEmitter\MessageEmitter;
 use Spryker\Zed\Payment\Business\MessageEmitter\MessageEmitterInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdater;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater;
@@ -44,8 +49,11 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodValidator;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface as DeprecatedPaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentHydratorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentReaderInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderExistsValidator;
 use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderPaymentMethodExistsValidator;
 use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderPaymentMethodUniqueValidator;
@@ -61,10 +69,14 @@ use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorC
 use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Writer\PaymentWriter;
 use Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToOmsFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
+use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
@@ -79,30 +91,13 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
      */
-    public function createPaymentMethodReader()
+    public function createPaymentMethodReader(): PaymentMethodReaderInterface
     {
         return new PaymentMethodReader(
             $this->getPaymentMethodFilterPlugins(),
             $this->getConfig(),
             $this->getStoreFacade(),
             $this->getRepository(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Business\Authorizer\ForeignPaymentAuthorizerInterface
-     */
-    public function createForeignPaymentAuthorizer(): ForeignPaymentAuthorizerInterface
-    {
-        return new ForeignPaymentAuthorizer(
-            $this->createQuoteDataMapper(),
-            $this->getLocaleFacade(),
-            $this->getRepository(),
-            $this->getPaymentClient(),
-            $this->getConfig(),
-            $this->getStoreFacade(),
-            $this->getPaymentService(),
-            $this->getPaymentAuthorizeRequestExpanderPlugins(),
         );
     }
 
@@ -128,6 +123,14 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): PaymentToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeInterface
+     */
+    public function getKernelAppFacade(): PaymentToKernelAppFacadeInterface
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_KERNEL_APP);
     }
 
     /**
@@ -160,7 +163,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Payment\Business\Calculation\PaymentCalculatorInterface
      */
-    public function createPaymentCalculator()
+    public function createPaymentCalculator(): PaymentCalculatorInterface
     {
         return new PaymentCalculator();
     }
@@ -217,9 +220,17 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PaymentToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return array<\Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface>
      */
-    public function getPaymentMethodFilterPlugins()
+    public function getPaymentMethodFilterPlugins(): array
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
     }
@@ -245,7 +256,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface
      */
-    public function createCheckoutPaymentPluginExecutor()
+    public function createCheckoutPaymentPluginExecutor(): PaymentPluginExecutorInterface
     {
         return new PaymentPluginExecutor($this->getCheckoutPlugins(), $this->createPaymentSaver());
     }
@@ -255,7 +266,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
      */
-    public function createPaymentSaver()
+    public function createPaymentSaver(): SalesPaymentSaverInterface
     {
         return new SalesPaymentSaver($this->getQueryContainer());
     }
@@ -265,7 +276,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */
-    public function getCheckoutPlugins()
+    public function getCheckoutPlugins(): CheckoutPluginCollectionInterface
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::CHECKOUT_PLUGINS);
     }
@@ -275,7 +286,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentHydratorInterface
      */
-    public function createPaymentHydrator()
+    public function createPaymentHydrator(): SalesPaymentHydratorInterface
     {
         return new SalesPaymentHydrator(
             $this->getPaymentHydrationPlugins(),
@@ -288,7 +299,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
-    public function getPaymentHydrationPlugins()
+    public function getPaymentHydrationPlugins(): PaymentHydratorPluginCollectionInterface
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS);
     }
@@ -298,7 +309,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentReaderInterface
      */
-    public function createSalesPaymentReader()
+    public function createSalesPaymentReader(): SalesPaymentReaderInterface
     {
         return new SalesPaymentReader(
             $this->getQueryContainer(),
@@ -348,14 +359,6 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getConfig(),
         );
-    }
-
-    /**
-     * @return array<int, \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface>
-     */
-    public function getPaymentAuthorizeRequestExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER);
     }
 
     /**
@@ -506,6 +509,31 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
         return new PaymentExpander(
             $this->getRepository(),
             $this->getStoreFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\MessageConsumer\PaymentMessageConsumerInterface
+     */
+    public function createPaymentMessageConsumer(): PaymentMessageConsumerInterface
+    {
+        return new PaymentMessageConsumer($this->createPaymentMethodUpdater());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface
+     */
+    public function createForeignPayment(): ForeignPaymentInterface
+    {
+        return new ForeignPayment(
+            $this->createQuoteDataMapper(),
+            $this->getLocaleFacade(),
+            $this->getKernelAppFacade(),
+            $this->getRepository(),
+            $this->getPaymentClient(),
+            $this->getConfig(),
+            $this->getPaymentService(),
+            $this->getUtilEncodingService(),
         );
     }
 }

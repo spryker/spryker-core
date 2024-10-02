@@ -50,6 +50,10 @@ class QuoteDataMapper implements QuoteDataMapperInterface
         foreach ($allowedFields as $fieldName => $allowedData) {
             $fieldValue = $camelCasedData[$fieldName];
 
+            if (is_array($allowedData) && $fieldValue === null) {
+                continue;
+            }
+
             if (is_array($allowedData) && $fieldValue instanceof AbstractTransfer) {
                 $mappedData = $this->mapTransferDataByAllowedFieldsRecursive($fieldValue, $allowedData, $mappedData);
 

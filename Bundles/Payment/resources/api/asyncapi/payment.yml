@@ -29,6 +29,7 @@ channels:
             message:
                 oneOf:
                     - $ref: '#/components/messages/AddPaymentMethod'
+                    - $ref: '#/components/messages/UpdatePaymentMethod'
                     - $ref: '#/components/messages/DeletePaymentMethod'
 
                     # Deprecated messages
@@ -42,6 +43,15 @@ components:
                 alias: PaymentMethodAdded
                 module: Payment
             summary: 'Handle a new Payment method.'
+            payload:
+                $ref: '#/components/schemas/PaymentMethodPayload'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+        UpdatePaymentMethod:
+            name: UpdatePaymentMethod
+            x-spryker:
+                module: Payment
+            summary: 'Handle an updated Payment method.'
             payload:
                 $ref: '#/components/schemas/PaymentMethodPayload'
             headers:
@@ -237,6 +247,19 @@ components:
                                     example:
                                         - /authorization
                                         - /transfer
+                        checkoutConfiguration:
+                            type: object
+                            description: 'Optional configuration for sophisticated payment methods that support e.g. CheckoutSession or Embedded payment forms.'
+                            properties:
+                                strategy:
+                                    type: string
+                                    examples:
+                                        - embedded
+                                        - checkout-session
+                                scripts:
+                                    type: array
+                                    description: 'List of scripts that should be included in the checkout page.'
+
         PaymentPayload:
             type: object
             properties:

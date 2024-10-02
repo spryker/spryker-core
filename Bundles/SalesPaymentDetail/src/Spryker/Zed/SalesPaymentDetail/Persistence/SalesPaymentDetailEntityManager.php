@@ -38,11 +38,12 @@ class SalesPaymentDetailEntityManager extends AbstractEntityManager implements S
     {
         $salesPaymentDetailEntity = $this->getFactory()->createSalesPaymentDetailQuery()
             ->filterByPaymentReference($salesPaymentDetailTransfer->getPaymentReference())
-        ->findOne();
+            ->findOne();
 
         if ($salesPaymentDetailEntity === null) {
             return $salesPaymentDetailTransfer;
         }
+
         $salesPaymentDetailEntity->fromArray($salesPaymentDetailTransfer->toArray());
         $salesPaymentDetailEntity->save();
 

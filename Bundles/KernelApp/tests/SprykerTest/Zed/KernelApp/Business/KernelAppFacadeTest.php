@@ -46,6 +46,7 @@ class KernelAppFacadeTest extends Unit
     {
         // Arrange
         $this->tester->setConfig(KernelAppConstants::TENANT_IDENTIFIER, Uuid::uuid4()->toString());
+
         $kernelAppFacade = $this->tester->getFacade();
         $expectedTenantIdentifier = Uuid::uuid4()->toString();
 
@@ -73,6 +74,7 @@ class KernelAppFacadeTest extends Unit
     {
         // Arrange
         $this->tester->setConfig(KernelAppConstants::TENANT_IDENTIFIER, Uuid::uuid4()->toString());
+
         $kernelAppFacade = $this->tester->getFacade();
         $expectedContentType = 'application/json';
 
@@ -99,6 +101,7 @@ class KernelAppFacadeTest extends Unit
     {
         // Arrange
         $this->tester->setConfig(KernelAppConstants::TENANT_IDENTIFIER, Uuid::uuid4()->toString());
+
         $kernelAppFacade = $this->tester->getFacade();
         $expectedContentType = 'application/xml';
 

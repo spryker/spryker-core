@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payment\Business\Mapper;
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 
 interface PaymentMethodEventMapperInterface
 {
@@ -21,6 +22,17 @@ interface PaymentMethodEventMapperInterface
      */
     public function mapAddPaymentMethodTransferToPaymentMethodTransfer(
         AddPaymentMethodTransfer $addPaymentMethodTransfer,
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UpdatePaymentMethodTransfer $updatePaymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function mapUpdatePaymentMethodTransferToPaymentMethodTransfer(
+        UpdatePaymentMethodTransfer $updatePaymentMethodTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer;
 

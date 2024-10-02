@@ -35,4 +35,25 @@ class SalesPaymentDetailRepository extends AbstractRepository implements SalesPa
             ->createSalesPaymentDetailMapper()
             ->mapSalesPaymentDetailEntityToSalesPaymentDetailTransfer($salesPaymentDetailEntity, new SalesPaymentDetailTransfer());
     }
+
+    /**
+     * @param string $paymentReference
+     *
+     * @return \Generated\Shared\Transfer\SalesPaymentDetailTransfer|null
+     */
+    public function findByPaymentReference(string $paymentReference): ?SalesPaymentDetailTransfer
+    {
+        $salesPaymentDetailEntity = $this->getFactory()
+            ->createSalesPaymentDetailQuery()
+            ->filterByPaymentReference($paymentReference)
+            ->findOne();
+
+        if ($salesPaymentDetailEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createSalesPaymentDetailMapper()
+            ->mapSalesPaymentDetailEntityToSalesPaymentDetailTransfer($salesPaymentDetailEntity, new SalesPaymentDetailTransfer());
+    }
 }

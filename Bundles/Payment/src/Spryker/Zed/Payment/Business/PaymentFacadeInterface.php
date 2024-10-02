@@ -28,9 +28,12 @@ use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
@@ -79,6 +82,55 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
+     * - Initializes a pre-order payment (pre-order is before the order gets persisted).
+     * - Requires `PreOrderPaymentRequestTransfer::QUOTE` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer::PAYMENT_METHOD` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer::IS_SUCCESS` true if the payment was initialized.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Cancels a pre-order payment (pre-order is before the order gets persisted).
+     * - Requires `PreOrderPaymentResponseTransfer::PAYMENT_METHOD` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer::IS_SUCCESS` true if the cancellation was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Confirms a pre-order payment after the order was persisted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function confirmPreOrderPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void;
+
+    /**
+     * Specification:
      * - Used to support only foreign payment methods.
      * - Requires `AddPaymentMethod.labelName` transfer field to be set.
      * - Requires `AddPaymentMethod.groupName` transfer field to be set.
@@ -92,7 +144,7 @@ interface PaymentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::addPaymentMethod()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::consumePaymentMethodMessage()} instead.
      *
      * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
@@ -103,8 +155,8 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Used to support only foreign payment methods.
-     * - Requires `AddPaymentMethod.labelName` transfer field to be set.
-     * - Requires `AddPaymentMethod.groupName` transfer field to be set.
+     * - Requires `AddPaymentMethod.name` transfer field to be set.
+     * - Requires `AddPaymentMethod.providerName` transfer field to be set.
      * - Creates payment provider if respective provider doesn't exist in the database.
      * - Creates payment method if the payment method with provided key doesn't exist in the database.
      * - Updates payment method if the payment method with provided key exist in the database.
@@ -114,11 +166,32 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::consumePaymentMethodMessage()} instead.
+     *
      * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\PaymentMethodAddedTransfer $addPaymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function addPaymentMethod(AddPaymentMethodTransfer|PaymentMethodAddedTransfer $addPaymentMethodTransfer): PaymentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Used to support only foreign payment methods.
+     * - Requires `AbstractTransfer.name` transfer field to be set.
+     * - Requires `AbstractTransfer.providerName` transfer field to be set.
+     * - When used with `AddPaymentMethodTransfer`: PaymentMethod will be created if it doesn't exist in the database.
+     * - When used with `UpdatePaymentMethodTransfer`: PaymentMethod will be updated if it exists in the database.
+     * - When use with `DeletePaymentMethodTransfer`: PaymentMethod will be hidden if it exists in the database.
+     * - Checks if there's a `UpdatePaymentMethod.messageAttributes.timestamp` and proceed with action only if it's null or newer than `last_message_timestamp`.
+     * - Returns `PaymentMethod` transfer filled with payment method data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\UpdatePaymentMethodTransfer|\Generated\Shared\Transfer\DeletePaymentMethodTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function consumePaymentMethodMessage(AbstractTransfer $messageTransfer): void;
 
     /**
      * Specification:

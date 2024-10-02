@@ -2,7 +2,7 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method Orm\\.+\\SpyWishlistQuery::groupByIdPaymentProvider\(\)#'
+        - '#Call to an undefined method .+Query::groupByIdPaymentProvider\(\)#'
         - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::toArrayNotRecursiveCamelCased\(\)\.#'
         - '#Method .+PaymentToUtilEncodingServiceBridge::decodeJson\(\) should return array\|null but returns array\|object\|null\.#'
         - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::*.#'

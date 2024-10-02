@@ -14,7 +14,17 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const RESOURCE_TYPE_PAYMENTS = 'payments';
+
+    /**
+     * @var string
+     */
     public const RESOURCE_PAYMENT_METHODS = 'payment-methods';
+
+    /**
+     * @var string
+     */
+    public const RESOURCE_TYPE_PAYMENT_CANCELLATIONS = 'payment-cancellations';
 
     /**
      * @var array<string, int>

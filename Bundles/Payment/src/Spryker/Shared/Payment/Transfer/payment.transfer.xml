@@ -25,6 +25,7 @@
         <property name="shippingAddress" type="Address"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="priceMode" type="string"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
     </transfer>
 
     <transfer name="Order">
@@ -51,18 +52,19 @@
         <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]"/>
     </transfer>
 
-    <transfer name="PaymentAuthorizeResponse">
-        <property name="redirectUrl" type="string"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="message" type="string"/>
-    </transfer>
-
     <transfer name="PaymentAuthorizeRequest">
         <property name="requestUrl" type="string"/>
         <property name="postData" type="array" associative="true" singular="postValue"/>
         <property name="authorization" type="string"/>
         <property name="storeReference" type="string" deprecated="Use {@link \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer::$tenantIdentifier} instead."/>
         <property name="tenantIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentAuthorizeResponse">
+        <property name="redirectUrl" type="string"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">
@@ -101,11 +103,16 @@
     <transfer name="PaymentMethodAppConfiguration" strict="true">
         <property name="baseUrl" type="string"/>
         <property name="endpoints" type="Endpoint[]" singular="endpoint"/>
+        <property name="checkoutConfiguration" type="CheckoutConfiguration"/>
     </transfer>
 
     <transfer name="Endpoint" strict="true">
         <property name="name" type="string"/>
         <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutConfiguration" strict="true">
+        <property name="strategy" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -278,8 +285,28 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="PreOrderPaymentRequest">
+        <property name="quote" type="Quote"/>
+        <property name="preOrderPaymentData" type="array" singular="preOrderPaymentDatum" description="After the first call to initialize the payment this data will be set."/>
+        <property name="payment" type="Payment"/>
+    </transfer>
+
+    <transfer name="PreOrderPaymentResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+    </transfer>
+
     <!-- Asynchronous Messages -->
     <transfer name="AddPaymentMethod">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="UpdatePaymentMethod">
         <property name="name" type="string"/>
         <property name="providerName" type="string"/>
         <property name="paymentAuthorizationEndpoint" type="string"/>
@@ -290,7 +317,6 @@
     <transfer name="DeletePaymentMethod">
         <property name="name" type="string"/>
         <property name="providerName" type="string"/>
-        <property name="paymentAuthorizationEndpoint" type="string"/>
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
@@ -489,6 +515,18 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="amount" type="int"/>
         <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="method" type="string"/>
+        <property name="uri" type="string"/>
+        <property name="headers" type="array" associative="true" singular="header"/>
+        <property name="body" type="string"/>
+    </transfer>
+
+    <transfer name="AcpHttpResponse" strict="true">
+        <property name="httpStatusCode" type="int"/>
+        <property name="content" type="string"/>
     </transfer>
     <!-- EOF deprecated Asynchronous Messages -->
 </transfers>

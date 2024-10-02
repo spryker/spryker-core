@@ -29,7 +29,7 @@ class SalesPaymentDetailFacade extends AbstractFacade implements SalesPaymentDet
      */
     public function handlePaymentCreated(PaymentCreatedTransfer $paymentCreatedTransfer): void
     {
-        $this->getFactory()->createPaymentCreatedMessageHandler()->handlePaymentCreated($paymentCreatedTransfer);
+        $this->getFactory()->createPaymentMessageHandler()->handlePaymentCreated($paymentCreatedTransfer);
     }
 
     /**
@@ -43,6 +43,6 @@ class SalesPaymentDetailFacade extends AbstractFacade implements SalesPaymentDet
      */
     public function handlePaymentUpdated(PaymentUpdatedTransfer $paymentUpdatedTransfer): void
     {
-        $this->getFactory()->createPaymentUpdatedMessageHandler()->handlePaymentUpdated($paymentUpdatedTransfer);
+        $this->getFactory()->createPaymentMessageHandler()->handlePaymentUpdated($paymentUpdatedTransfer);
     }
 }

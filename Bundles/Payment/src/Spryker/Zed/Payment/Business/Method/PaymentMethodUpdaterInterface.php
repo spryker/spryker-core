@@ -11,17 +11,16 @@ use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 
 interface PaymentMethodUpdaterInterface
 {
     /**
-     * @deprecated Use {@link \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface::update()} instead.
+     * @param \Generated\Shared\Transfer\UpdatePaymentMethodTransfer $updatePaymentMethodTransfer
      *
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function updatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
+    public function updatePaymentMethod(UpdatePaymentMethodTransfer $updatePaymentMethodTransfer): PaymentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer

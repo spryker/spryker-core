@@ -29,6 +29,6 @@ suites:
                 - \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
                       asyncapi: resources/api/asyncapi.yml
                       handlers:
-                          - \Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\PaymentCreatedMessageHandlerPlugin
+                          - \Spryker\Zed\SalesPaymentDetail\Communication\Plugin\MessageBroker\SalesPaymentDetailMessageHandlerPlugin
                 - \SprykerTest\AsyncApi\SalesPaymentDetail\Helper\SalesPaymentDetailHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper

@@ -1,0 +1,55 @@
+payments:
+    post:
+        quote:
+            - NotBlank
+            - Collection:
+                  fields:
+                      customer:
+                          - Collection:
+                                fields:
+                                    firstName:
+                                        - NotBlank
+                                    lastName:
+                                        - NotBlank
+                                    email:
+                                        - NotBlank
+                                        - EmailConstraint
+                      billingAddress:
+                          - Collection:
+                                fields:
+                                    iso2Code:
+                                        - NotBlank
+                                        - Country
+                      currency:
+                          - Collection:
+                                fields:
+                                    code:
+                                        - NotBlank
+                                        - Currency
+        payment:
+            - Collection:
+                  fields:
+                      amount:
+                          - NotBlank
+                          - Type:
+                                type: numeric
+                      paymentMethodName:
+                          - NotBlank
+                      paymentProviderName:
+                          - NotBlank
+
+payment-cancellations:
+    post:
+        payment:
+            - Collection:
+                  fields:
+                      paymentMethodName:
+                          - NotBlank
+                      paymentProviderName:
+                          - NotBlank
+
+        preOrderPaymentData:
+            - Collection:
+                  fields:
+                      transactionId:
+                          - NotBlank

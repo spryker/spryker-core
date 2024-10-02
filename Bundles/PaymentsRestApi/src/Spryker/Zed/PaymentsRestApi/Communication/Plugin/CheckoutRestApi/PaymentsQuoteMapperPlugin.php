@@ -21,6 +21,7 @@ class PaymentsQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPlu
     /**
      * {@inheritDoc}
      * - Maps rest request payments to quote.
+     * - Maps rest request preOrderPaymentData to quote.
      *
      * @api
      *

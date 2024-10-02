@@ -148,7 +148,6 @@ class PaymentBusinessTester extends Actor
     ): DeletePaymentMethodTransfer {
         return $this->haveDeletePaymentMethodTransfer([
             DeletePaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            DeletePaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
             DeletePaymentMethodTransfer::PROVIDER_NAME => $paymentProviderTransfer->getPaymentProviderKey(),
             DeletePaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,
@@ -169,7 +168,6 @@ class PaymentBusinessTester extends Actor
 
         return $this->haveDeletePaymentMethodTransfer([
             DeletePaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
-            DeletePaymentMethodTransfer::PAYMENT_AUTHORIZATION_ENDPOINT => static::PAYMENT_REDIRECT_URL,
             DeletePaymentMethodTransfer::PROVIDER_NAME => $providerKey,
             DeletePaymentMethodTransfer::MESSAGE_ATTRIBUTES => [
                 MessageAttributesTransfer::STORE_REFERENCE => static::STORE_REFERENCE,

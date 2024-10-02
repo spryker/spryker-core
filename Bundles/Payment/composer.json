@@ -11,6 +11,7 @@
         "spryker/checkout-extension": "^1.2.0",
         "spryker/guzzle": "^2.2.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/kernel-app": "^1.0.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/log": "^3.0.0",
         "spryker/message-broker": "^1.0.0",

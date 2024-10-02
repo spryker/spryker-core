@@ -47,6 +47,26 @@ class PaymentConfig extends AbstractBundleConfig
     protected const BASE_URL_YVES = 'APPLICATION:BASE_URL_YVES';
 
     /**
+     * @var string
+     */
+    public const PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_AUTHORIZATION = 'authorization';
+
+    /**
+     * @var string
+     */
+    public const PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_PRE_ORDER_CONFIRMATION = 'pre-order-confirmation';
+
+    /**
+     * @var string
+     */
+    public const PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_PRE_ORDER_CANCELLATION = 'pre-order-cancellation';
+
+    /**
+     * @var string
+     */
+    public const PRE_ORDER_PAYMENT_DATA_FIELD = 'preOrderPaymentData';
+
+    /**
      * Specification:
      * - Returns a map of the payment methods and state machine's processes names.
      *

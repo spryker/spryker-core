@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface;
 
@@ -22,6 +23,23 @@ use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInt
  */
 class PaymentMethodMessageHandlerPlugin extends AbstractPlugin implements MessageHandlerPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return iterable
+     */
+    public function handles(): iterable
+    {
+        yield AddPaymentMethodTransfer::class => [$this->getFacade(), 'consumePaymentMethodMessage'];
+        yield UpdatePaymentMethodTransfer::class => [$this->getFacade(), 'consumePaymentMethodMessage'];
+        yield DeletePaymentMethodTransfer::class => [$this->getFacade(), 'consumePaymentMethodMessage'];
+            // @deprecated
+        yield PaymentMethodAddedTransfer::class => [$this, 'onPaymentMethodAdded'];
+        yield PaymentMethodDeletedTransfer::class => [$this, 'onPaymentMethodDeleted'];
+    }
+
     /**
      * @deprecated Don't use this method directly, this method is only used for BC reasons.
      *
@@ -48,23 +66,5 @@ class PaymentMethodMessageHandlerPlugin extends AbstractPlugin implements Messag
         $deletePaymentMethodTransfer = (new DeletePaymentMethodTransfer())->fromArray($paymentMethodDeletedTransfer->toArray(), true);
 
         $this->getFacade()->deletePaymentMethod($deletePaymentMethodTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return iterable
-     */
-    public function handles(): iterable
-    {
-        return [
-            AddPaymentMethodTransfer::class => [$this->getFacade(), 'addPaymentMethod'],
-            DeletePaymentMethodTransfer::class => [$this->getFacade(), 'deletePaymentMethod'],
-            // @deprecated
-            PaymentMethodAddedTransfer::class => [$this, 'onPaymentMethodAdded'],
-            PaymentMethodDeletedTransfer::class => [$this, 'onPaymentMethodDeleted'],
-        ];
     }
 }

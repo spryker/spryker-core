@@ -1,5 +1,6 @@
 namespace: PaymentsRestApi
 include:
+    - tests/SprykerTest/Glue/PaymentsRestApi
     - tests/SprykerTest/Zed/PaymentsRestApi
 paths:
     tests: tests

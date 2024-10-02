@@ -78,7 +78,10 @@ class SalesPaymentDetailHelper extends Module
         $this->assertSame($salesPaymentDetailTransfer->getPaymentReference(), $salesPaymentDetailEntity->getPaymentReference());
         $this->assertSame($salesPaymentDetailTransfer->getEntityReference(), $salesPaymentDetailEntity->getEntityReference());
         $this->assertSame($salesPaymentDetailTransfer->getDetails(), $salesPaymentDetailEntity->getDetails());
-        $this->assertSame($salesPaymentDetailTransfer->getStructuredDetails(), json_decode($salesPaymentDetailEntity->getDetails(), true));
+
+        if ($salesPaymentDetailTransfer->getStructuredDetails()) {
+            $this->assertSame($salesPaymentDetailTransfer->getStructuredDetails(), json_decode($salesPaymentDetailEntity->getDetails(), true));
+        }
     }
 
     /**

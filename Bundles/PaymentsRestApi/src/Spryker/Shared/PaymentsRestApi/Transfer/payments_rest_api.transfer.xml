@@ -3,11 +3,36 @@
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="payments" type="RestPayment[]" singular="payment" restRequestParameter="yes"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestPreOrderPaymentRequestAttributes">
+        <property name="quote" type="Quote" restRequestParameter="required"/>
+        <property name="payment" type="RestPayment" restRequestParameter="required"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestPreOrderPaymentCancellationRequestAttributes">
+        <property name="payment" type="RestPayment" restRequestParameter="required"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="PreOrderPaymentRequest">
+        <property name="quote" type="Quote"/>
+        <property name="payment" type="Payment"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
+    </transfer>
+
+    <transfer name="PreOrderPaymentResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="store" type="Store"/>
+        <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
     </transfer>
 
     <transfer name="Store"/>
@@ -16,11 +41,13 @@
         <property name="paymentProvider" type="string"/>
         <property name="paymentMethod" type="string"/>
         <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="RestPayment">
         <property name="paymentProviderName" type="string" restRequestParameter="required"/>
         <property name="paymentMethodName" type="string" restRequestParameter="required"/>
+        <property name="amount" type="int" restRequestParameter="yes"/>
         <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
     </transfer>
 
@@ -70,5 +97,10 @@
         <property name="paymentMethodName" type="string"/>
         <property name="paymentProviderName" type="string"/>
         <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="detail" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 </transfers>

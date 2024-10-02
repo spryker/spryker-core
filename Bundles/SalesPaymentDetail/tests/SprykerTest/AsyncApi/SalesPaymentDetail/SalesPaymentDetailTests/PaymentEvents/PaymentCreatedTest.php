@@ -34,7 +34,7 @@ class PaymentCreatedTest extends Unit
     /**
      * @return void
      */
-    public function testPaymentCreatedMessagePersistPaymentReferenceForTheOrderFoundForTheOrderReference(): void
+    public function testPaymentCreatedMessageIsPersistedWhenPaymentReferenceForTheOrderWasFoundForTheOrderReference(): void
     {
         // Arrange
         $paymentReference = Uuid::uuid4()->toString();
@@ -63,6 +63,30 @@ class PaymentCreatedTest extends Unit
     /**
      * @return void
      */
+    public function testPaymentCreatedMessageIsPersistedWhenOnlyThePaymentReferenceIsGiven(): void
+    {
+        // Arrange
+        $paymentReference = Uuid::uuid4()->toString();
+
+        $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
+            PaymentCreatedTransfer::ENTITY_REFERENCE => null,
+            PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
+        ]);
+
+        // Act: This will trigger the MessageHandlerPlugin for this message.
+        $this->tester->runMessageReceiveTest($paymentCreatedTransfer, 'payment-events');
+
+        // Assert
+        $salesPaymentDetailTransfer = new SalesPaymentDetailTransfer();
+        $salesPaymentDetailTransfer
+            ->setPaymentReference($paymentReference);
+
+        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testPaymentCreatedMessageIsIgnoredWhenPaymentReferenceForOrderReferenceAlreadyExists(): void
     {
         // Arrange
@@ -80,6 +104,33 @@ class PaymentCreatedTest extends Unit
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
             PaymentCreatedTransfer::DETAILS => '{"foo": "hasChanged"}',
+        ]);
+
+        // Act: This will trigger the MessageHandlerPlugin for this message.
+        $this->tester->runMessageReceiveTest($paymentCreatedTransfer, 'payment-events');
+
+        // Assert
+        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPaymentCreatedMessageIsIgnoredWhenOnlyThePaymentReferenceIsGivenAndTheSalesPaymentDetailsAlreadyExists(): void
+    {
+        // Arrange
+        $paymentReference = Uuid::uuid4()->toString();
+
+        $salesPaymentDetailTransfer = $this->tester->haveSalesPaymentDetail([
+            SalesPaymentDetailTransfer::ENTITY_REFERENCE => null,
+            SalesPaymentDetailTransfer::PAYMENT_REFERENCE => $paymentReference,
+            SalesPaymentDetailTransfer::DETAILS => '{foo: bar}',
+        ]);
+
+        $paymentCreatedTransfer = $this->tester->havePaymentCreatedTransfer([
+            PaymentCreatedTransfer::ENTITY_REFERENCE => null,
+            PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
+            PaymentCreatedTransfer::DETAILS => '{foo: hasChanged}',
         ]);
 
         // Act: This will trigger the MessageHandlerPlugin for this message.

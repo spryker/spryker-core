@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface;
@@ -99,16 +100,20 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\UpdatePaymentMethodTransfer $updatePaymentMethodTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function updatePaymentMethod(
-        PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodResponseTransfer {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($paymentMethodTransfer) {
-            return $this->executeUpdatePaymentMethodTransaction($paymentMethodTransfer);
-        });
+    public function updatePaymentMethod(UpdatePaymentMethodTransfer $updatePaymentMethodTransfer): PaymentMethodTransfer
+    {
+        $paymentMethodTransfer = $this->paymentMethodEventMapper->mapUpdatePaymentMethodTransferToPaymentMethodTransfer(
+            $updatePaymentMethodTransfer,
+            new PaymentMethodTransfer(),
+        );
+
+        $existingPaymentMethodTransfer = $this->findExistingPaymentMethod($paymentMethodTransfer);
+
+        return $this->savePaymentMethod($paymentMethodTransfer, $existingPaymentMethodTransfer);
     }
 
     /**
@@ -141,10 +146,11 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         );
 
         $messageAttributes = $addPaymentMethodTransfer->getMessageAttributesOrFail();
+
         $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $addPaymentMethodTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
-        $existingPaymentMethodTransfer = $this->findExistentPaymentMethod(
+        $existingPaymentMethodTransfer = $this->findExistingPaymentMethod(
             $paymentMethodTransfer,
             $storeTransfer,
         );
@@ -180,7 +186,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         $paymentMethodTransfer->setPaymentMethodKey($this->getPaymentMethodKey($paymentMethodTransfer));
 
         $messageAttributes = $addPaymentMethodTransfer->getMessageAttributesOrFail();
-        $existingPaymentMethodTransfer = $this->findExistentPaymentMethod($paymentMethodTransfer);
+        $existingPaymentMethodTransfer = $this->findExistingPaymentMethod($paymentMethodTransfer);
 
         if (
             $existingPaymentMethodTransfer
@@ -221,7 +227,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $deletePaymentMethodTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
-        $existingPaymentMethodTransfer = $this->findExistentPaymentMethod(
+        $existingPaymentMethodTransfer = $this->findExistingPaymentMethod(
             $paymentMethodTransfer,
             $storeTransfer,
         );
@@ -261,7 +267,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
             ->requireGroupName();
 
         $messageAttributes = $deletePaymentMethodTransfer->getMessageAttributesOrFail();
-        $existingPaymentMethodTransfer = $this->findExistentPaymentMethod($paymentMethodTransfer);
+        $existingPaymentMethodTransfer = $this->findExistingPaymentMethod($paymentMethodTransfer);
 
         if (
             $existingPaymentMethodTransfer
@@ -384,7 +390,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
                 ->addStores($storeTransfer)
                 ->addIdStores($storeTransfer->getIdStore());
 
-            $paymentMethodResponseTransfer = $this->updatePaymentMethod($existingPaymentMethodTransfer);
+            $paymentMethodResponseTransfer = $this->update($existingPaymentMethodTransfer);
         } else {
             $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation() ?? new StoreRelationTransfer();
             $storeRelationTransfer
@@ -426,11 +432,10 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
-    protected function executeUpdatePaymentMethodTransaction(
+    protected function executeUpdateTransaction(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer {
-        $paymentMethodTransfer->requireIdPaymentMethod()
-            ->requireStoreRelation();
+        $paymentMethodTransfer->requireIdPaymentMethod();
 
         $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation()
             ->setIdEntity($paymentMethodTransfer->getIdPaymentMethod());
@@ -445,30 +450,6 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         }
 
         $this->storeRelationUpdater->update($storeRelationTransfer);
-
-        return (new PaymentMethodResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setPaymentMethod($paymentMethodTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
-     */
-    protected function executeUpdateTransaction(
-        PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodResponseTransfer {
-        $paymentMethodTransfer->requireIdPaymentMethod();
-
-        $paymentMethodTransfer = $this->paymentEntityManager
-            ->updatePaymentMethod($paymentMethodTransfer);
-
-        if ($paymentMethodTransfer === null) {
-            return (new PaymentMethodResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage($this->getErrorMessageTransfer(static::MESSAGE_UPDATE_ERROR));
-        }
 
         return (new PaymentMethodResponseTransfer())
             ->setIsSuccessful(true)
@@ -522,7 +503,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
-    protected function findExistentPaymentMethod(
+    protected function findExistingPaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer,
         ?StoreTransfer $storeTransfer = null
     ): ?PaymentMethodTransfer {

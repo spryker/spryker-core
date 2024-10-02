@@ -12,10 +12,12 @@ use Generated\Shared\DataBuilder\AddPaymentMethodBuilder;
 use Generated\Shared\DataBuilder\DeletePaymentMethodBuilder;
 use Generated\Shared\DataBuilder\PaymentMethodBuilder;
 use Generated\Shared\DataBuilder\PaymentProviderBuilder;
+use Generated\Shared\DataBuilder\UpdatePaymentMethodBuilder;
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
@@ -47,6 +49,21 @@ class PaymentDataHelper extends Module
         SpyPaymentMethodStoreQuery::create()->deleteAll();
         SpyPaymentMethodQuery::create()->deleteAll();
         SpyPaymentProviderQuery::create()->deleteAll();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function havePaymentMethodWithPaymentProviderPersisted(array $seed = []): PaymentMethodTransfer
+    {
+        $paymentProviderTransfer = $this->havePaymentProvider($seed);
+
+        $seed[PaymentMethodTransfer::PAYMENT_PROVIDER] = $paymentProviderTransfer;
+        $seed[PaymentMethodTransfer::ID_PAYMENT_PROVIDER] = $paymentProviderTransfer->getIdPaymentProvider();
+
+        return $this->havePaymentMethod($seed);
     }
 
     /**
@@ -90,9 +107,11 @@ class PaymentDataHelper extends Module
         }
 
         $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
+
         if ($paymentMethodTransfer->getPaymentProvider()) {
             $paymentMethodEntity->setGroupName($paymentMethodTransfer->getPaymentProvider()->getName());
         }
+
         $paymentMethodEntity->fromArray($modifiedPaymentMethodData);
 
         $paymentMethodEntity->save();
@@ -116,13 +135,32 @@ class PaymentDataHelper extends Module
     }
 
     /**
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
+     */
+    public function findPaymentMethodById(int $idPaymentMethod): ?PaymentMethodTransfer
+    {
+        $paymentMethodEntity = SpyPaymentMethodQuery::create()
+            ->findOneByIdPaymentMethod($idPaymentMethod);
+
+        if (!$paymentMethodEntity) {
+            return null;
+        }
+
+        $paymentMethodTransfer = (new PaymentMethodTransfer())->fromArray($paymentMethodEntity->toArray(), true);
+        $paymentMethodTransfer->setIdPaymentProvider($paymentMethodEntity->getFkPaymentProvider());
+
+        return $paymentMethodTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
     public function findPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
     {
-        $mod = $paymentMethodTransfer->modifiedToArrayNotRecursiveCamelCased();
         $paymentMethodEntity = SpyPaymentMethodQuery::create()
             ->filterByArray($paymentMethodTransfer->modifiedToArrayNotRecursiveCamelCased())
             ->findOne();
@@ -147,6 +185,18 @@ class PaymentDataHelper extends Module
     {
         return (new AddPaymentMethodBuilder($seedData))
             ->withMessageAttributes($messageAttributesSeedData)
+            ->build();
+    }
+
+    /**
+     * @param array<mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\UpdatePaymentMethodTransfer
+     */
+    public function haveUpdatePaymentMethodTransfer(array $seedData = []): UpdatePaymentMethodTransfer
+    {
+        return (new UpdatePaymentMethodBuilder($seedData))
+            ->withMessageAttributes()
             ->build();
     }
 

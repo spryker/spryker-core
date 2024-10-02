@@ -8,8 +8,9 @@
 namespace Spryker\Zed\SalesPaymentDetail\Business\MessageBroker;
 
 use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 
-interface PaymentCreatedMessageHandlerInterface
+interface PaymentMessageHandlerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PaymentCreatedTransfer $paymentCreatedTransfer
@@ -17,4 +18,11 @@ interface PaymentCreatedMessageHandlerInterface
      * @return void
      */
     public function handlePaymentCreated(PaymentCreatedTransfer $paymentCreatedTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentUpdatedTransfer $paymentUpdatedTransfer
+     *
+     * @return void
+     */
+    public function handlePaymentUpdated(PaymentUpdatedTransfer $paymentUpdatedTransfer): void;
 }

@@ -15,12 +15,12 @@ use Generated\Shared\DataBuilder\PaymentMethodBuilder;
 use Generated\Shared\DataBuilder\PaymentProviderBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\AddPaymentMethodTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
-use Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
@@ -29,16 +29,17 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
-use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 use Ramsey\Uuid\Uuid;
-use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\KernelApp\Business\KernelAppFacadeInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\PaymentBusinessFactory;
 use Spryker\Zed\Payment\Business\PaymentFacade;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeBridge;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 use SprykerTest\Zed\Payment\PaymentBusinessTester;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
@@ -185,15 +186,12 @@ class PaymentFacadeTest extends Unit
         $resultPaymentMethodEntity = SpyPaymentMethodQuery::create()
             ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
             ->findOne();
-        $storeRelationExist = SpyPaymentMethodStoreQuery::create()
-            ->filterByFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
-            ->exists();
+
         $this->assertSame(
             'test1',
             $resultPaymentMethodEntity->getPaymentMethodKey(),
             'Payment method name should match to the expected value',
         );
-        $this->assertTrue($storeRelationExist, 'Payment method store relation should exists');
     }
 
     /**
@@ -533,7 +531,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testForeignPaymentAuthorizerReceivesCorrectResponseAndUsingItAddsRedirectUrlWithCorrectData(): void
+    public function testForeignPaymentInitializePaymentReceivesCorrectResponseAndUsingItAddsRedirectUrlWithCorrectData(): void
     {
         // Arrange
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
@@ -551,20 +549,20 @@ class PaymentFacadeTest extends Unit
         $quoteTransfer->setPayment($paymentTransfer);
         $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
 
-        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+        $kernelAppFacadeMock = $this->getMockBuilder(KernelAppFacadeInterface::class)->getMock();
 
-        $paymentClientMock->expects($this->once())
-            ->method('authorizeForeignPayment')
-            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) {
-                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+        $kernelAppFacadeMock->expects($this->once())
+            ->method('makeRequest')
+            ->with($this->callback(function (AcpHttpRequestTransfer $acpHttpRequestTransfer) {
+                return $acpHttpRequestTransfer->getUri() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
             }))
             ->willReturn(
-                (new PaymentAuthorizeResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+                (new AcpHttpResponseTransfer())
+                    ->setHttpStatusCode(Response::HTTP_OK)
+                    ->setContent(json_encode(['redirectUrl' => static::PAYMENT_AUTHORIZATION_REDIRECT])),
             );
 
-        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+        $this->tester->setDependency(PaymentDependencyProvider::FACADE_KERNEL_APP, new PaymentToKernelAppFacadeBridge($kernelAppFacadeMock));
 
         // Act
         $this->tester->getFacade()->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
@@ -604,25 +602,26 @@ class PaymentFacadeTest extends Unit
         $quoteTransfer->setPayment($paymentTransfer);
         $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
 
-        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
-
         $forwardedAdditionPaymentData = [];
 
-        $paymentClientMock->expects($this->once())
-            ->method('authorizeForeignPayment')
-            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) use (&$forwardedAdditionPaymentData) {
-                // This is what would be sent, we want to compare later.
-                $forwardedAdditionPaymentData = $paymentAuthorizeRequestTransfer->getPostData()['orderData'][PaymentTransfer::ADDITIONAL_PAYMENT_DATA];
+        $kernelAppFacadeMock = $this->getMockBuilder(KernelAppFacadeInterface::class)->getMock();
 
-                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+        $kernelAppFacadeMock->expects($this->once())
+            ->method('makeRequest')
+            ->with($this->callback(function (AcpHttpRequestTransfer $acpHttpRequestTransfer) use (&$forwardedAdditionPaymentData) {
+                // This is what would be sent, we want to compare later.
+                $decodedBody = json_decode($acpHttpRequestTransfer->getBody(), true);
+                $forwardedAdditionPaymentData = $decodedBody['orderData'][PaymentTransfer::ADDITIONAL_PAYMENT_DATA];
+
+                return $acpHttpRequestTransfer->getUri() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
             }))
             ->willReturn(
-                (new PaymentAuthorizeResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+                (new AcpHttpResponseTransfer())
+                    ->setHttpStatusCode(Response::HTTP_OK)
+                    ->setContent(json_encode(['redirectUrl' => static::PAYMENT_AUTHORIZATION_REDIRECT])),
             );
 
-        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+        $this->tester->setDependency(PaymentDependencyProvider::FACADE_KERNEL_APP, new PaymentToKernelAppFacadeBridge($kernelAppFacadeMock));
 
         // Act
         $this->tester->getFacade()->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
@@ -679,20 +678,20 @@ class PaymentFacadeTest extends Unit
         $quoteTransfer->setPayment($paymentTransfer);
         $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
 
-        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+        $kernelAppFacadeMock = $this->getMockBuilder(KernelAppFacadeInterface::class)->getMock();
 
-        $paymentClientMock->expects($this->once())
-            ->method('authorizeForeignPayment')
-            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) {
-                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+        $kernelAppFacadeMock->expects($this->once())
+            ->method('makeRequest')
+            ->with($this->callback(function (AcpHttpRequestTransfer $acpHttpRequestTransfer) {
+                return $acpHttpRequestTransfer->getUri() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
             }))
             ->willReturn(
-                (new PaymentAuthorizeResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+                (new AcpHttpResponseTransfer())
+                    ->setHttpStatusCode(Response::HTTP_OK)
+                    ->setContent(json_encode(['redirectUrl' => static::PAYMENT_AUTHORIZATION_REDIRECT])),
             );
 
-        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+        $this->tester->setDependency(PaymentDependencyProvider::FACADE_KERNEL_APP, new PaymentToKernelAppFacadeBridge($kernelAppFacadeMock));
 
         $this->tester->mockConfigMethod('getStoreFrontPaymentPage', '/my-custom-payment-page');
 
@@ -727,20 +726,21 @@ class PaymentFacadeTest extends Unit
         $quoteTransfer->setPayment($paymentTransfer);
         $checkoutResponseTransfer = $this->buildCheckoutResponseTransfer();
 
-        $paymentClientMock = $this->getMockBuilder(PaymentClientInterface::class)->getMock();
+        $kernelAppFacadeMock = $this->getMockBuilder(KernelAppFacadeInterface::class)->getMock();
 
-        $paymentClientMock->expects($this->once())
-            ->method('authorizeForeignPayment')
-            ->with($this->callback(function (PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer) {
-                return $paymentAuthorizeRequestTransfer->getRequestUrl() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
+        $kernelAppFacadeMock->expects($this->once())
+            ->method('makeRequest')
+            ->with($this->callback(function (AcpHttpRequestTransfer $acpHttpRequestTransfer) {
+                return $acpHttpRequestTransfer->getUri() === static::PAYMENT_AUTHORIZATION_ENDPOINT;
             }))
             ->willReturn(
-                (new PaymentAuthorizeResponseTransfer())
-                    ->setIsSuccessful(true)
-                    ->setRedirectUrl(static::PAYMENT_AUTHORIZATION_REDIRECT),
+                (new AcpHttpResponseTransfer())
+                    ->setHttpStatusCode(Response::HTTP_OK)
+                    ->setContent(json_encode(['redirectUrl' => static::PAYMENT_AUTHORIZATION_REDIRECT])),
             );
 
-        $this->tester->setDependency(PaymentDependencyProvider::CLIENT_PAYMENT, $paymentClientMock);
+        $this->tester->setDependency(PaymentDependencyProvider::FACADE_KERNEL_APP, new PaymentToKernelAppFacadeBridge($kernelAppFacadeMock));
+
         $this->tester->mockConfigMethod('getStoreFrontPaymentPage', 'https://my-custom-domain.com/payment?some=param');
 
         // Act

@@ -28,9 +28,12 @@ use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -72,8 +75,57 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): void {
         $this->getFactory()
-            ->createForeignPaymentAuthorizer()
-            ->initForeignPaymentForCheckoutProcess($quoteTransfer, $checkoutResponseTransfer);
+            ->createForeignPayment()
+            ->initializePayment($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFactory()->createForeignPayment()->initializePreOrderPayment($preOrderPaymentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFactory()->createForeignPayment()->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function confirmPreOrderPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void {
+        $this->getFactory()
+            ->createForeignPayment()
+            ->confirmPreOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -110,6 +162,20 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 
         return $this->getFactory()->createPaymentMethodUpdater()
             ->addPaymentMethod($addPaymentMethodTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddPaymentMethodTransfer|\Generated\Shared\Transfer\UpdatePaymentMethodTransfer|\Generated\Shared\Transfer\DeletePaymentMethodTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function consumePaymentMethodMessage(AbstractTransfer $messageTransfer): void
+    {
+        $this->getFactory()->createPaymentMessageConsumer()->consumePaymentMessage($messageTransfer);
     }
 
     /**
@@ -230,7 +296,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     ): PaymentMethodResponseTransfer {
         return $this->getFactory()
             ->createPaymentMethodUpdater()
-            ->updatePaymentMethod($paymentMethodTransfer);
+            ->update($paymentMethodTransfer);
     }
 
     /**

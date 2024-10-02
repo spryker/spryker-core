@@ -17,7 +17,7 @@ interface SalesPaymentDetailFacadeInterface
      * - Handles payment created message.
      * - When this message is received it creates a new sales payment detail entity.
      * - Requires `PaymentCreatedTransfer::PAYMENT_REFERENCE` to be set.
-     * - Requires `PaymentCreatedTransfer::ENTITY_REFERENCE` to be set.
+     * - Optional `PaymentCreatedTransfer::ENTITY_REFERENCE`. Will not be present when a payment is created before order placement (preOrder payment).
      * - When the entity for this payment reference already exists, the message will be ignored.
      *
      * @api

@@ -8,11 +8,12 @@
 namespace Spryker\Zed\SalesPaymentDetail\Business\MessageBroker;
 
 use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
 use Generated\Shared\Transfer\SalesPaymentDetailTransfer;
 use Spryker\Zed\SalesPaymentDetail\Persistence\SalesPaymentDetailEntityManagerInterface;
 use Spryker\Zed\SalesPaymentDetail\Persistence\SalesPaymentDetailRepositoryInterface;
 
-class PaymentCreatedMessageHandler implements PaymentCreatedMessageHandlerInterface
+class PaymentMessageHandler implements PaymentMessageHandlerInterface
 {
     /**
      * @var \Spryker\Zed\SalesPaymentDetail\Persistence\SalesPaymentDetailRepositoryInterface
@@ -43,7 +44,7 @@ class PaymentCreatedMessageHandler implements PaymentCreatedMessageHandlerInterf
      */
     public function handlePaymentCreated(PaymentCreatedTransfer $paymentCreatedTransfer): void
     {
-        if ($this->salesPaymentDetailRepository->findByEntityReference($paymentCreatedTransfer->getEntityReferenceOrFail())) {
+        if (($paymentCreatedTransfer->getEntityReference() && $this->salesPaymentDetailRepository->findByEntityReference($paymentCreatedTransfer->getEntityReferenceOrFail())) || $this->salesPaymentDetailRepository->findByPaymentReference($paymentCreatedTransfer->getPaymentReferenceOrFail())) {
             return;
         }
 
@@ -51,5 +52,27 @@ class PaymentCreatedMessageHandler implements PaymentCreatedMessageHandlerInterf
         $salesPaymentDetailTransfer->fromArray($paymentCreatedTransfer->toArray(), true);
 
         $this->salesPaymentDetailEntityManager->createSalesPaymentDetails($salesPaymentDetailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentUpdatedTransfer $paymentUpdatedTransfer
+     *
+     * @return void
+     */
+    public function handlePaymentUpdated(PaymentUpdatedTransfer $paymentUpdatedTransfer): void
+    {
+        $salesPaymentDetailTransfer = $this->salesPaymentDetailRepository->findByEntityReference($paymentUpdatedTransfer->getEntityReferenceOrFail());
+
+        if (!$salesPaymentDetailTransfer) {
+            $salesPaymentDetailTransfer = $this->salesPaymentDetailRepository->findByPaymentReference($paymentUpdatedTransfer->getPaymentReferenceOrFail());
+        }
+
+        if (!$salesPaymentDetailTransfer) {
+            return;
+        }
+
+        $salesPaymentDetailTransfer->fromArray($paymentUpdatedTransfer->toArray(), true);
+
+        $this->salesPaymentDetailEntityManager->updateSalesPaymentDetails($salesPaymentDetailTransfer);
     }
 }
