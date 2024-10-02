@@ -962,6 +962,12 @@ a.label {
     }
 }
 
+.navbar-top-links li a:focus {
+    color: $green-dark;
+    outline: 1px solid $green-base;
+    outline-offset: 3px;
+}
+
 .pagination {
     display: inline-flex;
     vertical-align: top;

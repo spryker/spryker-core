@@ -4,7 +4,7 @@
             {% for breadcrumbItem in breadcrumbs %}
                 <li>
                     {% if breadcrumbItem.uri is not empty %}
-                        <a class="{{ loop.last ? 'disabled' }}" href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">
+                        <a class="{{ loop.last ? 'disabled' }}" tabindex="{{ loop.last ? '-1' }}" href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">
                             {{ breadcrumbItem.label | trans }}
                         </a>
                     {% else %}

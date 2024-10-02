@@ -154,6 +154,10 @@ $(document).ready(function () {
                     }, 1000);
                 });
         }
+
+        document.querySelectorAll('.paginate_button.disabled > a').forEach((element) => {
+            element.setAttribute('tabindex', '-1');
+        });
     });
 
     /* Draw data tables without search */
