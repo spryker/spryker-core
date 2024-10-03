@@ -1,10 +1,15 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  *
  * INSPINIA - Responsive Admin Theme
  * version 2.7.1
  */
+
+:root {
+    --grey-dark: #646464;
+    --green-default: #11856e;
+}
 
 h1,
 h2,
@@ -44,7 +49,7 @@ h5 {
     padding: 14px 20px 14px 25px;
 }
 .nav.navbar-right > li > a {
-    color: #999c9e;
+    color: var(--grey-dark);
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
@@ -4179,7 +4184,7 @@ table.table-mail tr td {
     color: #ed5565;
 }
 .text-muted {
-    color: #888888;
+    color: var(--grey-dark);
 }
 .text-white {
     color: #ffffff;
@@ -5328,7 +5333,7 @@ dd.project-people {
 }
 .message-date {
     font-size: 10px;
-    color: #888888;
+    color: var(--grey-dark);
 }
 .message-content {
     display: block;

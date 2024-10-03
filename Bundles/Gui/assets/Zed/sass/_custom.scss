@@ -225,7 +225,7 @@ body.login {
 
         label {
             text-transform: uppercase;
-            color: $grey-base;
+            color: $grey-dark;
             font-weight: 500;
 
             &:after {
@@ -631,7 +631,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
                 }
 
                 & > a {
-                    color: $green-default;
+                    color: $green-dark;
                     background-color: $grey-lighter;
                     .fa {
                         color: $green-default !important;
@@ -1482,7 +1482,7 @@ a.label {
         border-radius: 0;
         background: transparent;
         padding: 0;
-        color: #999c9e;
+        color: $grey-dark;
         border: none;
         box-shadow: none;
         line-height: 1;

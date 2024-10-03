@@ -1,125 +1,107 @@
 <!DOCTYPE html>
-<html data-application-locale="{{ app.locale }}">
-<head>
+<html data-application-locale="{{ app.locale }}" lang="{{ (app.locale | slice(0, 2)) | lower }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
-    <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
-
-    {% block head_css %}
-        <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    {% endblock %}
-
-</head>
-<body>
-
-<div id="wrapper">
-
-    {% block body_menu %}
-        {% if app.twig.getFunction('navigation') != false %}
-            {% include '@Gui/Partials/navigation.twig' %}
-        {% else %}
-            {% include '@Gui/Partials/menu.twig' %}
-        {% endif %}
-    {% endblock %}
-
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a href="#" class="navbar-minimalize minimalize-styl-2 btn btn-primary "><i class="fa fa-bars"></i></a>
-                    {#
-                    <form role="search" class="navbar-form-custom" action="search_results.html">
-                        <div class="form-group">
-                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                        </div>
-                    </form>
-                    #}
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}{% if username is defined %} <strong>{{ username }}</strong>{% endif %}{% if environment is defined %} <em>[{{ environment }}]</em>{% endif %}</span>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ 'Settings' | trans }} <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/user/edit/password-reset">{{ 'Reset password' | trans }}</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/auth/logout">
-                            <i class="fa fa-sign-out"></i> {{ 'Log out' | trans }}
-                        </a>
-                    </li>
-                </ul>
-
-            </nav>
-        </div>
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-xs-12 col-md-6">
-                <h2>{% block section_title %}{% if title is defined %}{{ title|trans }}{% endif %}{% endblock %}</h2>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div class="title-action">
-                    {% block action %}
-                        {# add here only links with classes "btn btn-sm btn-{color}" #}
-                        {# Example: <a href="" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</a> #}
-                    {% endblock %}
-                </div>
-            </div>
-            <div class="col-xs-12">
-                {% if app.twig.getFunction('breadcrumb') != false %}
-                    {% include '@Gui/Partials/breadcrumb.twig' %}
+        {% block head_css %}
+            <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
+            <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div id="wrapper">
+            {% block body_menu %}
+                {% if app.twig.getFunction('navigation') != false %}
+                    {% include '@Gui/Partials/navigation.twig' %}
                 {% else %}
-                    {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
+                    {% include '@Gui/Partials/menu.twig' %}
                 {% endif %}
+            {% endblock %}
+
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a href="#" class="navbar-minimalize minimalize-styl-2 btn btn-primary" title="{{ 'Minimize navigation bar' | trans }}"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}{% if username is defined %} <strong>{{ username }}</strong>{% endif %}{% if environment is defined %} <em>[{{ environment }}]</em>{% endif %}</span>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'Settings' | trans }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/user/edit/password-reset">{{ 'Reset password' | trans }}</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="/auth/logout">
+                                    <i class="fa fa-sign-out"></i> {{ 'Log out' | trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-xs-12 col-md-6">
+                        <h2>{% block section_title %}{% if title is defined %}{{ title|trans }}{% endif %}{% endblock %}</h2>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="title-action">
+                            {% block action %}
+                                {# add here only links with classes "btn btn-sm btn-{color}" #}
+                                {# Example: <a href="" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</a> #}
+                            {% endblock %}
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        {% if app.twig.getFunction('breadcrumb') != false %}
+                            {% include '@Gui/Partials/breadcrumb.twig' %}
+                        {% else %}
+                            {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="wrapper wrapper-content">
+                    {% include '@Messenger/Partials/flash-messages.twig' %}
+
+                    {% block content -%}{%- endblock %}
+                </div>
+                <div class="footer">
+                    <div>
+                        <strong>Copyright</strong> Spryker Systems GmbH &copy; {{ 'now'|date('Y') }}
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="wrapper wrapper-content">
-
-            {% include '@Messenger/Partials/flash-messages.twig' %}
-
-            {% block content -%}{%- endblock %}
-
-        </div>
-        <div class="footer">
-            <div>
-                <strong>Copyright</strong> Spryker Systems GmbH &copy; {{ 'now'|date('Y') }}
+        <div id="modal-alert" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content alert" id="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modal-title"></h4>
+                    </div>
+                    <div class="modal-body" id="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' | trans }}</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </div>
-</div>
-
-<div id="modal-alert" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content alert" id="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-title"></h4>
-            </div>
-            <div class="modal-body" id="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Close' | trans }}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% block footer_js %}
-    {% block common_js %}
-        <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
-    {% endblock %}
-    {% block init_js %}
-        <script src="{{ assetsPath('js/spryker-zed-gui-init.js') }}"></script>
-    {% endblock %}
-{% endblock %}
-
-</body>
+        {% block footer_js %}
+            {% block common_js %}
+                <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
+            {% endblock %}
+            {% block init_js %}
+                <script src="{{ assetsPath('js/spryker-zed-gui-init.js') }}"></script>
+            {% endblock %}
+        {% endblock %}
+    </body>
 </html>
