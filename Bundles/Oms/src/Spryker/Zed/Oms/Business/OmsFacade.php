@@ -155,13 +155,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param bool $regenerateCache
+     *
      * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
-    public function getProcesses()
+    public function getProcesses(bool $regenerateCache = false)
     {
         return $this->getFactory()
             ->createOrderStateMachineFinder()
-            ->getProcesses();
+            ->getProcesses($regenerateCache);
     }
 
     /**

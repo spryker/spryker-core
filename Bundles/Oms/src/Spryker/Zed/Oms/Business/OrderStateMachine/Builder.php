@@ -112,10 +112,11 @@ class Builder implements BuilderInterface
 
     /**
      * @param string $processName
+     * @param bool $regenerateCache
      *
      * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
-    public function createProcess($processName)
+    public function createProcess($processName, bool $regenerateCache = false): ProcessInterface
     {
         if (isset(static::$processBuffer[$processName])) {
             return static::$processBuffer[$processName];
@@ -135,7 +136,7 @@ class Builder implements BuilderInterface
             $process = $this->processCacheReader->getProcess($processName);
         }
 
-        if (!$isProcessCached) {
+        if (!$isProcessCached || $regenerateCache) {
             $process = $this->createMainProcess($processName);
             $this->processCacheWriter->cacheProcess($process, $processName);
         }

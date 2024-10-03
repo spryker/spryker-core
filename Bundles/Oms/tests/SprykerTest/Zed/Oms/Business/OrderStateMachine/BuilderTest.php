@@ -182,13 +182,15 @@ class BuilderTest extends Unit
      * @dataProvider omsProcessCachingWriterDataProvider
      *
      * @param bool $cacheIsEnabled
-     * @param int $expectedReaderCalls
+     * @param bool $regenerateCache
+     * @param int|bool $expectedReaderCalls
      * @param int $expectedWriterCalls
      *
      * @return void
      */
     public function testCreateProcessShouldWriteToCacheIfCacheIsEnabled(
         bool $cacheIsEnabled,
+        bool $regenerateCache,
         int $expectedReaderCalls,
         int $expectedWriterCalls
     ): void {
@@ -230,10 +232,10 @@ class BuilderTest extends Unit
 
         // Act
         $this->tester->resetProcessBuffer();
-        $builder->createProcess('process-a');
+        $builder->createProcess('process-a', $regenerateCache);
 
         $this->tester->resetProcessBuffer();
-        $builder->createProcess('process-a');
+        $builder->createProcess('process-a', $regenerateCache);
     }
 
     /**
@@ -242,13 +244,21 @@ class BuilderTest extends Unit
     protected function omsProcessCachingWriterDataProvider(): array
     {
         return [
-            'test when cache is enabled' => [
+            'test when cache is enabled and should be regenerated' => [
                 'cacheIsEnabled' => true,
+                'regenerateCache' => true,
+                'expectedReaderCalls' => 2,
+                'expectedWriterCalls' => 2,
+            ],
+            'test when cache is enabled and should not be regenerated' => [
+                'cacheIsEnabled' => true,
+                'regenerateCache' => false,
                 'expectedReaderCalls' => 2,
                 'expectedWriterCalls' => 1,
             ],
             'test when cache is disabled' => [
                 'cacheIsEnabled' => false,
+                'regenerateCache' => false,
                 'expectedReaderCalls' => 0,
                 'expectedWriterCalls' => 0,
             ],

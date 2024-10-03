@@ -257,14 +257,16 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @param bool $regenerateCache
+     *
      * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
-    public function getProcesses()
+    public function getProcesses(bool $regenerateCache = false)
     {
         $processes = [];
         foreach ($this->activeProcesses as $processName) {
             $builder = clone $this->builder;
-            $processes[$processName] = $builder->createProcess($processName);
+            $processes[$processName] = $builder->createProcess($processName, $regenerateCache);
         }
 
         return $processes;

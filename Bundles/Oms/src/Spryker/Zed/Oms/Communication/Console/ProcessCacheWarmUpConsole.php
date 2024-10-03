@@ -49,7 +49,7 @@ class ProcessCacheWarmUpConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->getProcesses();
+        $this->getFacade()->getProcesses(true);
 
         return static::CODE_SUCCESS;
     }

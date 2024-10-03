@@ -166,9 +166,11 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @param bool $regenerateCache
+     *
      * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
-    public function getProcesses();
+    public function getProcesses(bool $regenerateCache = false);
 
     /**
      * Specification:

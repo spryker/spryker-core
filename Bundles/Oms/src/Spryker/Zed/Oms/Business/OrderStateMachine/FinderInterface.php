@@ -61,9 +61,11 @@ interface FinderInterface
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
     /**
+     * @param bool $regenerateCache
+     *
      * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
-    public function getProcesses();
+    public function getProcesses(bool $regenerateCache = false);
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
