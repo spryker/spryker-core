@@ -25,4 +25,11 @@ interface MerchantAppEntityManagerInterface
      * @return void
      */
     public function persistAppMerchantAppOnboardingStatus(MerchantAppOnboardingStatusTransfer $merchantAppOnboardingStatus): void;
+
+    /**
+     * @param string $appIdentifier
+     *
+     * @return void
+     */
+    public function deleteMerchantAppOnboardingByAppIdentifier(string $appIdentifier): void;
 }

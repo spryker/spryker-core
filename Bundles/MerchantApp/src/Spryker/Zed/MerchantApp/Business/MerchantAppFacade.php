@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantApp\Business;
 
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AppConfigUpdatedTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingInitializationRequestTransfer;
@@ -49,6 +50,21 @@ class MerchantAppFacade extends AbstractFacade implements MerchantAppFacadeInter
     public function handleMerchantAppOnboardingStatusChanged(MerchantAppOnboardingStatusChangedTransfer $merchantOnboardingFailedTransfer): void
     {
         $this->getFactory()->createMerchantAppOnboardingChangedMessageHandler()->handleMerchantAppOnboardingStatusChanged($merchantOnboardingFailedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AppConfigUpdatedTransfer $appConfigUpdatedTransfer
+     *
+     * @return void
+     */
+    public function handleAppConfigUpdatedTransfer(AppConfigUpdatedTransfer $appConfigUpdatedTransfer): void
+    {
+        $this->getFactory()->createAppConfigUpdatedMessageHandler()
+            ->handleAppConfigUpdatedTransfer($appConfigUpdatedTransfer);
     }
 
     /**

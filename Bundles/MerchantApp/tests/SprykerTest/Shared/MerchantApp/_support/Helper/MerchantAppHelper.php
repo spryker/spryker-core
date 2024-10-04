@@ -139,12 +139,13 @@ class MerchantAppHelper extends Module
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReadyForMerchantAppOnboardingTransfer $readyForMerchantAppOnboardingTransfer
+     * @param \Generated\Shared\Transfer\ReadyForMerchantAppOnboardingTransfer|\Generated\Shared\Transfer\MerchantAppOnboardingTransfer $readyForMerchantAppOnboardingTransfer
      *
      * @return void
      */
-    public function seeMerchantAppOnboardingEntityInDatabase(ReadyForMerchantAppOnboardingTransfer $readyForMerchantAppOnboardingTransfer): void
-    {
+    public function seeMerchantAppOnboardingEntityInDatabase(
+        ReadyForMerchantAppOnboardingTransfer|MerchantAppOnboardingTransfer $readyForMerchantAppOnboardingTransfer
+    ): void {
         $spyMerchantAppOnboardingEntity = SpyMerchantAppOnboardingQuery::create()
             ->filterByType($readyForMerchantAppOnboardingTransfer->getType())
             ->filterByAppName($readyForMerchantAppOnboardingTransfer->getAppName())
@@ -187,5 +188,33 @@ class MerchantAppHelper extends Module
                 $spyMerchantAppOnboardingStatusEntity->getAdditionalInfo(),
             ));
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAppOnboardingStatusTransfer $merchantAppOnboardingStatusTransfer
+     *
+     * @return void
+     */
+    public function dontSeeMerchantAppOnboardingStatusEntityInDatabase(MerchantAppOnboardingStatusTransfer $merchantAppOnboardingStatusTransfer): void
+    {
+        $spyMerchantAppOnboardingStatusEntity = SpyMerchantAppOnboardingStatusQuery::create()
+            ->filterByMerchantReference($merchantAppOnboardingStatusTransfer->getMerchantReference())
+            ->findOne();
+
+        $this->assertNull($spyMerchantAppOnboardingStatusEntity, 'Expected not to find MerchantAppOnboardingStatus entity in the database but it was found.');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAppOnboardingTransfer $merchantAppOnboardingTransfer
+     *
+     * @return void
+     */
+    public function dontSeeMerchantAppOnboardingEntityInDatabase(MerchantAppOnboardingTransfer $merchantAppOnboardingTransfer): void
+    {
+        $spyMerchantAppOnboardingEntity = SpyMerchantAppOnboardingQuery::create()
+            ->filterByAppIdentifier($merchantAppOnboardingTransfer->getAppIdentifier())
+            ->findOne();
+
+        $this->assertNull($spyMerchantAppOnboardingEntity, 'Expected not to find MerchantAppOnboarding entity in the database but it was found.');
     }
 }

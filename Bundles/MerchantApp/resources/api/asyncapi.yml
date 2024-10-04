@@ -9,6 +9,11 @@ channels:
                 oneOf:
                     - $ref: '#/components/messages/ReadyForMerchantAppOnboarding'
                     - $ref: '#/components/messages/MerchantAppOnboardingStatusChanged'
+    app-events:
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/AppConfigUpdated'
 
 components:
     messages:
@@ -33,6 +38,17 @@ components:
                 $ref: '#/components/schemas/message-broker/components/schemas/headers'
             payload:
                 $ref: '#/components/schemas/MerchantAppOnboardingStatusChanged'
+
+        AppConfigUpdated:
+            x-spryker:
+                module: MerchantApp
+            name: AppConfigUpdated
+            title: Contains information about an updated App configuration.
+            summary: 'Contains information about an updated App configuration.'
+            headers:
+                $ref: '#/components/schemas/message-broker/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/AppConfigUpdated'
 
     schemas:
         ReadyForMerchantAppOnboarding:
@@ -117,6 +133,18 @@ components:
                 - appIdentifier
                 - status
                 - type
+
+        AppConfigUpdated:
+            type: object
+            properties:
+                appIdentifier:
+                    type: string
+                    description: The app identifier to identify the PBC.
+                isActive:
+                    type: boolean
+            required:
+                - appIdentifier
+                - isActive
 
         message-broker:
             $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantApp\Business\MerchantAppOnboarding\MerchantAppOnboarding
 use Spryker\Zed\MerchantApp\Business\MerchantAppOnboarding\MerchantAppOnboardingStatusInterface;
 use Spryker\Zed\MerchantApp\Business\MerchantAppOnboarding\MerchantAppOnboardingWriter;
 use Spryker\Zed\MerchantApp\Business\MerchantAppOnboarding\MerchantAppOnboardingWriterInterface;
+use Spryker\Zed\MerchantApp\Business\MessageBroker\AppConfigUpdatedMessageHandler;
+use Spryker\Zed\MerchantApp\Business\MessageBroker\AppConfigUpdatedMessageHandlerInterface;
 use Spryker\Zed\MerchantApp\Business\MessageBroker\MerchantAppOnboardingStatusChangedMessageHandler;
 use Spryker\Zed\MerchantApp\Business\MessageBroker\MerchantAppOnboardingStatusChangedMessageHandlerInterface;
 use Spryker\Zed\MerchantApp\Business\MessageBroker\ReadyForMerchantAppOnboardingMessageHandler;
@@ -61,6 +63,14 @@ class MerchantAppBusinessFactory extends AbstractBusinessFactory
     public function createMerchantAppOnboardingChangedMessageHandler(): MerchantAppOnboardingStatusChangedMessageHandlerInterface
     {
         return new MerchantAppOnboardingStatusChangedMessageHandler($this->createMerchantAppOnboardingStatus());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantApp\Business\MessageBroker\AppConfigUpdatedMessageHandlerInterface
+     */
+    public function createAppConfigUpdatedMessageHandler(): AppConfigUpdatedMessageHandlerInterface
+    {
+        return new AppConfigUpdatedMessageHandler($this->getRepository(), $this->getEntityManager());
     }
 
     /**

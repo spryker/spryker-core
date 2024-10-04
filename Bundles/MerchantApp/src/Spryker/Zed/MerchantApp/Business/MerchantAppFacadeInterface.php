@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantApp\Business;
 
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AppConfigUpdatedTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingInitializationRequestTransfer;
@@ -42,6 +43,21 @@ interface MerchantAppFacadeInterface
      * @return void
      */
     public function handleMerchantAppOnboardingStatusChanged(MerchantAppOnboardingStatusChangedTransfer $merchantOnboardingFailedTransfer): void;
+
+    /**
+     * Specification:
+     * - When an App sends the AppConfigUpdatedTransfer message, this handler will be triggered.
+     * - Requires AppConfigUpdated.isActive to be set.
+     * - Does nothing if AppConfigUpdated.isActive === true.
+     * - Otherwise, requires AppConfigUpdated.appIdentifier to be set and removes all the MerchantApp onboarding data by AppConfigUpdated.appIdentifier.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AppConfigUpdatedTransfer $appConfigUpdatedTransfer
+     *
+     * @return void
+     */
+    public function handleAppConfigUpdatedTransfer(AppConfigUpdatedTransfer $appConfigUpdatedTransfer): void;
 
     /**
      * Specification:

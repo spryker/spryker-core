@@ -165,7 +165,11 @@ trait AsyncApiMessageValidatorHelperTrait
         foreach ($messagePropertiesValidationRequestTransfer->getRequiredProperties() as $requiredProperty) {
             $propertyPath = sprintf('[%s]', implode('][', explode('.', $requiredProperty)));
 
-            if (!$propertyAccessor->isReadable($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath) || !$propertyAccessor->getValue($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath)) {
+            if (
+                !$propertyAccessor->isReadable($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath)
+                || $propertyAccessor->getValue($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath) === null
+                || $propertyAccessor->getValue($messagePropertiesValidationRequestTransfer->getProperties(), $propertyPath) === []
+            ) {
                 $missingProperties[] = $requiredProperty;
             }
         }

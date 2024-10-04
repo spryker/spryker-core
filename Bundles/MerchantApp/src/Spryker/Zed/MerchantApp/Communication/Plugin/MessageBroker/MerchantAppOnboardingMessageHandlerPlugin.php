@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantApp\Communication\Plugin\MessageBroker;
 
+use Generated\Shared\Transfer\AppConfigUpdatedTransfer;
 use Generated\Shared\Transfer\MerchantAppOnboardingStatusChangedTransfer;
 use Generated\Shared\Transfer\ReadyForMerchantAppOnboardingTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -48,6 +49,20 @@ class MerchantAppOnboardingMessageHandlerPlugin extends AbstractPlugin implement
 
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AppConfigUpdatedTransfer $appConfigUpdatedTransfer
+     *
+     * @return void
+     */
+    public function onAppConfigUpdated(AppConfigUpdatedTransfer $appConfigUpdatedTransfer): void
+    {
+        $this->getFacade()->handleAppConfigUpdatedTransfer($appConfigUpdatedTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      * Return an array where the key is the class name to be handled and the value is the callable that handles the message.
      *
      * @api
@@ -58,5 +73,6 @@ class MerchantAppOnboardingMessageHandlerPlugin extends AbstractPlugin implement
     {
         yield ReadyForMerchantAppOnboardingTransfer::class => [$this, 'onReadyForMerchantAppOnboarding'];
         yield MerchantAppOnboardingStatusChangedTransfer::class => [$this, 'onMerchantAppOnboardingStatusChanged'];
+        yield AppConfigUpdatedTransfer::class => [$this, 'onAppConfigUpdated'];
     }
 }

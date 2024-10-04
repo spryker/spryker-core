@@ -60,4 +60,20 @@ class MerchantAppEntityManager extends AbstractEntityManager implements Merchant
 
         $merchantAppOnboardingStatusEntity->save();
     }
+
+    /**
+     * @param string $appIdentifier
+     *
+     * @return void
+     */
+    public function deleteMerchantAppOnboardingByAppIdentifier(string $appIdentifier): void
+    {
+        $merchantAppOnboardingEntities = $this->getFactory()->createMerchantAppOnboardingQuery()
+            ->findByAppIdentifier($appIdentifier);
+
+        foreach ($merchantAppOnboardingEntities as $appOnboardingEntity) {
+            $appOnboardingEntity->getSpyMerchantAppOnboardingStatuses()->delete();
+            $appOnboardingEntity->delete();
+        }
+    }
 }
