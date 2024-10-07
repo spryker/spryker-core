@@ -3934,6 +3934,7 @@ code {
 .ibox.collapsed .ibox-content {
     display: none;
 }
+
 .ibox.collapsed .fa.fa-chevron-up:before {
     content: '\f078';
 }

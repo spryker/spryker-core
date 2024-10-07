@@ -21,6 +21,10 @@ function addSafeSubmitCheck() {
 
         if (isValid) {
             setTimeout(disableTrigger);
+        } else {
+            $('.ibox.collapsed').each((index, item) => {
+                $(item).find('.collapse-link').trigger('click');
+            });
         }
 
         return true;

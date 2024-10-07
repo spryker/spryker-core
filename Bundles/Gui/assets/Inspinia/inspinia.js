@@ -24,7 +24,7 @@ $(document).ready(function () {
         var content = ibox.children('.ibox-content');
         content.slideToggle(200);
         button.toggleClass('fa-minus').toggleClass('fa-plus');
-        ibox.toggleClass('').toggleClass('border-bottom');
+        ibox.toggleClass('border-bottom');
         setTimeout(function () {
             ibox.resize();
             ibox.find('[id^=map-]').resize();
