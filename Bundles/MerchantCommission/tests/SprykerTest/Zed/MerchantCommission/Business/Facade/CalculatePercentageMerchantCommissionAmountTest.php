@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer;
 use Generated\Shared\Transfer\MerchantCommissionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\MerchantCommission\Business\Exception\MerchantCommissionPriceTypePerStoreUndefinedException;
 use SprykerTest\Zed\MerchantCommission\MerchantCommissionBusinessTester;
 
 /**
@@ -84,6 +85,59 @@ class CalculatePercentageMerchantCommissionAmountTest extends Unit
 
         // Assert
         $this->assertSame($expectedAmount, $calculatedAmount);
+    }
+
+    /**
+     * @dataProvider calculatesMerchantCommissionAmountAccordingToOrderItemSumPriceDataProvider
+     *
+     * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     * @param int $expectedAmount
+     *
+     * @return void
+     */
+    public function testCalculatesMerchantCommissionAmountAccordingToOrderItemSumPrice(
+        MerchantCommissionTransfer $merchantCommissionTransfer,
+        MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer,
+        int $expectedAmount
+    ): void {
+        // Arrange
+        $this->tester->mockConfigMethod('isMerchantCommissionPriceModeForStoreCalculationEnabled', false);
+
+        // Act
+        $calculatedAmount = $this->tester->getFacade()->calculatePercentageMerchantCommissionAmount(
+            $merchantCommissionTransfer,
+            $merchantCommissionCalculationRequestItemTransfer,
+            $merchantCommissionCalculationRequestTransfer,
+        );
+
+        // Assert
+        $this->assertSame($expectedAmount, $calculatedAmount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testThrowsExceptionWhenPriceModeForeStoreIsNotConfigured(): void
+    {
+        // Arrange
+        $merchantCommissionTransfer = (new MerchantCommissionBuilder())->build();
+        $merchantCommissionCalculationRequestItemTransfer = (new MerchantCommissionCalculationRequestItemBuilder())->build();
+        $merchantCommissionCalculationRequestTransfer = (new MerchantCommissionCalculationRequestBuilder([
+            MerchantCommissionCalculationRequestTransfer::STORE => [StoreTransfer::NAME => static::STORE_NAME_DE],
+        ]))->build();
+
+        // Assert
+        $this->expectException(MerchantCommissionPriceTypePerStoreUndefinedException::class);
+
+        // Act
+        $this->tester->getFacade()->calculateFixedMerchantCommissionAmount(
+            $merchantCommissionTransfer,
+            $merchantCommissionCalculationRequestItemTransfer,
+            $merchantCommissionCalculationRequestTransfer,
+        );
     }
 
     /**
@@ -174,6 +228,41 @@ class CalculatePercentageMerchantCommissionAmountTest extends Unit
                     MerchantCommissionCalculationRequestTransfer::STORE => [StoreTransfer::NAME => static::STORE_NAME_DE],
                 ]))->build(),
                 static::PRICE_MODE_NET,
+                4,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function calculatesMerchantCommissionAmountAccordingToOrderItemSumPriceDataProvider(): array
+    {
+        return [
+            'Merchant commission amount 10%, item quantity 1' => [
+                (new MerchantCommissionBuilder([
+                    MerchantCommissionTransfer::AMOUNT => 1000,
+                ]))->build(),
+                (new MerchantCommissionCalculationRequestItemBuilder([
+                    MerchantCommissionCalculationRequestItemTransfer::QUANTITY => 1,
+                    MerchantCommissionCalculationRequestItemTransfer::SUM_PRICE => 10000,
+                ]))->build(),
+                (new MerchantCommissionCalculationRequestBuilder([
+                    MerchantCommissionCalculationRequestTransfer::STORE => [StoreTransfer::NAME => static::STORE_NAME_DE],
+                ]))->build(),
+                1000,
+            ],
+            'Merchant commission amount 7%, item quantity 1, commission amount round up' => [
+                (new MerchantCommissionBuilder([
+                    MerchantCommissionTransfer::AMOUNT => 700,
+                ]))->build(),
+                (new MerchantCommissionCalculationRequestItemBuilder([
+                    MerchantCommissionCalculationRequestItemTransfer::QUANTITY => 1,
+                    MerchantCommissionCalculationRequestItemTransfer::SUM_PRICE => 50,
+                ]))->build(),
+                (new MerchantCommissionCalculationRequestBuilder([
+                    MerchantCommissionCalculationRequestTransfer::STORE => [StoreTransfer::NAME => static::STORE_NAME_DE],
+                ]))->build(),
                 4,
             ],
         ];

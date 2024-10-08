@@ -58,10 +58,34 @@ class PercentageMerchantCommissionCalculatorType implements MerchantCommissionCa
             return 0;
         }
 
-        $priceMode = $this->merchantCommissionConfig->getMerchantCommissionPriceModeForStore(
-            $merchantCommissionCalculationRequestTransfer->getStoreOrFail()->getNameOrFail(),
-        );
+        if ($this->merchantCommissionConfig->isMerchantCommissionPriceModeForStoreCalculationEnabled()) {
+            return $this->calculateMerchantCommissionAmountForPriceMode(
+                $merchantCommissionCalculationRequestItemTransfer,
+                $merchantCommissionPercent,
+                $this->merchantCommissionConfig->getMerchantCommissionPriceModeForStore(
+                    $merchantCommissionCalculationRequestTransfer->getStoreOrFail()->getNameOrFail(),
+                ),
+            );
+        }
 
+        return $this->calculate(
+            $merchantCommissionCalculationRequestItemTransfer->getSumPriceOrFail(),
+            $merchantCommissionPercent,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer
+     * @param float $merchantCommissionPercent
+     * @param string $priceMode
+     *
+     * @return int
+     */
+    protected function calculateMerchantCommissionAmountForPriceMode(
+        MerchantCommissionCalculationRequestItemTransfer $merchantCommissionCalculationRequestItemTransfer,
+        float $merchantCommissionPercent,
+        string $priceMode
+    ): int {
         if ($priceMode === static::PRICE_MODE_NET) {
             return $this->calculate(
                 $merchantCommissionCalculationRequestItemTransfer->getSumNetPrice() ?? 0,

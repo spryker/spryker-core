@@ -233,7 +233,9 @@ interface MerchantCommissionFacadeInterface
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.currency.code` to be set.
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.netAmount` to be set.
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.grossAmount` to be set.
-     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} to get the price mode.
+     * - Requires `MerchantCommissionCalculationRequestTransfer.priceMode` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} returns `false`.
+     * - Uses price mode set in `MerchantCommissionCalculationRequestTransfer.priceMode` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()}` returns `false`,
+     *   uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} config otherwise.
      * - Returns calculated merchant commission amount for configured price mode.
      * - Returns 0 if merchant commission amount for configured price mode is not provided.
      *
@@ -258,9 +260,11 @@ interface MerchantCommissionFacadeInterface
      * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumNetPrice` to be set.
      * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumGrossPrice` to be set.
      * - Requires `MerchantCommissionTransfer.amount` to be set.
+     * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumPrice` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} returns `false`.
      * - Calculates merchant commission amount for provided item.
      * - Rounds cent fraction for total merchant commission amount.
-     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getPercentageMerchantCommissionCalculationRoundMode()} to get the rounding config.
+     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} to determine if
+     *   {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} config should be used to calculate commission.
      * - Returns calculated merchant commission amount for configured price mode.
      *
      * @api

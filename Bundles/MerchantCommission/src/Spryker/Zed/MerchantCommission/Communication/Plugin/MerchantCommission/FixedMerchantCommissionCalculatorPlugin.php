@@ -48,7 +48,9 @@ class FixedMerchantCommissionCalculatorPlugin extends AbstractPlugin implements 
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.currency.code` to be set.
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.netAmount` to be set.
      * - Requires `MerchantCommissionTransfer.merchantCommissionAmount.grossAmount` to be set.
-     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} to get price mode.
+     * - Requires `MerchantCommissionCalculationRequestTransfer.priceMode` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} returns `false`.
+     * - Uses price mode set in `MerchantCommissionCalculationRequestTransfer.priceMode` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()}` returns `false`,
+     *   uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} config otherwise.
      * - Returns calculated merchant commission amount for configured price mode.
      * - Returns 0 if merchant commission amount for configured price mode is not provided.
      *

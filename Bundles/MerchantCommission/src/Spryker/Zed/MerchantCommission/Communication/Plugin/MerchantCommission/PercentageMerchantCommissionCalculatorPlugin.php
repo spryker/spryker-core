@@ -44,9 +44,11 @@ class PercentageMerchantCommissionCalculatorPlugin extends AbstractPlugin implem
      * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumNetPrice` to be set.
      * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumGrossPrice` to be set.
      * - Requires `MerchantCommissionTransfer.amount` to be set.
+     * - Requires `MerchantCommissionCalculationRequestItemTransfer.sumPrice` if {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} returns `false`.
      * - Calculates merchant commission amount for provided item.
      * - Rounds cent fraction for total merchant commission amount.
-     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getPercentageMerchantCommissionCalculationRoundMode()} to get the rounding config.
+     * - Uses {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::isMerchantCommissionPriceModeForStoreCalculationEnabled()} to determine if
+     *   {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} config should be used to calculate commission.
      * - Returns calculated merchant commission amount for configured price mode.
      *
      * @api

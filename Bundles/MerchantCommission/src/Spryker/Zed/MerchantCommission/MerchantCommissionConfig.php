@@ -13,6 +13,8 @@ use Spryker\Zed\MerchantCommission\Business\Exception\MerchantCommissionPriceTyp
 class MerchantCommissionConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var array<string, string>
      */
     protected const MERCHANT_COMMISSION_PRICE_MODE_PER_STORE = [];
@@ -46,6 +48,8 @@ class MerchantCommissionConfig extends AbstractBundleConfig
      * - This method is used to get the commission price mode for a given store.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $storeName
      *
@@ -90,5 +94,18 @@ class MerchantCommissionConfig extends AbstractBundleConfig
     public function getRuleEngineMerchantCommissionDomainName(): string
     {
         return static::RULE_ENGINE_MERCHANT_COMMISSION_DOMAIN_NAME;
+    }
+
+    /**
+     * Specification:
+     * - Specifies if the {@link \Spryker\Zed\MerchantCommission\MerchantCommissionConfig::getMerchantCommissionPriceModeForStore()} configuration should be used for merchant commission calculation.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMerchantCommissionPriceModeForStoreCalculationEnabled(): bool
+    {
+        return true;
     }
 }

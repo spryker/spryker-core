@@ -71,9 +71,35 @@ class FixedMerchantCommissionCalculatorType implements MerchantCommissionCalcula
         MerchantCommissionTransfer $merchantCommissionTransfer,
         MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
     ): int {
-        $priceMode = $this->merchantCommissionConfig->getMerchantCommissionPriceModeForStore(
-            $merchantCommissionCalculationRequestTransfer->getStoreOrFail()->getNameOrFail(),
+        if ($this->merchantCommissionConfig->isMerchantCommissionPriceModeForStoreCalculationEnabled()) {
+            return $this->getMerchantCommissionAmountForPriceMode(
+                $merchantCommissionTransfer,
+                $merchantCommissionCalculationRequestTransfer,
+                $this->merchantCommissionConfig->getMerchantCommissionPriceModeForStore(
+                    $merchantCommissionCalculationRequestTransfer->getStoreOrFail()->getNameOrFail(),
+                ),
+            );
+        }
+
+        return $this->getMerchantCommissionAmountForPriceMode(
+            $merchantCommissionTransfer,
+            $merchantCommissionCalculationRequestTransfer,
+            $merchantCommissionCalculationRequestTransfer->getPriceModeOrFail(),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCommissionTransfer $merchantCommissionTransfer
+     * @param \Generated\Shared\Transfer\MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer
+     * @param string $priceMode
+     *
+     * @return int
+     */
+    protected function getMerchantCommissionAmountForPriceMode(
+        MerchantCommissionTransfer $merchantCommissionTransfer,
+        MerchantCommissionCalculationRequestTransfer $merchantCommissionCalculationRequestTransfer,
+        string $priceMode
+    ): int {
         $currencyCode = $merchantCommissionCalculationRequestTransfer->getCurrencyOrFail()->getCodeOrFail();
 
         foreach ($merchantCommissionTransfer->getMerchantCommissionAmounts() as $merchantCommissionAmountTransfer) {
