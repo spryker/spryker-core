@@ -47,6 +47,8 @@
         "spryker/agent-security-blocker-merchant-portal-gui": "*",
         "spryker/agent-security-merchant-portal-gui": "*",
         "spryker/alternative-products-rest-api": "*",
+        "spryker/analytics-gui": "*",
+        "spryker/analytics-gui-extension": "*",
         "spryker/api": "*",
         "spryker/api-extension": "*",
         "spryker/api-key": "*",

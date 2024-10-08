@@ -8,7 +8,13 @@
 namespace SprykerTest\Zed\User;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\UserCollectionResponseTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\SpyUserQuery;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
+use Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -35,6 +41,44 @@ class UserBusinessTester extends Actor
     public function ensureUserTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getUserQuery());
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserByUserName(string $username): ?UserTransfer
+    {
+        $userEntity = $this->getUserQuery()->findOneByUsername($username);
+        if ($userEntity === null) {
+            return null;
+        }
+
+        return (new UserTransfer())->fromArray($userEntity->toArray(), true);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getUserTransfer(): UserTransfer
+    {
+        return (new UserBuilder())->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface
+     */
+    public function getUserPostUpdatePluginMock(UserTransfer $userTransfer): UserPostUpdatePluginInterface
+    {
+        $userPostCreatePluginMock = Stub::makeEmpty(UserPostUpdatePluginInterface::class);
+        $userPostCreatePluginMock->expects(new InvokedCountMatcher(1))
+            ->method('postUpdate')
+            ->willReturn((new UserCollectionResponseTransfer())->addUser($userTransfer));
+
+        return $userPostCreatePluginMock;
     }
 
     /**

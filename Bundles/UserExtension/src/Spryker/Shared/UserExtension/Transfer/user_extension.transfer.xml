@@ -13,4 +13,7 @@
     <transfer name="UserCriteria">
     </transfer>
 
+    <transfer name="UserCollectionResponse" strict="true">
+    </transfer>
+
 </transfers>

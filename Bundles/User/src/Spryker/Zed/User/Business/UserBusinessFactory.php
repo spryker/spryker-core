@@ -45,6 +45,8 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getUserPreSavePlugins(),
             $this->getUserTransferExpanderPlugins(),
             $this->getUserExpanderPlugins(),
+            $this->getUserPostCreatePlugins(),
+            $this->getUserPostUpdatePlugins(),
         );
     }
 
@@ -112,5 +114,21 @@ class UserBusinessFactory extends AbstractBusinessFactory
     public function getUserExpanderPlugins(): array
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface>
+     */
+    protected function getUserPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_POST_CREATE);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
+     */
+    protected function getUserPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_POST_UPDATE);
     }
 }

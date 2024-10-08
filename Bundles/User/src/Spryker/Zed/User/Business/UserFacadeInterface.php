@@ -142,6 +142,7 @@ interface UserFacadeInterface
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface} plugins.
      * - Throws exception if username exist.
      *
      * @api
@@ -158,6 +159,7 @@ interface UserFacadeInterface
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface} plugins.
      *
      * @api
      *
@@ -238,7 +240,14 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Finds user by provided ID.
+     * - Throws {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case user was not found by provided ID.
+     * - Sets `deleted` status to a user.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface} plugins.
+     * - Persists updated user.
      *
      * @api
      *
@@ -255,6 +264,7 @@ interface UserFacadeInterface
      * - Sets `active` status to a user.
      * - Persists updated user.
      * - If enabled by configuration, executes {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugin stack.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface} plugins.
      * - Returns `true` in case user was successfully persisted, `false` otherwise.
      *
      * @api
@@ -272,6 +282,7 @@ interface UserFacadeInterface
      * - Sets `blocked` status to a user.
      * - Persists updated user.
      * - If enabled by configuration, executes {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugin stack.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface} plugins.
      * - Returns `true` in case user was successfully persisted, `false` otherwise.
      *
      * @api

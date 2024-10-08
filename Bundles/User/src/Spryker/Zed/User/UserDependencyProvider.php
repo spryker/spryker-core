@@ -76,6 +76,16 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_USER_POST_CREATE = 'PLUGINS_USER_POST_CREATE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_USER_POST_UPDATE = 'PLUGINS_USER_POST_UPDATE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'client session';
 
     /**
@@ -102,6 +112,8 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserPreSavePlugins($container);
         $container = $this->addUserTransferExpanderPlugins($container);
         $container = $this->addUserExpanderPlugins($container);
+        $container = $this->addUserPostCreatePlugins($container);
+        $container = $this->addUserPostUpdatePlugins($container);
 
         return $container;
     }
@@ -418,6 +430,50 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserQueryCriteriaExpanderPluginInterface>
      */
     protected function getUserQueryCriteriaExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_POST_CREATE, function () {
+            return $this->getUserPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface>
+     */
+    protected function getUserPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_POST_UPDATE, function () {
+            return $this->getUserPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
+     */
+    protected function getUserPostUpdatePlugins(): array
     {
         return [];
     }

@@ -542,12 +542,28 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     }
 }
 
-.spacing-bottom {
-    margin-bottom: 1em;
-}
+.spacing {
+    margin: 1em;
 
-.spacing-bottom-big {
-    margin-bottom: 20px;
+    &-top {
+        margin-top: 1em;
+    }
+
+    &-bottom {
+        margin-bottom: 1em;
+
+        &-big {
+            margin-bottom: 20px;
+        }
+    }
+
+    &-left {
+        margin-left: 1em;
+    }
+
+    &-right {
+        margin-right: 1em;
+    }
 }
 
 .navbar-default {
@@ -1934,5 +1950,29 @@ a.label {
         align-items: center;
         justify-content: center;
         cursor: pointer;
+    }
+}
+
+.analytics {
+    background: $white;
+    border-radius: 10px;
+    border: 1px solid rgba(18, 18, 18, 0.15);
+    box-shadow: 0 1px 3px rgba(18, 18, 18, 0.15);
+    padding: 20px 25px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    &__icon {
+        color: $green-default;
+        font-size: 40px;
+    }
+
+    &__content {
+        flex-grow: 1;
+    }
+
+    &__heading {
+        font-style: 16px;
     }
 }

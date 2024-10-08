@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <analytics>
+        <label>Analytics</label>
+        <title>Analytics</title>
+        <icon>fa-area-chart</icon>
+        <bundle>analytics-gui</bundle>
+        <controller>analytics</controller>
+        <action>index</action>
+    </analytics>
+</config>

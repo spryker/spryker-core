@@ -37,6 +37,13 @@ interface UserInterface
     public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function updateUser(UserTransfer $userTransfer): UserTransfer;
+
+    /**
      * @param string $password
      *
      * @return string

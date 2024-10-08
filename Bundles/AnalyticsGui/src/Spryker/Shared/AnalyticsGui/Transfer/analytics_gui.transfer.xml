@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AnalyticsRequest" strict="true">
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="AnalyticsCollection" strict="true">
+        <property name="analyticsList" type="Analytics[]" singular="analytics"/>
+        <property name="analyticsActions" type="AnalyticsAction[]" singular="analyticsAction"/>
+    </transfer>
+
+    <transfer name="Analytics" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="AnalyticsAction" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="AnalyticsEmbedUrlResponse" strict="true">
+    </transfer>
+
+</transfers>

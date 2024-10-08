@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\MailBuilder;
-use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
@@ -69,14 +68,6 @@ class UserTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    protected function getUserDataTransfer(): UserTransfer
-    {
-        return (new UserBuilder())->build();
-    }
-
-    /**
      * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -101,23 +92,6 @@ class UserTest extends Unit
         $this->assertSame($data['lastName'], $user->getLastName());
         $this->assertSame($data['username'], $user->getUsername());
         $this->assertNotEquals($data['password'], $user->getPassword());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateUser(): void
-    {
-        $data = $this->getUserDataTransfer();
-
-        $user = $this->getUserFacade()->createUser($data);
-
-        $this->assertInstanceOf(UserTransfer::class, $user);
-        $this->assertNotNull($user->getIdUser());
-        $this->assertSame($data->getFirstName(), $user->getFirstName());
-        $this->assertSame($data->getLastName(), $user->getLastName());
-        $this->assertSame($data->getUsername(), $user->getUsername());
-        $this->assertNotEquals($data->getPassword(), $user->getPassword());
     }
 
     /**

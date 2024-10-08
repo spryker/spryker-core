@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
+use Generated\Shared\Transfer\UserCollectionResponseTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -46,35 +47,47 @@ class User implements UserInterface
     protected $userConfig;
 
     /**
-     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
      */
     protected $userPostSavePlugins;
 
     /**
-     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     protected $userPreSavePlugins;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\User\Business\Model\User::$userExpanderPlugins} instead.
      *
-     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
      */
     protected $userTransferExpanderPlugins;
 
     /**
-     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
      */
     protected array $userExpanderPlugins;
+
+    /**
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface>
+     */
+    protected array $userPostCreatePlugins;
+
+    /**
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface>
+     */
+    protected array $userPostUpdatePlugins;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Spryker\Client\Session\SessionClientInterface $session
      * @param \Spryker\Zed\User\UserConfig $userConfig
-     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
-     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
-     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
-     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface> $userExpanderPlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface> $userExpanderPlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostCreatePluginInterface> $userPostCreatePlugins
+     * @param list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostUpdatePluginInterface> $userPostUpdatePlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
@@ -83,7 +96,9 @@ class User implements UserInterface
         array $userPostSavePlugins = [],
         array $userPreSavePlugins = [],
         array $userTransferExpanderPlugins = [],
-        array $userExpanderPlugins = []
+        array $userExpanderPlugins = [],
+        array $userPostCreatePlugins = [],
+        array $userPostUpdatePlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
@@ -92,6 +107,8 @@ class User implements UserInterface
         $this->userPreSavePlugins = $userPreSavePlugins;
         $this->userTransferExpanderPlugins = $userTransferExpanderPlugins;
         $this->userExpanderPlugins = $userExpanderPlugins;
+        $this->userPostCreatePlugins = $userPostCreatePlugins;
+        $this->userPostUpdatePlugins = $userPostUpdatePlugins;
     }
 
     /**
@@ -138,7 +155,19 @@ class User implements UserInterface
             );
         }
 
-        return $this->save($userTransfer);
+        return $this->handleUserCreateTransaction($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function updateUser(UserTransfer $userTransfer): UserTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($userTransfer) {
+            return $this->executeUserUpdateTransaction($userTransfer);
+        });
     }
 
     /**
@@ -207,7 +236,10 @@ class User implements UserInterface
         }
 
         $userEntity->save();
-        $userTransfer = $this->entityToTransfer($userEntity);
+        $userTransfer = $this->entityToTransfer(
+            $userEntity,
+            (new UserTransfer())->fromArray($userTransfer->toArray()),
+        );
         $userTransfer = $this->executePostSavePlugins($userTransfer);
 
         return $userTransfer;
@@ -248,10 +280,13 @@ class User implements UserInterface
      */
     public function removeUser($idUser)
     {
-        $user = $this->getUserById($idUser);
-        $user->setStatus('deleted');
+        $userTransfer = (new UserTransfer())
+            ->setIdUser($idUser)
+            ->setStatus('deleted');
 
-        return $this->save($user);
+        $userTransfer = $this->save($userTransfer);
+
+        return $this->executeUserPostUpdatePlugins($userTransfer);
     }
 
     /**
@@ -545,12 +580,16 @@ class User implements UserInterface
 
     /**
      * @param \Orm\Zed\User\Persistence\SpyUser $userEntity
+     * @param \Generated\Shared\Transfer\UserTransfer|null $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function entityToTransfer(SpyUser $userEntity)
+    protected function entityToTransfer(SpyUser $userEntity, ?UserTransfer $userTransfer = null)
     {
-        $userTransfer = new UserTransfer();
+        if ($userTransfer === null) {
+            $userTransfer = new UserTransfer();
+        }
+
         $userTransfer->fromArray($userEntity->toArray(), true);
 
         $userTransfer = $this->executeUserExpanderPlugins($userTransfer);
@@ -597,16 +636,7 @@ class User implements UserInterface
      */
     public function activateUser($idUser)
     {
-        $userEntity = $this->queryUserById($idUser);
-        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
-        $rowsAffected = $userEntity->save();
-
-        if ($this->userConfig->isPostSavePluginsEnabledAfterUserStatusChange()) {
-            $userTransfer = $this->entityToTransfer($userEntity);
-            $this->executePostSavePlugins($userTransfer);
-        }
-
-        return $rowsAffected > 0;
+        return $this->updateUserStatus($idUser, SpyUserTableMap::COL_STATUS_ACTIVE);
     }
 
     /**
@@ -616,14 +646,27 @@ class User implements UserInterface
      */
     public function deactivateUser($idUser)
     {
+        return $this->updateUserStatus($idUser, SpyUserTableMap::COL_STATUS_BLOCKED);
+    }
+
+    /**
+     * @param int $idUser
+     * @param string $status
+     *
+     * @return bool
+     */
+    protected function updateUserStatus(int $idUser, string $status): bool
+    {
         $userEntity = $this->queryUserById($idUser);
-        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
+        $userEntity->setStatus($status);
         $rowsAffected = $userEntity->save();
+        $userTransfer = $this->entityToTransfer($userEntity);
 
         if ($this->userConfig->isPostSavePluginsEnabledAfterUserStatusChange()) {
-            $userTransfer = $this->entityToTransfer($userEntity);
             $this->executePostSavePlugins($userTransfer);
         }
+
+        $this->executeUserPostUpdatePlugins($userTransfer);
 
         return $rowsAffected > 0;
     }
@@ -651,5 +694,75 @@ class User implements UserInterface
     protected function createUserKey()
     {
         return sprintf('%s:currentUser', static::USER_BUNDLE_SESSION_KEY);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function handleUserCreateTransaction(UserTransfer $userTransfer): UserTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($userTransfer) {
+            $userTransfer = $this->executeSaveTransaction($userTransfer);
+
+            return $this->executePostCreateTransaction($userTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executePostCreateTransaction(UserTransfer $userTransfer): UserTransfer
+    {
+        $userCollectionResponseTransfer = (new UserCollectionResponseTransfer())->addUser($userTransfer);
+        $userCollectionResponseTransfer = $this->executeUserPostCreatePlugins($userCollectionResponseTransfer);
+
+        return $userCollectionResponseTransfer->getUsers()->offsetGet(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCollectionResponseTransfer $userCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionResponseTransfer
+     */
+    protected function executeUserPostCreatePlugins(
+        UserCollectionResponseTransfer $userCollectionResponseTransfer
+    ): UserCollectionResponseTransfer {
+        foreach ($this->userPostCreatePlugins as $userPostCreatePlugin) {
+            $userCollectionResponseTransfer = $userPostCreatePlugin->postCreate($userCollectionResponseTransfer);
+        }
+
+        return $userCollectionResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executeUserUpdateTransaction(UserTransfer $userTransfer): UserTransfer
+    {
+        $userTransfer = $this->executeSaveTransaction($userTransfer);
+
+        return $this->executeUserPostUpdatePlugins($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executeUserPostUpdatePlugins(UserTransfer $userTransfer): UserTransfer
+    {
+        $userCollectionResponseTransfer = (new UserCollectionResponseTransfer())->addUser($userTransfer);
+
+        foreach ($this->userPostUpdatePlugins as $userPostUpdatePlugin) {
+            $userCollectionResponseTransfer = $userPostUpdatePlugin->postUpdate($userCollectionResponseTransfer);
+        }
+
+        return $userCollectionResponseTransfer->getUsers()->getIterator()->current();
     }
 }

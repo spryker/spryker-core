@@ -63,4 +63,14 @@
         <property name="conditions" type="array" singular="condition" strict="true"/>
     </transfer>
 
+    <transfer name="UserCollectionResponse" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
 </transfers>

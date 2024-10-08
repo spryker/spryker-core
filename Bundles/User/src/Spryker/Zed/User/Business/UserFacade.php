@@ -203,7 +203,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     {
         return $this->getFactory()
             ->createUserModel()
-            ->save($user);
+            ->updateUser($user);
     }
 
     /**
