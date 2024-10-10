@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
+use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
@@ -97,16 +98,23 @@ class VariantTable extends AbstractProductTable
     protected $type;
 
     /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductVariantTableActionExpanderPluginInterface>
+     */
+    protected array $productVariantTableActionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $type
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductVariantTableActionExpanderPluginInterface> $productVariantTableActionExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         $idProductAbstract,
         LocaleTransfer $localeTransfer,
-        $type
+        $type,
+        array $productVariantTableActionExpanderPlugins
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->idProductAbstract = $idProductAbstract;
@@ -119,6 +127,7 @@ class VariantTable extends AbstractProductTable
         );
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
         $this->type = $type;
+        $this->productVariantTableActionExpanderPlugins = $productVariantTableActionExpanderPlugins;
     }
 
     /**
@@ -269,6 +278,51 @@ class VariantTable extends AbstractProductTable
             'Manage Attributes',
         );
 
+        return $this->expandActionUrls($urls, $productEntity->toArray());
+    }
+
+    /**
+     * @param array<string> $urls
+     * @param array<mixed> $productData
+     *
+     * @return array<string>
+     */
+    protected function expandActionUrls(array $urls, array $productData): array
+    {
+        $buttonCollectionTransfer = $this->executeProductVariantTableActionExpanderPlugins(
+            new ButtonCollectionTransfer(),
+            $productData,
+        );
+
+        foreach ($buttonCollectionTransfer->getButtons() as $button) {
+            $urls[] = $this->generateButton(
+                $button->getUrl(),
+                $button->getTitle(),
+                $button->getDefaultOptions(),
+                $button->getCustomOptions(),
+            );
+        }
+
         return $urls;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ButtonCollectionTransfer $buttonCollectionTransfer
+     * @param array<mixed> $productData
+     *
+     * @return \Generated\Shared\Transfer\ButtonCollectionTransfer
+     */
+    protected function executeProductVariantTableActionExpanderPlugins(
+        ButtonCollectionTransfer $buttonCollectionTransfer,
+        array $productData
+    ): ButtonCollectionTransfer {
+        foreach ($this->productVariantTableActionExpanderPlugins as $productVariantTableActionExpanderPlugin) {
+            $buttonCollectionTransfer = $productVariantTableActionExpanderPlugin->execute(
+                $productData,
+                $buttonCollectionTransfer,
+            );
+        }
+
+        return $buttonCollectionTransfer;
     }
 }

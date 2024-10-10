@@ -386,6 +386,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $idProductAbstract,
             $this->getLocaleFacade()->getCurrentLocale(),
             $type,
+            $this->getProductVariantTableActionExpanderPlugins(),
         );
     }
 
@@ -715,5 +716,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductTableActionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductVariantTableActionExpanderPluginInterface>
+     */
+    public function getProductVariantTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER);
     }
 }

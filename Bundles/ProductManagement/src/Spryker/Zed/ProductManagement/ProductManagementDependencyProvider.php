@@ -237,6 +237,11 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -401,6 +406,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductTableConfigurationExpanderPlugins($container);
         $container = $this->addProductTableDataBulkExpanderPlugins($container);
         $container = $this->addProductTableActionExpanderPlugins($container);
+        $container = $this->addProductVariantTableActionExpanderPlugins($container);
 
         return $container;
     }
@@ -917,5 +923,27 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductVariantTableActionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_VARIANT_TABLE_ACTION_EXPANDER, function (): array {
+            return $this->getProductVariantTableActionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductVariantTableActionExpanderPluginInterface>
+     */
+    protected function getProductVariantTableActionExpanderPlugins(): array
+    {
+        return [];
     }
 }
