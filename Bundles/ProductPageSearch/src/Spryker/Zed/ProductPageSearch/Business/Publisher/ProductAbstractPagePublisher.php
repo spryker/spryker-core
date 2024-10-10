@@ -216,18 +216,18 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
         $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
 
-        if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
-            $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
-                $productAbstractLocalizedEntities,
-                $productAbstractIds,
-            );
-        }
-
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
         if (!$productAbstractLocalizedEntities) {
             $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
             return;
+        }
+
+        if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
+            $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
+                $productAbstractLocalizedEntities,
+                $productAbstractIds,
+            );
         }
 
         $this->storeData(
