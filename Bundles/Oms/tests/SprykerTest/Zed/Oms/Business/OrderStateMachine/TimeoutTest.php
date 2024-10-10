@@ -102,8 +102,8 @@ class TimeoutTest extends Unit
     public function timeoutDataProvider(): array
     {
         return [
-            'no store name, no limit' => [3, null, null],
             'no store name, limit' => [1, null, 1], // Will take only first created order
+            'no store name, no limit' => [3, null, null],
             'US store, no limit' => [2, 'US', null],
             'DE store, no limit' => [1, 'DE', null],
             'US store, no limit, single processor identifier' => [2, 'US', null, [2]],

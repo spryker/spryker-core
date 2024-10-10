@@ -298,6 +298,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->distinct()
             ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER);
 
+        $subQuery->orderByFkSalesOrder(Criteria::ASC);
         $subQuery = $this->addEventTimeoutFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addOmsProcessorIdentifierFilterToSalesOrderItemQuery($subQuery, $omsProcessorIdentifiers);

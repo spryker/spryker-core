@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
@@ -157,6 +158,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->select([
                 ProductAbstractTransfer::ID_PRODUCT_ABSTRACT,
                 ProductAbstractTransfer::SKU,
+                MerchantProductAbstractTransfer::ID_MERCHANT_PRODUCT_ABSTRACT,
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
                 ProductAbstractTransfer::NAME,
                 ProductAbstractTransfer::ATTRIBUTES,

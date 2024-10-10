@@ -133,6 +133,7 @@ class ServicePointStorageBusinessTester extends Actor
     {
         return $this->getServicePointStorageQuery()
             ->filterByFkServicePoint($idServicePoint)
+            ->orderByIdServicePointStorage()
             ->find()
             ->getData();
     }
