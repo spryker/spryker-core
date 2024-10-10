@@ -128,6 +128,50 @@ class QueueFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testQueueWorkerDoesNotStopIfThresholdIsReachedAndStopWhenEmptyIsEnabled(): void
+    {
+        // Arrange
+        $queueWorkerMock = $this->getQueueWorkerMock(true);
+
+        $queueWorkerMock->method('areQueuesEmpty')
+            ->willReturnOnConsecutiveCalls(false, true);
+
+        // Assert
+        $queueWorkerMock->expects($this->exactly(2))
+            ->method('executeOperation');
+
+        // Act
+        $queueWorkerMock->start(
+            $this->tester->getCommandSignature(),
+            [SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY => true],
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueueWorkerDoesNotStopIfThresholdIsReachedAndStopWhenEmptyIsDisabled(): void
+    {
+        // Arrange
+        $queueWorkerMock = $this->getQueueWorkerMock(true);
+
+        $queueWorkerMock->method('areQueuesEmpty')
+            ->willReturn(false);
+
+        // Assert
+        $queueWorkerMock->expects($this->exactly(0))
+            ->method('executeOperation');
+
+        // Act
+        $queueWorkerMock->start(
+            $this->tester->getCommandSignature(),
+            [SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY => false],
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testQueueWorkerShouldRestartIfQueuesHaveMessages(): void
     {
         // Arrange
@@ -148,11 +192,22 @@ class QueueFacadeTest extends Unit
     }
 
     /**
+     * @param bool $returnZeroThreshold
+     *
      * @return \Spryker\Zed\Queue\Business\Worker\WorkerInterface
      */
-    protected function getQueueWorkerMock(): WorkerInterface
+    protected function getQueueWorkerMock(bool $returnZeroThreshold = false): WorkerInterface
     {
         $queueBusinessFactory = new QueueBusinessFactory();
+
+        if ($returnZeroThreshold === true) {
+            $queueConfigMock = $this->getMockBuilder(QueueConfig::class)
+                ->getMock();
+            $queueConfigMock
+                ->method('getQueueWorkerMaxThreshold')
+                ->willReturn(0);
+            $queueBusinessFactory->setConfig($queueConfigMock);
+        }
 
         $queueWorkerMock = $this->getMockBuilder(Worker::class)
             ->setConstructorArgs([

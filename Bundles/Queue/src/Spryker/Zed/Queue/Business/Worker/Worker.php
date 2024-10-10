@@ -139,7 +139,7 @@ class Worker implements WorkerInterface
 
         $this->workerProgressBar->start($maxThreshold, $round);
 
-        while ($totalPassedSeconds < $maxThreshold) {
+        while ($this->continueExecution($totalPassedSeconds, $maxThreshold, $options)) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
 
@@ -159,6 +159,18 @@ class Worker implements WorkerInterface
         $this->workerProgressBar->finish();
         $this->processManager->flushIdleProcesses();
         $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds, $options);
+    }
+
+    /**
+     * @param int $totalPassedSeconds
+     * @param int $maxThreshold
+     * @param array<string, mixed> $options
+     *
+     * @return bool
+     */
+    protected function continueExecution(int $totalPassedSeconds, int $maxThreshold, array $options): bool
+    {
+        return $totalPassedSeconds < $maxThreshold || $this->isWorkerStopsWhenEmptyQueueEnabled($options);
     }
 
     /**
