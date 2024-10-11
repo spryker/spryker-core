@@ -8,6 +8,7 @@
 namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
+use Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\AdapterBuilderInterface;
 use Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\Aws3v3AdapterBuilder;
 
 class Aws3v3FilesystemBuilder extends AbstractFilesystemBuilder
@@ -15,7 +16,7 @@ class Aws3v3FilesystemBuilder extends AbstractFilesystemBuilder
     /**
      * @return \Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer
      */
-    protected function buildAdapterConfig()
+    protected function buildAdapterConfig(): FlysystemConfigAws3v3Transfer
     {
         $configTransfer = new FlysystemConfigAws3v3Transfer();
         $configTransfer->fromArray($this->config->getAdapterConfig(), true);
@@ -26,23 +27,21 @@ class Aws3v3FilesystemBuilder extends AbstractFilesystemBuilder
     /**
      * @return void
      */
-    protected function assertAdapterConfig()
+    protected function assertAdapterConfig(): void
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 
-        $adapterConfigTransfer->requireRoot();
         $adapterConfigTransfer->requirePath();
         $adapterConfigTransfer->requireKey();
         $adapterConfigTransfer->requireSecret();
         $adapterConfigTransfer->requireBucket();
-        $adapterConfigTransfer->requireVersion();
         $adapterConfigTransfer->requireRegion();
     }
 
     /**
      * @return \Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
-    protected function createAdapterBuilder()
+    protected function createAdapterBuilder(): AdapterBuilderInterface
     {
         $adapterConfigTransfer = $this->buildAdapterConfig();
 

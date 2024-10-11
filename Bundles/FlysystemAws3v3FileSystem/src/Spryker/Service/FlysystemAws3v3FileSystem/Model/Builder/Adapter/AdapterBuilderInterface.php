@@ -7,10 +7,12 @@
 
 namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter;
 
+use League\Flysystem\FilesystemAdapter;
+
 interface AdapterBuilderInterface
 {
     /**
      * @return \League\Flysystem\FilesystemAdapter
      */
-    public function build();
+    public function build(): FilesystemAdapter;
 }

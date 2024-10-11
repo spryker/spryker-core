@@ -8,6 +8,8 @@
 namespace SprykerTest\Service\FlysystemAws3v3FileSystem;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\FlysystemConfigAws3v3Builder;
+use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,14 @@ use Codeception\Actor;
 class FlysystemAws3v3FileSystemBusinessTester extends Actor
 {
     use _generated\FlysystemAws3v3FileSystemBusinessTesterActions;
+
+    /**
+     * @param array<string, mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer
+     */
+    public function haveFlysystemConfigAws3v3Transfer(array $seedData = []): FlysystemConfigAws3v3Transfer
+    {
+        return (new FlysystemConfigAws3v3Builder($seedData))->build();
+    }
 }

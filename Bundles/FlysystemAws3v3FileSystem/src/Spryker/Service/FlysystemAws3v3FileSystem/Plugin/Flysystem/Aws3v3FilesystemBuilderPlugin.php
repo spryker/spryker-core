@@ -17,6 +17,10 @@ use Spryker\Service\Kernel\AbstractPlugin;
 class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFilesystemBuilderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $type
      *
      * @return bool
@@ -27,6 +31,12 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a Filesystem to work with AWS S3.
+     * - Requires a `FlysystemConfig.adapterConfig` to be set and to have next keys: `key`, `secret`, `region`, `bucket`, `path`.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      *
      * @return \League\Flysystem\Filesystem

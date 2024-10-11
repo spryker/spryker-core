@@ -9,6 +9,7 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Filesystem;
 
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\Filesystem;
+use Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\AdapterBuilderInterface;
 
 abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
 {
@@ -28,17 +29,17 @@ abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
     /**
      * @return void
      */
-    abstract protected function assertAdapterConfig();
+    abstract protected function assertAdapterConfig(): void;
 
     /**
      * @return \Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\AdapterBuilderInterface
      */
-    abstract protected function createAdapterBuilder();
+    abstract protected function createAdapterBuilder(): AdapterBuilderInterface;
 
     /**
      * @return \League\Flysystem\Filesystem
      */
-    public function build()
+    public function build(): Filesystem
     {
         $this->assertAdapterConfig();
         $filesystem = $this->buildFilesystem();
@@ -49,7 +50,7 @@ abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
     /**
      * @return \League\Flysystem\Filesystem
      */
-    protected function buildFilesystem()
+    protected function buildFilesystem(): Filesystem
     {
         $adapter = $this->createAdapterBuilder()->build();
         $config = $this->config->getFlysystemConfig() ?: [];

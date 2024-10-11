@@ -10,6 +10,7 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter;
 use Aws\S3\S3Client;
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
 use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
+use League\Flysystem\FilesystemAdapter;
 use Spryker\Service\FlysystemAws3v3FileSystem\Exception\NoBucketException;
 
 class Aws3v3AdapterBuilder implements AdapterBuilderInterface
@@ -32,12 +33,12 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     /**
      * @var string
      */
-    public const VERSION = 'version';
+    public const CREDENTIALS = 'credentials';
 
     /**
      * @var string
      */
-    public const CREDENTIALS = 'credentials';
+    protected const ENDPOINT = 'endpoint';
 
     /**
      * @var \League\Flysystem\FilesystemAdapter
@@ -65,10 +66,9 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     /**
      * @return \League\Flysystem\FilesystemAdapter
      */
-    public function build()
+    public function build(): FilesystemAdapter
     {
-        $this
-            ->buildS3Client()
+        $this->buildS3Client()
             ->buildAdapter();
 
         return $this->adapter;
@@ -85,7 +85,7 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
                 static::SECRET => $this->adapterConfig->getSecret(),
             ],
             static::REGION => $this->adapterConfig->getRegion(),
-            static::VERSION => $this->adapterConfig->getVersion(),
+            static::ENDPOINT => $this->adapterConfig->getEndpoint(),
         ]);
 
         return $this;
@@ -104,7 +104,15 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
             throw new NoBucketException('Bucket not set in adapter configuration.');
         }
 
-        $this->adapter = new AwsS3V3Adapter($this->client, $bucket, '', null, null, [], false);
+        $this->adapter = new AwsS3V3Adapter(
+            $this->client,
+            $bucket,
+            $this->adapterConfig->getPath() ?? '',
+            null,
+            null,
+            [],
+            $this->adapterConfig->getIsStreamReads() ?? true,
+        );
 
         return $this;
     }

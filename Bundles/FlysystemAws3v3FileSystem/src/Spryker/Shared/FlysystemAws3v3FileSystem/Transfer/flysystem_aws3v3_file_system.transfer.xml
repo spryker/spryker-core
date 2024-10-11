@@ -8,12 +8,14 @@
 
     <transfer name="FlysystemConfigAws3v3">
         <property name="region" type="string"/>
-        <property name="version" type="string"/>
+        <property name="version" type="string" deprecated="Will be removed in next major."/>
         <property name="bucket" type="string"/>
         <property name="secret" type="string"/>
         <property name="key" type="string"/>
         <property name="path" type="string"/>
-        <property name="root" type="string"/>
+        <property name="root" type="string" deprecated="Will be removed in next major."/>
+        <property name="endpoint" type="string"/>
+        <property name="isStreamReads" type="bool"/>
     </transfer>
 
 </transfers>
