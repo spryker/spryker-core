@@ -11,6 +11,10 @@ namespace Spryker\Zed\Twig\Communication\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Twig\Environment;
 
+/**
+* This plugin will deactivate Navigation from Twig plugin stack.
+* It's handy for Zed applications that don't need to draw a default Zed UI navigation.
+*/
 class ZedGatewayTwigApplicationPlugin extends TwigApplicationPlugin
 {
     protected const PLUGIN_TO_IGNORE = 'Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin';
