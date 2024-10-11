@@ -26,6 +26,18 @@ class MerchantGuiConfig extends AbstractBundleConfig
     public const URL_MERCHANT_EDIT = '/merchant-gui/edit-merchant';
 
     /**
+     * Specification:
+     * - Base url for viewing a merchant’s page.
+     *
+     * @uses \Spryker\Zed\MerchantGui\Communication\Controller\ViewMerchantController::indexAction()
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const URL_MERCHANT_VIEW = '/merchant-gui/view-merchant';
+
+    /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::activateAction()
      *
      * @var string

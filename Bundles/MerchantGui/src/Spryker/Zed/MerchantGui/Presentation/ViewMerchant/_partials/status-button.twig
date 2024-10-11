@@ -1,0 +1,22 @@
+{% if merchant.status == 'approved' or merchant.status == 'waiting-for-approval' %}
+    {% set actionUrl = url('/merchant-gui/merchant-status', { 'id-merchant': merchant.idMerchant, 'status': 'denied' }) %}
+    {% set label = 'deny-access' | trans %}
+    {% set buttonClass = 'btn-remove' %}
+    {% set icon = 'fa-key' %}
+{% else %}
+    {% set actionUrl = url('/merchant-gui/merchant-status', { 'id-merchant': merchant.idMerchant, 'status': 'approved' }) %}
+    {% set label = 'approved_button' | trans %}
+    {% set buttonClass = 'btn-create' %}
+    {% set icon = 'fa-key' %}
+{% endif %}
+
+{{ form_start(toggleStatusForm, {
+    action: actionUrl,
+    attr: { class: 'form-inline' }
+}) }}
+
+<button class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+    <i class="fa {{ icon }}"></i> {{ label }}
+</button>
+
+{{ form_end(toggleStatusForm) }}

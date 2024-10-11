@@ -12,6 +12,8 @@
         <property name="addressCollection" type="MerchantAddressCollection" deprecated="Use MerchantProfile.addressCollection instead"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="merchantProfile" type="MerchantProfile"/>
+        <property name="stocks" type="Stock[]" singular="stock"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -89,6 +91,20 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+    </transfer>
+
+    <transfer name="MerchantProfile">
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
+        <property name="addressCollection" type="MerchantProfileAddress[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileLocalizedGlossaryAttributes">
+    </transfer>
+
+    <transfer name="MerchantProfileAddress">
     </transfer>
 
 </transfers>

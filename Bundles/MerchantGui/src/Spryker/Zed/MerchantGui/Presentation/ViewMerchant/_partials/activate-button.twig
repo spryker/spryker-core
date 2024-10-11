@@ -1,0 +1,22 @@
+{% if merchant.isActive %}
+    {% set actionUrl = url('/merchant-gui/edit-merchant/deactivate', { 'id-merchant': merchant.idMerchant }) %}
+    {% set label = 'Deactivate' | trans %}
+    {% set buttonClass = 'btn-remove' %}
+    {% set icon = 'fa-trash' %}
+{% else %}
+    {% set actionUrl = url('/merchant-gui/edit-merchant/activate', { 'id-merchant': merchant.idMerchant }) %}
+    {% set label = 'Activate' | trans %}
+    {% set buttonClass = 'btn-view' %}
+    {% set icon = 'fa-caret-right' %}
+{% endif %}
+
+{{ form_start(toggleActiveForm, {
+    action: actionUrl,
+    attr: { class: 'form-inline' }
+}) }}
+
+<button class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+    <i class="fa {{ icon }}"></i> {{ label }}
+</button>
+
+{{ form_end(toggleActiveForm) }}

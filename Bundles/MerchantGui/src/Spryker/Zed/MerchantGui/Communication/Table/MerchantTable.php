@@ -265,6 +265,10 @@ class MerchantTable extends AbstractTable
     protected function buildLinks(array $item): string
     {
         $buttons = [];
+        $buttons[] = $this->generateViewButton(
+            Url::generate(MerchantGuiConfig::URL_MERCHANT_VIEW, [static::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT]]),
+            'View',
+        );
         $buttons[] = $this->generateEditButton(
             Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT]]),
             'Edit',

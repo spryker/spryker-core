@@ -41,3 +41,38 @@ Stores,Stores
 "Create Merchant","Händler Erstellen"
 Approval,Genehmigung
 Status,Status
+registration-number,Zulassungsnummer
+merchant-user-id,"Benutzerkennung des Händlers"
+deny-access,"Zugang verweigern"
+terms-and-conditions,"Bedingungen und Konditionen"
+data-privacy,Datenschutz
+cancellation-policy,Annullierungspolitik
+view-merchant,"Ansicht Händler"
+Role,Rolle
+Title,Titel
+"First Name",Vorname
+"Last Name",Nachname
+Phone,Telefon
+"Store relation",Store-Beziehung
+Warehouses,Lagerhäuser
+Imprint,Impressum
+"Public Email","Öffentliche E-Mail"
+"Public Phone","Öffentliches Telefon"
+"Fax Number",Faxnummer
+"Logo Url",Logo-URL
+Country,Land
+Street,Straße
+Number,Nummer
+"Zip Code",Postleitzahl
+City,Stadt
+latitude,Breitengrad
+longitude,Längengrad
+Description,Beschreibung
+"Average Delivery Time","Durchschnittliche Lieferzeit"
+"Banner URL",Banner-URL
+"Approval Status",Genehmigungsstatus
+"Contact Person",Kontaktperson
+"Legal Information","Rechtliche Informationen"
+"Merchant Profile",Händlerprofil
+"Merchant Status",Händlerstatus
+Users,Benutzer

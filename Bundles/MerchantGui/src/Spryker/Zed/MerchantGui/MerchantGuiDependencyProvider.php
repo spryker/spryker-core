@@ -79,6 +79,11 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_MERCHANT_VIEW_FORM_VIEW_EXPANDER = 'PLUGINS_MERCHANT_VIEW_FORM_VIEW_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
@@ -101,6 +106,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUrlFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUpdateFormViewExpanderPlugins($container);
+        $container = $this->addMerchantViewFormViewExpanderPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
@@ -237,6 +243,20 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addMerchantViewFormViewExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_VIEW_FORM_VIEW_EXPANDER, function () {
+            return $this->getMerchantViewFormViewExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUrlFacade(Container $container): Container
     {
         $container->set(static::FACADE_URL, function (Container $container) {
@@ -343,6 +363,14 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface>
      */
     protected function getMerchantUpdateFormViewExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface>
+     */
+    protected function getMerchantViewFormViewExpanderPlugins(): array
     {
         return [];
     }

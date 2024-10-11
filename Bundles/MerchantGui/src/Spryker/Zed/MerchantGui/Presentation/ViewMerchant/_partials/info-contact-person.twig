@@ -1,0 +1,33 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Contact Person' | trans } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Role' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantProfile.contactPersonRole }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Title' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantProfile.contactPersonTitle }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'First Name' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantProfile.contactPersonFirstName }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Last Name' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantProfile.contactPersonLastName }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>{{ 'Phone' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantProfile.contactPersonPhone }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    {% endblock %}
+{% endembed %}

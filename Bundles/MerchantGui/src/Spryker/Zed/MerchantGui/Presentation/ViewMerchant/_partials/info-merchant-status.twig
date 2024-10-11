@@ -1,0 +1,27 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Status' | trans } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Status' | trans }}</b>
+            </div>
+            <div class="col-xs-10">
+                {% if merchant.isActive %}
+                    <span class="label label-info">{{ 'Active' | trans }}</span>
+                {% else %}
+                    <span class="label label-danger">{{ 'Inactive' | trans }}</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Approval Status' | trans }}</b>
+            </div>
+            <div class="col-xs-10">
+                <span class="label label-info">{{ merchant.status }}</span>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    {% endblock %}
+{% endembed %}

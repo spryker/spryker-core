@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'view-merchant' | trans ~ ': ' ~ merchant.name %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
+    {{ editActionButton(url('/merchant-gui/edit-merchant', { 'id-merchant': merchant.idMerchant }), 'Edit' | trans) }}
+    {% set redirectUrl = url('/merchant-gui/view-merchant', { 'id-merchant': merchant.idMerchant }) %}
+    {% include '@MerchantGui/ViewMerchant/_partials/activate-button.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/status-button.twig' %}
+{% endblock %}
+
+{% block content %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-merchant-status.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-general.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-contact-person.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-merchant-profile.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-legal-information.twig' %}
+    {% include '@MerchantGui/ViewMerchant/_partials/info-users.twig' %}
+{% endblock %}

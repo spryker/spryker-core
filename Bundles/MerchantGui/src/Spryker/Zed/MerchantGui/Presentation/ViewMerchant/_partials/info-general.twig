@@ -1,0 +1,76 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General' | trans } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Name' | trans }}</b>
+            </div>
+            <div class="col-xs-10">{{ merchant.name }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'registration-number' | trans }}</b>
+            </div>
+            <div class="col-xs-10">{{ merchant.registrationNumber }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Merchant Reference' | trans }}</b>
+            </div>
+            <div class="col-xs-10">{{ merchant.merchantReference }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Email' | trans }}</b>
+            </div>
+            <div class="col-xs-10">{{ merchant.email }}</div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        {% if storeRelations is defined %}
+            <div class="row">
+                <div class="col-xs-2">
+                    <b>{{ 'Store relation' | trans }}</b>
+                </div>
+                <div class="col-xs-10">
+                    {% for storeRelation in storeRelations %}
+                        <span class="label label-info">{{ storeRelation.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Merchant URL' | trans }}</b>
+            </div>
+            <div class="col-xs-10">
+                {% if merchantUrlCollection is defined %}
+                    {% for merchantUrl in merchantUrlCollection %}
+                        {{ merchantUrl.urlPrefix ~ merchantUrl.url }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        <div class="row">
+            <div class="col-xs-2">
+                <b>{{ 'Warehouses' | trans }}</b>
+            </div>
+            <div class="col-xs-10">
+                {% if merchantStockCollection is defined %}
+                    {% for stock in merchantStockCollection %}
+                        {{ stock.name }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    {% endblock %}
+{% endembed %}

@@ -41,3 +41,38 @@ Stores,Stores
 "Create Merchant","Create Merchant"
 Approval,Approval
 Status,Status
+registration-number,"Registration Number"
+merchant-user-id,"Merchant user ID"
+deny-access,"Deny Access"
+terms-and-conditions,"Terms and conditions"
+data-privacy,"Data Privacy"
+cancellation-policy,"Cancellation policy"
+view-merchant,"View Merchant"
+Role,Role
+Title,Title
+"First Name","First Name"
+"Last Name","Last Name"
+Phone,Phone
+"Store relation","Store relation"
+Warehouses,Warehouses
+Imprint,Imprint
+"Public Email","Public Email"
+"Public Phone","Public Phone"
+"Fax Number","Fax Number"
+"Logo Url","Logo Url"
+Country,Country
+Street,Street
+Number,Number
+"Zip Code","Zip Code"
+City,City
+latitude,Latitude
+longitude,Longitude
+Description,Description
+"Average Delivery Time","Average Delivery Time"
+"Banner URL","Banner URL"
+"Approval Status","Approval Status"
+"Contact Person","Contact Person"
+"Legal Information","Legal Information"
+"Merchant Profile","Merchant Profile"
+"Merchant Status","Merchant Status"
+Users,Users

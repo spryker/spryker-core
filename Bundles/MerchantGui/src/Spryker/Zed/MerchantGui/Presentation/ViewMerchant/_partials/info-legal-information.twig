@@ -1,0 +1,27 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Legal Information' | trans } %}
+    {% block widget_content %}
+        {% set glossaryKeys = {
+            'cancellation-policy': 'cancellationPolicyGlossaryKey',
+            'terms-and-conditions': 'termsConditionsGlossaryKey',
+            'data-privacy': 'dataPrivacyGlossaryKey',
+            'Imprint': 'imprintGlossaryKey'
+        } %}
+
+        {% for key, value in glossaryKeys %}
+            <div class="m-t">
+                {% for localizedAttribute in merchantLocalizedAttributes %}
+                    {% embed '@Gui/Partials/localized-ibox.twig' with { 'localeName': localizedAttribute.locale.localeName } %}
+                        {% block content %}
+                            <div class="row">
+                                <div class="col-xs-2"><b>{{ key | trans }}</b></div>
+                                <div class="col-xs-10">
+                                    {{ attribute(localizedAttribute.merchantProfileGlossaryAttributeValues, value) }}
+                                </div>
+                            </div>
+                        {% endblock %}
+                    {% endembed %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endembed %}

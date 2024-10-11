@@ -117,6 +117,8 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProfileMerchantExpander(
             $this->getRepository(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade(),
         );
     }
 

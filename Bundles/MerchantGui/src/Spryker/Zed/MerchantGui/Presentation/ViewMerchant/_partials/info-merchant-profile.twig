@@ -1,0 +1,112 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant Profile' | trans } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Public Email' | trans }} </b></div>
+                    <div class="col-xs-8">{{ merchantProfile.publicEmail }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Public Phone' | trans }} </b></div>
+                    <div class="col-xs-8">{{ merchantProfile.publicPhone }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Fax Number' | trans }} </b></div>
+                    <div class="col-xs-8">{{ merchantProfile.faxNumber }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Logo Url' | trans }} </b></div>
+                    <div class="col-xs-8">{{ merchantProfile.logoUrl }}</div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Country' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.countryName }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Street' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.address1 }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Number' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.address2 }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'Zip Code' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.zipCode }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'City' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.city }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'latitude' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.latitude }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4"><b>{{ 'longitude' | trans }}:</b></div>
+                    <div class="col-xs-8">
+                        {% for merchantAddress in merchantAddressCollection %}
+                            {{ merchantAddress.longitude }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="m-t">
+            {% for localizedAttribute in merchantLocalizedAttributes %}
+                {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': localizedAttribute.locale.localeName} %}
+                    {% block content %}
+                        <div class="row">
+                            <div class="col-xs-2"><b>{{ 'Description' | trans }}</b></div>
+                            <div class="col-xs-10">
+                                {{ localizedAttribute.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey }}
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-xs-2"><b>{{ 'Average Delivery Time' | trans }}</b></div>
+                            <div class="col-xs-10">
+                                {{ localizedAttribute.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey }}
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-xs-2"><b>{{ 'Banner URL' | trans }}</b></div>
+                            <div class="col-xs-10">
+                                {{ localizedAttribute.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey }}
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+{% endembed %}

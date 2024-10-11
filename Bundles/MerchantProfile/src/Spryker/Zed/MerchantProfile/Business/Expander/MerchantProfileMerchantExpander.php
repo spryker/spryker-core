@@ -7,9 +7,16 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\Expander;
 
+use ArrayObject;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
+use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface;
 
 class MerchantProfileMerchantExpander implements MerchantProfileMerchantExpanderInterface
@@ -20,12 +27,28 @@ class MerchantProfileMerchantExpander implements MerchantProfileMerchantExpander
     protected MerchantProfileRepositoryInterface $merchantProfileRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface
+     */
+    protected MerchantProfileToGlossaryFacadeInterface $glossaryFacade;
+
+    /**
+     * @var \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface
+     */
+    protected MerchantProfileToLocaleFacadeInterface $localeFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface $merchantProfileRepository
+     * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        MerchantProfileRepositoryInterface $merchantProfileRepository
+        MerchantProfileRepositoryInterface $merchantProfileRepository,
+        MerchantProfileToGlossaryFacadeInterface $glossaryFacade,
+        MerchantProfileToLocaleFacadeInterface $localeFacade
     ) {
         $this->merchantProfileRepository = $merchantProfileRepository;
+        $this->glossaryFacade = $glossaryFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -45,6 +68,8 @@ class MerchantProfileMerchantExpander implements MerchantProfileMerchantExpander
         if ($merchantProfileCollectionTransfer->getMerchantProfiles()->count() === 0) {
             return $merchantCollectionTransfer;
         }
+
+        $merchantProfileCollectionTransfer = $this->expandWithLocalizedGlossaryAttributes($merchantProfileCollectionTransfer);
 
         $merchantProfileTransfersIndexedByIdMerchant = $this->getMerchantProfileTransfersIndexedByIdMerchant($merchantProfileCollectionTransfer);
 
@@ -95,5 +120,94 @@ class MerchantProfileMerchantExpander implements MerchantProfileMerchantExpander
         }
 
         return $merchantProfileTransfersIndexedByIdMerchant;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCollectionTransfer $merchantProfileCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
+     */
+    protected function expandWithLocalizedGlossaryAttributes(
+        MerchantProfileCollectionTransfer $merchantProfileCollectionTransfer
+    ): MerchantProfileCollectionTransfer {
+        $merchantProfileGlossaryAttributeValues = new ArrayObject();
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        foreach ($merchantProfileCollectionTransfer->getMerchantProfiles() as $merchantProfileTransfer) {
+            foreach ($localeTransfers as $localeTransfer) {
+                $merchantProfileGlossaryAttributeValues->append(
+                    $this->getMerchantProfileLocalizedGlossaryAttributesTransfer($merchantProfileTransfer, $localeTransfer),
+                );
+            }
+
+            $merchantProfileTransfer->setMerchantProfileLocalizedGlossaryAttributes($merchantProfileGlossaryAttributeValues);
+        }
+
+        return $merchantProfileCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer
+     */
+    protected function getMerchantProfileLocalizedGlossaryAttributesTransfer(
+        MerchantProfileTransfer $merchantProfileTransfer,
+        LocaleTransfer $localeTransfer
+    ): MerchantProfileLocalizedGlossaryAttributesTransfer {
+        $merchantProfileLocalizedGlossaryAttributesTransfer = new MerchantProfileLocalizedGlossaryAttributesTransfer();
+        $merchantProfileLocalizedGlossaryAttributesTransfer->setLocale($localeTransfer);
+        $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues(
+            $this->getGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer),
+        );
+
+        return $merchantProfileLocalizedGlossaryAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer
+     */
+    protected function getGlossaryAttributeTranslations(
+        MerchantProfileTransfer $merchantProfileTransfer,
+        LocaleTransfer $localeTransfer
+    ): MerchantProfileGlossaryAttributeValuesTransfer {
+        $merchantProfileGlossaryAttributeValuesTransfer = new MerchantProfileGlossaryAttributeValuesTransfer();
+
+        $merchantProfileGlossaryAttributeValuesData = $merchantProfileGlossaryAttributeValuesTransfer->toArray(true, true);
+        $merchantProfileData = $merchantProfileTransfer->toArray(true, true);
+
+        foreach ($merchantProfileGlossaryAttributeValuesData as $merchantProfileGlossaryAttributeFieldName => $glossaryAttributeValue) {
+            $merchantProfileGlossaryKey = $merchantProfileData[$merchantProfileGlossaryAttributeFieldName];
+            if ($merchantProfileGlossaryKey === null) {
+                continue;
+            }
+
+            $merchantProfileGlossaryAttributeValuesData[$merchantProfileGlossaryAttributeFieldName] = $this->findLocalizedTranslationValue($merchantProfileGlossaryKey, $localeTransfer);
+        }
+
+        $merchantProfileGlossaryAttributeValuesTransfer->fromArray($merchantProfileGlossaryAttributeValuesData);
+
+        return $merchantProfileGlossaryAttributeValuesTransfer;
+    }
+
+    /**
+     * @param string $key
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string|null
+     */
+    protected function findLocalizedTranslationValue(string $key, LocaleTransfer $localeTransfer): ?string
+    {
+        if ($this->glossaryFacade->hasTranslation($key, $localeTransfer) === false) {
+            return null;
+        }
+
+        $translationTransfer = $this->glossaryFacade->getTranslation($key, $localeTransfer);
+
+        return $translationTransfer->getIsActive() ? $translationTransfer->getValue() : null;
     }
 }

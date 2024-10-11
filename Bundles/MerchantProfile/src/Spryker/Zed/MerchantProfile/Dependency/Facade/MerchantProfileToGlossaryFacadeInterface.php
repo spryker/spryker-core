@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface MerchantProfileToGlossaryFacadeInterface
 {
@@ -60,4 +61,12 @@ interface MerchantProfileToGlossaryFacadeInterface
      * @return bool
      */
     public function deleteTranslation($keyName, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 }

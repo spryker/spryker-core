@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Users' | trans } %}
+    {% block widget_content %}
+        {{ merchantUserTable | raw }}
+    {% endblock %}
+{% endembed %}

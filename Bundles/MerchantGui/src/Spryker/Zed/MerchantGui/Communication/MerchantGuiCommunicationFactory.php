@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProv
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantViewForm;
 use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
@@ -126,6 +127,17 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer|null $data
+     * @param array<string, mixed> $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createMerchantViewForm(?MerchantTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantViewForm::class, $data, $options);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
      */
     public function getMerchantFacade(): MerchantGuiToMerchantFacadeInterface
@@ -155,6 +167,14 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantUpdateFormViewExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantUpdateFormViewExpanderPluginInterface>
+     */
+    public function getMerchantViewFormViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_VIEW_FORM_VIEW_EXPANDER);
     }
 
     /**
