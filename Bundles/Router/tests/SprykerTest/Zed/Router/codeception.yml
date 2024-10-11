@@ -28,6 +28,13 @@ suites:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Router\Helper\RouterHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
+                - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Zed\Application\Helper\ApplicationHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
 
     Communication:
         path: ./Communication

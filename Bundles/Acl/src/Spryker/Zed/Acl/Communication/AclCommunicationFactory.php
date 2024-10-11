@@ -19,6 +19,7 @@ use Spryker\Zed\Acl\Communication\Table\GroupTable;
 use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
+use Spryker\Zed\Acl\Dependency\Facade\AclToRouterFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -153,7 +154,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
         /** @var \Spryker\Zed\Acl\Business\AclFacade $facade */
         $facade = $this->getFacade();
 
-        return new AclRuleFormDataProvider($facade);
+        return new AclRuleFormDataProvider($facade, $this->getRouterFacade());
     }
 
     /**
@@ -174,5 +175,13 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(DeleteRoleForm::class, [], [
             'fields' => [],
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Dependency\Facade\AclToRouterFacadeInterface
+     */
+    public function getRouterFacade(): AclToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::FACADE_ROUTER);
     }
 }

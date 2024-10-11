@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Router\Business;
 
+use Generated\Shared\Transfer\RouterActionCollectionTransfer;
+use Generated\Shared\Transfer\RouterBundleCollectionTransfer;
+use Generated\Shared\Transfer\RouterControllerCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
@@ -196,5 +199,46 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     public function warmUpBackendGatewayRouterCache(): void
     {
         $this->getFactory()->createBackendGatewayCacheWarmer()->warmUp();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\RouterBundleCollectionTransfer
+     */
+    public function getRouterBundleCollection(): RouterBundleCollectionTransfer
+    {
+        return $this->getFactory()->createRouterReader()->getBundleCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $bundle
+     *
+     * @return \Generated\Shared\Transfer\RouterControllerCollectionTransfer
+     */
+    public function getRouterControllerCollection(string $bundle): RouterControllerCollectionTransfer
+    {
+        return $this->getFactory()->createRouterReader()->getControllerCollection($bundle);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $bundle
+     * @param string $controller
+     *
+     * @return \Generated\Shared\Transfer\RouterActionCollectionTransfer
+     */
+    public function getRouterActionCollection(string $bundle, string $controller): RouterActionCollectionTransfer
+    {
+        return $this->getFactory()->createRouterReader()->getActionCollection($bundle, $controller);
     }
 }

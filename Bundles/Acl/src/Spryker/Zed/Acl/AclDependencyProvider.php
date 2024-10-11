@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl;
 
+use Spryker\Zed\Acl\Dependency\Facade\AclToRouterFacadeBridge;
+use Spryker\Zed\Acl\Dependency\Facade\AclToRouterFacadeInterface;
 use Spryker\Zed\Acl\Dependency\Facade\AclToUserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -62,6 +64,11 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ACL_ACCESS_CHECKER_STRATEGY = 'PLUGINS_ACL_ACCESS_CHECKER_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const FACADE_ROUTER = 'FACADE_ROUTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -70,6 +77,7 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addFacadeUser($container);
         $container = $this->addAclQueryContainer($container);
+        $container = $this->addRouterFacade($container);
 
         $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
@@ -103,6 +111,20 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_USER, function (Container $container) {
             return $container->getLocator()->user()->queryContainer();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouterFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_ROUTER, function (Container $container): AclToRouterFacadeInterface {
+            return new AclToRouterFacadeBridge($container->getLocator()->router()->facade());
         });
 
         return $container;

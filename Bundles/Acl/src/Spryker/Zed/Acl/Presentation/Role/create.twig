@@ -29,3 +29,7 @@
     {% endembed %}
 
 {% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-acl-role.js') }}"></script>
+{% endblock %}

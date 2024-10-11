@@ -102,4 +102,14 @@
         <property name="groupNames" type="string[]" singular="groupName"/>
     </transfer>
 
+    <transfer name="RouterBundleCollection">
+        <property name="bundles" type="string[]" singular="bundle"/>
+    </transfer>
+    <transfer name="RouterControllerCollection">
+        <property name="controllers" type="string[]" singular="controller"/>
+    </transfer>
+    <transfer name="RouterActionCollection">
+        <property name="actions" type="string[]" singular="action"/>
+    </transfer>
+
 </transfers>

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Router\Business;
 
+use Generated\Shared\Transfer\RouterActionCollectionTransfer;
+use Generated\Shared\Transfer\RouterBundleCollectionTransfer;
+use Generated\Shared\Transfer\RouterControllerCollectionTransfer;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
 
@@ -178,4 +181,39 @@ interface RouterFacadeInterface
      * @return void
      */
     public function cacheWarmUp(): void;
+
+    /**
+     * Specification:
+     * - Gets route bundles.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\RouterBundleCollectionTransfer
+     */
+    public function getRouterBundleCollection(): RouterBundleCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Gets route bundle controllers.
+     *
+     * @api
+     *
+     * @param string $bundle
+     *
+     * @return \Generated\Shared\Transfer\RouterControllerCollectionTransfer
+     */
+    public function getRouterControllerCollection(string $bundle): RouterControllerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Gets route bundle controller actions.
+     *
+     * @api
+     *
+     * @param string $bundle
+     * @param string $controller
+     *
+     * @return \Generated\Shared\Transfer\RouterActionCollectionTransfer
+     */
+    public function getRouterActionCollection(string $bundle, string $controller): RouterActionCollectionTransfer;
 }

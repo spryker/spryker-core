@@ -28,3 +28,7 @@
     {{ parent() }}
     <script src="{{ assetsPath('js/spryker-zed-acl-main.js') }}"></script>
 {% endblock %}
+
+{% block sidedrawer %}
+    {% include '@User/_partials/sidedrawer.twig' %}
+{% endblock %}

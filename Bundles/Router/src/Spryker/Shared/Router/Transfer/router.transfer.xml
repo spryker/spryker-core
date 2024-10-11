@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RouterBundleCollection">
+        <property name="bundles" type="string[]" singular="bundle"/>
+    </transfer>
+    <transfer name="RouterControllerCollection">
+        <property name="controllers" type="string[]" singular="controller"/>
+    </transfer>
+    <transfer name="RouterActionCollection">
+        <property name="actions" type="string[]" singular="action"/>
+    </transfer>
+</transfers>

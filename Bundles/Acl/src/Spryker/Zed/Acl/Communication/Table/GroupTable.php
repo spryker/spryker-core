@@ -78,6 +78,10 @@ class GroupTable extends AbstractTable
 
         $config->setRawColumns([static::EDIT, static::ROLES]);
 
+        $config->setSortable([
+            SpyAclGroupTableMap::COL_NAME,
+        ]);
+
         return $config;
     }
 

@@ -15,6 +15,8 @@ use Spryker\Zed\Router\Business\Cache\Cache;
 use Spryker\Zed\Router\Business\Cache\MerchantPortalCacheWarmer;
 use Spryker\Zed\Router\Business\Loader\ClosureLoader;
 use Spryker\Zed\Router\Business\Loader\LoaderInterface;
+use Spryker\Zed\Router\Business\Reader\RouterReader;
+use Spryker\Zed\Router\Business\Reader\RouterReaderInterface;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Business\Router\Router;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
@@ -311,5 +313,15 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function createFilesystem(): Filesystem
     {
         return new Filesystem();
+    }
+
+    /**
+     * @return \Spryker\Zed\Router\Business\Reader\RouterReaderInterface
+     */
+    public function createRouterReader(): RouterReaderInterface
+    {
+        return new RouterReader(
+            $this->createBackofficeChainRouter()->getRouteCollection(),
+        );
     }
 }

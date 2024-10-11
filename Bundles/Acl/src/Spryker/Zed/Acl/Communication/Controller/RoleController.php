@@ -221,7 +221,13 @@ class RoleController extends AbstractController
         $ruleSetForm = $this->getFactory()
             ->createRuleForm(
                 $dataProvider->getData($idAclRole),
-                $dataProvider->getOptions(),
+                array_merge(
+                    $dataProvider->getOptions(),
+                    $dataProvider->getRouterOptions(
+                        $request->get('ruleset')['bundle'] ?? null,
+                        $request->get('ruleset')['controller'] ?? null,
+                    ),
+                ),
             )
             ->handleRequest($request);
 

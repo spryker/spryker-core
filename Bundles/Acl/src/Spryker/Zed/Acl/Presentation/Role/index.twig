@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Role list' %}
+{% set widget_title = 'Role list' | trans %}
 
 {% block head_title widget_title | trans %}
 
@@ -22,3 +22,6 @@
 
 {% endblock %}
 
+{% block sidedrawer %}
+    {% include '@User/_partials/sidedrawer.twig' %}
+{% endblock %}
