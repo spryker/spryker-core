@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\File;
 
+use Generated\Shared\Transfer\FileManagerDataCollectionTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Business\FileContent\FileContentInterface;
@@ -62,24 +63,32 @@ class FileSaver implements FileSaverInterface
     protected $attributesSaver;
 
     /**
+     * @var list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface>
+     */
+    protected array $fileManagerDataCollectionExpanderPreSavePlugins;
+
+    /**
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
      * @param \Spryker\Zed\FileManager\Business\File\FileVersionInterface $fileVersion
      * @param \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Business\FileLocalizedAttributes\FileLocalizedAttributesSaverInterface $attributesSaver
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     * @param list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface> $fileManagerDataCollectionExpanderPreSavePlugins
      */
     public function __construct(
         FileManagerEntityManagerInterface $entityManager,
         FileVersionInterface $fileVersion,
         FileContentInterface $fileContent,
         FileLocalizedAttributesSaverInterface $attributesSaver,
-        FileManagerConfig $config
+        FileManagerConfig $config,
+        array $fileManagerDataCollectionExpanderPreSavePlugins
     ) {
         $this->entityManager = $entityManager;
         $this->fileVersion = $fileVersion;
         $this->fileContent = $fileContent;
         $this->config = $config;
         $this->attributesSaver = $attributesSaver;
+        $this->fileManagerDataCollectionExpanderPreSavePlugins = $fileManagerDataCollectionExpanderPreSavePlugins;
     }
 
     /**
@@ -101,6 +110,8 @@ class FileSaver implements FileSaverInterface
      */
     protected function executeSaveTransaction(FileManagerDataTransfer $fileManagerDataTransfer)
     {
+        $fileManagerDataTransfer = $this->expandFileManagerDataTransfer($fileManagerDataTransfer);
+
         $this->saveFile($fileManagerDataTransfer);
         $this->saveFileInfo($fileManagerDataTransfer);
 
@@ -214,5 +225,36 @@ class FileSaver implements FileSaverInterface
     protected function getFileNameVersionDelimiter()
     {
         return $this->config->getFileNameVersionDelimiter();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataCollectionTransfer
+     */
+    protected function executeFileManagerDataCollectionExpanderPreSavePlugins(
+        FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer
+    ): FileManagerDataCollectionTransfer {
+        foreach ($this->fileManagerDataCollectionExpanderPreSavePlugins as $fileManagerDataCollectionExpanderPreSavePlugin) {
+            $fileManagerDataCollectionTransfer = $fileManagerDataCollectionExpanderPreSavePlugin->expand($fileManagerDataCollectionTransfer);
+        }
+
+        return $fileManagerDataCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    protected function expandFileManagerDataTransfer(
+        FileManagerDataTransfer $fileManagerDataTransfer
+    ): FileManagerDataTransfer {
+        $fileManagerDataCollectionTransfer = new FileManagerDataCollectionTransfer();
+        $fileManagerDataCollectionTransfer->addFileManagerDataItem($fileManagerDataTransfer);
+
+        $fileManagerDataCollectionTransfer = $this->executeFileManagerDataCollectionExpanderPreSavePlugins($fileManagerDataCollectionTransfer);
+
+        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->offsetGet(0);
     }
 }

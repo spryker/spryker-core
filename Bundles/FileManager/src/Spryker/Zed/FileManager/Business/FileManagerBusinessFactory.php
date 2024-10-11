@@ -44,6 +44,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileContent(),
             $this->createLocalizedAttributesSaver(),
             $this->getConfig(),
+            $this->getFileManagerDataCollectionExpanderPreSavePlugins(),
         );
     }
 
@@ -55,6 +56,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
         return new FileReader(
             $this->getRepository(),
             $this->createFileContent(),
+            $this->getFileManagerDataCollectionExpanderPlugins(),
         );
     }
 
@@ -202,5 +204,21 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createMimeTypeReader()
     {
         return new MimeTypeReader($this->getRepository());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface>
+     */
+    public function getFileManagerDataCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface>
+     */
+    public function getFileManagerDataCollectionExpanderPreSavePlugins(): array
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE);
     }
 }

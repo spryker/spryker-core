@@ -1,5 +1,90 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\FileManagerDataTransfer>' for Spryker\\Zed\\FileManager\\Business\\File\\FileReader::getFilesByIds is incorrect, got 'array<Generated\\Shared\\Transfer\\FileManagerDataTransfer, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileReader.php",
+            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\FileManagerDataTransfer>",
+            "selected_text": "array<\\Generated\\Shared\\Transfer\\FileManagerDataTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\FileManagerDataCollectionTransfer::setFileManagerDataItems expects ArrayObject<Generated\\Shared\\Transfer\\FileManagerDataTransfer>, but ArrayObject<int, Generated\\Shared\\Transfer\\FileManagerDataTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileReader.php",
+            "snippet": "        $fileManagerDataCollectionTransfer->setFileManagerDataItems(new ArrayObject($fileManagerDataTransfers));",
+            "selected_text": "new ArrayObject($fileManagerDataTransfers)",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<Generated\\Shared\\Transfer\\FileManagerDataTransfer, mixed>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\FileManagerDataTransfer>' for Spryker\\Zed\\FileManager\\Business\\File\\FileReader::getFilesByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileReader.php",
+            "snippet": "        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->getArrayCopy();",
+            "selected_text": "$fileManagerDataCollectionTransfer->getFileManagerDataItems()->getArrayCopy()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 142,
+            "line_to": 142,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\FileManagerDataTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileReader.php",
+            "snippet": "        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->offsetGet(0);",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 154,
+            "line_to": 154,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\FileInfoTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileReader.php",
+            "snippet": "            return $fileTransfer->getFileInfo()[0] ?? null;",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 258,
+            "line_to": 258,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of ArrayObject::offsetGet expects Generated\\Shared\\Transfer\\FileManagerDataTransfer, but 0 provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/File/FileSaver.php",
+            "snippet": "        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->offsetGet(0);",
+            "selected_text": "0",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/FileDirectoryTree/FileDirectoryTreeReader.php",
+            "snippet": "                $nodesWithoutPosition[] = $fileDirectoryTreeNodeTransfer;",
+            "selected_text": "$nodesWithoutPosition",
+            "error_level": 6,
+            "shortcode": 57
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -12,18 +97,6 @@
             "selected_text": "$fileInfoTransfer->getVersion()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\FileDirectoryTreeNodeTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Business/FileDirectoryTree/FileDirectoryTreeReader.php",
-            "snippet": "            $fileDirectoryTreeTransfer->getNodes()->append($item);",
-            "selected_text": "append",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -75,16 +148,42 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $fileInfoCollection using possibly null offset int|mixed|null",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/Mapper/FileManagerMapper.php",
-            "snippet": "            $fileInfo = $fileInfoCollection[$fileInfoTransfer->getIdFileInfo()] ?? new SpyFileInfo();",
-            "selected_text": "$fileInfoCollection",
+            "line_from": 345,
+            "line_to": 345,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\FileManager\\Persistence\\SpyFileQuery::limit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/FileManagerRepository.php",
+            "snippet": "                ->limit($paginationTransfer->getLimit())",
+            "selected_text": "$paginationTransfer->getLimit()",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 346,
+            "line_to": 346,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\FileManager\\Persistence\\SpyFileQuery::offset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/FileManagerRepository.php",
+            "snippet": "                ->offset($paginationTransfer->getOffset());",
+            "selected_text": "$paginationTransfer->getOffset()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 218,
+            "line_to": 218,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\FileManager\\Persistence\\Mapper\\FileManagerMapper::hasExtensionsField has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/Mapper/FileManagerMapper.php",
+            "snippet": "        if ($this->hasExtensionsField() && $mimeType->getExtensions()) {",
+            "selected_text": "hasExtensionsField",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 15
 }

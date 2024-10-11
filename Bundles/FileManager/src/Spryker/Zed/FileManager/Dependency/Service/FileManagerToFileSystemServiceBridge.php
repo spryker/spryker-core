@@ -38,7 +38,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return string
      */
-    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer): string
     {
         return $this->fileSystemService->getMimeType($fileSystemQueryTransfer);
     }
@@ -48,7 +48,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return int|null
      */
-    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer): ?int
     {
         return $this->fileSystemService->getTimestamp($fileSystemQueryTransfer);
     }
@@ -58,7 +58,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return int
      */
-    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer): int
     {
         return $this->fileSystemService->getSize($fileSystemQueryTransfer);
     }
@@ -68,7 +68,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return bool
      */
-    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer): bool
     {
         return $this->fileSystemService->isPrivate($fileSystemQueryTransfer);
     }
@@ -78,7 +78,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return string
      */
-    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer): string
     {
         return $this->fileSystemService->read($fileSystemQueryTransfer);
     }
@@ -88,7 +88,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */
-    public function listContents(FileSystemListTransfer $fileSystemListTransfer)
+    public function listContents(FileSystemListTransfer $fileSystemListTransfer): array
     {
         return $this->fileSystemService->listContents($fileSystemListTransfer);
     }
@@ -98,7 +98,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return bool
      */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer): bool
     {
         return $this->fileSystemService->has($fileSystemQueryTransfer);
     }
@@ -108,7 +108,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
+    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer): void
     {
         $this->fileSystemService->markAsPrivate($fileSystemVisibilityTransfer);
     }
@@ -118,7 +118,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer)
+    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer): void
     {
         $this->fileSystemService->markAsPublic($fileSystemVisibilityTransfer);
     }
@@ -128,7 +128,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer): void
     {
         $this->fileSystemService->createDirectory($fileSystemCreateDirectoryTransfer);
     }
@@ -138,7 +138,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer)
+    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer): void
     {
         $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
     }
@@ -148,7 +148,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer)
+    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer): void
     {
         $this->fileSystemService->copy($fileSystemCopyTransfer);
     }
@@ -158,7 +158,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer)
+    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer): void
     {
         $this->fileSystemService->delete($fileSystemDeleteTransfer);
     }
@@ -168,7 +168,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
+    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer): void
     {
         $this->fileSystemService->rename($fileSystemRenameTransfer);
     }
@@ -178,7 +178,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function write(FileSystemContentTransfer $fileSystemContentTransfer)
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer): void
     {
         $this->fileSystemService->write($fileSystemContentTransfer);
     }
@@ -188,7 +188,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return mixed
      */
-    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer): mixed
     {
         return $this->fileSystemService->readStream($fileSystemStreamTransfer);
     }
@@ -199,7 +199,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
+    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, mixed $stream): void
     {
         $this->fileSystemService->writeStream($fileSystemStreamTransfer, $stream);
     }

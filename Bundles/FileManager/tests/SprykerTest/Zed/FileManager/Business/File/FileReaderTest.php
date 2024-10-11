@@ -94,9 +94,11 @@ class FileReaderTest extends Unit
      */
     public function testRead(): void
     {
+        //Arrange
         $fileContentMock = $this->createFileContentMock();
         $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
 
+        // Expect
         $fileManagerRepositoryMock->expects($this->once())
             ->method('getFileByIdFileInfo')
             ->willReturn($this->getMockedFile());
@@ -105,7 +107,13 @@ class FileReaderTest extends Unit
             ->method('read')
             ->willReturn('the content of the file');
 
-        $fileReader = new FileReader($fileManagerRepositoryMock, $fileContentMock);
+        $fileReader = new FileReader(
+            $fileManagerRepositoryMock,
+            $fileContentMock,
+            [],
+        );
+
+        //Act
         $this->assertFileInfo($fileReader->readFileByIdFileInfo(1));
     }
 
@@ -114,9 +122,11 @@ class FileReaderTest extends Unit
      */
     public function testReadLatestByFileId(): void
     {
+        //Arrange
         $fileContentMock = $this->createFileContentMock();
         $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
 
+        // Expect
         $fileManagerRepositoryMock->expects($this->once())
             ->method('getLatestFileInfoByIdFile')
             ->willReturn($this->getMockedFileInfo());
@@ -125,7 +135,13 @@ class FileReaderTest extends Unit
             ->method('read')
             ->willReturn('the content of the file');
 
-        $fileReader = new FileReader($fileManagerRepositoryMock, $fileContentMock);
+        $fileReader = new FileReader(
+            $fileManagerRepositoryMock,
+            $fileContentMock,
+            [],
+        );
+
+        //Act
         $this->assertFileInfo($fileReader->readLatestByFileId(1));
     }
 }

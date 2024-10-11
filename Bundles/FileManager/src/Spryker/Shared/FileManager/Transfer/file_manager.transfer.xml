@@ -157,4 +157,8 @@
         <property name="offset" type="int"/>
         <property name="nbResults" type="int"/>
     </transfer>
+
+    <transfer name="FileManagerDataCollection" strict="true">
+        <property name="fileManagerDataItems" type="FileManagerData[]" singular="fileManagerDataItem"/>
+    </transfer>
 </transfers>

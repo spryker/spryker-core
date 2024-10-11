@@ -350,6 +350,7 @@
         "spryker/event-dispatcher-extension": "*",
         "spryker/file-manager": "*",
         "spryker/file-manager-data-import": "*",
+        "spryker/file-manager-extension": "*",
         "spryker/file-manager-gui": "*",
         "spryker/file-manager-storage": "*",
         "spryker/file-system": "*",

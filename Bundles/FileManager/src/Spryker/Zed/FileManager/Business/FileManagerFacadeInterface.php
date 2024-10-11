@@ -25,6 +25,7 @@ interface FileManagerFacadeInterface
      * - Saves file info
      * - Uploads file content
      * - Creates a new file version
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface} plugins.
      *
      * @api
      *
@@ -50,6 +51,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Finds latest file version
      * - Returns a file meta info and a file content
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -113,6 +115,7 @@ interface FileManagerFacadeInterface
      * - Finds a file by idFile.
      * - Returns file with localized attributes.
      * - Reads latest file.
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -126,6 +129,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Finds a file info by idFileInfo
      * - Returns a file meta info and a file content with a specified version
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -233,6 +237,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Finds files by their ids.
      * - Returns files with localized attributes.
+     * - Executes the stack of {@link \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *

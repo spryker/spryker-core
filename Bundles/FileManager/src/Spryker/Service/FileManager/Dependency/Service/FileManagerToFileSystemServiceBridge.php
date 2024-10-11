@@ -30,7 +30,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return string
      */
-    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer): string
     {
         return $this->fileSystemService->read($fileSystemQueryTransfer);
     }
@@ -40,7 +40,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return mixed
      */
-    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer): mixed
     {
         return $this->fileSystemService->readStream($fileSystemStreamTransfer);
     }
@@ -50,7 +50,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return string
      */
-    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer): string
     {
         return $this->fileSystemService->getMimeType($fileSystemQueryTransfer);
     }

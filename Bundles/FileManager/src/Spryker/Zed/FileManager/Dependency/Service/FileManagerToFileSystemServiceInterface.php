@@ -27,7 +27,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return string
      */
-    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -36,7 +36,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return int|null
      */
-    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer): ?int;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -45,7 +45,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return int
      */
-    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function getSize(FileSystemQueryTransfer $fileSystemQueryTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -54,7 +54,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return bool
      */
-    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function isPrivate(FileSystemQueryTransfer $fileSystemQueryTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -63,7 +63,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return string
      */
-    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
@@ -72,7 +72,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */
-    public function listContents(FileSystemListTransfer $fileSystemListTransfer);
+    public function listContents(FileSystemListTransfer $fileSystemListTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -81,7 +81,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return bool
      */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
@@ -90,7 +90,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
+    public function markAsPrivate(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
@@ -99,7 +99,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer);
+    public function markAsPublic(FileSystemVisibilityTransfer $fileSystemVisibilityTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
@@ -108,7 +108,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
@@ -117,7 +117,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer);
+    public function deleteDirectory(FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
@@ -126,7 +126,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer);
+    public function copy(FileSystemCopyTransfer $fileSystemCopyTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
@@ -135,7 +135,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
+    public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
@@ -144,7 +144,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer);
+    public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
@@ -153,7 +153,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function write(FileSystemContentTransfer $fileSystemContentTransfer);
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -162,7 +162,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return mixed
      */
-    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer): mixed;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -172,5 +172,5 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return void
      */
-    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
+    public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, mixed $stream): void;
 }

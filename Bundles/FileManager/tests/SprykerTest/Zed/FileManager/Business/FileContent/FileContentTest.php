@@ -49,8 +49,7 @@ class FileContentTest extends Unit
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->once())
-            ->method('write')
-            ->willReturn(null);
+            ->method('write');
 
         $fileContent = new FileContent(
             $fileSystemServiceMock,
@@ -71,8 +70,7 @@ class FileContentTest extends Unit
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->any())
-            ->method('delete')
-            ->willReturn(null);
+            ->method('delete');
 
         $fileContent = new FileContent(
             $fileSystemServiceMock,

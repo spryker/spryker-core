@@ -28,6 +28,16 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER = 'PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE = 'PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -35,6 +45,8 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addFileSystemService($container);
+        $container = $this->addFileManagerDataCollectionExpanderPlugins($container);
+        $container = $this->addFileManagerDataCollectionExpanderPreSavePlugins($container);
 
         return $container;
     }
@@ -83,5 +95,49 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileManagerDataCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER, function () {
+            return $this->getFileManagerDataCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileManagerDataCollectionExpanderPreSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE, function () {
+            return $this->getFileManagerDataCollectionExpanderPreSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface>
+     */
+    protected function getFileManagerDataCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface>
+     */
+    protected function getFileManagerDataCollectionExpanderPreSavePlugins(): array
+    {
+        return [];
     }
 }

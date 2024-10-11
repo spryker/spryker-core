@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business\File;
 
+use ArrayObject;
+use Generated\Shared\Transfer\FileManagerDataCollectionTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Business\FileContent\FileContentInterface;
@@ -25,13 +27,23 @@ class FileReader implements FileReaderInterface
     protected $fileContent;
 
     /**
+     * @var list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface>
+     */
+    protected array $fileManagerDataCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
      * @param \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface $fileContent
+     * @param list<\Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface> $fileManagerDataCollectionExpanderPlugins
      */
-    public function __construct(FileManagerRepositoryInterface $repository, FileContentInterface $fileContent)
-    {
+    public function __construct(
+        FileManagerRepositoryInterface $repository,
+        FileContentInterface $fileContent,
+        array $fileManagerDataCollectionExpanderPlugins
+    ) {
         $this->repository = $repository;
         $this->fileContent = $fileContent;
+        $this->fileManagerDataCollectionExpanderPlugins = $fileManagerDataCollectionExpanderPlugins;
     }
 
     /**
@@ -101,10 +113,15 @@ class FileReader implements FileReaderInterface
         $fileManagerDataTransfers = [];
 
         foreach ($fileTransfers as $fileTransfer) {
-            $fileManagerDataTransfers[] = $this->createResponseTransfer($fileTransfer);
+            $fileManagerDataTransfers[] = $this->createFileManagerDataTransfer($fileTransfer);
         }
 
-        return $fileManagerDataTransfers;
+        $fileManagerDataCollectionTransfer = new FileManagerDataCollectionTransfer();
+        $fileManagerDataCollectionTransfer->setFileManagerDataItems(new ArrayObject($fileManagerDataTransfers));
+
+        $fileManagerDataCollectionTransfer = $this->executeFileManagerDataCollectionExpanderPlugins($fileManagerDataCollectionTransfer);
+
+        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->getArrayCopy();
     }
 
     /**
@@ -115,18 +132,14 @@ class FileReader implements FileReaderInterface
      */
     protected function createResponseTransfer(FileTransfer $fileTransfer, ?int $idFileInfo = null)
     {
-        $fileManagerDataTransfer = new FileManagerDataTransfer();
-        $fileManagerDataTransfer->setFile($fileTransfer);
-        $fileInfoTransfer = $this->getRequestedFileInfo($fileTransfer, $idFileInfo);
-        $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
+        $fileManagerDataTransfer = $this->createFileManagerDataTransfer($fileTransfer, $idFileInfo);
 
-        if ($fileInfoTransfer !== null) {
-            $fileManagerDataTransfer->setContent(
-                $this->fileContent->read($fileInfoTransfer->getStorageFileNameOrFail()),
-            );
-        }
+        $fileManagerDataCollectionTransfer = new FileManagerDataCollectionTransfer();
+        $fileManagerDataCollectionTransfer->addFileManagerDataItem($fileManagerDataTransfer);
 
-        return $fileManagerDataTransfer;
+        $fileManagerDataCollectionTransfer = $this->executeFileManagerDataCollectionExpanderPlugins($fileManagerDataCollectionTransfer);
+
+        return $fileManagerDataCollectionTransfer->getFileManagerDataItems()->offsetGet(0);
     }
 
     /**
@@ -148,5 +161,42 @@ class FileReader implements FileReaderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataCollectionTransfer
+     */
+    protected function executeFileManagerDataCollectionExpanderPlugins(
+        FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer
+    ): FileManagerDataCollectionTransfer {
+        foreach ($this->fileManagerDataCollectionExpanderPlugins as $fileManagerDataCollectionExpanderPlugin) {
+            $fileManagerDataCollectionTransfer = $fileManagerDataCollectionExpanderPlugin->expand($fileManagerDataCollectionTransfer);
+        }
+
+        return $fileManagerDataCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param int|null $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    protected function createFileManagerDataTransfer(FileTransfer $fileTransfer, ?int $idFileInfo = null): FileManagerDataTransfer
+    {
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setFile($fileTransfer);
+        $fileInfoTransfer = $this->getRequestedFileInfo($fileTransfer, $idFileInfo);
+        $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
+
+        if ($fileInfoTransfer !== null) {
+            $fileManagerDataTransfer->setContent(
+                $this->fileContent->read($fileInfoTransfer->getStorageFileNameOrFail()),
+            );
+        }
+
+        return $fileManagerDataTransfer;
     }
 }

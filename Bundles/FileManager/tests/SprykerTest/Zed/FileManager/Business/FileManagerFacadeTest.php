@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileManagerDataCollectionTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
@@ -21,6 +22,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
@@ -36,6 +38,8 @@ use Spryker\Zed\FileManager\Business\FileManagerBusinessFactory;
 use Spryker\Zed\FileManager\Business\FileManagerFacade;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBridge;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
+use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface;
+use Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Zed\FileManager\Stub\FileManagerConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FileSystemConfigStub;
@@ -93,6 +97,14 @@ class FileManagerFacadeTest extends Unit
 
         $container[FileManagerDependencyProvider::SERVICE_FILE_SYSTEM] = function (Container $container) use ($fileSystemService) {
             return new FileManagerToFileSystemServiceBridge($fileSystemService);
+        };
+
+        $container[FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER_PRE_SAVE] = function (Container $container) {
+            return [$this->getFileManagerDataCollectionExpanderPreSavePluginMock()];
+        };
+
+        $container[FileManagerDependencyProvider::PLUGINS_FILE_MANAGER_DATA_COLLECTION_EXPANDER] = function (Container $container) {
+            return [$this->getFileManagerDataCollectionExpanderPluginMock()];
         };
 
         $config = new FileManagerConfigStub();
@@ -203,24 +215,13 @@ class FileManagerFacadeTest extends Unit
      */
     public function testSave(): void
     {
-        $fileInfo = new FileInfoTransfer();
-        $fileInfo->setVersionName('v10');
-        $fileInfo->setVersion(10);
-        $fileInfo->setSize(17);
-        $fileInfo->setStorageFileName('new_customer.txt');
-        $fileInfo->setType('text');
-        $fileInfo->setExtension('txt');
+        // Arrange
+        $fileManagerDataTransfer = $this->createFileManagerDataTransfer();
 
-        $file = new FileTransfer();
-        $file->setFileContent('new customer file');
-        $file->setFileName('new%customer.txt');
-
-        $fileManagerDataTransfer = new FileManagerDataTransfer();
-        $fileManagerDataTransfer->setContent('new version of the file');
-        $fileManagerDataTransfer->setFile($file);
-        $fileManagerDataTransfer->setFileInfo($fileInfo);
-
+        // Act
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
+
+        // Assert
         $file = SpyFileQuery::create()->findOneByFileName('newcustomer.txt');
 
         $this->assertEquals($this->tester->getIdFile() + 1, $fileManagerDataTransfer->getFile()->getIdFile());
@@ -471,5 +472,68 @@ class FileManagerFacadeTest extends Unit
     protected function hasExtensionsField(): bool
     {
         return property_exists(SpyMimeType::class, 'extensions');
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPreSavePluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getFileManagerDataCollectionExpanderPreSavePluginMock(): FileManagerDataCollectionExpanderPreSavePluginInterface|MockObject
+    {
+        $fileManagerDataCollectionExpanderPreSavePluginMock = $this
+            ->getMockBuilder(FileManagerDataCollectionExpanderPreSavePluginInterface::class)
+            ->getMock();
+
+        $fileManagerDataCollectionExpanderPreSavePluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturnCallback(function (FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer) {
+                return $fileManagerDataCollectionTransfer;
+            });
+
+        return $fileManagerDataCollectionExpanderPreSavePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerExtension\Dependency\Plugin\FileManagerDataCollectionExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getFileManagerDataCollectionExpanderPluginMock(): FileManagerDataCollectionExpanderPluginInterface|MockObject
+    {
+        $fileManagerDataCollectionExpanderPluginMock = $this
+            ->getMockBuilder(FileManagerDataCollectionExpanderPluginInterface::class)
+            ->getMock();
+
+        $fileManagerDataCollectionExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand')
+            ->willReturnCallback(function (FileManagerDataCollectionTransfer $fileManagerDataCollectionTransfer) {
+                return $fileManagerDataCollectionTransfer;
+            });
+
+        return $fileManagerDataCollectionExpanderPluginMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function createFileManagerDataTransfer(): FileManagerDataTransfer
+    {
+        $fileInfo = new FileInfoTransfer();
+        $fileInfo->setVersionName('v10');
+        $fileInfo->setVersion(10);
+        $fileInfo->setSize(17);
+        $fileInfo->setStorageFileName('new_customer.txt');
+        $fileInfo->setType('text');
+        $fileInfo->setExtension('txt');
+
+        $file = new FileTransfer();
+        $file->setFileContent('new customer file');
+        $file->setFileName('new%customer.txt');
+
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setContent('new version of the file');
+        $fileManagerDataTransfer->setFile($file);
+        $fileManagerDataTransfer->setFileInfo($fileInfo);
+
+        return $fileManagerDataTransfer;
     }
 }

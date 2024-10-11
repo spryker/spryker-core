@@ -19,7 +19,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return string
      */
-    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function read(FileSystemQueryTransfer $fileSystemQueryTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
@@ -28,7 +28,7 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return mixed
      */
-    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
+    public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer): mixed;
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
@@ -37,5 +37,5 @@ interface FileManagerToFileSystemServiceInterface
      *
      * @return string
      */
-    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer): string;
 }
