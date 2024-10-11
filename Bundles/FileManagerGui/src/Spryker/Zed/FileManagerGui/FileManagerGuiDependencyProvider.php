@@ -52,6 +52,11 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_FILE_INFO_VIEW_TABLE_ACTIONS_EXPANDER = 'PLUGINS_FILE_INFO_VIEW_TABLE_ACTIONS_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -64,6 +69,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addQueries($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addTableActionsExpanderPlugins($container);
 
         return $container;
     }
@@ -170,5 +176,27 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTableActionsExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FILE_INFO_VIEW_TABLE_ACTIONS_EXPANDER, function () {
+            return $this->getFileInfoViewTableActionsExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\FileManagerGuiExtension\Dependency\Plugin\FileInfoViewTableActionsExpanderPluginInterface>
+     */
+    protected function getFileInfoViewTableActionsExpanderPlugins(): array
+    {
+        return [];
     }
 }

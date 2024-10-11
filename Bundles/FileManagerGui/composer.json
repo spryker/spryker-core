@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker/file-manager": "^2.3.0",
+        "spryker/file-manager-gui-extension": "^1.0.0",
         "spryker/file-system-extension": "^1.0.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",

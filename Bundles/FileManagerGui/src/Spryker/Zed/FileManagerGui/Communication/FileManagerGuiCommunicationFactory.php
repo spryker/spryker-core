@@ -69,6 +69,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return new FileInfoViewTable(
             $this->getFileInfoQuery(),
             $idFile,
+            $this->getTableActionsExpanderPlugins(),
         );
     }
 
@@ -263,5 +264,13 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getMimeTypeQuery()
     {
         return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PROPEL_QUERY_MIME_TYPE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\FileManagerGuiExtension\Dependency\Plugin\FileInfoViewTableActionsExpanderPluginInterface>
+     */
+    protected function getTableActionsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PLUGINS_FILE_INFO_VIEW_TABLE_ACTIONS_EXPANDER);
     }
 }

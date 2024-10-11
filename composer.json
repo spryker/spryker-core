@@ -352,6 +352,7 @@
         "spryker/file-manager-data-import": "*",
         "spryker/file-manager-extension": "*",
         "spryker/file-manager-gui": "*",
+        "spryker/file-manager-gui-extension": "*",
         "spryker/file-manager-storage": "*",
         "spryker/file-system": "*",
         "spryker/file-system-extension": "*",
