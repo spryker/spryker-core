@@ -38,15 +38,34 @@ class StoreExpander implements StoreExpanderInterface
         }
 
         $localeNamesGroupedByIdStore = $this->localeRepository->getLocaleNamesGroupedByIdStore($storeIds);
+        $indexedLocaleNamesGroupedByIdStore = $this->indexLocaleNamesByShortName($localeNamesGroupedByIdStore);
 
         $defaultLocaleNamesIndexedByIdStore = $this->localeRepository->getDefaultLocaleNamesIndexedByIdStore($storeIds);
 
         foreach ($storeTransfers as $storeTransfer) {
             $storeTransfer
                 ->setDefaultLocaleIsoCode($defaultLocaleNamesIndexedByIdStore[$storeTransfer->getIdStoreOrFail()])
-                ->setAvailableLocaleIsoCodes($localeNamesGroupedByIdStore[$storeTransfer->getIdStoreOrFail()] ?? []);
+                ->setAvailableLocaleIsoCodes($indexedLocaleNamesGroupedByIdStore[$storeTransfer->getIdStoreOrFail()] ?? []);
         }
 
         return $storeTransfers;
+    }
+
+    /**
+     * @param array<int, array<int, string>> $localeNamesGroupedByIdStore
+     *
+     * @return array<int, array<string, string>>
+     */
+    protected function indexLocaleNamesByShortName(array $localeNamesGroupedByIdStore): array
+    {
+        $indexedLocaleNamesGroupedByIdStore = [];
+        foreach ($localeNamesGroupedByIdStore as $idStore => $localeNames) {
+            foreach ($localeNames as $localeName) {
+                [$locale, $region] = explode('_', $localeName);
+                $indexedLocaleNamesGroupedByIdStore[$idStore][$locale] = $localeName;
+            }
+        }
+
+        return $indexedLocaleNamesGroupedByIdStore;
     }
 }
