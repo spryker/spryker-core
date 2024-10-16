@@ -61,11 +61,11 @@ class RulesController extends AbstractController
     public function actionChoicesAction(Request $request): JsonResponse
     {
         $bundle = (string)$request->query->get(static::BUNDLE_FIELD);
-        if ($bundle === static::ROOT_ACCESS) {
+        $controller = (string)$request->query->get(static::CONTROLLER_FIELD);
+
+        if ($bundle === static::ROOT_ACCESS && $controller !== static::ROOT_ACCESS) {
             return $this->jsonResponse(['error' => 'Please select a bundle first.'], 400);
         }
-
-        $controller = (string)$request->query->get(static::CONTROLLER_FIELD);
 
         if ($controller === static::ROOT_ACCESS) {
             return $this->jsonResponse([static::ROOT_ACCESS => static::ROOT_ACCESS]);
