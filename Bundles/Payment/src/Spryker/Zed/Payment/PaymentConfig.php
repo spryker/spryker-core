@@ -28,6 +28,7 @@ use Generated\Shared\Transfer\PaymentReservationCanceledTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Payment\PaymentConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Payment\Dependency\PaymentStateMachineEvents;
@@ -266,5 +267,15 @@ class PaymentConfig extends AbstractBundleConfig
     public function getTenantIdentifier(): string
     {
         return $this->get(PaymentConstants::TENANT_IDENTIFIER, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugEnabled(): bool
+    {
+        return $this->get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
     }
 }

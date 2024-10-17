@@ -25,6 +25,8 @@ class PaymentClient extends AbstractClient implements PaymentClientInterface
      *
      * @api
      *
+     * @deprecated The \Spryker\Zed\Payment\Business\ForeignPayment\ForeignPaymentInterface::initializePayment makes direct use of the KernelApp::makeRequest() method.
+     *
      * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer

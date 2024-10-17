@@ -108,11 +108,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const CLIENT_PAYMENT = 'CLIENT_PAYMENT';
-
-    /**
-     * @var string
-     */
     public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
 
     /**
@@ -133,7 +128,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutPlugins($container);
         $container = $this->addPaymentHydrationPlugins($container);
         $container = $this->addPaymentService($container);
-        $container = $this->addPaymentClient($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addKernelAppFacade($container);
         $container = $this->addUtilTextService($container);
@@ -198,20 +192,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_KERNEL_APP, function (Container $container) {
             return new PaymentToKernelAppFacadeBridge($container->getLocator()->kernelApp()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPaymentClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_PAYMENT, function (Container $container) {
-            return $container->getLocator()->payment()->client();
         });
 
         return $container;

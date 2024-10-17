@@ -90,16 +90,18 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
 
         $responseData = $this->utilEncodingService->decodeJson($response->getBody()->getContents(), true);
         $paymentAuthorizeResponseTransfer = (new PaymentAuthorizeResponseTransfer())->fromArray($responseData, true);
-        $this->getLogger()->error(
-            static::MESSAGE_ERROR_LOG_PAYMENT_AUTHORIZATION,
-            [
-                'payment_request' => $paymentAuthorizeRequestTransfer->toArray(),
-                'response' => $paymentAuthorizeResponseTransfer->toArray(),
-            ],
-        );
 
-        if ($paymentAuthorizeResponseTransfer->getIsSuccessful() === false && !$this->config->isDebugEnabled()) {
-            $paymentAuthorizeResponseTransfer->setMessage(static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION);
+        if ($paymentAuthorizeResponseTransfer->getIsSuccessful() === false) {
+            $this->getLogger()->error(
+                static::MESSAGE_ERROR_LOG_PAYMENT_AUTHORIZATION,
+                [
+                    'payment_request' => $paymentAuthorizeRequestTransfer->toArray(),
+                    'response' => $paymentAuthorizeResponseTransfer->toArray(),
+                ],
+            );
+            if (!$this->config->isDebugEnabled()) {
+                $paymentAuthorizeResponseTransfer->setMessage(static::MESSAGE_ERROR_PAYMENT_AUTHORIZATION);
+            }
         }
 
         return $paymentAuthorizeResponseTransfer;

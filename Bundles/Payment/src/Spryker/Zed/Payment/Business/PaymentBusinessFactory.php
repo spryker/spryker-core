@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Payment\Business;
 
-use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Service\Payment\PaymentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
@@ -99,14 +98,6 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
         );
-    }
-
-    /**
-     * @return \Spryker\Client\Payment\PaymentClientInterface
-     */
-    public function getPaymentClient(): PaymentClientInterface
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::CLIENT_PAYMENT);
     }
 
     /**
@@ -530,7 +521,6 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getKernelAppFacade(),
             $this->getRepository(),
-            $this->getPaymentClient(),
             $this->getConfig(),
             $this->getPaymentService(),
             $this->getUtilEncodingService(),

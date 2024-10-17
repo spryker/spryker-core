@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payment\Business\ForeignPayment;
 
 use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -18,9 +19,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Service\Payment\PaymentServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Payment\Business\Exception\PreOrderPaymentException;
 use Spryker\Zed\Payment\Business\Mapper\QuoteDataMapperInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeInterface;
@@ -33,10 +34,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ForeignPayment implements ForeignPaymentInterface
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
-    protected const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
+    protected const ERROR_MESSAGE_PAYMENT_AUTHORIZATION = 'Payment provider is currently unavailable, please try again later.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_PAYMENT_FAILED = 'payment failed';
 
     /**
      * @var \Spryker\Zed\Payment\Business\Mapper\QuoteDataMapperInterface
@@ -59,11 +67,6 @@ class ForeignPayment implements ForeignPaymentInterface
     protected PaymentRepositoryInterface $paymentRepository;
 
     /**
-     * @var \Spryker\Client\Payment\PaymentClientInterface
-     */
-    protected PaymentClientInterface $paymentClient;
-
-    /**
      * @var \Spryker\Zed\Payment\PaymentConfig
      */
     protected PaymentConfig $paymentConfig;
@@ -83,7 +86,6 @@ class ForeignPayment implements ForeignPaymentInterface
      * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToKernelAppFacadeInterface $kernelAppFacade
      * @param \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface $paymentRepository
-     * @param \Spryker\Client\Payment\PaymentClientInterface $paymentClient
      * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
      * @param \Spryker\Service\Payment\PaymentServiceInterface $paymentService
      * @param \Spryker\Zed\Payment\Dependency\Service\PaymentToUtilEncodingServiceInterface $utilEncodingService
@@ -93,7 +95,6 @@ class ForeignPayment implements ForeignPaymentInterface
         PaymentToLocaleFacadeInterface $localeFacade,
         PaymentToKernelAppFacadeInterface $kernelAppFacade,
         PaymentRepositoryInterface $paymentRepository,
-        PaymentClientInterface $paymentClient,
         PaymentConfig $paymentConfig,
         PaymentServiceInterface $paymentService,
         PaymentToUtilEncodingServiceInterface $utilEncodingService
@@ -102,7 +103,6 @@ class ForeignPayment implements ForeignPaymentInterface
         $this->localeFacade = $localeFacade;
         $this->kernelAppFacade = $kernelAppFacade;
         $this->paymentRepository = $paymentRepository;
-        $this->paymentClient = $paymentClient;
         $this->paymentConfig = $paymentConfig;
         $this->paymentService = $paymentService;
         $this->utilEncodingService = $utilEncodingService;
@@ -173,18 +173,26 @@ class ForeignPayment implements ForeignPaymentInterface
         $decodedResponseBody = $this->utilEncodingService->decodeJson($acpHttpResponseTransfer->getContentOrFail(), true);
 
         if ($acpHttpResponseTransfer->getHttpStatusCode() !== Response::HTTP_OK || json_last_error() !== JSON_ERROR_NONE) {
-            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
-                ->setErrorCode(static::ERROR_CODE_PAYMENT_FAILED)
-                ->setMessage($acpHttpResponseTransfer->getContent());
-
-            $checkoutResponseTransfer->setIsSuccess(false)
-                ->addError($checkoutErrorTransfer);
+            $this->logAcpHttpResponseError($acpHttpRequestTransfer, $acpHttpResponseTransfer);
+            $checkoutResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($this->createCheckoutErrorTransfer($acpHttpRequestTransfer, $acpHttpResponseTransfer));
 
             return;
         }
 
         $paymentAuthorizeResponseTransfer = new PaymentAuthorizeResponseTransfer();
         $paymentAuthorizeResponseTransfer->fromArray((array)$decodedResponseBody, true);
+
+        if (!$paymentAuthorizeResponseTransfer->getIsSuccessful()) {
+            $this->logAcpHttpResponseError($acpHttpRequestTransfer, $acpHttpResponseTransfer);
+
+            $checkoutResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($this->createCheckoutErrorTransfer($acpHttpRequestTransfer, $acpHttpResponseTransfer));
+
+            return;
+        }
 
         if ($this->paymentConfig->getStoreFrontPaymentPage() === '') {
             $checkoutResponseTransfer
@@ -397,6 +405,40 @@ class ForeignPayment implements ForeignPaymentInterface
         }
 
         return $cancelPreOrderPaymentResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createCheckoutErrorTransfer(
+        AcpHttpRequestTransfer $acpHttpRequestTransfer,
+        AcpHttpResponseTransfer $acpHttpResponseTransfer
+    ): CheckoutErrorTransfer {
+        return (new CheckoutErrorTransfer())
+            ->setErrorCode(static::ERROR_MESSAGE_PAYMENT_FAILED)
+            ->setMessage($this->paymentConfig->isDebugEnabled() ? $acpHttpResponseTransfer->getContent() : static::ERROR_MESSAGE_PAYMENT_AUTHORIZATION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
+     *
+     * @return void
+     */
+    protected function logAcpHttpResponseError(
+        AcpHttpRequestTransfer $acpHttpRequestTransfer,
+        AcpHttpResponseTransfer $acpHttpResponseTransfer
+    ): void {
+        $this->getLogger()->error(
+            static::ERROR_MESSAGE_PAYMENT_FAILED,
+            [
+                'payment_request' => $acpHttpRequestTransfer->toArray(),
+                'response' => $acpHttpResponseTransfer->getContent(),
+            ],
+        );
     }
 
     /**
