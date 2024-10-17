@@ -12,10 +12,12 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToLocaleFacadeInterface;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\LocaleMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelLocalizedAttributesMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelMapper;
 use Spryker\Zed\ProductLabel\Persistence\Mapper\ProductLabelStoreRelationMapper;
+use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
@@ -90,5 +92,13 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     public function createLocaleMapper(): LocaleMapper
     {
         return new LocaleMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductLabelToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_LOCALE);
     }
 }

@@ -69,4 +69,9 @@ interface ProductLabelEntityManagerInterface
      * @return void
      */
     public function createProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
+
+    /**
+     * @return void
+     */
+    public function createMissingLocalizedAttributes(): void;
 }

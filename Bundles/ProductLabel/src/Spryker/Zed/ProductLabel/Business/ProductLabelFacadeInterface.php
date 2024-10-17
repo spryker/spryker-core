@@ -296,4 +296,14 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function triggerProductAbstractUpdateEventsByProductLabelEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Persists missing localized attributes for product labels to database if Dynamic Store is enabled.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createMissingLocalizedAttributes(): void;
 }

@@ -342,4 +342,16 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     {
         $this->getFactory()->createProductEventTrigger()->triggerProductAbstractUpdateEvents($eventEntityTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createMissingLocalizedAttributes(): void
+    {
+        $this->getFactory()->createLocalizedAttributesCreator()->createMissingLocalizedAttributes();
+    }
 }

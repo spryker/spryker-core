@@ -18,6 +18,7 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
@@ -34,6 +35,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getConfig(),
             $this->getProductLabelFacade(),
             $this->getLocaleFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -93,5 +95,13 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     public function getLocaleFacade(): ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductAlternativeProductLabelConnectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_STORE);
     }
 }

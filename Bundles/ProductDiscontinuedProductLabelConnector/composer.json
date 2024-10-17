@@ -11,7 +11,8 @@
         "spryker/product-discontinued": "^1.0.0",
         "spryker/product-discontinued-extension": "^1.2.0",
         "spryker/product-label": "^2.5.0 || ^3.0.0",
-        "spryker/propel-orm": "^1.0.0"
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/store": "^1.19.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

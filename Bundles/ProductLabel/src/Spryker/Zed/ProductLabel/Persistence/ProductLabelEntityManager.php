@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStore;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\ProductLabel\Persistence\Exception\MissingProductLabelException;
 
@@ -18,6 +21,21 @@ use Spryker\Zed\ProductLabel\Persistence\Exception\MissingProductLabelException;
  */
 class ProductLabelEntityManager extends AbstractEntityManager implements ProductLabelEntityManagerInterface
 {
+    /**
+     * @var string
+     */
+    protected const KEY_NAME = 'name';
+
+    /**
+     * @var string
+     */
+    protected const KEY_LOCALES = 'locales';
+
+    /**
+     * @var string
+     */
+    protected const COL_NAME_ALIAS = 'default_name';
+
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
@@ -174,5 +192,85 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
                 ->setFkProductLabel($idProductLabel)
                 ->save();
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function createMissingLocalizedAttributes(): void
+    {
+        $existingLocalizedAttributes = $this->getFactory()->createLocalizedAttributesQuery()
+            ->rightJoinWithSpyProductLabel()
+            ->withColumn(SpyProductLabelTableMap::COL_NAME, static::COL_NAME_ALIAS)
+            ->find();
+
+        $existingLocalizedAttributesIndexedByFkProductLabel = $this->getExistingLocalizedAttributesIndexedByFkProductLabel($existingLocalizedAttributes);
+        $missingLocalizedAttributesIndexedByFkProductLabel = $this->getMissingLocalizedAttributesIndexedByFkProductLabel($existingLocalizedAttributesIndexedByFkProductLabel);
+
+        foreach ($missingLocalizedAttributesIndexedByFkProductLabel as $fkProductLabel => $missingLocales) {
+            $this->createMissingLocalizedAttributesForProductLabel(
+                $fkProductLabel,
+                $missingLocales,
+                $existingLocalizedAttributesIndexedByFkProductLabel[$fkProductLabel][static::KEY_NAME],
+            );
+        }
+    }
+
+    /**
+     * @param int $fkProductLabel
+     * @param array<int> $missingLocales
+     * @param string $name
+     *
+     * @return void
+     */
+    protected function createMissingLocalizedAttributesForProductLabel(int $fkProductLabel, array $missingLocales, string $name): void
+    {
+        foreach ($missingLocales as $fkLocale) {
+            $productLabelLocalizedAttributesEntity = (new SpyProductLabelLocalizedAttributes())
+                ->setFkProductLabel($fkProductLabel)
+                ->setFkLocale($fkLocale)
+                ->setName($name)
+                ->save();
+        }
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes> $existingLocalizedAttributeslizedAttributes
+     *
+     * @return array<int, array<mixed>>
+     */
+    protected function getExistingLocalizedAttributesIndexedByFkProductLabel(Collection $existingLocalizedAttributeslizedAttributes): array
+    {
+        $existingLocalizedAttributesIndexedByFkProductLabel = [];
+
+        foreach ($existingLocalizedAttributeslizedAttributes as $localizedAttributesEntity) {
+            $existingLocalizedAttributesIndexedByFkProductLabel[$localizedAttributesEntity->getFkProductLabel()][static::KEY_NAME] = $localizedAttributesEntity->getVirtualColumn(static::COL_NAME_ALIAS);
+            $existingLocalizedAttributesIndexedByFkProductLabel[$localizedAttributesEntity->getFkProductLabel()][static::KEY_LOCALES][$localizedAttributesEntity->getFkLocale()] = true;
+        }
+
+        return $existingLocalizedAttributesIndexedByFkProductLabel;
+    }
+
+    /**
+     * @param array<int, array<mixed>> $existingLocalizedAttributesIndexedByFkProductLabel
+     *
+     * @return array<int, array<int>>
+     */
+    protected function getMissingLocalizedAttributesIndexedByFkProductLabel(array $existingLocalizedAttributesIndexedByFkProductLabel): array
+    {
+        $localeIds = array_keys($this->getFactory()->getLocaleFacade()->getAvailableLocales());
+
+        $missingLocalizedAttributesIndexedByFkProductLabel = [];
+        foreach ($existingLocalizedAttributesIndexedByFkProductLabel as $fkProductLabel => $locales) {
+            $missingLocales = array_diff($localeIds, array_keys($locales[static::KEY_LOCALES]));
+
+            if ($missingLocales === []) {
+                continue;
+            }
+
+            $missingLocalizedAttributesIndexedByFkProductLabel[$fkProductLabel] = $missingLocales;
+        }
+
+        return $missingLocalizedAttributesIndexedByFkProductLabel;
     }
 }

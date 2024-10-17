@@ -13,6 +13,7 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
@@ -40,6 +41,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -51,6 +57,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -113,6 +120,22 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
             );
         });
 

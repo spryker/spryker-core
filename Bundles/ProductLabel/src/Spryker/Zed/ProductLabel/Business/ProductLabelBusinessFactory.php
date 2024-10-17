@@ -17,6 +17,8 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\Creator\LocalizedAttributesCreator;
+use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\Creator\LocalizedAttributesCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
@@ -30,6 +32,7 @@ use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRel
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManager;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManager;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToStoreFacadeInterface;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
@@ -223,5 +226,24 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function getEventFacade(): ProductLabelToEventInterface
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductLabelToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\Creator\LocalizedAttributesCreatorInterface
+     */
+    public function createLocalizedAttributesCreator(): LocalizedAttributesCreatorInterface
+    {
+        return new LocalizedAttributesCreator(
+            $this->getStoreFacade(),
+            $this->getEntityManager(),
+        );
     }
 }

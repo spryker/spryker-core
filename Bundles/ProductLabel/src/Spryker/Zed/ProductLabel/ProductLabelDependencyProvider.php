@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductLabel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventBridge;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToLocaleFacadeBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductBridge;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToStoreFacadeBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 
 /**
@@ -36,6 +38,16 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS = 'PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS';
 
     /**
@@ -48,8 +60,23 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addStoreFacade($container);
 
         $container = $this->addProductLabelRelationUpdaterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -91,6 +118,38 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ProductLabelToEventBridge($container->getLocator()->event()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new ProductLabelToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductLabelToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

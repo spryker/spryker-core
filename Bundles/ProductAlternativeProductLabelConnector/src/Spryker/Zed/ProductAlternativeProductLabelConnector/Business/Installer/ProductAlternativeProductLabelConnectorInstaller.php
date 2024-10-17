@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer;
 
-use Generated\Shared\Transfer\LocaleConditionsTransfer;
-use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAlternativeProductLabelConnectorInstaller implements ProductAlternativeProductLabelConnectorInstallerInterface
@@ -36,18 +35,26 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeInterface
+     */
+    protected ProductAlternativeProductLabelConnectorToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductAlternativeProductLabelConnectorConfig $config,
         ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
-        ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
+        ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade,
+        ProductAlternativeProductLabelConnectorToStoreFacadeInterface $storeFacade
     ) {
         $this->config = $config;
         $this->productLabelFacade = $productLabelFacade;
         $this->localeFacade = $localeFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -99,9 +106,11 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
             ->setIsDynamic(true)
             ->setIsPublished(true);
 
-        $localeCriteriaTransfer = $this->getAllActiveLocalesCriteria();
+        if ($this->storeFacade->isDynamicStoreEnabled() === true) {
+            return $productLabelTransfer;
+        }
 
-        foreach ($this->localeFacade->getLocaleCollection($localeCriteriaTransfer) as $localeTransfer) {
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $localizedAttributesTransfer = new ProductLabelLocalizedAttributesTransfer();
             $localizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
             $localizedAttributesTransfer->setFkProductLabel($productLabelTransfer->getIdProductLabel());
@@ -112,16 +121,5 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         }
 
         return $productLabelTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleCriteriaTransfer
-     */
-    protected function getAllActiveLocalesCriteria(): LocaleCriteriaTransfer
-    {
-        $localeConditions = (new LocaleConditionsTransfer())->setIsActive(true);
-
-        return (new LocaleCriteriaTransfer())
-            ->setLocaleConditions($localeConditions);
     }
 }
