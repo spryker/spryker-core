@@ -7,9 +7,24 @@ function select2combobox(selector) {
         var select2InitOptions = {};
         var $selectElement = $(element);
         var autocompleteUrl = $selectElement.data('autocomplete-url');
+        var preloadUrl = $selectElement.data('dependent-preload-url');
+        var disablePlaceholder = $selectElement.data('disable-placeholder');
+        var clearInitial = $selectElement.data('clear-initial');
         var minimumInputLengthValue = Number($selectElement.data('minimum-input-length'));
-        var parentFieldSelector = $selectElement.data('depends-on-field');
-        var $parentField = $(parentFieldSelector);
+        var parentFieldSelectors = $selectElement.data('depends-on-field')?.split(',');
+        var $parentFields = parentFieldSelectors?.map((parentFieldSelector) => $(parentFieldSelector));
+        var $placeholderOption = disablePlaceholder ? $selectElement.find('option:first') : null;
+        var cleanSelect = () => $selectElement.empty();
+        var insertPlaceholderOption = () => ($placeholderOption ? $selectElement.append($placeholderOption) : null);
+
+        if (disablePlaceholder) {
+            $placeholderOption?.attr('disabled', 'disabled');
+        }
+
+        if (clearInitial) {
+            cleanSelect();
+            insertPlaceholderOption();
+        }
 
         if (autocompleteUrl) {
             select2InitOptions = {
@@ -20,9 +35,11 @@ function select2combobox(selector) {
                     cache: true,
                     data: function (params) {
                         params.page = params.page || 1;
-                        if ($parentField) {
-                            var autocompleteKey = $selectElement.data('dependent-autocomplete-key');
-                            params[autocompleteKey] = $parentField.val();
+                        for (const $parentField of $parentFields) {
+                            if ($parentField) {
+                                var autocompleteKey = $selectElement.data('dependent-autocomplete-key');
+                                params[autocompleteKey] = $parentField.val();
+                            }
                         }
                         return params;
                     },
@@ -44,7 +61,7 @@ function select2combobox(selector) {
             });
         }
 
-        if ($parentField) {
+        if ($parentFields) {
             var disableSelectElementWhenParentEmpty = $selectElement[0].hasAttribute(
                 'data-dependent-disable-when-empty',
             );
@@ -61,9 +78,40 @@ function select2combobox(selector) {
             }
 
             if (resetSelectElementOnParentChange) {
-                $parentField.on('change', function () {
-                    $selectElement.val(null).trigger('change');
-                });
+                for (const $parentField of $parentFields) {
+                    $parentField.on('change', function () {
+                        $selectElement.val(null).trigger('change');
+                    });
+                }
+            }
+
+            if (preloadUrl) {
+                for (const $parentField of $parentFields) {
+                    $parentField.on('change', function () {
+                        const query = new URLSearchParams();
+
+                        $parentFields.forEach(($parentField) =>
+                            query.append($parentField.data('dependent-name'), $parentField.val()),
+                        );
+
+                        $selectElement.prop('disabled', true);
+
+                        $.ajax({
+                            url: `${preloadUrl}${query}`,
+                        }).done(function (data) {
+                            $placeholderOption?.removeAttr('disabled');
+                            cleanSelect();
+                            insertPlaceholderOption();
+
+                            for (const [key, value] of Object.entries(data)) {
+                                $selectElement.append(new Option(key, value, false, false));
+                            }
+
+                            $selectElement.prop('disabled', false);
+                            $placeholderOption?.attr('disabled', 'disabled');
+                        });
+                    });
+                }
             }
         }
 

@@ -1,4 +1,12 @@
+/**
+ * @deprecated not used any more use `data-depends-on-field` attribute instead.
+ */
+
 $(document).ready(function () {
+    if ($('.js-select-dependable[data-depends-on-field=".js-select-dependable--bundle"]')) {
+        return;
+    }
+
     initializeDropdowns();
 
     $('.js-select-dependable.js-select-dependable--bundle').on('change', function (event) {

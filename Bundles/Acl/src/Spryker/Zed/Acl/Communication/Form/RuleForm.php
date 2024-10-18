@@ -129,6 +129,8 @@ class RuleForm extends AbstractType
                 new NotBlank(),
             ],
             'attr' => [
+                'data-disable-placeholder' => true,
+                'data-dependent-name' => 'bundle',
                 'class' => 'js-select-dependable js-select-dependable--bundle spryker-form-select2combobox',
             ],
         ]);
@@ -155,6 +157,11 @@ class RuleForm extends AbstractType
                 new NotBlank(),
             ],
             'attr' => [
+                'data-dependent-name' => 'controller',
+                'data-dependent-preload-url' => '/acl/rules/controller-choices?',
+                'data-disable-placeholder' => true,
+                'data-clear-initial' => true,
+                'data-depends-on-field' => '.js-select-dependable--bundle',
                 'class' => 'js-select-dependable js-select-dependable--controller spryker-form-select2combobox',
             ],
         ]);
@@ -181,6 +188,10 @@ class RuleForm extends AbstractType
             ],
             'placeholder' => 'Select an action',
             'attr' => [
+                'data-dependent-preload-url' => '/acl/rules/action-choices?',
+                'data-disable-placeholder' => true,
+                'data-clear-initial' => true,
+                'data-depends-on-field' => '.js-select-dependable--controller,.js-select-dependable--bundle',
                 'class' => 'js-select-dependable js-select-dependable--action spryker-form-select2combobox',
             ],
         ]);
