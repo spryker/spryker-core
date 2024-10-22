@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
+
+    <process name="ItemSupply">
+
+        <states>
+            <state name="delivered" display="oms.state.delivered"/>
+        </states>
+
+        <events>
+            <event name="deliver" manual="true"/>
+        </events>
+    </process>
+
+</statemachine>

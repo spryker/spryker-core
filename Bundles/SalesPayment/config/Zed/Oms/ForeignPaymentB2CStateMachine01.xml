@@ -77,6 +77,19 @@
                 <target>payment refund ready</target>
                 <event>refund</event>
             </transition>
+
+            <transition happy="true">
+                <source>delivered</source>
+                <target>closed</target>
+                <event>close</event>
+            </transition>
+
+            <transition>
+                <source>payment refunded</source>
+                <target>canceled</target>
+                <event>close</event>
+            </transition>
+
         </transitions>
 
         <events>
@@ -87,9 +100,9 @@
 
     <process name="PaymentAuthorization" file="Subprocess/PaymentAuthorization01.xml"/>
     <process name="PaymentCapture" file="Subprocess/PaymentCapture01.xml"/>
-    <process name="ItemSupply" file="Subprocess/ItemSupply01.xml"/>
+    <process name="ItemSupply" file="Subprocess/ItemSupplyNonMarketplace01.xml"/>
     <process name="ItemReturn" file="Subprocess/ItemReturn01.xml"/>
-    <process name="PaymentRefund" file="Subprocess/PaymentRefund01.xml"/>
+    <process name="PaymentRefund" file="Subprocess/PaymentRefundNonMarketplace01.xml"/>
     <process name="PaymentCancel" file="Subprocess/PaymentCancel01.xml"/>
     <process name="ItemClose" file="Subprocess/ItemClose01.xml"/>
 
