@@ -8,7 +8,7 @@
     display: none;
 }
 
-.more-history {
+.more-history:not(.btn) {
     color: #337ab7;
 }
 
