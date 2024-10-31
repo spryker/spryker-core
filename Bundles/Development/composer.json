@@ -54,6 +54,7 @@
         }
     },
     "bin": [
-        "bin/development"
+        "bin/development",
+        "bin/phpstorm-command-line-tools.sh"
     ]
 }

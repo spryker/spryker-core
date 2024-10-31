@@ -21,6 +21,7 @@
         "Bundles/Console/bin/console",
         "Bundles/Console/bin/yves",
         "Bundles/Console/bin/glue",
+        "Bundles/Development/bin/phpstorm-command-line-tools.sh",
         ".local-ci/bin/local-ci"
     ],
     "scripts": {
