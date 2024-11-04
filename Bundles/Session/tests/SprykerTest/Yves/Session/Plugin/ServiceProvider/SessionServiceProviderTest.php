@@ -107,7 +107,7 @@ class SessionServiceProviderTest extends Unit
         $sessionMock = $this->getMockBuilder(SessionInterface::class)->getMock();
         $dispatcherMock = $this->getMockBuilder(EventDispatcher::class)->getMock();
         $applicationMockBuilder = $this->getMockBuilder(Application::class);
-        $applicationMockBuilder->setMethods(['offsetGet']);
+        $applicationMockBuilder->onlyMethods(['offsetGet']);
         $valueMap = [
             ['session', $sessionMock],
             ['dispatcher', $dispatcherMock],
@@ -226,7 +226,7 @@ class SessionServiceProviderTest extends Unit
     protected function createSessionFactoryMock(): SessionFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionFactory::class)
-            ->setMethods([
+            ->onlyMethods([
                 'createSessionHandlerRedis',
                 'createSessionHandlerRedisLocking',
                 'createSessionHandlerFile',
@@ -239,7 +239,7 @@ class SessionServiceProviderTest extends Unit
             $this->createMock(SessionHandlerRedis::class),
         );
         $sessionFactoryMock->method('createSessionHandlerRedisLocking')->willReturn(
-            $this->createMock(SessionHandlerRedisLocking::class),
+            $this->createMock(TestSessionHandlerRedisLocking::class),
         );
         $sessionFactoryMock->method('createSessionHandlerFile')->willReturn(
             $this->createMock(SessionHandlerFile::class),

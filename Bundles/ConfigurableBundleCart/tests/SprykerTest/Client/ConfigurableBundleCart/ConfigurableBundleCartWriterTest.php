@@ -467,7 +467,7 @@ class ConfigurableBundleCartWriterTest extends Unit
                 $this->createQuoteItemReaderMock(),
                 $this->createQuoteItemUpdaterMock(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -477,7 +477,7 @@ class ConfigurableBundleCartWriterTest extends Unit
     protected function createCartClientMock(): ConfigurableBundleCartToCartClientBridge
     {
         return $this->getMockBuilder(ConfigurableBundleCartToCartClientBridge::class)
-            ->setMethods([
+            ->onlyMethods([
                 'removeFromCart',
                 'updateQuantity',
             ])
@@ -494,7 +494,7 @@ class ConfigurableBundleCartWriterTest extends Unit
             ->setConstructorArgs([
                 $this->createQuoteItemReaderMock(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -505,7 +505,7 @@ class ConfigurableBundleCartWriterTest extends Unit
     {
         return $this->getMockBuilder(QuoteItemReader::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 }

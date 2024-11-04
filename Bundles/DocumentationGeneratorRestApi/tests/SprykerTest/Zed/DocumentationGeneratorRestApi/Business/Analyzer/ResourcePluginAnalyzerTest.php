@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
@@ -24,7 +24,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
  */
 class ResourcePluginAnalyzerTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var array
@@ -53,7 +53,7 @@ class ResourcePluginAnalyzerTest extends Unit
     {
         parent::setUp();
 
-        $this->resourcePluginAnalyzer = (new DocumentationGeneratorRestApiTestFactory())->createResourcePluginAnalyzer();
+        $this->resourcePluginAnalyzer = (new DocumentationGeneratorRestApiTestFactory(''))->createResourcePluginAnalyzer();
     }
 
     /**

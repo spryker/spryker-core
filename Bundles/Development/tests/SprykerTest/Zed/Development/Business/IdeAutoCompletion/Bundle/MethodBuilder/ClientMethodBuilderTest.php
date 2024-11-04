@@ -77,7 +77,7 @@ class ClientMethodBuilderTest extends Unit
         $methodBuilderMock = $this
             ->getMockBuilder(ClientMethodBuilder::class)
             ->setConstructorArgs([$this->getNamespaceExtractorMock()])
-            ->setMethods(['findFileByName', 'isSearchDirectoryAccessible'])
+            ->onlyMethods(['findFileByName', 'isSearchDirectoryAccessible'])
             ->getMock();
 
         $methodBuilderMock

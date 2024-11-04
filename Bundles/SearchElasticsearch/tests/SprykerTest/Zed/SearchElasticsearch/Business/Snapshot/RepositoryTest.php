@@ -199,7 +199,8 @@ class RepositoryTest extends Unit
     {
         $elasticaSnapshotMock = $this->getMockBuilder(ElasticaSnapshot::class)
             ->setConstructorArgs([$this->tester->getFactory()->getElasticsearchClient()])
-            ->setMethods(['registerRepository', 'getRepository', 'isOk'])
+            ->onlyMethods(['registerRepository', 'getRepository'])
+            ->addMethods(['isOk'])
             ->getMock();
         $elasticaSnapshotMock->method('isOk')->willReturn(true);
 

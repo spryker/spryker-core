@@ -73,7 +73,7 @@ class SourcePriceSanitizerTest extends Unit
     {
         return $this->getMockBuilder(SourcePriceSanitizer::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 }

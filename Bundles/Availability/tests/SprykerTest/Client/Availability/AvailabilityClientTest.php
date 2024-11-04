@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Availability\AvailabilityClient;
 use Spryker\Client\Availability\AvailabilityClientInterface;
 use Spryker\Client\Availability\AvailabilityDependencyProvider;
+use Spryker\Client\Availability\AvailabilityFactory;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface;
 use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
@@ -290,7 +291,7 @@ class AvailabilityClientTest extends Unit
     protected function getAvailabilityClientWithMockFactory($factoryMock): AvailabilityClient
     {
         $availabilityClientMock = $this->getMockBuilder(AvailabilityClient::class)
-            ->setMethods(['getFactory'])
+            ->onlyMethods(['getFactory'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -304,12 +305,12 @@ class AvailabilityClientTest extends Unit
     /**
      * @param \Spryker\Client\Availability\Storage\AvailabilityStorage $availabilityStorageMock
      *
-     * @return \SprykerTest\Client\Availability\AvailabilityFactory
+     * @return \Spryker\Client\Availability\AvailabilityFactory
      */
     protected function getFactoryMock($availabilityStorageMock): AvailabilityFactory
     {
         $factoryMock = $this->getMockBuilder(AvailabilityFactory::class)
-            ->setMethods(['createCurrentLocaleAvailabilityStorage'])
+            ->onlyMethods(['createCurrentLocaleAvailabilityStorage'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -369,7 +370,7 @@ class AvailabilityClientTest extends Unit
     protected function getAvailabilityResourceKeyBuilderMock(): AvailabilityResourceKeyBuilder
     {
         $availabilityResourceKeyBuilderMock = $this->getMockBuilder(AvailabilityResourceKeyBuilder::class)
-            ->setMethods(['generateKey'])
+            ->onlyMethods(['generateKey'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -382,7 +383,7 @@ class AvailabilityClientTest extends Unit
     protected function getAvailabilityToStoreClientMock(): AvailabilityToStoreClientInterface
     {
         $availabilityToStoreClientMock = $this->getMockBuilder(AvailabilityToStoreClientInterface::class)
-            ->setMethods(['getCurrentStore'])
+            ->onlyMethods(['getCurrentStore'])
             ->disableOriginalConstructor()
             ->getMock();
 

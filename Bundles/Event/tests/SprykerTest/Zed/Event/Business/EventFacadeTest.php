@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Event\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
@@ -199,6 +200,8 @@ class EventFacadeTest extends Unit
         $eventCollection = $this->createEventListenerCollection();
         $eventBulkListenerStub = new TestEventBulkListenerPluginStub();
         $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventBulkListenerStub);
+        $message = $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock());
+
         $messages = [
             $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
             $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
@@ -270,8 +273,7 @@ class EventFacadeTest extends Unit
      */
     protected function createTransferObjectMock(): TransferInterface
     {
-        return $this->getMockBuilder(TransferInterface::class)
-            ->getMock();
+        return new EventEntityTransfer();
     }
 
     /**

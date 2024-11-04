@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ShoppingList\Business\ShoppingList;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -27,6 +26,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 
 /**
  * Auto-generated group annotations
@@ -41,7 +41,7 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
  */
 class ShoppingListTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string

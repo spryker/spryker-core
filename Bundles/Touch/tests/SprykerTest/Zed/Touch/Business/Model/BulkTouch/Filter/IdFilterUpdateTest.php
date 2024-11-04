@@ -46,7 +46,7 @@ class IdFilterUpdateTest extends Unit
         $this->touchQueryContainer = $this->getMockBuilder(TouchQueryContainerInterface::class)->getMock();
 
         $this->idFilterUpdate = $this->getMockBuilder(IdFilterUpdate::class)
-            ->setMethods(['getIdCollection'])
+            ->onlyMethods(['getIdCollection'])
             ->disableOriginalConstructor()
             ->getMock();
     }

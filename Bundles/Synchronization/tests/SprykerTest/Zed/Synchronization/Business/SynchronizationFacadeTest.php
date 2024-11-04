@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
@@ -378,14 +377,12 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     public function testExecuteResolvedPluginsBySources(): void
     {
         if (!$this->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
+            $this->markTestSkipped('Warning: not in suite environment');
         }
 
         $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
@@ -433,7 +430,7 @@ class SynchronizationFacadeTest extends Unit
     {
         return $this->getMockBuilder(SynchronizationToQueueClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'sendMessages',
             ])
             ->getMock();
@@ -492,7 +489,7 @@ class SynchronizationFacadeTest extends Unit
     {
         return $this->getMockBuilder(SynchronizationToStorageClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'set',
                 'get',
                 'delete',
@@ -509,7 +506,7 @@ class SynchronizationFacadeTest extends Unit
     {
         return $this->getMockBuilder(SynchronizationToSearchClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'write',
                 'writeBulk',
                 'read',
@@ -526,7 +523,7 @@ class SynchronizationFacadeTest extends Unit
     {
         return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'encodeJson',
                 'decodeJson',
             ])

@@ -222,7 +222,7 @@ class VoucherEngineTest extends Unit
         }
 
         $voucherEngineMock = $this->getMockBuilder(VoucherEngine::class)
-            ->setMethods(['createDiscountVoucherEntity'])
+            ->onlyMethods(['createDiscountVoucherEntity'])
             ->setConstructorArgs([
                 $discountConfigMock,
                 $discountQueryContainerMock,
@@ -299,11 +299,13 @@ class VoucherEngineTest extends Unit
     protected function createDiscountVoucherQueryMock(): SpyDiscountVoucherQuery
     {
         return $this->getMockBuilder(SpyDiscountVoucherQuery::class)
-            ->setMethods([
+            ->addMethods([
                 'orderByVoucherBatch',
+                'findOneByCode',
+            ])
+            ->onlyMethods([
                 'filterByFkDiscountVoucherPool',
                 'findOne',
-                'findOneByCode',
             ])
             ->getMock();
     }

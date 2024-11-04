@@ -81,7 +81,7 @@ class CmsBlockCollectorFacadeTest extends Unit
 
         $this->cmsBlockCollectorBusinessFactoryMock = $this
             ->getMockBuilder(CmsBlockCollectorBusinessFactory::class)
-            ->setMethods(
+            ->onlyMethods(
                 [
                     'getCollectorFacade',
                     'createStorageCmsBlockCollector',
@@ -102,7 +102,7 @@ class CmsBlockCollectorFacadeTest extends Unit
 
         $this->cmsBlockCollectorFacadeMock = $this
             ->getMockBuilder(CmsBlockCollectorFacade::class)
-            ->setMethods(
+            ->onlyMethods(
                 [
                     'getFactory',
                 ],

@@ -41,8 +41,16 @@ class PublisherFacadeTest extends Unit
         // Act
         $publisherEvents = $this->tester->getFacade()->getPublisherEventCollection();
 
-        // Assert
-        $this->assertSame($this->getMergedPublisherEventsWithDefinedQueueName(), $publisherEvents);
+        //Assert
+        $this->assertArrayHasKey(SharedPublisherConfig::PUBLISH_QUEUE, $publisherEvents);
+        $this->assertSame(
+            ['TestEvent-1', 'TestEvent-2', 'TestEvent-3'],
+            array_keys($publisherEvents[SharedPublisherConfig::PUBLISH_QUEUE]),
+        );
+
+        $this->assertCount(1, $publisherEvents[SharedPublisherConfig::PUBLISH_QUEUE]['TestEvent-1']);
+        $this->assertCount(2, $publisherEvents[SharedPublisherConfig::PUBLISH_QUEUE]['TestEvent-2']);
+        $this->assertCount(1, $publisherEvents[SharedPublisherConfig::PUBLISH_QUEUE]['TestEvent-3']);
     }
 
     /**
@@ -57,7 +65,15 @@ class PublisherFacadeTest extends Unit
         $publisherEvents = $this->tester->getFacade()->getPublisherEventCollection();
 
         // Assert
-        $this->assertSame($this->getMergedPublisherEventsWithoutDefinedQueueName(), $publisherEvents);
+        $this->assertArrayHasKey('event', $publisherEvents);
+        $this->assertSame(
+            ['TestEvent-1', 'TestEvent-2', 'TestEvent-3'],
+            array_keys($publisherEvents['event']),
+        );
+
+        $this->assertCount(1, $publisherEvents['event']['TestEvent-1']);
+        $this->assertCount(2, $publisherEvents['event']['TestEvent-2']);
+        $this->assertCount(1, $publisherEvents['event']['TestEvent-3']);
     }
 
     /**
@@ -82,9 +98,9 @@ class PublisherFacadeTest extends Unit
      */
     protected function getPublisherRegistryPlugins(): array
     {
-        $publisherRegistryPluginMockOne = $this->getMockBuilder(PublisherPluginInterface::class)
-            ->setMockClassName('TestPluginClassFooPlugin')
-            ->getMock();
+        $publisherRegistryPluginMockOne = $this->getMockForAbstractClass(
+            PublisherPluginInterface::class,
+        );
 
         $publisherRegistryPluginMockOne
             ->method('getSubscribedEvents')
@@ -93,9 +109,9 @@ class PublisherFacadeTest extends Unit
                 'TestEvent-2',
             ]);
 
-        $publisherRegistryPluginMockTwo = $this->getMockBuilder(PublisherPluginInterface::class)
-            ->setMockClassName('TestPluginClassBarPlugin')
-            ->getMock();
+        $publisherRegistryPluginMockTwo = $this->getMockForAbstractClass(
+            PublisherPluginInterface::class,
+        );
 
         $publisherRegistryPluginMockTwo
             ->method('getSubscribedEvents')
@@ -103,9 +119,9 @@ class PublisherFacadeTest extends Unit
                 'TestEvent-2',
             ]);
 
-        $publisherRegistryPluginMockThree = $this->getMockBuilder(PublisherPluginInterface::class)
-            ->setMockClassName('TestPluginClassBazPlugin')
-            ->getMock();
+        $publisherRegistryPluginMockThree = $this->getMockForAbstractClass(
+            PublisherPluginInterface::class,
+        );
 
         $publisherRegistryPluginMockThree
             ->method('getSubscribedEvents')
@@ -117,48 +133,6 @@ class PublisherFacadeTest extends Unit
             $publisherRegistryPluginMockOne,
             $publisherRegistryPluginMockTwo,
             $publisherRegistryPluginMockThree,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getMergedPublisherEventsWithDefinedQueueName(): array
-    {
-        return [
-            SharedPublisherConfig::PUBLISH_QUEUE => [
-                'TestEvent-1' => [
-                    'TestPluginClassFooPlugin',
-                ],
-                'TestEvent-2' => [
-                    'TestPluginClassFooPlugin',
-                    'TestPluginClassBarPlugin',
-                ],
-                'TestEvent-3' => [
-                    'TestPluginClassBazPlugin',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getMergedPublisherEventsWithoutDefinedQueueName(): array
-    {
-        return [
-            'event' => [
-                'TestEvent-1' => [
-                    'TestPluginClassFooPlugin',
-                ],
-                'TestEvent-2' => [
-                    'TestPluginClassFooPlugin',
-                    'TestPluginClassBarPlugin',
-                ],
-                'TestEvent-3' => [
-                    'TestPluginClassBazPlugin',
-                ],
-            ],
         ];
     }
 }

@@ -144,7 +144,7 @@ class DiscountTest extends Unit
                 $voucherValidatorMock,
                 $this->discountEntityMapperMock,
                 $this->storeFacadeMock,
-            ])->setMethods([
+            ])->onlyMethods([
                 'isDiscountApplicable',
                 'hydrateDiscountTransfer',
             ])->getMock();

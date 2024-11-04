@@ -58,7 +58,7 @@ class SpySalesOrderItemTest extends Unit
     protected function createMockedSalesOrderItemEntity(): SpySalesOrderItem
     {
         $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)
-            ->setMethods([
+            ->onlyMethods([
                 'createOmsOrderItemStateHistoryEntity',
                 'doSave',
             ])
@@ -76,7 +76,7 @@ class SpySalesOrderItemTest extends Unit
     protected function createMockedOmsOrderItemSateHistoryEntity(): SpyOmsOrderItemStateHistory
     {
         $mockedOmsOrderItemStateHistory = $this->getMockBuilder(SpyOmsOrderItemStateHistory::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
 
         $mockedOmsOrderItemStateHistory->method('save')

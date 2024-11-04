@@ -27,6 +27,17 @@ class CategoryCreateCest
      *
      * @return void
      */
+    public function _before(CategoryPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\CategoryGui\CategoryPresentationTester $i
+     *
+     * @return void
+     */
     public function testICanCreateCategory(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryCreatePage::URL);

@@ -91,7 +91,7 @@ class AbstractServiceFactoryTest extends Unit
      */
     protected function getFactoryMock(array $methods): ServiceFactory
     {
-        $factoryMock = $this->getMockBuilder(ServiceFactory::class)->setMethods($methods)->getMock();
+        $factoryMock = $this->getMockBuilder(ServiceFactory::class)->onlyMethods($methods)->getMock();
 
         return $factoryMock;
     }

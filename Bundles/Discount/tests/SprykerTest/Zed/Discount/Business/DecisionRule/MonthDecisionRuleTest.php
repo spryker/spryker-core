@@ -60,7 +60,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
     ): MonthDecisionRule {
         /** @var \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule|\PHPUnit\Framework\MockObject\MockObject $monthDecisionRule */
         $monthDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)
-            ->setMethods(['getCurrentDateTime'])
+            ->addMethods(['getCurrentDateTime'])
             ->setConstructorArgs([$comparatorMock])
             ->getMock();
         $monthDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);

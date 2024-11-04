@@ -67,7 +67,7 @@ class ProductOptionValueSaverTest extends MockProvider
     protected function createProductOptionValueEntityMock(): SpyProductOptionValue
     {
         return $this->getMockBuilder(SpyProductOptionValue::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 
@@ -85,7 +85,7 @@ class ProductOptionValueSaverTest extends MockProvider
                 $this->createTouchFacadeMock(),
                 $this->createTranslationSaverMock(),
             ])
-            ->setMethods(['createProductOptionValueEntity'])
+            ->onlyMethods(['createProductOptionValueEntity'])
             ->getMock();
     }
 }

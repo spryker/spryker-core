@@ -220,7 +220,7 @@ class QueueFacadeTest extends Unit
                 $queueBusinessFactory->createQueueConfigReader(),
                 $queueBusinessFactory->getQueueMessageCheckerPlugins(),
             ])
-            ->setMethods(['areQueuesEmpty', 'getPendingProcesses', 'executeOperation'])
+            ->onlyMethods(['areQueuesEmpty', 'getPendingProcesses', 'executeOperation'])
             ->getMock();
 
         $queueWorkerMock

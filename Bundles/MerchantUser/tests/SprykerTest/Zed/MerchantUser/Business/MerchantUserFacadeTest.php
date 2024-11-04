@@ -274,13 +274,13 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @dataProvider getMerchantUserPositiveScenarioDataProvider
      *
-     * @param array<string> $merchantUserCriteriaKeys
+     * @param array<string> $merchantUserCriteriaDataKeys
      * @param bool $isUserInCriteria
      *
      * @return void
      */
     public function testFindMerchantUserReturnsTransferWithCorrectCriteria(
-        array $merchantUserCriteriaKeys,
+        array $merchantUserCriteriaDataKeys,
         bool $isUserInCriteria
     ): void {
         // Arrange
@@ -298,7 +298,7 @@ class MerchantUserFacadeTest extends Unit
         ];
         $merchantUserCriteriaData = array_intersect_key(
             $merchantUserCriteriaData,
-            array_flip($merchantUserCriteriaKeys),
+            array_flip($merchantUserCriteriaDataKeys),
         );
 
         $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())

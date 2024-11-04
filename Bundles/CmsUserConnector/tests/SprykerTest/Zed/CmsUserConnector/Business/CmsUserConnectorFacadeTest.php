@@ -196,7 +196,7 @@ class CmsUserConnectorFacadeTest extends Unit
     {
         return $this->getMockBuilder(CmsUserConnectorToUserBridge::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'hasCurrentUser',
                 'getCurrentUser',
                 'getUserCollection',

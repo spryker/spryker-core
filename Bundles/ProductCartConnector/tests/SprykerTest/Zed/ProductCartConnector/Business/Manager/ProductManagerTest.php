@@ -158,7 +158,7 @@ class ProductManagerTest extends Unit
     private function getMockProductFacade(): ProductCartConnectorToProductInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
-            ->setMethods([
+            ->onlyMethods([
                 'getProductConcrete',
                 'getLocalizedProductConcreteName',
                 'hasProductAbstract',
@@ -180,7 +180,7 @@ class ProductManagerTest extends Unit
     private function getMockLocaleFacade(): ProductCartConnectorToLocaleInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToLocaleInterface::class)
-            ->setMethods(['getCurrentLocale'])
+            ->onlyMethods(['getCurrentLocale'])
             ->disableOriginalConstructor()
             ->getMock();
     }

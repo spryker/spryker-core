@@ -109,7 +109,7 @@ class SaveSalesOrderItemsTest extends Unit
     {
         $businessFactory = new SalesBusinessFactory();
 
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->onlyMethods(['determineProcessForOrderItem'])->getMock();
         $salesConfigMock->method('determineProcessForOrderItem')->willReturn(BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
 
         $businessFactory->setConfig($salesConfigMock);

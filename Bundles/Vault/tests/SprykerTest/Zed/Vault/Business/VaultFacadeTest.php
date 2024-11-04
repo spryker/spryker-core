@@ -204,7 +204,7 @@ class VaultFacadeTest extends Unit
     protected function createVaultSharedConfigMock(?string $encryptionKey): VaultSharedConfig
     {
         $vaultSharedConfigMock = $this->getMockBuilder(VaultSharedConfig::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
 
         $vaultSharedConfigMock->method('get')

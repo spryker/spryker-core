@@ -100,7 +100,7 @@ class MailTypeCollectionTest extends Unit
      */
     protected function getMailTypeMock(): MailTypePluginInterface
     {
-        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['getName', 'build'])->getMock();
+        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->onlyMethods(['getName', 'build'])->getMock();
         $mailTypeMock->method('getName')->willReturn(static::MAIL_TYPE_A);
 
         return $mailTypeMock;

@@ -97,7 +97,7 @@ class QuoteRequestAgentConverterTest extends Unit
                 $this->createQuoteRequestAgentToQuoteClientBridgeMock(),
                 $this->createQuoteRequestAgentStatusMock(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -116,7 +116,7 @@ class QuoteRequestAgentConverterTest extends Unit
     {
         $quoteRequestAgentStatusMock = $this->getMockBuilder(QuoteRequestAgentStatus::class)
             ->disableOriginalConstructor()
-            ->setMethods(['isQuoteRequestEditable'])
+            ->onlyMethods(['isQuoteRequestEditable'])
             ->getMock();
 
         $quoteRequestAgentStatusMock

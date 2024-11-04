@@ -208,7 +208,7 @@ class HttpRequestValidatorTest extends Unit
 
         $request->headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
-            ->setMethods(['all'])
+            ->onlyMethods(['all'])
             ->getMock();
 
         $request->headers->expects($this->any())

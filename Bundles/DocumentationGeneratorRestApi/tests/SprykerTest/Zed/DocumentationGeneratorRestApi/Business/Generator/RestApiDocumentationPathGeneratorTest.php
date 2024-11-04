@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
@@ -24,7 +24,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
  */
 class RestApiDocumentationPathGeneratorTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string
@@ -73,7 +73,7 @@ class RestApiDocumentationPathGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->pathGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationPathGenerator();
+        $this->pathGenerator = (new DocumentationGeneratorRestApiTestFactory(''))->createOpenApiSpecificationPathGenerator();
     }
 
     /**

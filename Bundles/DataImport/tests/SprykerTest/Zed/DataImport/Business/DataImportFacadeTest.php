@@ -131,7 +131,7 @@ class DataImportFacadeTest extends Unit
     private function createDataImportBusinessFactoryMock(): DataImportBusinessFactory
     {
         $mockBuilder = $this->getMockBuilder(DataImportBusinessFactory::class)
-            ->setMethods(['createDataImporterCollection']);
+            ->onlyMethods(['createDataImporterCollection']);
 
         $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $dataImporterCollection

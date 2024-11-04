@@ -104,7 +104,7 @@ class PropelConfigTest extends Unit
      */
     protected function getPropelConfigMock(): PropelConfig
     {
-        $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->setMethods(['getCurrentDatabaseEngine'])->getMock();
+        $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->onlyMethods(['getCurrentDatabaseEngine'])->getMock();
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');
 
         return $propelConfigMock;

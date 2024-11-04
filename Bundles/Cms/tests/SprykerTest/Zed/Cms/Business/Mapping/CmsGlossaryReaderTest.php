@@ -92,7 +92,7 @@ class CmsGlossaryReaderTest extends CmsMocks
 
         return $this->getMockBuilder(CmsGlossaryReader::class)
             ->setConstructorArgs([$cmsQueryContainerMock, $localeFacadeMock, $templateReader])
-            ->setMethods([
+            ->onlyMethods([
                 'getCmsPageEntity',
                 'getGlossaryMappingCollection',
             ])

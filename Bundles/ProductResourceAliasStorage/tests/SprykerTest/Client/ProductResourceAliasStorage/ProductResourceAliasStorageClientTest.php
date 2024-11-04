@@ -70,9 +70,17 @@ class ProductResourceAliasStorageClientTest extends Unit
         $storageClientMock = $this->createMock(ProductResourceAliasStorageToStorageClientInterface::class);
         $mappingResource = ['id' => 123];
         $productConcreteStorageData = ['data' => 'product-data'];
+        $expectedKeys = [static::GENERATED_KEY, static::GENERATED_KEY];
+        $callIndex = 0;
+
         $storageClientMock->method('get')
-            ->withConsecutive([static::GENERATED_KEY], [static::GENERATED_KEY])
-            ->willReturnOnConsecutiveCalls($mappingResource, $productConcreteStorageData);
+            ->willReturnCallback(function ($key) use (&$callIndex, $expectedKeys, $mappingResource, $productConcreteStorageData) {
+                $this->assertSame($expectedKeys[$callIndex], $key);
+                $result = $callIndex === 0 ? $mappingResource : $productConcreteStorageData;
+                $callIndex++;
+
+                return $result;
+            });
         $this->tester->setDependency(ProductResourceAliasStorageDependencyProvider::CLIENT_STORAGE, $storageClientMock);
 
         // Act

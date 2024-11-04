@@ -221,8 +221,8 @@ class ProductStorageFacadeTest extends Unit
         return [
             'attribute map with single values included' => [
                 'attributeKeyCount' => 2,
-                'configValue' => true,
-                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
+                'isProductAttributesWithSingleValueIncluded' => true,
+                'expectedAttributeVariantsMapClosure' => function (int $productConcreteId, int $productConcreteTwoId): array {
                     return [
                         'attribute_1:value_1_1' => [
                             'attribute_2:value_2_1' => [
@@ -247,8 +247,8 @@ class ProductStorageFacadeTest extends Unit
             ],
             'attribute map with single values excluded' => [
                 'attributeKeyCount' => 2,
-                'configValue' => false,
-                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
+                'isProductAttributesWithSingleValueIncluded' => false,
+                'expectedAttributeVariantsMapClosure' => function (int $productConcreteId, int $productConcreteTwoId): array {
                     return [
                         'attribute_2:value_2_1' => [
                             'id_product_concrete' => $productConcreteId,
@@ -261,8 +261,8 @@ class ProductStorageFacadeTest extends Unit
             ],
             'attribute map with single values excluded (9 super attributes case)' => [
                 'attributeKeyCount' => 9,
-                'configValue' => false,
-                'closure' => function (int $productConcreteId, int $productConcreteTwoId): array {
+                'isProductAttributesWithSingleValueIncluded' => false,
+                'expectedAttributeVariantsMapClosure' => function (int $productConcreteId, int $productConcreteTwoId): array {
                     return [
                         'attribute_2:value_2_1' => [
                             'id_product_concrete' => $productConcreteId,

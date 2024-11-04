@@ -101,7 +101,7 @@ class ItemLockTest extends StateMachineMocks
         $stateMachineConfigMock = $this->createStateMachineConfigMock();
 
         $itemLockPartialMock = $this->getMockBuilder(ItemLock::class)
-            ->setMethods(['createStateMachineLockEntity'])
+            ->onlyMethods(['createStateMachineLockEntity'])
             ->setConstructorArgs([$stateMachineQueryContainerMock, $stateMachineConfigMock])
             ->getMock();
 

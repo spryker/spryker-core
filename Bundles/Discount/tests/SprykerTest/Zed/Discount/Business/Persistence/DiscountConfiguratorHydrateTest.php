@@ -218,7 +218,10 @@ class DiscountConfiguratorHydrateTest extends Unit
      */
     protected function createDiscountQueryMock(): SpyDiscountQuery
     {
-        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['find', 'getFirst'])->getMock();
+        return $this->getMockBuilder(SpyDiscountQuery::class)
+            ->addMethods(['getFirst'])
+            ->onlyMethods(['find'])
+            ->getMock();
     }
 
     /**

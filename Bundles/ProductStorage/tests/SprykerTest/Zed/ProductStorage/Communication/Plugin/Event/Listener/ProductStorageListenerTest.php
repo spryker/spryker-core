@@ -18,7 +18,6 @@ use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Product\Dependency\ProductEvents;
@@ -82,8 +81,6 @@ class ProductStorageListenerTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp(): void
@@ -91,7 +88,7 @@ class ProductStorageListenerTest extends Unit
         parent::setUp();
 
         if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
+            $this->markTestSkipped('Warning: not in suite environment');
         }
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {

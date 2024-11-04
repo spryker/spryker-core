@@ -49,7 +49,7 @@ class IsProductPackagingUnitItemQuantitySplittableTest extends Unit
     public function testIsItemQuantitySplittable(): void
     {
         // Arrange
-        $this->setData(true);
+        $this->saveData(true);
         $itemTransfer = (new ItemTransfer())
             ->setSku(static::CONCRETE_PRODUCT_SKU)
             ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer());
@@ -66,7 +66,7 @@ class IsProductPackagingUnitItemQuantitySplittableTest extends Unit
      *
      * @return void
      */
-    protected function setData(bool $isQuantitySplittable): void
+    protected function saveData(bool $isQuantitySplittable): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku(static::ABSTRACT_PRODUCT_SKU)

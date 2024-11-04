@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithNullableIdPlugin;
@@ -30,7 +30,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
  */
 class RestApiDocumentationSchemaGeneratorTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string
@@ -129,7 +129,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->schemaGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationSchemaGenerator();
+        $this->schemaGenerator = (new DocumentationGeneratorRestApiTestFactory(''))->createOpenApiSpecificationSchemaGenerator();
     }
 
     /**
@@ -299,7 +299,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     protected function getResourceRoutePluginWithInvalidResourceAttributesClassName(): ResourceRoutePluginInterface
     {
         $mock = $this->getMockBuilder(TestResourceRoutePlugin::class)
-            ->setMethods(['getResourceAttributesClassName'])
+            ->onlyMethods(['getResourceAttributesClassName'])
             ->getMock();
         $mock->method('getResourceAttributesClassName')
             ->willReturn('InvalidTransfer');

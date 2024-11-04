@@ -115,7 +115,7 @@ class ConsoleLogPluginTest extends Unit
     protected function getConsoleLogPluginMock(LoggerInterface $loggerMock): ConsoleLogPlugin
     {
         $consoleLogPluginMock = $this->getMockBuilder(ConsoleLogPlugin::class)
-            ->setMethods(['getLogger'])
+            ->onlyMethods(['getLogger'])
             ->getMock();
 
         $consoleLogPluginMock->expects($this->once())->method('getLogger')->willReturn($loggerMock);

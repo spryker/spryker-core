@@ -10,9 +10,9 @@ namespace SprykerTest\Glue\Testify\Helper;
 use Codeception\Module;
 use Codeception\PHPUnit\Constraint\JsonType as JsonTypeConstraint;
 use Codeception\Util\JsonType;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use JsonPath\JsonObject;
 use PHPUnit\Framework\Assert;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 
 /**
  * For JSONPath extended syntax: @see https://github.com/Galbar/JsonPath-PHP
@@ -20,7 +20,7 @@ use PHPUnit\Framework\Assert;
 class JsonPath extends Module
 {
     use LastConnectionConsumerTrait;
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @inheritDoc

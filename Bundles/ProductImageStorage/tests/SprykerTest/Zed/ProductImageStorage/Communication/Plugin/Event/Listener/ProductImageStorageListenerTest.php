@@ -15,7 +15,6 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
@@ -89,8 +88,6 @@ class ProductImageStorageListenerTest extends Unit
     protected $productConcreteTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp(): void
@@ -98,7 +95,7 @@ class ProductImageStorageListenerTest extends Unit
         parent::setUp();
 
         if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
+            $this->markTestSkipped('Warning: not in suite environment');
         }
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {

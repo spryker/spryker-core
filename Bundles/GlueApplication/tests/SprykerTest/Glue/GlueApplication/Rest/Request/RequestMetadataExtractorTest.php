@@ -117,7 +117,7 @@ class RequestMetadataExtractorTest extends Unit
     protected function createContentTypeResolverMock(): ContentTypeResolverInterface
     {
         return $this->getMockBuilder(ContentTypeResolverInterface::class)
-            ->setMethods(['matchContentType', 'addResponseHeaders'])
+            ->onlyMethods(['matchContentType', 'addResponseHeaders'])
             ->getMock();
     }
 
@@ -127,7 +127,7 @@ class RequestMetadataExtractorTest extends Unit
     protected function createLanguageNegotiationMock(): LanguageNegotiationInterface
     {
         return $this->getMockBuilder(LanguageNegotiationInterface::class)
-            ->setMethods(['getLanguageIsoCode'])
+            ->onlyMethods(['getLanguageIsoCode'])
             ->getMock();
     }
 }

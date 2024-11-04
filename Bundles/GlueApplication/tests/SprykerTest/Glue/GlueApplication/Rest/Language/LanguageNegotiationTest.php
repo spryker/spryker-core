@@ -98,7 +98,7 @@ class LanguageNegotiationTest extends Unit
     protected function createStoreClientMock(): GlueApplicationToStoreClientInterface
     {
         $storeClientMock = $this->getMockBuilder(GlueApplicationToStoreClientInterface::class)
-            ->setMethods(['getCurrentStore'])
+            ->onlyMethods(['getCurrentStore'])
             ->getMock();
 
         $storeTransfer = (new StoreTransfer())

@@ -45,19 +45,19 @@ class SendRefundPaymentMessageSalesPaymentFacadeTest extends Unit
     /**
      * @dataProvider orderItemsDataProviderForRefundSuccessProcess
      *
-     * @param array $orderData
+     * @param array $order
      * @param array $sentItemIds
      * @param int $expectedAmount
      *
      * @return void
      */
-    public function testSendRefundPaymentMessageSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
+    public function testSendRefundPaymentMessageSuccess(array $order, array $sentItemIds, int $expectedAmount): void
     {
         // Arrange
-        $this->mockSalesFacade($orderData);
+        $this->mockSalesFacade($order);
 
         $eventPaymentTransfer = (new EventPaymentTransfer())
-            ->setIdSalesOrder($orderData[OrderTransfer::ID_SALES_ORDER])
+            ->setIdSalesOrder($order[OrderTransfer::ID_SALES_ORDER])
             ->setOrderItemIds($sentItemIds);
 
         // Act
@@ -74,18 +74,18 @@ class SendRefundPaymentMessageSalesPaymentFacadeTest extends Unit
     /**
      * @dataProvider orderItemsDataProviderForRefundFailureProcess
      *
-     * @param array $orderData
+     * @param array $order
      * @param array $sentItemIds
      *
      * @return void
      */
-    public function testSendRefundPaymentMessageThrowsCommandExecutionException(array $orderData, array $sentItemIds): void
+    public function testSendRefundPaymentMessageThrowsCommandExecutionException(array $order, array $sentItemIds): void
     {
         // Arrange
-        $this->mockSalesFacade($orderData);
+        $this->mockSalesFacade($order);
 
         $eventPaymentTransfer = (new EventPaymentTransfer())
-            ->setIdSalesOrder($orderData[OrderTransfer::ID_SALES_ORDER])
+            ->setIdSalesOrder($order[OrderTransfer::ID_SALES_ORDER])
             ->setOrderItemIds($sentItemIds);
 
         // Expect

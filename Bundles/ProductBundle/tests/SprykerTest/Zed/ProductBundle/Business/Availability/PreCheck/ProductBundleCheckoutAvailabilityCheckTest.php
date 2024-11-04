@@ -112,7 +112,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCheckoutAvailabilityCheck::class)
             ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $productBundleConfig])
-            ->setMethods(['findBundledProducts'])
+            ->onlyMethods(['findBundledProducts'])
             ->getMock();
 
         return $productBundleCartAvailabilityCheckMock;

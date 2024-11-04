@@ -360,7 +360,7 @@ class SwiftMailerTest extends Unit
     protected function getMailerMock(): MailToMailerInterface
     {
         $mailerMock = $this->getMockBuilder(MailToMailerInterface::class)
-            ->setMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send', 'attach'])
+            ->onlyMethods(['setSubject', 'setFrom', 'addTo', 'addBcc', 'setHtmlContent', 'setTextContent', 'send', 'attach'])
             ->getMock();
 
         return $mailerMock;

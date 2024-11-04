@@ -45,19 +45,19 @@ class SendCapturePaymentMessageSalesPaymentFacadeTest extends Unit
     /**
      * @dataProvider orderItemsDataProviderForCaptureSuccessProcess
      *
-     * @param array $orderData
+     * @param array $order
      * @param array $sentItemIds
      * @param int $expectedAmount
      *
      * @return void
      */
-    public function testSendCapturePaymentMessageSuccess(array $orderData, array $sentItemIds, int $expectedAmount): void
+    public function testSendCapturePaymentMessageSuccess(array $order, array $sentItemIds, int $expectedAmount): void
     {
         // Arrange
-        $this->mockSalesFacade($orderData);
+        $this->mockSalesFacade($order);
 
         $eventPaymentTransfer = (new EventPaymentTransfer())
-            ->setIdSalesOrder($orderData[OrderTransfer::ID_SALES_ORDER])
+            ->setIdSalesOrder($order[OrderTransfer::ID_SALES_ORDER])
             ->setOrderItemIds($sentItemIds);
 
         // Act
@@ -74,18 +74,18 @@ class SendCapturePaymentMessageSalesPaymentFacadeTest extends Unit
     /**
      * @dataProvider orderItemsDataProviderForCaptureFailureProcess
      *
-     * @param array $orderData
+     * @param array $order
      * @param array $sentItemIds
      *
      * @return void
      */
-    public function testSendCapturePaymentMessageThrowsCommandExecutionException(array $orderData, array $sentItemIds): void
+    public function testSendCapturePaymentMessageThrowsCommandExecutionException(array $order, array $sentItemIds): void
     {
         // Arrange
-        $this->mockSalesFacade($orderData);
+        $this->mockSalesFacade($order);
 
         $eventPaymentTransfer = (new EventPaymentTransfer())
-            ->setIdSalesOrder($orderData[OrderTransfer::ID_SALES_ORDER])
+            ->setIdSalesOrder($order[OrderTransfer::ID_SALES_ORDER])
             ->setOrderItemIds($sentItemIds);
 
         // Expect

@@ -161,18 +161,10 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
     {
         $productConfigurationFactoryMock = $this->getMockBuilder(ProductConfigurationFactory::class)
             ->disableOriginalConstructor()
-            ->setMethodsExcept([
-                'createProductConfiguratorRedirectResolver',
-                'createProductConfiguratorResponseProcessor',
-                'createQuoteProductConfigurationChecker',
-                'createProductConfiguratorAccessTokenRedirectResolver',
-                'createProductConfiguratorRequestDataExpanderComposite',
-                'createProductConfiguratorCheckSumResponseValidatorComposite',
-                'createProductConfiguratorRequestDataCurrencyExpander',
-                'createProductConfiguratorRequestDataCustomerExpander',
-                'createProductConfiguratorRequestDataStoreExpander',
-                'createProductConfiguratorRequestDataLocaleExpander',
-                'createProductConfiguratorRequestDataPriceExpander',
+            ->onlyMethods([
+                'createProductConfiguratorCheckSumResponseValidators',
+                'getStoreClient',
+                'getCurrencyClient',
             ])
             ->getMock();
 

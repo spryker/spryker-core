@@ -141,19 +141,21 @@ class CategoryCrudFacadeTest extends Unit
 
         // Event Facade mock to perform expectations
         $eventFacadeMock = $this->createMock(EventFacade::class);
-        $eventFacadeMock->expects($this->exactly(3))
+        $matcher = $this->exactly(3);
+        $eventFacadeMock->expects($matcher)
             ->method('trigger')
-            ->withConsecutive(
-                [$this->equalTo(CategoryEvents::CATEGORY_BEFORE_CREATE), $this->callback(function ($subject) use ($categoryTransfer) {
-                    return $subject instanceof CategoryTransfer && $subject->getIdCategory() === $categoryTransfer->getIdCategory();
-                })],
-                [$this->equalTo(CategoryEvents::CATEGORY_AFTER_CREATE), $this->callback(function ($subject) use ($categoryTransfer) {
-                    return $subject instanceof CategoryTransfer && $subject->getIdCategory() === $categoryTransfer->getIdCategory();
-                })],
-                [$this->equalTo(CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE), $this->callback(function ($subject) use ($categoryTransfer) {
-                    return $subject instanceof EventEntityTransfer && $subject->getId() === $categoryTransfer->getIdCategory();
-                })],
-            );
+            ->willReturnCallback(function ($event, $subject) use ($matcher, $categoryTransfer) {
+                match ($matcher->numberOfInvocations()) {
+                    1 => $this->assertEquals(CategoryEvents::CATEGORY_BEFORE_CREATE, $event),
+                    2 => $this->assertEquals(CategoryEvents::CATEGORY_AFTER_CREATE, $event),
+                    3 => $this->assertEquals(CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE, $event),
+                };
+
+            match ($matcher->numberOfInvocations()) {
+                1, 2 => $this->assertInstanceOf(CategoryTransfer::class, $subject) && $this->assertEquals($categoryTransfer->getIdCategory(), $subject->getIdCategory()),
+                3 => $this->assertInstanceOf(EventEntityTransfer::class, $subject) && $this->assertEquals($categoryTransfer->getIdCategory(), $subject->getId()),
+            };
+            });
 
         $this->tester->mockFactoryMethod('getEventFacade', new CategoryToEventFacadeBridge($eventFacadeMock));
 

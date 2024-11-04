@@ -24,6 +24,17 @@ use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 class ProductOptionEditCest
 {
     /**
+     * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
+     *
+     * @return void
+     */
+    public function _before(ProductOptionPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
      * @skip This test was temporarily skipped due to flikerness. See {@link https://spryker.atlassian.net/browse/CC-25718} for details
      *
      * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i

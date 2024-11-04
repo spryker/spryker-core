@@ -43,7 +43,7 @@ class IdFilterInsertTest extends Unit
         parent::setUp();
 
         $this->idFilterInsert = $this->getMockBuilder(IdFilterInsert::class)
-            ->setMethods(['getIdCollection'])
+            ->onlyMethods(['getIdCollection'])
             ->disableOriginalConstructor()
             ->getMock();
     }

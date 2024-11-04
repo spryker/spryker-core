@@ -145,7 +145,7 @@ class ErrorHandlerFactoryTest extends Unit
     protected function getErrorHandlerFactoryMock(string $application, array $methods): ErrorHandlerFactory
     {
         return $this->getMockBuilder(ErrorHandlerFactory::class)
-            ->setMethods($methods)
+            ->onlyMethods($methods)
             ->setConstructorArgs([$application])
             ->getMock();
     }

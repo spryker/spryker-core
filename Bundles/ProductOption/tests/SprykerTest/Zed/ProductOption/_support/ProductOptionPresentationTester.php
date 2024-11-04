@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductOption;
 
 use ArrayObject;
 use Codeception\Actor;
-use Codeception\Scenario;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
@@ -42,17 +41,6 @@ class ProductOptionPresentationTester extends Actor
      * @var array
      */
     protected $locales = ['en_US', 'de_DE'];
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 
     /**
      * @param array $values

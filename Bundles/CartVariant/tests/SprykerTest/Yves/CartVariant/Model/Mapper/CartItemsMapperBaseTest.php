@@ -41,7 +41,7 @@ class CartItemsMapperBaseTest extends Unit
     {
         $mock = $this->getMockBuilder(ProductClient::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAttributeMapByIdProductAbstractForCurrentLocale'])->getMock();
+            ->onlyMethods(['getAttributeMapByIdProductAbstractForCurrentLocale'])->getMock();
 
         $mock->method('getAttributeMapByIdProductAbstractForCurrentLocale')
             ->willReturn(json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true));

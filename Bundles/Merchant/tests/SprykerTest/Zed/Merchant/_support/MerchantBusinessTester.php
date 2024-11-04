@@ -187,20 +187,22 @@ class MerchantBusinessTester extends Actor
         $eventFacade
             ->expects($this->exactly(2))
             ->method('trigger')
-            ->withConsecutive(
-                [MerchantEvents::MERCHANT_CREATED, $this->callback(function ($eventEntityTransfer) use ($merchantTransfer) {
+            ->willReturnCallback(function ($event, $eventEntityTransfer) use ($merchantTransfer, &$invocationCount) {
+                $invocationCount++;
+
+                $eventMap = [
+                    1 => MerchantEvents::MERCHANT_CREATED,
+                    2 => MerchantEvents::MERCHANT_PUBLISH,
+                ];
+
+                if (isset($eventMap[$invocationCount])) {
+                    $this->assertEquals($eventMap[$invocationCount], $event);
                     $this->assertNotEmpty($eventEntityTransfer);
                     $this->assertEquals($eventEntityTransfer->getId(), $merchantTransfer->getIdMerchant());
+                }
 
-                    return true;
-                })],
-                [MerchantEvents::MERCHANT_PUBLISH, $this->callback(function ($eventEntityTransfer) use ($merchantTransfer) {
-                    $this->assertNotEmpty($eventEntityTransfer);
-                    $this->assertEquals($eventEntityTransfer->getId(), $merchantTransfer->getIdMerchant());
-
-                    return true;
-                })],
-            );
+                return true;
+            });
     }
 
     /**
@@ -214,20 +216,21 @@ class MerchantBusinessTester extends Actor
         $eventFacade
             ->expects($this->atLeastOnce())
             ->method('trigger')
-            ->withConsecutive(
-                [MerchantEvents::MERCHANT_UPDATED, $this->callback(function ($eventEntityTransfer) use ($merchantTransfer) {
+            ->willReturnCallback(function ($event, $eventEntityTransfer) use ($merchantTransfer, &$invocationCount) {
+                $invocationCount++;
+
+                if ($invocationCount === 1) {
+                    $this->assertEquals(MerchantEvents::MERCHANT_UPDATED, $event);
                     $this->assertNotEmpty($eventEntityTransfer);
                     $this->assertEquals($eventEntityTransfer->getId(), $merchantTransfer->getIdMerchant());
-
-                    return true;
-                })],
-                [MerchantEvents::MERCHANT_PUBLISH, $this->callback(function ($eventEntityTransfer) use ($merchantTransfer) {
+                } elseif ($invocationCount === 2) {
+                    $this->assertEquals(MerchantEvents::MERCHANT_PUBLISH, $event);
                     $this->assertNotEmpty($eventEntityTransfer);
                     $this->assertEquals($eventEntityTransfer->getId(), $merchantTransfer->getIdMerchant());
+                }
 
-                    return true;
-                })],
-            );
+                return true;
+            });
     }
 
     /**

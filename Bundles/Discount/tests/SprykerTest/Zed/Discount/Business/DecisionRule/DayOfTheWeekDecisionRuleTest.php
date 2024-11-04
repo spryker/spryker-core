@@ -60,7 +60,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
     ): DayOfWeekDecisionRule {
         /** @var \Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule|\PHPUnit\Framework\MockObject\MockObject $dayOfWeekDecisionRule */
         $dayOfWeekDecisionRule = $this->getMockBuilder(DayOfWeekDecisionRule::class)
-            ->setMethods(['getCurrentDateTime'])
+            ->onlyMethods(['getCurrentDateTime'])
             ->setConstructorArgs([$comparatorMock])
             ->getMock();
         $dayOfWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);

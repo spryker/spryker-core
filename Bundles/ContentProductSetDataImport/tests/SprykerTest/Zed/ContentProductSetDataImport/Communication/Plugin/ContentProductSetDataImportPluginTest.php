@@ -195,7 +195,7 @@ class ContentProductSetDataImportPluginTest extends Unit
     protected function setProductSetQueryReturn(int $idProductSet): void
     {
         $productSetQueryMock = $this->getMockBuilder(SpyProductSetQuery::class)
-            ->setMethods(['findOneByProductSetKey'])
+            ->addMethods(['findOneByProductSetKey'])
             ->getMock();
 
         $productSetQueryMock->method('findOneByProductSetKey')

@@ -48,13 +48,20 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer(): void
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
+        $expectedArgs = [
+            [$this->fixtures['bundledProductSku'], new Decimal(15)],
+        ];
+        $callIndex = 0;
         $availabilityFacadeMock
             ->expects($this->once())
             ->method('isProductSellableForStore')
-            ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(new Decimal(15))],
-            )
-            ->willReturn(true);
+            ->willReturnCallback(function ($sku, $quantity) use (&$callIndex, $expectedArgs) {
+                $this->assertEquals($expectedArgs[$callIndex][0], $sku);
+                $this->assertEquals($expectedArgs[$callIndex][1], $quantity);
+                $callIndex++;
+
+                return true;
+            });
 
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability(0);
@@ -160,7 +167,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
                 $productBundleConfig,
                 $productBundleReader,
             ])
-            ->setMethods(['findBundledProducts'])
+            ->onlyMethods(['findBundledProducts'])
             ->getMock();
 
         return $productBundleCartAvailabilityCheckMock;

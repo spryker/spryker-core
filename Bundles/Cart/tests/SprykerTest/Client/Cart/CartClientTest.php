@@ -209,7 +209,7 @@ class CartClientTest extends Unit
         $quoteTransfer->addItem($itemTransfer);
 
         $mockBuilder = $this->getMockBuilder(CartClient::class);
-        $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
+        $mockBuilder->onlyMethods(['getQuote', 'getItemCounter']);
         /** @var \Spryker\Client\Cart\CartClientInterface|\PHPUnit\Framework\MockObject\MockObject $cartClientMock */
         $cartClientMock = $mockBuilder->getMock();
         $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
@@ -266,7 +266,7 @@ class CartClientTest extends Unit
         ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
     ): AbstractFactory {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
-            ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
+            ->addMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
             ->disableOriginalConstructor()->getMock();
 
         if ($quote !== null) {
@@ -305,7 +305,7 @@ class CartClientTest extends Unit
     private function getSessionQuoteStorageStrategyPluginMock(): QuoteStorageStrategyPluginInterface
     {
         $sessionQuoteStorageStrategyPluginMock = $this->getMockBuilder(SessionQuoteStorageStrategyPlugin::class)
-            ->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
+            ->onlyMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 
         return $sessionQuoteStorageStrategyPluginMock;
     }
@@ -317,7 +317,7 @@ class CartClientTest extends Unit
      */
     private function getCartClientMock($factoryMock): CartClient
     {
-        $cartClientMock = $this->getMockBuilder(CartClient::class)->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
+        $cartClientMock = $this->getMockBuilder(CartClient::class)->onlyMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 
         $cartClientMock->expects($this->any())
             ->method('getFactory')
@@ -331,12 +331,15 @@ class CartClientTest extends Unit
      */
     private function getQuoteMock(): CartToQuoteInterface
     {
-        $quoteMock = $this->getMockBuilder(CartToQuoteInterface::class)->setMethods([
+        $quoteMock = $this->getMockBuilder(CartToQuoteInterface::class)
+            ->addMethods([
+                'reloadItems',
+            ])
+            ->onlyMethods([
             'getQuote',
             'setQuote',
             'clearQuote',
             'getStorageStrategy',
-            'reloadItems',
             'isQuoteLocked',
             'lockQuote',
         ])->getMock();
@@ -352,19 +355,22 @@ class CartClientTest extends Unit
      */
     private function getStubMock(): CartStubInterface
     {
-        return $this->getMockBuilder(CartStubInterface::class)->setMethods([
-            'addValidItems',
-            'addItem',
-            'removeItem',
-            'reloadItems',
-            'changeItemQuantity',
-            'validateQuote',
-            'addFlashMessagesFromLastZedRequest',
-            'addResponseMessagesToMessenger',
-            'resetQuoteLock',
-            'addToCart',
-            'removeFromCart',
-            'replaceItem',
+        return $this->getMockBuilder(CartStubInterface::class)
+            ->addMethods([
+                'changeItemQuantity',
+                'addFlashMessagesFromLastZedRequest',
+                'addResponseMessagesToMessenger',
+            ])
+            ->onlyMethods([
+                'addValidItems',
+                'addItem',
+                'removeItem',
+                'reloadItems',
+                'validateQuote',
+                'resetQuoteLock',
+                'addToCart',
+                'removeFromCart',
+                'replaceItem',
         ])->getMock();
     }
 

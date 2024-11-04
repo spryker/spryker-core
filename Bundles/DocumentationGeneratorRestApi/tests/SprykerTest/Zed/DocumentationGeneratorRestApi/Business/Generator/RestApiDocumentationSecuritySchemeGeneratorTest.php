@@ -40,7 +40,7 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $this->securitySchemeGenerator = (new DocumentationGeneratorRestApiTestFactory())->createOpenApiSpecificationSecuritySchemeGenerator();
+        $this->securitySchemeGenerator = (new DocumentationGeneratorRestApiTestFactory(''))->createOpenApiSpecificationSecuritySchemeGenerator();
     }
 
     /**

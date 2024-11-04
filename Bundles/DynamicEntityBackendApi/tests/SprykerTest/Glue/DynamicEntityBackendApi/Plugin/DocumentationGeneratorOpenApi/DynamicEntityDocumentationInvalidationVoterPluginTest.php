@@ -91,7 +91,6 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
         }
 
         //Assert
-        $this->expectWarning();
         $this->expectExceptionMessage('DateInterval::createFromDateString(): Unknown or bad format () at position 0 ( ): Empty string');
 
         $this->runIsInvalidatedWithIntervalAsEmptyString();
@@ -122,8 +121,7 @@ class DynamicEntityDocumentationInvalidationVoterPluginTest extends Unit
         }
 
         // Assert
-        $this->expectWarning();
-        $this->expectWarningMessage('DateInterval::createFromDateString(): Unknown or bad format (9999999) at position 4 (9): Unexpected character');
+        $this->expectExceptionMessage('DateInterval::createFromDateString(): Unknown or bad format (9999999) at position 4 (9): Unexpected character');
 
         $this->runIsInvalidatedWithIntervalAsUnexpectedCharacter();
     }

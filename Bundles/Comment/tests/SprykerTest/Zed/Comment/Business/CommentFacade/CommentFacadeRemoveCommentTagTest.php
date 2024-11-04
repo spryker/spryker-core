@@ -260,7 +260,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Comment\CommentConfig $commentConfigMock */
         $commentConfigMock = $this->getMockBuilder(CommentConfig::class)
-            ->setMethods(['getAvailableCommentTags'])
+            ->onlyMethods(['getAvailableCommentTags'])
             ->disableOriginalConstructor()
             ->getMock();
 

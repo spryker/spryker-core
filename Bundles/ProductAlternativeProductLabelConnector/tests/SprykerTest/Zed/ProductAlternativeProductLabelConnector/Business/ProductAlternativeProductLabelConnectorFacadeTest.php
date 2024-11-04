@@ -100,7 +100,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
             ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge::class,
         )
             ->setConstructorArgs([$this->tester->getProductAlternativeFacade()])
-            ->setMethods(['isAlternativeProductApplicable'])
+            ->onlyMethods(['isAlternativeProductApplicable'])
             ->getMock();
         $productAlternativeFacadeMock
             ->method('isAlternativeProductApplicable')

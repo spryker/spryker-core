@@ -82,7 +82,8 @@ class TranslatorFacadeTest extends Unit
     protected function getFactoryMock(): TranslatorBusinessFactory
     {
         $factoryMock = $this->getMockBuilder(TranslatorBusinessFactory::class)
-            ->setMethods(['getConfig', 'getStore', 'getLocaleFacade'])
+            ->addMethods(['getStore'])
+            ->onlyMethods(['getConfig', 'getLocaleFacade'])
             ->getMock();
 
         $factoryMock->method('getConfig')
@@ -104,7 +105,7 @@ class TranslatorFacadeTest extends Unit
     {
         $storeMock = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getLocales'])
+            ->onlyMethods(['getLocales'])
             ->getMock();
 
         $storeMock->method('getLocales')
@@ -119,7 +120,7 @@ class TranslatorFacadeTest extends Unit
     protected function getConfigMock(): TranslatorConfig
     {
         $configMock = $this->getMockBuilder(TranslatorConfig::class)
-            ->setMethods(['getTranslationFilePathPatterns', 'getTranslatorCacheDirectory'])
+            ->onlyMethods(['getTranslationFilePathPatterns', 'getTranslatorCacheDirectory'])
             ->getMock();
 
         $configMock->method('getTranslationFilePathPatterns')
@@ -139,7 +140,8 @@ class TranslatorFacadeTest extends Unit
         $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
             ->enableOriginalConstructor()
             ->setConstructorArgs([$this->tester->getLocator()->locale()->facade()])
-            ->setMethods(['getCurrentLocale', 'getSupportedLocaleCodes'])
+            ->addMethods(['getCurrentLocale'])
+            ->onlyMethods(['getSupportedLocaleCodes'])
             ->getMock();
 
         $localeFacadeMock->method('getCurrentLocale')->willReturn('de_DE');

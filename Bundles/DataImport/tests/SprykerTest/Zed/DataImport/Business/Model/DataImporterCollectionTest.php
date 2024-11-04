@@ -94,6 +94,7 @@ class DataImporterCollectionTest extends Unit
      */
     public function testImporterPluginCanBeAddedAfterSpecificDataImporter(): void
     {
+        //Arrange
         $dataImportCollectionMock = $this->getDataImportCollectionMock();
         $dataImporterA = $this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A);
         $dataImporterB = $this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_B);
@@ -108,10 +109,23 @@ class DataImporterCollectionTest extends Unit
             $dataImporterPluginB,
         ]);
 
+        $expectedCallSequence = [
+            $dataImporterA,
+            $dataImporterPluginA,
+            $dataImporterB,
+            $dataImporterPluginB,
+        ];
+        $callIndex = 0;
+
+        //Assert
         $dataImportCollectionMock->expects($this->exactly(4))
             ->method('executeDataImporter')
-            ->withConsecutive([$dataImporterA], [$dataImporterPluginA], [$dataImporterB], [$dataImporterPluginB]);
+            ->willReturnCallback(function ($dataImporter) use (&$callIndex, $expectedCallSequence) {
+                $this->assertSame($expectedCallSequence[$callIndex], $dataImporter);
+                $callIndex++;
+            });
 
+        //Act
         $dataImportCollectionMock->import();
     }
 
@@ -120,6 +134,7 @@ class DataImporterCollectionTest extends Unit
      */
     public function testImporterPluginWillAddedAtTheEndIfAddAfterIsNotMatchingToAnyAppliedImporter(): void
     {
+        //Arrange
         $dataImportCollectionMock = $this->getDataImportCollectionMock();
 
         $dataImporterA = $this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A);
@@ -133,10 +148,22 @@ class DataImporterCollectionTest extends Unit
             [$dataImporterPluginA, 'catface'],
         ]);
 
+        $expectedCallSequence = [
+            $dataImporterA,
+            $dataImporterB,
+            $dataImporterPluginA,
+        ];
+        $callIndex = 0;
+
+        //Assert
         $dataImportCollectionMock->expects($this->exactly(3))
             ->method('executeDataImporter')
-            ->withConsecutive([$dataImporterA], [$dataImporterB], [$dataImporterPluginA]);
+            ->willReturnCallback(function ($dataImporter) use (&$callIndex, $expectedCallSequence) {
+                $this->assertSame($expectedCallSequence[$callIndex], $dataImporter);
+                $callIndex++;
+            });
 
+        //Act
         $dataImportCollectionMock->import();
     }
 
@@ -145,6 +172,7 @@ class DataImporterCollectionTest extends Unit
      */
     public function testAllImportersAreUsedWithFullGroupImport(): void
     {
+        //Arrange
         $dataImportCollectionMock = $this->getDataImportCollectionMock();
 
         $dataImporter = $this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A);
@@ -158,10 +186,22 @@ class DataImporterCollectionTest extends Unit
             $dataImporterPlugin,
         ]);
 
+        $expectedCallSequence = [
+            $dataImporter,
+            $dataImporterGroupAware,
+            $dataImporterPlugin,
+        ];
+        $callIndex = 0;
+
+        //Assert
         $dataImportCollectionMock->expects($this->exactly(3))
             ->method('executeDataImporter')
-            ->withConsecutive([$dataImporter], [$dataImporterGroupAware], [$dataImporterPlugin]);
+            ->willReturnCallback(function ($dataImporter) use (&$callIndex, $expectedCallSequence) {
+                $this->assertSame($expectedCallSequence[$callIndex], $dataImporter);
+                $callIndex++;
+            });
 
+        //Act
         $dataImportCollectionMock->import();
     }
 
@@ -195,7 +235,7 @@ class DataImporterCollectionTest extends Unit
     protected function getDataImportCollectionMock()
     {
         $dataImportCollectionMockBuilder = $this->getMockBuilder(DataImporterCollection::class)
-            ->setMethods(['executeDataImporter']);
+            ->onlyMethods(['executeDataImporter']);
 
         $dataImportCollectionMock = $dataImportCollectionMockBuilder->getMock();
 

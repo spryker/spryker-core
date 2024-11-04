@@ -435,7 +435,14 @@ class StorageRedisWrapperTest extends Unit
 
         $this->redisClientMock->expects($this->once())
             ->method('scan')
-            ->withConsecutive(...$expectedParams)
+            ->with($this->callback(function (...$args) {
+                [$connectionKey, $cursor, $options] = $args;
+
+                return $connectionKey === 'connection key'
+                    && $cursor === 0
+                    && $options['COUNT'] === 0
+                    && $options['MATCH'] === 'kv:test:*';
+            }))
             ->willReturn([0, $expectedKeys]);
 
         // Act

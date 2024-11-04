@@ -89,7 +89,7 @@ class ProductOptionOrderSaverTest extends MockProvider
 
         return $this->getMockBuilder(ProductOptionOrderSaver::class)
             ->setConstructorArgs([$glossaryFacadeMock])
-            ->setMethods(['createSalesOrderItemOptionEntity'])
+            ->onlyMethods(['createSalesOrderItemOptionEntity'])
             ->getMock();
     }
 
@@ -99,7 +99,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     protected function createSalesOrderItemOptionMock(): SpySalesOrderItemOption
     {
         $mockedSalesOrderItemOption = $this->getMockBuilder(SpySalesOrderItemOption::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
 
         $mockedSalesOrderItemOption->method('save')

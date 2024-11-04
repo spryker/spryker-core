@@ -80,8 +80,9 @@ class StockAddressDataImportPluginTest extends Unit
 
         $stockAddressDataImportPlugin = new StockAddressDataImportPlugin();
 
+        //Assert
         $this->expectException(DataImportException::class);
-        $this->expectErrorMessageMatches('/Warehouse \".+\" not found\./');
+        $this->expectExceptionMessageMatches('/Warehouse \".+\" not found\./');
 
         // Act
         $stockAddressDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -93,7 +94,6 @@ class StockAddressDataImportPluginTest extends Unit
     public function testImportWillThrowAnExceptionIfCountryIsoCodeDoesNotExist(): void
     {
         // Arrange
-        $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::TEST_COUNTRY_ISO_CODE]);
         $this->tester->haveStock([StockTransfer::NAME => static::TEST_STOCK_NAME]);
 
         $dataImportConfigurationTransfer = $this->getDataImporterReaderConfigurationTransfer('import/warehouse_address_incorrect_iso_code.csv');
@@ -101,9 +101,9 @@ class StockAddressDataImportPluginTest extends Unit
 
         $stockAddressDataImportPlugin = new StockAddressDataImportPlugin();
 
+        //Assert
         $this->expectException(DataImportException::class);
-
-        $this->expectErrorMessageMatches('/Country with ISO2 code \".+\" not found\./');
+        $this->expectExceptionMessageMatches('/Country with ISO2 code \".+\" not found\./');
 
         // Act
         $stockAddressDataImportPlugin->import($dataImportConfigurationTransfer);

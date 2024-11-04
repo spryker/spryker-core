@@ -199,7 +199,7 @@ class MessagePublisherTest extends Unit
             ->setConstructorArgs([
                 $this->tester->getFactory()->getConfig(),
             ])
-            ->setMethods([
+            ->onlyMethods([
                 'getLogger',
                 'getDuration',
             ])

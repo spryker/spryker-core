@@ -303,7 +303,7 @@ class ProductPageSearchFacadeTest extends Unit
 
         /** @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productPageSearchBusinessFactoryMock */
         $productPageSearchBusinessFactoryMock = $this->getMockBuilder(ProductPageSearchBusinessFactory::class)
-            ->setMethods(['getProductPageRefreshPlugins', 'createProductAbstractPagePublisher'])
+            ->onlyMethods(['getProductPageRefreshPlugins', 'createProductAbstractPagePublisher'])
             ->getMock();
 
         $productPageSearchBusinessFactoryMock

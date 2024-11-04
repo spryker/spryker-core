@@ -96,7 +96,7 @@ class ResponseHeadersTest extends Unit
     protected function createFormatResponseHeadersPluginMock(): FormatResponseHeadersPluginInterface
     {
         return $this->getMockBuilder(FormatResponseHeadersPluginInterface::class)
-            ->setMethods(['format'])
+            ->onlyMethods(['format'])
             ->getMock();
     }
 }

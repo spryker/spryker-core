@@ -101,7 +101,7 @@ class SalesQuantityFacadeTest extends Unit
      */
     public function testExpandItemsShouldPreSetBdValuesToItemTransfer(): void
     {
-        $this->setData(true);
+        $this->saveData(true);
         $item = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
         $cartChangeTransfer = (new CartChangeTransfer())->setItems(new ArrayObject($item));
 
@@ -111,7 +111,7 @@ class SalesQuantityFacadeTest extends Unit
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), true);
         }
 
-        $this->setData(false);
+        $this->saveData(false);
 
         $resultCartChangeTransfer = $this->facade->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
 
@@ -342,7 +342,7 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    protected function setData(bool $isQuantitySplittable): void
+    protected function saveData(bool $isQuantitySplittable): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku(static::ABSTRACT_PRODUCT_SKU)

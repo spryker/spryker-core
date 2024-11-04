@@ -107,7 +107,7 @@ class TooManyMethodsTest extends Unit
     protected function getTooManyMethodsMock(): TooManyMethods
     {
         $mockBuilder = $this->getMockBuilder(TooManyMethods::class);
-        $mockBuilder->setMethods(['addViolation', 'getIntProperty', 'getStringProperty']);
+        $mockBuilder->onlyMethods(['addViolation', 'getIntProperty', 'getStringProperty']);
 
         $tooManyMethodsMock = $mockBuilder->getMock();
         $tooManyMethodsMock->expects($this->any())->method('getStringProperty')->willReturn('/ignore regex pattern/');
@@ -124,7 +124,8 @@ class TooManyMethodsTest extends Unit
     protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractTypeNode::class);
-        $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethodNames'])
+        $mockBuilder->addMethods(['getNamespace'])
+            ->onlyMethods(['getMetric', 'getName', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethodNames'])
             ->disableOriginalConstructor();
 
         $nodeMock = $mockBuilder->getMock();

@@ -100,7 +100,7 @@ class ProductOptionValueReaderTest extends MockProvider
                     $productOptionQueryContainerMock,
                 ],
             )
-            ->setMethods(['findOptionValueById'])
+            ->onlyMethods(['findOptionValueById'])
             ->getMock();
     }
 
@@ -123,7 +123,7 @@ class ProductOptionValueReaderTest extends MockProvider
     protected function createProductOptionValueEntityMock(): SpyProductOptionValue
     {
         return $this->getMockBuilder(SpyProductOptionValue::class)
-            ->setMethods(['save', 'getSpyProductOptionGroup'])
+            ->onlyMethods(['save', 'getSpyProductOptionGroup'])
             ->getMock();
     }
 }

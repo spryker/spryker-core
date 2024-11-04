@@ -251,7 +251,7 @@ class ResponseRelationshipTest extends Unit
     protected function createRelationshipLoaderMock(): ResourceRelationshipLoaderInterface
     {
         return $this->getMockBuilder(ResourceRelationshipLoaderInterface::class)
-            ->setMethods(['load'])
+            ->onlyMethods(['load'])
             ->getMock();
     }
 
@@ -261,7 +261,7 @@ class ResponseRelationshipTest extends Unit
     protected function createResourceRelationshipPluginMock(): ResourceRelationshipPluginInterface
     {
         return $this->getMockBuilder(ResourceRelationshipPluginInterface::class)
-            ->setMethods(['addResourceRelationships', 'getRelationshipResourceType'])
+            ->onlyMethods(['addResourceRelationships', 'getRelationshipResourceType'])
             ->getMock();
     }
 }

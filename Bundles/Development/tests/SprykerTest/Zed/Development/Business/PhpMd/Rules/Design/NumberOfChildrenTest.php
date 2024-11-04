@@ -81,7 +81,7 @@ class NumberOfChildrenTest extends Unit
     protected function getNumberOfChildrenMock(): NumberOfChildren
     {
         $mockBuilder = $this->getMockBuilder(NumberOfChildren::class);
-        $mockBuilder->setMethods(['addViolation', 'getIntProperty']);
+        $mockBuilder->onlyMethods(['addViolation', 'getIntProperty']);
 
         $numberOfChildrenMock = $mockBuilder->getMock();
         $numberOfChildrenMock->expects($this->once())->method('getIntProperty')->willReturn(static::THRESHOLD);
@@ -97,7 +97,8 @@ class NumberOfChildrenTest extends Unit
     protected function getNodeMock(string $fullyQualifiedClassName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractNode::class);
-        $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])
+        $mockBuilder->addMethods(['getNamespace'])
+            ->onlyMethods(['getMetric', 'getName', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])
             ->disableOriginalConstructor();
 
         $nodeMock = $mockBuilder->getMock();

@@ -190,7 +190,7 @@ class VersionResolverTest extends Unit
     protected function createContentTypeResolverMock(): ContentTypeResolverInterface
     {
         $contentTypeResolverMock = $this->getMockBuilder(ContentTypeResolverInterface::class)
-            ->setMethods(['matchContentType', 'addResponseHeaders'])
+            ->onlyMethods(['matchContentType', 'addResponseHeaders'])
             ->getMock();
 
         return $contentTypeResolverMock;

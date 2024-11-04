@@ -86,7 +86,7 @@ class CouplingBetweenObjectsTest extends Unit
     protected function getCouplingBetweenObjectsMock(): CouplingBetweenObjects
     {
         $mockBuilder = $this->getMockBuilder(CouplingBetweenObjects::class);
-        $mockBuilder->setMethods(['addViolation', 'getIntProperty']);
+        $mockBuilder->onlyMethods(['addViolation', 'getIntProperty']);
 
         $couplingBetweenObjectsMock = $mockBuilder->getMock();
         $couplingBetweenObjectsMock->expects($this->once())->method('getIntProperty')->willReturn(static::THRESHOLD);
@@ -103,7 +103,8 @@ class CouplingBetweenObjectsTest extends Unit
     protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractNode::class);
-        $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])
+        $mockBuilder->addMethods(['getNamespace'])
+            ->onlyMethods(['getMetric', 'getName', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName'])
             ->disableOriginalConstructor();
 
         $nodeMock = $mockBuilder->getMock();

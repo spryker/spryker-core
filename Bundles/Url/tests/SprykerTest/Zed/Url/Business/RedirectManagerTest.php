@@ -55,10 +55,10 @@ class RedirectManagerTest extends Unit
      */
     public function testDeleteUrlRedirect(): void
     {
-        $entityMock = $this->getMockBuilder(SpyUrlRedirect::class)->setMethods(['delete'])->getMock();
+        $entityMock = $this->getMockBuilder(SpyUrlRedirect::class)->onlyMethods(['delete'])->getMock();
         $entityMock->expects($this->once())->method('delete');
 
-        $redirectedManager = $this->getMockBuilder(RedirectManager::class)->setMethods(['getRedirectById', 'touchDeleted'])->disableOriginalConstructor()->getMock();
+        $redirectedManager = $this->getMockBuilder(RedirectManager::class)->onlyMethods(['getRedirectById', 'touchDeleted'])->disableOriginalConstructor()->getMock();
         $redirectedManager->method('getRedirectById')->willReturn($entityMock);
         $redirectedManager->expects($this->once())->method('touchDeleted');
 

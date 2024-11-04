@@ -144,7 +144,7 @@ class ConsoleTest extends Unit
      */
     private function getPreRunPluginMock(): ConsolePreRunHookPluginInterface
     {
-        $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->setMethods(['preRun'])->getMock();
+        $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->onlyMethods(['preRun'])->getMock();
         $mock->expects($this->once())->method('preRun');
 
         return $mock;
@@ -155,7 +155,7 @@ class ConsoleTest extends Unit
      */
     private function getPostRunPluginMock(): ConsolePostRunHookPluginInterface
     {
-        $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->setMethods(['postRun'])->getMock();
+        $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->onlyMethods(['postRun'])->getMock();
         $mock->expects($this->once())->method('postRun');
 
         return $mock;

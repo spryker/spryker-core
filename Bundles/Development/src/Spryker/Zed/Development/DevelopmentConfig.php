@@ -428,7 +428,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'codeception/codeception' => 'spryker/testify',
-            'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
             'egulias/email-validator' => 'spryker/egulias',
             'fakerphp/faker' => 'spryker/testify',

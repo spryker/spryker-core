@@ -98,7 +98,7 @@ class TransitionLogTest extends StateMachineMocks
     protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock): TransitionLog
     {
         $partialTransitionLogMock = $this->getMockBuilder(TransitionLog::class)
-            ->setMethods(['createStateMachineTransitionLogEntity'])
+            ->onlyMethods(['createStateMachineTransitionLogEntity'])
             ->setConstructorArgs([$this->createPathFinderMock(), $this->createUtilNetworkServiceMock()])
             ->getMock();
 
@@ -121,7 +121,7 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createTransitionLogEntityMock(): SpyStateMachineTransitionLog
     {
-        return $this->getMockBuilder(SpyStateMachineTransitionLog::class)->setMethods(['save'])->getMock();
+        return $this->getMockBuilder(SpyStateMachineTransitionLog::class)->onlyMethods(['save'])->getMock();
     }
 
     /**
@@ -129,7 +129,7 @@ class TransitionLogTest extends StateMachineMocks
      */
     protected function createUtilNetworkServiceMock(): UtilNetworkServiceInterface
     {
-        $utilNetworkServiceMock = $this->getMockBuilder(UtilNetworkServiceInterface::class)->setMethods(['getHostName', 'getRequestId'])->getMock();
+        $utilNetworkServiceMock = $this->getMockBuilder(UtilNetworkServiceInterface::class)->onlyMethods(['getHostName', 'getRequestId'])->getMock();
         $utilNetworkServiceMock->method('getHostName')->willReturn('hostname-mock');
 
         return $utilNetworkServiceMock;

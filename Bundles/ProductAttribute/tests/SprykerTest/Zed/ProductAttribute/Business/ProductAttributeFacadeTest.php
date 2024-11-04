@@ -82,7 +82,7 @@ class ProductAttributeFacadeTest extends Unit
     {
         /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productManagementBusinessFactoryMock */
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
-            ->setMethods(['createAttributeTranslator'])
+            ->onlyMethods(['createAttributeTranslator'])
             ->getMock();
 
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
@@ -142,7 +142,7 @@ class ProductAttributeFacadeTest extends Unit
     {
         /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productManagementBusinessFactoryMock */
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
-            ->setMethods(['createAttributeTranslator'])
+            ->onlyMethods(['createAttributeTranslator'])
             ->getMock();
 
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
@@ -596,7 +596,7 @@ class ProductAttributeFacadeTest extends Unit
             $productManagementToLocaleBridgeMock,
             $productManagementToGlossaryBridgeMock,
             $glossaryKeyBuilderMock,
-        ])->setMethods(['getLocaleByName'])->getMock();
+        ])->onlyMethods(['getLocaleByName'])->getMock();
 
         $attributeTranslatorMock->method('getLocaleByName')->willReturnCallback(function ($localeName) {
             return $this->tester->getLocale($localeName);

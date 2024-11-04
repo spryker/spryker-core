@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use PHPUnit\Framework\Assert;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
@@ -422,25 +421,6 @@ class FileSystemServiceTest extends Unit
         $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
 
         $this->assertDirectoryDoesNotExist($dir);
-    }
-
-    /**
-     * @deprecated Will be removed once PHPUnit 8 support is dropped.
-     *
-     * @param string $directory
-     * @param string $message
-     *
-     * @return void
-     */
-    public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
-    {
-        if (method_exists(Assert::class, 'assertDirectoryDoesNotExist')) {
-            parent::assertDirectoryDoesNotExist($directory, $message);
-
-            return;
-        }
-
-        static::assertDirectoryNotExists($directory, $message);
     }
 
     /**

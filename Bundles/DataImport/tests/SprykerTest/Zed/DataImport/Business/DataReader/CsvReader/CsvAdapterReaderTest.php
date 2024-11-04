@@ -83,7 +83,7 @@ class CsvAdapterReaderTest extends Unit
     protected function getConfigMock(): DataImportConfig
     {
         $configMock = $this->getMockBuilder(DataImportConfig::class)
-            ->setMethods(['isDataImportFromOtherSourceEnabled'])
+            ->onlyMethods(['isDataImportFromOtherSourceEnabled'])
             ->getMock();
 
         $configMock->method('isDataImportFromOtherSourceEnabled')

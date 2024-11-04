@@ -113,7 +113,7 @@ class AbstractDatabaseCollectorTest extends Unit
 
         $this->abstractDatabaseCollectorMock = $this
             ->getMockBuilder(AbstractDatabaseCollector::class)
-            ->setMethods(['startProgressBar', 'isStorable', 'collectKey', 'processCollectedItem'])
+            ->onlyMethods(['startProgressBar', 'isStorable', 'collectKey', 'processCollectedItem'])
             ->getMockForAbstractClass();
 
         $this->abstractDatabaseCollectorMock->setTouchQueryContainer($this->touchQueryContainerMock);

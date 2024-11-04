@@ -45,7 +45,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     ): void {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
-            ->setMethods(['getSearchConfig'])
+            ->onlyMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
             ->method('getSearchConfig')

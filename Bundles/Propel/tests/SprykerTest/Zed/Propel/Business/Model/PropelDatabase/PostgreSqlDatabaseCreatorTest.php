@@ -70,7 +70,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     {
         return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)
             ->disableOriginalConstructor()
-            ->setMethods($methods)
+            ->onlyMethods($methods)
             ->getMock();
     }
 

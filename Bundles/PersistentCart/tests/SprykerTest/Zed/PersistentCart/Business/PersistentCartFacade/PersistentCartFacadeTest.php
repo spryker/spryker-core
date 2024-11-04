@@ -436,7 +436,7 @@ class PersistentCartFacadeTest extends Unit
     {
         $cartPreCheckPluginInterfaceMock = $this
             ->getMockBuilder(CartPreCheckPluginInterface::class)
-            ->setMethods([
+            ->onlyMethods([
                 'check',
             ])
             ->disableOriginalConstructor()
@@ -456,7 +456,7 @@ class PersistentCartFacadeTest extends Unit
     {
         $cartPreCheckPluginInterfaceMock = $this
             ->getMockBuilder(CartRemovalPreCheckPluginInterface::class)
-            ->setMethods([
+            ->onlyMethods([
                 'check',
             ])
             ->disableOriginalConstructor()

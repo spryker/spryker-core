@@ -216,7 +216,7 @@ class FormCollectionHandlerTest extends Unit
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 
-        $formCollectionHandlerMock = $this->getMockBuilder(FormCollectionHandler::class)->setMethods($formCollectionHandlerMethods)->setConstructorArgs($arguments)->getMock();
+        $formCollectionHandlerMock = $this->getMockBuilder(FormCollectionHandler::class)->onlyMethods($formCollectionHandlerMethods)->setConstructorArgs($arguments)->getMock();
 
         return $formCollectionHandlerMock;
     }

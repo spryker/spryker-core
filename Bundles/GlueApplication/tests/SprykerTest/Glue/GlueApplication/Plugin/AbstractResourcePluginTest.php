@@ -39,7 +39,7 @@ class AbstractResourcePluginTest extends Unit
                 ->setMethod('getCollection'));
 
         $abstractResourcePluginMock = $this->getMockBuilder(AbstractResourcePlugin::class)
-            ->setMethods(['getDeclaredMethods', 'getController', 'getType'])
+            ->onlyMethods(['getDeclaredMethods', 'getController', 'getType'])
             ->getMock();
         $abstractResourcePluginMock
             ->expects($this->once())
@@ -71,7 +71,7 @@ class AbstractResourcePluginTest extends Unit
                 ->setMethod('getCollection'));
 
         $abstractResourcePluginMock = $this->getMockBuilder(AbstractResourcePlugin::class)
-            ->setMethods(['getDeclaredMethods', 'getController', 'getType'])
+            ->onlyMethods(['getDeclaredMethods', 'getController', 'getType'])
             ->getMock();
         $abstractResourcePluginMock
             ->expects($this->once())
@@ -104,7 +104,7 @@ class AbstractResourcePluginTest extends Unit
                 ->setMethod('getCollection'));
 
         $abstractResourcePluginMock = $this->getMockBuilder(AbstractResourcePlugin::class)
-            ->setMethods(['getDeclaredMethods', 'getController', 'getType'])
+            ->onlyMethods(['getDeclaredMethods', 'getController', 'getType'])
             ->getMock();
         $abstractResourcePluginMock
             ->expects($this->once())
@@ -135,7 +135,7 @@ class AbstractResourcePluginTest extends Unit
                 ->setMethod('getCollection'));
 
         $abstractResourcePluginMock = $this->getMockBuilder(AbstractResourcePlugin::class)
-            ->setMethods(['getDeclaredMethods', 'getController', 'getType'])
+            ->onlyMethods(['getDeclaredMethods', 'getController', 'getType'])
             ->getMock();
         $abstractResourcePluginMock
             ->expects($this->once())

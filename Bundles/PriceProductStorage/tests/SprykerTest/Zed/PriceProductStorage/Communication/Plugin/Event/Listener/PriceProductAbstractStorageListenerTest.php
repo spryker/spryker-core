@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageBusinessFactory;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacade;
@@ -59,8 +58,6 @@ class PriceProductAbstractStorageListenerTest extends Unit
     protected $priceProductTransfer;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp(): void
@@ -68,7 +65,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
         parent::setUp();
 
         if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
+            $this->markTestSkipped('Warning: not in suite environment');
         }
 
         $productAbstractTransfer = $this->tester->haveProductAbstract();

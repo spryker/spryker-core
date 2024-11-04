@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 
 /**
  * @method void wantToTest($text)
@@ -27,15 +26,4 @@ use Codeception\Scenario;
 class DiscountPresentationTester extends Actor
 {
     use _generated\DiscountPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 }

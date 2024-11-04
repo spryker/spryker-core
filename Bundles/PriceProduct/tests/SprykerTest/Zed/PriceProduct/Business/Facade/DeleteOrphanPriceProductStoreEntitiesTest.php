@@ -41,7 +41,7 @@ class DeleteOrphanPriceProductStoreEntitiesTest extends Unit
 
         /** @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager $priceProductEntityManagerMock */
         $priceProductEntityManagerMock = $this->getMockBuilder(PriceProductEntityManager::class)
-            ->setMethods([
+            ->onlyMethods([
                 'deletePriceProductStore',
             ])
             ->getMock();

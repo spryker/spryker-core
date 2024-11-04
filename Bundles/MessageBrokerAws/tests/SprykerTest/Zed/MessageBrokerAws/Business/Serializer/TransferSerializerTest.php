@@ -342,14 +342,21 @@ class TransferSerializerTest extends Unit
             MessageBrokerTestMessageTransfer::KEY => $key,
         ];
 
+        $callIndex = 0;
+        $expectedCalls = [
+            [$filterData, $message],
+            [$return1, $message],
+        ];
+        $returnValues = [$return1, $return2];
+
         $filterMock = $this->createMock(MessageDataFilterInterface::class);
         $filterMock->expects($this->exactly(2))
             ->method('filter')
-            ->withConsecutive(
-                [$filterData, $message],
-                [$return1, $message],
-            )
-            ->willReturn($return1, $return2);
+            ->willReturnCallback(function ($data, $msg) use (&$callIndex, $expectedCalls, $returnValues) {
+                $this->assertSame($expectedCalls[$callIndex], [$data, $msg]);
+
+                return $returnValues[$callIndex++];
+            });
 
         $this->tester->mockFactoryMethod('getMessageDataFilters', [
             $filterMock,

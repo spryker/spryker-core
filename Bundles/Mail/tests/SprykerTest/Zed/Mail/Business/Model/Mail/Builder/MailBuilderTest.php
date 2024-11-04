@@ -285,7 +285,7 @@ class MailBuilderTest extends Unit
      */
     protected function getGlossaryFacadeMock(): MailToGlossaryInterface
     {
-        $glossaryFacadeMock = $this->getMockBuilder(MailToGlossaryInterface::class)->setMethods(['hasTranslation', 'translate'])->getMock();
+        $glossaryFacadeMock = $this->getMockBuilder(MailToGlossaryInterface::class)->onlyMethods(['hasTranslation', 'translate'])->getMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);
         $glossaryFacadeMock->method('translate')->willReturnArgument(0);
 
@@ -298,7 +298,7 @@ class MailBuilderTest extends Unit
     protected function getConfigMock(): MailConfig
     {
         $configMock = $this->getMockBuilder(MailConfig::class)
-            ->setMethods([
+            ->onlyMethods([
                 'getSenderName',
                 'getSenderEmail',
             ])

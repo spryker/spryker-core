@@ -107,7 +107,7 @@ class RefundSaverTest extends Unit
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
 
-        $salesOrderItemQueryMock = $this->getMockBuilder(SpySalesOrderItemQuery::class)->setMethods(['findOneByIdSalesOrderItem'])->getMock();
+        $salesOrderItemQueryMock = $this->getMockBuilder(SpySalesOrderItemQuery::class)->addMethods(['findOneByIdSalesOrderItem'])->getMock();
         $salesOrderItemQueryMock->method('findOneByIdSalesOrderItem')->willReturn($salesOrderItemEntityMock);
 
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
@@ -145,7 +145,7 @@ class RefundSaverTest extends Unit
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
 
-        $salesExpenseQueryMock = $this->getMockBuilder(SpySalesExpenseQuery::class)->setMethods(['findOneByIdSalesExpense'])->getMock();
+        $salesExpenseQueryMock = $this->getMockBuilder(SpySalesExpenseQuery::class)->addMethods(['findOneByIdSalesExpense'])->getMock();
         $salesExpenseQueryMock->method('findOneByIdSalesExpense')->willReturn($salesExpenseEntityMock);
 
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
@@ -216,7 +216,7 @@ class RefundSaverTest extends Unit
     ): RefundSaverInterface {
         if ($refundEntity) {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
-                ->setMethods(['buildRefundEntity'])
+                ->onlyMethods(['buildRefundEntity'])
                 ->setConstructorArgs([
                     $salesQueryContainerMock,
                     $salesFacadeMock,
@@ -229,7 +229,7 @@ class RefundSaverTest extends Unit
             $refundSaverMock->expects($this->once())->method('buildRefundEntity')->willReturn($refundEntity);
         } else {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
-                ->setMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
+                ->onlyMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
                 ->setConstructorArgs([
                     $this->getSalesQueryContainerMock(),
                     $salesFacadeMock,
@@ -382,7 +382,7 @@ class RefundSaverTest extends Unit
      */
     protected function getSalesOrderItemEntityMock(): SpySalesOrderItem
     {
-        $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
+        $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)->onlyMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesOrderItemEntityMock->method('save')->willReturn(1);
         $salesOrderItemEntityMock->expects($this->once())->method('setCanceledAmount');
 
@@ -394,7 +394,7 @@ class RefundSaverTest extends Unit
      */
     protected function getSalesExpenseEntityMock(): SpySalesExpense
     {
-        $salesExpenseEntityMock = $this->getMockBuilder(SpySalesExpense::class)->setMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
+        $salesExpenseEntityMock = $this->getMockBuilder(SpySalesExpense::class)->onlyMethods(['save', 'setCanceledAmount'])->disableOriginalConstructor()->getMock();
         $salesExpenseEntityMock->method('save')->willReturn(1);
         $salesExpenseEntityMock->expects($this->once())->method('setCanceledAmount');
 

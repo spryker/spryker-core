@@ -101,7 +101,7 @@ class WebErrorHtmlRendererTest extends Unit
     protected function getErrorPageMock(string $application): ErrorRendererInterface
     {
         $errorPageMock = $this->getMockBuilder(WebHtmlErrorRenderer::class)
-            ->setMethods(['getHtmlErrorPageContent'])
+            ->onlyMethods(['getHtmlErrorPageContent'])
             ->setConstructorArgs([$application])
             ->getMock();
 

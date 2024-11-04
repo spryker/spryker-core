@@ -316,7 +316,7 @@ class SchedulerFacadeTest extends Unit
     protected function getSchedulerConfigMock(): SchedulerConfig
     {
         $schedulerConfigMock = $this->getMockBuilder(SchedulerConfig::class)
-            ->setMethods([
+            ->onlyMethods([
                 'getPhpSchedulerReaderPath',
                 'getEnabledSchedulers',
             ])
@@ -349,7 +349,7 @@ class SchedulerFacadeTest extends Unit
     protected function getPhpSchedulerReaderPluginMock(): ScheduleReaderPluginInterface
     {
         $phpSchedulerReaderPluginMock = $this->getMockBuilder(PhpScheduleReaderPlugin::class)
-            ->setMethods(['readSchedule'])
+            ->onlyMethods(['readSchedule'])
             ->getMock();
 
         $phpSchedulerReaderPluginMock

@@ -38,7 +38,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getFacetConfigBuilder', 'getPaginationConfigBuilder', 'getSortConfigBuilder'])
+            ->onlyMethods(['getFacetConfigBuilder', 'getPaginationConfigBuilder', 'getSortConfigBuilder'])
             ->getMock();
 
         $searchConfigMock

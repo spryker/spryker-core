@@ -263,7 +263,7 @@ class CartCodesRestApiFacadeTest extends Unit
     {
         $mockCartsRestApiFacade = $this->getMockBuilder(CartCodesRestApiToCartsRestApiFacadeBridge::class)
             ->disableOriginalConstructor()
-            ->setMethods(['findQuoteByUuid'])
+            ->onlyMethods(['findQuoteByUuid'])
             ->getMock();
         $mockCartsRestApiFacade->method('findQuoteByUuid')
             ->willReturn(
@@ -284,7 +284,7 @@ class CartCodesRestApiFacadeTest extends Unit
         CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade
     ): CartCodesRestApiBusinessFactory {
         $mockCartCodesRestApiBusinessFactory = $this->getMockBuilder(CartCodesRestApiBusinessFactory::class)
-            ->setMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
+            ->onlyMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
             ->getMock();
 
         $mockCartCodesRestApiBusinessFactory->method('getCartsRestApiFacade')

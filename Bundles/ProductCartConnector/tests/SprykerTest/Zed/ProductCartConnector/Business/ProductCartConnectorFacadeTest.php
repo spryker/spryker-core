@@ -268,7 +268,7 @@ class ProductCartConnectorFacadeTest extends Unit
 
         // Assert
         $this->expectException(NullValueException::class);
-        $this->expectErrorMessage(sprintf('Property "%s" of transfer `%s` is null.', ItemTransfer::ABSTRACT_SKU, ItemTransfer::class));
+        $this->expectExceptionMessage(sprintf('Property "%s" of transfer `%s` is null.', ItemTransfer::ABSTRACT_SKU, ItemTransfer::class));
 
         // Act
         $this->tester->getFacade()->validateCheckoutQuoteItems($quoteTransfer, $checkoutResponseTransfer);

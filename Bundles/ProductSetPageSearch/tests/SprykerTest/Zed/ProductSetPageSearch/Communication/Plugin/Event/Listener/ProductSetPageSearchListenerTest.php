@@ -14,7 +14,6 @@ use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductAbstractProductSetPageSearchListener;
@@ -64,8 +63,6 @@ class ProductSetPageSearchListenerTest extends Unit
     protected $productSetFacadeInterface;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp(): void
@@ -73,7 +70,7 @@ class ProductSetPageSearchListenerTest extends Unit
         parent::setUp();
 
         if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
+            $this->markTestSkipped('Warning: not in suite environment');
         }
 
         $this->productSetFacadeInterface = $this->tester->getLocator()->productSet()->facade();

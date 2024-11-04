@@ -27,6 +27,17 @@ class CategoryEditCest
      *
      * @return void
      */
+    public function _before(CategoryPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\CategoryGui\CategoryPresentationTester $i
+     *
+     * @return void
+     */
     public function testICanOpenEditCategoryPage(CategoryPresentationTester $i): void
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);

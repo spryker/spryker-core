@@ -42,7 +42,7 @@ class BundleNameResolverTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)
-            ->setMethods(['getCodeBucket'])
+            ->onlyMethods(['getCodeBucket'])
             ->getMock();
 
         $mock

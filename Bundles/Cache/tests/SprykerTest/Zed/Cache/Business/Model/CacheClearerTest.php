@@ -136,14 +136,19 @@ class CacheClearerTest extends Unit
          * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
          */
         $fileSystemMock = $this->getFileSystemMock();
+        $matcher = $this->exactly(2);
         $fileSystemMock
-            ->expects($this->exactly(2))
+            ->expects($matcher)
             ->method('exists')
-            ->withConsecutive(
-                [$this->equalTo('/path/to/DE/cache')],
-                [$this->equalTo('/path/to/EN/cache')],
-            )
-            ->will($this->returnValue(true));
+            ->willReturnCallback(function ($path) use ($matcher) {
+                match ($matcher->numberOfInvocations()) {
+                    1 => $this->assertEquals('/path/to/DE/cache', $path),
+                    2 => $this->assertEquals('/path/to/EN/cache', $path),
+                };
+
+                return true;
+            });
+
         $fileSystemMock
             ->expects($this->exactly(2))
             ->method('remove');
@@ -152,14 +157,18 @@ class CacheClearerTest extends Unit
          * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
          */
         $finderMock = $this->getFinderMock();
+        $matcherFinder = $this->exactly(2);
         $finderMock
-            ->expects($this->exactly(2))
+            ->expects($matcherFinder)
             ->method('in')
-            ->withConsecutive(
-                [$this->equalTo('/path/to/DE/cache')],
-                [$this->equalTo('/path/to/EN/cache')],
-            )
-            ->will($this->returnSelf());
+            ->willReturnCallback(function ($path) use ($matcherFinder, $finderMock) {
+                match ($matcherFinder->numberOfInvocations()) {
+                    1 => $this->assertEquals('/path/to/DE/cache', $path),
+                    2 => $this->assertEquals('/path/to/EN/cache', $path),
+                };
+
+                return $finderMock;
+            });
 
         $finderMock
             ->expects($this->exactly(2))

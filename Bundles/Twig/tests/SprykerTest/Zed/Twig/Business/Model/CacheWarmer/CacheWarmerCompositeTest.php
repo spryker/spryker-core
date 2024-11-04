@@ -65,7 +65,7 @@ class CacheWarmerCompositeTest extends Unit
     private function getCacheWarmerMock(): CacheWarmerInterface
     {
         $mockBuilder = $this->getMockBuilder(CacheWarmerInterface::class)
-            ->setMethods(['warmUp']);
+            ->onlyMethods(['warmUp']);
 
         return $mockBuilder->getMock();
     }

@@ -105,7 +105,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         parent::setUp();
 
-        $this->testFactory = new DocumentationGeneratorRestApiTestFactory();
+        $this->testFactory = new DocumentationGeneratorRestApiTestFactory('');
     }
 
     /**

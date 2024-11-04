@@ -82,7 +82,7 @@ class DatabaseCreatorCollectionTest extends Unit
      */
     private function getDatabaseCreatorMock(): DatabaseCreatorInterface
     {
-        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
+        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->onlyMethods(['getEngine', 'createIfNotExists'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(static::TEST_ENGINE);
 
         return $databaseCreatorMock;

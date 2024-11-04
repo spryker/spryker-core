@@ -49,7 +49,7 @@ class TransformSplittableItemTest extends Unit
     public function testTransformSplittableItem(): void
     {
         // Arrange
-        $this->setData(true);
+        $this->saveData(true);
         $itemTransfer = (new ItemTransfer())
             ->setSku(static::CONCRETE_PRODUCT_SKU)
             ->setQuantity(2)
@@ -71,7 +71,7 @@ class TransformSplittableItemTest extends Unit
      *
      * @return void
      */
-    protected function setData(bool $isQuantitySplittable): void
+    protected function saveData(bool $isQuantitySplittable): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku(static::ABSTRACT_PRODUCT_SKU)

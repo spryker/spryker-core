@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +24,7 @@ use Generated\Shared\DataBuilder\ProductReviewBuilder;
  */
 class ReadProductReviewTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester

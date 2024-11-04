@@ -449,7 +449,7 @@ class CartOperationTest extends Unit
                 $this->createCartChangeRequestExpanderMock(),
                 $this->createSimpleProductQuoteItemFinderPluginMock(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -461,7 +461,7 @@ class CartOperationTest extends Unit
     protected function createQuoteClientMock(QuoteTransfer $quoteTransfer): CartToQuoteBridge
     {
         $quoteClientMock = $this->getMockBuilder(CartToQuoteBridge::class)
-            ->setMethods([
+            ->onlyMethods([
                 'getQuote',
                 'setQuote',
             ])
@@ -487,7 +487,7 @@ class CartOperationTest extends Unit
     protected function createCartStubMock(): CartStub
     {
         $cartStubMock = $this->getMockBuilder(CartStub::class)
-            ->setMethods([
+            ->onlyMethods([
                 'addToCart',
                 'removeFromCart',
             ])
@@ -504,7 +504,7 @@ class CartOperationTest extends Unit
     {
         $cartChangeRequestExpanderMock = $this
             ->getMockBuilder(CartChangeRequestExpander::class)
-            ->setMethods([
+            ->onlyMethods([
                 'addItemsRequestExpand',
                 'removeItemRequestExpand',
             ])
@@ -534,7 +534,7 @@ class CartOperationTest extends Unit
         return $this
             ->getMockBuilder(SimpleProductQuoteItemFinderPlugin::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 }

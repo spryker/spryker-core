@@ -76,13 +76,15 @@ class GraphPluginTest extends Unit
      */
     public function testInit(): void
     {
-        $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
+        $graphMock = $this->getMockBuilder(GraphInterface::class)
+            ->addMethods(['create'])
+            ->onlyMethods(['addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');
 
         $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
-        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
+        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->onlyMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
         $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->init(static::GRAPH_NAME));
@@ -157,13 +159,15 @@ class GraphPluginTest extends Unit
      */
     protected function getPluginMock(): GraphPlugin
     {
-        $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
+        $graphMock = $this->getMockBuilder(GraphInterface::class)
+            ->addMethods(['create'])
+            ->onlyMethods(['addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');
 
         $factoryMock = $this->getMockBuilder(GraphCommunicationFactory::class)->getMock();
         $factoryMock->method('createGraph')->willReturn($graphMock);
 
-        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
+        $pluginMock = $this->getMockBuilder(GraphPlugin::class)->onlyMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
         return $pluginMock->init(static::GRAPH_NAME);

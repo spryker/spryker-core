@@ -82,12 +82,11 @@ class TwigRendererTest extends Unit
      */
     protected function getTwigEnvironmentMock(): MailToRendererInterface
     {
-        $twigEnvironmentMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->setMethods(['render', 'getExtension'])->getMock();
+        $twigEnvironmentMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->onlyMethods(['render', 'getExtension'])->getMock();
         $twigEnvironmentMock->expects($this->once())->method('getExtension')->with(TwigTranslatorPlugin::class)->willReturn(new TwigTranslatorPlugin());
         $twigEnvironmentMock
             ->expects($this->exactly(2))
             ->method('render')
-            ->withConsecutive([TwigRenderer::LAYOUT_TEMPLATE_TEXT], [TwigRenderer::LAYOUT_TEMPLATE_HTML])
             ->willReturnOnConsecutiveCalls('TextTemplate', 'HtmlTemplate');
 
         $rendererBridge = new MailToRendererBridge($twigEnvironmentMock);

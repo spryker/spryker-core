@@ -27,6 +27,17 @@ class ProductOptionCreateCest
      *
      * @return void
      */
+    public function _before(ProductOptionPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
+     *
+     * @return void
+     */
     public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i): void
     {
         $i->wantTo('Create single option group with one option');

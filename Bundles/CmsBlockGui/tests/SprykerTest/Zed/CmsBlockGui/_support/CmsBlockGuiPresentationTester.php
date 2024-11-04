@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CmsBlockGui;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 
 /**
  * @method void wantToTest($text)
@@ -27,15 +26,4 @@ use Codeception\Scenario;
 class CmsBlockGuiPresentationTester extends Actor
 {
     use _generated\CmsBlockGuiPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 }

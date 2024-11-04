@@ -70,6 +70,6 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
      */
     protected function getResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return (new DocumentationGeneratorRestApiTestFactory())->createResourceRelationshipsPluginAnalyzer();
+        return (new DocumentationGeneratorRestApiTestFactory(''))->createResourceRelationshipsPluginAnalyzer();
     }
 }

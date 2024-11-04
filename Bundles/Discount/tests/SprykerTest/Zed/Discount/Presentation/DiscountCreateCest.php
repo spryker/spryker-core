@@ -24,6 +24,17 @@ class DiscountCreateCest
 {
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
+     *
+     * @return void
+     */
+    public function _before(DiscountPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void

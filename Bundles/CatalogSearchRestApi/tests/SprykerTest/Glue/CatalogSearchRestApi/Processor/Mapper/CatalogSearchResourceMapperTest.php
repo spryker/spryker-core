@@ -9,7 +9,6 @@ namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
@@ -24,6 +23,7 @@ use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerP
 use Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +38,7 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapp
  */
 class CatalogSearchResourceMapperTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string

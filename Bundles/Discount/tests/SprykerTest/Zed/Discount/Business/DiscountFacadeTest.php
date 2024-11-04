@@ -1118,7 +1118,8 @@ class DiscountFacadeTest extends Unit
     protected function createDiscountRuleWithValueOptionsPluginMock(): DiscountRuleWithValueOptionsPluginInterface
     {
         $discountRulePluginMock = $this->getMockBuilder(DiscountRuleWithValueOptionsPluginInterface::class)
-            ->setMethods(['getQueryStringValueOptions', 'getFieldName'])
+            ->addMethods(['getFieldName'])
+            ->onlyMethods(['getQueryStringValueOptions'])
             ->getMock();
 
         return $discountRulePluginMock;

@@ -113,7 +113,7 @@ class ProductListStorageListenerTest extends Unit
     protected function getConfigMock(): ProductListStorageConfig
     {
         $configMock = $this->getMockBuilder(ProductListStorageConfig::class)
-            ->setMethods(['isSendingToQueue'])
+            ->onlyMethods(['isSendingToQueue'])
             ->getMock();
 
         $configMock->method('isSendingToQueue')->willReturn(false);

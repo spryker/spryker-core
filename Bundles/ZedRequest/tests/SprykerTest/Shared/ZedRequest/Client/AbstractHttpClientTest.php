@@ -81,7 +81,7 @@ class AbstractHttpClientTest extends Unit
         $utilNetworkService = new UtilNetworkService();
 
         return $this->getMockBuilder(AbstractHttpClient::class)
-            ->setMethods($methods)
+            ->onlyMethods($methods)
             ->setConstructorArgs([$url, $utilNetworkService])
             ->getMock();
     }

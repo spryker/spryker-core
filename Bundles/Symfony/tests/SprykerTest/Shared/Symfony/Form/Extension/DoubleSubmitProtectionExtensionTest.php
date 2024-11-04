@@ -66,9 +66,12 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     {
         parent::setUp();
 
-        $this->generator = $this->getMockBuilder(TokenGeneratorInterface::class)->setMethods(['checkTokenEquals', 'generateToken'])->getMock();
-        $this->storage = $this->getMockBuilder(StorageInterface::class)->setMethods(['getToken', 'setToken', 'deleteToken', 'checkTokenEquals'])->getMock();
-        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->setMethods(['trans', 'getLocale'])->getMock();
+        $this->generator = $this->getMockBuilder(TokenGeneratorInterface::class)->onlyMethods(['checkTokenEquals', 'generateToken'])->getMock();
+        $this->storage = $this->getMockBuilder(StorageInterface::class)
+            ->addMethods(['checkTokenEquals'])
+            ->onlyMethods(['getToken', 'setToken', 'deleteToken'])->getMock();
+
+        $this->translator = $this->createTranslatorMock();
         $this->translator->method('trans')->willReturnArgument(0);
 
         $this->formFactory = Forms::createFormFactoryBuilder()
@@ -168,5 +171,22 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             [true],
             [false],
         ];
+    }
+
+    /**
+     * @return \Symfony\Contracts\Translation\TranslatorInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createTranslatorMock(): TranslatorInterface
+    {
+        if (method_exists(TranslatorInterface::class, 'getLocale') === false) {
+            return $this->getMockBuilder(TranslatorInterface::class)
+                ->addMethods(['getLocale'])
+                ->onlyMethods(['trans'])
+                ->getMock();
+        }
+
+        return $this->getMockBuilder(TranslatorInterface::class)
+            ->onlyMethods(['trans', 'getLocale'])
+            ->getMock();
     }
 }

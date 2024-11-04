@@ -243,7 +243,7 @@ class CollectDiscountByShipmentTest extends Unit
         $mockedQuoteLevelShipmentPriceDiscountDecisionRule = $this->getMockBuilder(ShipmentPriceDiscountDecisionRuleWithQuoteLevelShipment::class)->disableOriginalConstructor()->getMock();
         $mockedQuoteLevelShipmentPriceDiscountDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
 
-        $mockedBusinessFactory = $this->getMockBuilder(ShipmentDiscountConnectorBusinessFactory::class)->setMethods([
+        $mockedBusinessFactory = $this->getMockBuilder(ShipmentDiscountConnectorBusinessFactory::class)->onlyMethods([
             'createCarrierDiscountDecisionRule',
             'createCarrierDiscountDecisionRuleWithMultiShipment',
             'createMethodDiscountDecisionRule',

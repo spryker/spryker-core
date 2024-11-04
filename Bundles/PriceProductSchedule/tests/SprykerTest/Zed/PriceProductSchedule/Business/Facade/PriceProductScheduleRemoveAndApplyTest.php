@@ -429,7 +429,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
     protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['getFallbackPriceTypeList'])
+            ->onlyMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
         $configMock->method('getFallbackPriceTypeList')

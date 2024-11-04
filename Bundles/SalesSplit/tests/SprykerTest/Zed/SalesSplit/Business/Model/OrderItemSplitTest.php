@@ -146,7 +146,7 @@ class OrderItemSplitTest extends Unit
     {
         $salesOrderItemQueryMock = $this
             ->getMockBuilder(SpySalesOrderQuery::class)
-            ->setMethods(['findOneByIdSalesOrderItem'])
+            ->addMethods(['findOneByIdSalesOrderItem'])
             ->disableOriginalConstructor()
             ->getMock();
 

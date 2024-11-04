@@ -43,7 +43,7 @@ class TwigFacadeTest extends Unit
     protected function getFactoryMock(): TwigBusinessFactory
     {
         $mockBuilder = $this->getMockBuilder(TwigBusinessFactory::class)
-            ->setMethods(['createCacheWarmer']);
+            ->onlyMethods(['createCacheWarmer']);
 
         $mock = $mockBuilder->getMock();
         $mock->expects($this->once())->method('createCacheWarmer')->willReturn($this->getCacheWarmerMock());

@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\AnnotationTransfer;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
@@ -26,7 +26,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  */
 class HttpMethodProcessorTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string
@@ -70,7 +70,7 @@ class HttpMethodProcessorTest extends Unit
     {
         parent::setUp();
 
-        $this->methodProcessor = (new DocumentationGeneratorRestApiTestFactory())->createRestApiMethodProcessor();
+        $this->methodProcessor = (new DocumentationGeneratorRestApiTestFactory(''))->createRestApiMethodProcessor();
     }
 
     /**

@@ -45,7 +45,7 @@ class IndexInstallerTest extends Unit
 
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'request', 'getName'])
+            ->onlyMethods(['exists', 'request', 'getName'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(false);
@@ -73,7 +73,7 @@ class IndexInstallerTest extends Unit
     {
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'create', 'setSettings'])
+            ->onlyMethods(['exists', 'create', 'setSettings'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(true);
@@ -110,7 +110,7 @@ class IndexInstallerTest extends Unit
                 $this->createMessengerMock(),
                 $this->createSearchConfigMock(),
             ])
-            ->setMethods(['getIndexState'])
+            ->onlyMethods(['getIndexState'])
             ->getMock();
     }
 
@@ -125,7 +125,7 @@ class IndexInstallerTest extends Unit
     {
         $indexDefinitionLoader = $this->getMockBuilder(IndexDefinitionLoaderInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['loadIndexDefinitions'])
+            ->onlyMethods(['loadIndexDefinitions'])
             ->getMock();
 
         $indexDefinitionLoader
@@ -144,7 +144,7 @@ class IndexInstallerTest extends Unit
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getBlacklistSettingsForIndexUpdate'])
+            ->onlyMethods(['getBlacklistSettingsForIndexUpdate'])
             ->getMock();
 
         return $searchConfigMock;
@@ -161,7 +161,7 @@ class IndexInstallerTest extends Unit
     {
         $elasticaClientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIndex'])
+            ->onlyMethods(['getIndex'])
             ->getMock();
 
         $elasticaClientMock

@@ -94,7 +94,7 @@ class ProductBundleWriterTest extends Unit
     protected function createProductBundleEntityMock(): SpyProductBundle
     {
         $productBundleEntityMock = $this->getMockBuilder(SpyProductBundle::class)
-            ->setMethods(['save', 'delete', 'getIdProductBundle'])
+            ->onlyMethods(['save', 'delete', 'getIdProductBundle'])
             ->getMock();
 
         $productBundleEntityMock->method('save')->willReturn(1);
@@ -125,7 +125,7 @@ class ProductBundleWriterTest extends Unit
 
         $productBundleWriterMock = $this->getMockBuilder(ProductBundleWriter::class)
             ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleStockWriterMock])
-            ->setMethods(['findOrCreateProductBundleEntity', 'findProductBundleEntity'])
+            ->onlyMethods(['findOrCreateProductBundleEntity', 'findProductBundleEntity'])
             ->getMock();
 
         return $productBundleWriterMock;

@@ -140,7 +140,7 @@ class RemovePriceProductScheduleListTest extends Unit
         /** @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier|\PHPUnit\Framework\MockObject\MockObject $applierMock */
         $applierMock = $this->getMockBuilder(AbstractProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
-            ->setMethods(['applyScheduledPrices'])
+            ->onlyMethods(['applyScheduledPrices'])
             ->getMock();
 
         $applierMock->expects($this->once())->method('applyScheduledPrices');
@@ -247,7 +247,7 @@ class RemovePriceProductScheduleListTest extends Unit
 
         $applierMock = $this->getMockBuilder(ConcreteProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
-            ->setMethods(['applyScheduledPrices'])
+            ->onlyMethods(['applyScheduledPrices'])
             ->getMock();
 
         $applierMock->expects($this->once())->method('applyScheduledPrices');
@@ -354,7 +354,7 @@ class RemovePriceProductScheduleListTest extends Unit
 
         $applierMock = $this->getMockBuilder(ConcreteProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
-            ->setMethods(['applyScheduledPrices'])
+            ->onlyMethods(['applyScheduledPrices'])
             ->getMock();
 
         $applierMock->expects($this->once())->method('applyScheduledPrices');
@@ -459,7 +459,7 @@ class RemovePriceProductScheduleListTest extends Unit
 
         $applierMock = $this->getMockBuilder(AbstractProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
-            ->setMethods(['applyScheduledPrices'])
+            ->onlyMethods(['applyScheduledPrices'])
             ->getMock();
 
         $applierMock->expects($this->never())->method('applyScheduledPrices');
@@ -566,7 +566,7 @@ class RemovePriceProductScheduleListTest extends Unit
 
         $applierMock = $this->getMockBuilder(ConcreteProductPriceProductScheduleApplier::class)
             ->disableOriginalConstructor()
-            ->setMethods(['applyScheduledPrices'])
+            ->onlyMethods(['applyScheduledPrices'])
             ->getMock();
 
         $applierMock->expects($this->never())->method('applyScheduledPrices');
@@ -599,7 +599,7 @@ class RemovePriceProductScheduleListTest extends Unit
     protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['getFallbackPriceTypeList'])
+            ->onlyMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
         $configMock->method('getFallbackPriceTypeList')
@@ -645,7 +645,7 @@ class RemovePriceProductScheduleListTest extends Unit
     protected function getFactoryMock($applierMock, string $mockFactoryMethod): PriceProductScheduleBusinessFactory
     {
         $priceProductScheduleBusinessFactory = $this->getMockBuilder(PriceProductScheduleBusinessFactory::class)
-            ->setMethods([
+            ->onlyMethods([
                 $mockFactoryMethod,
                 'getRepository',
                 'getEntityManager',

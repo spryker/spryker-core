@@ -38,7 +38,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     public function testExecuteOpensTransactionOnFirstCall(): void
     {
         //Arrange
-        $propelConnectionMock = $this->getPropelConnectionMock(1, 1, false, true);
+        $propelConnectionMock = $this->getPropelConnectionMock(1, 2, false, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
 
         $dataSet = $this->createDataSet();
@@ -54,7 +54,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     public function testTransactionNotOpenedWhenAlreadyInTransaction(): void
     {
         //Arrange
-        $propelConnectionMock = $this->getPropelConnectionMock(0, 1, true, true);
+        $propelConnectionMock = $this->getPropelConnectionMock(0, 2, true, true, true);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
 
         $dataSet = $this->createDataSet();
@@ -70,7 +70,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     public function testThrowsExceptionIfNoOpenTransactionGiven(): void
     {
         //Arrange
-        $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false);
+        $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false, false, false);
         $this->tester->setDependency(DataImportDependencyProvider::PROPEL_CONNECTION, $propelConnectionMock);
 
         $dataSet = $this->createDataSet();
@@ -112,7 +112,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
         ...$isInTransaction
     ): DataImportToPropelConnectionInterface {
         $mockBuilder = $this->getMockBuilder(DataImportToPropelConnectionInterface::class)
-            ->setMethods(['inTransaction', 'beginTransaction', 'endTransaction', 'rollBack']);
+            ->onlyMethods(['inTransaction', 'beginTransaction', 'endTransaction', 'rollBack']);
 
         $propelConnectionMock = $mockBuilder->getMock();
 
@@ -147,7 +147,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
     protected function createDataImportStepMockWithExpectedExceptionOnExecute(): DataImportStepInterface
     {
         $dataImportStepMockBuilder = $this->getMockBuilder(DataImportStepInterface::class)
-            ->setMethods(['execute']);
+            ->onlyMethods(['execute']);
         $dataImportStepMock = $dataImportStepMockBuilder->getMock();
         $dataImportStepMock->expects($this->once())->method('execute')->willThrowException(new DataSetBrokerTransactionFailedException(10));
         $this->expectException(DataSetBrokerTransactionFailedException::class);
@@ -160,7 +160,7 @@ class DataSetStepBrokerElasticBatchTransactionAwareTest extends Unit
      */
     protected function createPropelConnectionMockWithExpectedRollBack(): DataImportToPropelConnectionInterface
     {
-        $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false);
+        $propelConnectionMock = $this->getPropelConnectionMock(1, 0, false, false, false);
         $propelConnectionMock->expects($this->exactly(1))->method('rollBack');
 
         return $propelConnectionMock;

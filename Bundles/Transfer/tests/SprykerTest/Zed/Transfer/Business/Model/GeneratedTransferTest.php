@@ -545,7 +545,7 @@ class GeneratedTransferTest extends Unit
         return [
             [
                 'isRecursive' => false,
-                'camelCase' => false,
+                'isCamelCase' => false,
                 'input' => $input,
                 'expected' => array_merge($underscoreOut, [
                     'test_transfer' => function ($value): void {
@@ -556,7 +556,7 @@ class GeneratedTransferTest extends Unit
             ],
             [
                 'isRecursive' => true,
-                'camelCase' => false,
+                'isCamelCase' => false,
                 'input' => $input,
                 'expected' => array_merge($underscoreOut, [
                     'test_transfer' => [
@@ -569,7 +569,7 @@ class GeneratedTransferTest extends Unit
             ],
             [
                 'isRecursive' => false,
-                'camelCase' => true,
+                'isCamelCase' => true,
                 'input' => $input,
                 'expected' => array_merge($camelCaseOut, [
                     'testTransfer' => function ($value): void {
@@ -579,7 +579,7 @@ class GeneratedTransferTest extends Unit
             ],
             [
                 'isRecursive' => true,
-                'camelCase' => true,
+                'isCamelCase' => true,
                 'input' => $input,
                 'expected' => array_merge($camelCaseOut, [
                     'testTransfer' => [

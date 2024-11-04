@@ -95,7 +95,7 @@ class SessionServiceProviderTest extends Unit
     protected function getSessionServiceProviderMock(): SessionServiceProvider
     {
         $sessionServiceProviderMockBuilder = $this->getMockBuilder(SessionServiceProvider::class);
-        $sessionServiceProviderMockBuilder->setMethods(['isCliOrPhpDbg']);
+        $sessionServiceProviderMockBuilder->onlyMethods(['isCliOrPhpDbg']);
 
         $sessionServiceProviderMock = $sessionServiceProviderMockBuilder->getMock();
         $sessionServiceProviderMock->expects($this->once())->method('isCliOrPhpDbg')->willReturn(false);
@@ -109,7 +109,7 @@ class SessionServiceProviderTest extends Unit
     protected function getSessionClientMock(): SessionClientInterface
     {
         $sessionClientMockBuilder = $this->getMockBuilder(SessionClient::class);
-        $sessionClientMockBuilder->setMethods(['setContainer']);
+        $sessionClientMockBuilder->onlyMethods(['setContainer']);
 
         $sessionClientMock = $sessionClientMockBuilder->getMock();
         $sessionClientMock->expects($this->once())->method('setContainer');
@@ -149,6 +149,8 @@ class SessionServiceProviderTest extends Unit
         $sessionServiceProvider->register($application);
 
         $this->assertInstanceOf(SessionHandlerRedisLocking::class, $application['session.storage.handler']);
+
+        unset($application['session.storage.handler']);
     }
 
     /**
@@ -224,7 +226,7 @@ class SessionServiceProviderTest extends Unit
     protected function createSessionCommunicationFactoryMock(): SessionCommunicationFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionCommunicationFactory::class)
-            ->setMethods([
+            ->onlyMethods([
                 'createSessionHandlerRedis',
                 'createSessionHandlerRedisLocking',
                 'createSessionHandlerFile',
@@ -238,7 +240,7 @@ class SessionServiceProviderTest extends Unit
             $this->createMock(SessionHandlerRedis::class),
         );
         $sessionFactoryMock->method('createSessionHandlerRedisLocking')->willReturn(
-            $this->createMock(SessionHandlerRedisLocking::class),
+            $this->createMock(TestSessionHandlerRedisLocking::class),
         );
         $sessionFactoryMock->method('createSessionHandlerFile')->willReturn(
             $this->createMock(SessionHandlerFile::class),

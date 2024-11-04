@@ -81,7 +81,7 @@ class ZedResponseLogPluginTest extends Unit
     protected function getZedResponseLogPluginMock(LoggerInterface $loggerMock): ZedResponseLogPlugin
     {
         $zedResponseLogPluginMock = $this->getMockBuilder(ZedResponseLogPlugin::class)
-            ->setMethods(['getLogger'])
+            ->onlyMethods(['getLogger'])
             ->getMock();
 
         $zedResponseLogPluginMock->expects($this->once())->method('getLogger')->willReturn($loggerMock);

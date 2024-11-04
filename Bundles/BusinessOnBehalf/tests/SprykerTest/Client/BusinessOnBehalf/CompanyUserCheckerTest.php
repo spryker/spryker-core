@@ -46,7 +46,7 @@ class CompanyUserCheckerTest extends Unit
         // Arrange
         $companyUserChangeAllowedCheckPluginMock = $this->getMockBuilder(CompanyUserChangeAllowedCheckPluginInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['check'])
+            ->onlyMethods(['check'])
             ->getMock();
 
         $companyUserChangeAllowedCheckPluginMock->method('check')
@@ -72,7 +72,7 @@ class CompanyUserCheckerTest extends Unit
             ->setConstructorArgs([
                 $companyUserChangeAllowedCheckPlugins,
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 }

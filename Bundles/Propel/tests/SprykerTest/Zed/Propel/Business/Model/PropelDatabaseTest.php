@@ -41,10 +41,10 @@ class PropelDatabaseTest extends Unit
      */
     public function testCreateIfNotExists(): void
     {
-        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['createIfNotExists', 'getEngine'])->getMock();
+        $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->onlyMethods(['createIfNotExists', 'getEngine'])->getMock();
         $databaseCreatorMock->expects($this->once())->method('createIfNotExists');
 
-        $databaseCreatorCollectionMock = $this->getMockBuilder(DatabaseCreatorCollectionInterface::class)->setMethods(['has', 'get', 'add'])->getMock();
+        $databaseCreatorCollectionMock = $this->getMockBuilder(DatabaseCreatorCollectionInterface::class)->onlyMethods(['has', 'get', 'add'])->getMock();
         $databaseCreatorCollectionMock->expects($this->once())->method('has')->willReturn(true);
         $databaseCreatorCollectionMock->expects($this->once())->method('get')->willReturn($databaseCreatorMock);
 

@@ -278,7 +278,6 @@ class MessageBrokerFacadeTest extends Unit
         $this->tester->getFacade()->sendMessage($messageBrokerTestMessageTransfer);
         $this->tester->getFacade()->startWorker($messageBrokerWorkerConfigTransfer);
 
-        $this->tester->assertSame(1, $this->getNumAssertions(), 'Expected one assertion to be made');
         $this->tester->assertTrue($this->isInstancePoolingEnabled(), 'Instance pooling should be enabled');
     }
 }

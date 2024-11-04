@@ -95,14 +95,18 @@ class MerchantSalesOrderFacadeTest extends Unit
     /**
      * @dataProvider getMerchantOrderPositiveScenarioDataProvider
      *
-     * @param array $merchantOrderCriteriaKeys
+     * @param array $merchantOrderCriteriaDataKeys
      * @param int $merchantOrderItemsCount
+     * @param bool $withOrder
+     * @param bool $withMerchant
      *
      * @return void
      */
     public function testGetMerchantOrderCollectionReturnsFilledCollectionTransferWithCorrectCriteria(
-        array $merchantOrderCriteriaKeys,
-        int $merchantOrderItemsCount
+        array $merchantOrderCriteriaDataKeys,
+        int $merchantOrderItemsCount,
+        bool $withOrder = false,
+        bool $withMerchant = false
     ): void {
         //Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -136,7 +140,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
-            array_flip($merchantOrderCriteriaKeys),
+            array_flip($merchantOrderCriteriaDataKeys),
         );
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->fromArray($merchantOrderCriteriaData);

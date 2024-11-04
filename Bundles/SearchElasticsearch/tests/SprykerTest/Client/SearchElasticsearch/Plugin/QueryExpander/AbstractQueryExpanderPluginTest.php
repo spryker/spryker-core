@@ -77,7 +77,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfigInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getFacetConfig', 'getSortConfig', 'getPaginationConfig'])
+            ->onlyMethods(['getFacetConfig', 'getSortConfig', 'getPaginationConfig'])
             ->getMock();
 
         $searchConfigMock
@@ -104,7 +104,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchElasticsearchFactoryMock */
         $searchElasticsearchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getSearchConfig', 'getConfig'])
+            ->onlyMethods(['getSearchConfig', 'getConfig'])
             ->getMock();
 
         $searchElasticsearchFactoryMock
@@ -134,7 +134,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
 
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods($methodsToMock)
+            ->onlyMethods($methodsToMock)
             ->getMock();
 
         $searchFactoryMock

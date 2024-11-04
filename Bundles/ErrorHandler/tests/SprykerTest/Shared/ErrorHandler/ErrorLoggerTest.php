@@ -68,7 +68,7 @@ class ErrorLoggerTest extends Unit
     protected function getErrorLoggerMock(LoggerInterface $logger, MonitoringServiceInterface $monitoringService): ErrorLogger
     {
         $errorLoggerMock = $this->getMockBuilder(ErrorLogger::class)
-            ->setMethods(['getLogger', 'createMonitoringService'])
+            ->onlyMethods(['getLogger', 'createMonitoringService'])
             ->getMock();
 
         $errorLoggerMock->method('getLogger')->willReturn($logger);

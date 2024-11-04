@@ -181,7 +181,7 @@ class ProductBundleReaderTest extends Unit
                 $productBundleRepository,
                 $productBundleCache,
             ])
-            ->setMethods(['findBundledProducts', 'getProductConcreteAvailabilityIndexedBySkuForStore'])
+            ->onlyMethods(['findBundledProducts', 'getProductConcreteAvailabilityIndexedBySkuForStore'])
             ->getMock();
 
         return $productBundleReaderMock;

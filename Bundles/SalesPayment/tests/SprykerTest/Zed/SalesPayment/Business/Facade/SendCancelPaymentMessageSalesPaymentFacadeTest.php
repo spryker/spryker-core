@@ -44,18 +44,19 @@ class SendCancelPaymentMessageSalesPaymentFacadeTest extends Unit
     /**
      * @dataProvider orderItemsDataProviderForCancelSuccessProcess
      *
-     * @param array $orderData
+     * @param array $order
      * @param array $sentItemIds
+     * @param int $expectedAmount
      *
      * @return void
      */
-    public function testSendCancelPaymentMessageSuccess(array $orderData, array $sentItemIds): void
+    public function testSendCancelPaymentMessageSuccess(array $order, array $sentItemIds, int $expectedAmount): void
     {
         // Arrange
-        $this->mockSalesFacade($orderData);
+        $this->mockSalesFacade($order);
 
         $eventPaymentTransfer = (new EventPaymentTransfer())
-            ->setIdSalesOrder($orderData[OrderTransfer::ID_SALES_ORDER])
+            ->setIdSalesOrder($order[OrderTransfer::ID_SALES_ORDER])
             ->setOrderItemIds($sentItemIds);
 
         // Act

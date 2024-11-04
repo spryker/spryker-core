@@ -167,7 +167,7 @@ abstract class AbstractCustomerFacadeTest extends Unit
     protected function mockUtilValidateService(bool $isEmailFormatValid): void
     {
         $serviceMock = $this->getMockBuilder(CustomerToUtilValidateServiceInterface::class)
-            ->setMethods(['isEmailFormatValid'])
+            ->onlyMethods(['isEmailFormatValid'])
             ->getMock();
 
         $serviceMock

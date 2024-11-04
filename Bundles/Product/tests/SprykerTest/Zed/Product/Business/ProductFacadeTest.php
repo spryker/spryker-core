@@ -731,13 +731,13 @@ class ProductFacadeTest extends Unit
     {
         return [
             'store reference is null' => [
-                'export criteria' => (new ProductExportCriteriaTransfer())->setStoreReference(null),
+                'productExportCriteriaTransfer' => (new ProductExportCriteriaTransfer())->setStoreReference(null),
             ],
             'store reference is empty' => [
-                'export criteria' => (new ProductExportCriteriaTransfer())->setStoreReference(''),
+                'productExportCriteriaTransfer' => (new ProductExportCriteriaTransfer())->setStoreReference(''),
             ],
             'store with given reference doesn\'t exist' => [
-                'export criteria' => (new ProductExportCriteriaTransfer())
+                'productExportCriteriaTransfer' => (new ProductExportCriteriaTransfer())
                     ->setStoreReference(static::UNEXISTING_STORE_REFERENCE),
             ],
         ];

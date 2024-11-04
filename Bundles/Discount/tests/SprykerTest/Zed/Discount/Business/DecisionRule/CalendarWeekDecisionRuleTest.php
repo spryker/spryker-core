@@ -60,7 +60,7 @@ class CalendarWeekDecisionRuleTest extends BaseRuleTester
     ): CalendarWeekDecisionRule {
         /** @var \Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule|\PHPUnit\Framework\MockObject\MockObject $calendarWeekDecisionRule */
         $calendarWeekDecisionRule = $this->getMockBuilder(CalendarWeekDecisionRule::class)
-            ->setMethods(['getCurrentDateTime'])
+            ->onlyMethods(['getCurrentDateTime'])
             ->setConstructorArgs([$comparatorMock])
             ->getMock();
         $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);

@@ -125,13 +125,26 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        unset($_SERVER['SERVER_NAME']);
+        unset($_SERVER['REQUEST_URI']);
+    }
+
+    /**
+     * @return void
+     */
     protected function _before(): void
     {
         $this->clientMock = $this->getMockBuilder(ClientInterface::class)
-            ->setMethods([
+            ->addMethods([
                 'keys',
                 'scan',
                 'dbSize',
+            ])
+            ->onlyMethods([
                 'getProfile',
                 'getOptions',
                 'connect',
@@ -419,17 +432,14 @@ class ServiceTest extends Unit
 
         $redisService = $this->getMockBuilder(Service::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getMulti', '__destruct'])
+            ->onlyMethods(['getMulti'])
             ->getMock();
         $redisService
             ->method('getMulti')
             ->willReturnCallback($getMultiFunctionStub);
-        $redisService
-            ->method('__destruct')
-            ->willReturn(true);
 
         $storageClient = $this->getMockBuilder(StorageClient::class)
-            ->setMethods(['loadCacheKeysAndValues', 'getService'])
+            ->onlyMethods(['loadCacheKeysAndValues', 'getService'])
             ->getMock();
         $storageClient
             ->method('getService')

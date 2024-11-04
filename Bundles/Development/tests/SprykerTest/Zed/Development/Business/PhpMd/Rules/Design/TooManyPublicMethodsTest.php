@@ -106,7 +106,7 @@ class TooManyPublicMethodsTest extends Unit
     protected function getTooManyPublicMethodsMock(): TooManyPublicMethods
     {
         $mockBuilder = $this->getMockBuilder(TooManyPublicMethods::class);
-        $mockBuilder->setMethods(['addViolation', 'getIntProperty', 'getStringProperty']);
+        $mockBuilder->onlyMethods(['addViolation', 'getIntProperty', 'getStringProperty']);
 
         $tooManyMethodsMock = $mockBuilder->getMock();
         $tooManyMethodsMock->expects($this->any())->method('getStringProperty')->willReturn('/ignore regex pattern/');
@@ -123,7 +123,8 @@ class TooManyPublicMethodsTest extends Unit
     protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractTypeNode::class);
-        $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethods'])
+        $mockBuilder->addMethods(['getNamespace'])
+            ->onlyMethods(['getMetric', 'getName', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethods'])
             ->disableOriginalConstructor();
 
         $nodeMock = $mockBuilder->getMock();

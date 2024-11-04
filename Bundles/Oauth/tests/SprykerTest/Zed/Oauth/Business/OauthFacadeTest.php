@@ -511,7 +511,7 @@ class OauthFacadeTest extends Unit
     protected function setUserProviderPluginMock(?bool $isSuccess = true): void
     {
         $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
-            ->setMethods(['getUser', 'accept'])
+            ->onlyMethods(['getUser', 'accept'])
             ->getMock();
 
         $userProviderPluginMock->method('getUser')->willReturnCallback(
@@ -551,7 +551,7 @@ class OauthFacadeTest extends Unit
     protected function setGrantTypeConfigurationProviderPluginMock(): void
     {
         $grantTypeConfigurationProviderPluginMock = $this->getMockBuilder(OauthGrantTypeConfigurationProviderPluginInterface::class)
-            ->setMethods(['getGrantTypeConfiguration'])
+            ->onlyMethods(['getGrantTypeConfiguration'])
             ->getMock();
 
         $grantTypeConfigurationProviderPluginMock->method('getGrantTypeConfiguration')->willReturnCallback(
@@ -672,7 +672,7 @@ class OauthFacadeTest extends Unit
     protected function setOauthRequestGrantTypeConfigurationProviderPluginMock(string $grantTypeBuilderClass, string $identifier): void
     {
         $oauthRequestGrantTypeConfigurationProviderPluginMock = $this->getMockBuilder(OauthRequestGrantTypeConfigurationProviderPluginInterface::class)
-            ->setMethods(['isApplicable', 'getGrantTypeConfiguration'])
+            ->onlyMethods(['isApplicable', 'getGrantTypeConfiguration'])
             ->getMock();
 
         $oauthRequestGrantTypeConfigurationProviderPluginMock
@@ -705,7 +705,7 @@ class OauthFacadeTest extends Unit
     protected function setOauthUserProviderPluginMock(?bool $isSuccess = true): void
     {
         $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
-            ->setMethods(['getUser', 'accept'])
+            ->onlyMethods(['getUser', 'accept'])
             ->getMock();
 
         $userProviderPluginMock->method('getUser')->willReturnCallback(

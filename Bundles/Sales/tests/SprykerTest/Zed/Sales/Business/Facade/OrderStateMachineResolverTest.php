@@ -111,7 +111,7 @@ class OrderStateMachineResolverTest extends Unit
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\SalesConfig $salesConfigMock */
         $salesConfigMock = $this
             ->getMockBuilder(SalesConfig::class)
-            ->setMethods(['isOldDeterminationForOrderItemProcessEnabled'])
+            ->onlyMethods(['isOldDeterminationForOrderItemProcessEnabled'])
             ->getMock();
 
         $salesConfigMock

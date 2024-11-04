@@ -25,6 +25,17 @@ class SalesDetailCest
 {
     /**
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
+     *
+     * @return void
+     */
+    public function _before(SalesPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void

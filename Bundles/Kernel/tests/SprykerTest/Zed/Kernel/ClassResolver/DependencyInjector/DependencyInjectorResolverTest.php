@@ -83,7 +83,7 @@ class DependencyInjectorResolverTest extends Unit
      */
     protected function getResolverMock(array $methods): DependencyInjectorResolver
     {
-        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
+        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->onlyMethods($methods)->getMock();
 
         return $dependencyInjectorResolverMock;
     }

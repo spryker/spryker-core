@@ -122,17 +122,27 @@ class TwigRendererTest extends Unit
     {
         $twigEnvironmentMock = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
-            ->setMethods(['render', 'getExtension'])
+            ->onlyMethods(['render', 'getExtension'])
             ->getMock();
         $twigEnvironmentMock->expects($this->once())
             ->method('getExtension')
             ->with(TwigTranslatorPlugin::class)
             ->willReturn(new TwigTranslatorPlugin());
+
+        $renderCallCount = 0;
         $twigEnvironmentMock
             ->expects($this->exactly(2))
             ->method('render')
-            ->withConsecutive([static::LAYOUT_TEMPLATE_TEXT], [static::LAYOUT_TEMPLATE_HTML])
-            ->willReturnOnConsecutiveCalls(static::FAKE_TEXT_TEMPLATE, static::FAKE_HTML_TEMPLATE);
+            ->with($this->callback(function ($template) use (&$renderCallCount) {
+                $expectedTemplates = [static::LAYOUT_TEMPLATE_TEXT, static::LAYOUT_TEMPLATE_HTML];
+
+                return $template === $expectedTemplates[$renderCallCount++];
+            }))
+            ->willReturnCallback(function () use (&$renderCallCount) {
+                $returnValues = [static::FAKE_TEXT_TEMPLATE, static::FAKE_HTML_TEMPLATE];
+
+                return $returnValues[$renderCallCount - 1];
+            });
 
         return new SymfonyMailerToRendererBridge($twigEnvironmentMock);
     }

@@ -199,7 +199,7 @@ class DiscountOrderSaverTest extends Unit
      */
     private function getDiscountQueryContainerMock(array $methods = []): DiscountQueryContainerInterface
     {
-        $discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)->setMethods($methods)->getMock();
+        $discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)->onlyMethods($methods)->getMock();
 
         return $discountQueryContainerMock;
     }
@@ -224,7 +224,7 @@ class DiscountOrderSaverTest extends Unit
      */
     private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = []): DiscountOrderSaver
     {
-        $discountSaverMock = $this->getMockBuilder(DiscountOrderSaver::class)->setMethods($discountSaverMethods)
+        $discountSaverMock = $this->getMockBuilder(DiscountOrderSaver::class)->onlyMethods($discountSaverMethods)
             ->setConstructorArgs([$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getVoucherCodeMock()])
             ->getMock();
 

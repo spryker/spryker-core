@@ -53,7 +53,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getSearchConfig'])
+            ->onlyMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
             ->method('getSearchConfig')
@@ -71,7 +71,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         /** @var \Elastica\ResultSet|\PHPUnit\Framework\MockObject\MockObject $resultSetMock */
         $resultSetMock = $this->getMockBuilder(ResultSet::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAggregations'])
+            ->onlyMethods(['getAggregations'])
             ->getMock();
         $resultSetMock
             ->method('getAggregations')

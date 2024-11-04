@@ -366,19 +366,21 @@ class ProductLabelFacadeTest extends Unit
 
         $productLabelTransfer->setIsActive(false);
 
+        $expectedCalls = [
+            [ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY, ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER],
+            [ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS, $idProductAbstract],
+        ];
+
+        $callIndex = 0;
+
         // Assert
         $touchFacadeMock->expects($this->exactly(2))
             ->method('touchActive')
-            ->withConsecutive(
-                [
-                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
-                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-                ],
-                [
-                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-                    $idProductAbstract,
-                ],
-            );
+            ->willReturnCallback(function ($resourceType, $identifier) use (&$callIndex, $expectedCalls) {
+                $this->assertEquals($expectedCalls[$callIndex][0], $resourceType);
+                $this->assertEquals($expectedCalls[$callIndex][1], $identifier);
+                $callIndex++;
+            });
 
         $productFacadeMock->expects($this->once())
             ->method('touchProductAbstract')
@@ -745,7 +747,7 @@ class ProductLabelFacadeTest extends Unit
         );
 
         $productLabelRelationUpdaterPluginMock = $this->getMockBuilder(ProductLabelRelationUpdaterPluginInterface::class)
-            ->setMethods(['findProductLabelProductAbstractRelationChanges'])
+            ->onlyMethods(['findProductLabelProductAbstractRelationChanges'])
             ->getMock();
 
         $productLabelRelationUpdaterPluginMock->method('findProductLabelProductAbstractRelationChanges')->willReturn([

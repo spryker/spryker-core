@@ -138,7 +138,7 @@ class IterateProductOfferServicesTest extends Unit
         $iterator = $this->tester->getFacade()->iterateProductOfferServices($iterableProductOfferServicesCriteriaTransfer);
 
         // Assert
-        $this->assertCount(2, $iterator);
+        $this->assertCount(2, iterator_to_array($iterator));
     }
 
     /**

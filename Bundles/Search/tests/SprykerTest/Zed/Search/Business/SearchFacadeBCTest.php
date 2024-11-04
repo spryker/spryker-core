@@ -86,7 +86,7 @@ class SearchFacadeBCTest extends Unit
     protected function createSearchFactoryMock(): SearchBusinessFactory
     {
         $searchFactoryMockBuilder = $this->getMockBuilder(SearchBusinessFactory::class)
-            ->setMethods(['createSnapshotHandler']);
+            ->onlyMethods(['createSnapshotHandler']);
 
         $searchFactoryMock = $searchFactoryMockBuilder->getMock();
 
@@ -102,7 +102,7 @@ class SearchFacadeBCTest extends Unit
     {
         $snapshotHandlerMockBuilder = $this->getMockBuilder(SnapshotHandler::class)
             ->setConstructorArgs([$this->createElasticsearchSnapshot()])
-            ->setMethods(['buildRepositorySettings']);
+            ->onlyMethods(['buildRepositorySettings']);
 
         $snapshotHandlerMock = $snapshotHandlerMockBuilder->getMock();
 

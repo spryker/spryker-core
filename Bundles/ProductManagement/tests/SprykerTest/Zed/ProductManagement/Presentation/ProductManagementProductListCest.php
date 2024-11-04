@@ -27,6 +27,17 @@ class ProductManagementProductListCest
      *
      * @return void
      */
+    public function _before(ProductManagementPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
+     *
+     * @return void
+     */
     public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerMoneyCollectionFormTypePlugin();

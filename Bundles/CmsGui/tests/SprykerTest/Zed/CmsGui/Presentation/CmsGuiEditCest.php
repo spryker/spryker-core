@@ -27,6 +27,17 @@ class CmsGuiEditCest
      *
      * @return void
      */
+    public function _before(CmsGuiPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\CmsGui\CmsGuiPresentationTester $i
+     *
+     * @return void
+     */
     public function breadcrumbIsVisible(CmsGuiPresentationTester $i): void
     {
         $i->amOnPage(CmsGuiListPage::URL);

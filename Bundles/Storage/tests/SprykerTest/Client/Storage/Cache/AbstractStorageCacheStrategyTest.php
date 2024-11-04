@@ -59,7 +59,7 @@ abstract class AbstractStorageCacheStrategyTest extends Unit
     {
         $this->storageClientMock = $this
             ->getMockBuilder(StorageClient::class)
-            ->setMethods(['getService'])
+            ->onlyMethods(['getService'])
             ->getMock();
 
         $predisClientMock = $this

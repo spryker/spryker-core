@@ -28,6 +28,17 @@ class CategoryReSortCest
      *
      * @return void
      */
+    public function _before(CategoryPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\CategoryGui\CategoryPresentationTester $i
+     *
+     * @return void
+     */
     public function testThatICanSeeSubCategories(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryReSortPage::URL);

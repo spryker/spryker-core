@@ -59,7 +59,7 @@ class TemplatePathMapBuilderTest extends Unit
     protected function getTemplateNameBuilderMock(): TemplateNameBuilderInterface
     {
         $mockBuilder = $this->getMockBuilder(TemplateNameBuilderInterface::class)
-            ->setMethods(['buildTemplateName']);
+            ->onlyMethods(['buildTemplateName']);
 
         return $mockBuilder->getMock();
     }

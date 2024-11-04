@@ -74,7 +74,7 @@ class GlueFragmentControllerResolverTest extends Unit
     protected function getFragmentControllerProvider(Request $request): GlueFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(GlueFragmentControllerResolver::class)
-            ->setMethods(['resolveController', 'getCurrentRequest'])
+            ->onlyMethods(['resolveController', 'getCurrentRequest'])
             ->disableOriginalConstructor()
             ->getMock();
 

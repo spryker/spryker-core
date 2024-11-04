@@ -38,7 +38,7 @@ class SeeHelper extends Module
      */
     public function seeMatches(string $pattern, string $selector): void
     {
-        Assert::assertRegExp($pattern, $this->grabMultipleAsText($selector));
+        Assert::assertMatchesRegularExpression($pattern, $this->grabMultipleAsText($selector));
     }
 
     /**
@@ -49,7 +49,7 @@ class SeeHelper extends Module
      */
     public function dontSeeMatches(string $pattern, string $selector): void
     {
-        Assert::assertNotRegExp($pattern, $this->grabMultipleAsText($selector));
+        Assert::assertDoesNotMatchRegularExpression($pattern, $this->grabMultipleAsText($selector));
     }
 
     /**

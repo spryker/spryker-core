@@ -74,7 +74,7 @@ class YvesFragmentControllerResolverTest extends Unit
     protected function getFragmentControllerProvider(Request $request): YvesFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(YvesFragmentControllerResolver::class)
-            ->setMethods(['resolveController', 'getCurrentRequest'])
+            ->onlyMethods(['resolveController', 'getCurrentRequest'])
             ->disableOriginalConstructor()
             ->getMock();
 

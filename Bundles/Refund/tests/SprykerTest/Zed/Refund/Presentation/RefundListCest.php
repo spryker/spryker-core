@@ -26,6 +26,17 @@ class RefundListCest
      *
      * @return void
      */
+    public function _before(RefundPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
+     *
+     * @return void
+     */
     public function testThatRefundListIsVisible(RefundPresentationTester $i): void
     {
         $i->canOpenRefundListPage();

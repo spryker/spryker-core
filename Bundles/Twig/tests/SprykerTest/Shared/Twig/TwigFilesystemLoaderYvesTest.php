@@ -138,7 +138,7 @@ class TwigFilesystemLoaderYvesTest extends Unit
     protected function getFilesystemLoaderForSplitBundleConverterTest(): TwigFilesystemLoader
     {
         $mockBuilder = $this->getMockBuilder(TwigFilesystemLoader::class)
-            ->setMethods(['isPathInSplit'])
+            ->onlyMethods(['isPathInSplit'])
             ->setConstructorArgs([[static::PATH_TO_CORE], $this->getCacheStub(), $this->getTemplateNameExtractor()]);
 
         $mock = $mockBuilder->getMock();

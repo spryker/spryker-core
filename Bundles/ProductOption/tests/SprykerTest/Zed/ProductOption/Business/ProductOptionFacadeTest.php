@@ -1145,7 +1145,7 @@ class ProductOptionFacadeTest extends Unit
         $currencyTransfer = $this->tester->getLocator()->currency()->facade()->fromIsoCode($currencyCode);
 
         $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
-            ->setMethods(['getCurrent', 'fromIsoCode'])
+            ->onlyMethods(['getCurrent', 'fromIsoCode'])
             ->getMock();
 
         $currencyFacadeMock

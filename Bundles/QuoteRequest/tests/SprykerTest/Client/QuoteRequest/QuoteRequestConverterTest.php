@@ -186,7 +186,7 @@ class QuoteRequestConverterTest extends Unit
                 $this->createQuoteRequestToCartClientInterfaceMock(),
                 $this->createQuoteRequestCheckerMock(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -197,7 +197,7 @@ class QuoteRequestConverterTest extends Unit
     {
         $quoteRequestToPersistentCartClientInterfaceMock = $this->getMockBuilder(QuoteRequestToPersistentCartClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['persistQuote'])
+            ->onlyMethods(['persistQuote'])
             ->getMock();
 
         $quoteRequestToPersistentCartClientInterfaceMock->expects($this->any())
@@ -242,7 +242,7 @@ class QuoteRequestConverterTest extends Unit
     {
         return $this->getMockBuilder(QuoteRequestStatus::class)
             ->setConstructorArgs([$this->createQuoteRequestConfigMock()])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -252,7 +252,7 @@ class QuoteRequestConverterTest extends Unit
     protected function createQuoteRequestConfigMock(): QuoteRequestConfig
     {
         $quoteRequestConfigMock = $this->getMockBuilder(QuoteRequestConfig::class)
-            ->setMethods(['getCancelableStatuses'])
+            ->onlyMethods(['getCancelableStatuses'])
             ->disableOriginalConstructor()
             ->getMock();
 

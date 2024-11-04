@@ -114,7 +114,7 @@ class SecurityHeaderExpanderTest extends Unit
             ->disableOriginalClone()
             ->disableArgumentCloning()
             ->disallowMockingUnknownTypes()
-            ->setMethods(['executeSecurityHeaderExpanderPlugins'])
+            ->onlyMethods(['executeSecurityHeaderExpanderPlugins'])
             ->getMock();
     }
 }

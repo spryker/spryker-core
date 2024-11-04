@@ -721,11 +721,11 @@ class ClassDefinitionTest extends Unit
      * @dataProvider transferDefinitionTypeIsCorrectlyShimmedDataProvider
      *
      * @param array $shimConfig
-     * @param array<string> $expectedTypesTypes
+     * @param array<string> $expectedTypes
      *
      * @return void
      */
-    public function testTransferDefinitionTypeIsCorrectlyShimmed(array $shimConfig, array $expectedTypesTypes): void
+    public function testTransferDefinitionTypeIsCorrectlyShimmed(array $shimConfig, array $expectedTypes): void
     {
         // Arrange
         $this->tester->mockConfigMethod('getTypeShims', $shimConfig);
@@ -762,7 +762,7 @@ class ClassDefinitionTest extends Unit
         $classDefinition->setDefinition($definition);
 
         // Assert
-        $this->assertMethodHasCorrectTypeShim($classDefinition, $expectedTypesTypes);
+        $this->assertMethodHasCorrectTypeShim($classDefinition, $expectedTypes);
     }
 
     /**
@@ -772,40 +772,40 @@ class ClassDefinitionTest extends Unit
     {
         return [
             'scalar type' => [
-                'shim config' => [
+                'shimConfig' => [
                     'FooBar' => [
                         'property1' => [
                             'int' => 'string',
                         ],
                     ],
                 ],
-                'expected types' => [
+                'expectedTypes' => [
                     'property1',
                     'string|int|null',
                 ],
             ],
             'typed array type' => [
-                'shim config' => [
+                'shimConfig' => [
                     'FooBar' => [
                         'property2' => [
                             'string[]' => 'bool',
                         ],
                     ],
                 ],
-                'expected types' => [
+                'expectedTypes' => [
                     'property2',
                     'bool|string[]',
                 ],
             ],
             'transfer type' => [
-                'shim config' => [
+                'shimConfig' => [
                     'FooBar' => [
                         'property3' => [
                             'array' => 'int',
                         ],
                     ],
                 ],
-                'expected types' => [
+                'expectedTypes' => [
                     'property3',
                     'int|array',
                 ],

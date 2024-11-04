@@ -48,7 +48,7 @@ class CacheWarmerConsoleTest extends Unit
     protected function getCacheWarmerConsoleMock(): CacheWarmerConsole
     {
         $mockBuilder = $this->getMockBuilder(CacheWarmerConsole::class)
-            ->setMethods(['getFacade']);
+            ->onlyMethods(['getFacade']);
 
         $mock = $mockBuilder->getMock();
         $mock->expects($this->once())->method('getFacade')->willReturn($this->getFacadeMock());

@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester;
 
 /**
@@ -25,7 +25,7 @@ use SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorB
  */
 class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn::EXPRESSION

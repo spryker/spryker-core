@@ -80,6 +80,6 @@ class GlueControllerFinderTest extends Unit
      */
     protected function getGlueControllerFinder(array $sourceDirectories): GlueControllerFinderInterface
     {
-        return (new DocumentationGeneratorRestApiTestFactory())->createGlueControllerFinder($sourceDirectories);
+        return (new DocumentationGeneratorRestApiTestFactory(''))->createGlueControllerFinder($sourceDirectories);
     }
 }

@@ -74,7 +74,7 @@ class ZedFragmentControllerResolverTest extends Unit
     protected function getFragmentControllerProvider(Request $request): ZedFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(ZedFragmentControllerResolver::class)
-            ->setMethods(['resolveController', 'getCurrentRequest'])
+            ->onlyMethods(['resolveController', 'getCurrentRequest'])
             ->disableOriginalConstructor()
             ->getMock();
 

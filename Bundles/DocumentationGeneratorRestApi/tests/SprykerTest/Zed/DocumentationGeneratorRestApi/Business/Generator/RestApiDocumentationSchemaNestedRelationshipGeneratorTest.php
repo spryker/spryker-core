@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestNestedResourceRoutePlugin;
 
@@ -27,7 +27,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestNeste
  */
 class RestApiDocumentationSchemaNestedRelationshipGeneratorTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string
@@ -61,7 +61,7 @@ class RestApiDocumentationSchemaNestedRelationshipGeneratorTest extends Unit
     {
         parent::setUp();
 
-        $documentationGeneratorRestApiTestFactory = new DocumentationGeneratorRestApiTestFactory();
+        $documentationGeneratorRestApiTestFactory = new DocumentationGeneratorRestApiTestFactory('');
 
         $resourceSchemaNameStorage = $documentationGeneratorRestApiTestFactory->createResourceSchemaNameStorage();
 

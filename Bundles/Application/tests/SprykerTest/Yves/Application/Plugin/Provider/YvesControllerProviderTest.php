@@ -99,7 +99,7 @@ class YvesControllerProviderTest extends Unit
      */
     protected function createControllerProviderMock($ssl, $controller, array $urls = []): ControllerProviderMock
     {
-        $controllerProviderMock = $this->getMockBuilder(ControllerProviderMock::class)->setMethods(['getService', 'getController', 'getExcludedUrls'])->setConstructorArgs([$ssl])->getMock();
+        $controllerProviderMock = $this->getMockBuilder(ControllerProviderMock::class)->onlyMethods(['getService', 'getController', 'getExcludedUrls'])->setConstructorArgs([$ssl])->getMock();
         $controllerProviderMock->method('getService')->willReturn('');
         $controllerProviderMock->method('getController')->willReturn($controller);
         $controllerProviderMock->method('getExcludedUrls')->willReturn($urls);

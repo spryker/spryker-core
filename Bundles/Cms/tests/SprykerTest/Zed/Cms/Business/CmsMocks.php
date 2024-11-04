@@ -79,7 +79,7 @@ abstract class CmsMocks extends Unit
     protected function createCmsPageEntityMock(): SpyCmsPage
     {
         return $this->getMockBuilder(SpyCmsPage::class)
-            ->setMethods(['save', 'getVirtualColumn'])
+            ->onlyMethods(['save', 'getVirtualColumn'])
             ->getMock();
     }
 
@@ -89,7 +89,7 @@ abstract class CmsMocks extends Unit
     protected function createCmsPageLocalizedAttributesEntityMock(): SpyCmsPageLocalizedAttributes
     {
         return $this->getMockBuilder(SpyCmsPageLocalizedAttributes::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 
@@ -127,7 +127,7 @@ abstract class CmsMocks extends Unit
     {
         return $this->getMockBuilder(TemplateManager::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTemplateById'])
+            ->onlyMethods(['getTemplateById'])
             ->getMock();
     }
 
@@ -155,7 +155,7 @@ abstract class CmsMocks extends Unit
     protected function createGlossaryMappingEntityMock(): SpyCmsGlossaryKeyMapping
     {
         return $this->getMockBuilder(SpyCmsGlossaryKeyMapping::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 
@@ -165,7 +165,7 @@ abstract class CmsMocks extends Unit
     protected function createGlossaryKeyEntityMock(): SpyGlossaryKey
     {
         return $this->getMockBuilder(SpyGlossaryKey::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 
@@ -175,7 +175,7 @@ abstract class CmsMocks extends Unit
     protected function createGlossaryTranslationEntityMock(): SpyGlossaryTranslation
     {
         return $this->getMockBuilder(SpyGlossaryTranslation::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 
@@ -258,7 +258,7 @@ abstract class CmsMocks extends Unit
 
         return $this->getMockBuilder(CmsPageMapper::class)
             ->setConstructorArgs([$cmsPageUrlBuilderMock, $cmsPageStoreRelationReaderMock])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -269,7 +269,7 @@ abstract class CmsMocks extends Unit
     {
         return $this->getMockBuilder(TemplateReader::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getPlaceholdersByTemplatePath'])
+            ->onlyMethods(['getPlaceholdersByTemplatePath'])
             ->getMock();
     }
 }

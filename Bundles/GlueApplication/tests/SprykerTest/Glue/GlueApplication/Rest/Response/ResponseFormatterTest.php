@@ -112,7 +112,7 @@ class ResponseFormatterTest extends Unit
     protected function createEncoderMock(): EncoderInterface
     {
         return $this->getMockBuilder(EncoderInterface::class)
-                ->setMethods(['encode'])
+                ->onlyMethods(['encode'])
             ->getMock();
     }
 
@@ -134,7 +134,7 @@ class ResponseFormatterTest extends Unit
      */
     protected function createEncoderMatcherMock(): EncoderMatcherInterface
     {
-        return $this->getMockBuilder(EncoderMatcherInterface::class)->setMethods(['match'])->getMock();
+        return $this->getMockBuilder(EncoderMatcherInterface::class)->onlyMethods(['match'])->getMock();
     }
 
     /**
@@ -143,7 +143,7 @@ class ResponseFormatterTest extends Unit
     protected function createResponseBuilderMock(): ResponseBuilderInterface
     {
         return $this->getMockBuilder(ResponseBuilderInterface::class)
-            ->setMethods(['buildResponse'])
+            ->onlyMethods(['buildResponse'])
             ->getMock();
     }
 

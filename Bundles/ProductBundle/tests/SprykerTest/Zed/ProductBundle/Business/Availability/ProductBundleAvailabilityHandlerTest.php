@@ -151,7 +151,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
             ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $stockFacadeMock])
-            ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
+            ->addMethods(['findBundledItemAvailabilityEntityBySku'])
+            ->onlyMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku'])
             ->getMock();
     }
 

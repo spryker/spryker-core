@@ -50,7 +50,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getSearchConfig'])
+            ->onlyMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
             ->method('getSearchConfig')

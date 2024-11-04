@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzer;
+use SprykerTest\Shared\Testify\Helper\AssertArraySubsetTrait;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\TestEntityTransfer;
 
@@ -26,7 +26,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\TestEntityTransf
  */
 class ResourceTransferAnalyzerTest extends Unit
 {
-    use ArraySubsetAsserts;
+    use AssertArraySubsetTrait;
 
     /**
      * @var string

@@ -89,7 +89,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
 
         return $this->getMockBuilder(ProductBundleSalesOrderSaver::class)
             ->setConstructorArgs([$queryContainerMock, $productBundleQueryContainerMock])
-            ->setMethods(['findSalesOrderItem', 'createSalesOrderItemBundleEntity'])
+            ->onlyMethods(['findSalesOrderItem', 'createSalesOrderItemBundleEntity'])
             ->getMock();
     }
 
@@ -99,7 +99,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     protected function createSalesOrderItemBundleEntityMock(): SpySalesOrderItemBundle
     {
         $salesOrderItemBundleEntityMock = $this->getMockBuilder(SpySalesOrderItemBundle::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
 
         $salesOrderItemBundleEntityMock->expects($this->once())
@@ -115,7 +115,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     protected function createSalesOrderItemEntityMock(): SpySalesOrderItem
     {
         $salesOrderItemEntityMock = $this->getMockBuilder(SpySalesOrderItem::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
 
         $salesOrderItemEntityMock->expects($this->once())

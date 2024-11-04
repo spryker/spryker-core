@@ -133,7 +133,7 @@ class CmsGlossarySaverTest extends CmsMocks
 
         return $this->getMockBuilder(CmsGlossarySaver::class)
             ->setConstructorArgs([$cmsQueryContainerMock, $glossaryFacadeMock, $cmsGlossaryKeyGeneratorMock])
-            ->setMethods([
+            ->onlyMethods([
                 'findGlossaryKeyEntityByTranslationKey',
                 'findGlossaryKeyMappingEntityById',
                 'hasPagePlaceholderMapping',

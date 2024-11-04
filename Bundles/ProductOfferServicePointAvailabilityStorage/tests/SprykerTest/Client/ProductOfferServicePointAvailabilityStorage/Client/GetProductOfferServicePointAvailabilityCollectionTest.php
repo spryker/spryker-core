@@ -435,7 +435,7 @@ class GetProductOfferServicePointAvailabilityCollectionTest extends Unit
     ): void {
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
-        $this->expectErrorMessageMatches('/' . $missingPropertyName . '/');
+        $this->expectExceptionMessageMatches('/' . $missingPropertyName . '/');
 
         // Act
         $this->tester->getClient()->getProductOfferServicePointAvailabilityCollection($productOfferServicePointAvailabilityCriteriaTransfer);

@@ -180,7 +180,7 @@ class GraphTest extends Unit
      */
     private function createAdapterMock(): GraphAdapterInterface
     {
-        $adapterMock = $this->getMockBuilder(GraphAdapterInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
+        $adapterMock = $this->getMockBuilder(GraphAdapterInterface::class)->onlyMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $adapterMock->method('render')->willReturn('');
 
         return $adapterMock;

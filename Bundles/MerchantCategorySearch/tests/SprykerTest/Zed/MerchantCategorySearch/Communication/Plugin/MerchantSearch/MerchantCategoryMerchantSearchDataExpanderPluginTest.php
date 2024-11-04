@@ -97,7 +97,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     protected function getFactoryMock(): MerchantCategorySearchCommunicationFactory
     {
         return $this->getMockBuilder(MerchantCategorySearchCommunicationFactory::class)
-            ->setMethods(['getMerchantCategoryFacade'])
+            ->onlyMethods(['getMerchantCategoryFacade'])
             ->getMock();
     }
 
@@ -107,7 +107,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
     protected function getMerchantCategoryFacadeMock(): MerchantCategorySearchToMerchantCategoryFacadeInterface
     {
         return $this->getMockBuilder(MerchantCategorySearchToMerchantCategoryFacadeInterface::class)
-            ->setMethods(['get'])
+            ->onlyMethods(['get'])
             ->getMock();
     }
 }

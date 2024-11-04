@@ -147,7 +147,7 @@ class TouchAwareStepTest extends Unit
     private function getTouchFacadeMock(int $calledCount = 1, string $method = 'bulkTouchSetActive'): DataImportToTouchInterface
     {
         $mockBuilder = $this->getMockBuilder(DataImportToTouchInterface::class)
-            ->setMethods(['bulkTouchSetActive', 'bulkTouchSetInactive', 'bulkTouchSetDeleted']);
+            ->onlyMethods(['bulkTouchSetActive', 'bulkTouchSetInactive', 'bulkTouchSetDeleted']);
 
         $dataImportToTouchInterfaceMock = $mockBuilder->getMock();
         $dataImportToTouchInterfaceMock->expects($this->exactly($calledCount))->method($method);

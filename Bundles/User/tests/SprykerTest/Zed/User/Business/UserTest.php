@@ -341,11 +341,11 @@ class UserTest extends Unit
     /**
      * @dataProvider getUserPositiveScenarioDataProvider
      *
-     * @param array<string> $userCriteriaKeys
+     * @param array<string> $userCriteriaDataKeys
      *
      * @return void
      */
-    public function testFindUserReturnsTransferWithCorrectData(array $userCriteriaKeys): void
+    public function testFindUserReturnsTransferWithCorrectData(array $userCriteriaDataKeys): void
     {
         // Arrange
         $userTransfer = $this->tester->haveUser([
@@ -358,7 +358,7 @@ class UserTest extends Unit
         ];
         $userCriteriaData = array_intersect_key(
             $userCriteriaData,
-            array_flip($userCriteriaKeys),
+            array_flip($userCriteriaDataKeys),
         );
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())
@@ -558,7 +558,7 @@ class UserTest extends Unit
      */
     protected function createSessionClient(): SessionClient
     {
-        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->onlyMethods(['get', 'set', 'has'])->getMock();
 
         return $sessionClient;
     }

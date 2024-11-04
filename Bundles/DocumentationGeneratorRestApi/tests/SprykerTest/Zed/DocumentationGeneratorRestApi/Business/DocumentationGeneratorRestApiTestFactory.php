@@ -174,7 +174,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createResourceRelationshipProcessorCollectionPluginMock()
     {
         $pluginMock = $this->getMockBuilder(ResourceRelationshipCollectionProviderPlugin::class)
-            ->setMethods(['getResourceRelationshipCollection'])
+            ->onlyMethods(['getResourceRelationshipCollection'])
             ->getMock();
         $pluginMock->method('getResourceRelationshipCollection')
             ->willReturn($this->createResourceRelationshipProcessorCollection());
@@ -188,7 +188,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createResourceRoutePluginsProviderPluginMock()
     {
         $pluginMock = $this->getMockBuilder(ResourceRoutePluginsProviderPlugin::class)
-            ->setMethods(['getResourceRoutePlugins'])
+            ->onlyMethods(['getResourceRoutePlugins'])
             ->getMock();
         $pluginMock->method('getResourceRoutePlugins')
             ->willReturn([

@@ -194,7 +194,7 @@ class ErrorHandlerTest extends Unit
         $methods = array_merge($mockMethods, $methods);
 
         $errorHandlerMock = $this->getMockBuilder(ErrorHandler::class)
-            ->setMethods($methods)
+            ->onlyMethods($methods)
             ->setConstructorArgs([$errorLogger, $errorRenderer, new UtilSanitizeService()])
             ->getMock();
 
@@ -209,7 +209,7 @@ class ErrorHandlerTest extends Unit
         $loggerMock = $this->getLoggerMock();
 
         $errorLoggerMock = $this->getMockBuilder(ErrorLogger::class)
-            ->setMethods(['getLogger', 'log'])
+            ->onlyMethods(['getLogger', 'log'])
             ->getMock();
 
         $errorLoggerMock->method('getLogger')->willReturn($loggerMock);

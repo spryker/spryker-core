@@ -353,7 +353,7 @@ class SearchElasticsearchFacadeTest extends Unit
     {
         $repositoryMock = $this->getMockBuilder(Repository::class)
             ->setConstructorArgs([$this->tester->getSnapshot()])
-            ->setMethods(['buildRepositorySettings'])
+            ->onlyMethods(['buildRepositorySettings'])
             ->getMock();
 
         $repositoryMock->method('buildRepositorySettings')->willReturnCallback(function (): array {

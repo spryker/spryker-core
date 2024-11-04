@@ -46,7 +46,7 @@ class IndexDefinitionReaderTest extends Unit
      */
     protected function getFileMock(): SplFileInfo
     {
-        $splFileInfoMockBuilder = $this->getMockBuilder(SplFileInfo::class)->setMethods(['getContents'])->disableOriginalConstructor();
+        $splFileInfoMockBuilder = $this->getMockBuilder(SplFileInfo::class)->onlyMethods(['getContents'])->disableOriginalConstructor();
         $splFileInfoMock = $splFileInfoMockBuilder->getMock();
 
         return $splFileInfoMock;

@@ -60,7 +60,7 @@ class TimeDecisionRuleTest extends BaseRuleTester
     ): TimeDecisionRule {
         /** @var \Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule|\PHPUnit\Framework\MockObject\MockObject $timeDecisionRule */
         $timeDecisionRule = $this->getMockBuilder(TimeDecisionRule::class)
-            ->setMethods(['getCurrentDateTime'])
+            ->onlyMethods(['getCurrentDateTime'])
             ->setConstructorArgs([$comparatorMock])
             ->getMock();
         $timeDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);

@@ -44,7 +44,7 @@ class ClassInfoTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
-            ->setMethods(['getModuleNameResolver'])
+            ->onlyMethods(['getModuleNameResolver'])
             ->getMock();
 
         $mock
@@ -63,7 +63,7 @@ class ClassInfoTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(ModuleNameResolver::class)
-            ->setMethods(['getCodeBucket'])
+            ->onlyMethods(['getCodeBucket'])
             ->getMock();
 
         $mock

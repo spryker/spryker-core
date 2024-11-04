@@ -99,7 +99,7 @@ class OauthPermissionFacadeTest extends Unit
     protected function createPermissionPluginMock(): PermissionPluginInterface
     {
         $mock = $this->getMockBuilder(PermissionPluginInterface::class)
-            ->setMethods(['getKey'])
+            ->onlyMethods(['getKey'])
             ->getMock();
         $mock->method('getKey')
             ->willReturn(static::PERMISSION_PLUGIN_KEY);
@@ -113,7 +113,7 @@ class OauthPermissionFacadeTest extends Unit
     protected function createPermissionStoragePluginStub(): PermissionStoragePluginInterface
     {
         $permissionStoragePluginStub = $this->getMockBuilder(PermissionStoragePluginInterface::class)
-            ->setMethods(['getPermissionCollection'])
+            ->onlyMethods(['getPermissionCollection'])
             ->getMock();
         $permissionStoragePluginStub->method('getPermissionCollection')
             ->willReturn($this->createPermissionCollectionTransfer());
@@ -145,7 +145,7 @@ class OauthPermissionFacadeTest extends Unit
     protected function createOauthPermissionConfigMock(): OauthPermissionConfig
     {
         $mock = $this->getMockBuilder(OauthPermissionConfig::class)
-            ->setMethods(['getOauthUserIdentifierFilterKeys'])
+            ->onlyMethods(['getOauthUserIdentifierFilterKeys'])
             ->getMock();
         $mock->method('getOauthUserIdentifierFilterKeys')
             ->willReturn($this->getOauthUserIdentifierFilterKeysMock());

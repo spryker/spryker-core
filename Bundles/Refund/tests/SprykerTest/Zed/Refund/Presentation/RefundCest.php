@@ -24,6 +24,17 @@ class RefundCest
 {
     /**
      * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
+     *
+     * @return void
+     */
+    public function _before(RefundPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
      * @param mixed $scenario
      *
      * @return void

@@ -156,7 +156,7 @@ class ProductBundleStockWriterTest extends Unit
 
         return $this->getMockBuilder(ProductBundleStockWriter::class)
             ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock, $storeFacadeMock])
-            ->setMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
+            ->onlyMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
             ->getMock();
     }
 
@@ -166,7 +166,7 @@ class ProductBundleStockWriterTest extends Unit
     protected function createStockProductEntityMock(): SpyStockProduct
     {
         $stockProductEntityMock = $this->getMockBuilder(SpyStockProduct::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
 
         $stockProductEntityMock->method('save')->willReturn(1);

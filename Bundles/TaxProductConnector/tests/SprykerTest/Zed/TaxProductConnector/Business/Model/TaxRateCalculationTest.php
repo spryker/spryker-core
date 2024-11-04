@@ -81,7 +81,7 @@ class TaxRateCalculationTest extends Unit
     protected function createProductItemTaxRateCalculator(): ProductItemTaxRateCalculator
     {
         return $this->getMockBuilder(ProductItemTaxRateCalculator::class)
-            ->setMethods(['findTaxRatesByAllIdProductAbstractsAndCountryIso2Code'])
+            ->onlyMethods(['findTaxRatesByAllIdProductAbstractsAndCountryIso2Code'])
             ->setConstructorArgs([
                 $this->createQueryContainerMock(),
                 $this->createTaxFacadeMock(),

@@ -274,7 +274,7 @@ class StorageClientTest extends Unit
     protected function setupStorageClientMock(): void
     {
         $this->storageClientMock = $this->getMockBuilder(StorageClient::class)
-            ->setMethods(['getFactory', 'updateCache'])
+            ->onlyMethods(['getFactory', 'updateCache'])
             ->getMock();
         $this->storageClientMock->method('getFactory')->willReturn(new StorageFactory());
     }

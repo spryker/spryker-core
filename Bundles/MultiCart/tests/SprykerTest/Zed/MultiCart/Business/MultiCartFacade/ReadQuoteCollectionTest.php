@@ -172,7 +172,7 @@ class ReadQuoteCollectionTest extends Unit
     protected function initWithResult(): void
     {
         $builder = $this->getMockBuilder(MultiCartBusinessFactory::class);
-        $builder->setMethods(
+        $builder->onlyMethods(
             [
                 'getQuoteFacade',
             ],
@@ -191,7 +191,7 @@ class ReadQuoteCollectionTest extends Unit
     protected function initWithoutResult(): void
     {
         $builder = $this->getMockBuilder(MultiCartBusinessFactory::class);
-        $builder->setMethods(
+        $builder->onlyMethods(
             [
                 'getQuoteFacade',
             ],

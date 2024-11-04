@@ -142,7 +142,7 @@ class PropelConfigConverterJsonTest extends Unit
     protected function getPropelConfigConvertJsonMock(): PropelConfigConverterInterface
     {
         $propelConfigConverterJsonMock = $this->getMockBuilder(PropelConfigConverterJson::class)
-            ->setMethods(['writeToFile'])
+            ->onlyMethods(['writeToFile'])
             ->setConstructorArgs([$this->getTestConfiguration()])
             ->getMock();
 

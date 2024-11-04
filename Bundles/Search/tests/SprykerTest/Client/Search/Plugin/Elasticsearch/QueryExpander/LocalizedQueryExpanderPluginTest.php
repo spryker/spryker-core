@@ -106,7 +106,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     {
         /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject $queryExpander */
         $queryExpander = $this->getMockBuilder(LocalizedQueryExpanderPlugin::class)
-            ->setMethods(['getCurrentLocale'])
+            ->onlyMethods(['getCurrentLocale'])
             ->getMock();
 
         $queryExpander

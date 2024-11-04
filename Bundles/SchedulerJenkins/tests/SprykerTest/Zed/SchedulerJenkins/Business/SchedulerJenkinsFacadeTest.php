@@ -133,7 +133,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     protected function getSchedulerBusinessFactoryMock(): SchedulerJenkinsBusinessFactory
     {
         $schedulerJenkinsBusinessFactoryMock = $this->getMockBuilder(SchedulerJenkinsBusinessFactory::class)
-            ->setMethods(
+            ->onlyMethods(
                 [
                     'createXmkJenkinsJobTemplateGenerator',
                     'createJenkinsApi',
@@ -164,7 +164,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     protected function createConfigurationProviderBuilder(): ConfigurationProviderBuilderInterface
     {
         $configurationProviderBuilderMock = $this->getMockBuilder(ConfigurationProviderBuilderInterface::class)
-            ->setMethods([
+            ->onlyMethods([
                 'build',
             ])
             ->getMock();
@@ -183,7 +183,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     {
         $jenkinsApiMock = $this->getMockBuilder(JenkinsApi::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'getJobs',
                 'createJob',
                 'updateJob',
@@ -228,7 +228,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     protected function createSchedulerJenkinsConfigMock(): SchedulerJenkinsConfig
     {
         $schedulerJenkinsConfigMock = $this->getMockBuilder(SchedulerJenkinsConfig::class)
-            ->setMethods(['getJenkinsConfiguration'])
+            ->onlyMethods(['getJenkinsConfiguration'])
             ->getMock();
 
         $schedulerJenkinsConfigMock

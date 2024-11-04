@@ -137,7 +137,7 @@ class AbstractProductOptionSaverTest extends MockProvider
                 $touchFacadeMock,
                 $eventFacadeMock,
             ])
-            ->setMethods([
+            ->onlyMethods([
                 'getProductAbstractBySku',
                 'getOptionGroupById',
             ])
@@ -150,7 +150,7 @@ class AbstractProductOptionSaverTest extends MockProvider
     protected function createProductOptionGroupEntityMock(): SpyProductOptionGroup
     {
         return $this->getMockBuilder(SpyProductOptionGroup::class)
-            ->setMethods(['save'])
+            ->onlyMethods(['save'])
             ->getMock();
     }
 }

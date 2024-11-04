@@ -95,7 +95,7 @@ class CmsPageReaderTest extends CmsMocks
             ->willReturn($this->getAvailableLocales());
 
         return $this->getMockBuilder(CmsPageReader::class)
-            ->setMethods(['findCmsPageEntity'])
+            ->onlyMethods(['findCmsPageEntity'])
             ->setConstructorArgs([$cmsQueryContainerMock, $cmsPageMapperMock, $localeFacadeMock])
             ->getMock();
     }

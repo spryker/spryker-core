@@ -199,7 +199,7 @@ class AutoloadUpdaterTest extends Unit
     protected function getAutoloadUpdaterMock(): AutoloadUpdater
     {
         $autoloadUpdaterMock = $this->getMockBuilder(AutoloadUpdater::class)
-            ->setMethods(['pathExists', 'getPath'])
+            ->onlyMethods(['pathExists', 'getPath'])
             ->getMock();
 
         return $autoloadUpdaterMock;

@@ -146,7 +146,8 @@ class SnapshotTest extends Unit
     {
         $elasticaSnapshotMock = $this->getMockBuilder(ElasticaSnapshot::class)
             ->setConstructorArgs([$this->tester->getFactory()->getElasticsearchClient()])
-            ->setMethods(['createSnapshot', 'restoreSnapshot', 'getSnapshot', 'deleteSnapshot', 'isOk'])
+            ->addMethods(['isOk'])
+            ->onlyMethods(['createSnapshot', 'restoreSnapshot', 'getSnapshot', 'deleteSnapshot'])
             ->getMock();
         $elasticaSnapshotMock->method('isOk')->willReturn(true);
 

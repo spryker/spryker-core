@@ -117,10 +117,10 @@ class AbstractFactoryTest extends Unit
         $dependencyInjectorMock->expects($this->once())->method('injectCommunicationLayerDependencies')->willReturn($container);
         $dependencyInjectorMock->expects($this->once())->method('injectPersistenceLayerDependencies')->willReturn($container);
 
-        $dependencyInjectorCollectionMock = $this->getMockBuilder(DependencyInjectorCollection::class)->setMethods(['getDependencyInjector'])->getMock();
+        $dependencyInjectorCollectionMock = $this->getMockBuilder(DependencyInjectorCollection::class)->onlyMethods(['getDependencyInjector'])->getMock();
         $dependencyInjectorCollectionMock->method('getDependencyInjector')->willReturn([$dependencyInjectorMock]);
 
-        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods(['resolve'])->getMock();
+        $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->onlyMethods(['resolve'])->getMock();
         $dependencyInjectorResolverMock->expects($this->once())->method('resolve')->willReturn($dependencyInjectorCollectionMock);
 
         return $dependencyInjectorResolverMock;
@@ -133,7 +133,7 @@ class AbstractFactoryTest extends Unit
      */
     protected function getFactoryMock(array $methods): AbstractFactory
     {
-        $factoryMock = $this->getMockBuilder(Factory::class)->setMethods($methods)->getMock();
+        $factoryMock = $this->getMockBuilder(Factory::class)->onlyMethods($methods)->getMock();
 
         return $factoryMock;
     }

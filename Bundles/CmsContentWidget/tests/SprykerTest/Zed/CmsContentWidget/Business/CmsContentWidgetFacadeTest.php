@@ -153,19 +153,19 @@ class CmsContentWidgetFacadeTest extends Unit
     {
         return [
             [
-               'getFunctionName' => 'functionName',
-               'getAvailableTemplates' => [
+               'functionName' => 'functionName',
+               'availableTemplates' => [
                    'identifier' => '@module/path/to/template.twig',
                ],
-               'getUsageInformation' => 'how to..',
+               'usageInformation' => 'how to..',
             ],
             [
-                'getFunctionName' => 'functionName1',
-                'getAvailableTemplates' => [
+                'functionName' => 'functionName1',
+                'availableTemplates' => [
                     'identifier1' => '@module/path/to/template1.twig',
                     'identifier2' => '@module/path/to/template2.twig',
                 ],
-                'getUsageInformation' => 'how to..2',
+                'usageInformation' => 'how to..2',
             ],
         ];
     }

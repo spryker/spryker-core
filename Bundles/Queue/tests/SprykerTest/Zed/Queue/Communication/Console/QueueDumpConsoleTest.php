@@ -59,7 +59,7 @@ class QueueDumpConsoleTest extends Unit
     protected function getQueueDumpConsoleMock(): QueueDumpConsole
     {
         $mockBuilder = $this->getMockBuilder(QueueDumpConsole::class)
-            ->setMethods(['getFacade']);
+            ->onlyMethods(['getFacade']);
 
         $mock = $mockBuilder->getMock();
         $mock->expects($this->once())->method('getFacade')->willReturn($this->getFacadeMock());

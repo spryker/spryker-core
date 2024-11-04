@@ -59,7 +59,7 @@ class CacheWarmerTest extends Unit
     protected function getCacheWriterMock(): CacheWriterInterface
     {
         $mockBuilder = $this->getMockBuilder(CacheWriterInterface::class)
-            ->setMethods(['write']);
+            ->onlyMethods(['write']);
 
         return $mockBuilder->getMock();
     }
@@ -70,7 +70,7 @@ class CacheWarmerTest extends Unit
     protected function getTemplatePathMapBuilderMock(): TemplatePathMapBuilderInterface
     {
         $mockBuilder = $this->getMockBuilder(TemplatePathMapBuilderInterface::class)
-            ->setMethods(['build']);
+            ->onlyMethods(['build']);
 
         return $mockBuilder->getMock();
     }

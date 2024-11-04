@@ -69,7 +69,7 @@ class PersistentCartShareClientTest extends Unit
     protected function createShareOptionPluginMock(): CartShareOptionPluginInterface
     {
         $cartShareOptionPluginMock = $this->getMockBuilder(CartShareOptionPluginInterface::class)
-            ->setMethods(['getShareOptionKey', 'getShareOptionGroup', 'isApplicable'])
+            ->onlyMethods(['getShareOptionKey', 'getShareOptionGroup', 'isApplicable'])
             ->getMock();
 
         $cartShareOptionPluginMock

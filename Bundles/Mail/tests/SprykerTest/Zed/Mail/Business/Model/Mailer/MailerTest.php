@@ -110,7 +110,7 @@ class MailerTest extends Unit
     protected function getMailerWhichIsNotExecuted(): MailHandler
     {
         $mailTypeCollectionMock = $this->getMockBuilder(MailHandler::class)
-            ->setMethods(['buildMail', 'sendMail'])
+            ->onlyMethods(['buildMail', 'sendMail'])
             ->setConstructorArgs([
                 $this->getMailBuilderMock(),
                 $this->getMailTypeCollectionWithoutMailMock(),
@@ -131,7 +131,7 @@ class MailerTest extends Unit
      */
     protected function getMailTypeCollectionMock(): MailTypeCollectionGetInterface
     {
-        $mailTypeCollectionMock = $this->getMockBuilder(MailTypeCollectionGetInterface::class)->setMethods(['has', 'get'])->getMock();
+        $mailTypeCollectionMock = $this->getMockBuilder(MailTypeCollectionGetInterface::class)->onlyMethods(['has', 'get'])->getMock();
 
         return $mailTypeCollectionMock;
     }
@@ -164,7 +164,7 @@ class MailerTest extends Unit
      */
     protected function getMailProviderCollectionMock(): MailProviderCollectionGetInterface
     {
-        $mailProviderCollectionMock = $this->getMockBuilder(MailProviderCollectionGetInterface::class)->setMethods(['getProviderForMailType'])->getMock();
+        $mailProviderCollectionMock = $this->getMockBuilder(MailProviderCollectionGetInterface::class)->onlyMethods(['getProviderForMailType'])->getMock();
 
         return $mailProviderCollectionMock;
     }
@@ -198,7 +198,7 @@ class MailerTest extends Unit
      */
     protected function getProviderMock(): MailProviderPluginInterface
     {
-        $providerMock = $this->getMockBuilder(MailProviderPluginInterface::class)->setMethods(['sendMail'])->getMock();
+        $providerMock = $this->getMockBuilder(MailProviderPluginInterface::class)->onlyMethods(['sendMail'])->getMock();
 
         return $providerMock;
     }
@@ -208,7 +208,7 @@ class MailerTest extends Unit
      */
     protected function getMailBuilderMock(): MailBuilderInterface
     {
-        $mailBuilderMock = $this->getMockBuilder(MailBuilder::class)->setMethods(['build'])->disableOriginalConstructor()->getMock();
+        $mailBuilderMock = $this->getMockBuilder(MailBuilder::class)->onlyMethods(['build'])->disableOriginalConstructor()->getMock();
         $mailBuilderMock->method('build')->willReturn($this->getMailTransfer());
 
         return $mailBuilderMock;
@@ -219,7 +219,7 @@ class MailerTest extends Unit
      */
     protected function getMailTypeMock(): MailTypePluginInterface
     {
-        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['build', 'getName'])->getMock();
+        $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->onlyMethods(['build', 'getName'])->getMock();
         $mailTypeMock->expects($this->once())->method('build');
 
         return $mailTypeMock;

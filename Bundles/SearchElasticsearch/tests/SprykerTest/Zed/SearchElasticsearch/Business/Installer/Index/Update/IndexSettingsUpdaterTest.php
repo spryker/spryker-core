@@ -221,7 +221,7 @@ class IndexSettingsUpdaterTest extends Unit
                 $this->tester->getModuleConfig(),
                 $this->tester->getFactory()->getUtilSanitizeService(),
             ])
-            ->setMethods(['getIndexState'])
+            ->onlyMethods(['getIndexState'])
             ->getMock();
     }
 

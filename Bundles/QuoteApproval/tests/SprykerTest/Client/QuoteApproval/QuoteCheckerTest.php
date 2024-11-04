@@ -101,7 +101,7 @@ class QuoteCheckerTest extends Unit
                 $this->createQuoteApprovalConfigMock(),
                 [],
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 
@@ -111,7 +111,7 @@ class QuoteCheckerTest extends Unit
     protected function createQuoteApprovalConfigMock(): QuoteApprovalConfig
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
-            ->setMethods(['getRequiredQuoteFieldsForApprovalProcess'])
+            ->onlyMethods(['getRequiredQuoteFieldsForApprovalProcess'])
             ->disableOriginalConstructor()
             ->getMock();
 

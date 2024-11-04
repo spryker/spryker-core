@@ -69,16 +69,27 @@ class TimeoutTest extends Unit
 
         $orderStateMachine = $this->createOrderStateMachineMock(['triggerEvent']);
 
-        //Check with grouping by event + order
+        $expectedCalls = [
+            [static::EVENT_PAY, [$salesOrderItem1, $salesOrderItem2]],
+            [static::EVENT_PAY, [$salesOrderItem3]],
+            [static::EVENT_SHIP, [$salesOrderItem4]],
+        ];
+
         $orderStateMachine
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(count($expectedCalls)))
             ->method('triggerEvent')
-            ->withConsecutive(
-                [$this->equalTo(static::EVENT_PAY), $this->equalTo([$salesOrderItem1, $salesOrderItem2])],
-                [$this->equalTo(static::EVENT_PAY), $this->equalTo([$salesOrderItem3])],
-                [$this->equalTo(static::EVENT_SHIP), $this->equalTo([$salesOrderItem4])],
-            )
-            ->willReturn([]);
+            ->willReturnCallback(function ($event, $items) use ($expectedCalls) {
+                static $invocationCount = 0;
+
+                [$expectedEvent, $expectedItems] = $expectedCalls[$invocationCount];
+
+                $invocationCount++;
+
+                $this->assertEquals($expectedEvent, $event);
+                $this->assertEquals($expectedItems, $items);
+
+                return [];
+            });
 
         $timeout = $this->createOmsTimeoutMock();
         $timeout
@@ -327,7 +338,7 @@ class TimeoutTest extends Unit
     {
         return $this->getMockBuilder(Timeout::class)
             ->disableOriginalConstructor()
-            ->setMethods([
+            ->onlyMethods([
                 'findItemsWithExpiredTimeouts',
             ])
             ->getMock();

@@ -199,7 +199,7 @@ class ConfigurableBundleCartAdderTest extends Unit
                 $cartClientMock,
                 $this->tester->getLocator()->configurableBundleCart()->service(),
             ])
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
     }
 }

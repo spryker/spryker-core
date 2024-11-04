@@ -133,7 +133,7 @@ class TransferValidatorTest extends Unit
      */
     protected function getTransferConfigMock(): TransferConfig
     {
-        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
+        return $this->getMockBuilder(TransferConfig::class)->onlyMethods(['isTransferNameValidated'])->getMock();
     }
 
     /**

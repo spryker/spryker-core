@@ -125,7 +125,7 @@ class StoreTest extends Unit
     {
         return $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getStoreSetup'])
+            ->onlyMethods(['getStoreSetup'])
             ->getMock();
     }
 

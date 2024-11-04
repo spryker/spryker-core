@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -35,17 +34,6 @@ use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 class ProductCategoryPresentationTester extends Actor
 {
     use _generated\ProductCategoryPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 
     /**
      * @param string $name

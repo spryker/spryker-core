@@ -82,7 +82,7 @@ class ConfigurableBundleNameGeneratorTest extends Unit
     {
         return $this->getMockBuilder(ConfigurableBundleToUtilTextServiceBridge::class)
             ->setConstructorArgs([$this->tester->getLocator()->utilText()->service()])
-            ->setMethods()
+            ->onlyMethods([])
             ->getMock();
     }
 

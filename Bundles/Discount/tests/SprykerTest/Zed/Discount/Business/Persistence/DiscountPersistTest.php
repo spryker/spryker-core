@@ -252,7 +252,7 @@ class DiscountPersistTest extends Unit
         $postUpdatePlugins = [];
 
         $discountPersistMock = $this->getMockBuilder(DiscountPersist::class)
-            ->setMethods(['createDiscountEntity', 'createVoucherPoolEntity'])
+            ->onlyMethods(['createDiscountEntity', 'createVoucherPoolEntity'])
             ->setConstructorArgs(
                 [
                     $voucherEngineMock,
@@ -290,7 +290,7 @@ class DiscountPersistTest extends Unit
      */
     protected function createDiscountQueryMock(): SpyDiscountQuery
     {
-        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
+        return $this->getMockBuilder(SpyDiscountQuery::class)->addMethods(['findOneByIdDiscount'])->getMock();
     }
 
     /**

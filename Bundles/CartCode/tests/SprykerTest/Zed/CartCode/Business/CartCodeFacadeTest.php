@@ -309,7 +309,7 @@ class CartCodeFacadeTest extends Unit
     {
         $cartCodePluginInterfaceMock = $this
             ->getMockBuilder(CartCodePluginInterface::class)
-            ->setMethods([
+            ->onlyMethods([
                 'addCartCode',
                 'removeCartCode',
                 'clearCartCodes',

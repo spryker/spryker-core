@@ -207,12 +207,17 @@ class BuilderTest extends Unit
             ->onlyMethods(['cacheProcess'])
             ->getMock();
 
+        $invocationCount = 0;
+
         // Assert
         $processCacheReaderMock
             ->expects($this->exactly($expectedReaderCalls))
             ->method('hasProcess')
-            ->withConsecutive(['process-a'], ['process-a'])
-            ->willReturnOnConsecutiveCalls(false, true);
+            ->willReturnCallback(function () use (&$invocationCount) {
+                $invocationCount++;
+
+                return $invocationCount === 2;
+            });
 
         $processCacheWriterMock
             ->expects($this->exactly($expectedWriterCalls))

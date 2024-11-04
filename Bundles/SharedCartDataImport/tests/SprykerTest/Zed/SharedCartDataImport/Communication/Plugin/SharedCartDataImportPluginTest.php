@@ -115,7 +115,7 @@ class SharedCartDataImportPluginTest extends Unit
      */
     protected function tearDown(): void
     {
-        parent::setUp();
+        parent::tearDown();
 
         $this->tester->deleteQuote($this->quoteTransfer);
         $this->tester->deleteCompanyUser($this->companyUser);

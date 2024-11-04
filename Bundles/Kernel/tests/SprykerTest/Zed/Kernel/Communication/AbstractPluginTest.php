@@ -72,7 +72,7 @@ class AbstractPluginTest extends Unit
     {
         $this->expectException(QueryContainerNotFoundException::class);
 
-        $queryContainerResolverMock = $this->getMockBuilder(QueryContainerResolver::class)->setMethods(['canResolve', 'getClassInfo'])->getMock();
+        $queryContainerResolverMock = $this->getMockBuilder(QueryContainerResolver::class)->onlyMethods(['canResolve', 'getClassInfo'])->getMock();
         $queryContainerResolverMock->method('canResolve')->willReturn(false);
 
         $classInfo = new ClassInfo();

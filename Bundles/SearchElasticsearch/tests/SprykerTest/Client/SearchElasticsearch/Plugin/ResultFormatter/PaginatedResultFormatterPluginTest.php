@@ -46,7 +46,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getSearchConfig'])
+            ->onlyMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
             ->method('getSearchConfig')
@@ -58,7 +58,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
         /** @var \Elastica\ResultSet|\PHPUnit\Framework\MockObject\MockObject $resultSetMock */
         $resultSetMock = $this->getMockBuilder(ResultSet::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTotalHits'])
+            ->onlyMethods(['getTotalHits'])
             ->getMock();
         $resultSetMock
             ->method('getTotalHits')

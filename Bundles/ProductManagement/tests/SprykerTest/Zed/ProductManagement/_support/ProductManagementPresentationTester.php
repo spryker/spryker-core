@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyFormTypePlugin;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
@@ -30,17 +29,6 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
 class ProductManagementPresentationTester extends Actor
 {
     use _generated\ProductManagementPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 
     /**
      * @return void

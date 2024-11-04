@@ -49,7 +49,7 @@ class WriterTest extends Unit
      */
     public function testDecrementStock(): void
     {
-        $this->setData();
+        $this->saveData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
         $stockProductEntity->reload();
         $oldQuantity = $stockProductEntity->getQuantity();
@@ -71,7 +71,7 @@ class WriterTest extends Unit
      */
     public function testIncrementStock(): void
     {
-        $this->setData();
+        $this->saveData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
         $stockProductEntity->reload();
         $oldQuantity = $stockProductEntity->getQuantity();
@@ -89,7 +89,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    protected function setData(): void
+    protected function saveData(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')

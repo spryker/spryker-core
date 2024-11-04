@@ -27,6 +27,17 @@ class ProductCategoryAssignCest
      *
      * @return void
      */
+    public function _before(ProductCategoryPresentationTester $i): void
+    {
+        $i->amZed();
+        $i->amLoggedInUser();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester $i
+     *
+     * @return void
+     */
     public function testThatICanAssignProducts(ProductCategoryPresentationTester $i): void
     {
         $name = 'my_unique_product_name_' . sha1(random_bytes(50));

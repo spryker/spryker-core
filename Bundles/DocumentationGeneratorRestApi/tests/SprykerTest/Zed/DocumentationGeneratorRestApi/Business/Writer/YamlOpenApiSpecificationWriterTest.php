@@ -51,8 +51,8 @@ class YamlOpenApiSpecificationWriterTest extends Unit
     {
         parent::setUp();
 
-        $this->yamlWriter = (new DocumentationGeneratorRestApiTestFactory())->createYamlOpenApiSpecificationWriter();
-        $this->config = (new DocumentationGeneratorRestApiTestFactory())->createConfig();
+        $this->yamlWriter = (new DocumentationGeneratorRestApiTestFactory(''))->createYamlOpenApiSpecificationWriter();
+        $this->config = (new DocumentationGeneratorRestApiTestFactory(''))->createConfig();
     }
 
     /**

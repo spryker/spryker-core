@@ -104,20 +104,25 @@ class ProductUrlGeneratorTest extends Unit
         $this->productAbstractNameGenerator = $this->getMockBuilder(ProductAbstractNameGeneratorInterface::class)
         ->disableOriginalConstructor()->getMock();
 
+        $invocationIndex = 0;
+        $expectedCalls = [
+            [$this->productAbstractTransfer, $this->locales['de_DE']],
+            [$this->productAbstractTransfer, $this->locales['en_US']],
+        ];
+        $returnValues = [
+            static::PRODUCT_NAME['de_DE'],
+            static::PRODUCT_NAME['en_US'],
+        ];
+
         $this->productAbstractNameGenerator
         ->expects($this->exactly(2))
         ->method('getLocalizedProductAbstractName')
-        ->withConsecutive(
-            [
-                $this->productAbstractTransfer,
-                $this->locales['de_DE'],
-            ],
-            [
-                $this->productAbstractTransfer,
-                $this->locales['en_US'],
-            ],
-        )
-        ->willReturn(static::PRODUCT_NAME['de_DE'], static::PRODUCT_NAME['en_US']);
+        ->willReturnCallback(function ($productAbstractTransfer, $locale) use (&$invocationIndex, $expectedCalls, $returnValues) {
+            $this->assertSame($expectedCalls[$invocationIndex][0], $productAbstractTransfer);
+            $this->assertSame($expectedCalls[$invocationIndex][1], $locale);
+
+            return $returnValues[$invocationIndex++];
+        });
     }
 
     /**
@@ -182,11 +187,18 @@ class ProductUrlGeneratorTest extends Unit
             new ArrayObject([$expectedDEUrl, $expectedENUrl]),
         );
 
+        $invocationIndex = 0;
+        $expectedValues = [static::PRODUCT_NAME['de_DE'], static::PRODUCT_NAME['en_US']];
+        $returnValues = ['product-name-dede', 'product-name-enus'];
+
         $this->utilTextService
         ->expects($this->exactly(2))
         ->method('generateSlug')
-        ->withConsecutive([static::PRODUCT_NAME['de_DE']], [static::PRODUCT_NAME['en_US']])
-        ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
+        ->willReturnCallback(function ($value) use (&$invocationIndex, $expectedValues, $returnValues) {
+            $this->assertSame($expectedValues[$invocationIndex], $value);
+
+            return $returnValues[$invocationIndex++];
+        });
 
         $configMock = $this->createMock(ProductConfig::class);
         $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(true);
@@ -219,11 +231,18 @@ class ProductUrlGeneratorTest extends Unit
                 new ArrayObject([$expectedDEUrl, $expectedENUrl]),
             );
 
+        $expectedCalls = [static::PRODUCT_NAME['de_DE'], static::PRODUCT_NAME['en_US']];
+        $returnValues = ['product-name-dede', 'product-name-enus'];
+        $callIndex = 0;
+
         $this->utilTextService
             ->expects($this->exactly(2))
             ->method('generateSlug')
-            ->withConsecutive([static::PRODUCT_NAME['de_DE']], [static::PRODUCT_NAME['en_US']])
-            ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
+            ->willReturnCallback(function ($value) use (&$callIndex, $expectedCalls, $returnValues) {
+                $this->assertSame($expectedCalls[$callIndex], $value);
+
+                return $returnValues[$callIndex++];
+            });
 
         $configMock = $this->createMock(ProductConfig::class);
         $configMock->method('isFullLocaleNamesInUrlEnabled')->willReturn(false);

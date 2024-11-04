@@ -185,7 +185,7 @@ class CmsPageSaverTest extends CmsMocks
                 $templateManagerMock,
                 $cmsPageStoreRelationWriterMock,
             ])
-            ->setMethods([
+            ->onlyMethods([
                 'getCmsPageEntity',
                 'createCmsPageEntity',
                 'createCmsPageLocalizedAttributesEntity',

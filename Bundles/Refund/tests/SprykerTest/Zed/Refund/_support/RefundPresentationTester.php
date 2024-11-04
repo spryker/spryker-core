@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Refund;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 use SprykerTest\Zed\Refund\PageObject\RefundListPage;
 use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
 
@@ -29,17 +28,6 @@ use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
 class RefundPresentationTester extends Actor
 {
     use _generated\RefundPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 
     /**
      * @return void

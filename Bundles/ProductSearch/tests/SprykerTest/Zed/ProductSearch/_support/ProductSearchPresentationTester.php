@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductSearch;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 use SprykerTest\Zed\ProductSearch\PageObject\FilterPreferencesPage;
 use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
 
@@ -29,17 +28,6 @@ use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
 class ProductSearchPresentationTester extends Actor
 {
     use _generated\ProductSearchPresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
 
     /**
      * @param string $filterName

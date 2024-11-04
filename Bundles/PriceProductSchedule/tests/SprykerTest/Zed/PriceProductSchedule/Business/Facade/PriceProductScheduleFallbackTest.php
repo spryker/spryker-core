@@ -404,7 +404,7 @@ class PriceProductScheduleFallbackTest extends Unit
     protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['getFallbackPriceTypeList'])
+            ->onlyMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
         $configMock->method('getFallbackPriceTypeList')
@@ -419,7 +419,7 @@ class PriceProductScheduleFallbackTest extends Unit
     protected function getNotConfiguredConfigMock(): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['getFallbackPriceTypeList'])
+            ->onlyMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
         $configMock->method('getFallbackPriceTypeList')
@@ -434,7 +434,7 @@ class PriceProductScheduleFallbackTest extends Unit
     protected function createPriceProductFacadeMock(): PriceProductFacadeInterface
     {
         $storeFacadeMock = $this->getMockBuilder(PriceProductToStoreFacadeInterface::class)
-            ->setMethods(['getCurrentStore', 'getStoreByName', 'getStoreById', 'getStoreTransfersByStoreNames'])
+            ->onlyMethods(['getCurrentStore', 'getStoreByName', 'getStoreById', 'getStoreTransfersByStoreNames'])
             ->getMock();
         $storeFacadeMock->method('getStoreByName')
             ->willReturn((new StoreTransfer())

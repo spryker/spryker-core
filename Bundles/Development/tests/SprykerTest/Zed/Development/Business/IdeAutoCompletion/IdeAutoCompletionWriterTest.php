@@ -184,7 +184,7 @@ class IdeAutoCompletionWriterTest extends Unit
     {
         $configMock = $this
             ->getMockBuilder(DevelopmentConfig::class)
-            ->setMethods(['getDefaultIdeAutoCompletionOptions'])
+            ->onlyMethods(['getDefaultIdeAutoCompletionOptions'])
             ->getMock();
 
         $configMock
