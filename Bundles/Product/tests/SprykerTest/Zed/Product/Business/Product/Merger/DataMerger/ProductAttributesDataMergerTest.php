@@ -33,8 +33,8 @@ class ProductAttributesDataMergerTest extends Unit
     public function testProductConcreteAttributesExtendedWithProductAbstract(): void
     {
         // Arrange
-        $productConcrete = (new ProductConcreteTransfer())->fromArray(['fkProductAbstract' => 1, 'attributes' => ['red', 'green']]);
-        $productAbstract = (new ProductAbstractTransfer())->fromArray(['idProductAbstract' => 1, 'attributes' => ['green', 'blue']]);
+        $productConcrete = (new ProductConcreteTransfer())->fromArray(['fkProductAbstract' => 1, 'attributes' => ['color' => 'black', 'pack' => 'box', 'system' => ['Windows', 'Linux']]]);
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['idProductAbstract' => 1, 'attributes' => ['color' => 'red', 'material' => 'wood']]);
 
         $productAttributesDataMerger = new ProductAttributesDataMerger();
 
@@ -45,6 +45,6 @@ class ProductAttributesDataMergerTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(['green', 'blue', 'red'], $productConcreteCollection[0]->getAttributes());
+        $this->assertEquals(['color' => 'black', 'pack' => 'box', 'material' => 'wood', 'system' => ['Windows', 'Linux']], $productConcreteCollection[0]->getAttributes());
     }
 }

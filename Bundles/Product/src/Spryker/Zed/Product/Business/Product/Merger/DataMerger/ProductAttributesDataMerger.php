@@ -35,11 +35,9 @@ class ProductAttributesDataMerger extends AbstractProductDataMerger
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): array {
-        return array_unique(
-            array_merge(
-                $productAbstractTransfer->getAttributes(),
-                $productConcreteTransfer->getAttributes(),
-            ),
+        return array_merge(
+            $productAbstractTransfer->getAttributes(),
+            $productConcreteTransfer->getAttributes(),
         );
     }
 }

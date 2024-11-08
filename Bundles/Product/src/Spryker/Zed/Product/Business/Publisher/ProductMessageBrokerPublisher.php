@@ -239,6 +239,8 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     /**
      * @param array<int> $productConcreteIds
      *
+     * @throws \Throwable
+     *
      * @return array<string, array<\Generated\Shared\Transfer\ProductConcreteTransfer>>
      */
     protected function readProductsConcreteByIdsIndexedByStoreReference(array $productConcreteIds): array
@@ -246,13 +248,13 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         try {
             $productConcreteTransfers = $this->productConcreteReader
                 ->readProductConcreteMergedWithProductAbstractByIds($productConcreteIds);
-
-            return $this->groupProductsByStoreReference($productConcreteTransfers);
         } catch (Throwable $throwable) {
             $this->getLogger()->error('Read product error: ' . $throwable->getMessage(), ['exception' => $throwable]);
+
+            throw $throwable;
         }
 
-        return [];
+        return $this->groupProductsByStoreReference($productConcreteTransfers);
     }
 
     /**
