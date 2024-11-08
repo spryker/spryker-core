@@ -281,7 +281,7 @@ class FlysystemAws3v3FileSystemTest extends Unit
         return [
             'stream reads enabled' => [true, true],
             'stream reads disabled' => [false, false],
-            'stream reads null' => [true, null],
+            'stream reads null' => [false, null],
         ];
     }
 

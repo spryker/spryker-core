@@ -111,7 +111,7 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
             null,
             null,
             [],
-            $this->adapterConfig->getIsStreamReads() ?? true,
+            $this->adapterConfig->getIsStreamReads() ?? false,
         );
 
         return $this;
