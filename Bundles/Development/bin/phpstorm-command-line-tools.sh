@@ -296,8 +296,6 @@ fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     BASE_DIR="$HOME/Library/Application Support/JetBrains"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    BASE_DIR="$HOME/.config/JetBrains"
 else
     echo "Unsupported operating system: $OSTYPE"
     exit 1
