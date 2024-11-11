@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapper;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Business\Search\ProductSetPageSearchWriter;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 
 /**
@@ -30,7 +29,6 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->createProductSetSearchDataMapper(),
             $this->getProductSetFacade(),
-            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -57,13 +55,5 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductSetSearchDataMapper(): ProductSetSearchDataMapperInterface
     {
         return new ProductSetSearchDataMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductSetPageSearchToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_STORE);
     }
 }

@@ -11,7 +11,6 @@
         "spryker/product-page-search-extension": "^1.0.0",
         "spryker/product-review": "^1.1.0 || ^2.0.0",
         "spryker/search-extension": "^1.0.0",
-        "spryker/store": "^1.19.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.0.0",
         "spryker/transfer": "^3.25.0",

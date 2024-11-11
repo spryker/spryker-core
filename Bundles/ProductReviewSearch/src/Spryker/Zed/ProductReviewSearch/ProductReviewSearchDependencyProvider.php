@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeBridge;
-use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingBridge;
 
@@ -21,11 +20,6 @@ use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtil
  */
 class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const FACADE_STORE = 'FACADE_STORE';
-
     /**
      * @var string
      */
@@ -79,7 +73,6 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -110,22 +103,6 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
         $container->set(static::PROPEL_QUERY_PRODUCT_REVIEW, $container->factory(function (): SpyProductReviewQuery {
             return SpyProductReviewQuery::create();
         }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new ProductReviewSearchToStoreFacadeBridge(
-                $container->getLocator()->store()->facade(),
-            );
-        });
 
         return $container;
     }

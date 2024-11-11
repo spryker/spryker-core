@@ -15,7 +15,7 @@
         <property name="url" type="string"/>
         <property name="imageSets" type="array" singular="imageSets"/>
         <property name="locale" type="string"/>
-        <property name="store" type="string"/>
+        <property name="store" type="string" deprecated="Will be removed with next major release."/>
         <property name="type" type="string"/>
     </transfer>
 

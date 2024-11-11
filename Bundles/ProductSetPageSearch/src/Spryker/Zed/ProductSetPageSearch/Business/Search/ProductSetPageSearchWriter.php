@@ -11,11 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductSetPageSearchTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface;
 
@@ -54,16 +52,10 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface $productSetFacade
-     * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
@@ -71,7 +63,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         ProductSetPageSearchToUtilEncodingInterface $utilEncodingService,
         ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper,
         ProductSetPageSearchToProductSetInterface $productSetFacade,
-        ProductSetPageSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
@@ -79,7 +70,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $this->productSetPageSearchDataMapper = $productSetPageSearchDataMapper;
         $this->productSetFacade = $productSetFacade;
         $this->isSendingToQueue = $isSendingToQueue;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -92,8 +82,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetEntities = $this->findProductSetLocalizedEntities($productSetIds);
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
 
-        $storeTransfer = $this->storeFacade->getCurrentStore(true);
-        $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
+        $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities);
     }
 
     /**
@@ -114,35 +103,32 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     /**
      * @param array $spyProductSetLocalizedEntities
      * @param array $spyProductSetStorageEntities
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function storeData(array $spyProductSetLocalizedEntities, array $spyProductSetStorageEntities, StoreTransfer $storeTransfer)
+    protected function storeData(array $spyProductSetLocalizedEntities, array $spyProductSetStorageEntities)
     {
         foreach ($spyProductSetLocalizedEntities as $spyProductSetLocalizedEntity) {
             $idProductSet = $spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET];
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
-                $this->storeDataSet($spyProductSetLocalizedEntity, $storeTransfer, $spyProductSetStorageEntities[$idProductSet][$localeName]);
+                $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
 
                 continue;
             }
 
-            $this->storeDataSet($spyProductSetLocalizedEntity, $storeTransfer);
+            $this->storeDataSet($spyProductSetLocalizedEntity);
         }
     }
 
     /**
      * @param array $spyProductSetLocalizedEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch|null $spyProductSetPageSearchEntity
      *
      * @return void
      */
     protected function storeDataSet(
         array $spyProductSetLocalizedEntity,
-        StoreTransfer $storeTransfer,
         ?SpyProductSetPageSearch $spyProductSetPageSearchEntity = null
     ) {
         if ($spyProductSetPageSearchEntity === null) {
@@ -157,7 +143,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
             return;
         }
 
-        $productSetPageSearchTransfer = $this->getProductSetPageSearchTransfer($spyProductSetLocalizedEntity, $storeTransfer);
+        $productSetPageSearchTransfer = $this->getProductSetPageSearchTransfer($spyProductSetLocalizedEntity);
         $localeTransfer = (new LocaleTransfer())
             ->setLocaleName($spyProductSetLocalizedEntity['SpyLocale']['locale_name'])
             ->setIdLocale($spyProductSetLocalizedEntity['SpyLocale']['id_locale']);
@@ -174,13 +160,11 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
 
     /**
      * @param array $spyProductAbstractLocalizedEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetPageSearchTransfer
      */
     protected function getProductSetPageSearchTransfer(
-        array $spyProductAbstractLocalizedEntity,
-        StoreTransfer $storeTransfer
+        array $spyProductAbstractLocalizedEntity
     ) {
         $productAbstractIds = [];
         foreach ($spyProductAbstractLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'] as $spyProductAbstractSet) {
@@ -190,7 +174,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity, true);
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity['SpyProductSet'], true);
         $productSetPageSearchTransfer->setLocale($spyProductAbstractLocalizedEntity['SpyLocale']['locale_name']);
-        $productSetPageSearchTransfer->setStore($storeTransfer->getNameOrFail());
         $productSetPageSearchTransfer->setIdProductAbstracts($productAbstractIds);
         $productSetPageSearchTransfer->setType('product_set');
         $productSetPageSearchTransfer->setImageSets($this->getProductSetImageSets($spyProductAbstractLocalizedEntity['fk_product_set'], $spyProductAbstractLocalizedEntity['SpyLocale']['id_locale']));

@@ -20,11 +20,6 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     /**
      * @var string
      */
-    protected const KEY_STORE = 'store';
-
-    /**
-     * @var string
-     */
     protected const KEY_WEIGHT = 'weight';
 
     /**
@@ -32,7 +27,6 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
      */
     protected const FILTERED_KEYS = [
         'locale',
-        'store',
         'type',
     ];
 
@@ -45,7 +39,6 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     public function mapProductSetDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
     {
         return [
-            PageIndexMap::STORE => $data[static::KEY_STORE],
             PageIndexMap::TYPE => static::PRODUCT_SET_RESOURCE_NAME,
             PageIndexMap::LOCALE => $localeTransfer->getLocaleName(),
             PageIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($data),

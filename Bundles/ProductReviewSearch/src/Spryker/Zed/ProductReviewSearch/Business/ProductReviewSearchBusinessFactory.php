@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter;
-use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 
 /**
@@ -27,7 +26,6 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductReviewSearchWriter(
             $this->getQueryContainer(),
             $this->getUtilEncoding(),
-            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -38,13 +36,5 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductReviewSearchToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::FACADE_STORE);
     }
 }

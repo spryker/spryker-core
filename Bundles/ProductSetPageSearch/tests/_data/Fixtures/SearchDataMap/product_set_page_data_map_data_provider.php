@@ -38,11 +38,9 @@ return [
                          ],
                  ],
             'locale' => 'de_DE',
-            'store' => 'DE',
             'type' => 'product_set',
         ],
         [
-            'store' => 'DE',
             'type' => 'product_set',
             'locale' => 'de_DE',
             'search-result-data' =>
