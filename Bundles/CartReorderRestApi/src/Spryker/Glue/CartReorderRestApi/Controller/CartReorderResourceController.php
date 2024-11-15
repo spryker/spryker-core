@@ -31,7 +31,7 @@ class CartReorderResourceController extends AbstractController
      *                  "name": "orderReference",
      *                  "in": "query",
      *                  "required": true,
-     *                  "description": "Order reference of existing order that should be amended."
+     *                  "description": "Order reference of existing order that should be updated."
      *              }
      *          ],
      *          "responses": {
