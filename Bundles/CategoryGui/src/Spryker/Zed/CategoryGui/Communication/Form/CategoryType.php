@@ -46,6 +46,11 @@ class CategoryType extends CommonCategoryType
     /**
      * @var string
      */
+    public const OPTION_HELP = 'help';
+
+    /**
+     * @var string
+     */
     protected const OPTION_PROPERTY_PATH_PARENT_CATEGORY_NODE = 'parentCategoryNode';
 
     /**

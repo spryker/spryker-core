@@ -65,3 +65,4 @@ Settings,Einstellungen
 "Main category will be moved to","Hauptkategorie wird verschoben"
 "Extra parent will be moved to","Zusätzliches Elternteil wird nach verschoben"
 "Category nodes cannot be relocated.","Kategorieknoten können nicht verschoben werden."
+"If a store is not selectable, please make sure that the parent category is assigned to it first.","Sollte ein Store nicht auswählbar sein, stellen Sie bitte sicher, dass diesem zuerst die übergeordnete Kategorie  zugeordnet ist."

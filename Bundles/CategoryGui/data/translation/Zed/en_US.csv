@@ -65,3 +65,4 @@ Settings,Settings
 "Main category will be moved to","Main category will be moved to"
 "Extra parent will be moved to","Extra parent will be moved to"
 "Category nodes cannot be relocated.","Category nodes cannot be relocated."
+"If a store is not selectable, please make sure that the parent category is assigned to it first.","If a store is not selectable, please make sure that the parent category is assigned to it first."

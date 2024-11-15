@@ -28,6 +28,11 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
     protected $storeRelationFormTypePlugin;
 
     /**
+     * @var string
+     */
+    protected const HELP_TEXT_ASSIGN_PARENT_FIRST = 'If a store is not selectable, please make sure that the parent category is assigned to it first.';
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface $categoryStoreWithStateFinder
      * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
@@ -67,11 +72,23 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
         $options[CategoryType::OPTION_INACTIVE_CHOICES] = $this->categoryStoreWithStateFinder
             ->getInactiveStoreIdsByIdCategoryNode($idCategoryNode);
 
+        if ($options[CategoryType::OPTION_INACTIVE_CHOICES]) {
+            $options[CategoryType::OPTION_HELP] = $this->getHelpMessageForStoreRelationSelector();
+        }
+
         $form->add(
             CategoryType::FIELD_STORE_RELATION,
             $this->storeRelationFormTypePlugin->getType(),
             $options,
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHelpMessageForStoreRelationSelector(): string
+    {
+        return static::HELP_TEXT_ASSIGN_PARENT_FIRST;
     }
 
     /**
