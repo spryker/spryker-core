@@ -1,0 +1,41 @@
+namespace: SprykerTest\Zed\SalesOrderAmendment
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Business:
+        path: Business
+        actor: SalesOrderAmendmentBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\SalesOrderAmendment\Helper\SalesOrderAmendmentHelper
+                - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+
+    Communication:
+        path: Communication
+        actor: SalesOrderAmendmentCommunicationTester
+        modules:
+            enabled:
+                - Asserts

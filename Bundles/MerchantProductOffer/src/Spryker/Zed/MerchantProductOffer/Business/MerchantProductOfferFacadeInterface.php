@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -75,4 +76,23 @@ interface MerchantProductOfferFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcretesWithOffers(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.productOfferReference` and `ItemTransfer.merchantReference` set.
+     * - Expands `CartReorderTransfer.reorderItems` with product offer reference if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with product offer reference, merchant reference, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with product offer reference and merchant reference set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithMerchantProductOffer(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

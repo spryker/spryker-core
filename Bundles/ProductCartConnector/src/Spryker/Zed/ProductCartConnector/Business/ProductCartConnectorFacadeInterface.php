@@ -83,4 +83,19 @@ interface ProductCartConnectorFacadeInterface
      * @return bool
      */
     public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Requires `CartChangeTransfer.quote` to be set.
+     * - Requires `CartChangeTransfer.quote.store` to be set.
+     * - Filters out items from `CartChangeTransfer` that are not active.
+     * - Adds a message for each item that is not active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutInactiveCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

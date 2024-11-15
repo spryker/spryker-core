@@ -299,6 +299,8 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -492,4 +494,28 @@
 
     <transfer name="SalesOrderConfiguredBundleItem">
     </transfer>
+
+    <transfer name="OrderCriteria" strict="true">
+        <property name="orderConditions" type="OrderConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="OrderConditions" strict="true">
+        <property name="salesOrderIds" type="int[]" singular="idSalesOrder"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="withOrderExpanderPlugins" type="bool"/>
+    </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" singular="order"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
 </transfers>

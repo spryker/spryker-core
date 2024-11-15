@@ -1,0 +1,5 @@
+cart-reorder:
+    post:
+        orderReference:
+            - Required
+            - NotBlank

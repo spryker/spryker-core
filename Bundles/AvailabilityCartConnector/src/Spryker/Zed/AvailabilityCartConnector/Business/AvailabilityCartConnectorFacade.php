@@ -47,4 +47,20 @@ class AvailabilityCartConnectorFacade extends AbstractFacade implements Availabi
             ->createCartCheckAvailability()
             ->checkCartAvailability($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutUnavailableCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeItemFilter()
+            ->filterOutUnavailableItems($cartChangeTransfer);
+    }
 }

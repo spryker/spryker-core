@@ -12,6 +12,8 @@
         <property name="cartNote" type="string"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Order">
@@ -42,6 +44,20 @@
     </transfer>
 
     <transfer name="Customer">
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="order" type="Order"/>
+        <property name="quote" type="Quote"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="cartNote" type="string" strict="true"/>
     </transfer>
 
 </transfers>

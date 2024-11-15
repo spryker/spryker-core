@@ -63,7 +63,7 @@ class ExpandCartChangeGroupKeyWithAmountTest extends Unit
     public function testExpandCartChangeGroupKeyWithAmountSalesUnitNoSalesUnitIsDefined(): void
     {
         // Arrange
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithoutAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY);
 
         // Act
         $cartChangeTransfer = $this->tester->getFacade()->expandCartChangeGroupKeyWithAmount($cartChangeTransfer);

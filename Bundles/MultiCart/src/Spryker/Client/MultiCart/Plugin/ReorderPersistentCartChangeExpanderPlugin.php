@@ -13,6 +13,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MultiCart\Communication\Plugin\CartReorder\DefaultReorderQuoteNameCartPreReorderPlugin} instead.
+ *
  * @method \Spryker\Client\MultiCart\MultiCartFactory getFactory()
  */
 class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface

@@ -14,6 +14,8 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class ConfigurableBundleCartServiceFactory extends AbstractServiceFactory
 {
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return \Spryker\Service\ConfigurableBundleCart\Expander\ConfiguredBundleGroupKeyExpanderInterface
      */
     public function createConfiguredBundleGroupKeyExpander(): ConfiguredBundleGroupKeyExpanderInterface

@@ -13,6 +13,8 @@ use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductOption\Business\Expander\ProductOptionExpanderInterface;
+use Spryker\Zed\ProductOption\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\ProductOption\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupIdHydrator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
@@ -170,6 +172,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionExpander(): ProductOptionExpanderInterface
     {
         return new ProductOptionExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 
     /**

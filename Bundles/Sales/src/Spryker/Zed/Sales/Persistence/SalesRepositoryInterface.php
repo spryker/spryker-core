@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
@@ -93,4 +95,11 @@ interface SalesRepositoryInterface
      * @return int
      */
     public function countUniqueProductsForOrder(int $idSalesOrder): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer;
 }

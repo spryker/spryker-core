@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartNote\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -67,5 +68,37 @@ class CartNoteFacade extends AbstractFacade implements CartNoteFacadeInterface
         return $this->getFactory()
             ->createQuoteCartNoteSetter()
             ->setQuoteItemNote($quoteItemCartNoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithCartNote(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function expandCartReorderQuoteWithCartNote(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderExpander()
+            ->expandCartReorderQuoteWithCartNote($cartReorderTransfer);
     }
 }

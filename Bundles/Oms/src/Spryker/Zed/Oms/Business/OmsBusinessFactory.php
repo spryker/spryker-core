@@ -10,6 +10,8 @@ namespace Spryker\Zed\Oms\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Checker\FlagChecker;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
+use Spryker\Zed\Oms\Business\Checker\OrderChecker;
+use Spryker\Zed\Oms\Business\Checker\OrderCheckerInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
@@ -455,6 +457,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createOrderStateMachineFinder(),
             $this->getRepository(),
             $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Checker\OrderCheckerInterface
+     */
+    public function createOrderChecker(): OrderCheckerInterface
+    {
+        return new OrderChecker(
+            $this->createFlagChecker(),
+            $this->getRepository(),
         );
     }
 

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\OrderCustomReference\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OrderCustomReference\Business\Expander\CartReorderExpander;
+use Spryker\Zed\OrderCustomReference\Business\Expander\CartReorderExpanderInterface;
 use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriter;
 use Spryker\Zed\OrderCustomReference\Business\Writer\OrderCustomReferenceWriterInterface;
 
@@ -23,5 +25,13 @@ class OrderCustomReferenceBusinessFactory extends AbstractBusinessFactory
     public function createOrderCustomReferenceWriter(): OrderCustomReferenceWriterInterface
     {
         return new OrderCustomReferenceWriter($this->getEntityManager(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\OrderCustomReference\Business\Expander\CartReorderExpanderInterface
+     */
+    public function createCartReorderExpander(): CartReorderExpanderInterface
+    {
+        return new CartReorderExpander();
     }
 }

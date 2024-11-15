@@ -8,6 +8,7 @@
 namespace Spryker\Client\ConfigurableBundleCart;
 
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientBridge;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -24,7 +25,7 @@ class ConfigurableBundleCartDependencyProvider extends AbstractDependencyProvide
     /**
      * @var string
      */
-    public const SERVICE_CONFIGURED_BUNDLE_CART = 'SERVICE_CONFIGURED_BUNDLE_CART';
+    public const SERVICE_CONFIGURABLE_BUNDLE = 'SERVICE_CONFIGURABLE_BUNDLE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -35,7 +36,7 @@ class ConfigurableBundleCartDependencyProvider extends AbstractDependencyProvide
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addCartClient($container);
-        $container = $this->addConfigurableBundleCartService($container);
+        $container = $this->addConfigurableBundleService($container);
 
         return $container;
     }
@@ -59,10 +60,12 @@ class ConfigurableBundleCartDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addConfigurableBundleCartService(Container $container): Container
+    protected function addConfigurableBundleService(Container $container): Container
     {
-        $container->set(static::SERVICE_CONFIGURED_BUNDLE_CART, function (Container $container) {
-            return $container->getLocator()->configurableBundleCart()->service();
+        $container->set(static::SERVICE_CONFIGURABLE_BUNDLE, function (Container $container) {
+            return new ConfigurableBundleCartToConfigurableBundleServiceBridge(
+                $container->getLocator()->configurableBundle()->service(),
+            );
         });
 
         return $container;

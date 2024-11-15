@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface InactiveItemsFilterInterface
@@ -17,4 +18,11 @@ interface InactiveItemsFilterInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutInactiveCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

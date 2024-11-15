@@ -12,6 +12,12 @@ use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUn
 use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Expander\PickingList\ProductPackagingUnitPickingListExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Expander\PickingList\ProductPackagingUnitPickingListExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Extractor\ProductPackagingUnitItemExtractor;
+use Spryker\Zed\ProductPackagingUnit\Business\Extractor\ProductPackagingUnitItemExtractorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\ProductPackagingUnit\Business\Hydrator\CartReorderItemHydratorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Merger\CartReorderItemMerger;
+use Spryker\Zed\ProductPackagingUnit\Business\Merger\CartReorderItemMergerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheck;
@@ -219,6 +225,33 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitPickingListExpander(
             $this->createOrderItemExpander(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Merger\CartReorderItemMergerInterface
+     */
+    public function createCartReorderItemMerger(): CartReorderItemMergerInterface
+    {
+        return new CartReorderItemMerger($this->createProductPackagingUnitItemExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator(
+            $this->createProductPackagingUnitItemExtractor(),
+            $this->getProductMeasurementUnitFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Extractor\ProductPackagingUnitItemExtractorInterface
+     */
+    public function createProductPackagingUnitItemExtractor(): ProductPackagingUnitItemExtractorInterface
+    {
+        return new ProductPackagingUnitItemExtractor();
     }
 
     /**

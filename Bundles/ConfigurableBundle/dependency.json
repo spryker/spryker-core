@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker/uuid-behavior": "Used to generate UUIDs for entities.",
-        "spryker/event": "Required to use Event plugins."
+        "spryker/event": "Required to use Event plugins.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }
 }

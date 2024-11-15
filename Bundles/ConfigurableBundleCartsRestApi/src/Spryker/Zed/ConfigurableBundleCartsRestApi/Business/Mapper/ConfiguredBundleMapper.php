@@ -17,21 +17,21 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
-use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface;
 
 class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
+     * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface
      */
-    protected $configurableBundleCartService;
+    protected ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface $configurableBundleService;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface $configurableBundleCartService
+     * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface $configurableBundleService
      */
-    public function __construct(ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface $configurableBundleCartService)
+    public function __construct(ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface $configurableBundleService)
     {
-        $this->configurableBundleCartService = $configurableBundleCartService;
+        $this->configurableBundleService = $configurableBundleService;
     }
 
     /**
@@ -45,7 +45,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer {
         $itemTransfers = [];
-        $configuredBundleTransfer = $this->getSlimConfiguredBundleTransfer($createConfiguredBundleRequestTransfer->getConfiguredBundle());
+        $configuredBundleTransfer = $this->getSlimConfiguredBundleTransfer($createConfiguredBundleRequestTransfer->getConfiguredBundleOrFail());
 
         foreach ($createConfiguredBundleRequestTransfer->getItems() as $itemTransfer) {
             $itemTransfers[] = $this->getSlimItemTransfer($configuredBundleTransfer, $itemTransfer);
@@ -69,15 +69,15 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         $persistentCartChangeTransfer->requireQuote();
 
         $persistentCartChangeTransfer->setCustomer((new CustomerTransfer())
-            ->fromArray($persistentCartChangeTransfer->getQuote()->getCustomer()->toArray()))
-            ->setIdQuote($persistentCartChangeTransfer->getQuote()->getIdQuote());
+            ->fromArray($persistentCartChangeTransfer->getQuoteOrFail()->getCustomerOrFail()->toArray()))
+            ->setIdQuote($persistentCartChangeTransfer->getQuoteOrFail()->getIdQuote());
 
-        foreach ($persistentCartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
+        foreach ($persistentCartChangeTransfer->getQuoteOrFail()->getItems() as $itemTransfer) {
             if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundleItem()) {
                 continue;
             }
 
-            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $updateConfiguredBundleRequestTransfer->getGroupKey()) {
+            if ($itemTransfer->getConfiguredBundleOrFail()->getGroupKey() !== $updateConfiguredBundleRequestTransfer->getGroupKey()) {
                 continue;
             }
 
@@ -101,15 +101,15 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
      */
     protected function getSlimConfiguredBundleTransfer(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundleTransfer
     {
-        $configuredBundleTransfer = $this->configurableBundleCartService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
+        $configuredBundleTransfer = $this->configurableBundleService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
 
         return (new ConfiguredBundleTransfer())
             ->setGroupKey($configuredBundleTransfer->getGroupKey())
             ->setQuantity($configuredBundleTransfer->getQuantity())
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())
-                    ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())
-                    ->setName($configuredBundleTransfer->getTemplate()->getName()),
+                    ->setUuid($configuredBundleTransfer->getTemplateOrFail()->getUuid())
+                    ->setName($configuredBundleTransfer->getTemplateOrFail()->getName()),
             );
     }
 
@@ -122,16 +122,16 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
     protected function getSlimItemTransfer(ConfiguredBundleTransfer $configuredBundleTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         $itemTransfer
-            ->getConfiguredBundleItem()
+            ->getConfiguredBundleItemOrFail()
                 ->requireSlot()
-                ->getSlot()
+                ->getSlotOrFail()
                     ->requireUuid();
 
         $configuredBundleItemTransfer = (new ConfiguredBundleItemTransfer())
-            ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
+            ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItemOrFail()->getQuantityPerSlot())
             ->setSlot(
                 (new ConfigurableBundleTemplateSlotTransfer())
-                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid()),
+                    ->setUuid($itemTransfer->getConfiguredBundleItemOrFail()->getSlotOrFail()->getUuid()),
             );
 
         $itemTransfer

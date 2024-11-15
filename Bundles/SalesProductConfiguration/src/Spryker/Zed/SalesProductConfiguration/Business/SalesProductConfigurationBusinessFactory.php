@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesProductConfiguration\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\SalesProductConfiguration\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\SalesProductConfiguration\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\SalesProductConfiguration\Business\Writer\SalesOrderItemConfigurationWriter;
 use Spryker\Zed\SalesProductConfiguration\Business\Writer\SalesOrderItemConfigurationWriterInterface;
 
@@ -38,5 +40,13 @@ class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
         return new OrderItemExpander(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConfiguration\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 }

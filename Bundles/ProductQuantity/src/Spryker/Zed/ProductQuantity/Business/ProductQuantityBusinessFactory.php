@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Spryker\Service\ProductQuantity\ProductQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductQuantity\Business\Merger\CartReorderItemMerger;
+use Spryker\Zed\ProductQuantity\Business\Merger\CartReorderItemMergerInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Checker\CartChangeTransferNormalizerPreChecker;
 use Spryker\Zed\ProductQuantity\Business\Model\Checker\CartChangeTransferNormalizerPreCheckerInterface;
 use Spryker\Zed\ProductQuantity\Business\Model\Normalizer\CartChangeTransferQuantityNormalizer;
@@ -59,6 +61,14 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeTransferNormalizerPreChecker(): CartChangeTransferNormalizerPreCheckerInterface
     {
         return new CartChangeTransferNormalizerPreChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductQuantity\Business\Merger\CartReorderItemMergerInterface
+     */
+    public function createCartReorderItemMerger(): CartReorderItemMergerInterface
+    {
+        return new CartReorderItemMerger($this->createProductQuantityReader());
     }
 
     /**

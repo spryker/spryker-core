@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -47,5 +48,21 @@ class SalesProductConfigurationFacade extends AbstractFacade implements SalesPro
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandOrderItemsWithProductConfiguration($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithProductConfiguration(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityCartConnector;
 
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityBridge;
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToMessengerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -24,6 +25,11 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     public const PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY';
 
     /**
+     * @var string
+     */
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -32,6 +38,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addCartItemQuantityCounterStrategyPlugins($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
@@ -45,6 +52,22 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
+            return new AvailabilityCartConnectorToMessengerFacadeBridge(
+                $container->getLocator()->messenger()->facade(),
+            );
         });
 
         return $container;

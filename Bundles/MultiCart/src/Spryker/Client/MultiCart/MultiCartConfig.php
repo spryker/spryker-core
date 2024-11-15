@@ -48,6 +48,8 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getReorderQuoteName(): string

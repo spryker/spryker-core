@@ -19,7 +19,7 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiDep
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeInterface;
-use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -60,7 +60,7 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
         return new ConfiguredBundleMapper(
-            $this->getConfigurableBundleCartService(),
+            $this->getConfigurableBundleService(),
         );
     }
 
@@ -97,10 +97,10 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
+     * @return \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface
      */
-    public function getConfigurableBundleCartService(): ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
+    public function getConfigurableBundleService(): ConfigurableBundleCartsRestApiToConfigurableBundleServiceInterface
     {
-        return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::SERVICE_CONFIGURABLE_BUNDLE_CART);
+        return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::SERVICE_CONFIGURABLE_BUNDLE);
     }
 }

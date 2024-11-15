@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface getFacade(?string $moduleName = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -84,5 +85,21 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
         return $this->getFactory()
             ->createProductConcreteOfferExpander()
             ->expandProductConcretesWithOffers($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithMerchantProductOffer(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

@@ -8,7 +8,16 @@
 namespace Spryker\Zed\AvailabilityCartConnector\Business;
 
 use Spryker\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
+use Spryker\Zed\AvailabilityCartConnector\Business\Calculator\ItemQuantityCalculator;
+use Spryker\Zed\AvailabilityCartConnector\Business\Calculator\ItemQuantityCalculatorInterface;
 use Spryker\Zed\AvailabilityCartConnector\Business\Cart\CheckCartAvailability;
+use Spryker\Zed\AvailabilityCartConnector\Business\Creator\MessageCreator;
+use Spryker\Zed\AvailabilityCartConnector\Business\Creator\MessageCreatorInterface;
+use Spryker\Zed\AvailabilityCartConnector\Business\Filter\CartChangeItemFilter;
+use Spryker\Zed\AvailabilityCartConnector\Business\Filter\CartChangeItemFilterInterface;
+use Spryker\Zed\AvailabilityCartConnector\Business\Reader\SellableItemsReader;
+use Spryker\Zed\AvailabilityCartConnector\Business\Reader\SellableItemsReaderInterface;
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
@@ -18,7 +27,51 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartCheckAvailability()
     {
-        return new CheckCartAvailability($this->getAvailabilityFacade(), $this->getCartItemQuantityCounterStrategyPlugins());
+        return new CheckCartAvailability(
+            $this->createItemQuantityCalculator(),
+            $this->createSellableItemsReader(),
+            $this->createMessageCreator(),
+            $this->getAvailabilityFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Filter\CartChangeItemFilterInterface
+     */
+    public function createCartChangeItemFilter(): CartChangeItemFilterInterface
+    {
+        return new CartChangeItemFilter(
+            $this->createSellableItemsReader(),
+            $this->createMessageCreator(),
+            $this->getMessengerFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Reader\SellableItemsReaderInterface
+     */
+    public function createSellableItemsReader(): SellableItemsReaderInterface
+    {
+        return new SellableItemsReader(
+            $this->createItemQuantityCalculator(),
+            $this->getAvailabilityFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Calculator\ItemQuantityCalculatorInterface
+     */
+    public function createItemQuantityCalculator(): ItemQuantityCalculatorInterface
+    {
+        return new ItemQuantityCalculator($this->getCartItemQuantityCounterStrategyPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnector\Business\Creator\MessageCreatorInterface
+     */
+    public function createMessageCreator(): MessageCreatorInterface
+    {
+        return new MessageCreator();
     }
 
     /**
@@ -30,7 +83,15 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
+     * @return \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): AvailabilityCartConnectorToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     public function getCartItemQuantityCounterStrategyPlugins(): array
     {

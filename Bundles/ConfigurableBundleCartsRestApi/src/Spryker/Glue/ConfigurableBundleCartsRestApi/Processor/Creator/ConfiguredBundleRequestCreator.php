@@ -56,7 +56,7 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
     ): ?CreateConfiguredBundleRequestTransfer {
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient
             ->findConfigurableBundleTemplateStorageByUuid(
-                $restConfiguredBundlesAttributesTransfer->getTemplateUuid(),
+                $restConfiguredBundlesAttributesTransfer->getTemplateUuidOrFail(),
                 $restRequest->getMetadata()->getLocale(),
             );
 
@@ -78,22 +78,24 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
      */
     public function createUpdateConfiguredBundleRequest(RestRequestInterface $restRequest): UpdateConfiguredBundleRequestTransfer
     {
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer */
+        $restUserTransfer = $restRequest->getRestUser();
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier())
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
 
         // For BC reasons
-        if ($restRequest->getRestUser()->getIdCompanyUser() !== null && $restRequest->getRestUser()->getIdCompany() !== null) {
+        if ($restUserTransfer->getIdCompanyUser() !== null && $restUserTransfer->getIdCompany() !== null) {
             $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
-                ->setFkCompany($restRequest->getRestUser()->getIdCompany());
+                ->setIdCompanyUser($restUserTransfer->getIdCompanyUserOrFail())
+                ->setFkCompany($restUserTransfer->getIdCompanyOrFail());
 
             $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
         }
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
 
         return (new UpdateConfiguredBundleRequestTransfer())
             ->setQuote($quoteTransfer)
@@ -112,13 +114,15 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): CreateConfiguredBundleRequestTransfer {
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer */
+        $restUserTransfer = $restRequest->getRestUser();
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+            ->setIdCustomer($restUserTransfer->getSurrogateIdentifier())
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+            ->setCustomerReference($restUserTransfer->getNaturalIdentifier());
 
         $configurableBundleTemplateTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),

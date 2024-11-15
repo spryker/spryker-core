@@ -15,6 +15,9 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 {
     /**
      * Specification:
+     * - Requires `CreateConfiguredBundleRequestTransfer.configuredBundle` to be set.
+     * - Requires `CreateConfiguredBundleRequestTransfer.configuredBundle.template` to be set.
+     * - Requires `CreateConfiguredBundleRequestTransfer.quote` to be set.
      * - Expects `quote.customer`, `quote.uuid` to be provided.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
@@ -33,6 +36,9 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Requires `CreateConfiguredBundleRequestTransfer.configuredBundle` to be set.
+     * - Requires `CreateConfiguredBundleRequestTransfer.configuredBundle.template` to be set.
+     * - Requires `CreateConfiguredBundleRequestTransfer.quote` to be set.
      * - Expects `quote.customer` to be provided.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
@@ -70,6 +76,7 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Requires `CreateConfiguredBundleRequestTransfer.quote` to be set.
      * - Expects `quote.customer` and `quote.uuid` to be provided.
      * - Requires `groupKey` property to find all items related to configured bundle.
      * - Removes configured bundle from cart.

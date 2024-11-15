@@ -44,14 +44,14 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
     ): CreateConfiguredBundleRequestTransfer {
         $createConfiguredBundleRequestTransfer
             ->requireConfiguredBundle()
-            ->getConfiguredBundle()
+            ->getConfiguredBundleOrFail()
                 ->requireTemplate()
-                ->getTemplate()
+                ->getTemplateOrFail()
                     ->requireUuid()
                     ->requireName();
 
         $createConfiguredBundleRequestTransfer
-            ->getConfiguredBundle()
+            ->getConfiguredBundleOrFail()
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
         $createConfiguredBundleRequestTransfer = $createConfiguredBundleRequestTransfer

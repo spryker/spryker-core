@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -524,4 +527,41 @@ interface ProductBundleFacadeInterface
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expects `CartReorderRequestTransfer.bundleItemIdentifiers` to be set.
+     * - Requires `OrderTransfer.items.idSalesOrderItem` to be set.
+     * - Filters reorder product bundle items.
+     * - Expands bundle items with first `salesOrderItemId` that belongs to the product bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function filterReorderBundleItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        OrderTransfer $orderTransfer
+    ): ArrayObject;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.order.items.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.order.items.productBundle.bundleItemIdentifier` to be set.
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Extracts items with product bundle from `CartReorderTransfer.order.items`.
+     * - Replaces items with `ItemTransfer.relatedBundleItemIdentifier` set with related product bundle item in `CartReorderTransfer.orderItems`.
+     * - Returns `CartReorderTransfer` with replaced order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function replaceCartReorderItemBundledItems(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

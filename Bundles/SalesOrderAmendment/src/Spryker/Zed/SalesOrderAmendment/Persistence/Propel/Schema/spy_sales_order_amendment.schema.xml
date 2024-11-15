@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesOrderAmendment\Persistence" package="src.Orm.Zed.SalesOrderAmendment.Persistence">
+
+    <table name="spy_sales_order_amendment" idMethod="native">
+        <column name="id_sales_order_amendment" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="amendment_order_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="amended_order_reference" type="VARCHAR" required="true" size="255"/>
+
+        <unique name="spy_sales_order_amendment-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <unique name="spy_sales_order_amendment-unique-amendment_o_r">
+            <unique-column name="amendment_order_reference"/>
+        </unique>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_amendment"/>
+        </behavior>
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_sales_order_amendment_pk_seq"/>
+    </table>
+
+</database>

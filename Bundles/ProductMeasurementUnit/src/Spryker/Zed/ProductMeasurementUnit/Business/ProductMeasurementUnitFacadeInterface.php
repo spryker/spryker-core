@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -264,4 +266,50 @@ interface ProductMeasurementUnitFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.order.items.groupKey` to be set.
+     * - Requires `CartReorderTransfer.order.items.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.order.items.quantity` to be set.
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.order.items` that have `ItemTransfer.quantitySalesUnit` set.
+     * - Filters extracted items by `CartReorderRequestTransfer.salesOrderItemIds`.
+     * - Merges extracted items' quantity by `ItemTransfer.groupKey`.
+     * - Replaces `CartReorderTransfer.orderItems` with merged items by `idSalesOrderItem`.
+     * - Returns `CartReorderTransfer` with merged order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeProductMeasurementUnitCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.orderItems.id` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.amountSalesUnit` set.
+     * - Gets product measurement sales unit IDs by store and product concrete SKUs from Persistence.
+     * - Expands `CartReorderTransfer.reorderItems` with quantity sales unit if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with quantity sales unit, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with merchant reference set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithQuantitySalesUnit(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

@@ -875,4 +875,21 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     {
         $this->getFactory()->createOrderStatusChangedMessageSender()->sendMessage($idSalesOrder);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function areOrderItemsSatisfiedByFlag(OrderTransfer $orderTransfer, string $flag): bool
+    {
+        return $this->getFactory()
+            ->createOrderChecker()
+            ->areOrderItemsSatisfiedByFlag($orderTransfer, $flag);
+    }
 }

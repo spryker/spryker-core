@@ -174,7 +174,7 @@ class ProductPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(
+    public function createCartChangeTransferWithoutAmountSalesUnitForGroupKeyGeneration(
         string $dummyGroupKey,
         int $dummyAmount,
         int $dummyQuantity

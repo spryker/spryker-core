@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
@@ -407,14 +409,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     {
         $orderEntity = $this->getSalesOrderEntity($orderFilterTransfer);
 
-        $orderTransfer = $this->getFactory()->createSalesOrderMapper()->mapSalesOrderEntityToSalesOrderTransfer($orderEntity, new OrderTransfer());
-        $orderTransfer = $this->setOrderTotals($orderEntity, $orderTransfer);
-        $orderTransfer = $this->setBillingAddress($orderEntity, $orderTransfer);
-        $orderTransfer = $this->setShippingAddress($orderEntity, $orderTransfer);
-        $orderTransfer = $this->setOrderExpenses($orderEntity, $orderTransfer);
-        $orderTransfer = $this->setMissingCustomer($orderEntity, $orderTransfer);
-
-        return $orderTransfer;
+        return $this->createOrderTransfer($orderEntity);
     }
 
     /**
@@ -454,6 +449,49 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer
+    {
+        $orderCollectionTransfer = new OrderCollectionTransfer();
+
+        $salesOrderQuery = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->leftJoinWith('SpySalesOrder.BillingAddress billingAddress')
+            ->leftJoinWith('billingAddress.Country billingCountry')
+            ->leftJoinWith('SpySalesOrder.ShippingAddress shippingAddress')
+            ->leftJoinWith('shippingAddress.Country shippingCountry');
+        $salesOrderQuery = $this->applySalesOrderFilters($salesOrderQuery, $orderCriteriaTransfer);
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $orderCriteriaTransfer->getSortCollection();
+        $salesOrderQuery = $this->applySorting($salesOrderQuery, $sortTransfers);
+
+        $paginationTransfer = $orderCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $salesOrderQuery = $this->applyPagination($salesOrderQuery, $paginationTransfer);
+            $orderCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $salesOrderEntitiesIndexedByIdSalesOrder = $salesOrderQuery->find()
+            ->getArrayCopy('IdSalesOrder');
+        $salesOrderEntitiesIndexedByIdSalesOrder = $this->expandSalesOrdersWithSalesOrderItems(
+            $salesOrderEntitiesIndexedByIdSalesOrder,
+        );
+        $salesOrderEntitiesIndexedByIdSalesOrder = $this->expandSalesOrdersWithSalesExpenses(
+            $salesOrderEntitiesIndexedByIdSalesOrder,
+        );
+
+        foreach ($salesOrderEntitiesIndexedByIdSalesOrder as $salesOrderEntity) {
+            $orderCollectionTransfer->addOrder($this->createOrderTransfer($salesOrderEntity));
+        }
+
+        return $orderCollectionTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
@@ -486,6 +524,25 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $orderEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrderTransfer(SpySalesOrder $salesOrderEntity): OrderTransfer
+    {
+        $orderTransfer = $this->getFactory()
+            ->createSalesOrderMapper()
+            ->mapSalesOrderEntityToSalesOrderTransfer($salesOrderEntity, new OrderTransfer());
+        $orderTransfer = $this->setOrderTotals($salesOrderEntity, $orderTransfer);
+        $orderTransfer = $this->setBillingAddress($salesOrderEntity, $orderTransfer);
+        $orderTransfer = $this->setShippingAddress($salesOrderEntity, $orderTransfer);
+        $orderTransfer = $this->setOrderExpenses($salesOrderEntity, $orderTransfer);
+        $orderTransfer = $this->setMissingCustomer($salesOrderEntity, $orderTransfer);
+
+        return $orderTransfer;
     }
 
     /**
@@ -599,5 +656,141 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function applySalesOrderFilters(
+        SpySalesOrderQuery $salesOrderQuery,
+        OrderCriteriaTransfer $orderCriteriaTransfer
+    ): SpySalesOrderQuery {
+        $orderConditionsTransfer = $orderCriteriaTransfer->getOrderConditions();
+        if ($orderConditionsTransfer === null) {
+            return $salesOrderQuery;
+        }
+
+        if ($orderConditionsTransfer->getSalesOrderIds() !== []) {
+            $salesOrderQuery->filterByIdSalesOrder_In($orderConditionsTransfer->getSalesOrderIds());
+        }
+
+        if ($orderConditionsTransfer->getOrderReferences() !== []) {
+            $salesOrderQuery->filterByOrderReference_In($orderConditionsTransfer->getOrderReferences());
+        }
+
+        if ($orderConditionsTransfer->getCustomerReferences() !== []) {
+            $salesOrderQuery->filterByCustomerReference_In($orderConditionsTransfer->getCustomerReferences());
+        }
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applySorting(
+        ModelCriteria $modelCriteria,
+        ArrayObject $sortTransfers
+    ): ModelCriteria {
+        foreach ($sortTransfers as $sortTransfer) {
+            $modelCriteria->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $modelCriteria;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyPagination(
+        ModelCriteria $modelCriteria,
+        PaginationTransfer $paginationTransfer
+    ): ModelCriteria {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($modelCriteria->count());
+
+            return $modelCriteria
+                ->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail());
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
+            $propelModelPager = $modelCriteria->paginate(
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
+            );
+
+            $paginationTransfer->setNbResults($propelModelPager->getNbResults())
+                ->setFirstIndex($propelModelPager->getFirstIndex())
+                ->setLastIndex($propelModelPager->getLastIndex())
+                ->setFirstPage($propelModelPager->getFirstPage())
+                ->setLastPage($propelModelPager->getLastPage())
+                ->setNextPage($propelModelPager->getNextPage())
+                ->setPreviousPage($propelModelPager->getPreviousPage());
+
+            return $propelModelPager->getQuery();
+        }
+
+        return $modelCriteria;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\Sales\Persistence\SpySalesOrder> $salesOrderEntitiesIndexedByIdSalesOrder
+     *
+     * @return array<int, \Orm\Zed\Sales\Persistence\SpySalesOrder>
+     */
+    protected function expandSalesOrdersWithSalesOrderItems(array $salesOrderEntitiesIndexedByIdSalesOrder): array
+    {
+        $salesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder_In(array_keys($salesOrderEntitiesIndexedByIdSalesOrder))
+            ->find();
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $idSalesOrder = $salesOrderItemEntity->getFkSalesOrder();
+            if (!isset($salesOrderEntitiesIndexedByIdSalesOrder[$idSalesOrder])) {
+                continue;
+            }
+
+            $salesOrderEntitiesIndexedByIdSalesOrder[$idSalesOrder]->addItem($salesOrderItemEntity);
+        }
+
+        return $salesOrderEntitiesIndexedByIdSalesOrder;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\Sales\Persistence\SpySalesOrder> $salesOrderEntitiesIndexedByIdSalesOrder
+     *
+     * @return array<int, \Orm\Zed\Sales\Persistence\SpySalesOrder>
+     */
+    protected function expandSalesOrdersWithSalesExpenses(array $salesOrderEntitiesIndexedByIdSalesOrder): array
+    {
+        $salesExpenseEntities = $this->getFactory()
+            ->createSalesExpenseQuery()
+            ->filterByFkSalesOrder_In(array_keys($salesOrderEntitiesIndexedByIdSalesOrder))
+            ->find();
+
+        foreach ($salesExpenseEntities as $salesExpenseEntity) {
+            $idSalesOrder = $salesExpenseEntity->getFkSalesOrder();
+            if (!isset($salesOrderEntitiesIndexedByIdSalesOrder[$idSalesOrder])) {
+                continue;
+            }
+
+            $salesOrderEntitiesIndexedByIdSalesOrder[$idSalesOrder]->addExpense($salesExpenseEntity);
+        }
+
+        return $salesOrderEntitiesIndexedByIdSalesOrder;
     }
 }

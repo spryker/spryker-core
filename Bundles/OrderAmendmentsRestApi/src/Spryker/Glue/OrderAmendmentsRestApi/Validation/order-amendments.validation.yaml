@@ -1,0 +1,7 @@
+cart-reorder:
+    post:
+        isAmendment:
+            - Optional:
+                  constraints:
+                      - Type:
+                            type: bool

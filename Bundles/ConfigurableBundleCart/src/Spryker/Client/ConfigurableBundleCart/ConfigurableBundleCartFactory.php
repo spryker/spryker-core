@@ -10,6 +10,7 @@ namespace Spryker\Client\ConfigurableBundleCart;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdderInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
@@ -17,7 +18,6 @@ use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriter;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface;
 
 /**
  * @method \Spryker\Client\ConfigurableBundleCart\ConfigurableBundleCartConfig getConfig()
@@ -61,7 +61,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     {
         return new ConfiguredBundleCartAdder(
             $this->getCartClient(),
-            $this->getConfigurableBundleCartService(),
+            $this->getConfigurableBundleService(),
         );
     }
 
@@ -74,10 +74,10 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface
+     * @return \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceInterface
      */
-    public function getConfigurableBundleCartService(): ConfigurableBundleCartServiceInterface
+    public function getConfigurableBundleService(): ConfigurableBundleCartToConfigurableBundleServiceInterface
     {
-        return $this->getProvidedDependency(ConfigurableBundleCartDependencyProvider::SERVICE_CONFIGURED_BUNDLE_CART);
+        return $this->getProvidedDependency(ConfigurableBundleCartDependencyProvider::SERVICE_CONFIGURABLE_BUNDLE);
     }
 }

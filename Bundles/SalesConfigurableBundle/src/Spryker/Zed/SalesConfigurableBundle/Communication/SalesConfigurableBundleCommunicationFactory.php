@@ -8,6 +8,10 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesConfigurableBundle\Communication\Adder\FlashMessageAdder;
+use Spryker\Zed\SalesConfigurableBundle\Communication\Adder\FlashMessageAdderInterface;
+use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToMessengerFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig getConfig()
@@ -17,4 +21,21 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SalesConfigurableBundleCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Communication\Adder\FlashMessageAdderInterface
+     */
+    public function createFlashMessageAdder(): FlashMessageAdderInterface
+    {
+        return new FlashMessageAdder(
+            $this->getMessengerFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): SalesConfigurableBundleToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_MESSENGER);
+    }
 }

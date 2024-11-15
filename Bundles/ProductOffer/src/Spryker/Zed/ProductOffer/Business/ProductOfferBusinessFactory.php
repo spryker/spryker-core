@@ -14,6 +14,8 @@ use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounte
 use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounterInterface;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGenerator;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface;
+use Spryker\Zed\ProductOffer\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\ProductOffer\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilter;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilterInterface;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
@@ -88,6 +90,14 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferStatusReader(): ProductOfferStatusReaderInterface
     {
         return new ProductOfferStatusReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 
     /**

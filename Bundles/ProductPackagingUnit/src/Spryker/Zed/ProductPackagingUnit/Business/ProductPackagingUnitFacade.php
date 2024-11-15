@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -596,5 +598,40 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitPickingListExpander()
             ->expandPickingListCollection($pickingListCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeProductPackagingUnitCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer {
+        return $this->getFactory()
+            ->createCartReorderItemMerger()
+            ->mergeProductPackagingUnitItems($cartReorderRequestTransfer, $cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithProductPackagingUnit(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

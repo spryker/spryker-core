@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
@@ -505,4 +507,25 @@ interface SalesFacadeInterface
      * @return bool
      */
     public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Retrieves sales order entities filtered by criteria from Persistence.
+     * - Uses `OrderCriteriaTransfer.orderConditions.salesOrderIds` to filter by IDs.
+     * - Uses `OrderCriteriaTransfer.orderConditions.orderReferences` to filter by order references.
+     * - Uses `OrderCriteriaTransfer.orderConditions.customerReferences` to filter by customer references.
+     * - Uses `OrderCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `OrderCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `OrderCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `OrderCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - If `OrderCriteriaTransfer.orderConditions.withOrderExpanderPlugins` is set to `true`, executes a stack of {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface} plugins.
+     * - Returns `OrderCollectionTransfer` filled with found orders.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer;
 }

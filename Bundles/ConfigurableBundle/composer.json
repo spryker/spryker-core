@@ -14,6 +14,7 @@
         "spryker/product-list": "^1.5.0",
         "spryker/product-list-extension": "^1.1.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-text": "^1.0.0",
         "spryker/uuid-behavior": "^1.0.0"
     },

@@ -36,6 +36,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemE
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\ReorderBundleItemFilter;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\ReorderBundleItemFilterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
@@ -58,6 +60,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusU
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
+use Spryker\Zed\ProductBundle\Business\Replacer\CartReorderItemsReplacer;
+use Spryker\Zed\ProductBundle\Business\Replacer\CartReorderItemsReplacerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
@@ -393,6 +397,22 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductBundlePriceCalculator(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Filter\ReorderBundleItemFilterInterface
+     */
+    public function createReorderBundleItemFilter(): ReorderBundleItemFilterInterface
+    {
+        return new ReorderBundleItemFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\Replacer\CartReorderItemsReplacerInterface
+     */
+    public function createCartReorderItemsReplacer(): CartReorderItemsReplacerInterface
+    {
+        return new CartReorderItemsReplacer();
     }
 
     /**

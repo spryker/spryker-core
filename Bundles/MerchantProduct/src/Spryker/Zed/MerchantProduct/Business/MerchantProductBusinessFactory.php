@@ -12,6 +12,8 @@ use Spryker\Zed\MerchantProduct\Business\Checker\MerchantProductShoppingListItem
 use Spryker\Zed\MerchantProduct\Business\Checker\MerchantProductShoppingListItemCheckerInterface;
 use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpander;
 use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpanderInterface;
+use Spryker\Zed\MerchantProduct\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\MerchantProduct\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReader;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReaderInterface;
 use Spryker\Zed\MerchantProduct\Business\Validator\Constraint\ProductAbstractBelongsToMerchantConstraint;
@@ -103,6 +105,14 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemExpander(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 
     /**

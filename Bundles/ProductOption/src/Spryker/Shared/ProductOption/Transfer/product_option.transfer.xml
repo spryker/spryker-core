@@ -271,4 +271,9 @@
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
 
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+    </transfer>
+
 </transfers>

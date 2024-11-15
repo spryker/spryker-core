@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         actor: MultiCartBusinessTester
         modules:
             enabled:
@@ -26,3 +26,10 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+
+    Communication:
+        path: Communication
+        actor: MultiCartCommunicationTester
+        modules:
+            enabled:
+                - Asserts

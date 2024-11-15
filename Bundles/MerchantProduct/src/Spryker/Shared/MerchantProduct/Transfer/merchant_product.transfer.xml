@@ -49,6 +49,8 @@
         <property name="sku" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -152,5 +154,10 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
     </transfer>
 </transfers>

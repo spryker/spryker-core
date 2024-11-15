@@ -12,8 +12,14 @@ use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitEx
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitChecker;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitCheckerInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Extractor\ProductMeasurementUnitItemExtractor;
+use Spryker\Zed\ProductMeasurementUnit\Business\Extractor\ProductMeasurementUnitItemExtractorInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\ProductMeasurementUnit\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Merger\CartReorderItemMerger;
+use Spryker\Zed\ProductMeasurementUnit\Business\Merger\CartReorderItemMergerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpander;
@@ -68,6 +74,34 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductMeasurementSalesUnitItemGroupKeyGenerator(): ProductMeasurementSalesUnitGroupKeyGeneratorInterface
     {
         return new ProductMeasurementSalesUnitGroupKeyGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Merger\CartReorderItemMergerInterface
+     */
+    public function createCartReorderItemMerger(): CartReorderItemMergerInterface
+    {
+        return new CartReorderItemMerger($this->createProductMeasurementUnitItemExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator(
+            $this->getRepository(),
+            $this->createProductMeasurementUnitItemExtractor(),
+            $this->getStoreFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Extractor\ProductMeasurementUnitItemExtractorInterface
+     */
+    public function createProductMeasurementUnitItemExtractor(): ProductMeasurementUnitItemExtractorInterface
+    {
+        return new ProductMeasurementUnitItemExtractor();
     }
 
     /**

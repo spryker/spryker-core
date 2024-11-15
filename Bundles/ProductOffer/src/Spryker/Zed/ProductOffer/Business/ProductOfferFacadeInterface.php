@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
@@ -85,8 +86,8 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
-     *  - Removes inactive offer items from quote.
-     *  - Adds info messages for the removed product offers.
+     * - Removes inactive offer items from quote.
+     * - Adds info messages for the removed product offers.
      *
      * @api
      *
@@ -173,4 +174,23 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.productOfferReference` set.
+     * - Expands `CartReorderTransfer.reorderItems` with product offer reference if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with product offer reference, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with product offer reference set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithProductOffer(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

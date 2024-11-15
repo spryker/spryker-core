@@ -23,11 +23,11 @@ class ConfigurableBundleCartsRestApiToGlossaryStorageClientBridge implements Con
     }
 
     /**
-     * @param array<string> $keyNames
+     * @param list<string> $keyNames
      * @param string $localeName
-     * @param array $parameters
+     * @param array<string, array<string, mixed>> $parameters
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array
     {

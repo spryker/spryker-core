@@ -18,6 +18,8 @@ interface ConfigurableBundleCartServiceInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Service\ConfigurableBundle\ConfigurableBundleServiceInterface::expandConfiguredBundleWithGroupKey()} instead.
+     *
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer

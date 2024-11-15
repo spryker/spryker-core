@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -149,5 +151,27 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityRestrictionValidator()
             ->isValidItemQuantitiesOnCheckout($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeProductQuantityRestrictionCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer {
+        return $this->getFactory()
+            ->createCartReorderItemMerger()
+            ->mergeProductQuantityRestrictionItems(
+                $cartReorderRequestTransfer,
+                $cartReorderTransfer,
+            );
     }
 }

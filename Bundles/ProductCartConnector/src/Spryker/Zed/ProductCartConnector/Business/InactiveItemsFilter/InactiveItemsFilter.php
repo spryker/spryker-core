@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface;
@@ -64,26 +66,55 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $skus = $this->getProductSkusFromQuoteTransfer($quoteTransfer);
+        $filteredItemTransfers = $this->filterOutInactiveItems(
+            $quoteTransfer->getStore(),
+            $quoteTransfer->getItems(),
+        );
 
-        if (count($skus) === 0) {
-            return $quoteTransfer;
+        return $quoteTransfer->setItems($filteredItemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutInactiveCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        $filteredItemTransfers = $this->filterOutInactiveItems(
+            $cartChangeTransfer->getQuoteOrFail()->getStoreOrFail(),
+            $cartChangeTransfer->getItems(),
+        );
+
+        return $cartChangeTransfer->setItems($filteredItemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function filterOutInactiveItems(StoreTransfer $storeTransfer, ArrayObject $itemTransfers): ArrayObject
+    {
+        $skus = $this->extractProductSkus($itemTransfers);
+        if ($skus === []) {
+            return $itemTransfers;
         }
 
-        $productCriteriaTransfer = (new ProductCriteriaTransfer())
-            ->setSkus($skus)
-            ->setIsActive(true)
-            ->setIdStore(
-                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore(),
-            );
+        $productCriteriaTransfer = $this->createProductCriteriaTransfer(
+            $storeTransfer,
+            $skus,
+        );
 
         $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
         $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
 
         $filteredItemTransfers = new ArrayObject();
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+        $messageTransfersIndexedBySku = [];
+        foreach ($itemTransfers as $key => $itemTransfer) {
             if (!isset($indexedProductConcreteTransfers[$itemTransfer->getSku()])) {
-                $this->addFilterMessage($itemTransfer->getSku());
+                $this->addFilterMessage($itemTransfer->getSku(), $messageTransfersIndexedBySku);
 
                 continue;
             }
@@ -91,35 +122,39 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
             $filteredItemTransfers->offsetSet($key, $itemTransfer);
         }
 
-        return $quoteTransfer->setItems($filteredItemTransfers);
+        return $filteredItemTransfers;
     }
 
     /**
      * @param string $sku
+     * @param array<string, \Generated\Shared\Transfer\MessageTransfer> $messageTransfersIndexedBySku
      *
      * @return void
      */
-    protected function addFilterMessage(string $sku): void
+    protected function addFilterMessage(string $sku, array $messageTransfersIndexedBySku): void
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED);
-        $messageTransfer->setParameters([
-            static::MESSAGE_PARAM_SKU => $sku,
-        ]);
+        if (isset($messageTransfersIndexedBySku[$sku])) {
+            return;
+        }
 
-        $this->messengerFacade->addInfoMessage($messageTransfer);
+        $messageTransfersIndexedBySku[$sku] = (new MessageTransfer())
+            ->setValue(static::MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED)
+            ->setParameters([
+                static::MESSAGE_PARAM_SKU => $sku,
+            ]);
+
+        $this->messengerFacade->addInfoMessage($messageTransfersIndexedBySku[$sku]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<string>
      */
-    protected function getProductSkusFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
+    protected function extractProductSkus(ArrayObject $itemTransfers): array
     {
         $skus = [];
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $skus[] = $itemTransfer->getSku();
         }
 
@@ -140,5 +175,21 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
         }
 
         return $indexedProductConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param list<string> $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductCriteriaTransfer
+     */
+    protected function createProductCriteriaTransfer(StoreTransfer $storeTransfer, array $productSkus): ProductCriteriaTransfer
+    {
+        return (new ProductCriteriaTransfer())
+            ->setSkus($productSkus)
+            ->setIsActive(true)
+            ->setIdStore(
+                $this->storeFacade->getStoreByName($storeTransfer->getName())->getIdStore(),
+            );
     }
 }

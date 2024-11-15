@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
@@ -183,5 +184,21 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
     {
         return $this->getRepository()->getProductOfferCollection($productOfferCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithProductOffer(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

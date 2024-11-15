@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleNote\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -31,5 +32,21 @@ class ConfigurableBundleNoteFacade extends AbstractFacade implements Configurabl
         return $this->getFactory()
             ->createConfigurableBundleNoteSetter()
             ->setConfiguredBundleNote($configuredBundleNoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithConfigurableBundle(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

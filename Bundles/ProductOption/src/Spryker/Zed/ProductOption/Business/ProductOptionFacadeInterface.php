@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -329,4 +330,19 @@ interface ProductOptionFacadeInterface
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Filters `CartReorderTransfer.orderItems` with product options.
+     * - Updates `CartReorderTransfer.reorderItems` with product options if item with provided `idSalesOrderItem` already exists,
+     *   adds new item to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with product options set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemWithProductOptions(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

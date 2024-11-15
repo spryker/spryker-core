@@ -28,6 +28,7 @@ use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Oms\OmsConfig;
@@ -215,5 +216,21 @@ class SalesBusinessTester extends Actor
             ->addItem($itemTransfer)
             ->setPayment($paymentTransfer)
             ->setStore($storeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureSalesOrderTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getSalesOrderQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function getSalesOrderQuery(): SpySalesOrderQuery
+    {
+        return SpySalesOrderQuery::create();
     }
 }

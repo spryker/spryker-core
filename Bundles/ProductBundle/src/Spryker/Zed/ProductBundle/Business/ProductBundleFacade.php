@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -614,5 +617,40 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductOptionExpander()
             ->expandItemProductBundlesWithProductOptions($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function filterReorderBundleItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        OrderTransfer $orderTransfer
+    ): ArrayObject {
+        return $this->getFactory()
+            ->createReorderBundleItemFilter()
+            ->filterReorderBundleItems($cartReorderRequestTransfer, $orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function replaceCartReorderItemBundledItems(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemsReplacer()
+            ->replaceCartReorderItems($cartReorderTransfer);
     }
 }

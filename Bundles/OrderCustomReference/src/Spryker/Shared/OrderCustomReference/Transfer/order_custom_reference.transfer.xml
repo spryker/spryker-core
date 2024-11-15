@@ -47,4 +47,12 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="CartReorder" strict="true">
+        <property name="order" type="Order"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+    </transfer>
+
 </transfers>

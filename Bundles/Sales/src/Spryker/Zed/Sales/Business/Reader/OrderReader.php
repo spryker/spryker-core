@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Business\Reader;
 
+use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -46,6 +48,26 @@ class OrderReader implements OrderReaderInterface
         $orderTransfer = $this->executeHydrateOrderPlugins($orderTransfer);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer
+    {
+        $orderCollectionTransfer = $this->salesRepository->getOrderCollection($orderCriteriaTransfer);
+        if (
+            $orderCriteriaTransfer->getOrderConditions()
+            && $orderCriteriaTransfer->getOrderConditionsOrFail()->getWithOrderExpanderPlugins()
+        ) {
+            foreach ($orderCollectionTransfer->getOrders() as $orderTransfer) {
+                $this->executeHydrateOrderPlugins($orderTransfer);
+            }
+        }
+
+        return $orderCollectionTransfer;
     }
 
     /**

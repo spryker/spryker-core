@@ -78,19 +78,19 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
         $this->assertRequiredCreateRequestProperties($createConfiguredBundleRequestTransfer);
-        $quoteResponseTransfer = $this->setCustomerQuoteUuid($createConfiguredBundleRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->setCustomerQuoteUuid($createConfiguredBundleRequestTransfer->getQuoteOrFail());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
+        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransferOrFail())) {
             return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
         }
 
         $persistentCartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestToPersistentCartChange(
             $createConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true),
+            (new PersistentCartChangeTransfer())->fromArray($quoteResponseTransfer->getQuoteTransferOrFail()->toArray(), true),
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
@@ -118,7 +118,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         }
 
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+            ->setCustomerReference($quoteTransfer->getCustomerOrFail()->getCustomerReference());
 
         $customerQuoteTransfers = $this->cartsRestApiFacade
             ->getQuoteCollection($quoteCriteriaFilterTransfer)
@@ -131,7 +131,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         /** @var \Generated\Shared\Transfer\QuoteTransfer $customerQuoteTransfer */
         $customerQuoteTransfer = $customerQuoteTransfers->offsetGet(0);
 
-        $quoteResponseTransfer->getQuoteTransfer()
+        $quoteResponseTransfer->getQuoteTransferOrFail()
             ->setUuid($customerQuoteTransfer->getUuid())
             ->setIdQuote($customerQuoteTransfer->getIdQuote());
 
@@ -147,7 +147,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
     {
         $currentStore = $this->storeFacade->getCurrentStore();
 
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransferOrFail()
             ->setStore($currentStore)
             ->setCurrency((new CurrencyTransfer())->setCode($currentStore->getDefaultCurrencyIsoCode()));
 
@@ -163,19 +163,19 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
     {
         $createConfiguredBundleRequestTransfer
             ->requireQuote()
-            ->getQuote()
+            ->getQuoteOrFail()
                 ->requireCustomer()
                 ->requireCustomerReference()
-                ->getCustomer()
+                ->getCustomerOrFail()
                     ->requireCustomerReference();
 
         $createConfiguredBundleRequestTransfer
             ->requireItems()
             ->requireConfiguredBundle()
-            ->getConfiguredBundle()
+            ->getConfiguredBundleOrFail()
                 ->requireQuantity()
                 ->requireTemplate()
-                ->getTemplate()
+                ->getTemplateOrFail()
                     ->requireUuid()
                     ->requireName();
     }

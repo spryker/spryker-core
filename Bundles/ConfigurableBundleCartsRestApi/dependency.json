@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/configurable-bundle-cart": "Added for forward compatibility.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+    }
+}

@@ -26,4 +26,11 @@ interface ProductPackagingUnitToProductMeasurementUnitFacadeInterface
     public function translateProductMeasurementSalesUnit(
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
     ): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return list<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
+     */
+    public function getSalesUnitsByIdProduct(int $idProduct): array;
 }

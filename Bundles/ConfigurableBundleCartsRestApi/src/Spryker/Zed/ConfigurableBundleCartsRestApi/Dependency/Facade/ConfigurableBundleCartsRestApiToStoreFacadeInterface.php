@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ConfigurableBundleCartsRestApiToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

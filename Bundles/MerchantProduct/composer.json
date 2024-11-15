@@ -7,6 +7,7 @@
         "php": ">=8.2",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/cart-extension": "^4.0.0",
+        "spryker/cart-reorder-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/merchant": "^3.0.0",

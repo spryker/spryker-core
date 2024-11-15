@@ -11,6 +11,7 @@
         <property name="groupKey" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -140,6 +141,11 @@
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>
         <property name="permissionMask" type="int"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
     </transfer>
 
 </transfers>

@@ -805,4 +805,20 @@ interface OmsFacadeInterface
      * @return void
      */
     public function sendOrderStatusChangedMessage(int $idSalesOrder): void;
+
+    /**
+     * Specification:
+     * - Expects `OrderTransfer.orderReference` to be set.
+     * - Requires `OrderTransfer.idSalesOrder` to be set if `OrderTransfer.orderReference` is not provided.
+     * - Reads order items from Persistence.
+     * - Checks if all order items are satisfied by provided flag.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param string $flag
+     *
+     * @return bool
+     */
+    public function areOrderItemsSatisfiedByFlag(OrderTransfer $orderTransfer, string $flag): bool;
 }

@@ -1,0 +1,44 @@
+{
+    "name": "spryker/order-amendments-rest-api",
+    "type": "library",
+    "description": "OrderAmendmentsRestApi module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "spryker/cart-reorder-rest-api-extension": "^1.0.0",
+        "spryker/carts-rest-api-extension": "^1.7.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/sales-order-amendment": "^0.1.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
+        "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0.",
+        "spryker/rest-request-validator": "If you want to use rest request validation."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

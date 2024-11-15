@@ -90,7 +90,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
         }
 
-        $createConfiguredBundleRequestTransfer->getQuote()->setUuid($quoteUuid);
+        $createConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($quoteUuid);
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->addConfiguredBundle($createConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -98,7 +98,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         }
 
         return $this->cartsRestApiResource->createCartRestResponse(
-            $quoteResponseTransfer->getQuoteTransfer(),
+            $quoteResponseTransfer->getQuoteTransferOrFail(),
             $restRequest,
         );
     }
@@ -130,7 +130,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             ->createUpdateConfiguredBundleRequest($restRequest)
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
-        $updateConfiguredBundleRequestTransfer->getQuote()->setUuid($quoteUuid);
+        $updateConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($quoteUuid);
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -138,7 +138,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         }
 
         return $this->cartsRestApiResource->createCartRestResponse(
-            $quoteResponseTransfer->getQuoteTransfer(),
+            $quoteResponseTransfer->getQuoteTransferOrFail(),
             $restRequest,
         );
     }
@@ -157,7 +157,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         }
 
         $updateConfiguredBundleRequestTransfer = $this->configuredBundleRequestCreator->createUpdateConfiguredBundleRequest($restRequest);
-        $updateConfiguredBundleRequestTransfer->getQuote()->setUuid($quoteUuid);
+        $updateConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($quoteUuid);
 
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 

@@ -110,4 +110,12 @@
         <property name="itemToBeReplaced" type="Item"/>
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

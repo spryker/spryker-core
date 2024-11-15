@@ -20,6 +20,8 @@ class ConfigurableBundleCartService extends AbstractService implements Configura
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Service\ConfigurableBundle\ConfigurableBundleService::expandConfiguredBundleWithGroupKey()} instead.
+     *
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer

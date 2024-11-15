@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Quote">
+        <property name="amendmentOrderReference" type="string" strict="true"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="orderReference" type="string"/>
+    </transfer>
+
+    <transfer name="OrderConditions" strict="true">
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+    </transfer>
+
+    <transfer name="OrderCriteria" strict="true">
+        <property name="orderConditions" type="OrderConditions"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendmentResponse" strict="true">
+    </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" singular="order"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="CartReorderResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="SalesOrderAmendment" strict="true">
+        <property name="amendmentOrderReference" type="string"/>
+        <property name="amendedOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+    </transfer>
+
+</transfers>

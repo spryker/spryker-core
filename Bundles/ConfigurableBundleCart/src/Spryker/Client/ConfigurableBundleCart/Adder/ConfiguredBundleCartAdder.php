@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceInterface;
 
 class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 {
@@ -27,20 +27,20 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface
+     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceInterface
      */
-    protected $configurableBundleCartService;
+    protected ConfigurableBundleCartToConfigurableBundleServiceInterface $configurableBundleService;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     * @param \Spryker\Service\ConfigurableBundleCart\ConfigurableBundleCartServiceInterface $configurableBundleCartService
+     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleServiceInterface $configurableBundleService
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
-        ConfigurableBundleCartServiceInterface $configurableBundleCartService
+        ConfigurableBundleCartToConfigurableBundleServiceInterface $configurableBundleService
     ) {
         $this->cartClient = $cartClient;
-        $this->configurableBundleCartService = $configurableBundleCartService;
+        $this->configurableBundleService = $configurableBundleService;
     }
 
     /**
@@ -98,7 +98,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->getTemplate()
                 ->requireUuid();
 
-        $configuredBundleTransfer = $this->configurableBundleCartService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
+        $configuredBundleTransfer = $this->configurableBundleService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
 
         return (new ConfiguredBundleTransfer())
             ->setGroupKey($configuredBundleTransfer->getGroupKey())

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
@@ -91,4 +93,50 @@ interface SalesConfigurableBundleFacadeInterface
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.order.items.groupKey` to be set.
+     * - Requires `CartReorderTransfer.order.items.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.order.items.quantity` to be set.
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.order.items` that have `ItemTransfer.salesOrderConfiguredBundle` and `ItemTransfer.salesOrderConfiguredBundleItem` set.
+     * - Filters extracted items by `CartReorderRequestTransfer.salesOrderItemIds`.
+     * - Merges extracted items and configured bundles quantity by `ItemTransfer.groupKey`.
+     * - Replaces `CartReorderTransfer.orderItems` with merged items by `idSalesOrderItem`.
+     * - Returns `CartReorderTransfer` with merged order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeConfigurableBundleProductsCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.salesOrderConfiguredBundle` and `ItemTransfer.salesOrderConfiguredBundleItem` set.
+     * - Expands `CartReorderTransfer.reorderItems` with configured bundle and configured bundle item data if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with configured bundle, configured bundle item, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with configured bundle and configured bundle item data set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithConfigurableBundle(
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer;
 }

@@ -108,4 +108,12 @@
         <property name="permissionMask" type="int"/>
     </transfer>
 
+    <transfer name="CartReorder" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="order" type="Order"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+    </transfer>
+
 </transfers>

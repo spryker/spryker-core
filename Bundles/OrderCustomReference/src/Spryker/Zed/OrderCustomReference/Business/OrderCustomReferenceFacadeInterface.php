@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OrderCustomReference\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -44,4 +45,19 @@ interface OrderCustomReferenceFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCustomReferenceResponseTransfer
      */
     public function updateOrderCustomReference(string $orderCustomReference, OrderTransfer $orderTransfer): OrderCustomReferenceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.quote` to be set.
+     * - Sets `CartReorderTransfer.order.orderCustomReference` to `CartReorderTransfer.quote.orderCustomReference` if it is provided.
+     * - Returns `CartReorderTransfer` with updated quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function expandCartReorderQuoteWithOrderCustomReference(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

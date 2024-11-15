@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProduct\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
@@ -235,5 +236,21 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
         MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
     ): MerchantProductAbstractCollectionTransfer {
         return $this->getRepository()->getMerchantProductAbstractCollection($merchantProductAbstractCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithMerchantReference(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

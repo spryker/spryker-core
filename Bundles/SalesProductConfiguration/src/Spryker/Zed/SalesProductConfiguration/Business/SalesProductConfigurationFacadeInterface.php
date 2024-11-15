@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SalesProductConfigurationFacadeInterface
@@ -39,4 +40,23 @@ interface SalesProductConfigurationFacadeInterface
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductConfiguration(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.salesOrderItemConfiguration` set.
+     * - Expands `CartReorderTransfer.reorderItems` with product configuration instance data if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with product configuration instance, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with product configuration instance set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithProductConfiguration(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

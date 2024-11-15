@@ -9,6 +9,9 @@ namespace Spryker\Service\ConfigurableBundleCart\Expander;
 
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 
+/**
+ * @deprecated Will be removed in the next major without replacement.
+ */
 interface ConfiguredBundleGroupKeyExpanderInterface
 {
     /**

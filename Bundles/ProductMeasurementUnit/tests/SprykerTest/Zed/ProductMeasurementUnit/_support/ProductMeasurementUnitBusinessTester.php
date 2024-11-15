@@ -163,9 +163,11 @@ class ProductMeasurementUnitBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $seedData
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemWithQuantitySalesUnit(): ItemTransfer
+    public function createItemWithQuantitySalesUnit(array $seedData = []): ItemTransfer
     {
         $productTransfer = $this->haveProduct();
 
@@ -182,11 +184,13 @@ class ProductMeasurementUnitBusinessTester extends Actor
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
             $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
+            $seedData,
         );
 
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
 
         return (new ItemBuilder())->build()
+            ->setId($productTransfer->getIdProductConcrete())
             ->setSku($productTransfer->getSku())
             ->setQuantitySalesUnit($quantitySalesUnit);
     }

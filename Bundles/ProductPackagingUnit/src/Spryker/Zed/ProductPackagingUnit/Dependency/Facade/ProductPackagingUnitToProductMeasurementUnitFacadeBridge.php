@@ -44,4 +44,14 @@ class ProductPackagingUnitToProductMeasurementUnitFacadeBridge implements Produc
     ): ProductMeasurementSalesUnitTransfer {
         return $this->productMeasurementUnitFacade->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
     }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return list<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
+     */
+    public function getSalesUnitsByIdProduct(int $idProduct): array
+    {
+        return $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
+    }
 }

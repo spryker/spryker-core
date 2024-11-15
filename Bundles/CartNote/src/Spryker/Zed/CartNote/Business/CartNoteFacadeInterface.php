@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartNote\Business;
 
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\QuoteCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -17,7 +18,7 @@ interface CartNoteFacadeInterface
 {
     /**
      * Specification:
-     *  - Saves cart note to order
+     * - Saves cart note to order
      *
      * @api
      *
@@ -55,4 +56,38 @@ interface CartNoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setQuoteItemNote(QuoteItemCartNoteRequestTransfer $quoteItemCartNoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.orderItems.sku` to be set.
+     * - Requires `CartReorderTransfer.orderItems.quantity` to be set.
+     * - Requires `CartReorderTransfer.reorderItems.idSalesOrderItem` to be set.
+     * - Extracts `CartReorderTransfer.orderItems` that have `ItemTransfer.cartNote` set.
+     * - Expands `CartReorderTransfer.reorderItems` with cart note if item with provided `idSalesOrderItem` already exists.
+     * - Adds new item with cart note, sku, quantity and ID sales order item properties set to `CartReorderTransfer.reorderItems` otherwise.
+     * - Returns `CartReorderTransfer` with cart note set to reorder items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithCartNote(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.quote` to be set.
+     * - Sets `CartReorderTransfer.order.cartNote` to `CartReorderTransfer.quote.cartNote` if it is provided.
+     * - Returns `CartReorderTransfer` with updated quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function expandCartReorderQuoteWithCartNote(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer;
 }

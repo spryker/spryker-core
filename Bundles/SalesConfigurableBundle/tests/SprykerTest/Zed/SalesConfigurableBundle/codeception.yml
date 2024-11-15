@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         actor: SalesConfigurableBundleBusinessTester
         modules:
             enabled:
@@ -30,3 +30,11 @@ suites:
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Store\Helper\StoreDependencyHelper
+
+    Communication:
+        path: Communication
+        actor: SalesConfigurableBundleCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

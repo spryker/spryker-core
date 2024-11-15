@@ -94,6 +94,7 @@
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
         <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
         <property name="value" type="int"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -168,6 +169,16 @@
 
     <transfer name="PickingList" strict="true">
         <property name="pickingListItems" type="PickingListItem[]" singular="pickingListItem"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+        <property name="order" type="Order"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
     </transfer>
 
 </transfers>

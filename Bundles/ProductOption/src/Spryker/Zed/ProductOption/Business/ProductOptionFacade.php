@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -375,5 +376,19 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         return $this->getFactory()
             ->createProductOptionExpander()
             ->expandOrderItemsWithProductOptions($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemWithProductOptions(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()->createCartReorderItemHydrator()->hydrate($cartReorderTransfer);
     }
 }

@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantProductOffer\Business\Expander\ProductConcreteOfferExpan
 use Spryker\Zed\MerchantProductOffer\Business\Expander\ProductConcreteOfferExpanderInterface;
 use Spryker\Zed\MerchantProductOffer\Business\Expander\ShoppingListItemExpander;
 use Spryker\Zed\MerchantProductOffer\Business\Expander\ShoppingListItemExpanderInterface;
+use Spryker\Zed\MerchantProductOffer\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\MerchantProductOffer\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReader;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReaderInterface;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeInterface;
@@ -64,6 +66,14 @@ class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
         return new ShoppingListItemExpander(
             $this->getProductOfferFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOffer\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 
     /**

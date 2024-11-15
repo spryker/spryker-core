@@ -67,8 +67,8 @@ class ItemMapper implements ItemMapperInterface
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        $templateName = $restItemsAttributesTransfer->getConfiguredBundle()
-            ->getTemplate()
+        $templateName = $restItemsAttributesTransfer->getConfiguredBundleOrFail()
+            ->getTemplateOrFail()
             ->getName();
 
         if (!$templateName) {
@@ -77,8 +77,8 @@ class ItemMapper implements ItemMapperInterface
 
         $translations = $this->glossaryStorageClient->translateBulk([$templateName], $localeName);
 
-        $restItemsAttributesTransfer->getConfiguredBundle()
-            ->getTemplate()
+        $restItemsAttributesTransfer->getConfiguredBundleOrFail()
+            ->getTemplateOrFail()
             ->setName($translations[$templateName]);
 
         return $restItemsAttributesTransfer;

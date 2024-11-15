@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductCartConnector\Business\Plugin;
+namespace SprykerTest\Zed\ProductCartConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -24,7 +24,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
  * @group Zed
  * @group ProductCartConnector
  * @group Business
- * @group Plugin
  * @group Facade
  * @group ProductCartConnectorFacadeTest
  * Add your own group annotations below this line

@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CartNote\Business;
 
+use Spryker\Zed\CartNote\Business\Expander\CartReorderExpander;
+use Spryker\Zed\CartNote\Business\Expander\CartReorderExpanderInterface;
+use Spryker\Zed\CartNote\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\CartNote\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\CartNote\Business\Model\CartNoteSaver;
 use Spryker\Zed\CartNote\Business\Model\CartNoteSaverInterface;
 use Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetter;
@@ -35,6 +39,22 @@ class CartNoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCartNoteSetter(): QuoteCartNoteSetterInterface
     {
         return new QuoteCartNoteSetter($this->getQuoteFacade(), $this->getQuoteItemsFinderPlugin());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartNote\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
+    }
+
+    /**
+     * @return \Spryker\Zed\CartNote\Business\Expander\CartReorderExpanderInterface
+     */
+    public function createCartReorderExpander(): CartReorderExpanderInterface
+    {
+        return new CartReorderExpander();
     }
 
     /**

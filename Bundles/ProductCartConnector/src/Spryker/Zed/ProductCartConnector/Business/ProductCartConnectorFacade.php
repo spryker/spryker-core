@@ -97,4 +97,20 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
             ->createProductValidator()
             ->validateCheckoutQuoteItems($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutInactiveCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createInactiveItemsFilter()
+            ->filterOutInactiveCartChangeItems($cartChangeTransfer);
+    }
 }

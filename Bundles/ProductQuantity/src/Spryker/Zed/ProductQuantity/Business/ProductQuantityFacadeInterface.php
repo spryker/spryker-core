@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -120,4 +122,31 @@ interface ProductQuantityFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Requires `CartReorderTransfer.order` to be set.
+     * - Requires `CartReorderTransfer.order.items.sku` to be set.
+     * - Requires `CartReorderTransfer.order.items.groupKey` to be set.
+     * - Requires `CartReorderTransfer.order.items.idSalesOrderItem` to be set.
+     * - Requires `CartReorderTransfer.order.items.quantity` to be set.
+     * - Requires `CartReorderTransfer.orderItems.idSalesOrderItem` to be set.
+     * - Gets product quantity restrictions from Persistence by `CartReorderTransfer.order.items.sku`.
+     * - Extracts `CartReorderTransfer.order.items` that have product quantity restriction rules.
+     * - Filters extracted items by `CartReorderRequestTransfer.salesOrderItemIds`.
+     * - Merges extracted items' quantity by `ItemTransfer.groupKey`.
+     * - Replaces `CartReorderTransfer.orderItems` with merged items by `idSalesOrderItem`.
+     * - Returns `CartReorderTransfer` with merged order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeProductQuantityRestrictionCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer;
 }

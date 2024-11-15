@@ -249,6 +249,7 @@ class Sellable implements SellableInterface
         $sellableItemResponseTransfer = new SellableItemResponseTransfer();
         $availableQuantity = $sellableItemRequestTransfer->getQuantityOrFail();
         $sellableItemResponseTransfer->setSku($sellableItemRequestTransfer->getSku());
+        $sellableItemResponseTransfer->setProductAvailabilityCriteria($sellableItemRequestTransfer->getProductAvailabilityCriteria());
         $sellableItemResponseTransfer->setAvailableQuantity(0);
 
         if ($productConcreteAvailabilityTransfer) {

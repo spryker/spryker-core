@@ -87,4 +87,12 @@
     <transfer name="Currency">
     </transfer>
 
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="orderReference" type="string"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

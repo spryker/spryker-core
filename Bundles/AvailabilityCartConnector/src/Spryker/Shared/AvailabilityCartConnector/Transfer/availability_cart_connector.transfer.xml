@@ -38,6 +38,7 @@
     </transfer>
 
     <transfer name="ProductAvailabilityCriteria">
+        <property name="entityIdentifier" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SellableItemsRequest">
@@ -63,6 +64,7 @@
         <property name="isSellable" type="bool"/>
         <property name="availableQuantity" type="decimal"/>
         <property name="sku" type="string"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria" strict="true"/>
     </transfer>
 
 </transfers>

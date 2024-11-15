@@ -103,4 +103,17 @@
     <transfer name="AclEntityMetadataCollection">
         <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
     </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
 </transfers>

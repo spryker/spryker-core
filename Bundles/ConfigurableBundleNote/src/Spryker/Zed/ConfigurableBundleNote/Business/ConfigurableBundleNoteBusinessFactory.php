@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleNote\Business;
 
+use Spryker\Zed\ConfigurableBundleNote\Business\Hydrator\CartReorderItemHydrator;
+use Spryker\Zed\ConfigurableBundleNote\Business\Hydrator\CartReorderItemHydratorInterface;
 use Spryker\Zed\ConfigurableBundleNote\Business\Setter\ConfigurableBundleNoteSetter;
 use Spryker\Zed\ConfigurableBundleNote\Business\Setter\ConfigurableBundleNoteSetterInterface;
 use Spryker\Zed\ConfigurableBundleNote\ConfigurableBundleNoteDependencyProvider;
@@ -24,6 +26,14 @@ class ConfigurableBundleNoteBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleNoteSetter(): ConfigurableBundleNoteSetterInterface
     {
         return new ConfigurableBundleNoteSetter($this->getQuoteFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleNote\Business\Hydrator\CartReorderItemHydratorInterface
+     */
+    public function createCartReorderItemHydrator(): CartReorderItemHydratorInterface
+    {
+        return new CartReorderItemHydrator();
     }
 
     /**

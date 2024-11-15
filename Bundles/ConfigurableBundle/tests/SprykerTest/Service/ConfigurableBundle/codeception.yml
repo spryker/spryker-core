@@ -1,0 +1,21 @@
+namespace: SprykerTest\Service\ConfigurableBundle
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Service:
+        path: .
+        actor: ConfigurableBundleServiceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Service\Testify\Helper\ServiceHelper

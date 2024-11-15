@@ -33,4 +33,17 @@ class MultiCartConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getGuestQuoteDefaultName();
     }
+
+    /**
+     * Specification:
+     * - Returns the default name for the reorder quote.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getReorderQuoteName(): string
+    {
+        return $this->getSharedConfig()->getReorderQuoteName();
+    }
 }

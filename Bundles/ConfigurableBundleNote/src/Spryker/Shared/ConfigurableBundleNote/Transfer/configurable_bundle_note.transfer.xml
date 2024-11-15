@@ -23,6 +23,10 @@
 
     <transfer name="Item">
         <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -31,6 +35,11 @@
     </transfer>
 
     <transfer name="Customer">
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="reorderItems" type="Item[]" singular="reorderItem"/>
     </transfer>
 
 </transfers>

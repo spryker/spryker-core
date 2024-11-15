@@ -81,7 +81,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
         }
 
-        $createConfiguredBundleRequestTransfer->getQuote()->setUuid($this->findGuestCartIdentifier($restRequest));
+        $createConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($this->findGuestCartIdentifier($restRequest));
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->addConfiguredBundleToGuestCart($createConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -89,7 +89,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         }
 
         return $this->cartsRestApiResource->createGuestCartRestResponse(
-            $quoteResponseTransfer->getQuoteTransfer(),
+            $quoteResponseTransfer->getQuoteTransferOrFail(),
             $restRequest,
         );
     }
@@ -118,7 +118,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             ->createUpdateConfiguredBundleRequest($restRequest)
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
-        $updateConfiguredBundleRequestTransfer->getQuote()->setUuid($quoteUuid);
+        $updateConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($quoteUuid);
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -126,7 +126,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         }
 
         return $this->cartsRestApiResource->createGuestCartRestResponse(
-            $quoteResponseTransfer->getQuoteTransfer(),
+            $quoteResponseTransfer->getQuoteTransferOrFail(),
             $restRequest,
         );
     }
@@ -145,7 +145,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         }
 
         $updateConfiguredBundleRequestTransfer = $this->configuredBundleRequestCreator->createUpdateConfiguredBundleRequest($restRequest);
-        $updateConfiguredBundleRequestTransfer->getQuote()->setUuid($quoteUuid);
+        $updateConfiguredBundleRequestTransfer->getQuoteOrFail()->setUuid($quoteUuid);
 
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 

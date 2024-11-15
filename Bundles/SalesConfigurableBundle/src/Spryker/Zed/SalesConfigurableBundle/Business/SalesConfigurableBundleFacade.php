@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
+use Generated\Shared\Transfer\CartReorderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
@@ -100,5 +102,40 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandOrderItemsWithSalesOrderConfiguredBundles($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function mergeConfigurableBundleProductsCartReorderItems(
+        CartReorderRequestTransfer $cartReorderRequestTransfer,
+        CartReorderTransfer $cartReorderTransfer
+    ): CartReorderTransfer {
+        return $this->getFactory()
+            ->createCartReorderItemMerger()
+            ->mergeConfigurableBundleItems($cartReorderRequestTransfer, $cartReorderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderTransfer
+     */
+    public function hydrateCartReorderItemsWithConfigurableBundle(CartReorderTransfer $cartReorderTransfer): CartReorderTransfer
+    {
+        return $this->getFactory()
+            ->createCartReorderItemHydrator()
+            ->hydrate($cartReorderTransfer);
     }
 }

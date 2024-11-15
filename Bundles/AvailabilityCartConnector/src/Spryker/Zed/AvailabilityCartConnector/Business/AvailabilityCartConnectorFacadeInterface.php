@@ -44,4 +44,21 @@ interface AvailabilityCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     * - Requires `CartChangeTransfer.quote.store` to be set.
+     * - Calculates items quantity for each item in the cart.
+     * - Executes a stack of {@link \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface} plugins.
+     * - Ignores items with `ItemTransfer.amount` defined.
+     * - Filters out items from `CartChangeTransfer` that are not sellable.
+     * - Adds a message for each unique item that is not sellable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterOutUnavailableCartChangeItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

@@ -35,3 +35,10 @@ suites:
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\ProductBundle\Helper\ProductBundleHelper
+
+    Communication:
+        path: Communication
+        actor: ProductBundleCommunicationTester
+        modules:
+            enabled:
+                - Asserts

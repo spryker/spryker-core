@@ -16,6 +16,7 @@
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="messages" type="Message[]" singular="message"/>
         <property name="groupKey" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -53,6 +54,19 @@
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartReorderRequest" strict="true">
+        <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="CartReorder" strict="true">
+        <property name="order" type="Order"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

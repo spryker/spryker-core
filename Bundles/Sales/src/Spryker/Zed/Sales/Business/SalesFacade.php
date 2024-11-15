@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\OrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
@@ -555,5 +557,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createDuplicateOrderChecker()
             ->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderCriteriaTransfer $orderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function getOrderCollection(OrderCriteriaTransfer $orderCriteriaTransfer): OrderCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderReader()
+            ->getOrderCollection($orderCriteriaTransfer);
     }
 }
