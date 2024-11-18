@@ -23,6 +23,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 class GetAddressesTest extends AbstractCustomerAddressFacadeTest
 {
     /**
+     * @var string
+     */
+    protected const TEST_EMAIL_ADDRESS = 'test@email.com';
+
+    /**
      * @return void
      */
     public function testGetAddressesHasCountry(): void
@@ -30,7 +35,12 @@ class GetAddressesTest extends AbstractCustomerAddressFacadeTest
         // Arrange
         $customerTransfer = $this->tester->haveCustomer([
             CustomerTransfer::PASSWORD => 'testPassword',
+            CustomerTransfer::EMAIL => static::TEST_EMAIL_ADDRESS,
+            CustomerTransfer::SHIPPING_ADDRESS => [
+                CustomerTransfer::EMAIL => static::TEST_EMAIL_ADDRESS,
+            ],
         ]);
+
         $this->customerFacade->createAddressAndUpdateCustomerDefaultAddresses($customerTransfer->getShippingAddress()[0]);
 
         // Act

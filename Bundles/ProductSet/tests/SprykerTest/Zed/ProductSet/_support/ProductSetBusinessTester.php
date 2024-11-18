@@ -35,6 +35,11 @@ class ProductSetBusinessTester extends Actor
     use _generated\ProductSetBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_IMAGE_SET_NAME = 'image-set-name';
+
+    /**
      * @param array $productSetSeed
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
@@ -58,6 +63,7 @@ class ProductSetBusinessTester extends Actor
             ->withImageSet(
                 (new ProductImageSetBuilder([
                     ProductImageSetTransfer::LOCALE => null,
+                    ProductImageSetTransfer::NAME => static::DEFAULT_IMAGE_SET_NAME,
                 ]))
                     ->withProductImage(),
             )

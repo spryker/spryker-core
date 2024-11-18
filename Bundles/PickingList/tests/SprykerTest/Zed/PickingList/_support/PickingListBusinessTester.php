@@ -226,6 +226,11 @@ class PickingListBusinessTester extends Actor
                 $pickingListItemTransfer,
             ],
         ]);
+
+        if (!$withUser) {
+            $pickingListTransfer->setUser(null);
+        }
+
         $this->havePickingList($pickingListTransfer);
     }
 

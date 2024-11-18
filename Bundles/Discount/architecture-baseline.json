@@ -14,13 +14,6 @@
         "priority": "1"
     },
     {
-        "fileName": "src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php",
-        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\CalculatorForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/Discount/Communication/Form/GeneralForm.php",
         "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\GeneralForm::getBlockPrefix()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",

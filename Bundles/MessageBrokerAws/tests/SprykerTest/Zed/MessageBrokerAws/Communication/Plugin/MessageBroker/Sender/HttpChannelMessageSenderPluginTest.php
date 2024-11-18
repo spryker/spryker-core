@@ -85,6 +85,7 @@ class HttpChannelMessageSenderPluginTest extends Unit
             MessageAttributesTransfer::PUBLISHER => null,
             MessageAttributesTransfer::EMITTER => null,
         ]);
+        $messageAttributesTransfer->setMetadata(null);
         $envelope = Envelope::wrap($this->tester->createMessageWithRequiredMessageAttributes());
         $envelope->getMessage()->setMessageAttributes($messageAttributesTransfer);
         $envelope = $envelope->with(new ChannelNameStamp(static::CHANNEL_NAME));

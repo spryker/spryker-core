@@ -16,6 +16,7 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
@@ -36,6 +37,11 @@ use Spryker\Shared\Shipment\ShipmentConfig;
  */
 class ShipmentPersistenceWithExpensesTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const TEST_SHIPMENT_METHOD_NAME = 'test_shipment_method';
+
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -65,6 +71,7 @@ class ShipmentPersistenceWithExpensesTest extends Unit
         $salesExpenseEntity = $salesExpenseQuery->findOne();
 
         $this->assertNotNull($salesExpenseEntity, 'Shipment expense should have been saved.');
+
         $this->assertSame($salesShipmentEntity->getFkSalesExpense(), $salesExpenseEntity->getIdSalesExpense(), 'Shipment expense ID should have been connected to shipment entity.');
     }
 
@@ -137,10 +144,11 @@ class ShipmentPersistenceWithExpensesTest extends Unit
 
         $shipmentBuilder = (new ShipmentBuilder())
             ->withShippingAddress($addressBuilder)
-            ->withMethod();
+            ->withMethod([ShipmentMethodTransfer::NAME => static::TEST_SHIPMENT_METHOD_NAME]);
 
         $expenseBuilder = (new ExpenseBuilder([
             ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::NAME => static::TEST_SHIPMENT_METHOD_NAME,
         ]))->withShipment($shipmentBuilder);
 
         $quoteTransfer = (new QuoteBuilder())

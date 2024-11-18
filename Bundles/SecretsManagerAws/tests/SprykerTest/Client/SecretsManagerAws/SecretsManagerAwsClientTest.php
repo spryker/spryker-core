@@ -121,7 +121,7 @@ class SecretsManagerAwsClientTest extends Unit
     public function testCreateSecretThrowsExceptionWhenPassingInvalidData(array $secretTransferSeedData): void
     {
         // Arrange
-        $secretTransfer = $this->tester->buildSecretTransfer($secretTransferSeedData);
+        $secretTransfer = $this->tester->buildSecretTransferWithoutSecretKey($secretTransferSeedData);
         $this->getSecretsManagerClientMock();
 
         // Assert
@@ -185,7 +185,7 @@ class SecretsManagerAwsClientTest extends Unit
     public function testGetSecretThrowsExceptionWhenPassingInvalidData(array $secretTransferSeedData): void
     {
         // Arrange
-        $secretTransfer = $this->tester->buildSecretTransfer($secretTransferSeedData);
+        $secretTransfer = $this->tester->buildSecretTransferWithoutSecretKey($secretTransferSeedData);
         $this->getSecretsManagerClientMock();
 
         // Assert

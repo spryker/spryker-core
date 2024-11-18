@@ -162,10 +162,10 @@ class CheckoutFacadeTest extends Unit
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
         $customer = $this->tester->haveCustomer();
 
-        $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
+        $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $productTransfer->getSku()])
             ->withStore($storeTransfer->toArray())
-            ->withCustomer()
+            ->withCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de'])
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()
@@ -193,10 +193,10 @@ class CheckoutFacadeTest extends Unit
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
         $customer = $this->tester->haveCustomer();
 
-        $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
+        $quoteTransfer = (new QuoteBuilder())
             ->withItem($this->createItemWithShipment([ItemTransfer::SKU => $productTransfer->getSku()], $customer))
             ->withStore($storeTransfer->toArray())
-            ->withCustomer()
+            ->withCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de'])
             ->withTotals()
             ->withCurrency()
             ->withBillingAddress()

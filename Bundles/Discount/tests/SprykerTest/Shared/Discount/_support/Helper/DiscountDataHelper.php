@@ -51,8 +51,11 @@ class DiscountDataHelper extends Module
     {
         $discountFacade = $this->getDiscountFacade();
 
+        $discountGeneralBuilder = (new DiscountGeneralBuilder($override))
+            ->withStoreRelation();
+
         $discountConfigurator = (new DiscountConfiguratorBuilder($override))
-            ->withDiscountGeneral((new DiscountGeneralBuilder())->withStoreRelation())
+            ->withDiscountGeneral($discountGeneralBuilder)
             ->withDiscountCondition()
             ->withDiscountCalculator()
             ->build();

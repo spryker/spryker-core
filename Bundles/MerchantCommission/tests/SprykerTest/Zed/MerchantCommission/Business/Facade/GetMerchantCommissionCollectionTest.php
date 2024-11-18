@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantCommissionAmountTransfer;
 use Generated\Shared\Transfer\MerchantCommissionConditionsTransfer;
 use Generated\Shared\Transfer\MerchantCommissionCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantCommissionGroupTransfer;
 use Generated\Shared\Transfer\MerchantCommissionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -417,8 +418,12 @@ class GetMerchantCommissionCollectionTest extends Unit
     public function testReturnsMerchantCommissionCollectionFilteredByMerchantCommissionGroupName(): void
     {
         // Arrange
-        $merchantCommissionGroup1Transfer = $this->tester->haveMerchantCommissionGroup();
-        $merchantCommissionGroup2Transfer = $this->tester->haveMerchantCommissionGroup();
+        $merchantCommissionGroup1Transfer = $this->tester->haveMerchantCommissionGroup([
+            MerchantCommissionGroupTransfer::NAME => 'test1',
+        ]);
+        $merchantCommissionGroup2Transfer = $this->tester->haveMerchantCommissionGroup([
+            MerchantCommissionGroupTransfer::NAME => 'test2',
+        ]);
 
         $this->tester->createMerchantCommission([
             MerchantCommissionTransfer::MERCHANT_COMMISSION_GROUP => $merchantCommissionGroup1Transfer,

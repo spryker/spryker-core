@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Store\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
+use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreCollectionTransfer;
@@ -593,11 +595,12 @@ class StoreFacadeTest extends Unit
         // Arrange
         $this->tester->setStoreReferenceData([]);
 
-        $accessTokenRequestTransfer = $this->tester->createAccessTokenRequestTransfer(
-            [
-                'storeReference' => null,
+        $storeReference = static::DEFAULT_STORE_REFERENCE;
+        $accessTokenRequestTransfer = $this->tester->createAccessTokenRequestTransfer([
+            AccessTokenRequestTransfer::ACCESS_TOKEN_REQUEST_OPTIONS => [
+                AccessTokenRequestOptionsTransfer::STORE_REFERENCE => null,
             ],
-        );
+        ]);
 
         // Act
         $accessTokenRequestTransfer = $this->tester->getFacade()->expandAccessTokenRequest($accessTokenRequestTransfer);
@@ -614,7 +617,9 @@ class StoreFacadeTest extends Unit
         // Arrange
         $storeReference = 'dev-DE';
         $accessTokenRequestTransfer = $this->tester->createAccessTokenRequestTransfer([
-            'storeReference' => $storeReference,
+            AccessTokenRequestTransfer::ACCESS_TOKEN_REQUEST_OPTIONS => [
+                AccessTokenRequestOptionsTransfer::STORE_REFERENCE => $storeReference,
+            ],
         ]);
 
         // Act

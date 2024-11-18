@@ -24,4 +24,15 @@ class SecretsManagerAwsHelper extends AbstractHelper
             ->withSecretKey()
             ->build();
     }
+
+    /**
+     * @param array<string, mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\SecretTransfer
+     */
+    public function buildSecretTransferWithoutSecretKey(array $seedData = []): SecretTransfer
+    {
+        return (new SecretBuilder($seedData))
+            ->build();
+    }
 }

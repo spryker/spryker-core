@@ -36,7 +36,7 @@ abstract class AbstractDataBuilder
     protected $dependencies = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $nestedBuilders = [];
 
@@ -129,7 +129,7 @@ abstract class AbstractDataBuilder
     }
 
     /**
-     * @param array|string $rules
+     * @param array<string>|string $rules
      *
      * @return $this
      */
@@ -150,28 +150,18 @@ abstract class AbstractDataBuilder
      */
     public function build()
     {
-        $transfer = $this->getTransfer();
-        $transfer->fromArray($this->generateFields());
-        $this->seedData = array_merge($this->getScalarValues($transfer), $this->seedData);
+        $seedData = array_merge($this->generateFields(), $this->seedData);
+        $transfer = $this->getTransfer()->fromArray($seedData, true);
 
-        $this->generateDependencies($transfer);
-        $transfer->fromArray($this->seedData, true);
+        if ($this->nestedBuilders !== []) {
+            $this->generateDependencies($transfer);
+        }
 
         return $transfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
-     *
-     * @return array
-     */
-    private function getScalarValues(AbstractTransfer $transfer)
-    {
-        return array_filter($transfer->toArray(false), 'is_scalar');
-    }
-
-    /**
-     * @return array
+     * @return array<bool|string>
      */
     protected function generateFields()
     {
@@ -185,7 +175,7 @@ abstract class AbstractDataBuilder
 
     /**
      * @param string $field
-     * @param array $override
+     * @param array<string, mixed> $override
      * @param bool $randomize
      *
      * @throws \Spryker\Shared\Testify\Exception\FieldNotDefinedException
@@ -226,16 +216,15 @@ abstract class AbstractDataBuilder
         foreach ($this->nestedBuilders as $builderInfo) {
             [$name, $dependencyBuilder, $randomize] = $builderInfo;
 
-            // add currently generated values
             if (!$randomize) {
-                $dependencyBuilder->seed($this->seedData);
-            }
-            $nestedTransfer = $dependencyBuilder->build();
+                $parentSeedData = $this->seedData[$name] ?? [];
+                $parentSeedData = $parentSeedData instanceof AbstractTransfer ? $parentSeedData->toArray() : $parentSeedData;
+                $dependencySeedData = array_merge($dependencyBuilder->getSeedData(), $parentSeedData);
 
-            // reuse generated values from nested objects
-            if (!$randomize) {
-                $this->seedData = array_merge($this->seedData, $dependencyBuilder->getSeedData());
+                $dependencyBuilder->seed($dependencySeedData);
             }
+
+            $nestedTransfer = $dependencyBuilder->build();
 
             if (method_exists($transfer, 'add' . $name)) {
                 /** @var callable $callable */

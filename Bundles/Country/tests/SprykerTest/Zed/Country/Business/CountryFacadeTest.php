@@ -351,10 +351,10 @@ class CountryFacadeTest extends Unit
     protected function prepareCheckoutDataTransferWithOutIso2Codes(): CheckoutDataTransfer
     {
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
-        $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withBillingAddress(['billingAddress' => new AddressTransfer()])
-            ->withShippingAddress(['shippingAddress' => new AddressTransfer()])
-            ->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::BILLING_ADDRESS => null,
+            CheckoutDataTransfer::SHIPPING_ADDRESS => null,
+        ]))->build();
 
         return $checkoutDataTransfer;
     }
@@ -366,8 +366,8 @@ class CountryFacadeTest extends Unit
     {
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
         $checkoutDataTransfer = (new CheckoutDataBuilder())
-            ->withBillingAddress(['billingAddress' => (new AddressTransfer())->setIso2Code(static::FAKE_ISO_2_CODE)])
-            ->withShippingAddress(['shippingAddress' => new AddressTransfer()])
+            ->withBillingAddress([AddressTransfer::ISO2_CODE => static::FAKE_ISO_2_CODE])
+            ->withShippingAddress()
             ->build();
 
         return $checkoutDataTransfer;

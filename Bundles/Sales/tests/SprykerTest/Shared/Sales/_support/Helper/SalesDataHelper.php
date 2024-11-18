@@ -189,7 +189,7 @@ class SalesDataHelper extends Module
         return (new QuoteBuilder($override))
             ->withStore($override)
             ->withItem($override)
-            ->withCustomer()
+            ->withCustomer($override)
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()

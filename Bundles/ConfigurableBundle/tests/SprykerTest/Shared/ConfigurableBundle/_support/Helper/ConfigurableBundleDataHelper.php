@@ -10,8 +10,6 @@ namespace SprykerTest\Shared\ConfigurableBundle\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateSlotBuilder;
-use Generated\Shared\DataBuilder\ConfigurableBundleTemplateSlotTranslationBuilder;
-use Generated\Shared\DataBuilder\ConfigurableBundleTemplateTranslationBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -28,13 +26,6 @@ class ConfigurableBundleDataHelper extends Module
     public function haveConfigurableBundleTemplate(array $seed = []): ConfigurableBundleTemplateTransfer
     {
         $configurableBundleTemplateBuilder = new ConfigurableBundleTemplateBuilder($seed);
-        $configurableBundleTemplateTranslationSeeds = $seed[ConfigurableBundleTemplateTransfer::TRANSLATIONS] ?? [];
-
-        foreach ($configurableBundleTemplateTranslationSeeds as $configurableBundleTemplateTranslationSeed) {
-            $configurableBundleTemplateBuilder->withTranslation(
-                new ConfigurableBundleTemplateTranslationBuilder($configurableBundleTemplateTranslationSeed),
-            );
-        }
 
         return $this->getLocator()
             ->configurableBundle()
@@ -51,13 +42,6 @@ class ConfigurableBundleDataHelper extends Module
     public function haveConfigurableBundleTemplateSlot(array $seed = []): ConfigurableBundleTemplateSlotTransfer
     {
         $configurableBundleTemplateSlotBuilder = new ConfigurableBundleTemplateSlotBuilder($seed);
-        $configurableBundleTemplateSlotTranslationSeeds = $seed[ConfigurableBundleTemplateSlotTransfer::TRANSLATIONS] ?? [];
-
-        foreach ($configurableBundleTemplateSlotTranslationSeeds as $configurableBundleTemplateSlotTranslationSeed) {
-            $configurableBundleTemplateSlotBuilder->withTranslation(
-                new ConfigurableBundleTemplateSlotTranslationBuilder($configurableBundleTemplateSlotTranslationSeed),
-            );
-        }
 
         return $this->getLocator()
             ->configurableBundle()

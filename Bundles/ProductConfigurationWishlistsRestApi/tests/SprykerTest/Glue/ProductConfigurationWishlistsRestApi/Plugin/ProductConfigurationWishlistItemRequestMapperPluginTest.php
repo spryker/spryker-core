@@ -9,15 +9,10 @@ namespace SprykerTest\Glue\ProductConfigurationWishlistsRestApi\Plugin;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\RestCurrencyBuilder;
 use Generated\Shared\DataBuilder\RestProductConfigurationPriceAttributesBuilder;
-use Generated\Shared\DataBuilder\RestProductPriceVolumesAttributesBuilder;
 use Generated\Shared\DataBuilder\RestWishlistItemProductConfigurationInstanceAttributesBuilder;
 use Generated\Shared\DataBuilder\RestWishlistItemsAttributesBuilder;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer;
-use Generated\Shared\Transfer\RestWishlistItemProductConfigurationInstanceAttributesTransfer;
-use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Spryker\Glue\ProductConfigurationWishlistsRestApi\Plugin\WishlistsRestApi\ProductConfigurationWishlistItemRequestMapperPlugin;
 
@@ -39,28 +34,19 @@ class ProductConfigurationWishlistItemRequestMapperPluginTest extends Unit
     public function testMap(): void
     {
         // Arrange
-        $price = (new RestProductConfigurationPriceAttributesBuilder([
-            RestProductConfigurationPriceAttributesTransfer::CURRENCY => (new RestCurrencyBuilder())->build(),
-            RestProductConfigurationPriceAttributesTransfer::VOLUME_PRICES => [(new RestProductPriceVolumesAttributesBuilder())->build()],
-        ]))
+        $productConfigurationWishlistItemRequestMapperPlugin = new ProductConfigurationWishlistItemRequestMapperPlugin();
+
+        $restProductConfigurationPriceAttributesBuilder = (new RestProductConfigurationPriceAttributesBuilder())
+            ->withCurrency()
+            ->withVolumePrice();
+
+        $restWishlistItemProductConfigurationInstanceAttributesTransfer = (new RestWishlistItemProductConfigurationInstanceAttributesBuilder())
+            ->withPrice($restProductConfigurationPriceAttributesBuilder)
             ->build();
 
-        $productConfigurationWishlistItemRequestMapperPlugin = new ProductConfigurationWishlistItemRequestMapperPlugin();
-        $restProductConfigurationInstance = (new RestWishlistItemProductConfigurationInstanceAttributesBuilder(
-            [
-                RestWishlistItemProductConfigurationInstanceAttributesTransfer::PRICES => new ArrayObject([
-                    $price,
-                ]),
-            ],
-        ))
-            ->build();
-        $restProductConfigurationInstance->setPrices(new ArrayObject([$price]));
         $restWishlistItemsAttributesTransfer = (new RestWishlistItemsAttributesBuilder())
-            ->withProductConfigurationInstance(
-                [
-                    RestWishlistItemsAttributesTransfer::PRODUCT_CONFIGURATION_INSTANCE => $restProductConfigurationInstance,
-                ],
-            )->build();
+            ->build()
+            ->setProductConfigurationInstance($restWishlistItemProductConfigurationInstanceAttributesTransfer);
 
         // Act
         $wishlistItemRequestTransfer = $productConfigurationWishlistItemRequestMapperPlugin->map(
@@ -70,8 +56,8 @@ class ProductConfigurationWishlistItemRequestMapperPluginTest extends Unit
 
         // Assert
         $this->assertInstanceOf(ProductConfigurationInstanceTransfer::class, $wishlistItemRequestTransfer->getProductConfigurationInstance());
-        $this->assertEquals($restProductConfigurationInstance->getConfiguratorKey(), $wishlistItemRequestTransfer->getProductConfigurationInstance()->getConfiguratorKey());
-        $this->assertEquals($restProductConfigurationInstance->getIsComplete(), $wishlistItemRequestTransfer->getProductConfigurationInstance()->getIsComplete());
+        $this->assertEquals($restWishlistItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(), $wishlistItemRequestTransfer->getProductConfigurationInstance()->getConfiguratorKey());
+        $this->assertEquals($restWishlistItemProductConfigurationInstanceAttributesTransfer->getIsComplete(), $wishlistItemRequestTransfer->getProductConfigurationInstance()->getIsComplete());
         $this->assertInstanceOf(ArrayObject::class, $wishlistItemRequestTransfer->getProductConfigurationInstance()->getPrices());
         $this->assertNotEquals(0, $wishlistItemRequestTransfer->getProductConfigurationInstance()->getPrices()->count());
     }

@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeRuleInterface;
@@ -409,6 +410,9 @@ class UpdatePickingListCollectionTest extends Unit
         $pickingListTransfer = $this->tester->createPickingListTransfer([
             PickingListTransfer::UUID => static::FAKE_UUID,
             PickingListTransfer::WAREHOUSE => $this->tester->haveStock(),
+            PickingListTransfer::USER => [
+                UserTransfer::UUID => static::FAKE_UUID,
+            ],
         ]);
 
         $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())

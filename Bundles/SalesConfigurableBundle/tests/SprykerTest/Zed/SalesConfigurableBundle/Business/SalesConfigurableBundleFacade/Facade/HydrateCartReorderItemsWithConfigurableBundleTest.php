@@ -67,6 +67,7 @@ class HydrateCartReorderItemsWithConfigurableBundleTest extends Unit
                 ItemTransfer::ID_SALES_ORDER_ITEM => 2,
             ]))->withSalesOrderConfiguredBundle([
                 SalesOrderConfiguredBundleTransfer::ID_SALES_ORDER_CONFIGURED_BUNDLE => 1,
+                SalesOrderConfiguredBundleTransfer::QUANTITY => 1,
                 SalesOrderConfiguredBundleTransfer::NAME => static::TEST_CONFIGURABLE_BUNDLE_NAME,
                 SalesOrderConfiguredBundleTransfer::CONFIGURABLE_BUNDLE_TEMPLATE_UUID => static::TEST_CONFIGURABLE_BUNDLE_TEMPLATE_UUID,
             ])->withSalesOrderConfiguredBundleItem([
@@ -120,6 +121,7 @@ class HydrateCartReorderItemsWithConfigurableBundleTest extends Unit
                 ItemTransfer::ID_SALES_ORDER_ITEM => 2,
             ]))->withSalesOrderConfiguredBundle([
                 SalesOrderConfiguredBundleTransfer::ID_SALES_ORDER_CONFIGURED_BUNDLE => 1,
+                SalesOrderConfiguredBundleTransfer::QUANTITY => 1,
                 SalesOrderConfiguredBundleTransfer::NAME => static::TEST_CONFIGURABLE_BUNDLE_NAME,
                 SalesOrderConfiguredBundleTransfer::CONFIGURABLE_BUNDLE_TEMPLATE_UUID => static::TEST_CONFIGURABLE_BUNDLE_TEMPLATE_UUID,
             ])->withSalesOrderConfiguredBundleItem([

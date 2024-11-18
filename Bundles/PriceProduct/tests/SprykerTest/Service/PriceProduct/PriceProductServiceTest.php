@@ -433,18 +433,30 @@ class PriceProductServiceTest extends Unit
         return [
             'min gross price' => [
                 [
-                    $this->buildPriceProductTransfer(['grossAmount' => 100, 'netAmount' => null]),
-                    $this->buildPriceProductTransfer(['grossAmount' => 90, 'netAmount' => null]),
-                    $this->buildPriceProductTransfer(['netAmount' => 80, 'grossAmount' => null]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => 100, 'netAmount' => null],
+                    ]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => 90, 'netAmount' => null],
+                    ]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => null, 'netAmount' => 80],
+                    ]),
                 ],
                 90,
                 static::PRICE_MODE_GROSS,
             ],
             'min net price' => [
                 [
-                    $this->buildPriceProductTransfer(['netAmount' => 110, 'grossAmount' => null]),
-                    $this->buildPriceProductTransfer(['grossAmount' => 70, 'netAmount' => null]),
-                    $this->buildPriceProductTransfer(['netAmount' => 100, 'grossAmount' => null]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => null, 'netAmount' => 110],
+                    ]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => 70, 'netAmount' => null],
+                    ]),
+                    $this->buildPriceProductTransfer([
+                        PriceProductTransfer::MONEY_VALUE => ['grossAmount' => null, 'netAmount' => 100],
+                    ]),
                 ],
                 100,
                 static::PRICE_MODE_NET,
@@ -583,8 +595,10 @@ class PriceProductServiceTest extends Unit
     protected function buildPriceProductTransfer(array $priceProductDataSeed): PriceProductTransfer
     {
         $priceProductDataSeed = array_merge([PriceProductTransfer::PRICE_TYPE_NAME => static::PRICE_TYPE_DEFAULT], $priceProductDataSeed);
+        $moneyValueBuilder = (new MoneyValueBuilder())->withCurrency();
 
-        return (new PriceProductBuilder($priceProductDataSeed))->withMoneyValue((new MoneyValueBuilder())->withCurrency($priceProductDataSeed))
+        return (new PriceProductBuilder($priceProductDataSeed))
+            ->withMoneyValue($moneyValueBuilder)
             ->withPriceDimension()
             ->withPriceType()
             ->build();

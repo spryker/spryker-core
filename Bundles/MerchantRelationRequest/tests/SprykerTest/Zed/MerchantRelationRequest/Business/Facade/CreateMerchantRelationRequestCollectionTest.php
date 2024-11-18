@@ -662,10 +662,18 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => null,
-                            MerchantTransfer::ID_MERCHANT => 1,
-                            CompanyUserTransfer::ID_COMPANY_USER => 1,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => 1,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            'assigneeCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => 1,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => 1,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
                         ]),
                     ])),
                 'Missing required property "status" for transfer Generated\Shared\Transfer\MerchantRelationRequestTransfer.',
@@ -676,10 +684,18 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => 'pending',
-                            MerchantTransfer::ID_MERCHANT => 1,
-                            CompanyUserTransfer::ID_COMPANY_USER => null,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => 1,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            'assigneeCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => null,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => 1,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
                         ]),
                     ])),
                 'Missing required property "idCompanyUser" for transfer Generated\Shared\Transfer\CompanyUserTransfer.',
@@ -690,10 +706,18 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => 'pending',
-                            MerchantTransfer::ID_MERCHANT => null,
-                            CompanyUserTransfer::ID_COMPANY_USER => 1,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => 1,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            'assigneeCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => 1,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => null,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
                         ]),
                     ])),
                 'Missing required property "idMerchant" for transfer Generated\Shared\Transfer\MerchantTransfer.',
@@ -704,10 +728,18 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => 'pending',
-                            MerchantTransfer::ID_MERCHANT => 1,
-                            CompanyUserTransfer::ID_COMPANY_USER => 1,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => 1,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+                            'assigneeCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => 1,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => 1,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => null,
+                            ],
                         ]),
                     ])),
                 'Missing required property "idCompanyBusinessUnit" for transfer Generated\Shared\Transfer\CompanyBusinessUnitTransfer.',
@@ -718,10 +750,16 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => 'pending',
-                            MerchantTransfer::ID_MERCHANT => 1,
-                            CompanyUserTransfer::ID_COMPANY_USER => 1,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => null,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => 1,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => 1,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::FK_COMPANY => null,
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
                         ]),
                     ])),
                 'Missing required property "fkCompany" for transfer Generated\Shared\Transfer\CompanyBusinessUnitTransfer.',
@@ -732,10 +770,15 @@ class CreateMerchantRelationRequestCollectionTest extends Unit
                     ->setMerchantRelationRequests(new ArrayObject([
                         $this->createDummyMerchantRelationRequest([
                             MerchantRelationRequestTransfer::STATUS => 'pending',
-                            MerchantTransfer::ID_MERCHANT => 1,
-                            CompanyUserTransfer::ID_COMPANY_USER => 1,
-                            CompanyBusinessUnitTransfer::FK_COMPANY => 1,
-                            CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            'companyUser' => [
+                                CompanyUserTransfer::ID_COMPANY_USER => 1,
+                            ],
+                            'merchant' => [
+                                MerchantTransfer::ID_MERCHANT => 1,
+                            ],
+                            'ownerCompanyBusinessUnit' => [
+                                CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT => 1,
+                            ],
                         ])->setAssigneeCompanyBusinessUnits(new ArrayObject([
                             new CompanyBusinessUnitTransfer(),
                         ])),

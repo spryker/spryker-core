@@ -69,7 +69,7 @@ class ReplaceCartReorderItemBundledItemsTest extends Unit
 
         $orderItemTransfer = $cartReorderTransfer->getOrderItems()->getIterator()->current();
         $this->assertSame(static::TEST_PRODUCT_BUNDLE_IDENTIFIER, $orderItemTransfer->getBundleItemIdentifier());
-        $this->assertSame(1, $orderItemTransfer->getQuantity());
+        $this->assertEquals(1, $orderItemTransfer->getQuantity());
     }
 
     /**
