@@ -30,6 +30,11 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CART_REORDER_REQUEST_VALIDATOR = 'PLUGINS_CART_REORDER_REQUEST_VALIDATOR';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY = 'PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY';
 
     /**
@@ -72,6 +77,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCartFacade($container);
         $container = $this->addSalesFacade($container);
+        $container = $this->addCartReorderRequestValidatorPlugins($container);
         $container = $this->addCartReorderQuoteProviderStrategyPlugins($container);
         $container = $this->addCartReorderItemFilterPlugins($container);
         $container = $this->addCartReorderValidatorPlugins($container);
@@ -106,6 +112,20 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new CartReorderToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartReorderRequestValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_REORDER_REQUEST_VALIDATOR, function () {
+            return $this->getCartReorderRequestValidatorPlugins();
         });
 
         return $container;
@@ -207,6 +227,14 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
+     */
+    protected function getCartReorderRequestValidatorPlugins(): array
+    {
+        return [];
     }
 
     /**

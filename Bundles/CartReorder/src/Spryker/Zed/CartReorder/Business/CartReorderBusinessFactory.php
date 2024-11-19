@@ -71,6 +71,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function createCartReorderValidator(): CartReorderValidatorInterface
     {
         return new CartReorderValidator(
+            $this->getCartReorderRequestValidatorPlugins(),
             $this->getCartReorderValidatorPlugins(),
         );
     }
@@ -99,6 +100,14 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): CartReorderToSalesFacadeInterface
     {
         return $this->getProvidedDependency(CartReorderDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface>
+     */
+    public function getCartReorderRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_REQUEST_VALIDATOR);
     }
 
     /**

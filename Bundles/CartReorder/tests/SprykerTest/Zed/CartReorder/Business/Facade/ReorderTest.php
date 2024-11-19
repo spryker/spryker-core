@@ -21,6 +21,7 @@ use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPlug
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface;
+use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface;
 use SprykerTest\Zed\CartReorder\CartReorderBusinessTester;
 
@@ -226,6 +227,7 @@ class ReorderTest extends Unit
     protected function cartReorderPluginProvider(): array
     {
         return [
+            'request validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_REQUEST_VALIDATOR, $this->getCartReorderRequestValidatorPluginMock()],
             'quote provider plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY, $this->getCartReorderQuoteProviderStrategyPluginMock()],
             'filter plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_FILTER, $this->getCartReorderItemFilterPluginMock()],
             'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
@@ -234,6 +236,22 @@ class ReorderTest extends Unit
             'pre add to cart plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_PRE_ADD_TO_CART, $this->getCartReorderPreAddToCartPluginMock()],
             'post reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_POST_REORDER, $this->getCartPostReorderPluginMock()],
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface
+     */
+    protected function getCartReorderRequestValidatorPluginMock(): CartReorderRequestValidatorPluginInterface
+    {
+        $cartReorderRequestValidatorPluginMock = $this
+            ->getMockBuilder(CartReorderRequestValidatorPluginInterface::class)
+            ->getMock();
+
+        $cartReorderRequestValidatorPluginMock
+            ->expects($this->once())
+            ->method('validate');
+
+        return $cartReorderRequestValidatorPluginMock;
     }
 
     /**

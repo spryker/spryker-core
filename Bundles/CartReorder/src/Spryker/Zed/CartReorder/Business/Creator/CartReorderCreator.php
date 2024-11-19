@@ -120,6 +120,13 @@ class CartReorderCreator implements CartReorderCreatorInterface
                 ->addError($this->createErrorTransfer(static::GLOSSARY_KEY_ORDER_NOT_FOUND));
         }
 
+        $cartReorderRequestTransfer->setOrder($orderTransfer);
+
+        $cartReorderResponseTransfer = $this->cartReorderValidator->validateRequest($cartReorderRequestTransfer);
+        if ($cartReorderResponseTransfer->getErrors()->count()) {
+            return $cartReorderResponseTransfer;
+        }
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($cartReorderRequestTransfer, $orderTransfer) {
             return $this->executeReorderTransaction($cartReorderRequestTransfer, $orderTransfer);
         });

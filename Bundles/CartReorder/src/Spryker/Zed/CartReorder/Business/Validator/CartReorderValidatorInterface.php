@@ -7,11 +7,19 @@
 
 namespace Spryker\Zed\CartReorder\Business\Validator;
 
+use Generated\Shared\Transfer\CartReorderRequestTransfer;
 use Generated\Shared\Transfer\CartReorderResponseTransfer;
 use Generated\Shared\Transfer\CartReorderTransfer;
 
 interface CartReorderValidatorInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartReorderResponseTransfer
+     */
+    public function validateRequest(CartReorderRequestTransfer $cartReorderRequestTransfer): CartReorderResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\CartReorderTransfer $cartReorderTransfer
      *

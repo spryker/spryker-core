@@ -5,6 +5,7 @@
         <property name="orderReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="quote" type="Quote"/>
+        <property name="order" type="Order"/>
         <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
     </transfer>
 
