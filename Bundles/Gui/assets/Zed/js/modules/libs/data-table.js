@@ -9,7 +9,11 @@ function getLocale() {
 }
 
 function getTranslation(locale) {
-    return require('./i18n/' + locale + '.json');
+    try {
+        return require('./i18n/' + locale + '.json');
+    } catch (e) {
+        return require('./i18n/en.json');
+    }
 }
 
 var locale = getLocale();
