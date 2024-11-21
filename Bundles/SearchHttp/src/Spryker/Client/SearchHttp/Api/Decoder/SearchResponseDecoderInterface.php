@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\SearchHttp\Api\Decoder;
 
-use Psr\Http\Message\ResponseInterface;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 
 interface SearchResponseDecoderInterface
 {
     /**
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
      *
      * @return array<string, mixed>
      */
-    public function decode(ResponseInterface $response): array;
+    public function decode(AcpHttpResponseTransfer $acpHttpResponseTransfer): array;
 }

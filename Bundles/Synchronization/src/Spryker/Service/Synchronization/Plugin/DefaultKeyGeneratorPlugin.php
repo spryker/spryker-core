@@ -37,10 +37,16 @@ class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements Synchronizat
     {
         $reference = $dataTransfer->getReference() ? $this->keyFilter->escapeKey($dataTransfer->getReference()) : null;
         $localeAndStore = $this->getStoreAndLocaleKey($dataTransfer);
+        /** @var string $keySuffix */
         $keySuffix = $reference && $localeAndStore
             ? sprintf('%s:%s', $localeAndStore, $reference)
             : sprintf('%s%s', $localeAndStore, $reference);
 
-        return sprintf('%s:%s', $this->getResource(), $keySuffix);
+        return sprintf(
+            '%s%s%s',
+            $this->getResource(),
+            $keySuffix ? ':' : '',
+            $keySuffix,
+        );
     }
 }

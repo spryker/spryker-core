@@ -33,7 +33,7 @@ class ProductSuggestionSearchHttpResultFormatterPlugin extends ProductSearchHttp
         $abstractProducts = $searchResult->getMatchedItems();
         $abstractProducts = $this->extendWithProductIds($abstractProducts);
         $abstractProducts = $this->filterNotFoundInAbstractProducts($abstractProducts);
-        $abstractProducts = $this->getFactory()->createResultProductMapper()->mapSearchHttpProductsToOriginalProducts($abstractProducts);
+        $abstractProducts = $this->getFactory()->createResultProductMapper()->mapSearchHttpProductsToOriginalProducts($searchResult, $abstractProducts);
 
         return $abstractProducts;
     }

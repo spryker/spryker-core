@@ -39,11 +39,16 @@ class KernelAppToGuzzleHttpClientAdapter implements KernelAppToHttpClientAdapter
             $acpHttpRequestTransfer->getMethodOrFail(),
             $acpHttpRequestTransfer->getUriOrFail(),
             $acpHttpRequestTransfer->getHeaders(),
-            $acpHttpRequestTransfer->getBodyOrFail(),
+            $acpHttpRequestTransfer->getBody(),
         );
+        $options = [];
+
+        if ($acpHttpRequestTransfer->getQuery()) {
+            $options['query'] = $acpHttpRequestTransfer->getQuery();
+        }
 
         try {
-            $response = $this->httpClient->send($request);
+            $response = $this->httpClient->send($request, $options);
         } catch (RequestException $e) {
             $acpHttpResponseTransfer = new AcpHttpResponseTransfer();
             $acpHttpResponseTransfer

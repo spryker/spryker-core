@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchHttp;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\SearchHttp\SearchHttpConstants;
 
 class SearchHttpConfig extends AbstractBundleConfig
 {
@@ -17,8 +16,8 @@ class SearchHttpConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getTenantIdentifier(): string
+    public function getForwardForAddress(): string
     {
-        return $this->get(SearchHttpConstants::TENANT_IDENTIFIER, '');
+        return $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
     }
 }

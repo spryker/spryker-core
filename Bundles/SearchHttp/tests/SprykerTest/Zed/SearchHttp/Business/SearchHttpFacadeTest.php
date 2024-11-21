@@ -11,8 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\SearchHttp\Dependency\Facade\SearchHttpToStoreFacadeInterface;
-use Spryker\Zed\SearchHttp\SearchHttpDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -50,92 +48,6 @@ class SearchHttpFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSearchHttpConfigSuccessfullyPublished(): void
-    {
-        // Arrange
-        $this->mockStoreGetCurrentStoreMethod();
-        $searchHttpConfigTransfer = $this->tester->createSearchHttpConfigTransfer();
-
-        // Act
-        $this->tester->getFacade()->publishSearchHttpConfig($searchHttpConfigTransfer, 'test_store_reference');
-
-        // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName('test_store_name');
-
-        $this->tester
-            ->assertSearchHttpConfigStoredProperly(
-                $searchHttpConfigTransfer,
-                $savedSearchHttpConfig,
-            );
-    }
-
-    /**
-     * @return void
-     */
-    public function testSearchHttpConfigSuccessfullyRePublished(): void
-    {
-        // Arrange
-        $storeName = 'test_store_name';
-        $this->mockStoreGetCurrentStoreMethod();
-        $this->tester->haveSearchHttpConfig(
-            [
-                'search_ccp_configs' => [
-                    SearchHttpConfigTransfer::APPLICATION_ID => 'test_application_id',
-                    SearchHttpConfigTransfer::URL => 'test_url',
-                ],
-            ],
-            $storeName,
-        );
-
-        $searchHttpConfigTransfer = $this->tester->createSearchHttpConfigTransfer(
-            [
-                SearchHttpConfigTransfer::APPLICATION_ID => 'test_application_id',
-                SearchHttpConfigTransfer::URL => 'new_test_url',
-            ],
-        );
-
-        // Act
-        $this->tester->getFacade()->publishSearchHttpConfig($searchHttpConfigTransfer, 'test_store_reference');
-
-        // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName($storeName);
-
-        $this->tester->assertSearchHttpConfigStoredProperly(
-            $searchHttpConfigTransfer,
-            $savedSearchHttpConfig,
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testSearchHttpConfigSuccessfullyUnpublished(): void
-    {
-        // Arrange
-        $storeName = 'test_store_name';
-        $this->mockStoreGetCurrentStoreMethod();
-        $this->tester->haveSearchHttpConfig(
-            [
-                'search_ccp_configs' => [
-                    SearchHttpConfigTransfer::APPLICATION_ID => 'test_application_id',
-                    SearchHttpConfigTransfer::URL => 'test_url',
-                ],
-            ],
-            $storeName,
-        );
-
-        // Act
-        $this->tester->getFacade()->unpublishSearchHttpConfig('test_store_reference', 'test_application_id');
-
-        // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName($storeName);
-
-        $this->tester->assertSearchHttpConfigRemovedProperly($savedSearchHttpConfig);
-    }
-
-    /**
-     * @return void
-     */
     public function testSearchHttpConfigSuccessfullySaved(): void
     {
         // Arrange
@@ -146,7 +58,7 @@ class SearchHttpFacadeTest extends Unit
         $this->tester->getFacade()->saveSearchHttpConfig($searchHttpConfigTransfer);
 
         // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName($storeTransfer->getName());
+        $savedSearchHttpConfig = $this->tester->findSearchHttpConfig();
 
         $this->tester->assertSearchHttpConfigStoredProperly(
             $searchHttpConfigTransfer,
@@ -183,7 +95,7 @@ class SearchHttpFacadeTest extends Unit
         $this->tester->getFacade()->saveSearchHttpConfig($newSearchHttpConfigTransfer);
 
         // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName($storeTransfer->getName());
+        $savedSearchHttpConfig = $this->tester->findSearchHttpConfig();
 
         $this->tester->assertSearchHttpConfigStoredProperly(
             $newSearchHttpConfigTransfer,
@@ -198,7 +110,6 @@ class SearchHttpFacadeTest extends Unit
     {
         // Arrange
         $searchHttpConfigTransfer = $this->tester->createSearchHttpConfigTransfer();
-        $storeTransfer = $this->tester->getAllowedStore();
         $this->tester->haveSearchHttpConfig(
             [
                 'search_ccp_configs' => [
@@ -206,34 +117,14 @@ class SearchHttpFacadeTest extends Unit
                     SearchHttpConfigTransfer::URL => 'test_url',
                 ],
             ],
-            $storeTransfer->getName(),
         );
 
         // Act
         $this->tester->getFacade()->deleteSearchHttpConfig($searchHttpConfigTransfer);
 
         // Assert
-        $savedSearchHttpConfig = $this->tester->findSearchHttpConfigByStoreName($storeTransfer->getName());
+        $savedSearchHttpConfig = $this->tester->findSearchHttpConfig();
 
         $this->tester->assertSearchHttpConfigRemovedProperly($savedSearchHttpConfig);
-    }
-
-    /**
-     * @return void
-     */
-    public function mockStoreGetCurrentStoreMethod(): void
-    {
-        $searchHttpToStoreFacadeBridge = $this
-            ->getMockBuilder(SearchHttpToStoreFacadeInterface::class)
-            ->getMock();
-
-        $searchHttpToStoreFacadeBridge
-            ->method('getStoreByStoreReference')
-            ->willReturn($this->tester->createStoreWithStoreReference());
-
-        $this->tester->setDependency(
-            SearchHttpDependencyProvider::FACADE_STORE,
-            $searchHttpToStoreFacadeBridge,
-        );
     }
 }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\SearchHttp;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SearchHttp\AggregationExtractor\AggregationExtractorFactory;
 use Spryker\Client\SearchHttp\AggregationExtractor\AggregationExtractorFactoryInterface;
@@ -28,8 +26,6 @@ use Spryker\Client\SearchHttp\Api\Sender\RequestSenderInterface;
 use Spryker\Client\SearchHttp\Api\Sender\SearchRequestSender;
 use Spryker\Client\SearchHttp\ApplicabilityChecker\QueryApplicabilityChecker;
 use Spryker\Client\SearchHttp\ApplicabilityChecker\QueryApplicabilityCheckerInterface;
-use Spryker\Client\SearchHttp\Builder\ConfigKeyBuilder;
-use Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface;
 use Spryker\Client\SearchHttp\Builder\FacetConfigBuilder;
 use Spryker\Client\SearchHttp\Builder\FacetConfigBuilderInterface;
 use Spryker\Client\SearchHttp\Config\FacetConfig;
@@ -44,6 +40,8 @@ use Spryker\Client\SearchHttp\Config\SortConfigInterface;
 use Spryker\Client\SearchHttp\CountProvider\SearchResultCountProvider;
 use Spryker\Client\SearchHttp\CountProvider\SearchResultCountProviderInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCategoryStorageClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCustomerClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToLocaleClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
@@ -73,7 +71,6 @@ class SearchHttpFactory extends AbstractFactory
     {
         return new ConfigReader(
             $this->getStorageClient(),
-            $this->createConfigKeyBuilder(),
             $this->createConfigMapper(),
         );
     }
@@ -100,16 +97,6 @@ class SearchHttpFactory extends AbstractFactory
     public function getStorageClient(): SearchHttpToStorageClientInterface
     {
         return $this->getProvidedDependency(SearchHttpDependencyProvider::CLIENT_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface
-     */
-    public function createConfigKeyBuilder(): ConfigKeyBuilderInterface
-    {
-        return new ConfigKeyBuilder(
-            $this->getStoreClient(),
-        );
     }
 
     /**
@@ -296,7 +283,7 @@ class SearchHttpFactory extends AbstractFactory
     public function createRequestSender(): RequestSenderInterface
     {
         return new SearchRequestSender(
-            $this->createHttpClient(),
+            $this->createKernelAppClient(),
             $this->createSearchHeaderBuilder(),
             $this->createSearchQueryBuilder(),
         );
@@ -317,10 +304,7 @@ class SearchHttpFactory extends AbstractFactory
      */
     public function createHttpResponseFormatter(): SearchResponseFormatterInterface
     {
-        return new SearchResponseFormatter(
-            $this->getConfig(),
-            $this->createSearchHttpResponseTransferMapper(),
-        );
+        return new SearchResponseFormatter($this->createSearchHttpResponseTransferMapper());
     }
 
     /**
@@ -332,11 +316,11 @@ class SearchHttpFactory extends AbstractFactory
     }
 
     /**
-     * @return \GuzzleHttp\ClientInterface
+     * @return \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface
      */
-    public function createHttpClient(): ClientInterface
+    public function createKernelAppClient(): SearchHttpToKernelAppClientInterface
     {
-        return new Client();
+        return $this->getProvidedDependency(SearchHttpDependencyProvider::CLIENT_KERNEL_APP);
     }
 
     /**
@@ -344,10 +328,7 @@ class SearchHttpFactory extends AbstractFactory
      */
     public function createSearchHeaderBuilder(): SearchHeaderBuilderInterface
     {
-        return new SearchHeaderBuilder(
-            $this->getStoreClient(),
-            $this->getConfig(),
-        );
+        return new SearchHeaderBuilder($this->getConfig());
     }
 
     /**
@@ -380,5 +361,13 @@ class SearchHttpFactory extends AbstractFactory
     public function getUtilEncodingService(): SearchHttpToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(SearchHttpDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCustomerClientInterface
+     */
+    public function getCustomerClient(): SearchHttpToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(SearchHttpDependencyProvider::CLIENT_CUSTOMER);
     }
 }

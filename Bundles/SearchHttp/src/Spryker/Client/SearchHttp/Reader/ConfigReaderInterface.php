@@ -8,6 +8,8 @@
 namespace Spryker\Client\SearchHttp\Reader;
 
 use Generated\Shared\Transfer\SearchHttpConfigCollectionTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 
 interface ConfigReaderInterface
 {
@@ -15,4 +17,11 @@ interface ConfigReaderInterface
      * @return \Generated\Shared\Transfer\SearchHttpConfigCollectionTransfer
      */
     public function getSearchHttpConfigCollectionForCurrentStore(): SearchHttpConfigCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria
+     *
+     * @return \Generated\Shared\Transfer\SearchHttpConfigTransfer|null
+     */
+    public function findSearchConfig(SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria): ?SearchHttpConfigTransfer;
 }

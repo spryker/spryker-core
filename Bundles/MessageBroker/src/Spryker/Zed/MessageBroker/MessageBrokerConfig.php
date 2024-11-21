@@ -147,9 +147,26 @@ class MessageBrokerConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - This configuration identifies whether default Spryker logger must be used instead of file logger.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isDefaultApplicationLoggerUsed(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
      * - This configuration defines log file path.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

@@ -40,9 +40,13 @@ class KernelAppClientTest extends Unit
     protected KernelAppClientTester $tester;
 
     /**
+     * @dataProvider requestTransferProvider
+     *
+     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
+     *
      * @return void
      */
-    public function testRequestIsExpendedWithHeaderFromExpanderPluginBeforeRequestIsSend(): void
+    public function testRequestIsExpendedWithHeaderFromExpanderPluginBeforeRequestIsSend(AcpHttpRequestTransfer $acpHttpRequestTransfer): void
     {
         // Arrange
         $kernelAppClient = new KernelAppClient();
@@ -52,10 +56,13 @@ class KernelAppClientTest extends Unit
 
         // Mock GuzzleClient to be able to introspect the RequestInterface and manipulate the returned response
         $clientMock = Stub::make(Client::class, [
-            'send' => function (RequestInterface $request) use ($expectedXMas): ResponseInterface {
+            'send' => function (RequestInterface $request, $options) use ($expectedXMas, $acpHttpRequestTransfer): ResponseInterface {
                 $this->assertTrue($request->hasHeader('x-mas'));
                 $xMas = $request->getHeader('x-mas')[0];
                 $this->assertSame($expectedXMas, $xMas);
+                ($acpHttpRequestTransfer->getMethod() === 'GET') ?
+                    $this->assertNotEmpty($options['query']) :
+                    $this->assertNotEmpty($acpHttpRequestTransfer->getBody());
 
                 return Stub::makeEmpty(ResponseInterface::class, [
                     'getBody' => function () {
@@ -101,12 +108,6 @@ class KernelAppClientTest extends Unit
         ]);
 
         // Act
-        $acpHttpRequestTransfer = new AcpHttpRequestTransfer();
-        $acpHttpRequestTransfer
-            ->setMethod('POST')
-            ->setUri('www.example.com')
-            ->setBody('{"foo": "bar"}');
-
         $acpHttpResponseTransfer = $kernelAppClient->request($acpHttpRequestTransfer);
 
         // Assert
@@ -190,5 +191,26 @@ class KernelAppClientTest extends Unit
         // Assert
         $this->assertInstanceOf(AcpHttpResponseTransfer::class, $acpHttpResponseTransfer);
         $this->assertSame(422, $acpHttpResponseTransfer->getHttpStatusCode());
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\AcpHttpRequestTransfer>
+     */
+    protected function requestTransferProvider(): array
+    {
+        return [
+            [
+                (new AcpHttpRequestTransfer())
+                    ->setMethod('GET')
+                    ->setUri('www.example.com')
+                    ->setQuery(['foo' => 'bar']),
+            ],
+            [
+                (new AcpHttpRequestTransfer())
+                    ->setMethod('POST')
+                    ->setUri('www.example.com')
+                    ->setBody('{"foo": "bar"}'),
+            ],
+        ];
     }
 }

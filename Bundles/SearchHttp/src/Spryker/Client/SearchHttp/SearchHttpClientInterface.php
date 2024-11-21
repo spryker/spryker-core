@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\SearchHttp;
 
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -72,4 +74,16 @@ interface SearchHttpClientInterface
      * @return int|null
      */
     public function findSearchResultTotalCount($searchResult): ?int;
+
+    /**
+     * Specification:
+     * - Finds search configuration by provided criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria
+     *
+     * @return \Generated\Shared\Transfer\SearchHttpConfigTransfer|null
+     */
+    public function findSearchConfig(SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria): ?SearchHttpConfigTransfer;
 }

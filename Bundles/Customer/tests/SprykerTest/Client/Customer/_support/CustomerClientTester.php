@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Customer;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Spryker\Client\Session\SessionClientInterface;
 
 /**
  * Inherited Methods
@@ -30,6 +32,16 @@ class CustomerClientTester extends Actor
     use _generated\CustomerClientTesterActions;
 
     /**
-     * Define custom actions here
+     * @param array $returnedValues
+     *
+     * @return \Spryker\Client\Session\SessionClientInterface
      */
+    public function getSessionClientMock(array $returnedValues = []): SessionClientInterface
+    {
+        return Stub::makeEmpty(SessionClientInterface::class, [
+            'get' => function ($key) use (&$returnedValues) {
+                return $returnedValues[$key] ?? null;
+            },
+        ]);
+    }
 }

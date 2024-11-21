@@ -11,48 +11,12 @@ use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\SearchHttp\Business\SearchHttpBusinessFactory getFactory()
  * @method \Spryker\Zed\SearchHttp\Persistence\SearchHttpRepositoryInterface getRepository()
  * @method \Spryker\Zed\SearchHttp\Persistence\SearchHttpEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SearchHttp\Business\SearchHttpBusinessFactory getFactory()
  */
 class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacade::saveSearchHttpConfig()} instead.
-     *
-     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
-     * @param string $storeReference
-     *
-     * @return void
-     */
-    public function publishSearchHttpConfig(
-        SearchHttpConfigTransfer $searchHttpConfigTransfer,
-        string $storeReference
-    ): void {
-        $this->getFactory()->createConfigWriter()->write($searchHttpConfigTransfer, $storeReference);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\SearchHttp\Business\SearchHttpFacade::deleteSearchHttpConfig()} instead.
-     *
-     * @param string $storeReference
-     * @param string $applicationId
-     *
-     * @return void
-     */
-    public function unpublishSearchHttpConfig(string $storeReference, string $applicationId): void
-    {
-        $this->getFactory()->createConfigDeleter()->delete($storeReference, $applicationId);
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -64,7 +28,7 @@ class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterfa
      */
     public function saveSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
     {
-        $this->getFactory()->createConfigWriter()->saveSearchHttpConfig($searchHttpConfigTransfer);
+        $this->getEntityManager()->saveSearchHttpConfig($searchHttpConfigTransfer);
     }
 
     /**
@@ -78,6 +42,6 @@ class SearchHttpFacade extends AbstractFacade implements SearchHttpFacadeInterfa
      */
     public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
     {
-        $this->getFactory()->createConfigDeleter()->deleteSearchHttpConfig($searchHttpConfigTransfer);
+        $this->getEntityManager()->deleteSearchHttpConfig($searchHttpConfigTransfer);
     }
 }

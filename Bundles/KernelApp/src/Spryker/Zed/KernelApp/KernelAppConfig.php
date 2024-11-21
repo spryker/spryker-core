@@ -9,18 +9,11 @@ namespace Spryker\Zed\KernelApp;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\KernelApp\KernelAppConfig getSharedConfig()
+ */
 class KernelAppConfig extends AbstractBundleConfig
 {
-    /**
-     * @var string
-     */
-    protected const CONTENT_TYPE_HEADER = 'Content-Type';
-
-    /**
-     * @var string
-     */
-    protected const CONTENT_TYPE_HEADER_VALUE = 'application/json';
-
     /**
      * Specification:
      * - Returns an array of default headers to be used in HTTP requests.
@@ -35,8 +28,6 @@ class KernelAppConfig extends AbstractBundleConfig
      */
     public function getDefaultHeaders(): array
     {
-        return [
-            static::CONTENT_TYPE_HEADER => static::CONTENT_TYPE_HEADER_VALUE,
-        ];
+        return $this->getSharedConfig()->getDefaultHeaders();
     }
 }

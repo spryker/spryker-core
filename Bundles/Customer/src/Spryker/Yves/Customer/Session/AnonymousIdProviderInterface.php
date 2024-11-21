@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchHttp\Builder;
+namespace Spryker\Yves\Customer\Session;
 
-interface ConfigKeyBuilderInterface
+interface AnonymousIdProviderInterface
 {
     /**
      * @return string
      */
-    public function buildKeyForCurrentStore(): string;
+    public function generateUniqueId(): string;
 }

@@ -73,8 +73,8 @@ class SearchHttpApiClient implements SearchHttpApiInterface
                 ->getIterator()
                 ->current();
 
-            $httpResponse = $this->searchRequestSender->send($searchQuery, $searchHttpConfigTransfer);
-            $responseData = $this->searchResponseDecoder->decode($httpResponse);
+            $acpHttpResponseTransfer = $this->searchRequestSender->send($searchQuery, $searchHttpConfigTransfer);
+            $responseData = $this->searchResponseDecoder->decode($acpHttpResponseTransfer);
 
             if (!$resultFormatters) {
                 return $responseData;
@@ -104,8 +104,8 @@ class SearchHttpApiClient implements SearchHttpApiInterface
                 ->getIterator()
                 ->current();
 
-            $httpResponse = $this->searchRequestSender->sendSuggestionRequest($searchQuery, $searchHttpConfigTransfer);
-            $responseData = $this->searchResponseDecoder->decode($httpResponse);
+            $acpHttpResponseTransfer = $this->searchRequestSender->sendSuggestionRequest($searchQuery, $searchHttpConfigTransfer);
+            $responseData = $this->searchResponseDecoder->decode($acpHttpResponseTransfer);
 
             if (!$resultFormatters) {
                 return $responseData;

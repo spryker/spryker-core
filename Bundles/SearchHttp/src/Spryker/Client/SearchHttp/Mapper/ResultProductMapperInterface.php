@@ -7,12 +7,19 @@
 
 namespace Spryker\Client\SearchHttp\Mapper;
 
+use Generated\Shared\Transfer\SearchHttpResponseTransfer;
+use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
+
 interface ResultProductMapperInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer|\Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer $searchHttpResponseTransfer
      * @param array<int, mixed> $products
      *
      * @return array<int, mixed>
      */
-    public function mapSearchHttpProductsToOriginalProducts(array $products): array;
+    public function mapSearchHttpProductsToOriginalProducts(
+        SearchHttpResponseTransfer|SuggestionsSearchHttpResponseTransfer $searchHttpResponseTransfer,
+        array $products
+    ): array;
 }

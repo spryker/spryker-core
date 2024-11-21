@@ -21,6 +21,7 @@
         <property name="method" type="string"/>
         <property name="uri" type="string"/>
         <property name="headers" type="array" associative="true" singular="header"/>
+        <property name="query" type="array" associative="true" singular="param"/>
         <property name="body" type="string"/>
     </transfer>
 

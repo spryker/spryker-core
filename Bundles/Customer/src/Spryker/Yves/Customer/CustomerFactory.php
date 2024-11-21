@@ -7,8 +7,11 @@
 
 namespace Spryker\Yves\Customer;
 
+use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Yves\Customer\Processor\CurrentCustomerDataRequestLogProcessor;
 use Spryker\Yves\Customer\Processor\CurrentCustomerDataRequestLogProcessorInterface;
+use Spryker\Yves\Customer\Session\AnonymousIdProvider;
+use Spryker\Yves\Customer\Session\AnonymousIdProviderInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -28,5 +31,21 @@ class CustomerFactory extends AbstractFactory
     public function getRequestStackService(): RequestStack
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_REQUEST_STACK);
+    }
+
+    /**
+     * @return \Spryker\Yves\Customer\Session\AnonymousIdProviderInterface
+     */
+    public function createAnonymousIdProvider(): AnonymousIdProviderInterface
+    {
+        return new AnonymousIdProvider($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\UtilTextServiceInterface
+     */
+    public function getUtilTextService(): UtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

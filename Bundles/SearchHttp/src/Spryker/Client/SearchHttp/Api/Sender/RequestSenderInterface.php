@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\SearchHttp\Api\Sender;
 
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\SearchHttpConfigTransfer;
-use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface RequestSenderInterface
@@ -17,15 +17,15 @@ interface RequestSenderInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\AcpHttpResponseTransfer
      */
-    public function send(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): ResponseInterface;
+    public function send(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer;
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\AcpHttpResponseTransfer
      */
-    public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): ResponseInterface;
+    public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer;
 }

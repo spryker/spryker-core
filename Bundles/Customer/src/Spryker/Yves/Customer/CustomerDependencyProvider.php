@@ -23,6 +23,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -30,6 +35,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addRequestStackService($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -43,6 +49,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container)
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return $container->getLocator()->utilText()->service();
         });
 
         return $container;

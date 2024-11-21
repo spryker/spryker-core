@@ -8,8 +8,6 @@
 namespace SprykerTest\Client\SearchHttp\Api;
 
 use Codeception\Test\Unit;
-use GuzzleHttp\Psr7\Request;
-use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +30,6 @@ class SearchHttpApiClientTest extends Unit
      * @var array<string, string>
      */
     protected const REQUEST_HEADERS = [
-        'X-Store-Reference' => 'store-reference',
         'Accept-Language' => 'de_DE',
     ];
 
@@ -42,6 +39,8 @@ class SearchHttpApiClientTest extends Unit
     protected $tester;
 
     /**
+     * @group test1
+     *
      * @return void
      */
     public function testSearchHttpRequestSuccessfullySent(): void
@@ -52,20 +51,14 @@ class SearchHttpApiClientTest extends Unit
         $this->tester->mockStoreClientDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
         $this->tester->mockUtilEncodingServiceDependency();
-
-        $httpRequest = new Request(
-            SearchHttpConfig::SEARCH_HTTP_METHOD,
-            'url',
-            static::REQUEST_HEADERS + [
-                'User-Agent' => sprintf('Spryker/%s', APPLICATION),
-                'X-Store-Reference' => $this->tester->getModuleConfig()->getTenantIdentifier(),
-                'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
-            ],
-        );
         $responseData = [['responseData']];
 
-        $this->tester->mockHttpClient($httpRequest, $searchQuery, $responseData);
+        $this->tester->mockKernelAppClient('url', static::REQUEST_HEADERS + [
+                'User-Agent' => sprintf('Spryker/%s', APPLICATION),
+                'X-Forwarded-For' => 'ip',
+            ], $searchQuery, $responseData);
 
+        $this->tester->mockSearchHttpConfig('ip');
         $searchApiClient = $this->tester->getFactory()->createSearchApiClient();
 
         // Act
@@ -86,17 +79,10 @@ class SearchHttpApiClientTest extends Unit
         $this->tester->mockStoreClientDependency();
         $this->tester->mockStorageClientDependency(static::SEARCH_HTTP_CONFIG_DATA);
         $this->tester->mockUtilEncodingServiceDependency();
-
-        $httpRequest = new Request(
-            SearchHttpConfig::SEARCH_HTTP_METHOD,
-            'url',
-            static::REQUEST_HEADERS + [
-                'X-Tenant-Identifier' => $this->tester->getModuleConfig()->getTenantIdentifier(),
-            ],
-        );
         $responseData = ['wrong_response'];
 
-        $this->tester->mockHttpClient($httpRequest, $searchQuery, $responseData);
+        $this->tester->mockKernelAppClient('url', [], $searchQuery, $responseData);
+        $this->tester->mockSearchHttpConfig('ip');
 
         $searchApiClient = $this->tester->getFactory()->createSearchApiClient();
 

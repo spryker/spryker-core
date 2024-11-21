@@ -7,13 +7,13 @@
 
 namespace Spryker\Client\SearchHttp\Api\Sender;
 
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\SearchHttpConfigTransfer;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\ResponseInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchHttp\Api\Builder\SearchHeaderBuilderInterface;
 use Spryker\Client\SearchHttp\Api\Builder\SearchQueryBuilderInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
@@ -22,9 +22,9 @@ class SearchRequestSender implements RequestSenderInterface
     use LoggerTrait;
 
     /**
-     * @var \GuzzleHttp\ClientInterface
+     * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface
      */
-    protected ClientInterface $httpClient;
+    protected SearchHttpToKernelAppClientInterface $kernelAppClient;
 
     /**
      * @var \Spryker\Client\SearchHttp\Api\Builder\SearchHeaderBuilderInterface
@@ -37,16 +37,16 @@ class SearchRequestSender implements RequestSenderInterface
     protected SearchQueryBuilderInterface $queryBuilder;
 
     /**
-     * @param \GuzzleHttp\ClientInterface $httpClient
+     * @param \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface $kernelAppClient
      * @param \Spryker\Client\SearchHttp\Api\Builder\SearchHeaderBuilderInterface $headerBuilder
      * @param \Spryker\Client\SearchHttp\Api\Builder\SearchQueryBuilderInterface $queryBuilder
      */
     public function __construct(
-        ClientInterface $httpClient,
+        SearchHttpToKernelAppClientInterface $kernelAppClient,
         SearchHeaderBuilderInterface $headerBuilder,
         SearchQueryBuilderInterface $queryBuilder
     ) {
-        $this->httpClient = $httpClient;
+        $this->kernelAppClient = $kernelAppClient;
         $this->headerBuilder = $headerBuilder;
         $this->queryBuilder = $queryBuilder;
     }
@@ -55,21 +55,16 @@ class SearchRequestSender implements RequestSenderInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\AcpHttpResponseTransfer
      */
-    public function send(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): ResponseInterface
+    public function send(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer
     {
-        $httpRequest = new Request(
-            SearchHttpConfig::SEARCH_HTTP_METHOD,
-            $searchHttpConfigTransfer->getUrlOrFail(),
-            $this->headerBuilder->build($searchQuery),
-        );
-
-        return $this->httpClient->send(
-            $httpRequest,
-            [
-                'query' => $this->queryBuilder->build($searchQuery),
-            ],
+        return $this->kernelAppClient->request(
+            (new AcpHttpRequestTransfer())
+                ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
+                ->setUri($searchHttpConfigTransfer->getUrlOrFail())
+                ->setHeaders($this->headerBuilder->build($searchQuery))
+                ->setQuery($this->queryBuilder->build($searchQuery)),
         );
     }
 
@@ -77,21 +72,16 @@ class SearchRequestSender implements RequestSenderInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Generated\Shared\Transfer\AcpHttpResponseTransfer
      */
-    public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): ResponseInterface
+    public function sendSuggestionRequest(QueryInterface $searchQuery, SearchHttpConfigTransfer $searchHttpConfigTransfer): AcpHttpResponseTransfer
     {
-        $httpRequest = new Request(
-            SearchHttpConfig::SEARCH_HTTP_METHOD,
-            $searchHttpConfigTransfer->getSuggestionUrlOrFail(),
-            $this->headerBuilder->build($searchQuery),
-        );
-
-        return $this->httpClient->send(
-            $httpRequest,
-            [
-                'query' => $this->queryBuilder->build($searchQuery),
-            ],
+        return $this->kernelAppClient->request(
+            (new AcpHttpRequestTransfer())
+                ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
+                ->setUri($searchHttpConfigTransfer->getSuggestionUrlOrFail())
+                ->setHeaders($this->headerBuilder->build($searchQuery))
+                ->setQuery($this->queryBuilder->build($searchQuery)),
         );
     }
 }

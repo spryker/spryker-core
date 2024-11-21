@@ -12,6 +12,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Config\JsonToArrayConfigFormatter;
@@ -52,6 +53,8 @@ use Symfony\Component\Messenger\Transport\Sender\SendersLocatorInterface;
  */
 class MessageBrokerBusinessFactory extends AbstractBusinessFactory
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
@@ -331,6 +334,10 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
             return $this->createNullLogger();
         }
 
+        if ($this->getConfig()->isDefaultApplicationLoggerUsed()) {
+            return $this->getLogger();
+        }
+
         $logger = new Logger(static::LOGGER_NAME);
         $logger->pushHandler(
             $this->createStreamHandler(),
@@ -348,6 +355,8 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Monolog\Handler\HandlerInterface
      */
     public function createStreamHandler(): HandlerInterface

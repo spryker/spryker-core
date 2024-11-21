@@ -37,6 +37,12 @@ components:
                 url:
                     type: string
                     description: The URI of the search endpoint
+                suggestion_url:
+                    type: string
+                    description: The URI of the search suggestion endpoint
+                settings:
+                    type: object
+                    description: The setting contains the configuration search
 
         message-broker:
             $ref: 'https://raw.githubusercontent.com/spryker/message-broker/1.6.0/resources/api/template.yml'

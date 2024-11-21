@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\SearchHttp;
 
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -78,5 +80,19 @@ class SearchHttpClient extends AbstractClient implements SearchHttpClientInterfa
         return $this->getFactory()
             ->createSearchResultCountProvider()
             ->findSearchResultTotalCount($searchResult);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria
+     *
+     * @return \Generated\Shared\Transfer\SearchHttpConfigTransfer|null
+     */
+    public function findSearchConfig(SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria): ?SearchHttpConfigTransfer
+    {
+        return $this->getFactory()->createConfigReader()->findSearchConfig($searchHttpConfigCriteria);
     }
 }

@@ -10,6 +10,10 @@ namespace Spryker\Client\SearchHttp;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCategoryStorageClientBridge;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCustomerClientBridge;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCustomerClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientBridge;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToLocaleClientBridge;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToLocaleClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientBridge;
@@ -40,6 +44,16 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_KERNEL_APP = 'CLIENT_KERNEL_APP';
 
     /**
      * @var string
@@ -91,6 +105,8 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addKernelAppClient($container);
         $container = $this->addSearchConfigBuilderPlugins($container);
         $container = $this->addSearchConfigExpanderPlugins($container);
         $container = $this->addMoneyClient($container);
@@ -141,6 +157,22 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
         $container->set(static::CLIENT_LOCALE, function (Container $container): SearchHttpToLocaleClientInterface {
             return new SearchHttpToLocaleClientBridge(
                 $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addKernelAppClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_KERNEL_APP, function (Container $container): SearchHttpToKernelAppClientInterface {
+            return new SearchHttpToKernelAppClientBridge(
+                $container->getLocator()->kernelApp()->client(),
             );
         });
 
@@ -297,5 +329,21 @@ class SearchHttpDependencyProvider extends AbstractDependencyProvider
     protected function getSortConfigTransferBuilders(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container): SearchHttpToCustomerClientInterface {
+            return new SearchHttpToCustomerClientBridge(
+                $container->getLocator()->customer()->client(),
+            );
+        });
+
+        return $container;
     }
 }

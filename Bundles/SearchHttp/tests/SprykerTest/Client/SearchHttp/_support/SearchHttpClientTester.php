@@ -22,6 +22,8 @@ use Generated\Shared\DataBuilder\SearchQueryRangeFacetFilterBuilder;
 use Generated\Shared\DataBuilder\SearchQuerySortingBuilder;
 use Generated\Shared\DataBuilder\SearchQueryValueFacetFilterBuilder;
 use Generated\Shared\DataBuilder\SuggestionsSearchHttpResponseBuilder;
+use Generated\Shared\Transfer\AcpHttpRequestTransfer;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -30,10 +32,8 @@ use Generated\Shared\Transfer\SearchHttpSearchContextTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Stream\Stream;
+use PHPUnit\Framework\Constraint\IsEqual;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchHttp\AggregationExtractor\AggregationExtractorFactory;
 use Spryker\Client\SearchHttp\Config\FacetConfig;
@@ -41,6 +41,7 @@ use Spryker\Client\SearchHttp\Config\PaginationConfig;
 use Spryker\Client\SearchHttp\Config\SearchConfigInterface;
 use Spryker\Client\SearchHttp\Config\SortConfig;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToCategoryStorageClientInterface;
+use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToKernelAppClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToLocaleClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToMoneyClientInterface;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToProductStorageClientInterface;
@@ -49,6 +50,7 @@ use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 use Spryker\Client\SearchHttp\Mapper\ResultProductMapper;
 use Spryker\Client\SearchHttp\Plugin\Catalog\Query\SearchHttpQueryPlugin;
+use Spryker\Client\SearchHttp\SearchHttpConfig as ClientSearchHttpConfig;
 use Spryker\Client\SearchHttp\SearchHttpDependencyProvider;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
@@ -444,57 +446,72 @@ class SearchHttpClientTester extends Actor
     }
 
     /**
-     * @param \GuzzleHttp\Psr7\Request $httpRequest
+     * @param string $url
+     * @param array $headers
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $responseData
      *
      * @return void
      */
-    public function mockHttpClient(Request $httpRequest, QueryInterface $searchQuery, array $responseData): void
+    public function mockKernelAppClient(string $url, array $headers, QueryInterface $searchQuery, array $responseData): void
     {
-        $httpClientMock = Stub::makeEmpty(ClientInterface::class);
+        $kernelAppClientMock = Stub::makeEmpty(SearchHttpToKernelAppClientInterface::class);
 
         $handler = fopen('data://text/plain,' . json_encode($responseData), 'r');
         $stream = new Stream($handler);
 
-        $response = new Response(200, [], $stream);
-
-        $httpClientMock
-            ->expects(Expected::once()->getMatcher())
-            ->method('send')
-            ->with(
-                $httpRequest,
-                [
-                    'query' => [
-                        'query' => $searchQuery->getSearchQuery()->getQueryString(),
-                        'facets' => [
-                            $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[0]->getFieldName() => [
-                                'type' => 'values',
-                                'values' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[0]->getValues(),
-                            ],
-                            $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFieldName() => [
-                                'type' => 'range',
-                                'values' => [
-                                    'from' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFrom(),
-                                    'to' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getTo(),
-                                ],
-                            ],
-                        ],
-                        'sorting' => [
-                            'field' => $searchQuery->getSearchQuery()->getSort()->getFieldName(),
-                            'direction' => $searchQuery->getSearchQuery()->getSort()->getSortDirection(),
-                        ],
-                        'pagination' => [
-                            'page' => $searchQuery->getSearchQuery()->getPagination()->getPage(),
-                            'hitsPerPage' => $searchQuery->getSearchQuery()->getPagination()->getItemsPerPage(),
-                        ],
-                        'store' => static::STORE_NAME,
+        $response = (new AcpHttpResponseTransfer())->setHttpStatusCode(200)->setContent($stream->getContents());
+        $query = [
+            'query' => $searchQuery->getSearchQuery()->getQueryString(),
+            'facets' => [
+                $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[0]->getFieldName() => [
+                    'type' => 'values',
+                    'values' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[0]->getValues(),
+                ],
+                $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFieldName() => [
+                    'type' => 'range',
+                    'values' => [
+                        'from' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFrom(),
+                        'to' => $searchQuery->getSearchQuery()->getSearchQueryFacetFilters()[1]->getTo(),
                     ],
                 ],
+            ],
+            'sorting' => [
+                'field' => $searchQuery->getSearchQuery()->getSort()->getFieldName(),
+                'direction' => $searchQuery->getSearchQuery()->getSort()->getSortDirection(),
+            ],
+            'pagination' => [
+                'page' => $searchQuery->getSearchQuery()->getPagination()->getPage(),
+                'hitsPerPage' => $searchQuery->getSearchQuery()->getPagination()->getItemsPerPage(),
+            ],
+            'store' => static::STORE_NAME,
+        ];
+
+        $kernelAppClientMock
+            ->expects(Expected::once()->getMatcher())
+            ->method('request')
+            ->with(
+                new IsEqual((new AcpHttpRequestTransfer())
+                    ->setMethod(SearchHttpConfig::SEARCH_HTTP_METHOD)
+                    ->setUri($url)
+                    ->setHeaders($headers)
+                    ->setQuery($query)),
             )
             ->willReturn($response);
 
-        $this->mockFactoryMethod('createHttpClient', $httpClientMock);
+        $this->mockFactoryMethod('createKernelAppClient', $kernelAppClientMock);
+    }
+
+    /**
+     * @param string $ip
+     *
+     * @return void
+     */
+    public function mockSearchHttpConfig(string $ip): void
+    {
+        $clientSearchHttpConfigMock = Stub::makeEmpty(ClientSearchHttpConfig::class);
+        $clientSearchHttpConfigMock->method('getForwardForAddress')->willReturn($ip);
+        $this->mockFactoryMethod('getConfig', $clientSearchHttpConfigMock);
     }
 
     /**

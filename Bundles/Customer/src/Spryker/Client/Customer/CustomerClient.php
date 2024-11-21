@@ -577,4 +577,16 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createCustomerAddressUpdater()
             ->updateCustomerAddresses($customerTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->getFactory()->createSessionCustomerSession()->getUserIdentifier();
+    }
 }

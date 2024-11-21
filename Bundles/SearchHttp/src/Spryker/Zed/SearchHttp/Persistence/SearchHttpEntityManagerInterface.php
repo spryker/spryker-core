@@ -8,26 +8,22 @@
 namespace Spryker\Zed\SearchHttp\Persistence;
 
 use Generated\Shared\Transfer\SearchHttpConfigTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 interface SearchHttpEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
     public function saveSearchHttpConfig(
-        SearchHttpConfigTransfer $searchHttpConfigTransfer,
-        StoreTransfer $storeTransfer
+        SearchHttpConfigTransfer $searchHttpConfigTransfer
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $applicationId
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
      * @return void
      */
-    public function deleteSearchHttpConfig(StoreTransfer $storeTransfer, string $applicationId): void;
+    public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void;
 }

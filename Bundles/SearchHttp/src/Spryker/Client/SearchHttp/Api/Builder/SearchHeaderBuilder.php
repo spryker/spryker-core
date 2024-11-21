@@ -8,42 +8,20 @@
 namespace Spryker\Client\SearchHttp\Api\Builder;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface;
 use Spryker\Client\SearchHttp\SearchHttpConfig;
 
 class SearchHeaderBuilder implements SearchHeaderBuilderInterface
 {
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @var string
-     */
-    protected const HEADER_STORE_REFERENCE = 'X-Store-Reference';
-
-    /**
-     * @var string
-     */
-    protected const HEADER_TENANT_IDENTIFIER = 'X-Tenant-Identifier';
-
-    /**
-     * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface
-     */
-    protected SearchHttpToStoreClientInterface $storeClient;
-
     /**
      * @var \Spryker\Client\SearchHttp\SearchHttpConfig
      */
     protected SearchHttpConfig $searchHttpConfig;
 
     /**
-     * @param \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStoreClientInterface $storeClient
      * @param \Spryker\Client\SearchHttp\SearchHttpConfig $searchHttpConfig
      */
-    public function __construct(
-        SearchHttpToStoreClientInterface $storeClient,
-        SearchHttpConfig $searchHttpConfig
-    ) {
-        $this->storeClient = $storeClient;
+    public function __construct(SearchHttpConfig $searchHttpConfig)
+    {
         $this->searchHttpConfig = $searchHttpConfig;
     }
 
@@ -54,17 +32,10 @@ class SearchHeaderBuilder implements SearchHeaderBuilderInterface
      */
     public function build(QueryInterface $searchQuery): array
     {
-        $headers = [
-            'User-Agent' => sprintf('Spryker/%s', APPLICATION),
+        return [
             'Accept-Language' => $searchQuery->getSearchQuery()->getLocaleOrFail(),
-            static::HEADER_STORE_REFERENCE => $this->storeClient->getCurrentStore()->getStoreReference() ?? $this->searchHttpConfig->getTenantIdentifier(),
-            static::HEADER_TENANT_IDENTIFIER => $this->searchHttpConfig->getTenantIdentifier(),
+            'User-Agent' => sprintf('Spryker/%s', APPLICATION),
+            'X-Forwarded-For' => $this->searchHttpConfig->getForwardForAddress(),
         ];
-
-        if (isset($_COOKIE['XDEBUG_SESSION'])) {
-            $headers['Cookie'] = 'XDEBUG_SESSION=' . $_COOKIE['XDEBUG_SESSION'];
-        }
-
-        return $headers;
     }
 }

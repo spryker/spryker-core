@@ -8,9 +8,11 @@
 namespace Spryker\Client\SearchHttp\Reader;
 
 use Generated\Shared\Transfer\SearchHttpConfigCollectionTransfer;
-use Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface;
+use Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer;
+use Generated\Shared\Transfer\SearchHttpConfigTransfer;
 use Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface;
 use Spryker\Client\SearchHttp\Mapper\ConfigMapperInterface;
+use Spryker\Shared\SearchHttp\SearchHttpConfig;
 
 class ConfigReader implements ConfigReaderInterface
 {
@@ -18,11 +20,6 @@ class ConfigReader implements ConfigReaderInterface
      * @var \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface
      */
     protected SearchHttpToStorageClientInterface $storageClient;
-
-    /**
-     * @var \Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface
-     */
-    protected ConfigKeyBuilderInterface $configKeyBuilder;
 
     /**
      * @var \Spryker\Client\SearchHttp\Mapper\ConfigMapperInterface
@@ -41,16 +38,13 @@ class ConfigReader implements ConfigReaderInterface
 
     /**
      * @param \Spryker\Client\SearchHttp\Dependency\Client\SearchHttpToStorageClientInterface $storageClient
-     * @param \Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface $configKeyBuilder
      * @param \Spryker\Client\SearchHttp\Mapper\ConfigMapperInterface $searchHttpConfigMapper
      */
     public function __construct(
         SearchHttpToStorageClientInterface $storageClient,
-        ConfigKeyBuilderInterface $configKeyBuilder,
         ConfigMapperInterface $searchHttpConfigMapper
     ) {
         $this->storageClient = $storageClient;
-        $this->configKeyBuilder = $configKeyBuilder;
         $this->searchHttpConfigMapper = $searchHttpConfigMapper;
 
         $this->isSearchHttpConfigCached = false;
@@ -64,6 +58,18 @@ class ConfigReader implements ConfigReaderInterface
         $this->loadSearchConfigForCurrentStore();
 
         return $this->searchHttpConfigCollectionTransferCache;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria
+     *
+     * @return \Generated\Shared\Transfer\SearchHttpConfigTransfer|null
+     */
+    public function findSearchConfig(SearchHttpConfigCriteriaTransfer $searchHttpConfigCriteria): ?SearchHttpConfigTransfer
+    {
+        $searchHttpConfigs = $this->getSearchHttpConfigCollectionForCurrentStore()->getSearchHttpConfigs();
+
+        return $searchHttpConfigs->count() > 0 ? $searchHttpConfigs->getIterator()->current() : null;
     }
 
     /**
@@ -95,6 +101,6 @@ class ConfigReader implements ConfigReaderInterface
      */
     protected function getSearchConfigForCurrentStore(): ?array
     {
-        return $this->storageClient->get($this->configKeyBuilder->buildKeyForCurrentStore());
+        return $this->storageClient->get(SearchHttpConfig::SEARCH_HTTP_CONFIG_RESOURCE_NAME);
     }
 }

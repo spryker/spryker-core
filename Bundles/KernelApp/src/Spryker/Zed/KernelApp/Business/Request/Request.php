@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AcpHttpRequestTransfer;
 use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Spryker\Client\KernelApp\KernelAppClientInterface;
 use Spryker\Zed\KernelApp\KernelAppConfig;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class Request implements RequestInterface
 {
@@ -53,13 +52,6 @@ class Request implements RequestInterface
     public function request(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpResponseTransfer
     {
         $acpHttpRequestTransfer = $this->executeRequestExpanderPlugins($acpHttpRequestTransfer);
-
-        $internalRequest = SymfonyRequest::createFromGlobals();
-
-        if ($internalRequest->cookies->has('XDEBUG_SESSION')) {
-            $acpHttpRequestTransfer->addHeader('Cookie', sprintf('XDEBUG_SESSION=%s', $internalRequest->cookies->get('XDEBUG_SESSION')));
-        }
-
         $acpHttpRequestTransfer = $this->expandWithDefaultHeaders($acpHttpRequestTransfer);
 
         return $this->kernelAppClient->request($acpHttpRequestTransfer);

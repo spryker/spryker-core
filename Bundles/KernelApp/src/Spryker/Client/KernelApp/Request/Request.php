@@ -14,9 +14,9 @@ use Spryker\Client\KernelApp\KernelAppConfig;
 
 class Request implements RequestInterface
 {
-    /**
-     * @var array<\Spryker\Shared\KernelAppExtension\RequestExpanderPluginInterface>
-     */
+ /**
+  * @var array<\Spryker\Shared\KernelAppExtension\RequestExpanderPluginInterface>
+  */
     protected array $requestExpanderPlugins;
 
     protected KernelAppConfig $config;
@@ -72,16 +72,14 @@ class Request implements RequestInterface
      */
     protected function expandRequest(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpRequestTransfer
     {
-        return $this->addTenantIdentifier($acpHttpRequestTransfer);
-    }
+        foreach ($this->config->getDefaultHeaders() as $headerName => $headerValue) {
+            if (isset($acpHttpRequestTransfer->getHeaders()[$headerName])) {
+                continue;
+            }
 
-    /**
-     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\AcpHttpRequestTransfer
-     */
-    protected function addTenantIdentifier(AcpHttpRequestTransfer $acpHttpRequestTransfer): AcpHttpRequestTransfer
-    {
-        return $acpHttpRequestTransfer->addHeader('x-tenant-identifier', $this->config->getTenantIdentifier());
+            $acpHttpRequestTransfer->addHeader($headerName, $headerValue);
+        }
+
+        return $acpHttpRequestTransfer;
     }
 }

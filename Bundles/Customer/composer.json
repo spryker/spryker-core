@@ -10,6 +10,7 @@
         "spryker/checkout-extension": "^1.2.0",
         "spryker/country": "^3.1.0 || ^4.0.0",
         "spryker/customer-extension": "^1.5.0",
+        "spryker/event-dispatcher-extension": "^1.0.0",
         "spryker/gui": "^3.39.0",
         "spryker/kernel": "^3.72.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -47,6 +48,8 @@
     },
     "suggest": {
         "spryker/checkout": "If you want to use Checkout plugins.",
+        "spryker/container": "To use EventDispatcher plugins.",
+        "spryker/event-dispatcher": "To use EventDispatcher plugins.",
         "spryker/log": "If you want to use Log plugins.",
         "spryker/sales": "If you want customer information in sales."
     },

@@ -12,6 +12,11 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class CustomerConfig extends AbstractSharedConfig
 {
     /**
+     * @var string
+     */
+    public const ANONYMOUS_SESSION_KEY = 'anonymousID';
+
+    /**
      * @api
      *
      * @return bool

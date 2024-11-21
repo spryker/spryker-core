@@ -43,7 +43,8 @@ class SearchHttpQueryPlugin extends AbstractPlugin implements SearchContextAware
             ->setSearchHttpContext(new SearchHttpSearchContextTransfer());
 
         $this->searchQueryTransfer = (new SearchQueryTransfer())
-            ->setLocale($this->getFactory()->getLocaleClient()->getCurrentLocale());
+            ->setLocale($this->getFactory()->getLocaleClient()->getCurrentLocale())
+            ->setUserToken($this->getFactory()->getCustomerClient()->getUserIdentifier());
     }
 
     /**

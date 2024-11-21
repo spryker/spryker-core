@@ -49,4 +49,9 @@ interface CustomerSessionInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string;
 }

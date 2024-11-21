@@ -10,6 +10,7 @@ namespace Spryker\Client\Customer\Session;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Customer\Exception\EmptyCustomerTransferCacheException;
 use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Shared\Customer\CustomerConfig;
 
 class CustomerSession implements CustomerSessionInterface
 {
@@ -195,5 +196,15 @@ class CustomerSession implements CustomerSessionInterface
     protected function invalidateCustomerTransferCache(): void
     {
         static::$customerTransferCache = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        $customerTransfer = $this->getCustomer();
+
+        return $customerTransfer ? $customerTransfer->getCustomerReference() : $this->sessionClient->get(CustomerConfig::ANONYMOUS_SESSION_KEY, '');
     }
 }

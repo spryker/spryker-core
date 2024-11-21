@@ -39,7 +39,8 @@ class SearchEndpointMessageHandlerPlugin extends AbstractPlugin implements Messa
                         $this->getApplicationId($searchEndpointAvailableTransfer->getMessageAttributesOrFail()),
                     )
                     ->setUrl($searchEndpointAvailableTransfer->getUrl())
-                    ->setSuggestionUrl($searchEndpointAvailableTransfer->getSuggestionUrl());
+                    ->setSuggestionUrl($searchEndpointAvailableTransfer->getSuggestionUrl())
+                    ->setSettings($searchEndpointAvailableTransfer->getSettings());
 
                 $this->getFacade()->saveSearchHttpConfig($searchHttpConfigTransfer);
             },

@@ -11,29 +11,20 @@ use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 use Generated\Shared\Transfer\SuggestionsSearchHttpResponseTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\GroupedResultFormatterPluginInterface;
 use Spryker\Client\SearchHttp\Api\Mapper\SearchHttpResponseTransferMapperInterface;
-use Spryker\Client\SearchHttp\SearchHttpConfig;
 
 class SearchResponseFormatter implements SearchResponseFormatterInterface
 {
-    /**
-     * @var \Spryker\Client\SearchHttp\SearchHttpConfig
-     */
-    protected SearchHttpConfig $config;
-
     /**
      * @var \Spryker\Client\SearchHttp\Api\Mapper\SearchHttpResponseTransferMapperInterface
      */
     protected SearchHttpResponseTransferMapperInterface $httpResponseTransferMapper;
 
     /**
-     * @param \Spryker\Client\SearchHttp\SearchHttpConfig $config
      * @param \Spryker\Client\SearchHttp\Api\Mapper\SearchHttpResponseTransferMapperInterface $httpResponseTransferMapper
      */
     public function __construct(
-        SearchHttpConfig $config,
         SearchHttpResponseTransferMapperInterface $httpResponseTransferMapper
     ) {
-        $this->config = $config;
         $this->httpResponseTransferMapper = $httpResponseTransferMapper;
     }
 

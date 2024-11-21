@@ -9,6 +9,7 @@
         <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
         <property name="url" dataBuilderRule="lexify('??????????')"/>
         <property name="suggestionUrl" dataBuilderRule="lexify('??????????')" strict="true"/>
+        <property name="settings" dataBuilderRule="shuffle(array('id', 'key'))"/>
     </transfer>
 
     <transfer name="SearchHttpConfigCollection">

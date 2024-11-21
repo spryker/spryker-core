@@ -9,6 +9,7 @@
         <property name="applicationId" type="string"/>
         <property name="url" type="string"/>
         <property name="suggestionUrl" type="string" strict="true"/>
+        <property name="settings" type="array" associative="true" singular="setting"/>
     </transfer>
 
     <transfer name="SearchHttpConfigCriteria">
@@ -20,6 +21,7 @@
         <property name="messageAttributes" type="MessageAttributes"/>
         <property name="url" type="string"/>
         <property name="suggestionUrl" type="string" strict="true"/>
+        <property name="settings" type="array" associative="true" singular="setting"/>
     </transfer>
 
     <transfer name="SearchEndpointRemoved" strict="true">
@@ -51,6 +53,7 @@
         <property name="pagination" type="SearchQueryPagination"/>
         <property name="sort" type="SearchQuerySorting"/>
         <property name="locale" type="string"/>
+        <property name="userToken" type="string" strict="true"/>
     </transfer>
 
     <transfer name="SearchQueryValueFacetFilter">
@@ -78,6 +81,7 @@
         <property name="items" type="array" singular="item"/>
         <property name="pagination" type="SearchHttpResponsePagination"/>
         <property name="facets" type="array" singular="facet"/>
+        <property name="queryId" type="string"/>
     </transfer>
 
     <transfer name="SuggestionsSearchHttpResponse" strict="true">
@@ -196,4 +200,14 @@
         <property name="abstractSku" type="int"/>
     </transfer>
 
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="method" type="string"/>
+        <property name="uri" type="string"/>
+        <property name="headers" type="array" associative="true" singular="header"/>
+        <property name="query" type="array" associative="true" singular="param"/>
+    </transfer>
+
+    <transfer name="AcpHttpResponse" strict="true">
+        <property name="content" type="string"/>
+    </transfer>
 </transfers>

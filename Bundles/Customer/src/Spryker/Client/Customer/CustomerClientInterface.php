@@ -447,4 +447,15 @@ interface CustomerClientInterface
      * @return void
      */
     public function updateCustomerAddresses(CustomerTransfer $customerTransfer): void;
+
+    /**
+     * Specification:
+     * - Returns logged-in customer identifier.
+     * - Otherwise, returns an identifier for anonymous from the session.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUserIdentifier(): string;
 }

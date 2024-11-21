@@ -67,7 +67,7 @@ class ProductSearchHttpResultFormatterPlugin extends AbstractPlugin implements R
 
         $products = $this->extendWithProductIds($products);
         $products = $this->filterNotFoundInAbstractProducts($products);
-        $products = $this->getFactory()->createResultProductMapper()->mapSearchHttpProductsToOriginalProducts($products);
+        $products = $this->getFactory()->createResultProductMapper()->mapSearchHttpProductsToOriginalProducts($searchResult, $products);
 
         return $products;
     }

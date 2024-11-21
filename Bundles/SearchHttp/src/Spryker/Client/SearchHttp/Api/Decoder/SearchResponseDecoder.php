@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\SearchHttp\Api\Decoder;
 
-use Psr\Http\Message\ResponseInterface;
+use Generated\Shared\Transfer\AcpHttpResponseTransfer;
 use Spryker\Client\SearchHttp\Dependency\Service\SearchHttpToUtilEncodingServiceInterface;
 use Spryker\Client\SearchHttp\Exception\SearchResponseException;
 
@@ -28,15 +28,15 @@ class SearchResponseDecoder implements SearchResponseDecoderInterface
     }
 
     /**
-     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
      *
      * @throws \Spryker\Client\SearchHttp\Exception\SearchResponseException
      *
      * @return array<string, mixed>
      */
-    public function decode(ResponseInterface $response): array
+    public function decode(AcpHttpResponseTransfer $acpHttpResponseTransfer): array
     {
-        $responseData = $this->searchHttpToUtilEncodingService->decodeJson($response->getBody()->getContents(), true);
+        $responseData = $this->searchHttpToUtilEncodingService->decodeJson((string)$acpHttpResponseTransfer->getContent(), true);
 
         if ($responseData === null) {
             throw new SearchResponseException('Wrong response format from Search API. Not a JSON or corrupted JSON.');

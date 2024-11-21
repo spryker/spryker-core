@@ -5,11 +5,11 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.2",
-        "psr/http-message": "^1.0.0",
         "spryker/catalog-extension": "^1.0.0",
         "spryker/category-storage": "^2.0.0",
-        "spryker/guzzle": "^2.0.0",
+        "spryker/customer": "^7.61.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/kernel-app": "^1.2.0",
         "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0",
         "spryker/log": "^3.0.0",
         "spryker/message-broker-extension": "^1.0.0",
@@ -27,6 +27,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/guzzle": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/session": "*",

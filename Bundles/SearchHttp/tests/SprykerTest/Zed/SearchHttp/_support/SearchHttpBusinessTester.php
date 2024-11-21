@@ -53,14 +53,11 @@ class SearchHttpBusinessTester extends Actor
     }
 
     /**
-     * @param string $storeName
-     *
      * @return \Orm\Zed\SearchHttp\Persistence\SpySearchHttpConfig|null
      */
-    public function findSearchHttpConfigByStoreName(string $storeName): ?SpySearchHttpConfig
+    public function findSearchHttpConfig(): ?SpySearchHttpConfig
     {
         return $this->getSearchHttpConfigQuery()
-            ->filterByStore($storeName)
             ->findOne();
     }
 
@@ -91,6 +88,11 @@ class SearchHttpBusinessTester extends Actor
         $this->assertEquals(
             $searchHttpConfigTransfer->getSuggestionUrl(),
             $searchHttpConfigEntity->getData()['search_http_configs'][0]['suggestion_url'],
+        );
+        $this->assertNotNull($searchHttpConfigEntity->getData()['search_http_configs'][0]['settings']);
+        $this->assertEquals(
+            $searchHttpConfigTransfer->getSettings(),
+            $searchHttpConfigEntity->getData()['search_http_configs'][0]['settings'],
         );
     }
 

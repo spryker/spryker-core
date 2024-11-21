@@ -9,7 +9,6 @@ namespace Spryker\Zed\SearchHttp\Persistence;
 
 use Generated\Shared\Transfer\SearchHttpConfigCollectionTransfer;
 use Generated\Shared\Transfer\SearchHttpConfigTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\SearchHttp\Persistence\SpySearchHttpConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -20,15 +19,13 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
 {
     /**
      * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
     public function saveSearchHttpConfig(
-        SearchHttpConfigTransfer $searchHttpConfigTransfer,
-        StoreTransfer $storeTransfer
+        SearchHttpConfigTransfer $searchHttpConfigTransfer
     ): void {
-        $searchHttpConfigEntity = $this->findSearchHttpConfigEntityByStoreName($storeTransfer->getNameOrFail());
+        $searchHttpConfigEntity = $this->findSearchHttpConfig();
 
         if ($searchHttpConfigEntity) {
             $searchHttpConfigCollectionTransfer = $this->getFactory()
@@ -56,19 +53,17 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
                 $searchHttpConfigCollectionTransfer,
                 $searchHttpConfigEntity,
             )
-            ->setStore($storeTransfer->getNameOrFail())
             ->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $applicationId
+     * @param \Generated\Shared\Transfer\SearchHttpConfigTransfer $searchHttpConfigTransfer
      *
      * @return void
      */
-    public function deleteSearchHttpConfig(StoreTransfer $storeTransfer, string $applicationId): void
+    public function deleteSearchHttpConfig(SearchHttpConfigTransfer $searchHttpConfigTransfer): void
     {
-        $searchHttpConfigEntity = $this->findSearchHttpConfigEntityByStoreName($storeTransfer->getNameOrFail());
+        $searchHttpConfigEntity = $this->findSearchHttpConfig();
 
         if ($searchHttpConfigEntity) {
             $searchHttpConfigCollectionTransfer = $this->getFactory()
@@ -81,7 +76,7 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
             $searchHttpConfigCollectionTransfer = $this
                 ->removeSearchHttpConfigFromCollectionByApplicationId(
                     $searchHttpConfigCollectionTransfer,
-                    $applicationId,
+                    $searchHttpConfigTransfer->getApplicationIdOrFail(),
                 );
 
             $this->getFactory()
@@ -90,21 +85,17 @@ class SearchHttpEntityManager extends AbstractEntityManager implements SearchHtt
                     $searchHttpConfigCollectionTransfer,
                     $searchHttpConfigEntity,
                 )
-                ->setStore($storeTransfer->getNameOrFail())
                 ->save();
         }
     }
 
     /**
-     * @param string $storeName
-     *
      * @return \Orm\Zed\SearchHttp\Persistence\SpySearchHttpConfig|null
      */
-    protected function findSearchHttpConfigEntityByStoreName(string $storeName): ?SpySearchHttpConfig
+    protected function findSearchHttpConfig(): ?SpySearchHttpConfig
     {
         return $this->getFactory()
             ->createSearchHttpPropelQuery()
-            ->filterByStore($storeName)
             ->findOne();
     }
 

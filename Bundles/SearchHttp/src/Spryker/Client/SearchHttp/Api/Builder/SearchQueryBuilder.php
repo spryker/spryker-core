@@ -52,8 +52,9 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
         $query = $this->addQueryString($query, $searchQueryTransfer);
         $query = $this->addFacets($query, $searchQueryTransfer);
         $query = $this->addSorting($query, $searchQueryTransfer);
+        $query = $this->addPagination($query, $searchQueryTransfer);
 
-        return $this->addPagination($query, $searchQueryTransfer);
+        return $this->addUserToken($query, $searchQueryTransfer);
     }
 
     /**
@@ -181,6 +182,21 @@ class SearchQueryBuilder implements SearchQueryBuilderInterface
                 'page' => $searchQueryTransfer->getPagination()->getPage(),
                 'hitsPerPage' => $searchQueryTransfer->getPagination()->getItemsPerPage(),
             ];
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     * @param \Generated\Shared\Transfer\SearchQueryTransfer $searchQueryTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function addUserToken(array $query, SearchQueryTransfer $searchQueryTransfer): array
+    {
+        if ($searchQueryTransfer->getUserToken()) {
+            $query['userToken'] = $searchQueryTransfer->getUserToken();
         }
 
         return $query;

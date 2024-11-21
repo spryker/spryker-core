@@ -39,7 +39,8 @@ class ProductConcreteSearchHttpQueryPlugin extends AbstractPlugin implements Sea
             ->setSourceIdentifier(SearchHttpConfig::SOURCE_IDENTIFIER_PRODUCT)
             ->setSearchHttpContext(new SearchHttpSearchContextTransfer());
         $this->searchQueryTransfer = (new SearchQueryTransfer())
-            ->setLocale($this->getFactory()->getLocaleClient()->getCurrentLocale());
+            ->setLocale($this->getFactory()->getLocaleClient()->getCurrentLocale())
+            ->setUserToken($this->getFactory()->getCustomerClient()->getUserIdentifier());
     }
 
     /**

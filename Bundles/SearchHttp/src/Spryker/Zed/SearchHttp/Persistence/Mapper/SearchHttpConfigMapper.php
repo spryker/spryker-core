@@ -35,6 +35,6 @@ class SearchHttpConfigMapper implements SearchHttpConfigMapperInterface
         SpySearchHttpConfig $searchHttpConfigEntity,
         SearchHttpConfigCollectionTransfer $searchHttpConfigCollectionTransfer
     ): SearchHttpConfigCollectionTransfer {
-        return $searchHttpConfigCollectionTransfer->fromArray($searchHttpConfigEntity->getData());
+        return $searchHttpConfigCollectionTransfer->fromArray($searchHttpConfigEntity->getData(), true);
     }
 }
