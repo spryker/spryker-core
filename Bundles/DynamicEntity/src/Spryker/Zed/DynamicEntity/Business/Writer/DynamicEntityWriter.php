@@ -10,7 +10,9 @@ namespace Spryker\Zed\DynamicEntity\Business\Writer;
 use Generated\Shared\Transfer\DynamicEntityCollectionRequestTransfer;
 use Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer;
 use Generated\Shared\Transfer\DynamicEntityConditionsTransfer;
+use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
+use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationFieldMappingTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityTransfer;
@@ -393,6 +395,12 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
                 $dynamicEntityConditionsTransfer = new DynamicEntityConditionsTransfer();
             }
 
+            $dynamicEntityConditionsTransfer = $this->addParentForeignKeyToConditionsTransfer(
+                $dynamicEntityConditionsTransfer,
+                $childDynamicEntityConfiguration,
+                $parentDynamicEntityTransfer,
+            );
+
             $childDynamicEntityCollectionResponseTransfer = $this->entityManager->updateChildDynamicEntity(
                 $childDynamicEntityTransfer,
                 $childDynamicEntityConfiguration,
@@ -441,6 +449,29 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
         return $childDynamicEntityTransfer->setFields(
             array_merge($childDynamicEntityTransfer->getFields(), $parentForeignKeyField),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer $childDynamicEntityConfiguration
+     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $parentDynamicEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\DynamicEntityConditionsTransfer
+     */
+    protected function addParentForeignKeyToConditionsTransfer(
+        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
+        DynamicEntityConfigurationRelationTransfer $childDynamicEntityConfiguration,
+        DynamicEntityTransfer $parentDynamicEntityTransfer
+    ): DynamicEntityConditionsTransfer {
+        foreach ($childDynamicEntityConfiguration->getRelationFieldMappings() as $childRelationFieldMapping) {
+            $dynamicEntityConditionsTransfer->addFieldCondition(
+                (new DynamicEntityFieldConditionTransfer())
+                    ->setName($childRelationFieldMapping->getChildFieldName())
+                    ->setValue($parentDynamicEntityTransfer->getFields()[$childRelationFieldMapping->getParentFieldName()]),
+            );
+        }
+
+        return $dynamicEntityConditionsTransfer;
     }
 
     /**
