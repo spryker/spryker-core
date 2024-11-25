@@ -24,7 +24,7 @@ interface SalesOrderAmendmentFacadeInterface
      * - Retrieves sales order amendment entities filtered by criteria from Persistence.
      * - Uses `SalesOrderAmendmentCriteriaTransfer.salesOrderAmendmentConditions.salesOrderAmendmentIds` to filter by IDs.
      * - Uses `SalesOrderAmendmentCriteriaTransfer.salesOrderAmendmentConditions.uuids` to filter by UUIDs.
-     * - Uses `SalesOrderAmendmentCriteriaTransfer.salesOrderAmendmentConditions.amendmentOrderReferences` to filter by amendment order references.
+     * - Uses `SalesOrderAmendmentCriteriaTransfer.salesOrderAmendmentConditions.originalOrderReferences` to filter by original order references.
      * - Uses `SalesOrderAmendmentCriteriaTransfer.sort.field` to set the 'order by' field.
      * - Uses `SalesOrderAmendmentCriteriaTransfer.sort.isAscending` to set ascending/descending order.
      * - Uses `SalesOrderAmendmentCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
@@ -44,9 +44,8 @@ interface SalesOrderAmendmentFacadeInterface
 
     /**
      * Specification:
-     * - Requires `SalesOrderAmendmentRequestTransfer.amendmentOrderReference` to be set.
+     * - Requires `SalesOrderAmendmentRequestTransfer.originalOrderReference` to be set.
      * - Requires `SalesOrderAmendmentRequestTransfer.amendedOrderReference` to be set.
-     * - Validates if sales order amendment for provided amendment order reference does not exist.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreCreatePluginInterface} plugins.
      * - Persists sales order amendment entity.
@@ -67,9 +66,6 @@ interface SalesOrderAmendmentFacadeInterface
      * Specification:
      * - Requires `SalesOrderAmendmentTransfer.uuid` to be set.
      * - Validates if sales order amendment with provided UUID exists.
-     * - Validates if order with provided amendment order reference exists.
-     * - Validates if order with provided amended order reference exists.
-     * - Validates if another sales order amendment for provided amendment order reference does not exist.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreUpdatePluginInterface} plugins.
      * - Update sales order amendment entity in Persistence.

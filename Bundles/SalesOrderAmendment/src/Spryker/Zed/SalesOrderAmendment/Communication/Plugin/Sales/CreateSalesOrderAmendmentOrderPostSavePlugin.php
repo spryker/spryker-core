@@ -22,9 +22,8 @@ class CreateSalesOrderAmendmentOrderPostSavePlugin extends AbstractPlugin implem
     /**
      * {@inheritDoc}
      * - Does nothing if `QuoteTransfer.amendmentOrderReference` is not set.
-     * - Requires `SalesOrderAmendmentRequestTransfer.amendmentOrderReference` to be set.
+     * - Requires `SalesOrderAmendmentRequestTransfer.originalOrderReference` to be set.
      * - Requires `SalesOrderAmendmentRequestTransfer.amendedOrderReference` to be set.
-     * - Validates if sales order amendment for provided amendment order reference does not exist.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentValidatorRulePluginInterface} plugins.
      * - Executes a stack of {@link \Spryker\Zed\SalesOrderAmendmentExtension\Dependency\Plugin\SalesOrderAmendmentPreCreatePluginInterface} plugins.
      * - Persists sales order amendment entity.
@@ -44,7 +43,7 @@ class CreateSalesOrderAmendmentOrderPostSavePlugin extends AbstractPlugin implem
         }
 
         $salesOrderAmendmentRequestTransfer = (new SalesOrderAmendmentRequestTransfer())
-            ->setAmendmentOrderReference($quoteTransfer->getAmendmentOrderReferenceOrFail())
+            ->setOriginalOrderReference($quoteTransfer->getAmendmentOrderReferenceOrFail())
             ->setAmendedOrderReference($saveOrderTransfer->getOrderReferenceOrFail());
         $this->getFacade()->createSalesOrderAmendment($salesOrderAmendmentRequestTransfer);
 

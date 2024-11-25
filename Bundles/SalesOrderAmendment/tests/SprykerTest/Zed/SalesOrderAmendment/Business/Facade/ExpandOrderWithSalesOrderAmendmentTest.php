@@ -48,7 +48,7 @@ class ExpandOrderWithSalesOrderAmendmentTest extends Unit
         // Arrange
         $salesOrderAmendment = $this->tester->createSalesOrderAmendment();
         $orderTransfer = (new OrderBuilder([
-            OrderTransfer::ORDER_REFERENCE => $salesOrderAmendment->getAmendmentOrderReferenceOrFail(),
+            OrderTransfer::ORDER_REFERENCE => $salesOrderAmendment->getOriginalOrderReferenceOrFail(),
         ]))->build();
 
         // Act

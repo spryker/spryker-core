@@ -48,7 +48,7 @@
     </transfer>
 
     <transfer name="SalesOrderAmendment" strict="true">
-        <property name="amendmentOrderReference" type="string"/>
+        <property name="originalOrderReference" type="string"/>
         <property name="amendedOrderReference" type="string"/>
     </transfer>
 

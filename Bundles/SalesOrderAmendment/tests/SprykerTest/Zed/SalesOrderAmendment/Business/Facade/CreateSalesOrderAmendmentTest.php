@@ -30,13 +30,6 @@ use SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentBusinessTester;
 class CreateSalesOrderAmendmentTest extends Unit
 {
     /**
-     * @uses \Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\UniqueOrderSalesOrderAmendmentValidatorRule::GLOSSARY_KEY_VALIDATION_SALES_ORDER_AMENDMENT_DUPLICATED
-     *
-     * @var string
-     */
-    protected const GLOSSARY_KEY_VALIDATION_SALES_ORDER_AMENDMENT_DUPLICATED = 'sales_order_amendment.validation.order_amendment_duplicated';
-
-    /**
      * @var \SprykerTest\Zed\SalesOrderAmendment\SalesOrderAmendmentBusinessTester
      */
     protected SalesOrderAmendmentBusinessTester $tester;
@@ -66,32 +59,9 @@ class CreateSalesOrderAmendmentTest extends Unit
         // Assert
         $this->assertCount(0, $salesOrderAmendmentResponseTransfer->getErrors());
         $this->assertNotNull($salesOrderAmendmentResponseTransfer->getSalesOrderAmendment());
-        $this->assertNotNull($this->tester->findSalesOrderAmendmentByOrderReference(
-            $salesOrderAmendmentRequestTransfer->getAmendmentOrderReferenceOrFail(),
+        $this->assertNotNull($this->tester->findSalesOrderAmendmentByOriginalOrderReference(
+            $salesOrderAmendmentRequestTransfer->getOriginalOrderReferenceOrFail(),
         ));
-    }
-
-    /**
-     * @return void
-     */
-    public function testShouldReturnValidationErrorWhenSalesOrderAmendmentForOrderAlreadyExists(): void
-    {
-        // Arrange
-        $salesOrderAmendmentTransfer = $this->tester->createSalesOrderAmendment();
-        $salesOrderAmendmentRequestTransfer = (new SalesOrderAmendmentRequestTransfer())
-            ->setAmendmentOrderReference($salesOrderAmendmentTransfer->getAmendmentOrderReferenceOrFail())
-            ->setAmendedOrderReference($salesOrderAmendmentTransfer->getAmendedOrderReferenceOrFail());
-
-        // Act
-        $salesOrderAmendmentResponseTransfer = $this->tester->getFacade()
-            ->createSalesOrderAmendment($salesOrderAmendmentRequestTransfer);
-
-        // Assert
-        $this->assertCount(1, $salesOrderAmendmentResponseTransfer->getErrors());
-        $this->assertSame(
-            static::GLOSSARY_KEY_VALIDATION_SALES_ORDER_AMENDMENT_DUPLICATED,
-            $salesOrderAmendmentResponseTransfer->getErrors()->getIterator()->current()->getMessage(),
-        );
     }
 
     /**
@@ -148,16 +118,16 @@ class CreateSalesOrderAmendmentTest extends Unit
     /**
      * @return void
      */
-    public function testShouldThrowExceptionWhenAmendmentOrderReferenceIsNotProvided(): void
+    public function testShouldThrowExceptionWhenOriginalOrderReferenceIsNotProvided(): void
     {
         // Arrange
         $salesOrderAmendmentRequestTransfer = (new SalesOrderAmendmentRequestTransfer())
-            ->setAmendmentOrderReference(null)
+            ->setOriginalOrderReference(null)
             ->setAmendedOrderReference('order-reference');
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
-        $this->expectExceptionMessage(sprintf('Missing required property "amendmentOrderReference" for transfer %s.', SalesOrderAmendmentRequestTransfer::class));
+        $this->expectExceptionMessage(sprintf('Missing required property "originalOrderReference" for transfer %s.', SalesOrderAmendmentRequestTransfer::class));
 
         // Act
         $this->tester->getFacade()
@@ -171,7 +141,7 @@ class CreateSalesOrderAmendmentTest extends Unit
     {
         // Arrange
         $salesOrderAmendmentRequestTransfer = (new SalesOrderAmendmentRequestTransfer())
-            ->setAmendmentOrderReference('order-reference')
+            ->setOriginalOrderReference('order-reference')
             ->setAmendedOrderReference(null);
 
         // Assert

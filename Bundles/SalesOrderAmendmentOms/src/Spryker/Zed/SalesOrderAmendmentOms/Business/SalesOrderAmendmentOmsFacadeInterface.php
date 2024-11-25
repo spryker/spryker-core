@@ -75,10 +75,10 @@ interface SalesOrderAmendmentOmsFacadeInterface
 
     /**
      * Specification:
+     * - Requires `SalesOrderAmendmentTransfer.originalOrderReference` to be set.
      * - Requires `SalesOrderAmendmentTransfer.amendedOrderReference` to be set.
-     * - Requires `SalesOrderAmendmentTransfer.amendmentOrderReference` to be set.
+     * - Validates if order with provided original order reference exists.
      * - Validates if order with provided amended order reference exists.
-     * - Validates if order with provided amendment order reference exists.
      * - Returns `ErrorCollectionTransfer` with error messages if validation fails.
      *
      * @api

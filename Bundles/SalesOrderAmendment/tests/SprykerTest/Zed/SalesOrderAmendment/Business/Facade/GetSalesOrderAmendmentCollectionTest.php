@@ -121,14 +121,14 @@ class GetSalesOrderAmendmentCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testShouldReturnSalesOrderAmendmentCollectionFilteredByAmendmentOrderReference(): void
+    public function testShouldReturnSalesOrderAmendmentCollectionFilteredByOriginalOrderReference(): void
     {
         // Arrange
         $salesOrderAmendmentTransfer = $this->tester->createSalesOrderAmendment();
         $this->tester->createSalesOrderAmendment();
 
         $salesOrderAmendmentConditionsTransfer = (new SalesOrderAmendmentConditionsTransfer())
-            ->addAmendmentOrderReference($salesOrderAmendmentTransfer->getAmendmentOrderReferenceOrFail());
+            ->addOriginalOrderReference($salesOrderAmendmentTransfer->getOriginalOrderReferenceOrFail());
         $salesOrderAmendmentCriteriaTransfer = (new SalesOrderAmendmentCriteriaTransfer())
             ->setSalesOrderAmendmentConditions($salesOrderAmendmentConditionsTransfer);
 
@@ -151,17 +151,17 @@ class GetSalesOrderAmendmentCollectionTest extends Unit
     {
         // Arrange
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-1',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-1',
         ]);
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-2',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-2',
         ]);
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-3',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-3',
         ]);
 
         $sortTransfer = (new SortTransfer())
-            ->setField(SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE)
+            ->setField(SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE)
             ->setIsAscending(true);
 
         $salesOrderAmendmentCriteriaTransfer = (new SalesOrderAmendmentCriteriaTransfer())
@@ -174,9 +174,9 @@ class GetSalesOrderAmendmentCollectionTest extends Unit
         // Assert
         $salesOrderAmendmentTransfers = $salesOrderAmendmentCollectionTransfer->getSalesOrderAmendments();
         $this->assertCount(3, $salesOrderAmendmentTransfers);
-        $this->assertSame('order-reference-1', $salesOrderAmendmentTransfers->offsetGet(0)->getAmendmentOrderReference());
-        $this->assertSame('order-reference-2', $salesOrderAmendmentTransfers->offsetGet(1)->getAmendmentOrderReference());
-        $this->assertSame('order-reference-3', $salesOrderAmendmentTransfers->offsetGet(2)->getAmendmentOrderReference());
+        $this->assertSame('order-reference-1', $salesOrderAmendmentTransfers->offsetGet(0)->getOriginalOrderReference());
+        $this->assertSame('order-reference-2', $salesOrderAmendmentTransfers->offsetGet(1)->getOriginalOrderReference());
+        $this->assertSame('order-reference-3', $salesOrderAmendmentTransfers->offsetGet(2)->getOriginalOrderReference());
     }
 
     /**
@@ -186,17 +186,17 @@ class GetSalesOrderAmendmentCollectionTest extends Unit
     {
         // Arrange
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-1',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-1',
         ]);
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-2',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-2',
         ]);
         $this->tester->createSalesOrderAmendment([
-            SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE => 'order-reference-3',
+            SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE => 'order-reference-3',
         ]);
 
         $sortTransfer = (new SortTransfer())
-            ->setField(SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE)
+            ->setField(SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE)
             ->setIsAscending(false);
 
         $salesOrderAmendmentCriteriaTransfer = (new SalesOrderAmendmentCriteriaTransfer())
@@ -209,9 +209,9 @@ class GetSalesOrderAmendmentCollectionTest extends Unit
         // Assert
         $salesOrderAmendmentTransfers = $salesOrderAmendmentCollectionTransfer->getSalesOrderAmendments();
         $this->assertCount(3, $salesOrderAmendmentTransfers);
-        $this->assertSame('order-reference-3', $salesOrderAmendmentTransfers->offsetGet(0)->getAmendmentOrderReference());
-        $this->assertSame('order-reference-2', $salesOrderAmendmentTransfers->offsetGet(1)->getAmendmentOrderReference());
-        $this->assertSame('order-reference-1', $salesOrderAmendmentTransfers->offsetGet(2)->getAmendmentOrderReference());
+        $this->assertSame('order-reference-3', $salesOrderAmendmentTransfers->offsetGet(0)->getOriginalOrderReference());
+        $this->assertSame('order-reference-2', $salesOrderAmendmentTransfers->offsetGet(1)->getOriginalOrderReference());
+        $this->assertSame('order-reference-1', $salesOrderAmendmentTransfers->offsetGet(2)->getOriginalOrderReference());
     }
 
     /**

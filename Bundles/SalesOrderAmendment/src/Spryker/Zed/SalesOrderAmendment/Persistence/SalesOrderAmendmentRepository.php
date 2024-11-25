@@ -109,8 +109,8 @@ class SalesOrderAmendmentRepository extends AbstractRepository implements SalesO
             $salesOrderAmendmentQuery->filterByUuid_In($salesOrderAmendmentConditionsTransfer->getUuids());
         }
 
-        if ($salesOrderAmendmentConditionsTransfer->getAmendmentOrderReferences() !== []) {
-            $salesOrderAmendmentQuery->filterByAmendmentOrderReference_In($salesOrderAmendmentConditionsTransfer->getAmendmentOrderReferences());
+        if ($salesOrderAmendmentConditionsTransfer->getOriginalOrderReferences() !== []) {
+            $salesOrderAmendmentQuery->filterByOriginalOrderReference_In($salesOrderAmendmentConditionsTransfer->getOriginalOrderReferences());
         }
 
         return $salesOrderAmendmentQuery;

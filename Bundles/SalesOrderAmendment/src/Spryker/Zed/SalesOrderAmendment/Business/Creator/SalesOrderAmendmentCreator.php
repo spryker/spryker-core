@@ -147,7 +147,7 @@ class SalesOrderAmendmentCreator implements SalesOrderAmendmentCreatorInterface
     protected function assertRequiredFields(SalesOrderAmendmentRequestTransfer $salesOrderAmendmentRequestTransfer): void
     {
         $salesOrderAmendmentRequestTransfer
-            ->requireAmendmentOrderReference()
+            ->requireOriginalOrderReference()
             ->requireAmendedOrderReference();
     }
 }

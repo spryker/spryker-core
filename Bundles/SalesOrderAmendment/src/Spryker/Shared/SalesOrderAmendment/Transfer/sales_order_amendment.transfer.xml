@@ -4,7 +4,7 @@
     <transfer name="SalesOrderAmendment" strict="true">
         <property name="idSalesOrderAmendment" type="int"/>
         <property name="uuid" type="string"/>
-        <property name="amendmentOrderReference" type="string"/>
+        <property name="originalOrderReference" type="string"/>
         <property name="amendedOrderReference" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
@@ -24,7 +24,7 @@
     <transfer name="SalesOrderAmendmentConditions" strict="true">
         <property name="salesOrderAmendmentIds" type="int[]" singular="idSalesOrderAmendment"/>
         <property name="uuids" type="string[]" singular="uuid"/>
-        <property name="amendmentOrderReferences" type="string[]" singular="amendmentOrderReference"/>
+        <property name="originalOrderReferences" type="string[]" singular="originalOrderReference"/>
     </transfer>
 
     <transfer name="SalesOrderAmendmentCollection" strict="true">
@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="SalesOrderAmendmentRequest" strict="true">
-        <property name="amendmentOrderReference" type="string"/>
+        <property name="originalOrderReference" type="string"/>
         <property name="amendedOrderReference" type="string"/>
     </transfer>
 

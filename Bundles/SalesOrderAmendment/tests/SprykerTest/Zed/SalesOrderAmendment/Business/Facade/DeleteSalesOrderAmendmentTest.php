@@ -69,7 +69,7 @@ class DeleteSalesOrderAmendmentTest extends Unit
         $this->assertNotNull($salesOrderAmendmentResponseTransfer->getSalesOrderAmendment());
 
         $this->assertNull(
-            $this->tester->findSalesOrderAmendmentByOrderReference($salesOrderAmendmentTransfer->getAmendmentOrderReferenceOrFail()),
+            $this->tester->findSalesOrderAmendmentByOriginalOrderReference($salesOrderAmendmentTransfer->getOriginalOrderReferenceOrFail()),
         );
     }
 
@@ -92,7 +92,7 @@ class DeleteSalesOrderAmendmentTest extends Unit
         $this->assertNotNull($salesOrderAmendmentResponseTransfer->getSalesOrderAmendment());
 
         $this->assertNull(
-            $this->tester->findSalesOrderAmendmentByOrderReference($salesOrderAmendmentTransfer->getAmendmentOrderReferenceOrFail()),
+            $this->tester->findSalesOrderAmendmentByOriginalOrderReference($salesOrderAmendmentTransfer->getOriginalOrderReferenceOrFail()),
         );
     }
 

@@ -35,7 +35,7 @@ class OrderExpander implements OrderExpanderInterface
     public function expand(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderAmendmentConditionsTransfer = (new SalesOrderAmendmentConditionsTransfer())
-            ->addAmendmentOrderReference($orderTransfer->getOrderReferenceOrFail());
+            ->addOriginalOrderReference($orderTransfer->getOrderReferenceOrFail());
         $salesOrderAmendmentCriteriaTransfer = (new SalesOrderAmendmentCriteriaTransfer())
             ->setSalesOrderAmendmentConditions($salesOrderAmendmentConditionsTransfer);
 

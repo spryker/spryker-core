@@ -62,7 +62,7 @@ class SalesOrderAmendmentBusinessTester extends Actor
         );
 
         return (new SalesOrderAmendmentRequestTransfer())
-            ->setAmendmentOrderReference($amendmentOrderTransfer->getOrderReferenceOrFail())
+            ->setOriginalOrderReference($amendmentOrderTransfer->getOrderReferenceOrFail())
             ->setAmendedOrderReference($amendedOrderTransfer->getOrderReferenceOrFail());
     }
 
@@ -76,9 +76,9 @@ class SalesOrderAmendmentBusinessTester extends Actor
         array $seedData = [],
         string $stateMachineProcessName = self::DEFAULT_OMS_PROCESS_NAME
     ): SalesOrderAmendmentTransfer {
-        if (!isset($seedData[SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE])) {
+        if (!isset($seedData[SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE])) {
             $orderTransfer = $this->haveOrder([], $stateMachineProcessName);
-            $seedData[SalesOrderAmendmentTransfer::AMENDMENT_ORDER_REFERENCE] = $orderTransfer->getOrderReferenceOrFail();
+            $seedData[SalesOrderAmendmentTransfer::ORIGINAL_ORDER_REFERENCE] = $orderTransfer->getOrderReferenceOrFail();
         }
 
         if (!isset($seedData[SalesOrderAmendmentTransfer::AMENDED_ORDER_REFERENCE])) {
@@ -94,10 +94,10 @@ class SalesOrderAmendmentBusinessTester extends Actor
      *
      * @return \Orm\Zed\SalesOrderAmendment\Persistence\SpySalesOrderAmendment|null
      */
-    public function findSalesOrderAmendmentByOrderReference(string $orderReference): ?SpySalesOrderAmendment
+    public function findSalesOrderAmendmentByOriginalOrderReference(string $orderReference): ?SpySalesOrderAmendment
     {
         return $this->getSalesOrderAmendmentQuery()
-            ->filterByAmendmentOrderReference($orderReference)
+            ->filterByOriginalOrderReference($orderReference)
             ->findOne();
     }
 

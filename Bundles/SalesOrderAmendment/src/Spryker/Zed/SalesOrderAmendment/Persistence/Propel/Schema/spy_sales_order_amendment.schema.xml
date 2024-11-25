@@ -4,16 +4,20 @@
     <table name="spy_sales_order_amendment" idMethod="native">
         <column name="id_sales_order_amendment" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" type="VARCHAR" required="false" size="36"/>
-        <column name="amendment_order_reference" type="VARCHAR" required="true" size="255"/>
+        <column name="original_order_reference" type="VARCHAR" required="true" size="255"/>
         <column name="amended_order_reference" type="VARCHAR" required="true" size="255"/>
 
         <unique name="spy_sales_order_amendment-unique-uuid">
             <unique-column name="uuid"/>
         </unique>
 
-        <unique name="spy_sales_order_amendment-unique-amendment_o_r">
-            <unique-column name="amendment_order_reference"/>
-        </unique>
+        <index name="spy_sales_order_amendment_original_o_r">
+            <index-column name="original_order_reference"/>
+        </index>
+
+        <index name="spy_sales_order_amendment_amended_o_r">
+            <index-column name="amended_order_reference"/>
+        </index>
 
         <behavior name="uuid">
             <parameter name="key_columns" value="id_sales_order_amendment"/>

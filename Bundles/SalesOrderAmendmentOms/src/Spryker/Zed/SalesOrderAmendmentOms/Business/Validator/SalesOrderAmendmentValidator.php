@@ -17,12 +17,7 @@ class SalesOrderAmendmentValidator implements SalesOrderAmendmentValidatorInterf
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_AMENDMENT_ORDER_DOES_NOT_EXIST = 'sales_order_amendment_oms.validation.amendment_order_does_not_exist';
-
-    /**
-     * @var string
-     */
-    protected const GLOSSARY_KEY_VALIDATION_AMENDED_ORDER_DOES_NOT_EXIST = 'sales_order_amendment_oms.validation.amended_order_does_not_exist';
+    protected const GLOSSARY_KEY_VALIDATION_ORDER_DOES_NOT_EXIST = 'sales_order_amendment_oms.validation.order_does_not_exist';
 
     /**
      * @var string
@@ -49,34 +44,12 @@ class SalesOrderAmendmentValidator implements SalesOrderAmendmentValidatorInterf
      */
     public function validate(SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer): ErrorCollectionTransfer
     {
-        $errorCollectionTransfer = $this->validateAmendedOrderReference(
+        $errorCollectionTransfer = $this->validateOriginalOrderReference(
             $salesOrderAmendmentTransfer,
             new ErrorCollectionTransfer(),
         );
 
-        return $this->validateAmendmentOrderReference($salesOrderAmendmentTransfer, $errorCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
-     */
-    protected function validateAmendmentOrderReference(
-        SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer,
-        ErrorCollectionTransfer $errorCollectionTransfer
-    ): ErrorCollectionTransfer {
-        $orderReference = $salesOrderAmendmentTransfer->getAmendmentOrderReferenceOrFail();
-        if (!$this->orderExists($orderReference)) {
-            $this->addError(
-                $errorCollectionTransfer,
-                static::GLOSSARY_KEY_VALIDATION_AMENDMENT_ORDER_DOES_NOT_EXIST,
-                [static::GLOSSARY_KEY_PARAMETER_ORDER_REFERENCE => $orderReference],
-            );
-        }
-
-        return $errorCollectionTransfer;
+        return $this->validateAmendedOrderReference($salesOrderAmendmentTransfer, $errorCollectionTransfer);
     }
 
     /**
@@ -93,7 +66,29 @@ class SalesOrderAmendmentValidator implements SalesOrderAmendmentValidatorInterf
         if (!$this->orderExists($orderReference)) {
             $this->addError(
                 $errorCollectionTransfer,
-                static::GLOSSARY_KEY_VALIDATION_AMENDED_ORDER_DOES_NOT_EXIST,
+                static::GLOSSARY_KEY_VALIDATION_ORDER_DOES_NOT_EXIST,
+                [static::GLOSSARY_KEY_PARAMETER_ORDER_REFERENCE => $orderReference],
+            );
+        }
+
+        return $errorCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer
+     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
+     */
+    protected function validateOriginalOrderReference(
+        SalesOrderAmendmentTransfer $salesOrderAmendmentTransfer,
+        ErrorCollectionTransfer $errorCollectionTransfer
+    ): ErrorCollectionTransfer {
+        $orderReference = $salesOrderAmendmentTransfer->getOriginalOrderReferenceOrFail();
+        if (!$this->orderExists($orderReference)) {
+            $this->addError(
+                $errorCollectionTransfer,
+                static::GLOSSARY_KEY_VALIDATION_ORDER_DOES_NOT_EXIST,
                 [static::GLOSSARY_KEY_PARAMETER_ORDER_REFERENCE => $orderReference],
             );
         }

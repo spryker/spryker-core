@@ -24,7 +24,6 @@ use Spryker\Zed\SalesOrderAmendment\Business\Validator\CartReorderValidator;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\CartReorderValidatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentExistsSalesOrderAmendmentValidatorRule;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentValidatorRuleInterface;
-use Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\UniqueOrderSalesOrderAmendmentValidatorRule;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidator;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\SalesOrderAmendmentValidatorInterface;
 use Spryker\Zed\SalesOrderAmendment\Business\Validator\Util\ErrorAdder;
@@ -140,9 +139,7 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
      */
     public function getSalesOrderAmendmentCreateValidatorRules(): array
     {
-        return [
-            $this->createUniqueOrderSalesOrderAmendmentValidatorRule(),
-        ];
+        return [];
     }
 
     /**
@@ -153,17 +150,6 @@ class SalesOrderAmendmentBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createSalesOrderAmendmentExistsSalesOrderAmendmentValidatorRule(),
         ];
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesOrderAmendment\Business\Validator\Rules\SalesOrderAmendment\SalesOrderAmendmentValidatorRuleInterface
-     */
-    public function createUniqueOrderSalesOrderAmendmentValidatorRule(): SalesOrderAmendmentValidatorRuleInterface
-    {
-        return new UniqueOrderSalesOrderAmendmentValidatorRule(
-            $this->getRepository(),
-            $this->createErrorAdder(),
-        );
     }
 
     /**
