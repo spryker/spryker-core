@@ -714,6 +714,25 @@ interface GuiTableConfigurationBuilderInterface
     public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
 
     /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param array<string|int, mixed> $dataSetTypeOptions
+     * @param array<string|int, mixed>|null $defaultTypeOptions
+     *
+     * @return $this
+     */
+    public function addInlineEditableColumnDynamic(
+        string $id,
+        string $title,
+        string $dependableColumn,
+        array $dataSetTypeOptions,
+        ?array $defaultTypeOptions = null
+    );
+
+    /**
      * Specification:
      *  - Sets the display key for specified column by column ID.
      *

@@ -1275,6 +1275,48 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param array<string|int, mixed> $dataSetTypeOptions
+     * @param array<string|int, mixed>|null $defaultTypeOptions
+     *
+     * @return $this
+     */
+    public function addInlineEditableColumnDynamic(
+        string $id,
+        string $title,
+        string $dependableColumn,
+        array $dataSetTypeOptions,
+        ?array $defaultTypeOptions = null
+    ) {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_DYNAMIC)
+            ->setTypeOptions([
+                'datasource' => [
+                    'type' => static::DATA_SOURCE_TYPE_DEPENDABLE,
+                    'dependsOn' => $dependableColumn,
+                    'datasource' => [
+                        'type' => static::DATA_SOURCE_TYPE_INLINE,
+                        'data' => $dataSetTypeOptions,
+                        'dependsOnContext' => [
+                            'contextKey' => $dependableColumn,
+                            'default' => $defaultTypeOptions,
+                        ],
+                    ],
+                ],
+            ]);
+
+        $this->addEditableColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
      * @param array<string, mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer

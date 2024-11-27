@@ -370,6 +370,7 @@
         <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
         <property name="allowInput" type="bool"/>
         <property name="inputType" type="string"/>
+        <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeFilter">
@@ -460,6 +461,11 @@
 
     <transfer name="MerchantProductAbstract">
         <property name="idMerchantProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedProductManagementAttributeKey">
+        <property name="localeName" type="string"/>
+        <property name="keyTranslation" type="string"/>
     </transfer>
 
 </transfers>

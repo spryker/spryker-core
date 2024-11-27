@@ -10,15 +10,59 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Configurat
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableButtonTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 
 class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAbstractAttributeGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     *
+     * @uses \Spryker\Shared\ProductAttribute\ProductAttributeConfig::INPUT_TYPE_MULTISELECT
+     */
+    protected const INPUT_TYPE_MULTISELECT = 'multiselect';
+
+    /**
+     * @var string
+     */
+    protected const KEY_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    protected const KEY_PRODUCT_ATTRIBUTES = 'productAttributes';
+
+    /**
+     * @var string
+     */
+    protected const KEY_DATA = 'data';
+
+    /**
+     * @var string
+     */
+    protected const KEY_ERRORS = 'errors';
+
+    /**
+     * @var string
+     */
+    protected const KEY_CONTEXT = 'context';
+
+    /**
+     * @var string
+     */
+    protected const COL_KEY_ATTRIBUTE_KEY = 'attribute_key';
+
+    /**
+     * @var string
+     */
+    protected const KEY_PRODUCT_MANAGEMENT_ATTRIBUTES = 'productManagementAttributes';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ID_PRODUCT_ABSTRACT
      *
@@ -132,6 +176,11 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
     protected const COLOR_BLUE = 'blue';
 
     /**
+     * @var string
+     */
+    protected const EDITABLE_NEW_ROW = 'editableNewRow';
+
+    /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     protected GuiTableFactoryInterface $guiTableFactory;
@@ -147,23 +196,31 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
     protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouperInterface
+     */
+    protected ProductAttributeGrouperInterface $productAttributeGrouper;
+
+    /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouperInterface $productAttributeGrouper
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
         ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
-        ProductMerchantPortalGuiToProductFacadeInterface $productFacade
+        ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
+        ProductAttributeGrouperInterface $productAttributeGrouper
     ) {
         $this->guiTableFactory = $guiTableFactory;
         $this->productAttributeFacade = $productAttributeFacade;
         $this->productFacade = $productFacade;
+        $this->productAttributeGrouper = $productAttributeGrouper;
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array<string, array<string, mixed>> $attributesInitialData
+     * @param array<string, array<int|string, mixed>> $attributesInitialData
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductAbstractNotFoundException
      *
@@ -184,23 +241,6 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
         $guiTableConfigurationBuilder
             ->addColumnChip(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false, static::COLOR_GREY)
             ->addColumnChip(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false, static::COLOR_BLUE);
-
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
-
-            $guiTableConfigurationBuilder->addColumnText(
-                $localeTransfer->getLocaleNameOrFail(),
-                $localeTransfer->getLocaleNameOrFail(),
-                true,
-                true,
-            );
-            $guiTableConfigurationBuilder->addEditableColumnDynamic(
-                $localeTransfer->getLocaleNameOrFail(),
-                $localeTransfer->getLocaleNameOrFail(),
-                static::COL_KEY_ATTRIBUTE_NAME,
-                static::PRODUCT_ATTRIBUTES_DATA_URL,
-            );
-        }
 
         $dataSourceUrl = sprintf(
             static::FORMAT_STRING_DATA_URL,
@@ -228,6 +268,159 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
+    protected function addCustomEditableColumns(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
+        array $attributesInitialData
+    ): GuiTableConfigurationBuilderInterface {
+        $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributesInitialData);
+        $productAttributes = $this->getInitialDataContext($attributesInitialData, static::KEY_PRODUCT_ATTRIBUTES) ?? [];
+        $localeTransfer = $this->getInitialDataContext($attributesInitialData, static::KEY_LOCALE);
+
+        $applicableProductManagementAttributesGroupedByProductAttributeKey = $this->productAttributeGrouper->getApplicableProductManagementAttributesGroupedByProductAttributeKey(
+            $productManagementAttributeTransfers,
+            $productAttributes,
+        );
+
+        $attributesInitialData = $this->productAttributeGrouper->getInitialDataGroupedByAttributeKey(
+            $attributesInitialData,
+            $applicableProductManagementAttributesGroupedByProductAttributeKey,
+        );
+
+        $attributesOptions = $this->productAttributeGrouper->getLocalizedAttributeNamesGroupedByProductAttributeKey($applicableProductManagementAttributesGroupedByProductAttributeKey, $localeTransfer);
+
+        foreach ($attributesInitialData[static::KEY_DATA] as &$attributesInitialDatum) {
+            $attributesInitialDatum[static::COL_KEY_ATTRIBUTE_NAME] = $attributesOptions[$attributesInitialDatum[static::COL_KEY_ATTRIBUTE_KEY]] ?? $attributesInitialDatum[static::COL_KEY_ATTRIBUTE_NAME];
+        }
+
+        $guiTableConfigurationBuilder->addInlineEditableColumnDynamic(
+            static::COL_KEY_ATTRIBUTE_DEFAULT,
+            static::TITLE_COLUMN_ATTRIBUTE_DEFAULT,
+            static::COL_KEY_ATTRIBUTE_NAME,
+            $this->buildEditableTypeOptions($attributesInitialData, $applicableProductManagementAttributesGroupedByProductAttributeKey),
+            $this->getDefaultTextTypeOptions(),
+        );
+
+        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL));
+
+        $formInputName = sprintf('%s[%s][]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::ATTRIBUTES);
+
+        $guiTableConfigurationBuilder->enableAddingNewRows(
+            $formInputName,
+            $attributesInitialData,
+            [
+                GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::VARIANT => static::VARIANT_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::SIZE => static::SIZE_EDITABLE_BUTTON,
+            ],
+        );
+
+        return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @param array<int|string, mixed> $attributesInitialData
+     * @param array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $applicableProductManagementAttributesGroupedByProductAttributeKey
+     *
+     * @return array<int|string, mixed>
+     */
+    protected function buildEditableTypeOptions(array $attributesInitialData, array $applicableProductManagementAttributesGroupedByProductAttributeKey): array
+    {
+        $typeOptions = [];
+
+        $attributesInitialData = $this->productAttributeGrouper->getInitialDataGroupedByAttributeKey(
+            $attributesInitialData,
+            $applicableProductManagementAttributesGroupedByProductAttributeKey,
+        );
+
+        foreach ($attributesInitialData[static::KEY_DATA] ?? [] as $attributesInitialDatum) {
+            $attributeKey = $attributesInitialDatum[static::COL_KEY_ATTRIBUTE_KEY];
+            $productManagementAttributeTransfer = $applicableProductManagementAttributesGroupedByProductAttributeKey[$attributeKey] ?? null;
+
+            if (!$productManagementAttributeTransfer) {
+                continue;
+            }
+
+            if ($productManagementAttributeTransfer->getAllowInput()) {
+                continue;
+            }
+
+            $attributeTypeOptions = [
+                'options' => $this->getOptionsFromProductManagementAttribute($productManagementAttributeTransfer),
+                'multiple' => $productManagementAttributeTransfer->getInputType() === static::INPUT_TYPE_MULTISELECT,
+            ];
+
+            $typeOptions[$attributeKey] = [
+                'type' => GuiTableConfigurationBuilderInterface::COLUMN_TYPE_SELECT,
+                'typeOptions' => $attributeTypeOptions,
+            ];
+        }
+
+        return $typeOptions;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function getDefaultTextTypeOptions(): array
+    {
+        return [
+            'type' => GuiTableConfigurationBuilderInterface::COLUMN_TYPE_INPUT,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttribute
+     *
+     * @return array<int, array<string, string>>
+     */
+    protected function getOptionsFromProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttribute): array
+    {
+        $options = [];
+        foreach ($productManagementAttribute->getValues() as $value) {
+            if ($value->getValue() === null) {
+                continue;
+            }
+            $options[] = [
+                'value' => $value->getValueOrFail(),
+                'title' => ucfirst($value->getValueOrFail()),
+            ];
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param array<string, mixed> $initialData
+     *
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
+     */
+    protected function getProductManagementAttributes(array $initialData): array
+    {
+        $productManagementAttributes = $this->getInitialDataContext($initialData, static::KEY_PRODUCT_MANAGEMENT_ATTRIBUTES);
+        if ($productManagementAttributes !== null) {
+            return $productManagementAttributes;
+        }
+
+        return $this->productAttributeFacade->getProductAttributeCollection();
+    }
+
+    /**
+     * @param array<string, mixed> $initialData
+     * @param string $key
+     *
+     * @return mixed
+     */
+    protected function getInitialDataContext(array $initialData, string $key): mixed
+    {
+        return $initialData[static::KEY_CONTEXT][$key] ?? null;
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     * @param array<string, array<string|int, mixed>> $attributesInitialData
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
     protected function addEditableColumns(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         array $attributesInitialData
@@ -239,17 +432,26 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
             $attributesOptions[$attribute->getKeyOrFail()] = $attribute->getKeyOrFail();
         }
 
+        $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributesInitialData);
+        $productAttributes = $this->getInitialDataContext($attributesInitialData, static::KEY_PRODUCT_ATTRIBUTES) ?? [];
+
+        $applicableProductManagementAttributesGroupedByProductAttributeKey = $this->productAttributeGrouper->getApplicableProductManagementAttributesGroupedByProductAttributeKey(
+            $productManagementAttributeTransfers,
+            $productAttributes,
+        );
+
         $guiTableConfigurationBuilder->addEditableColumnSelect(
             static::COL_KEY_ATTRIBUTE_NAME,
             static::TITLE_COLUMN_ATTRIBUTE_NAME,
             false,
             $attributesOptions,
             static::PLACEHOLDER_SELECT_ATTRIBUTE,
-        )->addEditableColumnDynamic(
+        )->addInlineEditableColumnDynamic(
             static::COL_KEY_ATTRIBUTE_DEFAULT,
             static::TITLE_COLUMN_ATTRIBUTE_DEFAULT,
             static::COL_KEY_ATTRIBUTE_NAME,
-            static::PRODUCT_ATTRIBUTES_DATA_URL,
+            $this->buildEditableTypeOptions($attributesInitialData, $applicableProductManagementAttributesGroupedByProductAttributeKey),
+            $this->getDefaultTextTypeOptions(),
         );
 
         $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL));

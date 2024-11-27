@@ -60,6 +60,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\Quantity
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\StockTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGenerator;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProvider;
@@ -717,6 +719,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getGuiTableFactory(),
             $this->getProductAttributeFacade(),
             $this->getProductFacade(),
+            $this->createProductAttributeGrouper(),
         );
     }
 
@@ -924,6 +927,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createApplicableApprovalStatusReader(): ApplicableApprovalStatusReaderInterface
     {
         return new ApplicableApprovalStatusReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Grouper\ProductAttributeGrouperInterface
+     */
+    public function createProductAttributeGrouper(): ProductAttributeGrouperInterface
+    {
+        return new ProductAttributeGrouper();
     }
 
     /**

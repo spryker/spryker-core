@@ -146,32 +146,41 @@ class ProductDataHelper extends Module
         array $productAbstractOverride = []
     ): ProductConcreteTransfer {
         $allStoresRelation = $this->getAllStoresRelation()->toArray();
+        $localizedAttributes = $productAbstractOverride[ProductAbstractTransfer::LOCALIZED_ATTRIBUTES] ?? null;
+        if ($localizedAttributes === null) {
+            $localizedAttributes[] = (new LocalizedAttributesBuilder([
+                LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
+                LocalizedAttributesTransfer::LOCALE => $productAbstractOverride[LocalizedAttributesTransfer::LOCALE] ?? $this->getCurrentLocale(),
+                LocalizedAttributesTransfer::ATTRIBUTES => $productConcreteOverride[ProductConcreteTransfer::ATTRIBUTES] ?? [],
+            ]))->build()->toArray();
+        }
+        $productAbstractBuilder = new ProductAbstractBuilder($productAbstractOverride);
 
-        $localizedAttributes = (new LocalizedAttributesBuilder([
-            LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
-            LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
-            LocalizedAttributesTransfer::ATTRIBUTES => $productConcreteOverride[ProductConcreteTransfer::ATTRIBUTES] ?? [],
-        ]))->build()->toArray();
+        foreach ($localizedAttributes as $localizedAttribute) {
+            $productAbstractBuilder->withLocalizedAttributes($localizedAttribute);
+        }
 
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
-        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))
-            ->withLocalizedAttributes($productAbstractOverride[ProductAbstractTransfer::LOCALIZED_ATTRIBUTES] ?? $localizedAttributes)
-            ->withStoreRelation($allStoresRelation)
+        $productAbstractTransfer = $productAbstractBuilder->withStoreRelation($allStoresRelation)
             ->build();
 
         $productFacade = $this->getProductFacade();
 
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+
+        $productConcreteBuilder = new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride));
+
+        foreach ($localizedAttributes as $localizedAttribute) {
+            $productConcreteBuilder->withLocalizedAttributes($localizedAttribute);
+        }
+
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride)))
-            ->withLocalizedAttributes($localizedAttributes)
-            ->withStores($allStoresRelation)
-            ->build();
+        $productConcreteTransfer = $productConcreteBuilder->withStores($allStoresRelation)->build();
         $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
 
         $productFacade->createProductConcrete($productConcreteTransfer);
 
-        $url = $productFacade->createProductUrl(
+        $productFacade->createProductUrl(
             $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract()),
         );
 
