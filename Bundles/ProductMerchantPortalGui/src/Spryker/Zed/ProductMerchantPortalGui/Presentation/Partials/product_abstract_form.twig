@@ -195,10 +195,10 @@
                                                                 {% set mappedImageSets = [] %}
                                                                 {% set mappedImageSetsErrors = [] %}
 
-                                                                {% for imageSet in imageSets %}
+                                                                {% for imageSetHash, imageSet in imageSets %}
                                                                     {% set mappedImageSet = {
                                                                         idProductImageSet: imageSet.idProductImageSet,
-                                                                        originalIndex: imageSetMetaData[imageSet].originalIndex,
+                                                                        originalIndex: imageSetMetaDataGroupedByHash[imageSetHash].originalIndex,
                                                                         name: imageSet.name,
                                                                         locale: {
                                                                             idLocale: imageSet.locale.idLocale | default(null),
@@ -219,7 +219,7 @@
 
                                                                     {% set mappedImageSet = mappedImageSet | merge({ images: mappedImages }) %}
                                                                     {% set mappedImageSets = mappedImageSets | merge([mappedImageSet]) %}
-                                                                    {% set mappedImageSetsErrors = mappedImageSetsErrors | merge([imageSetMetaData[imageSet].errors]) %}
+                                                                    {% set mappedImageSetsErrors = mappedImageSetsErrors | merge([imageSetMetaDataGroupedByHash[imageSetHash].errors]) %}
                                                                 {% endfor %}
 
                                                                 {% block imagesCardInnerTabSets %}

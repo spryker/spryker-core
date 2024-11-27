@@ -297,6 +297,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         $imageSetTabNames = $this->getImageSetTabNames($productConcreteTransfer);
         $imageSetsGroupedByIdLocale = $this->getImageSetsGroupedByIdLocale($productConcreteTransfer->getImageSets());
         $imageSetMetaData = $this->getImageSetMetaDataGroupedByImageSet($productConcreteTransfer->getImageSets(), $imageSetsErrors);
+        $imageSetMetaDataGroupedByHash = $this->getImageSetMetaDataGroupedByImageSetHash($productConcreteTransfer->getImageSets(), $imageSetsErrors);
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_form.twig', [
@@ -304,7 +305,8 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 'productConcrete' => $productConcreteTransfer,
                 'imageSetTabNames' => $imageSetTabNames,
                 'imageSetsGroupedByIdLocale' => $imageSetsGroupedByIdLocale,
-                'imageSetMetaData' => $imageSetMetaData,
+                'imageSetMetaData' => $imageSetMetaData, // @deprecated Use `imageSetMetaDataGroupedByHash` instead.
+                'imageSetMetaDataGroupedByHash' => $imageSetMetaDataGroupedByHash,
                 'productConcreteName' => $localizedAttributesTransfer ? $localizedAttributesTransfer->getName() : $productConcreteTransfer->getName(),
                 'superAttributeNames' => $superAttributeNames,
                 'priceProductConcreteTableConfiguration' => $this->getFactory()
@@ -339,7 +341,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
+     * @return array<int, array<string, \Generated\Shared\Transfer\ProductImageSetTransfer>>
      */
     protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
     {
@@ -347,13 +349,15 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
         foreach ($imageSets as $imageSet) {
             $idLocale = $imageSet->getLocale() ? $imageSet->getLocaleOrFail()->getIdLocaleOrFail() : 0;
-            $imageSetsGroupedByIdLocale[$idLocale][] = $imageSet;
+            $imageSetsGroupedByIdLocale[$idLocale][spl_object_hash($imageSet)] = $imageSet;
         }
 
         return $imageSetsGroupedByIdLocale;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array<int, mixed> $imageSetsErrors
      *
@@ -365,6 +369,26 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
         foreach ($imageSets as $originalIndex => $imageSet) {
             $imageSetMetaData[$imageSet] = [
+                'originalIndex' => $originalIndex,
+                'errors' => $imageSetsErrors[$originalIndex] ?? [],
+            ];
+        }
+
+        return $imageSetMetaData;
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
+     * @param array<int, mixed> $imageSetsErrors
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    protected function getImageSetMetaDataGroupedByImageSetHash(ArrayObject $imageSets, array $imageSetsErrors): array
+    {
+        $imageSetMetaData = [];
+
+        foreach ($imageSets as $originalIndex => $imageSet) {
+            $imageSetMetaData[spl_object_hash($imageSet)] = [
                 'originalIndex' => $originalIndex,
                 'errors' => $imageSetsErrors[$originalIndex] ?? [],
             ];
