@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Client\Locale\LocaleClientInterface getClient()
  * @method \Spryker\Yves\Locale\LocaleFactory getFactory()
+ * @method \Spryker\Yves\Locale\LocaleConfig getConfig()
  */
 class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
 {
@@ -101,6 +102,10 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
     {
         $urlPath = (string)parse_url(trim($requestUri, '/'), PHP_URL_PATH);
         $pathElements = explode('/', $urlPath);
+
+        if ($this->getConfig()->isStoreRoutingEnabled() === true) {
+            return $pathElements[$this->getConfig()->getLocaleCodeIndex()] ?? '';
+        }
 
         return $pathElements[0];
     }

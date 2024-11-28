@@ -13,9 +13,15 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
+ * @method \Spryker\Yves\Router\RouterFactory getFactory()
  */
 class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
+    /**
+     * @var string
+     */
+    protected const PARAMETER_STORE = 'store';
+
     /**
      * @var string|null
      */
@@ -52,7 +58,7 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
     public function afterMatch(array $parameters, RequestContext $requestContext): array
     {
         if ($this->currentStore !== null) {
-            $parameters['store'] = $this->currentStore;
+            $parameters[static::PARAMETER_STORE] = $this->currentStore;
         }
 
         return $parameters;
@@ -83,11 +89,11 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
      */
     protected function findStore(RequestContext $requestContext): ?string
     {
-        if ($requestContext->hasParameter('store')) {
-            return $requestContext->getParameter('store');
-        }
-
-        return null;
+        return $requestContext->hasParameter(static::PARAMETER_STORE) && $requestContext->getParameter(static::PARAMETER_STORE) !== null
+            ? $requestContext->getParameter(static::PARAMETER_STORE)
+            : ($this->getConfig()->isStoreRoutingEnabled()
+                ? $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail()
+                : null);
     }
 
     /**

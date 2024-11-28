@@ -9,6 +9,7 @@ namespace Spryker\Yves\Router;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Router\Dependency\Client\RouterToStoreClientBridge;
 
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
@@ -36,6 +37,11 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public const ROUTER_ENHANCER_PLUGINS = 'ROUTER_ENHANCER_PLUGINS';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -46,6 +52,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouterEnhancerPlugins($container);
         $container = $this->addRouteProvider($container);
         $container = $this->addPostAddRouteManipulator($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -136,5 +143,19 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPostAddRouteManipulator(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new RouterToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
     }
 }

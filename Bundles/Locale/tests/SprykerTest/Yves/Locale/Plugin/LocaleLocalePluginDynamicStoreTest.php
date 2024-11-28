@@ -14,6 +14,7 @@ use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Client\Locale\LocaleDependencyProvider;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Spryker\Yves\Locale\Dependency\Client\LocaleToStoreClientInterface;
+use Spryker\Yves\Locale\LocaleConfig;
 use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
 use SprykerTest\Yves\Locale\LocaleBusinessTester;
 
@@ -81,6 +82,11 @@ class LocaleLocalePluginDynamicStoreTest extends Unit
         $this->localeLocalePlugin->setClient($localeClientMock);
         $this->defaultLocaleName = $localeClientMock->getCurrentLocale();
 
+        $localeConfigMock = $this->createMock(LocaleConfig::class);
+        $localeConfigMock->method('isStoreRoutingEnabled')->willReturn(true);
+        $localeConfigMock->method('getLocaleCodeIndex')->willReturn(1);
+        $this->localeLocalePlugin->setConfig($localeConfigMock);
+
         $availableLocales = $localeClientMock->getLocales();
         foreach ($availableLocales as $localeIsoCode => $localeName) {
             if ($localeName !== $this->defaultLocaleName) {
@@ -113,7 +119,7 @@ class LocaleLocalePluginDynamicStoreTest extends Unit
     public function testPluginReturnsLocaleSpecifiedInUrlWithSlashes(): void
     {
         // Arrange
-        $_SERVER['REQUEST_URI'] = "/$this->notDefaultLocaleIsoCode/";
+        $_SERVER['REQUEST_URI'] = "/DE/$this->notDefaultLocaleIsoCode/";
 
         // Act
         $localeTransfer = $this->localeLocalePlugin->getLocaleTransfer($this->container);
@@ -128,7 +134,7 @@ class LocaleLocalePluginDynamicStoreTest extends Unit
     public function testPluginReturnsLocaleSpecifiedInUrlWithSlashesWithQueryString(): void
     {
         // Arrange
-        $_SERVER['REQUEST_URI'] = "/$this->notDefaultLocaleIsoCode/?gclid=1";
+        $_SERVER['REQUEST_URI'] = "/DE/$this->notDefaultLocaleIsoCode/?gclid=1";
 
         // Act
         $localeTransfer = $this->localeLocalePlugin->getLocaleTransfer($this->container);
@@ -143,7 +149,7 @@ class LocaleLocalePluginDynamicStoreTest extends Unit
     public function testPluginReturnsLocaleSpecifiedInUrlWithoutSlashes(): void
     {
         // Arrange
-        $_SERVER['REQUEST_URI'] = "$this->notDefaultLocaleIsoCode";
+        $_SERVER['REQUEST_URI'] = "/DE/$this->notDefaultLocaleIsoCode";
 
         // Act
         $localeTransfer = $this->localeLocalePlugin->getLocaleTransfer($this->container);
@@ -158,7 +164,7 @@ class LocaleLocalePluginDynamicStoreTest extends Unit
     public function testPluginReturnsLocaleSpecifiedInUrlWithoutSlashesWithQueryString(): void
     {
         // Arrange
-        $_SERVER['REQUEST_URI'] = "$this->notDefaultLocaleIsoCode?gclid=1";
+        $_SERVER['REQUEST_URI'] = "/DE/$this->notDefaultLocaleIsoCode?gclid=1";
 
         // Act
         $localeTransfer = $this->localeLocalePlugin->getLocaleTransfer($this->container);

@@ -111,6 +111,28 @@ class YvesRouterPluginWithStorePrefixRouterEnhancerTest extends Unit
      */
     public function testGenerateReturnsUrlWithoutStoreWhenStoreIsNotInContext(string $url, string $routeName): void
     {
+        $this->tester->mockEnvironmentConfig(RouterConstants::IS_STORE_ROUTING_ENABLED, false);
+        $routerPlugin = new YvesRouterPlugin();
+        $routerPlugin->setFactory($this->tester->getFactory());
+
+        $router = $routerPlugin->getRouter();
+
+        $generatedUrl = $router->generate($routeName);
+
+        $this->assertSame($url, $generatedUrl);
+    }
+
+    /**
+     * @dataProvider generatorWithoutLanguageAndStoreDataProviderWithStoreRoutingEnabled
+     *
+     * @param string $url
+     * @param string $routeName
+     *
+     * @return void
+     */
+    public function testGenerateReturnsUrlWithoutStoreWhenStoreIsNotInContextWithStoreRoutingEnabled(string $url, string $routeName): void
+    {
+        $this->tester->mockEnvironmentConfig(RouterConstants::IS_STORE_ROUTING_ENABLED, true);
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
@@ -155,6 +177,17 @@ class YvesRouterPluginWithStorePrefixRouterEnhancerTest extends Unit
         return [
             ['/', 'home'],
             ['/foo', 'foo'],
+        ];
+    }
+
+    /**
+     * @return array<array<string>>
+     */
+    public function generatorWithoutLanguageAndStoreDataProviderWithStoreRoutingEnabled(): array
+    {
+        return [
+            ['/DE', 'home'],
+            ['/DE/foo', 'foo'],
         ];
     }
 }

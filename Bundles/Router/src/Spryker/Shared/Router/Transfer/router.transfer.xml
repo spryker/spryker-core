@@ -10,4 +10,8 @@
     <transfer name="RouterActionCollection">
         <property name="actions" type="string[]" singular="action"/>
     </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

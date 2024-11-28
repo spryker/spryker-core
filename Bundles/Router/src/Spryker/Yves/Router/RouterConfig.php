@@ -136,4 +136,17 @@ class RouterConfig extends AbstractBundleConfig
             'US',
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStoreRoutingEnabled(): bool
+    {
+        return $this->get(RouterConstants::IS_STORE_ROUTING_ENABLED, false);
+    }
 }

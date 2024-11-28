@@ -144,4 +144,14 @@ interface RouterConstants
      * @var string
      */
     public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
+
+    /**
+     * Specification:
+     *  - Returns true if the store routing is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const IS_STORE_ROUTING_ENABLED = 'ROUTER:IS_STORE_ROUTING_ENABLED';
 }

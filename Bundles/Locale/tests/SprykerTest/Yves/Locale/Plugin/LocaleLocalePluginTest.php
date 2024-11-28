@@ -13,6 +13,7 @@ use Spryker\Client\Locale\LocaleClient;
 use Spryker\Client\Locale\LocaleClientInterface;
 use Spryker\Client\Locale\LocaleDependencyProvider;
 use Spryker\Yves\Locale\Dependency\Client\LocaleToStoreClientInterface;
+use Spryker\Yves\Locale\LocaleConfig;
 use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
 
 /**
@@ -74,6 +75,10 @@ class LocaleLocalePluginTest extends Unit
         $localeClientMock = $this->createLocaleClientMock();
         $this->localeLocalePlugin->setClient($localeClientMock);
         $this->defaultLocaleName = $localeClientMock->getCurrentLocale();
+
+        $localeConfigMock = $this->createMock(LocaleConfig::class);
+        $localeConfigMock->method('isStoreRoutingEnabled')->willReturn(false);
+        $this->localeLocalePlugin->setConfig($localeConfigMock);
 
         $availableLocales = $localeClientMock->getLocales();
         foreach ($availableLocales as $localeIsoCode => $localeName) {
