@@ -29,6 +29,28 @@
         <property name="preOrderPaymentData" type="array" associative="true" singular="preOrderPaymentDatum"/>
     </transfer>
 
+    <transfer name="RestPaymentCustomersRequestAttributes" strict="true">
+        <property name="customer" type="RestCustomerResponseAttributes"/>
+        <property name="payment" type="RestPayment" restRequestParameter="required"/>
+        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestPaymentCustomersResponseAttributes">
+        <property name="customer" type="RestCustomerResponseAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCustomerRequest" strict="true">
+        <property name="customer" type="RestCustomerResponseAttributes"/>
+        <property name="payment" type="Payment"/>
+        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum"/>
+    </transfer>
+
+    <transfer name="PaymentCustomerResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="customer" type="Customer"/>
+        <property name="error" type="string"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="store" type="Store"/>
@@ -38,10 +60,12 @@
     <transfer name="Store"/>
 
     <transfer name="Payment">
-        <property name="paymentProvider" type="string"/>
+        <property name="paymentProviderName" type="string"/>
+        <property name="paymentMethodName" type="string"/>
         <property name="paymentMethod" type="string"/>
         <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
         <property name="amount" type="int"/>
+        <property name="paymentProvider" type="string"/>
     </transfer>
 
     <transfer name="RestPayment">
@@ -56,6 +80,7 @@
         <property name="paymentProviderName" type="string"/>
         <property name="priority" type="int"/>
         <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
     </transfer>
 
     <transfer name="RestCheckout">
@@ -68,6 +93,7 @@
         <property name="paymentProvider" type="PaymentProvider"/>
         <property name="idPaymentMethod" type="int"/>
         <property name="name" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
     </transfer>
 
     <transfer name="PaymentProvider">
@@ -102,5 +128,30 @@
     <transfer name="RestErrorMessage">
         <property name="detail" type="string"/>
         <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAppConfiguration" strict="true">
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
+    </transfer>
+
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="RestCustomerResponseAttributes">
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="company" type="string"/>
+        <property name="billingAddress" type="RestAddressAttributes"/>
+        <property name="shippingAddress" type="RestAddressAttributes"/>
+    </transfer>
+
+    <transfer name="RestAddressAttributes">
     </transfer>
 </transfers>

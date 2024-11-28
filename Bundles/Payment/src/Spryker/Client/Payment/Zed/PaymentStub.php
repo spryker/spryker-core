@@ -61,6 +61,8 @@ class PaymentStub implements PaymentStubInterface
     }
 
     /**
+     * @see \Spryker\Zed\Payment\Communication\Controller\GatewayController::getAvailableMethodsAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer

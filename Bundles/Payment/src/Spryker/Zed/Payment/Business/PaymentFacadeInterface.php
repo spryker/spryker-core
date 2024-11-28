@@ -83,9 +83,9 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Initializes a pre-order payment (pre-order is before the order gets persisted).
-     * - Requires `PreOrderPaymentRequestTransfer::QUOTE` to be set.
-     * - Requires `PreOrderPaymentRequestTransfer::PAYMENT_METHOD` to be set.
-     * - Returns `PreOrderPaymentResponseTransfer::IS_SUCCESS` true if the payment was initialized.
+     * - Requires `PreOrderPaymentRequestTransfer.quote` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer.paymentMethod` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer.isSuccess` true if the payment was initialized.
      *
      * @api
      *
@@ -100,8 +100,8 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Cancels a pre-order payment (pre-order is before the order gets persisted).
-     * - Requires `PreOrderPaymentResponseTransfer::PAYMENT_METHOD` to be set.
-     * - Returns `PreOrderPaymentResponseTransfer::IS_SUCCESS` true if the cancellation was successful.
+     * - Requires `PreOrderPaymentResponseTransfer.paymentMethod` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer.isSuccess` true if the cancellation was successful.
      *
      * @api
      *
@@ -602,6 +602,8 @@ interface PaymentFacadeInterface
      * Specification:
      * - Requires `PaymentTransfer.paymentMethod` to be set.
      * - Requires `PaymentTransfer.paymentProvider` to be set.
+     * - Expects `PaymentTransfer.paymentMethodName` to be set.
+     * - Expects `PaymentTransfer.paymentProviderName` to be set.
      * - Requires `StoreTransfer.idStore` or `StoreTransfer.name` to be set.
      * - Expands PaymentTransfer with paymentSelection field if it was not populated before.
      * - Uses provided arguments to retrieve payment method from database.

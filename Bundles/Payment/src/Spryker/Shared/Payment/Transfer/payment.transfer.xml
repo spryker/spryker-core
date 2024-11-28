@@ -11,6 +11,8 @@
         <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method"/>
         <property name="foreignPayments" type="array" associative="true" singular="foreignPayment"/>
         <property name="additionalPaymentData" type="array" singular="additionalPaymentData"/>
+        <property name="paymentProviderName" type="string"/>
+        <property name="paymentMethodName" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -113,6 +115,7 @@
 
     <transfer name="CheckoutConfiguration" strict="true">
         <property name="strategy" type="string"/>
+        <property name="paymentServiceProviderData" type="array" singular="paymentServiceProviderDatum" associative="true"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -176,6 +179,8 @@
         <property name="locale" type="Locale"/>
         <property name="email" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
+        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
     </transfer>
 
     <transfer name="Locale">

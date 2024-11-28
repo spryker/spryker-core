@@ -175,7 +175,10 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             ->setPaymentMethodName($paymentMethodTransfer->getName())
             ->setPaymentProviderName($paymentProviderTransfer->getPaymentProviderKey())
             ->setRequiredRequestData(
-                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName()),
+                $this->config->getRequiredRequestDataForPaymentMethod(
+                    $paymentProviderTransfer->getName(),
+                    $paymentMethodTransfer->getName(),
+                ),
             );
     }
 
@@ -197,6 +200,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodKey] ?? null)
             ->setRequiredRequestData(
                 $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey),
-            );
+            )
+            ->setPaymentMethodAppConfiguration($paymentMethodTransfer->getPaymentMethodAppConfiguration());
     }
 }

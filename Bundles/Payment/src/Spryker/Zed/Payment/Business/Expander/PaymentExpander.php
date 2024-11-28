@@ -53,8 +53,8 @@ class PaymentExpander implements PaymentExpanderInterface
         }
 
         $paymentMethodTransfer = $this->getPaymentMethodByNameAndProvider(
-            $paymentTransfer->getPaymentMethod(),
-            $paymentTransfer->getPaymentProvider(),
+            $paymentTransfer->getPaymentMethod() ?? $paymentTransfer->getPaymentMethodNameOrFail(),
+            $paymentTransfer->getPaymentProvider() ?? $paymentTransfer->getPaymentProviderNameOrFail(),
             $storeTransfer,
         );
 

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\RestPaymentTransfer;
 use Generated\Shared\Transfer\RestPreOrderPaymentCancellationRequestAttributesTransfer;
 use Spryker\Client\Payment\PaymentClient;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\PaymentsRestApi\Controller\PreOrderPaymentCancellationsResourceController;
 use Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentClientBridge;
@@ -33,9 +34,24 @@ use SprykerTest\Glue\PaymentsRestApi\PaymentsRestApiControllerTester;
 class CancelPreOrderPaymentsResourceControllerTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
+    /**
      * @var \SprykerTest\Glue\PaymentsRestApi\PaymentsRestApiControllerTester
      */
     protected PaymentsRestApiControllerTester $tester;
+
+    /**
+     * @return void
+     */
+    public function _before(): void
+    {
+        parent::_before();
+
+        $this->tester->getContainer()->set(static::SERVICE_RESOURCE_BUILDER, new RestResourceBuilder());
+    }
 
     /**
      * @return void

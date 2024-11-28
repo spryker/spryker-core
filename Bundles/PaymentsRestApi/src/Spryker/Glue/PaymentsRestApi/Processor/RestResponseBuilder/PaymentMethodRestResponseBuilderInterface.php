@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface PaymentMethodRestResponseBuilderInterface
 {
@@ -17,4 +19,20 @@ interface PaymentMethodRestResponseBuilderInterface
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createRestPaymentMethodsResources(RestCheckoutDataTransfer $restCheckoutDataTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createPaymentCancellationsRestResponse(
+        PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer
+    ): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createPaymentsRestResponse(PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer): RestResponseInterface;
 }

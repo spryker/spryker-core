@@ -9,6 +9,9 @@ namespace Spryker\Zed\PaymentCartConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\PaymentCartConnector\PaymentCartConnectorConfig getConfig()
+ */
 class PaymentCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

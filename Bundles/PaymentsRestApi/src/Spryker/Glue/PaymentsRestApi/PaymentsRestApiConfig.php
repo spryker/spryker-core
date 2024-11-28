@@ -27,6 +27,11 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_TYPE_PAYMENT_CANCELLATIONS = 'payment-cancellations';
 
     /**
+     * @var string
+     */
+    public const RESOURCE_TYPE_PAYMENT_CUSTOMERS = 'payment-customers';
+
+    /**
      * @var array<string, int>
      */
     protected const PAYMENT_METHOD_PRIORITY = [];
@@ -50,7 +55,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      *
-     * @return array
+     * @return array<int, string>
      */
     public function getRequiredRequestDataForPaymentMethod(string $paymentProviderName, string $paymentMethodName): array
     {

@@ -32,7 +32,7 @@ class KernelAppConfig extends AbstractBundleConfig
      * - Returns an array of default headers to be used in HTTP requests.
      * - The array keys represent the header names.
      * - The array values represent the header values.
-     * - The default headers include a 'Content-Type' header with the value 'application/json' and Cookie for zdebug session..
+     * - The default headers include a 'Content-Type' header with the value 'application/json' and Cookie for XDebug session.
      * - If a header already exists in the request, it will not be overridden.
      *
      * @api
@@ -46,10 +46,25 @@ class KernelAppConfig extends AbstractBundleConfig
         ];
 
         $request = Request::createFromGlobals();
+
         if ($request->cookies->has('XDEBUG_SESSION')) {
             $headers[static::COOKIE_HEADER] = sprintf('XDEBUG_SESSION=%s', $request->cookies->get('XDEBUG_SESSION'));
         }
 
+        if ($this->isForwardDebugSessionEnabled()) {
+            $headers[static::COOKIE_HEADER] = 'XDEBUG_SESSION=PHPSTORM';
+        }
+
         return $headers;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isForwardDebugSessionEnabled(): bool
+    {
+        return $this->getConfig()->get(KernelAppConstants::ENABLE_FORWARD_DEBUG_SESSION, false);
     }
 }

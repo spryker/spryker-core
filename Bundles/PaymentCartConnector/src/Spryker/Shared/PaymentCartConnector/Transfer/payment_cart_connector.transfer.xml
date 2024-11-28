@@ -3,9 +3,16 @@
 
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
     <transfer name="Payment">
+        <property name="paymentMethod" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="operation" type="string"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfers>

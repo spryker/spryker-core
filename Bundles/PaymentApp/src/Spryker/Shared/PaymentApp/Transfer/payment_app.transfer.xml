@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ExpressCheckoutPaymentRequest" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="ExpressCheckoutPaymentResponse" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="store" type="Store"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+    </transfer>
+
+    <transfer name="PaymentCustomerRequest" strict="true">
+        <property name="payment" type="Payment"/>
+        <property name="customerPaymentServiceProviderData" type="array" associative="true" singular="customerPaymentServiceProviderDatum"/>
+    </transfer>
+
+    <transfer name="PaymentCustomerResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="AcpHttpRequest" strict="true">
+        <property name="method" type="string"/>
+        <property name="uri" type="string"/>
+        <property name="headers" type="array" associative="true" singular="header"/>
+        <property name="body" type="string"/>
+    </transfer>
+
+    <transfer name="AcpHttpResponse" strict="true">
+        <property name="httpStatusCode" type="int"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCriteria">
+        <property name="paymentMethodConditions" type="PaymentMethodConditions"/>
+    </transfer>
+
+    <transfer name="PaymentMethodConditions">
+        <property name="paymentMethodKeys" type="string[]" singular="paymentMethodKey"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentMethodName" type="string"/>
+        <property name="paymentProviderName" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="name" type="string"/>
+        <property name="paymentMethodKey" type="string" strict="true"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="city" type="string"/>
+        <property name="state" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="Error">
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+    </transfer>
+
+    <transfer name="PaymentMethodCollection">
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAppConfiguration" strict="true">
+        <property name="endpoints" type="Endpoint[]" singular="endpoint"/>
+        <property name="baseUrl" type="string"/>
+    </transfer>
+
+    <transfer name="Endpoint" strict="true">
+        <property name="name" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+</transfers>

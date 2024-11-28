@@ -120,7 +120,7 @@ class ForeignPayment implements ForeignPaymentInterface
     ): void {
         $paymentSelectionKey = $this->paymentService->getPaymentSelectionKey($quoteTransfer->getPaymentOrFail());
 
-        if ($paymentSelectionKey !== PaymentTransfer::FOREIGN_PAYMENTS || count($quoteTransfer->getPreOrderPaymentData()) > 0) {
+        if ($paymentSelectionKey !== PaymentTransfer::FOREIGN_PAYMENTS || $this->hasQuotePreOrderPaymentData($quoteTransfer)) {
             return;
         }
 
@@ -132,6 +132,14 @@ class ForeignPayment implements ForeignPaymentInterface
 
         if (!$paymentMethodTransfer || (!$paymentMethodTransfer->getPaymentAuthorizationEndpoint() && !$paymentMethodTransfer->getPaymentMethodAppConfiguration())) {
             return;
+        }
+
+        if ($paymentMethodTransfer->getPaymentMethodAppConfiguration()) {
+            $checkoutConfigurationTransfer = $paymentMethodTransfer->getPaymentMethodAppConfiguration()->getCheckoutConfiguration();
+
+            if ($checkoutConfigurationTransfer && $checkoutConfigurationTransfer->getStrategy() === PaymentConfig::CHECKOUT_STRATEGY_EXPRESS_CHECKOUT) {
+                return;
+            }
         }
 
         $saveOrderTransfer = $checkoutResponseTransfer->getSaveOrderOrFail();
@@ -176,7 +184,7 @@ class ForeignPayment implements ForeignPaymentInterface
             $this->logAcpHttpResponseError($acpHttpRequestTransfer, $acpHttpResponseTransfer);
             $checkoutResponseTransfer
                 ->setIsSuccess(false)
-                ->addError($this->createCheckoutErrorTransfer($acpHttpRequestTransfer, $acpHttpResponseTransfer));
+                ->addError($this->createCheckoutErrorTransfer($acpHttpResponseTransfer));
 
             return;
         }
@@ -189,7 +197,7 @@ class ForeignPayment implements ForeignPaymentInterface
 
             $checkoutResponseTransfer
                 ->setIsSuccess(false)
-                ->addError($this->createCheckoutErrorTransfer($acpHttpRequestTransfer, $acpHttpResponseTransfer));
+                ->addError($this->createCheckoutErrorTransfer($acpHttpResponseTransfer));
 
             return;
         }
@@ -222,7 +230,7 @@ class ForeignPayment implements ForeignPaymentInterface
         $quoteTransfer = $preOrderPaymentRequestTransfer->getQuoteOrFail();
 
         $paymentMethodTransfer = $this->paymentRepository->findPaymentMethod(
-            $this->getPaymentMethodTransferFromPreOrderPaymentRequestTransfer($preOrderPaymentRequestTransfer),
+            $this->getPaymentMethodTransferFromRequestTransfer($preOrderPaymentRequestTransfer),
         );
 
         if (!$paymentMethodTransfer) {
@@ -245,7 +253,13 @@ class ForeignPayment implements ForeignPaymentInterface
                 $this->paymentConfig->getQuoteFieldsForForeignPayment(),
             ),
             'preOrderPaymentData' => $preOrderPaymentRequestTransfer->getPreOrderPaymentData(),
+            'localeName' => $this->localeFacade->getCurrentLocale()->getLocaleName(),
         ];
+
+        // Workaround for cases when the PSP App is not updated and is using the paymentMethod property as name instead of the paymentMethodName property.
+        if (!isset($postData['orderData']['paymentMethod'])) {
+            $postData['orderData']['paymentMethod'] = $postData['orderData']['paymentMethodName'];
+        }
 
         $acpHttpRequestTransfer = new AcpHttpRequestTransfer();
         $acpHttpRequestTransfer
@@ -301,25 +315,24 @@ class ForeignPayment implements ForeignPaymentInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @throws \Spryker\Zed\Payment\Business\Exception\PreOrderPaymentException
-     *
      * @return void
      */
     public function confirmPreOrderPayment(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): void {
-        if (count($quoteTransfer->getPreOrderPaymentData()) === 0) {
-            return;
-        }
-
         $paymentMethodTransfer = $this->paymentRepository->findPaymentMethod(
             (new PaymentMethodTransfer())
                 ->setName($quoteTransfer->getPaymentOrFail()->getPaymentMethodOrFail())
                 ->setPaymentProvider((new PaymentProviderTransfer())->setName($quoteTransfer->getPaymentOrFail()->getPaymentProviderOrFail())),
         );
 
+        // Only foreign payment methods have a payment method app configuration. If it's not a foreign payment method, we can return early.
         if (!$paymentMethodTransfer || !$paymentMethodTransfer->getPaymentMethodAppConfiguration()) {
+            return;
+        }
+
+        if (!$this->hasQuotePreOrderPaymentData($quoteTransfer) || !$this->isExpressCheckoutPaymentMethod($paymentMethodTransfer)) {
             return;
         }
 
@@ -334,6 +347,7 @@ class ForeignPayment implements ForeignPaymentInterface
             'orderReference' => $saveOrderTransfer->getOrderReference(),
             'orderData' => $orderData,
             PaymentConfig::PRE_ORDER_PAYMENT_DATA_FIELD => $quoteTransfer->getPreOrderPaymentData(),
+            'localeName' => $this->localeFacade->getCurrentLocale()->getLocaleName(),
         ];
 
         $acpHttpRequestTransfer = new AcpHttpRequestTransfer();
@@ -345,12 +359,40 @@ class ForeignPayment implements ForeignPaymentInterface
         $acpHttpResponseTransfer = $this->kernelAppFacade->makeRequest($acpHttpRequestTransfer);
 
         if ($acpHttpResponseTransfer->getHttpStatusCode() !== Response::HTTP_OK) {
-            throw new PreOrderPaymentException(sprintf(
-                'Failed to confirm pre-order payment for order %s. Response: %s',
-                $saveOrderTransfer->getOrderReference(),
-                $acpHttpResponseTransfer->getContent(),
-            ));
+            $this->logAcpHttpResponseError($acpHttpRequestTransfer, $acpHttpResponseTransfer);
+
+            $checkoutResponseTransfer
+                ->addError((new CheckoutErrorTransfer())->setMessage(
+                    sprintf(
+                        'Failed to confirm pre-order payment for order %s. Response: %s',
+                        $saveOrderTransfer->getOrderReference(),
+                        $acpHttpResponseTransfer->getContent(),
+                    ),
+                ))
+                ->setIsSuccess(false);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasQuotePreOrderPaymentData(QuoteTransfer $quoteTransfer): bool
+    {
+        return count($quoteTransfer->getPreOrderPaymentData()) > 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function isExpressCheckoutPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): bool
+    {
+        $checkoutConfigurationTransfer = $paymentMethodTransfer->getPaymentMethodAppConfiguration()->getCheckoutConfiguration();
+
+        return !$checkoutConfigurationTransfer || $checkoutConfigurationTransfer->getStrategy() !== PaymentConfig::CHECKOUT_STRATEGY_EXPRESS_CHECKOUT;
     }
 
     /**
@@ -362,7 +404,7 @@ class ForeignPayment implements ForeignPaymentInterface
         PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
     ): PreOrderPaymentResponseTransfer {
         $paymentMethodTransfer = $this->paymentRepository->findPaymentMethod(
-            $this->getPaymentMethodTransferFromPreOrderPaymentRequestTransfer($preOrderPaymentRequestTransfer),
+            $this->getPaymentMethodTransferFromRequestTransfer($preOrderPaymentRequestTransfer),
         );
 
         if (!$paymentMethodTransfer) {
@@ -408,13 +450,11 @@ class ForeignPayment implements ForeignPaymentInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AcpHttpRequestTransfer $acpHttpRequestTransfer
      * @param \Generated\Shared\Transfer\AcpHttpResponseTransfer $acpHttpResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
     protected function createCheckoutErrorTransfer(
-        AcpHttpRequestTransfer $acpHttpRequestTransfer,
         AcpHttpResponseTransfer $acpHttpResponseTransfer
     ): CheckoutErrorTransfer {
         return (new CheckoutErrorTransfer())
@@ -474,8 +514,16 @@ class ForeignPayment implements ForeignPaymentInterface
             return $paymentMethodTransfer->getPaymentAuthorizationEndpoint();
         }
 
+        $checkoutConfigurationTransfer = $paymentMethodAppConfigurationTransfer->getCheckoutConfiguration();
+
+        $endpointName = PaymentConfig::PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_AUTHORIZATION;
+
+        if ($checkoutConfigurationTransfer && $checkoutConfigurationTransfer->getStrategy() === PaymentConfig::CHECKOUT_STRATEGY_EXPRESS_CHECKOUT) {
+            $endpointName = PaymentConfig::PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_PRE_ORDER_PAYMENT;
+        }
+
         foreach ($paymentMethodAppConfigurationTransfer->getEndpoints() as $endpointTransfer) {
-            if ($endpointTransfer->getNameOrFail() === PaymentConfig::PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_AUTHORIZATION) {
+            if ($endpointTransfer->getNameOrFail() === $endpointName) {
                 return sprintf('%s%s', $paymentMethodAppConfigurationTransfer->getBaseUrlOrFail(), $endpointTransfer->getPathOrFail());
             }
         }
@@ -595,15 +643,23 @@ class ForeignPayment implements ForeignPaymentInterface
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    protected function getPaymentMethodTransferFromPreOrderPaymentRequestTransfer(
+    protected function getPaymentMethodTransferFromRequestTransfer(
         PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
     ): PaymentMethodTransfer {
         $paymentTransfer = $preOrderPaymentRequestTransfer->getPaymentOrFail();
+
+        $paymentMethodName = $paymentTransfer->getPaymentMethod() ?? $paymentTransfer->getPaymentMethodName();
+        $paymentProviderName = $paymentTransfer->getPaymentProvider() ?? $paymentTransfer->getPaymentProviderName();
+
         $paymentProviderTransfer = new PaymentProviderTransfer();
-        $paymentProviderTransfer->setName($paymentTransfer->getPaymentProviderOrFail());
+        $paymentProviderTransfer->setName($paymentTransfer->getPaymentProvider() ?? $paymentTransfer->getPaymentProviderName());
+
+        $normalizedPaymentMethodKey = str_replace(' ', '-', mb_strtolower($paymentMethodName));
+        $paymentMethodKey = sprintf('%s-%s', $paymentProviderName, $normalizedPaymentMethodKey);
 
         return (new PaymentMethodTransfer())
-            ->setName($paymentTransfer->getPaymentMethodOrFail())
+            ->setName($paymentMethodName)
+            ->setPaymentMethodKey($paymentMethodKey)
             ->setPaymentProvider($paymentProviderTransfer);
     }
 }

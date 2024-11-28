@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ExpressCheckoutPaymentRequest" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="ExpressCheckoutPaymentResponse" strict="true">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="isActive" type="bool"/>
+        <property name="idShipmentMethod" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shipmentSelection" type="string"/>
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="customer" type="Customer"/>
+        <property name="skipRecalculation" type="bool" strict="true"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+</transfers>

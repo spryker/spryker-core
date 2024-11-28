@@ -18,7 +18,7 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
     /**
      * @var \Spryker\Zed\PaymentsRestApi\Dependency\Facade\PaymentsRestApiToPaymentFacadeInterface
      */
-    protected $paymentFacade;
+    protected PaymentsRestApiToPaymentFacadeInterface $paymentFacade;
 
     /**
      * @param \Spryker\Zed\PaymentsRestApi\Dependency\Facade\PaymentsRestApiToPaymentFacadeInterface $paymentFacade
@@ -94,7 +94,10 @@ class PaymentQuoteMapper implements PaymentQuoteMapperInterface
     {
         $paymentTransfer = (new PaymentTransfer())->fromArray($restPaymentTransfer->toArray(), true);
 
-        $paymentTransfer->setPaymentProvider($restPaymentTransfer->getPaymentProviderName())
+        $paymentTransfer
+            ->setPaymentProvider($restPaymentTransfer->getPaymentProviderName())
+            ->setPaymentProviderName($restPaymentTransfer->getPaymentProviderName())
+            ->setPaymentMethodName($restPaymentTransfer->getPaymentMethodName())
             ->setPaymentMethod($restPaymentTransfer->getPaymentMethodName());
 
         return $paymentTransfer;

@@ -50,7 +50,17 @@ class PaymentConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const CHECKOUT_STRATEGY_EXPRESS_CHECKOUT = 'express-checkout';
+
+    /**
+     * @var string
+     */
     public const PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_AUTHORIZATION = 'authorization';
+
+    /**
+     * @var string
+     */
+    public const PAYMENT_SERVICE_PROVIDER_ENDPOINT_NAME_PRE_ORDER_PAYMENT = 'pre-order-payment';
 
     /**
      * @var string
@@ -241,6 +251,7 @@ class PaymentConfig extends AbstractBundleConfig
             QuoteTransfer::PAYMENT => [
                 PaymentTransfer::AMOUNT => 'grandTotal',
                 PaymentTransfer::PAYMENT_METHOD => 'paymentMethod',
+                PaymentTransfer::PAYMENT_METHOD_NAME => 'paymentMethodName',
                 PaymentTransfer::ADDITIONAL_PAYMENT_DATA => 'additionalPaymentData',
             ],
             QuoteTransfer::ITEMS => [

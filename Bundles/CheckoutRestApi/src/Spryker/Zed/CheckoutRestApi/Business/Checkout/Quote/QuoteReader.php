@@ -60,7 +60,7 @@ class QuoteReader implements QuoteReaderInterface
     protected function createQuoteTransfer(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): QuoteTransfer {
-        $customerTransfer = (new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCustomer()->toArray(), true);
+        $customerTransfer = (new CustomerTransfer())->fromArray($restCheckoutRequestAttributesTransfer->getCustomer()->modifiedToArray(), true);
 
         return (new QuoteTransfer())
             ->setUuid($restCheckoutRequestAttributesTransfer->getIdCart())

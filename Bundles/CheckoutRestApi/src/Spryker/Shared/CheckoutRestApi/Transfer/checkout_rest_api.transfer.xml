@@ -86,6 +86,29 @@
         <property name="paymentMethodName" type="string"/>
         <property name="paymentProviderName" type="string"/>
         <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAppConfiguration" strict="true">
+        <property name="baseUrl" type="string"/>
+        <property name="endpoints" type="Endpoint[]" singular="endpoint"/>
+        <property name="checkoutConfiguration" type="CheckoutConfiguration"/>
+    </transfer>
+
+    <transfer name="Endpoint" strict="true">
+        <property name="name" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutConfiguration" strict="true">
+        <property name="strategy" type="string"/>
+        <property name="scripts" type="Script[]" singular="script"/>
+        <property name="paymentServiceProviderData" type="array" singular="paymentServiceProviderDatum" associative="true"/>
+    </transfer>
+
+    <transfer name="Script" strict="true">
+        <property name="url" type="string"/>
+        <property name="queryParams" type="array" singular="queryParam" associative="true"/>
     </transfer>
 
     <transfer name="RestShipmentMethod">

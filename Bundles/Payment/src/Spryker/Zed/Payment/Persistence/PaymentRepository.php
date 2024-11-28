@@ -62,7 +62,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             $paymentMethodQuery->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey());
         }
 
-        if ($paymentMethodTransfer->getName() !== null && $paymentMethodTransfer->getPaymentProvider() !== null && $paymentMethodTransfer->getPaymentProvider()->getName() !== null) {
+        if ($paymentMethodTransfer->getPaymentMethodKey() === null && $paymentMethodTransfer->getName() !== null && $paymentMethodTransfer->getPaymentProvider() !== null && $paymentMethodTransfer->getPaymentProvider()->getName() !== null) {
             $paymentMethodQuery
                 ->filterByLabelName($paymentMethodTransfer->getName())
                 ->filterByGroupName($paymentMethodTransfer->getPaymentProvider()->getName());
@@ -227,6 +227,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentMethodQuery = $this->getFactory()
             ->createPaymentMethodQuery()
             ->joinWithSpyPaymentProvider();
+
         $paymentMethodEntities = $this->applyPaymentMethodFilters(
             $paymentMethodQuery,
             $paymentMethodCriteriaTransfer,

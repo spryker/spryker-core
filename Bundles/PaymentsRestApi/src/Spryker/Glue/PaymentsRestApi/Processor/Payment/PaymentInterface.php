@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Payment;
 
+use Generated\Shared\Transfer\RestPaymentCustomersRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPreOrderPaymentCancellationRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPreOrderPaymentRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -34,5 +35,16 @@ interface PaymentInterface
     public function cancelPreOrderPayment(
         RestRequestInterface $restRequest,
         RestPreOrderPaymentCancellationRequestAttributesTransfer $restPreOrderPaymentCancellationRequestAttributesTransfer
+    ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestPaymentCustomersRequestAttributesTransfer $restPaymentCustomersRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomer(
+        RestRequestInterface $restRequest,
+        RestPaymentCustomersRequestAttributesTransfer $restPaymentCustomersRequestAttributesTransfer
     ): RestResponseInterface;
 }

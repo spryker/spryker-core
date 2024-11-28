@@ -53,3 +53,16 @@ payment-cancellations:
                   fields:
                       transactionId:
                           - NotBlank
+
+payment-customers:
+    post:
+        payment:
+            - Collection:
+                  fields:
+                      paymentMethodName:
+                          - NotBlank
+                      paymentProviderName:
+                          - NotBlank
+
+        customerPaymentServiceProviderData:
+            - NotBlank

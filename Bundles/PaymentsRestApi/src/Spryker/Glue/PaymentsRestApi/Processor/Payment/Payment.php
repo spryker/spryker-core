@@ -7,18 +7,18 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Payment;
 
+use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestPaymentCustomersRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPreOrderPaymentCancellationRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestPreOrderPaymentRequestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponse;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentAppClientInterface;
 use Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentClientInterface;
-use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentCustomerRestResponseBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
 
 class Payment implements PaymentInterface
 {
@@ -28,11 +28,36 @@ class Payment implements PaymentInterface
     protected PaymentsRestApiToPaymentClientInterface $paymentClient;
 
     /**
-     * @param \Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentClientInterface $paymentClient
+     * @var \Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentAppClientInterface
      */
-    public function __construct(PaymentsRestApiToPaymentClientInterface $paymentClient)
-    {
+    protected PaymentsRestApiToPaymentAppClientInterface $paymentAppClient;
+
+    /**
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface
+     */
+    protected PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder;
+
+    /**
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentCustomerRestResponseBuilderInterface
+     */
+    protected PaymentCustomerRestResponseBuilderInterface $paymentCustomerRestResponseBuilder;
+
+    /**
+     * @param \Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentClientInterface $paymentClient
+     * @param \Spryker\Glue\PaymentsRestApi\Dependency\Client\PaymentsRestApiToPaymentAppClientInterface $paymentAppClient
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentCustomerRestResponseBuilderInterface $paymentCustomerRestResponseBuilder
+     */
+    public function __construct(
+        PaymentsRestApiToPaymentClientInterface $paymentClient,
+        PaymentsRestApiToPaymentAppClientInterface $paymentAppClient,
+        PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder,
+        PaymentCustomerRestResponseBuilderInterface $paymentCustomerRestResponseBuilder
+    ) {
         $this->paymentClient = $paymentClient;
+        $this->paymentAppClient = $paymentAppClient;
+        $this->paymentMethodRestResponseBuilder = $paymentMethodRestResponseBuilder;
+        $this->paymentCustomerRestResponseBuilder = $paymentCustomerRestResponseBuilder;
     }
 
     /**
@@ -48,29 +73,17 @@ class Payment implements PaymentInterface
         $preOrderPaymentRequestTransfer = (new PreOrderPaymentRequestTransfer())->fromArray($restPreOrderPaymentRequestAttributesTransfer->toArray(), true);
         $preOrderPaymentRequestTransfer->setPayment(
             (new PaymentTransfer())
-                ->setPaymentProvider($restPreOrderPaymentRequestAttributesTransfer->getPaymentOrFail()->getPaymentProviderNameOrFail())
-                ->setPaymentMethod($restPreOrderPaymentRequestAttributesTransfer->getPaymentOrFail()->getPaymentMethodNameOrFail())
+                ->setPaymentProviderName($restPreOrderPaymentRequestAttributesTransfer->getPaymentOrFail()->getPaymentProviderNameOrFail())
+                ->setPaymentMethodName($restPreOrderPaymentRequestAttributesTransfer->getPaymentOrFail()->getPaymentMethodNameOrFail())
                 ->setAmount($restPreOrderPaymentRequestAttributesTransfer->getPaymentOrFail()->getAmountOrFail()),
         );
         $preOrderPaymentRequestTransfer->getQuoteOrFail()->setPayment($preOrderPaymentRequestTransfer->getPaymentOrFail());
 
         $preOrderPaymentResponseTransfer = $this->paymentClient->initializePreOrderPayment($preOrderPaymentRequestTransfer);
 
-        $restResource = new RestResource(PaymentsRestApiConfig::RESOURCE_TYPE_PAYMENTS, null, $preOrderPaymentResponseTransfer);
-
-        $restResponse = new RestResponse();
-        $restResponse->addResource($restResource);
-
-        if ($preOrderPaymentResponseTransfer->getIsSuccessful() === false) {
-            $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer
-                ->setDetail($preOrderPaymentResponseTransfer->getError())
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
+        return $this->paymentMethodRestResponseBuilder->createPaymentsRestResponse(
+            $preOrderPaymentResponseTransfer,
+        );
     }
 
     /**
@@ -83,29 +96,39 @@ class Payment implements PaymentInterface
         RestRequestInterface $restRequest,
         RestPreOrderPaymentCancellationRequestAttributesTransfer $restPreOrderPaymentCancellationRequestAttributesTransfer
     ): RestResponseInterface {
-        $preOrderPaymentRequestTransfer = (new PreOrderPaymentRequestTransfer())->fromArray($restPreOrderPaymentCancellationRequestAttributesTransfer->toArray(), true);
+        $preOrderPaymentRequestTransfer = (new PreOrderPaymentRequestTransfer())->fromArray(
+            $restPreOrderPaymentCancellationRequestAttributesTransfer->toArray(),
+            true,
+        );
         $preOrderPaymentRequestTransfer->setPayment(
             (new PaymentTransfer())
-                ->setPaymentProvider($restPreOrderPaymentCancellationRequestAttributesTransfer->getPaymentOrFail()->getPaymentProviderNameOrFail())
-                ->setPaymentMethod($restPreOrderPaymentCancellationRequestAttributesTransfer->getPaymentOrFail()->getPaymentMethodNameOrFail()),
+                ->setPaymentProviderName($restPreOrderPaymentCancellationRequestAttributesTransfer->getPaymentOrFail()->getPaymentProviderNameOrFail())
+                ->setPaymentMethodName($restPreOrderPaymentCancellationRequestAttributesTransfer->getPaymentOrFail()->getPaymentMethodNameOrFail()),
         );
 
         $preOrderPaymentResponseTransfer = $this->paymentClient->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
 
-        $restResource = new RestResource(PaymentsRestApiConfig::RESOURCE_TYPE_PAYMENT_CANCELLATIONS, null, $preOrderPaymentResponseTransfer);
+        return $this->paymentMethodRestResponseBuilder->createPaymentCancellationsRestResponse(
+            $preOrderPaymentResponseTransfer,
+        );
+    }
 
-        $restResponse = new RestResponse();
-        $restResponse->addResource($restResource);
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestPaymentCustomersRequestAttributesTransfer $restPaymentCustomersRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomer(
+        RestRequestInterface $restRequest,
+        RestPaymentCustomersRequestAttributesTransfer $restPaymentCustomersRequestAttributesTransfer
+    ): RestResponseInterface {
+        $paymentCustomerRequestTransfer = (new PaymentCustomerRequestTransfer())->fromArray($restPaymentCustomersRequestAttributesTransfer->toArray(), true);
 
-        if ($preOrderPaymentResponseTransfer->getIsSuccessful() === false) {
-            $restErrorMessageTransfer = new RestErrorMessageTransfer();
-            $restErrorMessageTransfer
-                ->setDetail($preOrderPaymentResponseTransfer->getError())
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $paymentCustomerResponseTransfer = $this->paymentAppClient->getCustomer($paymentCustomerRequestTransfer);
 
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
+        return $this->paymentCustomerRestResponseBuilder->createPaymentCustomersRestResponse(
+            $paymentCustomerResponseTransfer,
+        );
     }
 }

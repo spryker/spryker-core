@@ -8,13 +8,21 @@
 namespace Spryker\Zed\PaymentCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Cart\Dependency\PostSavePluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
+/**
+ * @method \Spryker\Zed\PaymentCartConnector\Business\PaymentCartConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\PaymentCartConnector\PaymentCartConnectorConfig getConfig()
+ */
+class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements CartOperationPostSavePluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Removes the payment information from the quote if not excluded by configuration {@link \Spryker\Zed\PaymentCartConnector\PaymentCartConnectorConfig::getExcludedPaymentMethods()}.
+     * - Expects `QuoteTransfer.payment` and `QuoteTransfer.payments` to be set.
+     * - Removes `Quote.payment` and `Quote.payments`.
+     * - Returns the modified quote.
      *
      * @api
      *
@@ -22,10 +30,8 @@ class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSave
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function postSave(QuoteTransfer $quoteTransfer)
+    public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setPayment(null);
-
-        return $quoteTransfer;
+        return $this->getFacade()->removeQuotePayment($quoteTransfer);
     }
 }

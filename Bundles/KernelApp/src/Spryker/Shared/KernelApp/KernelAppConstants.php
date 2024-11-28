@@ -16,4 +16,9 @@ interface KernelAppConstants
      * @var string
      */
     public const TENANT_IDENTIFIER = 'KERNEL_APP:TENANT_IDENTIFIER';
+
+    /**
+     * @var string
+     */
+    public const ENABLE_FORWARD_DEBUG_SESSION = 'KERNEL_APP:ENABLE_FORWARD_DEBUG_SESSION';
 }
