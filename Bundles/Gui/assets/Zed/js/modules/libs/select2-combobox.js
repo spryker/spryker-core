@@ -35,8 +35,9 @@ function select2combobox(selector) {
                     cache: true,
                     data: function (params) {
                         params.page = params.page || 1;
-                        for (const $parentField of $parentFields) {
-                            if ($parentField) {
+
+                        if ($parentFields) {
+                            for (const $parentField of $parentFields) {
                                 var autocompleteKey = $selectElement.data('dependent-autocomplete-key');
                                 params[autocompleteKey] = $parentField.val();
                             }
@@ -68,13 +69,15 @@ function select2combobox(selector) {
             var resetSelectElementOnParentChange = $selectElement[0].hasAttribute('data-dependent-reset-on-change');
 
             if (disableSelectElementWhenParentEmpty) {
-                if (!$parentField.val()) {
-                    $selectElement.prop('disabled', true);
-                }
+                for (const $parentField of $parentFields) {
+                    if (!$parentField.val()) {
+                        $selectElement.prop('disabled', true);
+                    }
 
-                $parentField.on('change', function () {
-                    $selectElement.prop('disabled', !$parentField.val());
-                });
+                    $parentField.on('change', function () {
+                        $selectElement.prop('disabled', !$parentField.val());
+                    });
+                }
             }
 
             if (resetSelectElementOnParentChange) {
