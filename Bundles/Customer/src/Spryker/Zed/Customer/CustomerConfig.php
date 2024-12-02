@@ -65,6 +65,11 @@ class CustomerConfig extends AbstractBundleConfig
     public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
 
     /**
+     * @var bool
+     */
+    protected const IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE = true;
+
+    /**
      * @var int
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
@@ -353,6 +358,19 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerInvalidSalutationErrorCode(): int
     {
         return static::ERROR_CODE_CUSTOMER_INVALID_SALUTATION;
+    }
+
+    /**
+     * Specification:
+     * - Returns whether customer email validation should be case sensitive.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCustomerEmailValidationCaseSensitive(): bool
+    {
+        return static::IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE;
     }
 
     /**

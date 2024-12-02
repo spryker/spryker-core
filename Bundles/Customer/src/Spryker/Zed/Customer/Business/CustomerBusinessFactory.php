@@ -308,8 +308,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function createEmailValidator()
     {
         return new EmailValidator(
-            $this->getQueryContainer(),
             $this->getUtilValidateService(),
+            $this->getRepository(),
         );
     }
 

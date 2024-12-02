@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence\Propel;
 
 use Orm\Zed\Customer\Persistence\Base\SpyCustomerQuery as BaseSpyCustomerQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -34,6 +35,26 @@ abstract class AbstractSpyCustomerQuery extends BaseSpyCustomerQuery
 
         if (!$withAnonymized) {
             $query->filterByAnonymizedAt(null);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param list<string>|string|null $email
+     * @param string $comparison
+     * @param bool $ignoreCase
+     *
+     * @return self
+     */
+    public function filterByEmail($email = null, $comparison = Criteria::EQUAL, bool $ignoreCase = true): self
+    {
+        $query = parent::filterByEmail($email, $comparison);
+
+        if ($ignoreCase === false) {
+            /** @var \Propel\Runtime\ActiveQuery\Criterion\BasicCriterion $criterion */
+            $criterion = $query->getCriterion(SpyCustomerTableMap::COL_EMAIL);
+            $criterion->setIgnoreCase(false);
         }
 
         return $query;

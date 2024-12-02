@@ -79,4 +79,12 @@ interface CustomerRepositoryInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): ?CustomerTransfer;
+
+    /**
+     * @param string $email
+     * @param int|null $exceptIdCustomer
+     *
+     * @return bool
+     */
+    public function isEmailAvailableForCustomer(string $email, ?int $exceptIdCustomer): bool;
 }

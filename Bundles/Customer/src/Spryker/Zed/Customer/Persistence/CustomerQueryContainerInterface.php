@@ -29,6 +29,8 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Customer\Persistence\CustomerRepository::isEmailAvailableForCustomer()} instead.
+     *
      * @param string $email
      * @param int $exceptIdCustomer
      *

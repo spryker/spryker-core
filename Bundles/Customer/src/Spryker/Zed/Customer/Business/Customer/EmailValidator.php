@@ -8,19 +8,14 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
 class EmailValidator implements EmailValidatorInterface
 {
     /**
      * @var int
      */
-    protected const COL_EMAIL_MAX_ALLOWED_LENGHT = 100;
-
-    /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    protected $queryContainer;
+    protected const COL_EMAIL_MAX_ALLOWED_LENGTH = 100;
 
     /**
      * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface
@@ -28,13 +23,20 @@ class EmailValidator implements EmailValidatorInterface
     protected $utilValidateService;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface $utilValidateService
+     * @var \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateServiceInterface $utilValidateService)
-    {
-        $this->queryContainer = $queryContainer;
+    protected CustomerRepositoryInterface $customerRepository;
+
+    /**
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface $utilValidateService
+     * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
+     */
+    public function __construct(
+        CustomerToUtilValidateServiceInterface $utilValidateService,
+        CustomerRepositoryInterface $customerRepository
+    ) {
         $this->utilValidateService = $utilValidateService;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -55,11 +57,7 @@ class EmailValidator implements EmailValidatorInterface
      */
     public function isEmailAvailableForCustomer($email, $idCustomer)
     {
-        $customerEntity = $this->queryContainer
-            ->queryCustomerByEmailApartFromIdCustomer($email, $idCustomer)
-            ->findOne();
-
-        return ($customerEntity === null);
+        return $this->customerRepository->isEmailAvailableForCustomer($email, $idCustomer);
     }
 
     /**
@@ -69,6 +67,6 @@ class EmailValidator implements EmailValidatorInterface
      */
     public function isEmailLengthValid(string $email): bool
     {
-        return mb_strlen($email) <= static::COL_EMAIL_MAX_ALLOWED_LENGHT;
+        return mb_strlen($email) <= static::COL_EMAIL_MAX_ALLOWED_LENGTH;
     }
 }

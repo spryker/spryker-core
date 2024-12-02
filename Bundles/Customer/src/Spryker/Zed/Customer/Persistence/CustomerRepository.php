@@ -287,6 +287,21 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     }
 
     /**
+     * @param string $email
+     * @param int|null $exceptIdCustomer
+     *
+     * @return bool
+     */
+    public function isEmailAvailableForCustomer(string $email, ?int $exceptIdCustomer): bool
+    {
+        return $this->getFactory()
+            ->createSpyCustomerQuery()
+            ->filterByEmail($email, Criteria::EQUAL, $this->getFactory()->getConfig()->isCustomerEmailValidationCaseSensitive())
+            ->filterByIdCustomer($exceptIdCustomer, Criteria::NOT_EQUAL)
+            ->count() === 0;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery

@@ -32,6 +32,8 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
      * @api
      *
      * @inheritDoc
+     *
+     * @deprecated Use {@link \Spryker\Zed\Customer\Persistence\CustomerRepository::isEmailAvailableForCustomer()} instead.
      */
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer)
     {
