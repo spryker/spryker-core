@@ -67,7 +67,7 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @var bool
      */
-    protected const IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE = true;
+    protected const IS_CUSTOMER_EMAIL_VALIDATION_CASE_SENSITIVE = false;
 
     /**
      * @var int
