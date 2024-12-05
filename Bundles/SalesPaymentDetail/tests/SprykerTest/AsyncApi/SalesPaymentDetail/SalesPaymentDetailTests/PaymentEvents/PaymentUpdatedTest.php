@@ -34,41 +34,46 @@ class PaymentUpdatedTest extends Unit
     /**
      * @return void
      */
-    public function testPaymentUpdatedMessagePersistPaymentReferenceForTheOrderFoundForTheOrderReference(): void
+    public function testGivenSalesPaymentDetailsDoNotExistsWhenThePaymentUpdatedMessageHasAnEntityReferenceAndAPaymentReferenceThenTheSalesPaymentDetailsArePersisted(): void
     {
         // Arrange
         $paymentReference = Uuid::uuid4()->toString();
 
         $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+
         $paymentUpdatedTransfer = $this->tester->havePaymentUpdatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             PaymentCreatedTransfer::PAYMENT_REFERENCE => $paymentReference,
             PaymentCreatedTransfer::DETAILS => '{"test": "value"}',
         ]);
 
+        $salesPaymentDetailTransfer = new SalesPaymentDetailTransfer();
+        $salesPaymentDetailTransfer->fromArray($paymentUpdatedTransfer->toArray(), true);
+
         // Act: This will trigger the MessageHandlerPlugin for this message.
         $this->tester->runMessageReceiveTest($paymentUpdatedTransfer, 'payment-events');
 
-        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsNotFound($paymentReference);
+        $this->tester->assertSalesPaymentDetailByPaymentReferenceIsIdentical($paymentReference, $salesPaymentDetailTransfer);
     }
 
     /**
      * @return void
      */
-    public function testPaymentUpdatedMessageIsIgnoredWhenPaymentReferenceForOrderReferenceAlreadyExists(): void
+    public function testGivenSalesPaymentDetailsExistsForAnOrderReferenceAndPaymentReferenceWhenThePaymentUpdatedMessageHasUpdatedDetailsThenTheNewDetailsArePersisted(): void
     {
         // Arrange
         $paymentReference = Uuid::uuid4()->toString();
+
         $salesOrderEntity = $this->tester->haveSalesOrderEntity();
 
         $salesPaymentDetailTransfer = $this->tester->haveSalesPaymentDetail([
             SalesPaymentDetailTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
             SalesPaymentDetailTransfer::PAYMENT_REFERENCE => $paymentReference,
             SalesPaymentDetailTransfer::DETAILS => '{"foo": "bar"}',
-            SalesPaymentDetailTransfer::STRUCTURED_DETAILS => ['foo' => 'bar'],
         ]);
+
+        // Change the data to be what is expected after the message is processed.
         $salesPaymentDetailTransfer->setDetails('{"foo": "hasChanged"}');
-        $salesPaymentDetailTransfer->setStructuredDetails(['foo' => 'hasChanged']);
 
         $paymentUpdatedTransfer = $this->tester->havePaymentUpdatedTransfer([
             PaymentCreatedTransfer::ENTITY_REFERENCE => $salesOrderEntity->getOrderReference(),
@@ -76,7 +81,7 @@ class PaymentUpdatedTest extends Unit
             PaymentCreatedTransfer::DETAILS => '{"foo": "hasChanged"}',
         ]);
 
-        // Act: This will trigger the MessageHandlerPlugin for this message.
+        // Act: This will trigger the MessageHandlerPlugin for this message and should update the existing sales payment detail.
         $this->tester->runMessageReceiveTest($paymentUpdatedTransfer, 'payment-events');
 
         // Assert

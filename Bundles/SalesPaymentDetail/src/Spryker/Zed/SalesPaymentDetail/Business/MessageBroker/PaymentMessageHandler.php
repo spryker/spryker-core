@@ -67,7 +67,14 @@ class PaymentMessageHandler implements PaymentMessageHandlerInterface
             $salesPaymentDetailTransfer = $this->salesPaymentDetailRepository->findByPaymentReference($paymentUpdatedTransfer->getPaymentReferenceOrFail());
         }
 
+        // When no details have been found by the required entity reference or payment reference, we create a new one.
+        // This happens in case of preOrderPayments where the PaymentCreated
         if (!$salesPaymentDetailTransfer) {
+            $salesPaymentDetailTransfer = new SalesPaymentDetailTransfer();
+            $salesPaymentDetailTransfer->fromArray($paymentUpdatedTransfer->toArray(), true);
+
+            $this->salesPaymentDetailEntityManager->createSalesPaymentDetails($salesPaymentDetailTransfer);
+
             return;
         }
 

@@ -392,7 +392,7 @@ class ForeignPayment implements ForeignPaymentInterface
     {
         $checkoutConfigurationTransfer = $paymentMethodTransfer->getPaymentMethodAppConfiguration()->getCheckoutConfiguration();
 
-        return !$checkoutConfigurationTransfer || $checkoutConfigurationTransfer->getStrategy() !== PaymentConfig::CHECKOUT_STRATEGY_EXPRESS_CHECKOUT;
+        return $checkoutConfigurationTransfer && $checkoutConfigurationTransfer->getStrategy() === PaymentConfig::CHECKOUT_STRATEGY_EXPRESS_CHECKOUT;
     }
 
     /**
