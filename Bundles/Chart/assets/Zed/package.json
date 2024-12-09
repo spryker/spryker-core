@@ -3,7 +3,7 @@
     "name": "spryker-zed-chart-plotly",
     "version": "1.0.0",
     "dependencies": {
-        "plotly.js": "~2.27.0"
+        "plotly.js": "~2.35.2"
     },
     "devDependencies": {
         "assert": "~2.1.0",
