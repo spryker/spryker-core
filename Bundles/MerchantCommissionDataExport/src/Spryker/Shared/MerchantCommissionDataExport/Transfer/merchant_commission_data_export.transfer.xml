@@ -23,6 +23,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="MerchantCommissionAmountTransformerRequest" strict="true">
@@ -51,6 +52,7 @@
 
     <transfer name="Error">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
 </transfers>

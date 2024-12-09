@@ -135,6 +135,25 @@ class ExportMerchantCommissionsByMerchantCommissionExportRequestTest extends Uni
     }
 
     /**
+     * @return void
+     */
+    public function testReturnsResponseTransferWithNotEmptyErrorMessage(): void
+    {
+        // Arrange
+        $merchantCommissionExportRequestTransfer = $this->createMerchantCommissionExportRequestTransfer();
+        $merchantCommissionExportRequestTransfer->setConnection('unknown-connection');
+
+        // Act
+        $merchantCommissionExportResponseTransfer = $this->tester->getFacade()->exportMerchantCommissionsByMerchantCommissionExportRequest(
+            $merchantCommissionExportRequestTransfer,
+        );
+
+        // Assert
+        $this->assertCount(1, $merchantCommissionExportResponseTransfer->getErrors());
+        $this->assertNotNull($merchantCommissionExportResponseTransfer->getErrors()[0]->getMessage());
+    }
+
+    /**
      * @dataProvider throwsNullValueExceptionWhenRequiredFieldIsMissingDataProvider
      *
      * @param \Generated\Shared\Transfer\MerchantCommissionExportRequestTransfer $merchantCommissionExportRequestTransfer

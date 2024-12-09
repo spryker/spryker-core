@@ -69,6 +69,6 @@ class MerchantCommissionDataExportMapper implements MerchantCommissionDataExport
     {
         return $errorTransfer
             ->setMessage($messageTransfer->getValue())
-            ->fromArray($messageTransfer->toArray(), true);
+            ->setParameters($messageTransfer->getParameters());
     }
 }
