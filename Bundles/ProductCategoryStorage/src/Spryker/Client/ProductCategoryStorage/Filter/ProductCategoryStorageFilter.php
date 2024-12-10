@@ -73,7 +73,10 @@ class ProductCategoryStorageFilter implements ProductCategoryStorageFilterInterf
             return false;
         }
 
-        if ($httpReferer && strpos($httpReferer, $productCategoryStorageTransfer->getUrlOrFail()) === false) {
+        if (
+            $httpReferer
+            && strpos(urldecode($httpReferer), $productCategoryStorageTransfer->getUrlOrFail()) === false
+        ) {
             return false;
         }
 

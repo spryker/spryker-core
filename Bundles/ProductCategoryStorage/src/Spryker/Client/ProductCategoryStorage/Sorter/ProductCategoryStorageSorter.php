@@ -21,8 +21,10 @@ class ProductCategoryStorageSorter implements ProductCategoryStorageSorterInterf
         $sortedProductCategoryStorageTransfers = [];
         $alreadySortedCategoryIds = [];
 
-        foreach ($productCategoryStorageTransfers as $key => $productCategoryStorageTransfer) {
-            unset($productCategoryStorageTransfers[$key]);
+        foreach ($productCategoryStorageTransfers as $productCategoryStorageTransfer) {
+            if (in_array($productCategoryStorageTransfer->getCategoryIdOrFail(), $alreadySortedCategoryIds, true)) {
+                continue;
+            }
 
             $sortedProductCategoryStorageTransfers = $this->addParentProductCategoryStorageTransfer(
                 $productCategoryStorageTransfer,
@@ -33,13 +35,6 @@ class ProductCategoryStorageSorter implements ProductCategoryStorageSorterInterf
 
             $sortedProductCategoryStorageTransfers = $this->addSortedProductCategoryStorageTransfer(
                 $productCategoryStorageTransfer,
-                $sortedProductCategoryStorageTransfers,
-                $alreadySortedCategoryIds,
-            );
-
-            $sortedProductCategoryStorageTransfers = $this->addChildProductCategoryStorageTransfer(
-                $productCategoryStorageTransfer,
-                $productCategoryStorageTransfers,
                 $sortedProductCategoryStorageTransfers,
                 $alreadySortedCategoryIds,
             );
@@ -68,6 +63,13 @@ class ProductCategoryStorageSorter implements ProductCategoryStorageSorterInterf
         );
 
         if ($parentProductCategoryStorageTransfer) {
+            $sortedProductCategoryStorageTransfers = $this->addParentProductCategoryStorageTransfer(
+                $parentProductCategoryStorageTransfer,
+                $productCategoryStorageTransfers,
+                $sortedProductCategoryStorageTransfers,
+                $alreadySortedCategoryIds,
+            );
+
             $sortedProductCategoryStorageTransfers = $this->addSortedProductCategoryStorageTransfer(
                 $parentProductCategoryStorageTransfer,
                 $sortedProductCategoryStorageTransfers,
@@ -115,54 +117,5 @@ class ProductCategoryStorageSorter implements ProductCategoryStorageSorterInterf
         }
 
         return $sortedProductCategoryStorageTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductCategoryStorageTransfer $productCategoryStorageTransfer
-     * @param list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
-     * @param list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer> $sortedProductCategoryStorageTransfers
-     * @param list<int> $alreadySortedCategoryIds
-     *
-     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
-     */
-    protected function addChildProductCategoryStorageTransfer(
-        ProductCategoryStorageTransfer $productCategoryStorageTransfer,
-        array $productCategoryStorageTransfers,
-        array $sortedProductCategoryStorageTransfers,
-        array &$alreadySortedCategoryIds
-    ): array {
-        $childProductCategoryStorageTransfer = $this->getChildProductCategoryStorageTransfer(
-            $productCategoryStorageTransfers,
-            $productCategoryStorageTransfer,
-        );
-
-        if ($childProductCategoryStorageTransfer) {
-            $sortedProductCategoryStorageTransfers = $this->addSortedProductCategoryStorageTransfer(
-                $childProductCategoryStorageTransfer,
-                $sortedProductCategoryStorageTransfers,
-                $alreadySortedCategoryIds,
-            );
-        }
-
-        return $sortedProductCategoryStorageTransfers;
-    }
-
-    /**
-     * @param list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductCategoryStorageTransfer $parentProductCategoryStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer|null
-     */
-    protected function getChildProductCategoryStorageTransfer(
-        array $productCategoryStorageTransfers,
-        ProductCategoryStorageTransfer $parentProductCategoryStorageTransfer
-    ): ?ProductCategoryStorageTransfer {
-        foreach ($productCategoryStorageTransfers as $productCategoryStorageTransfer) {
-            if (in_array($parentProductCategoryStorageTransfer->getCategoryIdOrFail(), $productCategoryStorageTransfer->getParentCategoryIds(), true)) {
-                return $productCategoryStorageTransfer;
-            }
-        }
-
-        return null;
     }
 }

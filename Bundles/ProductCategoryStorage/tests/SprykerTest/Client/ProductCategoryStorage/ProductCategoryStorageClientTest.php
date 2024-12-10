@@ -343,8 +343,20 @@ class ProductCategoryStorageClientTest extends Unit
             [
                 [
                     $this->createProductCategoryStorageTransfer(
-                        static::CATEGORY_URL_CAMERA,
-                        static::CATEGORY_ID_CAMERA,
+                        static::CATEGORY_URL_COMPUTER_NOTEBOOK,
+                        static::CATEGORY_ID_COMPUTER_NOTEBOOK,
+                        [static::CATEGORY_ID_COMPUTER],
+                    ),
+                    $this->createProductCategoryStorageTransfer(
+                        static::CATEGORY_URL_COMPUTER,
+                        static::CATEGORY_ID_COMPUTER,
+                        [static::CATEGORY_ID_ROOT],
+                    ),
+                ],
+                [
+                    $this->createProductCategoryStorageTransfer(
+                        static::CATEGORY_URL_COMPUTER,
+                        static::CATEGORY_ID_COMPUTER,
                         [static::CATEGORY_ID_ROOT],
                     ),
                     $this->createProductCategoryStorageTransfer(
@@ -352,14 +364,18 @@ class ProductCategoryStorageClientTest extends Unit
                         static::CATEGORY_ID_COMPUTER_NOTEBOOK,
                         [static::CATEGORY_ID_COMPUTER],
                     ),
+                ],
+            ],
+            [
+                [
                     $this->createProductCategoryStorageTransfer(
                         static::CATEGORY_URL_CAMERA_DIGITAL,
                         static::CATEGORY_ID_CAMERA_DIGITAL,
                         [static::CATEGORY_ID_CAMERA],
                     ),
                     $this->createProductCategoryStorageTransfer(
-                        static::CATEGORY_URL_COMPUTER,
-                        static::CATEGORY_ID_COMPUTER,
+                        static::CATEGORY_URL_CAMERA,
+                        static::CATEGORY_ID_CAMERA,
                         [static::CATEGORY_ID_ROOT],
                     ),
                 ],
@@ -373,16 +389,6 @@ class ProductCategoryStorageClientTest extends Unit
                         static::CATEGORY_URL_CAMERA_DIGITAL,
                         static::CATEGORY_ID_CAMERA_DIGITAL,
                         [static::CATEGORY_ID_CAMERA],
-                    ),
-                    $this->createProductCategoryStorageTransfer(
-                        static::CATEGORY_URL_COMPUTER,
-                        static::CATEGORY_ID_COMPUTER,
-                        [static::CATEGORY_ID_ROOT],
-                    ),
-                    $this->createProductCategoryStorageTransfer(
-                        static::CATEGORY_URL_COMPUTER_NOTEBOOK,
-                        static::CATEGORY_ID_COMPUTER_NOTEBOOK,
-                        [static::CATEGORY_ID_COMPUTER],
                     ),
                 ],
             ],
@@ -411,5 +417,54 @@ class ProductCategoryStorageClientTest extends Unit
     protected function createProductCategoryStorageClient(): ProductCategoryStorageClientInterface
     {
         return new ProductCategoryStorageClient();
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductCategoriesByHttpRefererExcludesNonMatchingUrlsWithSpecialCharacters(): void
+    {
+        // Arrange
+        $productCategoryStorageTransfers = [
+            (new ProductCategoryStorageTransfer())
+                ->setUrl('/essen/gemüse'),
+            (new ProductCategoryStorageTransfer())
+                ->setUrl('/startseite/büromöbel'),
+        ];
+
+        // Act
+        $result = $this->createProductCategoryStorageClient()
+            ->filterProductCategoriesByHttpReferer($productCategoryStorageTransfers, 'https://example.com/startseite/b%C3%BCrom%C3%B6bel');
+
+        // Assert
+        $this->assertCount(1, $result);
+        $this->assertSame('/startseite/büromöbel', $result[0]->getUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterProductCategoriesByHttpRefererIncludesRelatedCategoriesWithSpecialCharacters(): void
+    {
+        // Arrange
+        $productCategoryStorageTransfers = [
+            (new ProductCategoryStorageTransfer())
+                ->setUrl('/essen')
+                ->setCategoryId(1)
+                ->setParentCategoryIds([2]),
+            (new ProductCategoryStorageTransfer())
+                ->setUrl('/essen/gemüse')
+                ->setCategoryId(2)
+                ->setParentCategoryIds([]),
+        ];
+
+        // Act
+        $result = $this->createProductCategoryStorageClient()
+            ->filterProductCategoriesByHttpReferer($productCategoryStorageTransfers, 'https://example.com/categorie/essen/gem%C3%BCse');
+
+        // Assert
+        $this->assertCount(2, $result);
+        $this->assertSame('/essen', $result[0]->getUrl());
+        $this->assertSame('/essen/gemüse', $result[1]->getUrl());
     }
 }
