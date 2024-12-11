@@ -38,7 +38,7 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
             $this->createItemHydrator(),
             $this->createCartItemAdder(),
             $this->getCartReorderQuoteProviderStrategyPlugins(),
-            $this->getCartReorderItemFilterPlugins(),
+            $this->getCartReorderOrderItemFilterPlugins(),
             $this->getCartPreReorderPlugins(),
             $this->getCartPostReorderPlugins(),
         );
@@ -127,11 +127,11 @@ class CartReorderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface>
      */
-    public function getCartReorderItemFilterPlugins(): array
+    public function getCartReorderOrderItemFilterPlugins(): array
     {
-        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_FILTER);
+        return $this->getProvidedDependency(CartReorderDependencyProvider::PLUGINS_CART_REORDER_ORDER_ITEM_FILTER);
     }
 
     /**

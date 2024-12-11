@@ -61,9 +61,9 @@ class CartReorderCreator implements CartReorderCreatorInterface
     protected array $cartReorderQuoteProviderStrategyPlugins;
 
     /**
-     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface>
+     * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface>
      */
-    protected array $cartReorderItemFilterPlugins;
+    protected array $cartReorderOrderItemFilterPlugins;
 
     /**
      * @var list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface>
@@ -81,7 +81,7 @@ class CartReorderCreator implements CartReorderCreatorInterface
      * @param \Spryker\Zed\CartReorder\Business\Hydrator\ItemHydratorInterface $itemHydrator
      * @param \Spryker\Zed\CartReorder\Business\Adder\CartItemAdderInterface $cartItemAdder
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface> $cartReorderQuoteProviderStrategyPlugins
-     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface> $cartReorderItemFilterPlugins
+     * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface> $cartReorderOrderItemFilterPlugins
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface> $cartPreReorderPlugins
      * @param list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface> $cartPostReorderPlugins
      */
@@ -91,7 +91,7 @@ class CartReorderCreator implements CartReorderCreatorInterface
         ItemHydratorInterface $itemHydrator,
         CartItemAdderInterface $cartItemAdder,
         array $cartReorderQuoteProviderStrategyPlugins,
-        array $cartReorderItemFilterPlugins,
+        array $cartReorderOrderItemFilterPlugins,
         array $cartPreReorderPlugins,
         array $cartPostReorderPlugins
     ) {
@@ -100,7 +100,7 @@ class CartReorderCreator implements CartReorderCreatorInterface
         $this->itemHydrator = $itemHydrator;
         $this->cartItemAdder = $cartItemAdder;
         $this->cartReorderQuoteProviderStrategyPlugins = $cartReorderQuoteProviderStrategyPlugins;
-        $this->cartReorderItemFilterPlugins = $cartReorderItemFilterPlugins;
+        $this->cartReorderOrderItemFilterPlugins = $cartReorderOrderItemFilterPlugins;
         $this->cartPreReorderPlugins = $cartPreReorderPlugins;
         $this->cartPostReorderPlugins = $cartPostReorderPlugins;
     }
@@ -152,7 +152,7 @@ class CartReorderCreator implements CartReorderCreatorInterface
             ->setOrder($orderTransfer)
             ->setQuote($quoteTransfer);
         $cartReorderTransfer = $this->addOrderItemsToCartReorder(
-            $this->filterOrderItems($cartReorderRequestTransfer, $orderTransfer),
+            $this->filterOrderItems($cartReorderRequestTransfer),
             $cartReorderTransfer,
         );
 
@@ -176,42 +176,28 @@ class CartReorderCreator implements CartReorderCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function filterOrderItems(
-        CartReorderRequestTransfer $cartReorderRequestTransfer,
-        OrderTransfer $orderTransfer
-    ): ArrayObject {
-        $filteredOrderItems = $this->filterOrderItemsByIdSalesOrderItem($orderTransfer, $cartReorderRequestTransfer);
-        $filteredOrderItems = $this->executeCartReorderItemFilterPlugins(
-            $filteredOrderItems,
-            $cartReorderRequestTransfer,
-            $orderTransfer,
-        );
+    protected function filterOrderItems(CartReorderRequestTransfer $cartReorderRequestTransfer): ArrayObject
+    {
+        $filteredOrderItems = $this->filterOrderItemsByIdSalesOrderItem($cartReorderRequestTransfer);
 
-        return $filteredOrderItems->count() ? $filteredOrderItems : $orderTransfer->getItems();
+        return $this->executeCartReorderOrderItemFilterPlugins($filteredOrderItems, $cartReorderRequestTransfer);
     }
 
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $filteredOrderItems
      * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function executeCartReorderItemFilterPlugins(
+    protected function executeCartReorderOrderItemFilterPlugins(
         ArrayObject $filteredOrderItems,
-        CartReorderRequestTransfer $cartReorderRequestTransfer,
-        OrderTransfer $orderTransfer
+        CartReorderRequestTransfer $cartReorderRequestTransfer
     ): ArrayObject {
-        foreach ($this->cartReorderItemFilterPlugins as $cartReorderItemFilterPlugin) {
-            $filteredItems = $cartReorderItemFilterPlugin->filter($cartReorderRequestTransfer, $orderTransfer);
-
-            foreach ($filteredItems as $filteredItem) {
-                $filteredOrderItems->append($filteredItem);
-            }
+        foreach ($this->cartReorderOrderItemFilterPlugins as $cartReorderOrderItemFilterPlugin) {
+            $filteredOrderItems = $cartReorderOrderItemFilterPlugin->filter($filteredOrderItems, $cartReorderRequestTransfer);
         }
 
         return $filteredOrderItems;
@@ -311,21 +297,18 @@ class CartReorderCreator implements CartReorderCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
-    protected function filterOrderItemsByIdSalesOrderItem(
-        OrderTransfer $orderTransfer,
-        CartReorderRequestTransfer $cartReorderRequestTransfer
-    ): ArrayObject {
-        $filteredOrderItems = new ArrayObject();
+    protected function filterOrderItemsByIdSalesOrderItem(CartReorderRequestTransfer $cartReorderRequestTransfer): ArrayObject
+    {
         if (!$cartReorderRequestTransfer->getSalesOrderItemIds()) {
-            return $filteredOrderItems;
+            return $cartReorderRequestTransfer->getOrderOrFail()->getItems();
         }
 
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
+        $filteredOrderItems = new ArrayObject();
+        foreach ($cartReorderRequestTransfer->getOrderOrFail()->getItems() as $itemTransfer) {
             if (in_array($itemTransfer->getIdSalesOrderItemOrFail(), $cartReorderRequestTransfer->getSalesOrderItemIds())) {
                 $filteredOrderItems->append($itemTransfer);
             }

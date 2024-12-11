@@ -40,6 +40,13 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CART_REORDER_ORDER_ITEM_FILTER = 'PLUGINS_CART_REORDER_ORDER_ITEM_FILTER';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @var string
+     */
     public const PLUGINS_CART_REORDER_ITEM_FILTER = 'PLUGINS_CART_REORDER_ITEM_FILTER';
 
     /**
@@ -79,7 +86,7 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addCartReorderRequestValidatorPlugins($container);
         $container = $this->addCartReorderQuoteProviderStrategyPlugins($container);
-        $container = $this->addCartReorderItemFilterPlugins($container);
+        $container = $this->addCartReorderOrderItemFilterPlugins($container);
         $container = $this->addCartReorderValidatorPlugins($container);
         $container = $this->addCartPreReorderPlugins($container);
         $container = $this->addCartReorderItemHydratorPlugins($container);
@@ -150,10 +157,10 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartReorderItemFilterPlugins(Container $container): Container
+    protected function addCartReorderOrderItemFilterPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CART_REORDER_ITEM_FILTER, function () {
-            return $this->getCartReorderItemFilterPlugins();
+        $container->set(static::PLUGINS_CART_REORDER_ORDER_ITEM_FILTER, function () {
+            return $this->getCartReorderOrderItemFilterPlugins();
         });
 
         return $container;
@@ -246,9 +253,9 @@ class CartReorderDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface>
+     * @return list<\Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface>
      */
-    protected function getCartReorderItemFilterPlugins(): array
+    protected function getCartReorderOrderItemFilterPlugins(): array
     {
         return [];
     }

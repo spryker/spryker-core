@@ -23,7 +23,7 @@ interface CartReorderClientInterface
      * - Determines the `QuoteTransfer` to use by executing {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface} plugins.
      *   If no plugins provide a `QuoteTransfer`, it will use the `CartReorderRequestTransfer.quote`.
      * - Filters items from the order by `CartReorderRequestTransfer.salesOrderItemIds`.
-     * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface} plugins to filter items by the provided reorder request.
+     * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface} plugins to filter items by the provided reorder request.
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface} plugins to perform any necessary actions before reordering items.
      * - Validates the reorder request by executing {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderValidatorPluginInterface} plugins.
      * - Executes {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface} plugins to hydrate the items in the reorder request.

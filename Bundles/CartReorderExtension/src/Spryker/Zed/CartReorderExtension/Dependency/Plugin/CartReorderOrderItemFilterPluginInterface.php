@@ -9,29 +9,24 @@ namespace Spryker\Zed\CartReorderExtension\Dependency\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartReorderRequestTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface} instead.
- *
  * Use this plugin interface to filter reorder items.
  */
-interface CartReorderItemFilterPluginInterface
+interface CartReorderOrderItemFilterPluginInterface
 {
     /**
      * Specification:
      * - Filters reorder items.
      * - Uses the provided `CartReorderRequestTransfer` parameters to filter reorder items.
+     * - Returns filtered array of `ItemTransfer` objects.
      *
      * @api
      *
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer> $filteredItems
      * @param \Generated\Shared\Transfer\CartReorderRequestTransfer $cartReorderRequestTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \ArrayObject<array-key, \Generated\Shared\Transfer\ItemTransfer>
      */
-    public function filter(
-        CartReorderRequestTransfer $cartReorderRequestTransfer,
-        OrderTransfer $orderTransfer
-    ): ArrayObject;
+    public function filter(ArrayObject $filteredItems, CartReorderRequestTransfer $cartReorderRequestTransfer): ArrayObject;
 }

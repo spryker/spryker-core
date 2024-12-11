@@ -233,6 +233,8 @@
 
     <transfer name="CartReorderRequest" strict="true">
         <property name="bundleItemIdentifiers" type="array" singular="bundleItemIdentifier"/>
+        <property name="order" type="Order"/>
+        <property name="salesOrderItemIds" type="array" singular="idSalesOrderItem"/>
     </transfer>
 
     <transfer name="CartReorder" strict="true">

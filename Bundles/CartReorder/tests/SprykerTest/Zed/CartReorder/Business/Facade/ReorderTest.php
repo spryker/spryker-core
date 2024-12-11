@@ -17,8 +17,8 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\CartReorder\CartReorderDependencyProvider;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPostReorderPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartPreReorderPluginInterface;
-use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemHydratorPluginInterface;
+use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderPreAddToCartPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderQuoteProviderStrategyPluginInterface;
 use Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderRequestValidatorPluginInterface;
@@ -229,7 +229,7 @@ class ReorderTest extends Unit
         return [
             'request validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_REQUEST_VALIDATOR, $this->getCartReorderRequestValidatorPluginMock()],
             'quote provider plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_QUOTE_PROVIDER_STRATEGY, $this->getCartReorderQuoteProviderStrategyPluginMock()],
-            'filter plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_FILTER, $this->getCartReorderItemFilterPluginMock()],
+            'filter order item plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ORDER_ITEM_FILTER, $this->getCartReorderOrderItemFilterPluginMock()],
             'validator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_VALIDATOR, $this->getCartReorderValidatorPluginMock()],
             'pre reorder plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_PRE_REORDER, $this->getCartPreReorderPluginMock()],
             'item hydrator plugin stack' => [CartReorderDependencyProvider::PLUGINS_CART_REORDER_ITEM_HYDRATOR, $this->getCartReorderItemHydratorPluginMock()],
@@ -293,19 +293,19 @@ class ReorderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderItemFilterPluginInterface
+     * @return \Spryker\Zed\CartReorderExtension\Dependency\Plugin\CartReorderOrderItemFilterPluginInterface
      */
-    protected function getCartReorderItemFilterPluginMock(): CartReorderItemFilterPluginInterface
+    protected function getCartReorderOrderItemFilterPluginMock(): CartReorderOrderItemFilterPluginInterface
     {
-        $cartReorderItemFilterPluginMock = $this
-            ->getMockBuilder(CartReorderItemFilterPluginInterface::class)
+        $cartReorderOrderItemFilterPluginMock = $this
+            ->getMockBuilder(CartReorderOrderItemFilterPluginInterface::class)
             ->getMock();
 
-        $cartReorderItemFilterPluginMock
+        $cartReorderOrderItemFilterPluginMock
             ->expects($this->once())
             ->method('filter');
 
-        return $cartReorderItemFilterPluginMock;
+        return $cartReorderOrderItemFilterPluginMock;
     }
 
     /**
