@@ -20,17 +20,27 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @var int
      */
-    protected const MIN_LENGTH_USER_PASSWORD = 8;
+    protected const MIN_LENGTH_USER_PASSWORD = 12;
 
     /**
      * @var int
      */
-    protected const MAX_LENGTH_USER_PASSWORD = 72;
+    protected const MAX_LENGTH_USER_PASSWORD = 128;
 
     /**
      * @var bool
      */
     protected const IS_POST_SAVE_PLUGINS_ENABLED_AFTER_USER_STATUS_CHANGE = false;
+
+    /**
+     * @var string
+     */
+    protected const PASSWORD_VALIDATION_PATTERN = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~])[A-Za-z\d!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PASSWORD_VALIDATION_MESSAGE = 'Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed.';
 
     /**
      * @api
@@ -99,6 +109,32 @@ class UserConfig extends AbstractBundleConfig
     public function isPostSavePluginsEnabledAfterUserStatusChange(): bool
     {
         return static::IS_POST_SAVE_PLUGINS_ENABLED_AFTER_USER_STATUS_CHANGE;
+    }
+
+    /**
+     * Specification:
+     * - Returns the pattern for user password validation.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUserPasswordPattern(): string
+    {
+        return static::PASSWORD_VALIDATION_PATTERN;
+    }
+
+    /**
+     * Specification:
+     * - Returns the message for user password validation.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getPasswordValidationMessage(): string
+    {
+        return static::PASSWORD_VALIDATION_MESSAGE;
     }
 
     /**

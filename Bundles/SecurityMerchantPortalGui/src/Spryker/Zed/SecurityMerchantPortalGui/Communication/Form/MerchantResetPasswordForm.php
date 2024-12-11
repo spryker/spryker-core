@@ -11,7 +11,10 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\SecurityMerchantPortalGui\Communication\SecurityMerchantPortalGuiCommunicationFactory getFactory()
@@ -83,6 +86,15 @@ class MerchantResetPasswordForm extends AbstractType
         $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
+                new Length([
+                    'min' => $this->getConfig()->getMerchantUserPasswordMinLength(),
+                    'max' => $this->getConfig()->getMerchantUserPasswordMaxLength(),
+                ]),
+                new Regex([
+                    'pattern' => $this->getConfig()->getMerchantUserPasswordPattern(),
+                    'message' => $this->getConfig()->getPasswordValidationMessage(),
+                ]),
+                new NotCompromisedPassword(),
             ],
             'invalid_message' => static::MESSAGE_PASSWORD_FIELDS_ERROR,
             'first_options' => [

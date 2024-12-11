@@ -79,7 +79,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @var int
      */
-    protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
+    protected const MAX_LENGTH_CUSTOMER_PASSWORD = 128;
 
     /**
      * @var int

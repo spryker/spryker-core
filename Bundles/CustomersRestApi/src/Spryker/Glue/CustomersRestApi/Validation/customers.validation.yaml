@@ -22,13 +22,16 @@ customers:
         password:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
+            - Regex:
+                  pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~])[A-Za-z\d!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~]+$/'
+            - NotCompromisedPassword
         confirmPassword:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
         acceptedTerms:
             - IsTrue
     patch:
@@ -193,17 +196,20 @@ customer-password:
         password:
             - NotBlank
             - Length:
-                  max: 72
+                  max: 128
         newPassword:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
+            - Regex:
+                  pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~])[A-Za-z\d!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~]+$/'
+            - NotCompromisedPassword
         confirmPassword:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
 
 customer-forgotten-password:
     post:
@@ -220,13 +226,16 @@ customer-restore-password:
         password:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
+            - Regex:
+                  pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~])[A-Za-z\d!@#$%^&*()\_\-\=\+\[\]\{\}\|;:<>.,\/?\\~]+$/'
+            - NotCompromisedPassword
         confirmPassword:
             - NotBlank
             - Length:
-                  min: 7
-                  max: 72
+                  min: 12
+                  max: 128
 
 customer-confirmation:
     post:

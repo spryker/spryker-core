@@ -7,3 +7,4 @@ Password,Password
 "Forgot password?","Forgot password?"
 "Reset Password","Reset Password"
 "Back to Login","Back to Login"
+"Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed.","Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed."

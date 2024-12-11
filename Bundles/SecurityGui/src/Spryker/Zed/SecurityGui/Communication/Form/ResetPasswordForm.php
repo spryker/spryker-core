@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\SecurityGui\Communication\SecurityGuiCommunicationFactory getFactory()
@@ -35,7 +36,7 @@ class ResetPasswordForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUserNameField($builder);
+        $this->addPasswordField($builder);
     }
 
     /**
@@ -51,7 +52,7 @@ class ResetPasswordForm extends AbstractType
      *
      * @return $this
      */
-    protected function addUserNameField(FormBuilderInterface $builder)
+    protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
@@ -59,6 +60,10 @@ class ResetPasswordForm extends AbstractType
                 new Length([
                     'min' => $this->getConfig()->getUserPasswordMinLength(),
                     'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                ]),
+                new Regex([
+                    'pattern' => $this->getConfig()->getUserPasswordPattern(),
+                    'message' => $this->getConfig()->getPasswordValidationMessage(),
                 ]),
                 new NotCompromisedPassword(),
             ],

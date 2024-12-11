@@ -12,7 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
@@ -131,6 +134,15 @@ class ChangePasswordForm extends AbstractType
                 'type' => PasswordType::class,
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'min' => $this->getConfig()->getMerchantUserPasswordPattern(),
+                        'max' => $this->getConfig()->getMerchantUserPasswordMaxLength(),
+                    ]),
+                    new Regex([
+                        'pattern' => $this->getConfig()->getMerchantUserPasswordPattern(),
+                        'message' => $this->getConfig()->getPasswordValidationMessage(),
+                    ]),
+                    new NotCompromisedPassword(),
                 ],
             ]);
 

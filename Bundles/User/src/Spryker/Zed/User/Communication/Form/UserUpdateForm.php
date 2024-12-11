@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
@@ -85,6 +86,10 @@ class UserUpdateForm extends UserForm
                     new Length([
                         'min' => $this->getConfig()->getUserPasswordMinLength(),
                         'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                    ]),
+                    new Regex([
+                        'pattern' => $this->getConfig()->getUserPasswordPattern(),
+                        'message' => $this->getConfig()->getPasswordValidationMessage(),
                     ]),
                     new NotCompromisedPassword(),
                 ],

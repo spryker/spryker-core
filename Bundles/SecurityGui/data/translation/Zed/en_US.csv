@@ -11,3 +11,4 @@ Password,Password
 "Repeat Password","Repeat Password"
 "Recover password","Recover password"
 "If there is an account associated with this email, you will receive an Email with further instructions.","If there is an account associated with this email, you will receive an Email with further instructions."
+"Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed.","Your password must include at least one uppercase letter, one lowercase letter, one number, and one special character from the following list: !@#$%^&*()_-+=[]{}|;:<>.,/?\~. Non-Latin and other special characters are not allowed."

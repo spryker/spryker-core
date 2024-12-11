@@ -209,6 +209,10 @@ class UserForm extends AbstractType
                         'min' => $this->getConfig()->getUserPasswordMinLength(),
                         'max' => $this->getConfig()->getUserPasswordMaxLength(),
                     ]),
+                    new Regex([
+                        'pattern' => $this->getConfig()->getUserPasswordPattern(),
+                        'message' => $this->getConfig()->getPasswordValidationMessage(),
+                    ]),
                     new NotCompromisedPassword(),
                 ],
                 'invalid_message' => 'The password fields must match.',
@@ -257,7 +261,7 @@ class UserForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<mixed> $choices
      *
      * @return $this
      */
