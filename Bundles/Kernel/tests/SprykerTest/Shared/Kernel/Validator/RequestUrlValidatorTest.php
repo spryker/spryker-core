@@ -210,12 +210,26 @@ class RequestUrlValidatorTest extends Unit
                 'redirectRequest' => true,
                 'validationResult' => true,
             ],
-            'relative url to some page with umlauts' => [
+            'relative url to some page with German umlauts' => [
                 'allowedDomains' => ['alloweddomain.com'],
                 'url' => '/some-pageäöüÄÖÜß/indexäöüÄÖÜß/some-page-childäöüÄÖÜß',
                 'isStrictDomainRedirectEnabled' => true,
                 'redirectRequest' => true,
                 'validationResult' => true,
+            ],
+            'relative url to some page with international characters' => [
+                'allowedDomains' => [],
+                'url' => '/some-pageАЕЁИОУЫЭЮЯаеёиоуыэюяÄÖÜßÉÈÊËÀÂÇÙÛÎÏÁÍÓÚÑÜÀÈÌÒÙÇÁÀÃÂÉÊÍÓÔÕÚÇČĎĚŇŘŠŤŮŽĄĆĘŁŃÓŚŹŻÁÉÍÓÖŐÚÜŰĂÂÎȘȚÆØÅΆΈΉΊΌΎΏÇĞİŞÖÜ/index/some-page-child',
+                'isStrictDomainRedirectEnabled' => true,
+                'redirectRequest' => true,
+                'validationResult' => true,
+            ],
+            'relative url to some page with referer url' => [
+                'allowedDomains' => [],
+                'url' => '/en/catalog/change-view-mode?mode=list&refererurl=/\google.com',
+                'isStrictDomainRedirectEnabled' => true,
+                'redirectRequest' => true,
+                'validationResult' => false,
             ],
             'relative url to some with a few parameters' => [
                 'allowedDomains' => ['alloweddomain.com'],
