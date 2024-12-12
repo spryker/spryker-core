@@ -9,13 +9,11 @@ namespace Spryker\Shared\Twig\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Symfony\Bridge\Twig\Extension\DumpExtension;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 
-/**
- * @deprecated Use {@link \Spryker\Shared\Twig\Plugin\VarDumperTwigPlugin} instead.
- */
-class DebugTwigPlugin implements TwigPluginInterface
+class VarDumperTwigPlugin implements TwigPluginInterface
 {
     /**
      * @var string
@@ -24,6 +22,7 @@ class DebugTwigPlugin implements TwigPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Added pretty print for debug extension.
      *
      * @api
      *
@@ -38,7 +37,7 @@ class DebugTwigPlugin implements TwigPluginInterface
             return $twig;
         }
 
-        $twig->addExtension(new DebugExtension());
+        $twig->addExtension(new DumpExtension(new VarCloner()));
 
         return $twig;
     }

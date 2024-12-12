@@ -21,7 +21,8 @@
         "spryker/event-dispatcher": "*",
         "spryker/propel": "*",
         "spryker/silex": "*",
-        "spryker/testify": "*"
+        "spryker/testify": "*",
+        "symfony/var-dumper": "*"
     },
     "suggest": {
         "spryker/event-dispatcher": "If you want to use EventDispatcher plugin.",
