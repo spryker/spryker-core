@@ -33,16 +33,6 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     /**
      * @var string
      */
-    protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/(.+)-merchant-portal-gui/';
-
-    /**
-     * @var string
-     */
-    protected const IGNORABLE_PATH_PATTERN = '^/security-merchant-portal-gui';
-
-    /**
-     * @var string
-     */
     protected const SECURITY_MERCHANT_PORTAL_LOGIN_FORM_AUTHENTICATOR = 'security.MerchantUser.login_form.authenticator';
 
     /**
@@ -56,15 +46,23 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected OptionsBuilderInterface $optionsBuilder;
 
     /**
+     * @var \Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig
+     */
+    protected SecurityMerchantPortalGuiConfig $config;
+
+    /**
      * @param \Spryker\Zed\SecurityMerchantPortalGui\Communication\Builder\OptionsBuilderInterface $optionsBuilder
      * @param \Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface $authenticator
+     * @param \Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig $config
      */
     public function __construct(
         OptionsBuilderInterface $optionsBuilder,
-        AuthenticatorInterface $authenticator
+        AuthenticatorInterface $authenticator,
+        SecurityMerchantPortalGuiConfig $config
     ) {
         $this->optionsBuilder = $optionsBuilder;
         $this->authenticator = $authenticator;
+        $this->config = $config;
     }
 
     /**
@@ -104,7 +102,7 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     {
         return $securityBuilder->addAccessRules([
             [
-                static::IGNORABLE_PATH_PATTERN,
+                $this->config->getIgnorablePathPattern(),
                 static::ACCESS_MODE_PUBLIC,
             ],
             [
@@ -132,9 +130,9 @@ class SecurityBuilderExpander implements SecurityBuilderExpanderInterface
     protected function getMerchantPortalRoutePattern(): string
     {
         if (APPLICATION == static::APPLICATION_MERCHANT_PORTAL) {
-            return sprintf('(^/$|%s)', static::MERCHANT_PORTAL_ROUTE_PATTERN);
+            return sprintf('(^/$|%s)', $this->config->getMerchantPortalRoutePattern());
         }
 
-        return static::MERCHANT_PORTAL_ROUTE_PATTERN;
+        return $this->config->getMerchantPortalRoutePattern();
     }
 }

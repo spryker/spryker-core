@@ -203,6 +203,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
         return new SecurityBuilderExpander(
             $this->createOptionsBuilder(),
             $this->createMechantLoginFormAuthenticator(),
+            $this->getConfig(),
         );
     }
 

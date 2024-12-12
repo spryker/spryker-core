@@ -29,6 +29,16 @@ class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    protected const MERCHANT_PORTAL_ROUTE_PATTERN = '^/(.+)-merchant-portal-gui/';
+
+    /**
+     * @var string
+     */
+    protected const IGNORABLE_PATH_PATTERN = '^/security-merchant-portal-gui';
+
+    /**
+     * @var string
+     */
     protected const MERCHANT_PORTAL_SECURITY_BLOCKER_ENTITY_TYPE = 'customer';
 
     /**
@@ -153,5 +163,31 @@ class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
     public function getPasswordValidationMessage(): string
     {
         return static::PASSWORD_VALIDATION_MESSAGE;
+    }
+
+    /**
+     * Specification:
+     * - Returns the ignorable security Merchant Portal path pattern.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIgnorablePathPattern(): string
+    {
+        return static::IGNORABLE_PATH_PATTERN;
+    }
+
+    /**
+     * Specification:
+     * - Returns the route pattern for the merchant portal.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalRoutePattern(): string
+    {
+        return static::MERCHANT_PORTAL_ROUTE_PATTERN;
     }
 }
