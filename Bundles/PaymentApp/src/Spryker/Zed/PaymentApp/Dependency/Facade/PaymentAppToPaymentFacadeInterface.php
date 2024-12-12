@@ -7,13 +7,42 @@
 
 namespace Spryker\Zed\PaymentApp\Dependency\Facade;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
 use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface PaymentAppToPaymentFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer): PreOrderPaymentResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function confirmPreOrderPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer): PreOrderPaymentResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

@@ -30,7 +30,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
  *
  * @SuppressWarnings(\SprykerTest\Zed\Payment\PHPMD)
  *
- * @method \Spryker\Zed\PaymentApp\Business\PaymentAppFacadeInterface getFacade()
+ * @method \Spryker\Zed\PaymentAppShipment\Business\PaymentAppShipmentFacadeInterface getFacade()
  */
 class PaymentAppShipmentBusinessTester extends Actor
 {

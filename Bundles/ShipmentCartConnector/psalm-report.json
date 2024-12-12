@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 74,
+            "line_to": 74,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShipmentCartConnector\\Dependency\\Facade\\ShipmentCartConnectorToShipmentFacadeInterface::getAvailableMethodsByShipment cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
+            "line_from": 99,
+            "line_to": 99,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ShipmentCartConnector\\Business\\Cart\\ShipmentCartExpander::findAvailableShipmentMethodByIdShipmentMethod cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
+            "line_from": 99,
+            "line_to": 99,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdShipmentMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
+            "line_from": 109,
+            "line_to": 109,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
+            "line_from": 129,
+            "line_to": 129,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdShipmentMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -75,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
+            "line_from": 135,
+            "line_to": 135,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSourcePrice on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -87,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 161,
-            "line_to": 161,
+            "line_from": 162,
+            "line_to": 162,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -99,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 162,
-            "line_to": 162,
+            "line_from": 163,
+            "line_to": 163,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getStoreCurrencyPrice on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -111,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 179,
-            "line_to": 179,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCurrencyIsoCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -123,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 180,
-            "line_to": 180,
+            "line_from": 181,
+            "line_to": 181,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -135,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 243,
-            "line_to": 243,
+            "line_from": 244,
+            "line_to": 244,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ShipmentCartConnector\\Business\\Cart\\ShipmentCartExpander::setExpensePrice cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -147,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 244,
-            "line_to": 244,
+            "line_from": 245,
+            "line_to": 245,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\ShipmentCartConnector\\Business\\Cart\\ShipmentCartExpander::setExpensePrice cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -159,20 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 260,
-            "line_to": 260,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ShipmentCartConnector\\Dependency\\Service\\ShipmentCartConnectorToShipmentServiceInterface::getShipmentHashKey cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
-            "snippet": "            $expenseShipmentHashKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());",
-            "selected_text": "$expenseTransfer->getShipment()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 282,
-            "line_to": 282,
+            "line_from": 287,
+            "line_to": 287,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
@@ -183,25 +171,13 @@
         },
         {
             "severity": "info",
-            "line_from": 284,
-            "line_to": 284,
+            "line_from": 289,
+            "line_to": 289,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPrices on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
             "snippet": "        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {",
             "selected_text": "getPrices",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 285,
-            "line_to": 285,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getCode on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Cart/ShipmentCartExpander.php",
-            "snippet": "            if ($moneyValueTransfer->getCurrency()->getCode() !== $currencyTransfer->getCode()) {",
-            "selected_text": "getCode",
             "error_level": 3,
             "shortcode": 83
         },
@@ -459,18 +435,6 @@
         },
         {
             "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getCode on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Model/ShipmentCartExpander.php",
-            "snippet": "            if ($moneyValueTransfer->getCurrency()->getCode() !== $currencyTransfer->getCode()) {",
-            "selected_text": "getCode",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
             "line_from": 218,
             "line_to": 218,
             "type": "PossiblyNullArgument",
@@ -603,18 +567,6 @@
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method setMethod on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Sanitizer/ShipmentSanitizer.php",
-            "snippet": "                $itemTransfer->getShipment()->setMethod(null);",
-            "selected_text": "setMethod",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
             "line_from": 84,
             "line_to": 84,
             "type": "PossiblyNullReference",
@@ -636,18 +588,6 @@
             "selected_text": "getItems",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCartConnector/src/Spryker/Zed/ShipmentCartConnector/Business/Sanitizer/ShipmentSanitizer.php",
-            "snippet": "        if (!$quoteTransfer->getItems()->count()) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -784,5 +724,5 @@
             "shortcode": 152
         }
     ],
-    "count": 65
+    "count": 60
 }

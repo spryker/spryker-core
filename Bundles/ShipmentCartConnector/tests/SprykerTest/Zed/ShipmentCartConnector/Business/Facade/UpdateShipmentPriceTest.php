@@ -154,4 +154,33 @@ class UpdateShipmentPriceTest extends Unit
             $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testUpdateShouldNotFailWithDifferentExpenseTypes(): void
+    {
+        // Arrange
+        $sourcePrice = 322;
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => ShipmentCartConnectorBusinessTester::STORE_NAME_DE,
+        ]);
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], ShipmentCartConnectorBusinessTester::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
+
+        $shipmentMethodTransfer->setCurrencyIsoCode(ShipmentCartConnectorBusinessTester::CURRENCY_ISO_CODE_USD)
+            ->setSourcePrice((new MoneyValueBuilder([MoneyValueTransfer::GROSS_AMOUNT => $sourcePrice]))->build());
+
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithDifferentExpenseTypes($shipmentMethodTransfer, $storeTransfer);
+
+        // Act
+        $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
+
+        // Assert
+        $this->assertSame(
+            $sourcePrice,
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
+        );
+    }
 }

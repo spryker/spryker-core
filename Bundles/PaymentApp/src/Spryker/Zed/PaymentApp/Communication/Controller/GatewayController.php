@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -38,5 +40,27 @@ class GatewayController extends AbstractGatewayController
         PaymentCustomerRequestTransfer $paymentCustomerRequestTransfer
     ): PaymentCustomerResponseTransfer {
         return $this->getFacade()->getCustomer($paymentCustomerRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPaymentAction(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFacade()->initializePreOrderPayment($preOrderPaymentRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPaymentAction(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFacade()->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
     }
 }

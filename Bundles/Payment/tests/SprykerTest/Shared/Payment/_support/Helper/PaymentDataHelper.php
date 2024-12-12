@@ -58,7 +58,7 @@ class PaymentDataHelper extends Module
      */
     public function havePaymentMethodWithPaymentProviderPersisted(array $seed = []): PaymentMethodTransfer
     {
-        $paymentProviderTransfer = $this->havePaymentProvider($seed);
+        $paymentProviderTransfer = $this->havePaymentProvider($seed[PaymentMethodTransfer::PAYMENT_PROVIDER] ?? $seed);
 
         $seed[PaymentMethodTransfer::PAYMENT_PROVIDER] = $paymentProviderTransfer;
         $seed[PaymentMethodTransfer::ID_PAYMENT_PROVIDER] = $paymentProviderTransfer->getIdPaymentProvider();

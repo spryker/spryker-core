@@ -22,14 +22,16 @@ class PaymentAppShipmentFacade extends AbstractFacade implements PaymentAppShipm
      * @api
      *
      * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+     * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer
      */
     public function processExpressCheckoutPaymentRequest(
-        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer,
+        ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
     ): ExpressCheckoutPaymentResponseTransfer {
         return $this->getFactory()
             ->createExpressCheckoutPaymentRequestExecutor()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, $expressCheckoutPaymentResponseTransfer);
     }
 }

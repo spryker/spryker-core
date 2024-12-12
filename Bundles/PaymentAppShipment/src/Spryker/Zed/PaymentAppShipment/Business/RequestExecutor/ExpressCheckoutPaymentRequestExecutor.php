@@ -59,6 +59,7 @@ class ExpressCheckoutPaymentRequestExecutor implements ExpressCheckoutPaymentReq
 
     /**
      * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+     * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
      *
      * @throws \Spryker\Zed\PaymentAppShipment\Business\Exception\MissingExpressCheckoutPaymentException
      * @throws \Spryker\Zed\PaymentAppShipment\Business\Exception\MissingExpressCheckoutShipmentMethodException
@@ -66,7 +67,8 @@ class ExpressCheckoutPaymentRequestExecutor implements ExpressCheckoutPaymentReq
      * @return \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer
      */
     public function processExpressCheckoutPaymentRequest(
-        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer,
+        ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
     ): ExpressCheckoutPaymentResponseTransfer {
         if (!$expressCheckoutPaymentRequestTransfer->getQuoteOrFail()->getPayments()->offsetExists(0)) {
             throw new MissingExpressCheckoutPaymentException(
@@ -104,7 +106,7 @@ class ExpressCheckoutPaymentRequestExecutor implements ExpressCheckoutPaymentReq
             $quoteTransfer->setSkipRecalculation(true),
         );
 
-        return (new ExpressCheckoutPaymentResponseTransfer())->setQuote($quoteTransfer);
+        return $expressCheckoutPaymentResponseTransfer->setQuote($quoteTransfer);
     }
 
     /**

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PaymentAppShipment\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
+use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -80,7 +81,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
         $expressCheckoutPaymentResponseTransfer = $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer */
@@ -133,7 +134,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
         $expressCheckoutPaymentResponseTransfer = $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer */
@@ -201,7 +202,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
         $expressCheckoutPaymentResponseTransfer = $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
 
         // Assert
         /** @var \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer */
@@ -240,7 +241,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
          $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
     }
 
     /**
@@ -277,7 +278,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
     }
 
     /**
@@ -332,7 +333,7 @@ class PaymentAppShipmentFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()
-            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+            ->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, new ExpressCheckoutPaymentResponseTransfer());
     }
 
     /**

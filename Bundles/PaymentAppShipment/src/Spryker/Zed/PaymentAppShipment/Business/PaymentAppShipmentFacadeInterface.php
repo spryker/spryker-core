@@ -37,6 +37,7 @@ interface PaymentAppShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+     * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
      *
      * @throws \Spryker\Zed\PaymentAppShipment\Business\Exception\MissingExpressCheckoutPaymentException
      * @throws \Spryker\Zed\PaymentAppShipment\Business\Exception\MissingExpressCheckoutShipmentMethodException
@@ -44,6 +45,7 @@ interface PaymentAppShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer
      */
     public function processExpressCheckoutPaymentRequest(
-        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer,
+        ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
     ): ExpressCheckoutPaymentResponseTransfer;
 }

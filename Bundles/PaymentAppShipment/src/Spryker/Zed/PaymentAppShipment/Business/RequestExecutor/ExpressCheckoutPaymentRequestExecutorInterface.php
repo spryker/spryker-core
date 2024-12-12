@@ -14,10 +14,12 @@ interface ExpressCheckoutPaymentRequestExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+     * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer
      */
     public function processExpressCheckoutPaymentRequest(
-        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer,
+        ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
     ): ExpressCheckoutPaymentResponseTransfer;
 }

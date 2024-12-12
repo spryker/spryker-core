@@ -61,7 +61,7 @@ interface PaymentFacadeInterface
      * - Terminates payment authorization if not.
      * - Receives all the necessary information about the foreign payment method.
      * - Terminates payment authorization if the payment method is not found or no `paymentAuthorizationEndpoint` is specified for it.
-     * - Uses `PaymentAuthorizeRequestExpanderPluginInterface` plugins stack to expand payment authorization request data.
+     * - Terminates payment authorization when the PaymentMethods checkout strategy is `express-checkout`.
      * - Enhances the payment authorization request data by including the tenant identifier value if it is provided.
      * - Sends an HTTP request with all pre-selected quote fields using URL from `PaymentMethod.paymentAuthorizationEndpoint`.
      * - Updates CheckoutResponseTransfer with errors or the redirect URL according to response received.

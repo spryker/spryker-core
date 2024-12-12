@@ -14,6 +14,8 @@
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="store" type="Store"/>
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="PaymentCustomerRequest" strict="true">
@@ -82,6 +84,7 @@
     </transfer>
 
     <transfer name="Error">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -105,6 +108,21 @@
     <transfer name="Endpoint" strict="true">
         <property name="name" type="string"/>
         <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="PreOrderPaymentRequest">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+    </transfer>
+
+    <transfer name="PreOrderPaymentResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
     </transfer>
 
 </transfers>

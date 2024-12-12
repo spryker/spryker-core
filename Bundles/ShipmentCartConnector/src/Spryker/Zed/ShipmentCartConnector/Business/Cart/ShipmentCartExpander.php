@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 use Spryker\Zed\ShipmentCartConnector\Business\Calculator\ShipmentMethodPriceCalculatorInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
@@ -257,6 +258,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $shipmentHashKey = $shipmentGroupTransfer->getHash();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            if ($expenseTransfer->getType() !== ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
+
             $expenseShipmentHashKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
             if ($shipmentHashKey === $expenseShipmentHashKey) {
                 return $expenseTransfer;

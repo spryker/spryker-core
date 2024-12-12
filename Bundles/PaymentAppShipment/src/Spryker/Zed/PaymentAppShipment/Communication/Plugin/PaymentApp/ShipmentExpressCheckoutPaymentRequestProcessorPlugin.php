@@ -43,12 +43,14 @@ class ShipmentExpressCheckoutPaymentRequestProcessorPlugin extends AbstractPlugi
      * @api
      *
      * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+     * @param \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer
      */
     public function processExpressCheckoutPaymentRequest(
-        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer
+        ExpressCheckoutPaymentRequestTransfer $expressCheckoutPaymentRequestTransfer,
+        ExpressCheckoutPaymentResponseTransfer $expressCheckoutPaymentResponseTransfer
     ): ExpressCheckoutPaymentResponseTransfer {
-        return $this->getFacade()->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer);
+        return $this->getFacade()->processExpressCheckoutPaymentRequest($expressCheckoutPaymentRequestTransfer, $expressCheckoutPaymentResponseTransfer);
     }
 }

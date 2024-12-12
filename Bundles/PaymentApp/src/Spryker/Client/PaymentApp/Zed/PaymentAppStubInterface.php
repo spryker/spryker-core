@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 
 interface PaymentAppStubInterface
 {
@@ -38,4 +40,42 @@ interface PaymentAppStubInterface
      * @return \Generated\Shared\Transfer\PaymentCustomerResponseTransfer
      */
     public function getCustomer(PaymentCustomerRequestTransfer $paymentCustomerRequestTransfer): PaymentCustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes a request through the KernelApp to a PSP App to initialize the preOrderPayment.
+     * - Requires `PreOrderPaymentRequestTransfer.quote` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer.payment` to be set.
+     * - Returns a `PreOrderPaymentResponseTransfer.isSuccessful` with `true` if the request was successful.
+     * - Returns a `PreOrderPaymentResponseTransfer.preOrderPaymentData` with PSP specific data.
+     * - Returns a `PaymentCustomerResponseTransfer.error` in case of an error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes a request through the KernelApp to a PSP App to cancel a preOrderPayment.
+     * - Requires `PreOrderPaymentRequestTransfer.quote` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer.payment` to be set.
+     * - Returns a `PreOrderPaymentResponseTransfer.isSuccessful` with `true` if the request was successful.
+     * - Returns a `PreOrderPaymentResponseTransfer.preOrderPaymentData` with PSP specific data.
+     * - Returns a `PaymentCustomerResponseTransfer.error` in case of an error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
 }

@@ -12,6 +12,8 @@ use Spryker\Zed\PaymentApp\Business\Customer\PaymentCustomer;
 use Spryker\Zed\PaymentApp\Business\Customer\PaymentCustomerInterface;
 use Spryker\Zed\PaymentApp\Business\Expander\QuotePaymentExpander;
 use Spryker\Zed\PaymentApp\Business\Expander\QuotePaymentExpanderInterface;
+use Spryker\Zed\PaymentApp\Business\PreOrderPayment\PreOrderPayment;
+use Spryker\Zed\PaymentApp\Business\PreOrderPayment\PreOrderPaymentInterface;
 use Spryker\Zed\PaymentApp\Business\RequestExecutor\ExpressCheckoutPaymentRequestExecutor;
 use Spryker\Zed\PaymentApp\Business\RequestExecutor\ExpressCheckoutPaymentRequestExecutorInterface;
 use Spryker\Zed\PaymentApp\Dependency\Facade\PaymentAppToCartFacadeInterface;
@@ -25,6 +27,14 @@ use Spryker\Zed\PaymentApp\PaymentAppDependencyProvider;
  */
 class PaymentAppBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\PaymentApp\Business\PreOrderPayment\PreOrderPaymentInterface
+     */
+    public function createPreOrderPayment(): PreOrderPaymentInterface
+    {
+        return new PreOrderPayment($this->getPaymentFacade(), $this->createExpressCheckoutPaymentRequestExecutor());
+    }
+
     /**
      * @return \Spryker\Zed\PaymentApp\Business\RequestExecutor\ExpressCheckoutPaymentRequestExecutorInterface
      */

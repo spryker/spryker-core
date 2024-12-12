@@ -66,6 +66,7 @@ class ExpressCheckoutPaymentRequestExecutor implements ExpressCheckoutPaymentReq
         }
 
         $quoteResponseTransfer = $this->cartFacade->reloadItemsInQuote($quoteTransfer);
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->addQuoteErrors($quoteResponseTransfer, $expressCheckoutPaymentResponseTransfer);
         }
@@ -87,13 +88,12 @@ class ExpressCheckoutPaymentRequestExecutor implements ExpressCheckoutPaymentReq
         foreach ($this->expressCheckoutPaymentRequestProcessorPlugins as $expressCheckoutPaymentRequestProcessorPlugin) {
             $expressCheckoutPaymentResponseTransfer = $expressCheckoutPaymentRequestProcessorPlugin->processExpressCheckoutPaymentRequest(
                 $expressCheckoutPaymentRequestTransfer,
+                $expressCheckoutPaymentResponseTransfer,
             );
 
             if ($expressCheckoutPaymentResponseTransfer->getErrors()->count()) {
                 return $expressCheckoutPaymentResponseTransfer;
             }
-
-            $expressCheckoutPaymentRequestTransfer->fromArray($expressCheckoutPaymentResponseTransfer->toArray(), true);
         }
 
         return $expressCheckoutPaymentResponseTransfer;

@@ -148,6 +148,35 @@ class ShipmentCartConnectorBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithDifferentExpenseTypes(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): CartChangeTransfer {
+        $shipmentTransfer = $this->createShipmentTransfer($shipmentMethodTransfer);
+
+        $itemTransfer = (new ItemBuilder())
+            ->build()
+            ->setSku(static::TEST_SKU)
+            ->setGroupKey(static::TEST_SKU)
+            ->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withStore($storeTransfer->toArray())
+            ->withCurrency()
+            ->withItem($itemTransfer->toArray())
+            ->withAnotherExpense($this->createExpenseTransfer($shipmentTransfer)->toArray())
+            ->withAnotherExpense()
+            ->build();
+
+        return (new CartChangeBuilder())->withQuote($quoteTransfer->toArray())->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer
      */

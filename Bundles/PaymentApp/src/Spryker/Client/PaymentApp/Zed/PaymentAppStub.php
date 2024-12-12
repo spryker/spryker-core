@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Spryker\Client\PaymentApp\Dependency\Client\PaymentAppToZedRequestClientInterface;
 
 class PaymentAppStub implements PaymentAppStubInterface
@@ -60,5 +62,37 @@ class PaymentAppStub implements PaymentAppStubInterface
         $paymentCustomerResponseTransfer = $this->zedRequestClient->call('/payment-app/gateway/get-customer', $paymentCustomerRequestTransfer, null);
 
         return $paymentCustomerResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\PaymentApp\Communication\Controller\GatewayController::initializePreOrderPaymentAction()
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        /** @var \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer */
+        $preOrderPaymentResponseTransfer = $this->zedRequestClient->call('/payment-app/gateway/initialize-pre-order-payment', $preOrderPaymentRequestTransfer);
+
+        return $preOrderPaymentResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\PaymentApp\Communication\Controller\GatewayController::cancelPreOrderPaymentAction()
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        /** @var \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer $preOrderPaymentResponseTransfer */
+        $preOrderPaymentResponseTransfer = $this->zedRequestClient->call('/payment-app/gateway/cancel-pre-order-payment', $preOrderPaymentRequestTransfer);
+
+        return $preOrderPaymentResponseTransfer;
     }
 }

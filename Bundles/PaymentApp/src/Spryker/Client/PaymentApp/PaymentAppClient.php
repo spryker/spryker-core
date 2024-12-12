@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -45,5 +47,35 @@ class PaymentAppClient extends AbstractClient implements PaymentAppClientInterfa
     public function getCustomer(PaymentCustomerRequestTransfer $paymentCustomerRequestTransfer): PaymentCustomerResponseTransfer
     {
         return $this->getFactory()->createPaymentAppStub()->getCustomer($paymentCustomerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFactory()->createPaymentAppStub()->initializePreOrderPayment($preOrderPaymentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer {
+        return $this->getFactory()->createPaymentAppStub()->cancelPreOrderPayment($preOrderPaymentRequestTransfer);
     }
 }

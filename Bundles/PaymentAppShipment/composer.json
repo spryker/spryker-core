@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "spryker/kernel": "^3.30.0",
-        "spryker/payment-app-extension": "^1.0.0",
+        "spryker/payment-app-extension": "^1.1.0",
         "spryker/shipment": "^8.0.0",
         "spryker/transfer": "^3.27.0"
     },

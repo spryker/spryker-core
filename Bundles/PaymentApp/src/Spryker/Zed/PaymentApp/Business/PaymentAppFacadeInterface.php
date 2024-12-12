@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\PaymentApp\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentRequestTransfer;
 use Generated\Shared\Transfer\ExpressCheckoutPaymentResponseTransfer;
 use Generated\Shared\Transfer\PaymentCustomerRequestTransfer;
 use Generated\Shared\Transfer\PaymentCustomerResponseTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentRequestTransfer;
+use Generated\Shared\Transfer\PreOrderPaymentResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentAppFacadeInterface
 {
@@ -53,4 +57,54 @@ interface PaymentAppFacadeInterface
     public function getCustomer(
         PaymentCustomerRequestTransfer $paymentCustomerRequestTransfer
     ): PaymentCustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Initializes a pre-order payment (pre-order is before the order gets persisted).
+     * - Requires `PreOrderPaymentRequestTransfer.quote` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer.quote.store` to be set.
+     * - Requires `PreOrderPaymentRequestTransfer.paymentMethod` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer.isSuccess` true if the payment was initialized.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function initializePreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
+
+    /**
+     * Specification:
+     * - Confirms a pre-order payment after the order was persisted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function confirmPreOrderPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): void;
+
+    /**
+     * Specification:
+     * - Cancels a pre-order payment (pre-order is before the order gets persisted).
+     * - Requires `PreOrderPaymentResponseTransfer.paymentMethod` to be set.
+     * - Returns `PreOrderPaymentResponseTransfer.isSuccess` true if the cancellation was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PreOrderPaymentResponseTransfer
+     */
+    public function cancelPreOrderPayment(
+        PreOrderPaymentRequestTransfer $preOrderPaymentRequestTransfer
+    ): PreOrderPaymentResponseTransfer;
 }
