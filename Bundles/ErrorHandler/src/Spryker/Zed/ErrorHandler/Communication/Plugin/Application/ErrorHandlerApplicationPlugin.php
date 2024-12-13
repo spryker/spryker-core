@@ -47,8 +47,8 @@ class ErrorHandlerApplicationPlugin extends AbstractPlugin implements Applicatio
     protected function registerPrettyErrorHandler(): void
     {
         $whoops = new Run();
-        $whoops->appendHandler($this->getPrettyPageHandler());
         $whoops->appendHandler($this->getErrorLoggerCallbackHandler());
+        $whoops->appendHandler($this->getPrettyPageHandler());
 
         $whoops->register();
     }
