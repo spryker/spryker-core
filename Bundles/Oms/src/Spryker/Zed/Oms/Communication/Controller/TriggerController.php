@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
@@ -65,6 +66,18 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
+     * @var string
+     */
+    protected const FORM_FIELD_CSRF_TOKEN = '_token';
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::OMS_TRIGGER_FORM_PREFIX
+     *
+     * @var string
+     */
+    protected const OMS_TRIGGER_FORM_PREFIX = 'oms_trigger_form_';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -73,7 +86,8 @@ class TriggerController extends AbstractController
     {
         /** @var string $redirect */
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
-        if (!$this->isValidPostRequest($request)) {
+
+        if (!$this->isValidPostRequest($request) && !$this->isCsrfTokenValid($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
@@ -196,6 +210,27 @@ class TriggerController extends AbstractController
             ->handleRequest($request);
 
         return $form->isSubmitted() && $form->isValid();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isCsrfTokenValid(Request $request): bool
+    {
+        /** @var string|null $token */
+        $token = $request->request->get(static::FORM_FIELD_CSRF_TOKEN);
+        if (!$token) {
+            return false;
+        }
+
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $idSalesOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
+
+        return $this->getFactory()
+            ->getCsrfTokenManager()
+            ->isTokenValid(new CsrfToken(static::OMS_TRIGGER_FORM_PREFIX . $event . '_' . $idSalesOrderItem, $token));
     }
 
     /**

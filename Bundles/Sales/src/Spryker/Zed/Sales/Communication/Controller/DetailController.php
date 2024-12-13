@@ -41,6 +41,11 @@ class DetailController extends AbstractController
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
     /**
+     * @var string
+     */
+    protected const OMS_TRIGGER_FORM_PREFIX = 'oms_trigger_form_';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -82,6 +87,7 @@ class DetailController extends AbstractController
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
             'tableColumnHeaders' => $this->getFactory()->createOrderItemsTableExpander()->getColumnHeaders(),
             'tableColumnCellsContent' => $this->getFactory()->createOrderItemsTableExpander()->getColumnCellsContent($orderTransfer->getItems()),
+            'eventsFormAttributeMap' => $this->getEventsFormAttributeMap($eventsGroupedByItem, $idSalesOrder),
         ], $blockResponseData);
     }
 
@@ -190,5 +196,38 @@ class DetailController extends AbstractController
     protected function getSubRequestHandler()
     {
         return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
+    }
+
+    /**
+     * @param array<array<string>> $eventsGroupedByItem
+     * @param int $idSalesOrder
+     *
+     * @return array<array<int, array<string, string>>>
+     */
+    protected function getEventsFormAttributeMap(array $eventsGroupedByItem, int $idSalesOrder): array
+    {
+        $eventsFormAttributeMap = [];
+        $redirectUrl = '/sales/detail?id-sales-order=' . $idSalesOrder;
+        $csrfTokenManager = $this->getFactory()->getCsrfTokenManager();
+
+        foreach ($eventsGroupedByItem as $idSalesOrderItem => $events) {
+            foreach ($events as $event) {
+                $token = $csrfTokenManager->getToken(static::OMS_TRIGGER_FORM_PREFIX . $event . '_' . $idSalesOrderItem);
+                $action = sprintf(
+                    '/oms/trigger/submit-trigger-event-for-order-items?event=%s&id-sales-order-item=%d&redirect=%s',
+                    urlencode($event),
+                    $idSalesOrderItem,
+                    urlencode($redirectUrl),
+                );
+
+                $eventsFormAttributeMap[$idSalesOrderItem][] = [
+                    'label' => ucfirst($event),
+                    'action' => $action,
+                    'token' => $token->getValue(),
+                ];
+            }
+        }
+
+        return $eventsFormAttributeMap;
     }
 }

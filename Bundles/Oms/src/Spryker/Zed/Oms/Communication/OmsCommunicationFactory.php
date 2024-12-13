@@ -13,6 +13,8 @@ use Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilderInterfa
 use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactory;
 use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
@@ -47,5 +49,13 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
     public function createOmsTriggerFormCollectionBuilder(): OmsTriggerFormCollectionBuilderInterface
     {
         return new OmsTriggerFormCollectionBuilder($this->createOmsTriggerFormFactory());
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+     */
+    public function getCsrfTokenManager(): CsrfTokenManagerInterface
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 }

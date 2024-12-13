@@ -145,6 +145,13 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
 
     /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
+     * @var string
+     */
+    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -172,6 +179,19 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTimeoutProcessorPlugins($container);
         $container = $this->addOmsEventTriggeredListenerPlugins($container);
         $container = $this->addMessageBrokerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCsrfProviderService($container);
 
         return $container;
     }
@@ -640,6 +660,20 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
             return new OmsToMessageBrokerBridge($container->getLocator()->messageBroker()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCsrfProviderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_FORM_CSRF_PROVIDER);
         });
 
         return $container;

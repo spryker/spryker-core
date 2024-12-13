@@ -1,5 +1,21 @@
-{{ render(controller('/oms/render-form/order-item', {
-    redirectUrl: redirectUrl,
-    idSalesOrderItem: idSalesOrderItem,
-    eventsGroupedByItem: eventsGroupedByItem,
-})) }}
+{% if eventsFormAttributeMap[idSalesOrderItem] is defined %}
+    {% for formAttribute in eventsFormAttributeMap[idSalesOrderItem] %}
+        <form name="oms_trigger_form" method="post" action="{{ formAttribute.action }}" class="oms-trigger-form">
+            <div id="oms_trigger_form" class="oms-trigger-form">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm trigger-event safe-submit btn">
+                        {{ formAttribute.label | trans }}
+                    </button>
+                </div>
+                <input type="hidden" name="_token" value="{{ formAttribute.token }}">
+            </div>
+        </form>
+    {% endfor %}
+{% else %}
+    {{ render(controller('/oms/render-form/order-item', {
+        redirectUrl: redirectUrl,
+        idSalesOrderItem: idSalesOrderItem,
+        eventsGroupedByItem: eventsGroupedByItem,
+    })) }}
+{% endif %}
+
