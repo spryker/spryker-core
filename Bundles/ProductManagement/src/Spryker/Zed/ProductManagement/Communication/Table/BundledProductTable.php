@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\DecimalObject\Decimal;
@@ -57,6 +56,31 @@ class BundledProductTable extends AbstractTable
      * @var string
      */
     public const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+
+    /**
+     * @var string
+     */
+    protected const ALIAS_IN_THIS_BUNDLE = 'inThisBundle';
+
+    /**
+     * @var string
+     */
+    protected const ALIAS_HAS_ANOTHER_BUNDLE = 'hasAnotherBundle';
+
+    /**
+     * @var string
+     */
+    protected const COL_ID_PRODUCT_BUNDLE = 'id_product_bundle';
+
+    /**
+     * @var string
+     */
+    protected const VIRTUAL_COL_BUNDLE_ID = 'bundleId';
+
+    /**
+     * @var string
+     */
+    protected const COL_FK_PRODUCT = 'fk_product';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -197,17 +221,29 @@ class BundledProductTable extends AbstractTable
         $query = $this
             ->productQueryContainer
             ->queryProduct()
-            ->leftJoinSpyProductBundleRelatedByFkProduct()
+            ->leftJoinSpyProductBundleRelatedByFkProduct(static::ALIAS_HAS_ANOTHER_BUNDLE)
             ->joinSpyProductLocalizedAttributes()
             ->joinStockProduct()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY)
             ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
-            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
-            ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
-            ->addGroupByColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-            ->addGroupByColumn(static::IS_NEVER_OUT_OF_STOCK);
+            ->add(
+                static::ALIAS_HAS_ANOTHER_BUNDLE . '.' . static::COL_ID_PRODUCT_BUNDLE,
+                null,
+                Criteria::ISNULL,
+            )
+            ->groupBy(SpyProductTableMap::COL_ID_PRODUCT);
+
+        if ($this->idProductConcrete) {
+            $query->leftJoinSpyProductBundleRelatedByFkBundledProduct(static::ALIAS_IN_THIS_BUNDLE)
+                ->addJoinCondition(
+                    static::ALIAS_IN_THIS_BUNDLE,
+                    static::ALIAS_IN_THIS_BUNDLE . '.' . static::COL_FK_PRODUCT . ' = ?',
+                    $this->idProductConcrete,
+                )
+                ->withColumn(static::ALIAS_IN_THIS_BUNDLE . '.' . static::COL_ID_PRODUCT_BUNDLE, static::VIRTUAL_COL_BUNDLE_ID);
+        }
 
         /** @var array<\Orm\Zed\Product\Persistence\SpyProduct> $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
@@ -229,10 +265,12 @@ class BundledProductTable extends AbstractTable
                     $productEntity->getIdProduct(),
                 ),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
+                static::COL_AVAILABILITY => $this->formatFloat(
+                    $this->getAvailability($productEntity)
+                                                ->trim()
+                                                ->toFloat(),
+                ),
             ];
-
-            $availability = $this->getAvailability($productEntity)->trim();
-            $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_AVAILABILITY] = $this->formatFloat($availability->toFloat());
         }
 
         return $productAbstractCollection;
@@ -265,13 +303,12 @@ class BundledProductTable extends AbstractTable
     protected function addCheckBox(SpyProduct $productConcreteEntity)
     {
         $checked = '';
-        if ($this->idProductConcrete) {
-            $criteria = new Criteria();
-            $criteria->add(SpyProductBundleTableMap::COL_FK_PRODUCT, $this->idProductConcrete);
 
-            if ($productConcreteEntity->getSpyProductBundlesRelatedByFkBundledProduct($criteria)->count() > 0) {
+        if (
+            $this->idProductConcrete
+            && $productConcreteEntity->getVirtualColumn(static::VIRTUAL_COL_BUNDLE_ID) !== null
+        ) {
                 $checked = 'checked="checked"';
-            }
         }
 
         return sprintf(
