@@ -64,7 +64,7 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
         ?array $providedData = null
     ): string {
         if ($storeName === null) {
-            $storeName = $this->storeFacade->getCurrentStore()->getNameOrFail();
+            $storeName = $this->storeFacade->getCurrentStore(true)->getNameOrFail();
         }
 
         $cmsBlockTransfer = $this->cmsBlockRepository

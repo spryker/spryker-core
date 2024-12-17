@@ -10,7 +10,9 @@ namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 interface CmsBlockToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(bool $fallbackToDefault = false);
 }
