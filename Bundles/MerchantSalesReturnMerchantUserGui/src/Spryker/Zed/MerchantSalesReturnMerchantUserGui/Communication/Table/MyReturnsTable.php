@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnItemTableMap;
+use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnTableMap;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
@@ -46,7 +47,7 @@ class MyReturnsTable extends AbstractTable
     /**
      * @var string
      */
-    protected const COL_ORDER_REFERENCE = 'merchant_reference';
+    protected const COL_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
      * @var string
@@ -132,7 +133,7 @@ class MyReturnsTable extends AbstractTable
         $config->setHeader([
             static::COL_RETURN_ID => 'Return ID',
             static::COL_RETURN_REFERENCE => 'Return Reference',
-            static::COL_ORDER_REFERENCE => 'Order Reference',
+            static::COL_MERCHANT_REFERENCE => 'Merchant Reference',
             static::COL_MARKETPLACE_ORDER_REFERENCE => 'Marketplace Order Reference',
             static::COL_RETURNED_PRODUCTS => 'Returned Products',
             static::COL_RETURN_DATE => 'Return Date',
@@ -152,10 +153,10 @@ class MyReturnsTable extends AbstractTable
         ]);
 
         $config->setSearchable([
-            static::COL_RETURN_ID,
-            static::COL_RETURN_REFERENCE,
-            static::COL_MARKETPLACE_ORDER_REFERENCE,
-            static::COL_ORDER_REFERENCE,
+            SpySalesReturnTableMap::COL_ID_SALES_RETURN,
+            SpySalesReturnTableMap::COL_RETURN_REFERENCE,
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
+            SpySalesReturnTableMap::COL_MERCHANT_REFERENCE,
         ]);
 
         $config->setHasSearchableFieldsWithAggregateFunctions(true);
@@ -217,6 +218,7 @@ class MyReturnsTable extends AbstractTable
         /** @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery */
         $salesReturnQuery = $this->salesReturnQuery
             ->groupByIdSalesReturn()
+            ->addGroupByColumn(SpySalesOrderTableMap::COL_ORDER_REFERENCE)
             ->useSpySalesReturnItemQuery()
                 ->useSpySalesOrderItemQuery()
                     ->filterByMerchantReference($merchantReference)
