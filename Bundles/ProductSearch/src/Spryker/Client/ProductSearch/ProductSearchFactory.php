@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToLocaleClientInterface;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStorageClientInterface;
 use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStoreClientInterface;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\ProductSearchConfigExtensionKeyBuilder;
 
@@ -23,9 +24,9 @@ class ProductSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStorageClientInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): ProductSearchToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_STORAGE);
     }

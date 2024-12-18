@@ -10,6 +10,8 @@ namespace Spryker\Client\ProductSearch;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToLocaleClientBridge;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStorageClientBridge;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStoreClientBridge;
 
 class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
@@ -52,7 +54,9 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     protected function addStorageClient(Container $container)
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
-            return $container->getLocator()->storage()->client();
+            return new ProductSearchToStorageClientBridge(
+                $container->getLocator()->storage()->client(),
+            );
         });
 
         return $container;
@@ -66,7 +70,9 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     protected function addStoreClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
-            return $container->getLocator()->store()->client();
+            return new ProductSearchToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
         });
 
         return $container;
