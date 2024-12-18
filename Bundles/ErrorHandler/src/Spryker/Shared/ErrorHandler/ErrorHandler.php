@@ -11,6 +11,7 @@ use ErrorException;
 use ReflectionProperty;
 use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class ErrorHandler
@@ -21,6 +22,21 @@ class ErrorHandler
     public const ZED = 'ZED';
 
     public const EXIT_CODE_ERROR = -1;
+
+    /**
+     * @var string
+     */
+    protected const METHOD_NAME_GET_STATUS_CODE = 'getStatusCode';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_404 = 'HTTP/1.0 404 Not Found';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_500 = 'HTTP/1.0 500 Internal Server Error';
 
     /**
      * @var \Spryker\Shared\ErrorHandler\ErrorLoggerInterface
@@ -61,7 +77,8 @@ class ErrorHandler
             $exception = $this->sanitizeExceptionMessage($exception);
             $this->errorLogger->log($exception);
 
-            $this->send500Header();
+            $this->sendHeader($exception);
+
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
         } catch (Throwable $internalException) {
@@ -97,12 +114,53 @@ class ErrorHandler
     }
 
     /**
+     * @param \Throwable $exception
+     *
+     * @return void
+     */
+    protected function sendHeader(Throwable $exception): void
+    {
+        if ($this->getStatusCodeFromException($exception) === Response::HTTP_NOT_FOUND) {
+            $this->send404Header();
+
+            return;
+        }
+
+        $this->send500Header();
+    }
+
+    /**
+     * @param \Throwable $exception
+     *
+     * @return int
+     */
+    protected function getStatusCodeFromException(Throwable $exception): int
+    {
+        if (method_exists($exception, static::METHOD_NAME_GET_STATUS_CODE)) {
+            /** @phpstan-ignore-next-line method.notFound */
+            return $exception->getStatusCode();
+        }
+
+        return $exception->getCode();
+    }
+
+    /**
+     * @return void
+     */
+    protected function send404Header(): void
+    {
+        if (!headers_sent()) {
+            header(static::HEADER_404);
+        }
+    }
+
+    /**
      * @return void
      */
     protected function send500Header()
     {
         if (!headers_sent()) {
-            header('HTTP/1.0 500 Internal Server Error');
+            header(static::HEADER_500);
         }
     }
 

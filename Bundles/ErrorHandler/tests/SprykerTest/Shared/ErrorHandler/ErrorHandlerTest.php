@@ -15,6 +15,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\ErrorHandler\ErrorLoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Auto-generated group annotations
@@ -50,6 +51,22 @@ class ErrorHandlerTest extends Unit
         $errorHandlerMock->expects($this->never())->method('cleanOutputBuffer');
         $errorHandlerMock->expects($this->once())->method('sendExitCode');
 
+        $errorHandlerMock->handleException($exception);
+    }
+
+    /**
+     * @return void
+     */
+    public function testZedErrorPageSends404StatusForNotFoundHttpException(): void
+    {
+        // Arrange
+        $exception = new NotFoundHttpException();
+
+        $errorHandlerMock = $this->getErrorHandlerMock($this->getErrorLoggerMock(), $this->getErrorRendererMock());
+        // Assert
+        $errorHandlerMock->expects($this->once())->method('send404Header')->willThrowException($exception);
+
+        // Act
         $errorHandlerMock->handleException($exception);
     }
 
@@ -189,6 +206,7 @@ class ErrorHandlerTest extends Unit
             'cleanOutputBuffer',
             'sendExitCode',
             'send500Header',
+            'send404Header',
         ];
 
         $methods = array_merge($mockMethods, $methods);
