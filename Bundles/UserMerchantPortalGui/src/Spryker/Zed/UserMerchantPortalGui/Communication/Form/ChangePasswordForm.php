@@ -135,7 +135,7 @@ class ChangePasswordForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length([
-                        'min' => $this->getConfig()->getMerchantUserPasswordPattern(),
+                        'min' => $this->getConfig()->getMerchantUserPasswordMinLength(),
                         'max' => $this->getConfig()->getMerchantUserPasswordMaxLength(),
                     ]),
                     new Regex([
