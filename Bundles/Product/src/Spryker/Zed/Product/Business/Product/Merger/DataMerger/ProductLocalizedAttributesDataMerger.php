@@ -79,11 +79,9 @@ class ProductLocalizedAttributesDataMerger extends AbstractProductDataMerger
         $productConcreteLocalizedAttributesTransfer->fromArray($concreteAttributes, true);
 
         $productConcreteLocalizedAttributesTransfer->setAttributes(
-            array_unique(
-                array_merge(
-                    $productAbstractLocalizedAttributesTransfer->getAttributes(),
-                    $productConcreteLocalizedAttributesTransfer->getAttributes(),
-                ),
+            array_merge(
+                $productAbstractLocalizedAttributesTransfer->getAttributes(),
+                $productConcreteLocalizedAttributesTransfer->getAttributes(),
             ),
         );
 

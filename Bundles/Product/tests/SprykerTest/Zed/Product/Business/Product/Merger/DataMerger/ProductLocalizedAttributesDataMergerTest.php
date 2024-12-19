@@ -209,12 +209,12 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         // Arrange
         $productConcreteLocalizedAttribute = (new LocalizedAttributesTransfer())
             ->setLocale((new LocaleTransfer())->setIdLocale(1))
-            ->setAttributes(['red', 'green'])
+            ->setAttributes(['color' => 'black', 'pack' => 'box', 'system' => ['Windows', 'Linux']])
             ->toArray();
 
         $productAbstractLocalizedAttribute = (new LocalizedAttributesTransfer())
             ->setLocale((new LocaleTransfer())->setIdLocale(1))
-            ->setAttributes(['green', 'blue'])
+            ->setAttributes(['color' => 'red', 'material' => 'wood'])
             ->toArray();
 
         $productConcrete = (new ProductConcreteTransfer())->fromArray(['fkProductAbstract' => 1, 'localizedAttributes' => [$productConcreteLocalizedAttribute]]);
@@ -229,6 +229,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(['green', 'blue', 'red'], $productConcreteCollection[0]->getLocalizedAttributes()[0]->getAttributes());
+        $this->assertEquals(['color' => 'black', 'pack' => 'box', 'material' => 'wood', 'system' => ['Windows', 'Linux']], $productConcreteCollection[0]->getLocalizedAttributes()[0]->getAttributes());
     }
 }
