@@ -18,8 +18,8 @@ use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Config\JsonToArrayConfigFormatter;
 use Spryker\Zed\MessageBroker\Business\Debug\DebugPrinter;
 use Spryker\Zed\MessageBroker\Business\Debug\DebugPrinterInterface;
-use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLogger;
-use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface;
+use Spryker\Zed\MessageBroker\Business\Logger\MessageLogger;
+use Spryker\Zed\MessageBroker\Business\Logger\MessageLoggerInterface;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProvider;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Business\MessageChannelProvider\MessageChannelProvider;
@@ -31,6 +31,7 @@ use Spryker\Zed\MessageBroker\Business\MessageValidator\MessageValidatorStackInt
 use Spryker\Zed\MessageBroker\Business\Middleware\AddChannelNameStampMiddleware;
 use Spryker\Zed\MessageBroker\Business\Middleware\DisableHandleMessagePropelPoolingMiddleware;
 use Spryker\Zed\MessageBroker\Business\Middleware\LogHandleMessageExceptionMiddleware;
+use Spryker\Zed\MessageBroker\Business\Middleware\LogMessageHandlingResultMiddleware;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisher;
 use Spryker\Zed\MessageBroker\Business\Publisher\MessagePublisherInterface;
 use Spryker\Zed\MessageBroker\Business\Worker\Worker;
@@ -68,17 +69,16 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         return new MessagePublisher(
             $this->createMessageDecorator(),
             $this->createMessageBus(),
-            $this->createMessagePublishLogger(),
             $this->getConfig(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface
+     * @return \Spryker\Zed\MessageBroker\Business\Logger\MessageLoggerInterface
      */
-    public function createMessagePublishLogger(): MessagePublishLoggerInterface
+    public function createMessageLogger(): MessageLoggerInterface
     {
-        return new MessagePublishLogger($this->getConfig());
+        return new MessageLogger($this->getConfig());
     }
 
     /**
@@ -116,6 +116,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     {
         return array_merge(
             [
+                $this->createLogMessageHandlingResultMiddleware(),
                 $this->createLogHandleMessageExceptionMiddleware(),
             ],
             $this->getMiddlewarePlugins(),
@@ -126,6 +127,14 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
                 $this->createHandleMessageMiddleware(),
             ],
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Messenger\Middleware\MiddlewareInterface
+     */
+    public function createLogMessageHandlingResultMiddleware(): MiddlewareInterface
+    {
+        return new LogMessageHandlingResultMiddleware($this->createMessageLogger());
     }
 
     /**

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Zed\MessageBroker\Business\Receiver\Stamp\ChannelNameStamp;
@@ -20,6 +22,7 @@ use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Stamp\SenderClientStamp;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Envelope;
 
 /**
@@ -90,6 +93,13 @@ class HttpChannelMessageSenderPluginTest extends Unit
         $envelope->getMessage()->setMessageAttributes($messageAttributesTransfer);
         $envelope = $envelope->with(new ChannelNameStamp(static::CHANNEL_NAME));
 
+        $messageId = 'test-message-id';
+        $responseMock = $this->createMock(ResponseInterface::class);
+        $streamMock = $this->createMock(StreamInterface::class);
+        $responseMock->method('getStatusCode')->willReturn(Response::HTTP_OK);
+        $responseMock->method('getBody')->willReturn($streamMock);
+        $streamMock->method('getContents')->willReturn(json_encode(['MessageId' => $messageId]));
+
         $httpClientMock = $this->createMock(Client::class);
         $httpClientMock->expects($this->once())
             ->method('request')
@@ -109,7 +119,8 @@ class HttpChannelMessageSenderPluginTest extends Unit
                     ],
                     RequestOptions::BODY => json_encode(['key' => 'value']),
                 ],
-            );
+            )
+            ->willReturn($responseMock);
         $this->tester->setDependency(
             MessageBrokerAwsDependencyProvider::CLIENT_HTTP,
             $httpClientMock,
@@ -127,6 +138,10 @@ class HttpChannelMessageSenderPluginTest extends Unit
         $this->assertSame(
             $messageAttributesTransfer->getActorId(),
             $expectedEnvelope->getMessage()->getMessageAttributes()->getActorID(),
+        );
+        $this->assertSame(
+            $messageId,
+            $expectedEnvelope->getMessage()->getMessageAttributes()->getMetadata()->getMessageId(),
         );
     }
 

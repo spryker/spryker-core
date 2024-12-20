@@ -8,13 +8,17 @@
 namespace Spryker\Zed\MessageBrokerAws\Business\Sender\Client;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageMetadataTransfer;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Exception\MessageValidationFailedException;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\HttpHeaderFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Stamp\SenderClientStamp;
+use Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 
@@ -41,21 +45,29 @@ class HttpChannelSenderClient implements SenderClientInterface
     protected ClientInterface $httpClient;
 
     /**
+     * @var \Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface
+     */
+    protected MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig $config
      * @param \Symfony\Component\Messenger\Transport\Serialization\SerializerInterface $serializer
      * @param \Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter\HttpHeaderFormatterInterface $httpHeaderFormatter
      * @param \GuzzleHttp\ClientInterface $httpClient
+     * @param \Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         MessageBrokerAwsConfig $config,
         SerializerInterface $serializer,
         HttpHeaderFormatterInterface $httpHeaderFormatter,
-        ClientInterface $httpClient
+        ClientInterface $httpClient,
+        MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->config = $config;
         $this->serializer = $serializer;
         $this->httpHeaderFormatter = $httpHeaderFormatter;
         $this->httpClient = $httpClient;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -94,7 +106,7 @@ class HttpChannelSenderClient implements SenderClientInterface
 
         $headers = $this->httpHeaderFormatter->formatHeaders($encodedMessage['headers'] ?? []);
 
-        $this->httpClient->request(
+        $response = $this->httpClient->request(
             SymfonyRequest::METHOD_POST,
             $this->config->getHttpChannelSenderBaseUrl() . $channelNameStamp->getChannelName(),
             [
@@ -102,6 +114,9 @@ class HttpChannelSenderClient implements SenderClientInterface
                 RequestOptions::BODY => $encodedMessage['body'],
             ],
         );
+
+        $messageAttributesTransfer = $this->updateMessageAttributesMetadata($messageAttributesTransfer, $response);
+        $messageTransfer->setMessageAttributes($messageAttributesTransfer);
 
         return $envelope->with(new SenderClientStamp(static::class));
     }
@@ -116,5 +131,46 @@ class HttpChannelSenderClient implements SenderClientInterface
         return $messageAttributesTransfer->getActorId()
             && $messageAttributesTransfer->getTenantIdentifier()
             && $messageAttributesTransfer->getName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    protected function updateMessageAttributesMetadata(
+        MessageAttributesTransfer $messageAttributesTransfer,
+        ResponseInterface $response
+    ): MessageAttributesTransfer {
+        $messageMetadataTransfer = $messageAttributesTransfer->getMetadata();
+
+        if (!$messageMetadataTransfer) {
+            $messageMetadataTransfer = new MessageMetadataTransfer();
+        }
+
+        $messageMetadataTransfer->setMessageId($this->findMessageId($response));
+
+        return $messageAttributesTransfer->setMetadata($messageMetadataTransfer);
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
+     * @return string|null
+     */
+    protected function findMessageId(ResponseInterface $response): ?string
+    {
+        if (!($response->getStatusCode() >= Response::HTTP_OK && $response->getStatusCode() < Response::HTTP_MULTIPLE_CHOICES)) {
+            return null;
+        }
+
+        $messageResponse = $this->utilEncodingService->decodeJson($response->getBody()->getContents(), true);
+
+        if (!is_array($messageResponse)) {
+            return null;
+        }
+
+        return $messageResponse['MessageId'] ?? null;
     }
 }

@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\MessageBroker\Business\Publisher;
 
-use Exception;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\MessageBroker\Business\Exception\MessageBrokerException;
-use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\MessageBrokerConfig;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -33,11 +31,6 @@ class MessagePublisher implements MessagePublisherInterface
     protected MessageBusInterface $messageBus;
 
     /**
-     * @var \Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface
-     */
-    protected MessagePublishLoggerInterface $messagePublishLogger;
-
-    /**
      * @var \Spryker\Zed\MessageBroker\MessageBrokerConfig
      */
     protected MessageBrokerConfig $messageBrokerConfig;
@@ -45,25 +38,20 @@ class MessagePublisher implements MessagePublisherInterface
     /**
      * @param \Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface $messageDecorator
      * @param \Symfony\Component\Messenger\MessageBusInterface $messageBus
-     * @param \Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface $messagePublishLogger
      * @param \Spryker\Zed\MessageBroker\MessageBrokerConfig $messageBrokerConfig
      */
     public function __construct(
         MessageAttributeProviderInterface $messageDecorator,
         MessageBusInterface $messageBus,
-        MessagePublishLoggerInterface $messagePublishLogger,
         MessageBrokerConfig $messageBrokerConfig
     ) {
         $this->messageAttributeProvider = $messageDecorator;
         $this->messageBus = $messageBus;
-        $this->messagePublishLogger = $messagePublishLogger;
         $this->messageBrokerConfig = $messageBrokerConfig;
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
-     *
-     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\MessageResponseTransfer
      */
@@ -76,21 +64,10 @@ class MessagePublisher implements MessagePublisherInterface
             return $messageResponseTransfer;
         }
 
-        $startMicrotime = microtime(true);
+        $messageTransfer = $this->provideMessageAttributes($messageTransfer);
+        $envelope = $this->messageBus->dispatch($messageTransfer);
 
-        try {
-            $messageTransfer = $this->provideMessageAttributes($messageTransfer);
-            $envelope = $this->messageBus->dispatch($messageTransfer);
-            $messageResponseTransfer->setBody($envelope);
-
-            $this->messagePublishLogger->logInfo($messageTransfer, $startMicrotime);
-        } catch (Exception $e) {
-            $this->messagePublishLogger->logError($messageTransfer, $startMicrotime, $e->getMessage());
-
-            throw $e;
-        }
-
-        return $messageResponseTransfer;
+        return $messageResponseTransfer->setBody($envelope);
     }
 
     /**

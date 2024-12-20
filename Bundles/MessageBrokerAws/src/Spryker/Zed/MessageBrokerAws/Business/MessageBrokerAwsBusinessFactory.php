@@ -154,6 +154,7 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
             $this->createSerializer(),
             $this->createHttpHeaderFormatter(),
             $this->getHttpClient(),
+            $this->getUtilEncodingService(),
         );
     }
 

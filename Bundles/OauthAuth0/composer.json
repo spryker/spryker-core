@@ -4,7 +4,7 @@
     "description": "OauthAuth0 module",
     "license": "proprietary",
     "require": {
-        "league/oauth2-client": "^2.6.0",
+        "league/oauth2-client": "~2.7.0",
         "php": ">=8.2",
         "riskio/oauth2-auth0": "^2.4.0",
         "spryker/guzzle": "^2.4.1",

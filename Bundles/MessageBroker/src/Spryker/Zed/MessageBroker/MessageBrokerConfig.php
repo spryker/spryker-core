@@ -33,6 +33,26 @@ class MessageBrokerConfig extends AbstractBundleConfig
     protected const MESSAGE_BROKER_CALL_ERROR_CODE_NAME = 'Message Broker call sendMessage Error';
 
     /**
+     * @var int
+     */
+    protected const MESSAGE_BROKER_CONSUME_SUCCESS_CODE = 11002;
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_BROKER_CONSUME_SUCCESS_CODE_NAME = 'Message Broker consume message Success';
+
+    /**
+     * @var int
+     */
+    protected const MESSAGE_BROKER_CONSUME_ERROR_CODE = 11003;
+
+    /**
+     * @var string
+     */
+    protected const MESSAGE_BROKER_CONSUME_ERROR_CODE_NAME = 'Message Broker consume message Error';
+
+    /**
      * Specification:
      * - This configuration defines success code for message broker call.
      *
@@ -82,6 +102,58 @@ class MessageBrokerConfig extends AbstractBundleConfig
     public function getMessageBrokerCallErrorCodeName(): string
     {
         return static::MESSAGE_BROKER_CALL_ERROR_CODE_NAME;
+    }
+
+    /**
+     * Specification:
+     * - This configuration defines success code for message broker consume.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMessageBrokerConsumeSuccessCode(): int
+    {
+        return static::MESSAGE_BROKER_CONSUME_SUCCESS_CODE;
+    }
+
+    /**
+     * Specification:
+     * - This configuration defines success code name for message broker consume.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMessageBrokerConsumeSuccessCodeName(): string
+    {
+        return static::MESSAGE_BROKER_CONSUME_SUCCESS_CODE_NAME;
+    }
+
+    /**
+     * Specification:
+     * - This configuration defines error code for message broker consume.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMessageBrokerConsumeErrorCode(): int
+    {
+        return static::MESSAGE_BROKER_CONSUME_ERROR_CODE;
+    }
+
+    /**
+     * Specification:
+     * - This configuration defines error code name for message broker consume.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMessageBrokerConsumeErrorCodeName(): string
+    {
+        return static::MESSAGE_BROKER_CONSUME_ERROR_CODE_NAME;
     }
 
     /**
@@ -156,6 +228,19 @@ class MessageBrokerConfig extends AbstractBundleConfig
      * @return bool
      */
     public function isDefaultApplicationLoggerUsed(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
+     * - This configuration defines whether message body must be logged by message logger.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMessageBodyIncludedInLogs(): bool
     {
         return false;
     }
