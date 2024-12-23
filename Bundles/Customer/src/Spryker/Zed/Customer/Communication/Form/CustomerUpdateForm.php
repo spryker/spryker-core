@@ -105,10 +105,10 @@ class CustomerUpdateForm extends CustomerForm
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
+        $currentEmail = $builder->getData()[static::FIELD_EMAIL] ?? null;
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
-            'constraints' => $this->createEmailConstraints(),
-            'disabled' => 'disabled',
+            'constraints' => $this->createEmailConstraints($currentEmail),
         ]);
 
         return $this;

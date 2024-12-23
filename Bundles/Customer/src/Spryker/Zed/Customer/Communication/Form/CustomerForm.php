@@ -390,9 +390,11 @@ class CustomerForm extends AbstractType
     }
 
     /**
+     * @param string|null $currentEmail
+     *
      * @return list<\Symfony\Component\Validator\Constraint>
      */
-    protected function createEmailConstraints(): array
+    protected function createEmailConstraints(?string $currentEmail = null): array
     {
         $emailConstraints = [
             new NotBlank(),
@@ -403,7 +405,11 @@ class CustomerForm extends AbstractType
         $customerQuery = $this->getQueryContainer()->queryCustomers();
 
         $emailConstraints[] = new Callback([
-            'callback' => function ($email, ExecutionContextInterface $context) use ($customerQuery) {
+            'callback' => function ($email, ExecutionContextInterface $context) use ($customerQuery, $currentEmail) {
+                if ($currentEmail !== null && $email === $currentEmail) {
+                    return;
+                }
+
                 if ($customerQuery->findByEmail($email)->count() > 0) {
                     $context->addViolation('Email is already used');
                 }
