@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Session\Business\Handler;
 
 use Predis\Client;
+use Predis\Response\Status;
 use SessionHandlerInterface;
 use Spryker\Shared\Session\Business\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
@@ -22,6 +23,11 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      * @var string
      */
     public const KEY_PREFIX = 'session:';
+
+    /**
+     * @var string
+     */
+    protected const OK_WRITE_STATUS = 'OK';
 
     /**
      * @var \Predis\Client
@@ -157,6 +163,10 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         $result = $this
             ->redisClient
             ->setex($this->keyGenerator->generateSessionKey($sessionId), $this->ttlSeconds, $data);
+
+        if ($result instanceof Status) {
+            return $result->getPayload() === static::OK_WRITE_STATUS;
+        }
 
         return ($result ? true : false);
     }

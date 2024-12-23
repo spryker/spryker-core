@@ -8,9 +8,15 @@
 namespace Spryker\Client\Redis\Adapter;
 
 use Predis\Client;
+use Predis\Response\Status;
 
-class PredisAdapter implements RedisAdapterInterface
+class VersionAgnosticPredisAdapter implements RedisAdapterInterface
 {
+    /**
+     * @var string
+     */
+    protected const OK_WRITE_STATUS = 'OK';
+
     /**
      * @var \Predis\Client
      */
@@ -43,7 +49,13 @@ class PredisAdapter implements RedisAdapterInterface
      */
     public function setex(string $key, int $seconds, string $value): bool
     {
-        return (bool)$this->client->setex($key, $seconds, $value);
+        $result = $this->client->setex($key, $seconds, $value);
+
+        if ($result instanceof Status) {
+            return $result->getPayload() === static::OK_WRITE_STATUS;
+        }
+
+        return (bool)$result;
     }
 
     /**

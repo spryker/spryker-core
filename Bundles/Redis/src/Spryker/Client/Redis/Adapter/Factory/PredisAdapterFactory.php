@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Predis\Client;
 use Spryker\Client\Redis\Adapter\LoggableRedisAdapter;
-use Spryker\Client\Redis\Adapter\PredisAdapter;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Adapter\VersionAgnosticPredisAdapter;
 use Spryker\Client\Redis\Exception\ConnectionConfigurationException;
 use Spryker\Client\Redis\RedisConfig;
 use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
@@ -59,7 +59,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     public function create(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
         if (!$this->redisConfig->isDevelopmentMode()) {
-            return $this->createPredisAdapter($redisConfigurationTransfer);
+            return $this->createVersionAgnosticPredisAdapter($redisConfigurationTransfer);
         }
 
         return $this->createLoggablePredisAdapter($redisConfigurationTransfer);
@@ -70,9 +70,9 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      *
      * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
-    protected function createPredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
+    protected function createVersionAgnosticPredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
-        return new PredisAdapter(
+        return new VersionAgnosticPredisAdapter(
             $this->createPredisClient($redisConfigurationTransfer),
         );
     }
@@ -85,7 +85,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     protected function createLoggablePredisAdapter(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
         return new LoggableRedisAdapter(
-            $this->createPredisAdapter($redisConfigurationTransfer),
+            $this->createVersionAgnosticPredisAdapter($redisConfigurationTransfer),
             $this->createRedisLogger($redisConfigurationTransfer),
         );
     }

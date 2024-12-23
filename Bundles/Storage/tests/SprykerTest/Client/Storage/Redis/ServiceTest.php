@@ -145,7 +145,7 @@ class ServiceTest extends Unit
                 'dbSize',
             ])
             ->onlyMethods([
-                'getProfile',
+                method_exists(ClientInterface::class, 'getCommandFactory') ? 'getCommandFactory' : 'getProfile',
                 'getOptions',
                 'connect',
                 'disconnect',

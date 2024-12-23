@@ -7,3 +7,5 @@ parameters:
         - '#Result of \|\| is always false.#'
         - '#Strict comparison using === between '''' and ''development'' will always evaluate to false.#'
         - '#Strict comparison using === between '''' and ''docker.dev'' will always evaluate to false.#'
+        - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Redis/src/Spryker/Client/Redis/Adapter/VersionAgnosticPredisAdapter.php' }
+        - '#Instanceof between int and Predis\\Response\\Status will always evaluate to false.#'
