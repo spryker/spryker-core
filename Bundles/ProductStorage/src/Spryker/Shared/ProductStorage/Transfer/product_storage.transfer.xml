@@ -42,6 +42,7 @@
         <property name="attributes" type="array" singular="attributes"/>
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="url" type="string"/>
         <property name="description" type="string"/>
         <property name="metaTitle" type="string"/>

@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductReview\Business\MessageBroker;
 use Generated\Shared\Transfer\AddReviewsTransfer;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewCreatorInterface;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewReaderInterface;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleInterface;
@@ -71,14 +69,15 @@ class ProductReviewMessageHandler implements ProductReviewMessageHandlerInterfac
 
         foreach ($addReviewsTransfer->getReviews() as $reviewTransfer) {
             $idLocale = $localeNameToForeignKeyMap[$reviewTransfer->getLocale()];
+            if (!isset($productIdentifierToIdProductAbstractMap[$reviewTransfer->getProductIdentifier()])) {
+                $this->getLogger()->info(sprintf('Product with SKU %s not found, could be not a product review.', $reviewTransfer->getProductIdentifier()));
+
+                continue;
+            }
             $idProductAbstract = $productIdentifierToIdProductAbstractMap[$reviewTransfer->getProductIdentifier()];
 
             // We simply ignore Reviews where no matching locale was found.
             if (!$idLocale) {
-                continue;
-            }
-            // We simply ignore Reviews where no matching product was found.
-            if (!$idProductAbstract) {
                 continue;
             }
 
@@ -158,30 +157,8 @@ class ProductReviewMessageHandler implements ProductReviewMessageHandlerInterfac
             $productIdentifiers[$reviewTransfer->getProductIdentifier()] = $reviewTransfer->getProductIdentifier();
         }
 
-        // Reviews are made for concretes, find the concrete products by the given identifier.
-        $productIdentifierToIdProductAbstractMap = $this->getIdProductAbstractMap($productIdentifiers);
-
-        return $productIdentifierToIdProductAbstractMap;
-    }
-
-    /**
-     * @param string $productIdentifier
-     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransferCollection
-     *
-     * @return int|null
-     */
-    protected function findIdProductConcreteByProductIdentifier(string $productIdentifier, array $productConcreteTransferCollection): ?int
-    {
-        foreach ($productConcreteTransferCollection as $productConcreteTransfer) {
-            if ($productConcreteTransfer->getSku() === $productIdentifier) {
-                // We need to save the id_product_abstract in the database return this instead of the id_product_concrete.
-                return $productConcreteTransfer->getFkProductAbstract();
-            }
-        }
-
-        $this->getLogger()->info(sprintf('Product with SKU %s not found, could be not a product review.', $productIdentifier));
-
-        return null;
+        // Reviews are made for abstract, find the abstract products by the given identifier.
+        return $this->getIdProductAbstractMap($productIdentifiers);
     }
 
     /**
@@ -192,23 +169,9 @@ class ProductReviewMessageHandler implements ProductReviewMessageHandlerInterfac
     protected function getIdProductAbstractMap(array $productIdentifiers): array
     {
         $productIdentifierToIdProductAbstractMap = [];
-
-        if (method_exists(ProductFacadeInterface::class, 'getRawProductConcreteTransfersByConcreteSkus')) {
-            $productConcreteTransferCollection = $this->productFacade->getRawProductConcreteTransfersByConcreteSkus(array_values($productIdentifiers));
-            foreach ($productIdentifiers as $productIdentifier) {
-                $productIdentifierToIdProductAbstractMap[$productIdentifier] = $this->findIdProductConcreteByProductIdentifier($productIdentifier, $productConcreteTransferCollection);
-            }
-
-            return $productIdentifierToIdProductAbstractMap;
-        }
-        // fallback for Product v5
-        foreach ($productIdentifiers as $productIdentifier) {
-            try {
-                $productIdentifierToIdProductAbstractMap[$productIdentifier] = $this->productFacade->getProductAbstractIdByConcreteSku($productIdentifier);
-            } catch (MissingProductException) {
-                $this->getLogger()->info(sprintf('Product with SKU %s not found, could be not a product review.', $productIdentifier));
-                $productIdentifierToIdProductAbstractMap[$productIdentifier] = null;
-            }
+        $productAbstractTransfers = $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productIdentifiers);
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $productIdentifierToIdProductAbstractMap[$productAbstractTransfer->getSku()] = $productAbstractTransfer->getIdProductAbstract();
         }
 
         return $productIdentifierToIdProductAbstractMap;

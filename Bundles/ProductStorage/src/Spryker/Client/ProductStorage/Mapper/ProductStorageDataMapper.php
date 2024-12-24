@@ -105,10 +105,14 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
             return $this->formatCollectorData($productStorageData);
         }
 
-        $productStorageTransfer = new ProductViewTransfer();
-        $productStorageTransfer->fromArray($productStorageData, true);
+        $productViewTransfer = new ProductViewTransfer();
+        $productViewTransfer->fromArray($productStorageData, true);
 
-        return $productStorageTransfer;
+        if ($productViewTransfer->getIdProductConcrete() === null) {
+            $productViewTransfer->setAbstractSku($productViewTransfer->getSku());
+        }
+
+        return $productViewTransfer;
     }
 
     /**

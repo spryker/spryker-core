@@ -499,6 +499,7 @@ class OmsFacadeTest extends Unit
 
                 foreach ($message->getOrderItems() as $k => $orderItem) {
                     $this->assertEquals($orderItem->getProductId(), $items[$k]->getSku());
+                    $this->assertEquals($orderItem->getAbstractSku(), $items[$k]->getAbstractSku());
                     $this->assertEquals($orderItem->getName(), $items[$k]->getName());
                     $this->assertEquals($orderItem->getImageUrl(), $items[$k]->getMetaData()->getImage());
                     $this->assertEquals($orderItem->getPrice(), $items[$k]->getUnitPrice());

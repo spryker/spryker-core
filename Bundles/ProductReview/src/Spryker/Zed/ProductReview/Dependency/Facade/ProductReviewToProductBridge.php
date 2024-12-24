@@ -33,22 +33,12 @@ class ProductReviewToProductBridge implements ProductReviewToProductInterface
     }
 
     /**
-     * @param array<string> $skus
+     * @param array<string> $productAbstractSkus
      *
-     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
-    public function getRawProductConcreteTransfersByConcreteSkus(array $skus): array
+    public function getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus)
     {
-        return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($skus);
-    }
-
-    /**
-     * @param string $concreteSku
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteSku($concreteSku)
-    {
-        return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
+        return $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
     }
 }

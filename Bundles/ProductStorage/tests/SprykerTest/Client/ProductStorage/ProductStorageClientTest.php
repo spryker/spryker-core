@@ -739,6 +739,7 @@ class ProductStorageClientTest extends Unit
             $actualId = $resourceName === ProductStorageClientTester::PRODUCT_ABSTRACT_RESOURCE_NAME ?
                 $productViewTransfers[$index]->getIdProductAbstract() : $productViewTransfers[$index]->getIdProductConcrete();
 
+            $this->assertSame($productViewTransfers[$index]->getSku(), $productViewTransfers[$index]->getAbstractSku());
             $this->assertSame($expectedId, $actualId);
         }
     }

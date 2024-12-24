@@ -175,6 +175,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     {
         $productViewTransfer = new ProductViewTransfer();
         $productViewTransfer->fromArray($productStorageData, true);
+        $productViewTransfer->setAbstractSku($productViewTransfer->getSku());
 
         foreach ($this->productViewExpanderPlugins as $productViewExpanderPlugin) {
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $localeName);

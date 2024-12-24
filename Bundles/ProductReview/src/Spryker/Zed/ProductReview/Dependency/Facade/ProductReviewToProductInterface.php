@@ -17,18 +17,9 @@ interface ProductReviewToProductInterface
     public function touchProductAbstract($idProductAbstract);
 
     /**
-     * @param array<string> $skus
+     * @param array<string> $productAbstractSkus
      *
-     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
-    public function getRawProductConcreteTransfersByConcreteSkus(array $skus): array;
-
-    /**
-     * @param string $concreteSku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteSku($concreteSku);
+    public function getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
 }

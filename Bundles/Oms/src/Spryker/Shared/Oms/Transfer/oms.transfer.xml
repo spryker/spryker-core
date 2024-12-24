@@ -106,6 +106,7 @@
     <transfer name="Item">
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
@@ -229,6 +230,7 @@
 
     <transfer name="OrderItem">
         <property name="productId" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="name" type="string"/>
         <property name="imageUrl" type="string"/>
         <property name="price" type="int"/>

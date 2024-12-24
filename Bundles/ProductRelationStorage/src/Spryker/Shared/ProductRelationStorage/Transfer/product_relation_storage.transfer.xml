@@ -23,6 +23,8 @@
     </transfer>
 
     <transfer name="ProductView">
+        <property name="abstractSku" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Quote">

@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ReviewBuilder;
 use Generated\Shared\Transfer\AddReviewsTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Ramsey\Uuid\Uuid;
@@ -93,7 +93,7 @@ class ProductReviewHelper extends Module
      */
     protected function haveProductWithIdentifier(string $productIdentifier)
     {
-        $this->getProductHelper()->haveFullProduct([ProductConcreteTransfer::SKU => $productIdentifier]);
+        $this->getProductHelper()->haveFullProduct([], [ProductAbstractTransfer::SKU => $productIdentifier]);
     }
 
     /**

@@ -109,6 +109,7 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
             }
             $orderItemTransfer = new OrderItemTransfer();
             $orderItemTransfer->setProductId($orderItem->getSku());
+            $orderItemTransfer->setAbstractSku($orderItem->getAbstractSku());
             $orderItemTransfer->setName($orderItem->getName());
             $orderItemTransfer->setImageUrl($orderItem->getMetadata()->getImage());
             $orderItemTransfer->setPrice($orderItem->getUnitPrice());
