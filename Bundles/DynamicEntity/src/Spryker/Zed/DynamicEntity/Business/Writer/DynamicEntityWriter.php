@@ -414,6 +414,8 @@ class DynamicEntityWriter implements DynamicEntityWriterInterface
                     $dynamicEntityCollectionResponseTransfer,
                     $childDynamicEntityCollectionResponseTransfer->getErrors()->getArrayCopy(),
                 );
+
+                return $dynamicEntityCollectionResponseTransfer;
             }
 
             if ($childDynamicEntityTransfer->getChildRelations()->count() > 0) {

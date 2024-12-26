@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\DynamicEntityConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationRelationTransfer;
 use Generated\Shared\Transfer\DynamicEntityConfigurationTransfer;
 use Generated\Shared\Transfer\DynamicEntityCriteriaTransfer;
-use Generated\Shared\Transfer\DynamicEntityDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldConditionTransfer;
 use Generated\Shared\Transfer\DynamicEntityFieldDefinitionTransfer;
 use Generated\Shared\Transfer\DynamicEntityRelationFieldMappingTransfer;
@@ -198,12 +197,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $dynamicEntityQueryClassName = $this->getFactory()->createDynamicEntityQueryBuilder()
             ->assertEntityQueryClassNameExists($dynamicEntityConfigurationTransfer->getTableNameOrFail());
 
-        $isCreatable = (bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable();
+        $isRequestAllowsNewEntityCreation = (bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable();
+
         $activeRecord = $this->resolveActiveRecord(
             $dynamicEntityConfigurationTransfer,
             $dynamicEntityConditionsTransfer,
             $dynamicEntityQueryClassName,
-            $isCreatable,
+            $isRequestAllowsNewEntityCreation,
         );
 
         if ($activeRecord === null) {
@@ -222,14 +222,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             $dynamicEntityCollectionRequestTransfer,
         );
 
-        if (
-            $isCreatable &&
-            !$this->isAllowCreateWithSetupIdentifier($activeRecord, $dynamicEntityConfigurationTransfer)
-        ) {
-            return $this->addIdentifierIsNotCreatableError(
+        $isIdentifierCreatable = $this->isDynamicEntityIdentifierCreatable($dynamicEntityConditionsTransfer, $dynamicEntityConfigurationTransfer);
+
+        if ($activeRecord->isNew() && !$isIdentifierCreatable) {
+            return $this->addIdentifierIsNotFoundError(
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityConfigurationTransfer,
-                $activeRecord,
+                $dynamicEntityConditionsTransfer,
                 $errorPath,
             );
         }
@@ -265,12 +264,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         $dynamicEntityQueryClassName = $this->getFactory()->createDynamicEntityQueryBuilder()
             ->assertEntityQueryClassNameExists($dynamicEntityConfigurationTransfer->getTableNameOrFail());
 
-        $isCreatable = (bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable();
+        $isRequestAllowsNewEntityCreation = (bool)$dynamicEntityCollectionRequestTransfer->getIsCreatable();
+
         $activeRecord = $this->resolveActiveRecord(
             $dynamicEntityConfigurationTransfer,
             $dynamicEntityConditionsTransfer,
             $dynamicEntityQueryClassName,
-            $isCreatable,
+            $isRequestAllowsNewEntityCreation,
         );
 
         if ($activeRecord === null) {
@@ -297,14 +297,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             );
         }
 
-        if (
-            $dynamicEntityCollectionRequestTransfer->getIsCreatable() &&
-            !$this->isAllowCreateWithSetupIdentifier($activeRecord, $dynamicEntityConfigurationTransfer)
-        ) {
-            return $this->addIdentifierIsNotCreatableError(
+        $isIdentifierCreatable = $this->isDynamicEntityIdentifierCreatable($dynamicEntityConditionsTransfer, $dynamicEntityConfigurationTransfer);
+
+        if ($activeRecord->isNew() && !$isIdentifierCreatable) {
+            return $this->addIdentifierIsNotFoundError(
                 $dynamicEntityCollectionResponseTransfer,
                 $dynamicEntityConfigurationTransfer,
-                $activeRecord,
+                $dynamicEntityConditionsTransfer,
                 $errorPath,
             );
         }
@@ -401,15 +400,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     }
 
     /**
-     * @throw \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
-     *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      *
      * @return bool
      */
-    protected function isAllowCreateWithSetupIdentifier(
-        ActiveRecordInterface $activeRecord,
+    protected function isDynamicEntityIdentifierCreatable(
+        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
     ): bool {
         $dynamicEntityDefinitionTransfer = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail();
@@ -426,8 +423,9 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             return true;
         }
 
-        $isCreatable = array_shift($identifierFieldDefinition)->getIsCreatable();
-        if ($activeRecord->isNew() && $activeRecord->getByName($identifier) !== null && $isCreatable === false) {
+        $isIdentifierCreatable = array_shift($identifierFieldDefinition)->getIsCreatable();
+
+        if ($this->findFieldConditionValueByName($dynamicEntityConditionsTransfer, $identifier) && $isIdentifierCreatable === false) {
             return false;
         }
 
@@ -467,8 +465,11 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             );
         }
 
-        $dynamicEntityTransfer = $this->populateDynamicEntityTransferWithFields($dynamicEntityTransfer, $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(), $activeRecord);
-        $dynamicEntityTransfer = $this->addIdentifierToFields($dynamicEntityTransfer, $activeRecord, $dynamicEntityConfigurationTransfer);
+        $dynamicEntityTransfer = $this->getFactory()->createDynamicEntityMapper()->mapEntityRecordToDynamicEntityTransfer(
+            $activeRecord,
+            $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
+            $dynamicEntityTransfer,
+        );
 
         return $dynamicEntityCollectionResponseTransfer->addDynamicEntity($dynamicEntityTransfer);
     }
@@ -477,7 +478,7 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
      * @param string $dynamicEntityQueryClassName
-     * @param bool $isCreatable
+     * @param bool $isRequestAllowsNewEntityCreation
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null
      */
@@ -485,10 +486,15 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
         DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
         string $dynamicEntityQueryClassName,
-        bool $isCreatable
+        bool $isRequestAllowsNewEntityCreation
     ): ?ActiveRecordInterface {
         /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $dynamicEntityQuery */
         $dynamicEntityQuery = new $dynamicEntityQueryClassName();
+
+        if (!$this->hasIdentifierCondition($dynamicEntityConditionsTransfer, $dynamicEntityConfigurationTransfer)) {
+            return new ($dynamicEntityQuery->getModelName())();
+        }
+
         $dynamicEntityCriteriaTransfer = (new DynamicEntityCriteriaTransfer())
             ->setDynamicEntityConditions($dynamicEntityConditionsTransfer);
 
@@ -499,11 +505,13 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
                 $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail(),
             );
 
-        if ($isCreatable === true) {
-            return $dynamicEntityQuery->findOneOrCreate();
+        $dyamicEntity = $dynamicEntityQuery->findOne();
+
+        if (!$dyamicEntity && $isRequestAllowsNewEntityCreation) {
+            return new ($dynamicEntityQuery->getModelName())();
         }
 
-        return $dynamicEntityQuery->findOne();
+        return $dyamicEntity;
     }
 
     /**
@@ -535,60 +543,6 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
         );
 
         return $dynamicEntityConditionsTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
-     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
-     */
-    protected function addIdentifierToFields(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        ActiveRecordInterface $activeRecord,
-        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-    ): DynamicEntityTransfer {
-        $identifier = $dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail();
-        $identifierVisibleName = $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer);
-
-        $identifierValue = $activeRecord->getByName($identifier);
-        $dynamicEntityTransfer->setFields(array_merge(
-            $dynamicEntityTransfer->getFields(),
-            [$identifierVisibleName => $identifierValue],
-        ));
-        $dynamicEntityTransfer->setIdentifier($identifierValue);
-
-        return $dynamicEntityTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DynamicEntityTransfer $dynamicEntityTransfer
-     * @param \Generated\Shared\Transfer\DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
-     *
-     * @return \Generated\Shared\Transfer\DynamicEntityTransfer
-     */
-    protected function populateDynamicEntityTransferWithFields(
-        DynamicEntityTransfer $dynamicEntityTransfer,
-        DynamicEntityDefinitionTransfer $dynamicEntityDefinitionTransfer,
-        ActiveRecordInterface $activeRecord
-    ): DynamicEntityTransfer {
-        $activeRecord = $activeRecord->toArray();
-        $entityFields = [];
-        foreach ($dynamicEntityDefinitionTransfer->getFieldDefinitions() as $fieldDefinitionTransfer) {
-            $fieldName = $fieldDefinitionTransfer->getFieldNameOrFail();
-            $fieldVisibleName = $fieldDefinitionTransfer->getFieldVisibleNameOrFail();
-            $fieldValue = $activeRecord[$fieldName];
-            $entityFields[$fieldVisibleName] = $fieldValue;
-        }
-
-        $dynamicEntityTransfer->setFields(array_merge(
-            $dynamicEntityTransfer->getFields(),
-            $entityFields,
-        ));
-
-        return $dynamicEntityTransfer;
     }
 
     /**
@@ -709,32 +663,55 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
     /**
      * @param \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer
      * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $activeRecord
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
      * @param string $errorPath
      *
      * @return \Generated\Shared\Transfer\DynamicEntityCollectionResponseTransfer
      */
-    protected function addIdentifierIsNotCreatableError(
+    protected function addIdentifierIsNotFoundError(
         DynamicEntityCollectionResponseTransfer $dynamicEntityCollectionResponseTransfer,
         DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer,
-        ActiveRecordInterface $activeRecord,
+        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
         string $errorPath
     ): DynamicEntityCollectionResponseTransfer {
         $identifierFieldVisibleName = $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer);
+        $identifierValue = $this->findFieldConditionValueByName($dynamicEntityConditionsTransfer, $identifierFieldVisibleName);
+        $identifierPlaceholderValue = $identifierFieldVisibleName;
+
+        if ($identifierValue) {
+            $identifierPlaceholderValue = sprintf(
+                '%s: %s',
+                $identifierFieldVisibleName,
+                $identifierValue,
+            );
+        }
 
         return $this->addErrorToResponseTransfer(
             $dynamicEntityCollectionResponseTransfer,
             static::GLOSSARY_KEY_ERROR_ENTITY_NOT_FOUND_OR_IDENTIFIER_IS_NOT_CREATABLE,
             $dynamicEntityConfigurationTransfer->getTableAliasOrFail(),
             [
-                static::IDENTIFIER_PLACEHOLDER => sprintf(
-                    '%s: %s',
-                    $identifierFieldVisibleName,
-                    $activeRecord->getByName($dynamicEntityConfigurationTransfer->getDynamicEntityDefinitionOrFail()->getIdentifierOrFail()),
-                ),
+                static::IDENTIFIER_PLACEHOLDER => $identifierPlaceholderValue,
                 DynamicEntityConfig::ERROR_PATH => $errorPath,
             ],
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+     * @param string $fieldName
+     *
+     * @return string|null
+     */
+    protected function findFieldConditionValueByName(DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer, string $fieldName): ?string
+    {
+        foreach ($dynamicEntityConditionsTransfer->getFieldConditions() as $fieldCondition) {
+            if ($fieldCondition->getName() === $fieldName) {
+                return $fieldCondition->getValueOrFail();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -763,5 +740,26 @@ class DynamicEntityEntityManager extends AbstractEntityManager implements Dynami
             $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer),
             $identifier,
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer
+     * @param \Generated\Shared\Transfer\DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+     *
+     * @return bool
+     */
+    protected function hasIdentifierCondition(
+        DynamicEntityConditionsTransfer $dynamicEntityConditionsTransfer,
+        DynamicEntityConfigurationTransfer $dynamicEntityConfigurationTransfer
+    ): bool {
+        $identifierVisibleName = $this->getIdentifierVisibleName($dynamicEntityConfigurationTransfer);
+
+        foreach ($dynamicEntityConditionsTransfer->getFieldConditions()->getArrayCopy() as $dynamicEntityFieldConditionTransfer) {
+            if ($dynamicEntityFieldConditionTransfer->getName() === $identifierVisibleName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
