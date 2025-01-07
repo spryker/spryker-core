@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerStorage\Persistence;
 
 use Generated\Shared\Transfer\InvalidatedCustomerCollectionTransfer;
 use Generated\Shared\Transfer\InvalidatedCustomerCriteriaTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 
 interface CustomerStorageRepositoryInterface
 {
@@ -22,11 +23,13 @@ interface CustomerStorageRepositoryInterface
     ): InvalidatedCustomerCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\InvalidatedCustomerCriteriaTransfer $invalidatedCustomerCriteriaTransfer
+     * @param array<int> $customerIds
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array<int, \Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getInvalidatedCustomerSynchronizationDataTransferCollection(
-        InvalidatedCustomerCriteriaTransfer $invalidatedCustomerCriteriaTransfer
+        array $customerIds,
+        PaginationTransfer $paginationTransfer
     ): array;
 }

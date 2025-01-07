@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\InvalidatedCustomerCollectionTransfer;
 use Generated\Shared\Transfer\InvalidatedCustomerConditionsTransfer;
 use Generated\Shared\Transfer\InvalidatedCustomerCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\CustomerStorage\Persistence\SpyCustomerInvalidatedStorageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -20,6 +22,11 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
  */
 class CustomerStorageRepository extends AbstractRepository implements CustomerStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
+    protected const CUSTOMER_INVALIDATED_STORAGE_CUSTOMER_REFERENCE = 'spy_customer_invalidated_storage.customer_reference';
+
     /**
      * @module Customer
      *
@@ -58,24 +65,26 @@ class CustomerStorageRepository extends AbstractRepository implements CustomerSt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\InvalidatedCustomerCriteriaTransfer $invalidatedCustomerCriteriaTransfer
+     * @param array<int> $customerIds
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array<int, \Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getInvalidatedCustomerSynchronizationDataTransferCollection(
-        InvalidatedCustomerCriteriaTransfer $invalidatedCustomerCriteriaTransfer
+        array $customerIds,
+        PaginationTransfer $paginationTransfer
     ): array {
-        $customerInvalidatedStorageQuery = $this->applyCustomerInvalidatedStorageFilters(
-            $this->getFactory()->createSpyCustomerInvalidatedStorageQuery(),
-            $invalidatedCustomerCriteriaTransfer,
+        $customerInvalidatedStorageQuery = $this->getFactory()->createSpyCustomerInvalidatedStorageQuery();
+
+        $customerInvalidatedStorageQuery = $this->applyCustomerInvalidatedConditions(
+            $customerInvalidatedStorageQuery,
+            $customerIds,
         );
 
-        if ($invalidatedCustomerCriteriaTransfer->getPagination()) {
-            $customerInvalidatedStorageQuery = $this->applyCustomerInvalidatedStoragePagination(
-                $customerInvalidatedStorageQuery,
-                $invalidatedCustomerCriteriaTransfer->getPaginationOrFail(),
-            );
-        }
+        $customerInvalidatedStorageQuery = $this->applyCustomerInvalidatedStoragePagination(
+            $customerInvalidatedStorageQuery,
+            $paginationTransfer,
+        );
 
         /**
          * @var array<int, \Generated\Shared\Transfer\SynchronizationDataTransfer> $synchronizationDataTransferCollection
@@ -85,6 +94,39 @@ class CustomerStorageRepository extends AbstractRepository implements CustomerSt
             ->find();
 
         return $synchronizationDataTransferCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\CustomerStorage\Persistence\SpyCustomerInvalidatedStorageQuery $customerInvalidatedStorageQuery
+     * @param array<int> $customerIds
+     *
+     * @return \Orm\Zed\CustomerStorage\Persistence\SpyCustomerInvalidatedStorageQuery
+     */
+    protected function applyCustomerInvalidatedConditions(
+        SpyCustomerInvalidatedStorageQuery $customerInvalidatedStorageQuery,
+        array $customerIds
+    ): SpyCustomerInvalidatedStorageQuery {
+        $customerInvalidatedStorageQuery = $customerInvalidatedStorageQuery->addJoin(
+            static::CUSTOMER_INVALIDATED_STORAGE_CUSTOMER_REFERENCE,
+            SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,
+            Criteria::INNER_JOIN,
+        );
+
+        $customerInvalidatedStorageQuery->add(
+            SpyCustomerTableMap::COL_ANONYMIZED_AT,
+            null,
+            Criteria::ISNOTNULL,
+        );
+
+        if ($customerIds) {
+            $customerInvalidatedStorageQuery = $customerInvalidatedStorageQuery->addAnd(
+                SpyCustomerTableMap::COL_ID_CUSTOMER,
+                $customerIds,
+                Criteria::IN,
+            );
+        }
+
+        return $customerInvalidatedStorageQuery;
     }
 
     /**

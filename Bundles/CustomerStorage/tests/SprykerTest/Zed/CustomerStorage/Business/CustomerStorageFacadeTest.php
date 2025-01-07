@@ -99,8 +99,8 @@ class CustomerStorageFacadeTest extends Unit
     public function testGetSynchronizationTransferCollection(): void
     {
         // Arrange
-        $customerTransfer1 = $this->tester->haveCustomer();
-        $customerTransfer2 = $this->tester->haveCustomer();
+        $customerTransfer1 = $this->tester->haveCustomer(['anonymizedAt' => (new DateTime())->format('Y-m-d H:i:s')]);
+        $customerTransfer2 = $this->tester->haveCustomer(['anonymizedAt' => (new DateTime())->format('Y-m-d H:i:s')]);
         $this->tester->createCustomerInvalidatedStorage($customerTransfer1, new DateTime());
         $this->tester->createCustomerInvalidatedStorage($customerTransfer2, new DateTime('-1 day'));
         $paginationTransfer = $this->tester->createPaginationTransfer();
