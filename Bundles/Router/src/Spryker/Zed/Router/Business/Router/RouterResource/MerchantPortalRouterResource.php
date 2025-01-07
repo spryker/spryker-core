@@ -46,7 +46,7 @@ class MerchantPortalRouterResource extends AbstractRouterResource
             ->name('*Controller.php')
             ->notName('GatewayController.php')
             ->filter(function (SplFileInfo $item) {
-                return strpos($item->getPathname(), static::MERCHANT_PORTAL_FOLDER_FILTER) !== false;
+                return strpos($item->getPathname(), static::MERCHANT_PORTAL_FOLDER_FILTER) !== false || strpos($item->getFilename(), static::MERCHANT_PORTAL_FOLDER_FILTER) !== false;
             });
 
         return $finder;

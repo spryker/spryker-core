@@ -53,6 +53,7 @@ class LocatorHelper extends Module
                 'Spryker',
                 'SprykerEco',
                 'SprykerSdk',
+                'SprykerFeature',
             ],
         ];
     }

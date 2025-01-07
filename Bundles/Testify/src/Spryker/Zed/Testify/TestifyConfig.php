@@ -23,6 +23,8 @@ class TestifyConfig extends AbstractBundleConfig
             APPLICATION_ROOT_DIR . '/tests/PyzTest/*/*/_output/',
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/tests/_output/',
             APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/tests/SprykerTest/*/*/_output/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Features/*/tests/_output/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Features/*/tests/SprykerTest/*/*/_output/',
             APPLICATION_VENDOR_DIR . '/spryker/spryker-shop/Bundles/*/tests/SprykerTest/*/*/_output/',
         ];
 

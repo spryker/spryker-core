@@ -22,28 +22,33 @@ runCommand() {
     local SRC_FOLDER=''
     local TESTS_FOLDER=''
 
-    if [[ -d "Bundles/$module/src/" ]]; then
-        SRC_FOLDER="Bundles/$module/src/"
+    if [[ -d "$module_directory/$module/src/" ]]; then
+        SRC_FOLDER="$module_directory/$module/src/"
     fi
 
-    if [ -d "Bundles/$module/tests/" ]; then
-        TESTS_FOLDER="Bundles/$module/tests/"
+    if [ -d "$module_directory/$module/tests/" ]; then
+        TESTS_FOLDER="$module_directory/$module/tests/"
     fi
 
-    php -d memory_limit=-1 vendor/bin/phpcs Bundles/$module --standard=$RULESET -p $SRC_FOLDER $TESTS_FOLDER
+    php -d memory_limit=-1 vendor/bin/phpcs $module_directory/$module --standard=$RULESET -p $SRC_FOLDER $TESTS_FOLDER
 }
 
 validateModuleCodeSniffer() {
-  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB master... | grep "^Bundles\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
+  local module_directory=$2
+  MODULES=$(git -C ./ diff --name-only --diff-filter=ACMRTUXB master... | grep "^$module_directory\/" | cut -d "/" -f2- | cut -d "/" -f1 | sort | uniq)
 
   echo "code sniffer check"
   for module in $MODULES
       do
           echo $1.$module
 
-          local RULESET="Bundles/$module/phpcs.xml"
+          if [[ ! -d "$module_directory/$module/src/" && ! -d "$module_directory/$module/tests/" ]]; then
+             continue
+          fi
+
+          local RULESET="$2/$module/phpcs.xml"
           if [ -f "$RULESET" ]; then
-              output=$(runCommand $module $RULESET)
+              output=$(runCommand $module $RULESET $module_directory)
 
               if [ $? -ne 0 ]; then
                   echo "${output}"
@@ -53,7 +58,7 @@ validateModuleCodeSniffer() {
               continue
           fi
 
-          LEVEL=$(getConfigurationOption Bundles/$module/tooling.yml code-sniffer level)
+          LEVEL=$(getConfigurationOption $2/$module/tooling.yml code-sniffer level)
           if [ -z "$LEVEL" ]; then
               LEVEL=1
           fi
@@ -63,7 +68,7 @@ validateModuleCodeSniffer() {
               RULESET="Bundles/Development/ruleset.xml"
           fi
 
-          output=$(runCommand $module $RULESET)
+          output=$(runCommand $module $RULESET $module_directory)
           if [ $? -ne 0 ]; then
               echo "${output}"
               EXITCODE=1
@@ -72,6 +77,7 @@ validateModuleCodeSniffer() {
   wait
 }
 
-validateModuleCodeSniffer Spryker
+validateModuleCodeSniffer Spryker Bundles
+validateModuleCodeSniffer Spryker Features
 
 exit $EXITCODE

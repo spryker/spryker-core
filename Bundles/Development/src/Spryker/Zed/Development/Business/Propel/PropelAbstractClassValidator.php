@@ -57,7 +57,10 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     protected function getModuleNames(): array
     {
         $finder = new Finder();
-        $finder->directories()->in(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/')->depth('< 1');
+        $finder->directories()->in([
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/',
+            APPLICATION_VENDOR_DIR . '/spryker/spryker/Features/',
+        ])->depth('< 1');
 
         $modules = [];
 
@@ -127,7 +130,10 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
      */
     protected function getPathToModuleSchemas(string $module): string
     {
-        return sprintf('%1$s/spryker/spryker/Bundles/%2$s/src/Spryker/Zed/%2$s/Persistence/Propel/Schema/', APPLICATION_VENDOR_DIR, $module);
+        $bundlePath = sprintf('%1$s/spryker/spryker/Bundles/%2$s/src/Spryker/Zed/%2$s/Persistence/Propel/Schema/', APPLICATION_VENDOR_DIR, $module);
+        $featurePath = sprintf('%1$s/spryker/spryker/Features/%2$s/src/SprykerFeature/Zed/%2$s/Persistence/Propel/Schema/', APPLICATION_VENDOR_DIR, $module);
+
+        return is_dir($featurePath) ? $featurePath : $bundlePath;
     }
 
     /**
@@ -195,16 +201,18 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             $tableName = $this->getTableNameFromSimpleXmlTableElement($simpleXmlTableElement);
 
             $abstractEntityClass = sprintf('Spryker\\Zed\\%s\\Persistence\\Propel\\Abstract%s', $module, $phpName);
-            if (!class_exists($abstractEntityClass)) {
+            $abstractFeatureEntityClass = sprintf('SprykerFeature\\Zed\\%s\\Persistence\\Propel\\Abstract%s', $module, $phpName);
+            if (!class_exists($abstractEntityClass) && !class_exists($abstractFeatureEntityClass)) {
                 $isValid = false;
-                $output->writeln(sprintf('<fg=yellow>%s</> <fg=red>does not exists, please create one.</>', $abstractEntityClass));
+                $output->writeln(sprintf('<fg=red>Neither %s nor %s</> <fg=red>does not exists, please create one.</>', $abstractEntityClass, $abstractFeatureEntityClass));
                 $output->writeln(sprintf('<fg=green>vendor/bin/console spryk:run AddZedPersistencePropelAbstractEntity  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%2$s\' -n</>', $module, $tableName));
             }
 
             $abstractQueryClass = sprintf('Spryker\\Zed\\%s\\Persistence\\Propel\\Abstract%sQuery', $module, $phpName);
-            if (!class_exists($abstractQueryClass)) {
+            $abstractFeatureQueryClass = sprintf('SprykerFeature\\Zed\\%s\\Persistence\\Propel\\Abstract%sQuery', $module, $phpName);
+            if (!class_exists($abstractQueryClass) && !class_exists($abstractFeatureQueryClass)) {
                 $isValid = false;
-                $output->writeln(sprintf('<fg=red>%s does not exists, please create one.</>', $abstractQueryClass));
+                $output->writeln(sprintf('<fg=red>Neither %s nor %s does not exists, please create one.</>', $abstractQueryClass, $abstractFeatureQueryClass));
                 $output->writeln(sprintf('<fg=green>vendor/bin/console spryk:run AddZedPersistencePropelAbstractQuery  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%2$s\' -n</>', $module, $tableName));
             }
         }

@@ -49,6 +49,7 @@ class AllModuleFinder implements AllModuleFinderInterface
         $modules = [];
         $modules[] = $this->loadProjectModules();
         $modules[] = $this->loadCoreDevelopmentModules();
+        $modules[] = $this->loadFeaturesDevelopmentModules();
         $modules[] = $this->loadOtherCoreModules();
 
         return $this->addApplication(array_merge(...$modules));
@@ -82,6 +83,21 @@ class AllModuleFinder implements AllModuleFinderInterface
                 $path = sprintf('%s/spryker/%s/Bundles/%s*/src/*/*', APPLICATION_VENDOR_DIR, $namespaceDir, $letter);
                 $modules[] = $this->findModules($path, $internalNamespace);
             }
+        }
+
+        return array_merge(...$modules);
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadFeaturesDevelopmentModules(): array
+    {
+        $modules = [];
+
+        foreach (range('A', 'Z') as $letter) {
+            $path = sprintf('%s/spryker/%s/Features/%s*/src/*/*', APPLICATION_VENDOR_DIR, 'spryker', $letter);
+            $modules[] = $this->findModules($path, $this->developmentConfig->getSprykerFeatureNamespace());
         }
 
         return array_merge(...$modules);

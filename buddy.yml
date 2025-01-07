@@ -36,6 +36,6 @@
         docker_image_tag: '8.2'
         execute_commands:
             - 'chmod +x *.sh'
-            - 'bash travis_check_touched_modules.sh'
+            - 'bash ci_check_touched_modules.sh'
             - 'echo "Finished checking touched modules"'
         shell: 'BASH'

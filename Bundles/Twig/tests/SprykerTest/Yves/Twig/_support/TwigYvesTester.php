@@ -130,9 +130,25 @@ class TwigYvesTester extends Actor
     /**
      * @return string
      */
+    public function getPathSprykerFeature(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerFeature/Yves/%s/Theme/default';
+    }
+
+    /**
+     * @return string
+     */
     public function getPathSprykerShared(): string
     {
         return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/Spryker/Shared/%s/Theme/default';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathSprykerFeatureShared(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerFeature/Shared/%s/Theme/default';
     }
 
     /**

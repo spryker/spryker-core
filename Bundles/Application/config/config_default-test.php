@@ -8,6 +8,7 @@ $config[KernelConstants::PROJECT_NAMESPACES] = [
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
     'Spryker',
+    'SprykerFeature',
 ];
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';

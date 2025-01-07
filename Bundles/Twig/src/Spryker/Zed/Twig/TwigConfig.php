@@ -85,6 +85,7 @@ class TwigConfig extends AbstractBundleConfig
         }
 
         $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
+        $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/spryker-feature/*/src/SprykerFeature/Zed/%s/Presentation/';
 
         return $paths;
     }

@@ -107,6 +107,11 @@ class AutoloadUpdater implements UpdaterInterface
     /**
      * @var string
      */
+    public const SPRYKER_FEATURE_NAMESPACE = 'SprykerFeature';
+
+    /**
+     * @var string
+     */
     public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
 
     /**
@@ -169,6 +174,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected $autoloadPSR4Whitelist = [
         self::SPRYKER_NAMESPACE,
+        self::SPRYKER_FEATURE_NAMESPACE,
         self::SPRYKER_SHOP_NAMESPACE,
         self::SPRYKER_ECO_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,

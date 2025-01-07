@@ -209,6 +209,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             return $matches[1];
         }
 
+        if (preg_match('/vendor\/spryker\/spryker\/Features\/\w+\/composer.json$/', $realPath, $matches)) {
+            return 'spryker-feature';
+        }
+
         if (preg_match('/vendor\/([a-z_-]+)\/[a-z_-]+\/composer.json$/', $realPath, $matches)) {
             return $matches[1];
         }

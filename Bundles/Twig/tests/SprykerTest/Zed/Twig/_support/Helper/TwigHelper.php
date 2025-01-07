@@ -189,6 +189,7 @@ class TwigHelper extends Module
             $twigConfig = new TwigConfig();
             $paths = $twigConfig->getTemplatePaths();
             $paths[] = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%2$s/src/*/Zed/%1$s/Presentation';
+            $paths[] = APPLICATION_VENDOR_DIR . '/spryker/spryker/Features/%2$s/src/*/Zed/%1$s/Presentation';
 
             return $paths;
         }, static::MODULE_NAME);

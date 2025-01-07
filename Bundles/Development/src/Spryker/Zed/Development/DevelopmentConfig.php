@@ -61,6 +61,11 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
 
     /**
+     * @var string
+     */
+    protected const NAMESPACE_SPRYKER_FEATURE = 'SprykerFeature';
+
+    /**
      * @var array<string>
      */
     public const APPLICATION_NAMESPACES = [
@@ -96,6 +101,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     protected const INTERNAL_NAMESPACES_LIST = [
         self::NAMESPACE_SPRYKER,
+        self::NAMESPACE_SPRYKER_FEATURE,
         self::NAMESPACE_SPRYKER_SHOP,
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL,
     ];
@@ -105,6 +111,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
+        self::NAMESPACE_SPRYKER_FEATURE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
@@ -139,7 +146,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getInternalNamespaces(): array
     {
-        return ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+        return ['Spryker', 'SprykerFeature', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
     }
 
     /**
@@ -153,6 +160,8 @@ class DevelopmentConfig extends AbstractBundleConfig
             $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',
             $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',
             $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',
+            $this->getPathToCore() . '%1$s/src/SprykerFeature/Zed/%1$s/Presentation/',
+            $this->getPathToCore() . '%1$s/src/SprykerFeature/Yves/%1$s/Theme/',
         ];
     }
 
@@ -276,6 +285,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'Spryker' => $this->getPathToCore(),
+            'SprykerFeature' => $this->getPathToCore(),
             'SprykerEco' => $this->getPathToEco(),
         ];
     }
@@ -889,5 +899,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function isStandaloneMode(): bool
     {
         return (bool)getenv('DEVELOPMENT_STANDALONE_MODE');
+    }
+
+    /**
+     * Specification:
+     * - Returns Spryker Feature namespace.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSprykerFeatureNamespace(): string
+    {
+        return static::NAMESPACE_SPRYKER_FEATURE;
     }
 }
