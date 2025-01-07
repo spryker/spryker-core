@@ -50,6 +50,16 @@ class LocaleBusinessTester extends Actor
     /**
      * @var string
      */
+    public const LOCALE_CODE = 'en';
+
+    /**
+     * @var string
+     */
+    public const LOCALE_DE_CODE = 'de';
+
+    /**
+     * @var string
+     */
     public const SERVICE_STORE = 'store';
 
     /**

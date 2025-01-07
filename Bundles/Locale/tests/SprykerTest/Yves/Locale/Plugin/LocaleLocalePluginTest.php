@@ -28,6 +28,11 @@ use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
 class LocaleLocalePluginTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const SPRINTF_URI_FORMAT = '%s-%s';
+
+    /**
      * @var \Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin
      */
     protected $localeLocalePlugin;
@@ -182,13 +187,29 @@ class LocaleLocalePluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testPluginReturnsLocaleSpecifiedInUrlAndSeparatedByHyphen(): void
+    {
+        // Arrange
+        $uri = sprintf(static::SPRINTF_URI_FORMAT, $this->notDefaultLocaleIsoCode, $this->notDefaultLocaleIsoCode);
+        $_SERVER['REQUEST_URI'] = $uri;
+
+        // Act
+        $localeTransfer = $this->localeLocalePlugin->getLocaleTransfer($this->container);
+
+        // Assert
+        $this->assertSame($localeTransfer->getLocaleName(), $this->notDefaultLocaleName);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Yves\Plugin\Spryker\Client\Locale\LocaleClientInterface
      */
     protected function createLocaleClientMock(): LocaleClientInterface
     {
         $localeClientMock = $this->createMock(LocaleClient::class);
         $localeClientMock->method('getLocales')
-            ->willReturn([$this->tester::LOCALE, $this->tester::LOCALE_DE]);
+            ->willReturn([$this->tester::LOCALE_CODE => $this->tester::LOCALE, $this->tester::LOCALE_DE_CODE => $this->tester::LOCALE_DE]);
         $localeClientMock->method('getCurrentLocale')
             ->willReturn($this->tester::LOCALE);
 

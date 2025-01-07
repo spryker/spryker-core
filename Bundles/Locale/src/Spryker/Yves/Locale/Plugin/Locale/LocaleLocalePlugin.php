@@ -104,9 +104,21 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
         $pathElements = explode('/', $urlPath);
 
         if ($this->getConfig()->isStoreRoutingEnabled() === true) {
-            return $pathElements[$this->getConfig()->getLocaleCodeIndex()] ?? '';
+            return $this->getLanguageByLocaleCode($pathElements[$this->getConfig()->getLocaleCodeIndex()] ?? '');
         }
 
-        return $pathElements[0];
+        return $this->getLanguageByLocaleCode($pathElements[0]);
+    }
+
+    /**
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    protected function getLanguageByLocaleCode(string $localeCode): string
+    {
+        $localeSegments = explode('-', $localeCode);
+
+        return $localeSegments[0];
     }
 }
