@@ -31,6 +31,11 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
     protected $aclEntityMetadataConfigFilter;
 
     /**
+     * @var array<\Generated\Shared\Transfer\AclEntityMetadataConfigTransfer>
+     */
+    protected static array $cache = [];
+
+    /**
      * @param array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface> $aclEntityMetadataCollectionExpandPlugins
      * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
      * @param \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
@@ -52,6 +57,24 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
     public function getAclEntityMetadataConfig(
+        bool $runValidation = true,
+        ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
+    ): AclEntityMetadataConfigTransfer {
+        $modelName = $aclEntityMetadataConfigRequestTransfer?->getModelName() ?? '';
+        if (!isset(static::$cache[$runValidation][$modelName])) {
+            static::$cache[$runValidation][$modelName] = $this->executeGetAclEntityMetadataConfig($runValidation, $aclEntityMetadataConfigRequestTransfer);
+        }
+
+        return static::$cache[$runValidation][$modelName];
+    }
+
+    /**
+     * @param bool $runValidation
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigRequestTransfer|null $aclEntityMetadataConfigRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
+     */
+    protected function executeGetAclEntityMetadataConfig(
         bool $runValidation = true,
         ?AclEntityMetadataConfigRequestTransfer $aclEntityMetadataConfigRequestTransfer = null
     ): AclEntityMetadataConfigTransfer {
